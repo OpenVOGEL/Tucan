@@ -1,0 +1,20 @@
+C:\Users\JADSC\Software\Projects\DotNumerics\DotNumerics Samples\DotNumerics Samples\bin\Debug\DotNumerics Samples.exe
+C:\Users\JADSC\Software\Projects\DotNumerics\DotNumerics Samples\DotNumerics Samples\bin\Debug\DotNumerics Samples.pdb
+C:\Users\JADSC\Software\Projects\DotNumerics\DotNumerics Samples\DotNumerics Samples\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\JADSC\Software\Projects\DotNumerics\DotNumerics Samples\DotNumerics Samples\obj\Debug\DotNumerics_Samples.Properties.Resources.resources
+C:\Users\JADSC\Software\Projects\DotNumerics\DotNumerics Samples\DotNumerics Samples\obj\Debug\DotNumerics Samples.csproj.GenerateResource.Cache
+C:\Users\JADSC\Software\Projects\DotNumerics\DotNumerics Samples\DotNumerics Samples\obj\Debug\DotNumerics Samples.exe
+C:\Users\JADSC\Software\Projects\DotNumerics\DotNumerics Samples\DotNumerics Samples\obj\Debug\DotNumerics Samples.pdb
+C:\Users\JADSC\Software\Projects\DotNumerics\DotNumerics Samples\DotNumerics Samples\obj\Debug\DotNumerics_Samples.FormSampleRunner.resources
+C:\Users\JADSC\Software\Projects\DotNumerics\DotNumerics Samples\DotNumerics Samples\bin\Debug\DotNumerics.dll
+C:\Users\JADSC\Software\Projects\DotNumerics\DotNumerics Samples\DotNumerics Samples\bin\Debug\DotNumerics.pdb
+E:\JADSC\TestProgramas\DotNumerics\DotNumerics Samples\DotNumerics Samples\obj\Debug\DotNumerics Samples.exe
+E:\JADSC\TestProgramas\DotNumerics\DotNumerics Samples\DotNumerics Samples\obj\Debug\DotNumerics Samples.pdb
+E:\JADSC\TestProgramas\DotNumerics\DotNumerics Samples\DotNumerics Samples\bin\Debug\DotNumerics Samples.exe
+E:\JADSC\TestProgramas\DotNumerics\DotNumerics Samples\DotNumerics Samples\bin\Debug\DotNumerics Samples.pdb
+E:\JADSC\TestProgramas\DotNumerics\DotNumerics Samples\DotNumerics Samples\bin\Debug\DotNumerics.dll
+E:\JADSC\TestProgramas\DotNumerics\DotNumerics Samples\DotNumerics Samples\bin\Debug\DotNumerics.pdb
+E:\JADSC\TestProgramas\DotNumerics\DotNumerics Samples\DotNumerics Samples\obj\Debug\ResolveAssemblyReference.cache
+E:\JADSC\TestProgramas\DotNumerics\DotNumerics Samples\DotNumerics Samples\obj\Debug\DotNumerics_Samples.FormSampleRunner.resources
+E:\JADSC\TestProgramas\DotNumerics\DotNumerics Samples\DotNumerics Samples\obj\Debug\DotNumerics_Samples.Properties.Resources.resources
+E:\JADSC\TestProgramas\DotNumerics\DotNumerics Samples\DotNumerics Samples\obj\Debug\DotNumerics Samples.csproj.GenerateResource.Cache

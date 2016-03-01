@@ -1,0 +1,110 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{1C395A62-0FBD-4E48-8068-AD794186C3A8}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DotNumerics_Samples</RootNamespace>
+    <AssemblyName>DotNumerics Samples</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Dumper\NullObjectDumper.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Dumper\ObjectDumper.cs" />
+    <Compile Include="FormSampleRunner.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormSampleRunner.Designer.cs">
+      <DependentUpon>FormSampleRunner.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Harness\CategoryAttribute.cs" />
+    <Compile Include="Harness\DescriptionAttribute.cs" />
+    <Compile Include="Harness\IObjectDumper.cs" />
+    <Compile Include="Harness\LinkedClassAttribute.cs" />
+    <Compile Include="Harness\LinkedMethodAttribute.cs" />
+    <Compile Include="Harness\PrefixAttribute.cs" />
+    <Compile Include="Harness\SampleSuite.cs" />
+    <Compile Include="Harness\TitleAttribute.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="FormSampleRunner.resx">
+      <DependentUpon>FormSampleRunner.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Runner\Sample.cs" />
+    <Compile Include="Runner\SampleBase.cs" />
+    <Compile Include="Runner\SampleGroup.cs" />
+    <Compile Include="Runner\SampleRunner.cs" />
+    <Compile Include="SampleLoader.cs" />
+    <Compile Include="Samples\LinearAlgebra.cs" />
+    <Compile Include="Samples\DifferentialEquations.cs" />
+    <Compile Include="Samples\Optimization.cs" />
+    <Compile Include="Samples\SchemaInformationBasedSample.cs" />
+    <Compile Include="TextWriterSampleRunner.cs" />
+    <Compile Include="Utils\CodeExtractor.cs" />
+    <Compile Include="Utils\NativeMethods.cs" />
+    <Compile Include="Utils\SyntaxColorizer.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Source\DotNumerics\DotNumerics VS2005.csproj">
+      <Project>{48185EF1-B73B-457B-AA37-0BCE567C5AB1}</Project>
+      <Name>DotNumerics</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

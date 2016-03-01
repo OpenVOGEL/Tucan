@@ -1,0 +1,232 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<asmv1:assembly xsi:schemaLocation="urn:schemas-microsoft-com:asm.v1 assembly.adaptive.xsd" manifestVersion="1.0" xmlns:asmv1="urn:schemas-microsoft-com:asm.v1" xmlns="urn:schemas-microsoft-com:asm.v2" xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:co.v1="urn:schemas-microsoft-com:clickonce.v1" xmlns:asmv3="urn:schemas-microsoft-com:asm.v3" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" xmlns:co.v2="urn:schemas-microsoft-com:clickonce.v2">
+  <asmv1:assemblyIdentity name="Vogel.exe" version="2015.0.0.20" publicKeyToken="2a2fcb37012c1f59" language="neutral" processorArchitecture="msil" type="win32" />
+  <description asmv2:iconFile="Vogel.ico" xmlns="urn:schemas-microsoft-com:asm.v1" />
+  <application />
+  <entryPoint>
+    <assemblyIdentity name="Vogel" version="2015.0.0.0" language="neutral" processorArchitecture="msil" />
+    <commandLine file="Vogel.exe" parameters="" />
+  </entryPoint>
+  <trustInfo>
+    <security>
+      <applicationRequestMinimum>
+        <PermissionSet Unrestricted="true" ID="Custom" SameSite="site" />
+        <defaultAssemblyRequest permissionSetReference="Custom" />
+      </applicationRequestMinimum>
+      <requestedPrivileges xmlns="urn:schemas-microsoft-com:asm.v3">
+        <!--
+          UAC Manifest Options
+          If you want to change the Windows User Account Control level replace the 
+          requestedExecutionLevel node with one of the following.
+
+        <requestedExecutionLevel  level="asInvoker" uiAccess="false" />
+        <requestedExecutionLevel  level="requireAdministrator" uiAccess="false" />
+        <requestedExecutionLevel  level="highestAvailable" uiAccess="false" />
+
+         If you want to utilize File and Registry Virtualization for backward 
+         compatibility then delete the requestedExecutionLevel node.
+    -->
+        <requestedExecutionLevel level="asInvoker" uiAccess="false" />
+      </requestedPrivileges>
+    </security>
+  </trustInfo>
+  <dependency>
+    <dependentOS>
+      <osVersionInfo>
+        <os majorVersion="5" minorVersion="1" buildNumber="2600" servicePackMajor="0" />
+      </osVersionInfo>
+    </dependentOS>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="preRequisite" allowDelayedBinding="true">
+      <assemblyIdentity name="Microsoft.Windows.CommonLanguageRuntime" version="4.0.30319.0" />
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="AeroTools.dll" size="584704">
+      <assemblyIdentity name="AeroTools" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+        <dsig:DigestValue>928UnVIZa7rVGJRCHoodWrR1688=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="CommonResources.dll" size="17920">
+      <assemblyIdentity name="CommonResources" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+        <dsig:DigestValue>u18euOlCwNuh1Ba1iNLD1o6xl68=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Cudafy.NET.dll" size="3534800">
+      <assemblyIdentity name="Cudafy.NET" version="1.28.5482.15045" publicKeyToken="63A4C9931616906B" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+        <dsig:DigestValue>u4USSuuBG4kXUI5gaZRSwDnmpAw=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="DotNumerics.dll" size="732160">
+      <assemblyIdentity name="DotNumerics" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+        <dsig:DigestValue>+c2Q/z5+qPgGJMYrsneSBvL+DYE=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="MathTools.dll" size="38400">
+      <assemblyIdentity name="MathTools" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+        <dsig:DigestValue>5i/gV2TRq+4mVjcPSDnLxbTihwU=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="MeshingTools.dll" size="51712">
+      <assemblyIdentity name="MeshingTools" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+        <dsig:DigestValue>15FGDUv/3ZIbD93Q93zmebbVVA0=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Meta.Numerics.dll" size="185344">
+      <assemblyIdentity name="Meta.Numerics" version="2.0.0.0" publicKeyToken="67D25C65A6631347" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+        <dsig:DigestValue>mmaDKs09+BcgcCnNP4DPJuxRwzE=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="SharpGL.dll" size="357888">
+      <assemblyIdentity name="SharpGL" version="2.0.0.0" publicKeyToken="27FC851303210B27" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+        <dsig:DigestValue>j/4v68ZZ7xpR4Nv1fZFpFPjZ5qc=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="SharpGL.SceneGraph.dll" size="141824">
+      <assemblyIdentity name="SharpGL.SceneGraph" version="1.0.0.0" publicKeyToken="27FC851303210B27" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+        <dsig:DigestValue>2e72e6h1pTKl+wp/Mt5FouoEYq8=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="SharpGL.WinForms.dll" size="19456">
+      <assemblyIdentity name="SharpGL.WinForms" version="2.0.0.0" publicKeyToken="27FC851303210B27" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+        <dsig:DigestValue>YlFaw9uwKhvvPMYkhAJQpQqHPYE=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="VisualTools.dll" size="14336">
+      <assemblyIdentity name="VisualTools" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+        <dsig:DigestValue>KJDvMrLvGC5YwTEFFdm4bCgFBcA=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Vogel.exe" size="922032">
+      <assemblyIdentity name="Vogel" version="2015.0.0.0" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+        <dsig:DigestValue>52J+e0qPPetgR6gDGqiLiVTXe4g=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="en-US\Vogel.resources.dll" size="6656">
+      <assemblyIdentity name="Vogel.resources" version="2015.0.0.0" language="en-US" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+        <dsig:DigestValue>PCapwAErfYzL/Xv72bTgyjQC6V8=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="ig\Vogel.resources.dll" size="20480">
+      <assemblyIdentity name="Vogel.resources" version="2015.0.0.0" language="ig" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+        <dsig:DigestValue>M14MWiEs1K1HKfyXsBvF6XmbCZ8=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <file name="Vogel.exe.config" size="183">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+      <dsig:DigestValue>zmtMKrAEuvsQh2jJFtlCNruBIWE=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="Vogel.ico" size="99678">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+      <dsig:DigestValue>gElodd8Ok1/wemM8L6jIAIbQhfE=</dsig:DigestValue>
+    </hash>
+  </file>
+  <fileAssociation extension=".vog" description="Vogel project file" progid="0" defaultIcon="Vogel.ico" xmlns="urn:schemas-microsoft-com:clickonce.v1" />
+<publisherIdentity name="CN=GUILLERMO\Guillermo" issuerKeyHash="2cac5883303b0b580909d3f5fdafaa6f129d66a6" /><Signature Id="StrongNameSignature" xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1" /><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /><Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" /><DigestValue>4AVfyFjFgfgcum0IrJYii6dkzEM=</DigestValue></Reference></SignedInfo><SignatureValue>aEOUCPS3h459IZQR/UXsZOAZZaN8pE0VoMJ4XM2WUS9Pir8z1EJjRRnpq2Oj920Ih9r9shdo9LOiSU+kBu52Fx0uAx/7yffFfFHuI2cQfIiqVkyIyLsIZakV7qdiuXOe/D0WAr1n8z7hR2Z7Cvxy2NkkJdkYbnNkwTkVdltFRes=</SignatureValue><KeyInfo Id="StrongNameKeyInfo"><KeyValue><RSAKeyValue><Modulus>tVOwAvtu8izn6D9zLhuJzKZBCRQQ91UWfePENDiUOJ7cdj4vjcQkCUVx/0CyVUsO9/SoDkXdfTbN3r49LVlkUeuX43wI/8hc1e8unsiQaWG1SOfKentTU3aaIocaR6lXfzMBhhvF/4Zctd6VwQq9WZOGosgd7VvzU/IRyWYi15E=</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><msrel:RelData xmlns:msrel="http://schemas.microsoft.com/windows/rel/2005/reldata"><r:license xmlns:r="urn:mpeg:mpeg21:2003:01-REL-R-NS" xmlns:as="http://schemas.microsoft.com/windows/pki/2005/Authenticode"><r:grant><as:ManifestInformation Hash="43cc64a78b2296ac086dba1cf881c558c85f05e0" Description="" Url=""><as:assemblyIdentity name="Vogel.exe" version="2015.0.0.20" publicKeyToken="2a2fcb37012c1f59" language="neutral" processorArchitecture="msil" type="win32" /></as:ManifestInformation><as:SignedBy /><as:AuthenticodePublisher><as:X509SubjectName>CN=GUILLERMO\Guillermo</as:X509SubjectName></as:AuthenticodePublisher></r:grant><r:issuer><Signature Id="AuthenticodeSignature" xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1" /><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /><Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" /><DigestValue>qjMklygM0DX5oNOSH5BUHbgN5YQ=</DigestValue></Reference></SignedInfo><SignatureValue>H1MfZ/1MOpGdcrU9kQUuMV7AxZEfReda3v5xkZBV/B1AgDSg1TBF6ui5VApv8d7T8+SCGmEG5fUPKbN9+E/17sCvbLfS/aC5YtlYhtJWC3bTyN7Kl9kGF8Nu1r717QryG3aIdD4CBIdBdl1SXuthT2afuKOpRHBgfyhqPv9stOk=</SignatureValue><KeyInfo><KeyValue><RSAKeyValue><Modulus>tVOwAvtu8izn6D9zLhuJzKZBCRQQ91UWfePENDiUOJ7cdj4vjcQkCUVx/0CyVUsO9/SoDkXdfTbN3r49LVlkUeuX43wI/8hc1e8unsiQaWG1SOfKentTU3aaIocaR6lXfzMBhhvF/4Zctd6VwQq9WZOGosgd7VvzU/IRyWYi15E=</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><X509Data><X509Certificate>MIIB5TCCAU6gAwIBAgIQXQkiL4DnD6xGgLQcewHYkTANBgkqhkiG9w0BAQUFADAxMS8wLQYDVQQDHiYARwBVAEkATABMAEUAUgBNAE8AXABHAHUAaQBsAGwAZQByAG0AbzAeFw0xNTEwMDYxODMxNDdaFw0xNjEwMDYwMDMxNDdaMDExLzAtBgNVBAMeJgBHAFUASQBMAEwARQBSAE0ATwBcAEcAdQBpAGwAbABlAHIAbQBvMIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC1U7AC+27yLOfoP3MuG4nMpkEJFBD3VRZ948Q0OJQ4ntx2Pi+NxCQJRXH/QLJVSw739KgORd19Ns3evj0tWWRR65fjfAj/yFzV7y6eyJBpYbVI58p6e1NTdpoihxpHqVd/MwGGG8X/hly13pXBCr1Zk4aiyB3tW/NT8hHJZiLXkQIDAQABMA0GCSqGSIb3DQEBBQUAA4GBAIgumRV/w6W0mBOPKiKL5A/GQJhDVEMgmZI7hZYGJNn02hyi5kcT1ZvGlgu6939N7Ki2GF54NE7hdTyCpDhtfqMDBWNw2e5TUnoEZF5gfL98JIGc53qqjtk5tsNyNqIdkN3meaNNP6II8L69q7BYITfKKej1gjhubbAxn8bk4AXP</X509Certificate></X509Data></KeyInfo></Signature></r:issuer></r:license></msrel:RelData></KeyInfo></Signature></asmv1:assembly>

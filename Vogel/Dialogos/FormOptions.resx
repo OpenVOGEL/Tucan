@@ -1,0 +1,3489 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="Ocultar.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
+  </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="Ocultar.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 7pt</value>
+  </data>
+  <data name="Ocultar.Location" type="System.Drawing.Point, System.Drawing">
+    <value>408, 393</value>
+  </data>
+  <data name="Ocultar.Size" type="System.Drawing.Size, System.Drawing">
+    <value>78, 23</value>
+  </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="Ocultar.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="Ocultar.Text" xml:space="preserve">
+    <value>&amp;OK</value>
+  </data>
+  <metadata name="ToolTipS.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>110, 17</value>
+  </metadata>
+  <data name="Ocultar.ToolTip" xml:space="preserve">
+    <value>Aceptar cambios y redibujar</value>
+  </data>
+  <data name="&gt;&gt;Ocultar.Name" xml:space="preserve">
+    <value>Ocultar</value>
+  </data>
+  <data name="&gt;&gt;Ocultar.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Ocultar.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;Ocultar.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="MarcacionFina.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="MarcacionFina.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 177</value>
+  </data>
+  <data name="MarcacionFina.Size" type="System.Drawing.Size, System.Drawing">
+    <value>86, 17</value>
+  </data>
+  <data name="MarcacionFina.TabIndex" type="System.Int32, mscorlib">
+    <value>56</value>
+  </data>
+  <data name="MarcacionFina.Text" xml:space="preserve">
+    <value>Fine marker</value>
+  </data>
+  <data name="&gt;&gt;MarcacionFina.Name" xml:space="preserve">
+    <value>MarcacionFina</value>
+  </data>
+  <data name="&gt;&gt;MarcacionFina.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;MarcacionFina.Parent" xml:space="preserve">
+    <value>GroupBox5</value>
+  </data>
+  <data name="&gt;&gt;MarcacionFina.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="PantallaSample.Location" type="System.Drawing.Point, System.Drawing">
+    <value>75, 198</value>
+  </data>
+  <data name="PantallaSample.Size" type="System.Drawing.Size, System.Drawing">
+    <value>27, 26</value>
+  </data>
+  <data name="PantallaSample.TabIndex" type="System.Int32, mscorlib">
+    <value>55</value>
+  </data>
+  <data name="&gt;&gt;PantallaSample.Name" xml:space="preserve">
+    <value>PantallaSample</value>
+  </data>
+  <data name="&gt;&gt;PantallaSample.Type" xml:space="preserve">
+    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;PantallaSample.Parent" xml:space="preserve">
+    <value>GroupBox5</value>
+  </data>
+  <data name="&gt;&gt;PantallaSample.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="PantallaButton.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
+  </data>
+  <data name="PantallaButton.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 7pt</value>
+  </data>
+  <data name="PantallaButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>15, 198</value>
+  </data>
+  <data name="PantallaButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>54, 26</value>
+  </data>
+  <data name="PantallaButton.TabIndex" type="System.Int32, mscorlib">
+    <value>54</value>
+  </data>
+  <data name="PantallaButton.Text" xml:space="preserve">
+    <value>Screen</value>
+  </data>
+  <data name="&gt;&gt;PantallaButton.Name" xml:space="preserve">
+    <value>PantallaButton</value>
+  </data>
+  <data name="&gt;&gt;PantallaButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;PantallaButton.Parent" xml:space="preserve">
+    <value>GroupBox5</value>
+  </data>
+  <data name="&gt;&gt;PantallaButton.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="MarcacionGruesa.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="MarcacionGruesa.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 159</value>
+  </data>
+  <data name="MarcacionGruesa.Size" type="System.Drawing.Size, System.Drawing">
+    <value>93, 17</value>
+  </data>
+  <data name="MarcacionGruesa.TabIndex" type="System.Int32, mscorlib">
+    <value>45</value>
+  </data>
+  <data name="MarcacionGruesa.Text" xml:space="preserve">
+    <value>Gross marker</value>
+  </data>
+  <data name="&gt;&gt;MarcacionGruesa.Name" xml:space="preserve">
+    <value>MarcacionGruesa</value>
+  </data>
+  <data name="&gt;&gt;MarcacionGruesa.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;MarcacionGruesa.Parent" xml:space="preserve">
+    <value>GroupBox5</value>
+  </data>
+  <data name="&gt;&gt;MarcacionGruesa.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="Label15.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="Label15.Location" type="System.Drawing.Point, System.Drawing">
+    <value>10, 136</value>
+  </data>
+  <data name="Label15.Size" type="System.Drawing.Size, System.Drawing">
+    <value>35, 13</value>
+  </data>
+  <data name="Label15.TabIndex" type="System.Int32, mscorlib">
+    <value>53</value>
+  </data>
+  <data name="Label15.Text" xml:space="preserve">
+    <value>Zmed</value>
+  </data>
+  <data name="&gt;&gt;Label15.Name" xml:space="preserve">
+    <value>Label15</value>
+  </data>
+  <data name="&gt;&gt;Label15.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label15.Parent" xml:space="preserve">
+    <value>GroupBox5</value>
+  </data>
+  <data name="&gt;&gt;Label15.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="Zmed_Box.Location" type="System.Drawing.Point, System.Drawing">
+    <value>47, 134</value>
+  </data>
+  <data name="Zmed_Box.Size" type="System.Drawing.Size, System.Drawing">
+    <value>55, 22</value>
+  </data>
+  <data name="Zmed_Box.TabIndex" type="System.Int32, mscorlib">
+    <value>52</value>
+  </data>
+  <data name="Zmed_Box.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
+    <value>Right</value>
+  </data>
+  <data name="Zmed_Box.ToolTip" xml:space="preserve">
+    <value>Nivel de transparencia</value>
+  </data>
+  <data name="&gt;&gt;Zmed_Box.Name" xml:space="preserve">
+    <value>Zmed_Box</value>
+  </data>
+  <data name="&gt;&gt;Zmed_Box.Type" xml:space="preserve">
+    <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Zmed_Box.Parent" xml:space="preserve">
+    <value>GroupBox5</value>
+  </data>
+  <data name="&gt;&gt;Zmed_Box.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="Label14.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="Label14.Location" type="System.Drawing.Point, System.Drawing">
+    <value>10, 115</value>
+  </data>
+  <data name="Label14.Size" type="System.Drawing.Size, System.Drawing">
+    <value>31, 13</value>
+  </data>
+  <data name="Label14.TabIndex" type="System.Int32, mscorlib">
+    <value>51</value>
+  </data>
+  <data name="Label14.Text" xml:space="preserve">
+    <value>Ymin</value>
+  </data>
+  <data name="&gt;&gt;Label14.Name" xml:space="preserve">
+    <value>Label14</value>
+  </data>
+  <data name="&gt;&gt;Label14.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label14.Parent" xml:space="preserve">
+    <value>GroupBox5</value>
+  </data>
+  <data name="&gt;&gt;Label14.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="Ymin_Box.Location" type="System.Drawing.Point, System.Drawing">
+    <value>47, 113</value>
+  </data>
+  <data name="Ymin_Box.Size" type="System.Drawing.Size, System.Drawing">
+    <value>55, 22</value>
+  </data>
+  <data name="Ymin_Box.TabIndex" type="System.Int32, mscorlib">
+    <value>50</value>
+  </data>
+  <data name="Ymin_Box.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
+    <value>Right</value>
+  </data>
+  <data name="Ymin_Box.ToolTip" xml:space="preserve">
+    <value>Nivel de transparencia</value>
+  </data>
+  <data name="&gt;&gt;Ymin_Box.Name" xml:space="preserve">
+    <value>Ymin_Box</value>
+  </data>
+  <data name="&gt;&gt;Ymin_Box.Type" xml:space="preserve">
+    <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Ymin_Box.Parent" xml:space="preserve">
+    <value>GroupBox5</value>
+  </data>
+  <data name="&gt;&gt;Ymin_Box.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="Label13.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="Label13.Location" type="System.Drawing.Point, System.Drawing">
+    <value>10, 94</value>
+  </data>
+  <data name="Label13.Size" type="System.Drawing.Size, System.Drawing">
+    <value>32, 13</value>
+  </data>
+  <data name="Label13.TabIndex" type="System.Int32, mscorlib">
+    <value>49</value>
+  </data>
+  <data name="Label13.Text" xml:space="preserve">
+    <value>Ymax</value>
+  </data>
+  <data name="&gt;&gt;Label13.Name" xml:space="preserve">
+    <value>Label13</value>
+  </data>
+  <data name="&gt;&gt;Label13.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label13.Parent" xml:space="preserve">
+    <value>GroupBox5</value>
+  </data>
+  <data name="&gt;&gt;Label13.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="Ymax_Box.Location" type="System.Drawing.Point, System.Drawing">
+    <value>47, 92</value>
+  </data>
+  <data name="Ymax_Box.Size" type="System.Drawing.Size, System.Drawing">
+    <value>55, 22</value>
+  </data>
+  <data name="Ymax_Box.TabIndex" type="System.Int32, mscorlib">
+    <value>48</value>
+  </data>
+  <data name="Ymax_Box.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
+    <value>Right</value>
+  </data>
+  <data name="Ymax_Box.ToolTip" xml:space="preserve">
+    <value>Nivel de transparencia</value>
+  </data>
+  <data name="&gt;&gt;Ymax_Box.Name" xml:space="preserve">
+    <value>Ymax_Box</value>
+  </data>
+  <data name="&gt;&gt;Ymax_Box.Type" xml:space="preserve">
+    <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Ymax_Box.Parent" xml:space="preserve">
+    <value>GroupBox5</value>
+  </data>
+  <data name="&gt;&gt;Ymax_Box.ZOrder" xml:space="preserve">
+    <value>9</value>
+  </data>
+  <data name="Label12.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="Label12.Location" type="System.Drawing.Point, System.Drawing">
+    <value>10, 73</value>
+  </data>
+  <data name="Label12.Size" type="System.Drawing.Size, System.Drawing">
+    <value>32, 13</value>
+  </data>
+  <data name="Label12.TabIndex" type="System.Int32, mscorlib">
+    <value>47</value>
+  </data>
+  <data name="Label12.Text" xml:space="preserve">
+    <value>Xmin</value>
+  </data>
+  <data name="&gt;&gt;Label12.Name" xml:space="preserve">
+    <value>Label12</value>
+  </data>
+  <data name="&gt;&gt;Label12.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label12.Parent" xml:space="preserve">
+    <value>GroupBox5</value>
+  </data>
+  <data name="&gt;&gt;Label12.ZOrder" xml:space="preserve">
+    <value>10</value>
+  </data>
+  <data name="Xmin_Box.Location" type="System.Drawing.Point, System.Drawing">
+    <value>47, 71</value>
+  </data>
+  <data name="Xmin_Box.Size" type="System.Drawing.Size, System.Drawing">
+    <value>55, 22</value>
+  </data>
+  <data name="Xmin_Box.TabIndex" type="System.Int32, mscorlib">
+    <value>46</value>
+  </data>
+  <data name="Xmin_Box.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
+    <value>Right</value>
+  </data>
+  <data name="Xmin_Box.ToolTip" xml:space="preserve">
+    <value>Nivel de transparencia</value>
+  </data>
+  <data name="&gt;&gt;Xmin_Box.Name" xml:space="preserve">
+    <value>Xmin_Box</value>
+  </data>
+  <data name="&gt;&gt;Xmin_Box.Type" xml:space="preserve">
+    <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Xmin_Box.Parent" xml:space="preserve">
+    <value>GroupBox5</value>
+  </data>
+  <data name="&gt;&gt;Xmin_Box.ZOrder" xml:space="preserve">
+    <value>11</value>
+  </data>
+  <data name="Label11.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="Label11.Location" type="System.Drawing.Point, System.Drawing">
+    <value>10, 52</value>
+  </data>
+  <data name="Label11.Size" type="System.Drawing.Size, System.Drawing">
+    <value>33, 13</value>
+  </data>
+  <data name="Label11.TabIndex" type="System.Int32, mscorlib">
+    <value>45</value>
+  </data>
+  <data name="Label11.Text" xml:space="preserve">
+    <value>Xmax</value>
+  </data>
+  <data name="&gt;&gt;Label11.Name" xml:space="preserve">
+    <value>Label11</value>
+  </data>
+  <data name="&gt;&gt;Label11.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label11.Parent" xml:space="preserve">
+    <value>GroupBox5</value>
+  </data>
+  <data name="&gt;&gt;Label11.ZOrder" xml:space="preserve">
+    <value>12</value>
+  </data>
+  <data name="Xmax_Box.Location" type="System.Drawing.Point, System.Drawing">
+    <value>47, 50</value>
+  </data>
+  <data name="Xmax_Box.Size" type="System.Drawing.Size, System.Drawing">
+    <value>55, 22</value>
+  </data>
+  <data name="Xmax_Box.TabIndex" type="System.Int32, mscorlib">
+    <value>45</value>
+  </data>
+  <data name="Xmax_Box.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
+    <value>Right</value>
+  </data>
+  <data name="Xmax_Box.ToolTip" xml:space="preserve">
+    <value>Nivel de transparencia</value>
+  </data>
+  <data name="&gt;&gt;Xmax_Box.Name" xml:space="preserve">
+    <value>Xmax_Box</value>
+  </data>
+  <data name="&gt;&gt;Xmax_Box.Type" xml:space="preserve">
+    <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Xmax_Box.Parent" xml:space="preserve">
+    <value>GroupBox5</value>
+  </data>
+  <data name="&gt;&gt;Xmax_Box.ZOrder" xml:space="preserve">
+    <value>13</value>
+  </data>
+  <data name="WireframeSample.Location" type="System.Drawing.Point, System.Drawing">
+    <value>75, 17</value>
+  </data>
+  <data name="WireframeSample.Size" type="System.Drawing.Size, System.Drawing">
+    <value>27, 26</value>
+  </data>
+  <data name="WireframeSample.TabIndex" type="System.Int32, mscorlib">
+    <value>17</value>
+  </data>
+  <data name="&gt;&gt;WireframeSample.Name" xml:space="preserve">
+    <value>WireframeSample</value>
+  </data>
+  <data name="&gt;&gt;WireframeSample.Type" xml:space="preserve">
+    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;WireframeSample.Parent" xml:space="preserve">
+    <value>GroupBox5</value>
+  </data>
+  <data name="&gt;&gt;WireframeSample.ZOrder" xml:space="preserve">
+    <value>14</value>
+  </data>
+  <data name="ReferenceFrame.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
+  </data>
+  <data name="ReferenceFrame.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 7pt</value>
+  </data>
+  <data name="ReferenceFrame.Location" type="System.Drawing.Point, System.Drawing">
+    <value>13, 17</value>
+  </data>
+  <data name="ReferenceFrame.Size" type="System.Drawing.Size, System.Drawing">
+    <value>54, 26</value>
+  </data>
+  <data name="ReferenceFrame.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="ReferenceFrame.Text" xml:space="preserve">
+    <value>Frame</value>
+  </data>
+  <data name="&gt;&gt;ReferenceFrame.Name" xml:space="preserve">
+    <value>ReferenceFrame</value>
+  </data>
+  <data name="&gt;&gt;ReferenceFrame.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;ReferenceFrame.Parent" xml:space="preserve">
+    <value>GroupBox5</value>
+  </data>
+  <data name="&gt;&gt;ReferenceFrame.ZOrder" xml:space="preserve">
+    <value>15</value>
+  </data>
+  <data name="GroupBox5.Location" type="System.Drawing.Point, System.Drawing">
+    <value>7, 6</value>
+  </data>
+  <data name="GroupBox5.Size" type="System.Drawing.Size, System.Drawing">
+    <value>116, 234</value>
+  </data>
+  <data name="GroupBox5.TabIndex" type="System.Int32, mscorlib">
+    <value>34</value>
+  </data>
+  <data name="GroupBox5.Text" xml:space="preserve">
+    <value>Rulers</value>
+  </data>
+  <data name="&gt;&gt;GroupBox5.Name" xml:space="preserve">
+    <value>GroupBox5</value>
+  </data>
+  <data name="&gt;&gt;GroupBox5.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;GroupBox5.Parent" xml:space="preserve">
+    <value>Aparence</value>
+  </data>
+  <data name="&gt;&gt;GroupBox5.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;ListaDeCuerpos.Name" xml:space="preserve">
+    <value>ListaDeCuerpos</value>
+  </data>
+  <data name="&gt;&gt;ListaDeCuerpos.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;ListaDeCuerpos.Parent" xml:space="preserve">
+    <value>GrupoDiseño</value>
+  </data>
+  <data name="&gt;&gt;ListaDeCuerpos.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;IncMalladoCuerpos.Name" xml:space="preserve">
+    <value>IncMalladoCuerpos</value>
+  </data>
+  <data name="&gt;&gt;IncMalladoCuerpos.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;IncMalladoCuerpos.Parent" xml:space="preserve">
+    <value>GrupoDiseño</value>
+  </data>
+  <data name="&gt;&gt;IncMalladoCuerpos.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;Label16.Name" xml:space="preserve">
+    <value>Label16</value>
+  </data>
+  <data name="&gt;&gt;Label16.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label16.Parent" xml:space="preserve">
+    <value>GrupoDiseño</value>
+  </data>
+  <data name="&gt;&gt;Label16.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;Label17.Name" xml:space="preserve">
+    <value>Label17</value>
+  </data>
+  <data name="&gt;&gt;Label17.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label17.Parent" xml:space="preserve">
+    <value>GrupoDiseño</value>
+  </data>
+  <data name="&gt;&gt;Label17.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;TransparenciaCuerpos.Name" xml:space="preserve">
+    <value>TransparenciaCuerpos</value>
+  </data>
+  <data name="&gt;&gt;TransparenciaCuerpos.Type" xml:space="preserve">
+    <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TransparenciaCuerpos.Parent" xml:space="preserve">
+    <value>GrupoDiseño</value>
+  </data>
+  <data name="&gt;&gt;TransparenciaCuerpos.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;MalladoCuerposSampleColor.Name" xml:space="preserve">
+    <value>MalladoCuerposSampleColor</value>
+  </data>
+  <data name="&gt;&gt;MalladoCuerposSampleColor.Type" xml:space="preserve">
+    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;MalladoCuerposSampleColor.Parent" xml:space="preserve">
+    <value>GrupoDiseño</value>
+  </data>
+  <data name="&gt;&gt;MalladoCuerposSampleColor.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="&gt;&gt;CuerposSampleColor.Name" xml:space="preserve">
+    <value>CuerposSampleColor</value>
+  </data>
+  <data name="&gt;&gt;CuerposSampleColor.Type" xml:space="preserve">
+    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;CuerposSampleColor.Parent" xml:space="preserve">
+    <value>GrupoDiseño</value>
+  </data>
+  <data name="&gt;&gt;CuerposSampleColor.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="&gt;&gt;MalladoCuerposColor.Name" xml:space="preserve">
+    <value>MalladoCuerposColor</value>
+  </data>
+  <data name="&gt;&gt;MalladoCuerposColor.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;MalladoCuerposColor.Parent" xml:space="preserve">
+    <value>GrupoDiseño</value>
+  </data>
+  <data name="&gt;&gt;MalladoCuerposColor.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="&gt;&gt;CuerposColor.Name" xml:space="preserve">
+    <value>CuerposColor</value>
+  </data>
+  <data name="&gt;&gt;CuerposColor.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;CuerposColor.Parent" xml:space="preserve">
+    <value>GrupoDiseño</value>
+  </data>
+  <data name="&gt;&gt;CuerposColor.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="&gt;&gt;ListeDeSuperfices.Name" xml:space="preserve">
+    <value>ListeDeSuperfices</value>
+  </data>
+  <data name="&gt;&gt;ListeDeSuperfices.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;ListeDeSuperfices.Parent" xml:space="preserve">
+    <value>GrupoDiseño</value>
+  </data>
+  <data name="&gt;&gt;ListeDeSuperfices.ZOrder" xml:space="preserve">
+    <value>9</value>
+  </data>
+  <data name="&gt;&gt;IncMallado.Name" xml:space="preserve">
+    <value>IncMallado</value>
+  </data>
+  <data name="&gt;&gt;IncMallado.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;IncMallado.Parent" xml:space="preserve">
+    <value>GrupoDiseño</value>
+  </data>
+  <data name="&gt;&gt;IncMallado.ZOrder" xml:space="preserve">
+    <value>10</value>
+  </data>
+  <data name="&gt;&gt;Label8.Name" xml:space="preserve">
+    <value>Label8</value>
+  </data>
+  <data name="&gt;&gt;Label8.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label8.Parent" xml:space="preserve">
+    <value>GrupoDiseño</value>
+  </data>
+  <data name="&gt;&gt;Label8.ZOrder" xml:space="preserve">
+    <value>11</value>
+  </data>
+  <data name="&gt;&gt;Label7.Name" xml:space="preserve">
+    <value>Label7</value>
+  </data>
+  <data name="&gt;&gt;Label7.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label7.Parent" xml:space="preserve">
+    <value>GrupoDiseño</value>
+  </data>
+  <data name="&gt;&gt;Label7.ZOrder" xml:space="preserve">
+    <value>12</value>
+  </data>
+  <data name="&gt;&gt;TransparenciaSuperficie.Name" xml:space="preserve">
+    <value>TransparenciaSuperficie</value>
+  </data>
+  <data name="&gt;&gt;TransparenciaSuperficie.Type" xml:space="preserve">
+    <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TransparenciaSuperficie.Parent" xml:space="preserve">
+    <value>GrupoDiseño</value>
+  </data>
+  <data name="&gt;&gt;TransparenciaSuperficie.ZOrder" xml:space="preserve">
+    <value>13</value>
+  </data>
+  <data name="&gt;&gt;MalladoSampleColor.Name" xml:space="preserve">
+    <value>MalladoSampleColor</value>
+  </data>
+  <data name="&gt;&gt;MalladoSampleColor.Type" xml:space="preserve">
+    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;MalladoSampleColor.Parent" xml:space="preserve">
+    <value>GrupoDiseño</value>
+  </data>
+  <data name="&gt;&gt;MalladoSampleColor.ZOrder" xml:space="preserve">
+    <value>14</value>
+  </data>
+  <data name="&gt;&gt;SuperficieSampleColor.Name" xml:space="preserve">
+    <value>SuperficieSampleColor</value>
+  </data>
+  <data name="&gt;&gt;SuperficieSampleColor.Type" xml:space="preserve">
+    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SuperficieSampleColor.Parent" xml:space="preserve">
+    <value>GrupoDiseño</value>
+  </data>
+  <data name="&gt;&gt;SuperficieSampleColor.ZOrder" xml:space="preserve">
+    <value>15</value>
+  </data>
+  <data name="&gt;&gt;MalladoPalaColor.Name" xml:space="preserve">
+    <value>MalladoPalaColor</value>
+  </data>
+  <data name="&gt;&gt;MalladoPalaColor.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;MalladoPalaColor.Parent" xml:space="preserve">
+    <value>GrupoDiseño</value>
+  </data>
+  <data name="&gt;&gt;MalladoPalaColor.ZOrder" xml:space="preserve">
+    <value>16</value>
+  </data>
+  <data name="&gt;&gt;SuperficiesColor.Name" xml:space="preserve">
+    <value>SuperficiesColor</value>
+  </data>
+  <data name="&gt;&gt;SuperficiesColor.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SuperficiesColor.Parent" xml:space="preserve">
+    <value>GrupoDiseño</value>
+  </data>
+  <data name="&gt;&gt;SuperficiesColor.ZOrder" xml:space="preserve">
+    <value>17</value>
+  </data>
+  <data name="GrupoDiseño.Location" type="System.Drawing.Point, System.Drawing">
+    <value>129, 6</value>
+  </data>
+  <data name="GrupoDiseño.Size" type="System.Drawing.Size, System.Drawing">
+    <value>164, 234</value>
+  </data>
+  <data name="GrupoDiseño.TabIndex" type="System.Int32, mscorlib">
+    <value>33</value>
+  </data>
+  <data name="GrupoDiseño.Text" xml:space="preserve">
+    <value>Models</value>
+  </data>
+  <data name="&gt;&gt;GrupoDiseño.Name" xml:space="preserve">
+    <value>GrupoDiseño</value>
+  </data>
+  <data name="&gt;&gt;GrupoDiseño.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;GrupoDiseño.Parent" xml:space="preserve">
+    <value>Aparence</value>
+  </data>
+  <data name="&gt;&gt;GrupoDiseño.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;AlphaBlendBox.Name" xml:space="preserve">
+    <value>AlphaBlendBox</value>
+  </data>
+  <data name="&gt;&gt;AlphaBlendBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;AlphaBlendBox.Parent" xml:space="preserve">
+    <value>GroupBox2</value>
+  </data>
+  <data name="&gt;&gt;AlphaBlendBox.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;Antialias2D.Name" xml:space="preserve">
+    <value>Antialias2D</value>
+  </data>
+  <data name="&gt;&gt;Antialias2D.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Antialias2D.Parent" xml:space="preserve">
+    <value>GroupBox2</value>
+  </data>
+  <data name="&gt;&gt;Antialias2D.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;SmothLines.Name" xml:space="preserve">
+    <value>SmothLines</value>
+  </data>
+  <data name="&gt;&gt;SmothLines.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SmothLines.Parent" xml:space="preserve">
+    <value>GroupBox2</value>
+  </data>
+  <data name="&gt;&gt;SmothLines.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="GroupBox2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>299, 6</value>
+  </data>
+  <data name="GroupBox2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>182, 234</value>
+  </data>
+  <data name="GroupBox2.TabIndex" type="System.Int32, mscorlib">
+    <value>13</value>
+  </data>
+  <data name="GroupBox2.Text" xml:space="preserve">
+    <value>Graphics</value>
+  </data>
+  <data name="&gt;&gt;GroupBox2.Name" xml:space="preserve">
+    <value>GroupBox2</value>
+  </data>
+  <data name="&gt;&gt;GroupBox2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;GroupBox2.Parent" xml:space="preserve">
+    <value>Aparence</value>
+  </data>
+  <data name="&gt;&gt;GroupBox2.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="Aparence.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 22</value>
+  </data>
+  <data name="Aparence.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 3, 3, 3</value>
+  </data>
+  <data name="Aparence.Size" type="System.Drawing.Size, System.Drawing">
+    <value>480, 361</value>
+  </data>
+  <data name="Aparence.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="Aparence.Text" xml:space="preserve">
+    <value>Screen and model</value>
+  </data>
+  <data name="&gt;&gt;Aparence.Name" xml:space="preserve">
+    <value>Aparence</value>
+  </data>
+  <data name="&gt;&gt;Aparence.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Aparence.Parent" xml:space="preserve">
+    <value>TabControl1</value>
+  </data>
+  <data name="&gt;&gt;Aparence.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;GrupoPostProceso.Name" xml:space="preserve">
+    <value>GrupoPostProceso</value>
+  </data>
+  <data name="&gt;&gt;GrupoPostProceso.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;GrupoPostProceso.Parent" xml:space="preserve">
+    <value>Postprocess</value>
+  </data>
+  <data name="&gt;&gt;GrupoPostProceso.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;GroupBox1.Name" xml:space="preserve">
+    <value>GroupBox1</value>
+  </data>
+  <data name="&gt;&gt;GroupBox1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;GroupBox1.Parent" xml:space="preserve">
+    <value>Postprocess</value>
+  </data>
+  <data name="&gt;&gt;GroupBox1.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;GroupBox7.Name" xml:space="preserve">
+    <value>GroupBox7</value>
+  </data>
+  <data name="&gt;&gt;GroupBox7.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;GroupBox7.Parent" xml:space="preserve">
+    <value>Postprocess</value>
+  </data>
+  <data name="&gt;&gt;GroupBox7.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;GroupBox6.Name" xml:space="preserve">
+    <value>GroupBox6</value>
+  </data>
+  <data name="&gt;&gt;GroupBox6.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;GroupBox6.Parent" xml:space="preserve">
+    <value>Postprocess</value>
+  </data>
+  <data name="&gt;&gt;GroupBox6.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="Postprocess.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 22</value>
+  </data>
+  <data name="Postprocess.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 3, 3, 3</value>
+  </data>
+  <data name="Postprocess.Size" type="System.Drawing.Size, System.Drawing">
+    <value>480, 361</value>
+  </data>
+  <data name="Postprocess.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="Postprocess.Text" xml:space="preserve">
+    <value>Post-process</value>
+  </data>
+  <data name="&gt;&gt;Postprocess.Name" xml:space="preserve">
+    <value>Postprocess</value>
+  </data>
+  <data name="&gt;&gt;Postprocess.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Postprocess.Parent" xml:space="preserve">
+    <value>TabControl1</value>
+  </data>
+  <data name="&gt;&gt;Postprocess.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="TabControl1.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Top</value>
+  </data>
+  <data name="TabControl1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>2, 2</value>
+  </data>
+  <data name="TabControl1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>488, 387</value>
+  </data>
+  <data name="TabControl1.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;TabControl1.Name" xml:space="preserve">
+    <value>TabControl1</value>
+  </data>
+  <data name="&gt;&gt;TabControl1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabControl, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TabControl1.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;TabControl1.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="ListaDeCuerpos.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
+  </data>
+  <data name="ListaDeCuerpos.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 123</value>
+  </data>
+  <data name="ListaDeCuerpos.Size" type="System.Drawing.Size, System.Drawing">
+    <value>156, 21</value>
+  </data>
+  <data name="ListaDeCuerpos.TabIndex" type="System.Int32, mscorlib">
+    <value>53</value>
+  </data>
+  <data name="&gt;&gt;ListaDeCuerpos.Name" xml:space="preserve">
+    <value>ListaDeCuerpos</value>
+  </data>
+  <data name="&gt;&gt;ListaDeCuerpos.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;ListaDeCuerpos.Parent" xml:space="preserve">
+    <value>GrupoDiseño</value>
+  </data>
+  <data name="&gt;&gt;ListaDeCuerpos.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="IncMalladoCuerpos.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="IncMalladoCuerpos.Location" type="System.Drawing.Point, System.Drawing">
+    <value>110, 203</value>
+  </data>
+  <data name="IncMalladoCuerpos.Size" type="System.Drawing.Size, System.Drawing">
+    <value>15, 14</value>
+  </data>
+  <data name="IncMalladoCuerpos.TabIndex" type="System.Int32, mscorlib">
+    <value>52</value>
+  </data>
+  <data name="IncMalladoCuerpos.ToolTip" xml:space="preserve">
+    <value>Incluir/Excluir</value>
+  </data>
+  <data name="&gt;&gt;IncMalladoCuerpos.Name" xml:space="preserve">
+    <value>IncMalladoCuerpos</value>
+  </data>
+  <data name="&gt;&gt;IncMalladoCuerpos.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;IncMalladoCuerpos.Parent" xml:space="preserve">
+    <value>GrupoDiseño</value>
+  </data>
+  <data name="&gt;&gt;IncMalladoCuerpos.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="Label16.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="Label16.Location" type="System.Drawing.Point, System.Drawing">
+    <value>107, 148</value>
+  </data>
+  <data name="Label16.Size" type="System.Drawing.Size, System.Drawing">
+    <value>47, 13</value>
+  </data>
+  <data name="Label16.TabIndex" type="System.Int32, mscorlib">
+    <value>51</value>
+  </data>
+  <data name="Label16.Text" xml:space="preserve">
+    <value>Transp.:</value>
+  </data>
+  <data name="&gt;&gt;Label16.Name" xml:space="preserve">
+    <value>Label16</value>
+  </data>
+  <data name="&gt;&gt;Label16.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label16.Parent" xml:space="preserve">
+    <value>GrupoDiseño</value>
+  </data>
+  <data name="&gt;&gt;Label16.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="Label17.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="Label17.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 148</value>
+  </data>
+  <data name="Label17.Size" type="System.Drawing.Size, System.Drawing">
+    <value>38, 13</value>
+  </data>
+  <data name="Label17.TabIndex" type="System.Int32, mscorlib">
+    <value>50</value>
+  </data>
+  <data name="Label17.Text" xml:space="preserve">
+    <value>Color:</value>
+  </data>
+  <data name="&gt;&gt;Label17.Name" xml:space="preserve">
+    <value>Label17</value>
+  </data>
+  <data name="&gt;&gt;Label17.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label17.Parent" xml:space="preserve">
+    <value>GrupoDiseño</value>
+  </data>
+  <data name="&gt;&gt;Label17.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="TransparenciaCuerpos.Location" type="System.Drawing.Point, System.Drawing">
+    <value>110, 167</value>
+  </data>
+  <data name="TransparenciaCuerpos.Size" type="System.Drawing.Size, System.Drawing">
+    <value>39, 22</value>
+  </data>
+  <data name="TransparenciaCuerpos.TabIndex" type="System.Int32, mscorlib">
+    <value>49</value>
+  </data>
+  <data name="TransparenciaCuerpos.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
+    <value>Right</value>
+  </data>
+  <data name="TransparenciaCuerpos.ToolTip" xml:space="preserve">
+    <value>Nivel de transparencia</value>
+  </data>
+  <data name="&gt;&gt;TransparenciaCuerpos.Name" xml:space="preserve">
+    <value>TransparenciaCuerpos</value>
+  </data>
+  <data name="&gt;&gt;TransparenciaCuerpos.Type" xml:space="preserve">
+    <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TransparenciaCuerpos.Parent" xml:space="preserve">
+    <value>GrupoDiseño</value>
+  </data>
+  <data name="&gt;&gt;TransparenciaCuerpos.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="MalladoCuerposSampleColor.Location" type="System.Drawing.Point, System.Drawing">
+    <value>77, 197</value>
+  </data>
+  <data name="MalladoCuerposSampleColor.Size" type="System.Drawing.Size, System.Drawing">
+    <value>27, 26</value>
+  </data>
+  <data name="MalladoCuerposSampleColor.TabIndex" type="System.Int32, mscorlib">
+    <value>48</value>
+  </data>
+  <data name="&gt;&gt;MalladoCuerposSampleColor.Name" xml:space="preserve">
+    <value>MalladoCuerposSampleColor</value>
+  </data>
+  <data name="&gt;&gt;MalladoCuerposSampleColor.Type" xml:space="preserve">
+    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;MalladoCuerposSampleColor.Parent" xml:space="preserve">
+    <value>GrupoDiseño</value>
+  </data>
+  <data name="&gt;&gt;MalladoCuerposSampleColor.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="CuerposSampleColor.Location" type="System.Drawing.Point, System.Drawing">
+    <value>77, 164</value>
+  </data>
+  <data name="CuerposSampleColor.Size" type="System.Drawing.Size, System.Drawing">
+    <value>27, 26</value>
+  </data>
+  <data name="CuerposSampleColor.TabIndex" type="System.Int32, mscorlib">
+    <value>47</value>
+  </data>
+  <data name="&gt;&gt;CuerposSampleColor.Name" xml:space="preserve">
+    <value>CuerposSampleColor</value>
+  </data>
+  <data name="&gt;&gt;CuerposSampleColor.Type" xml:space="preserve">
+    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;CuerposSampleColor.Parent" xml:space="preserve">
+    <value>GrupoDiseño</value>
+  </data>
+  <data name="&gt;&gt;CuerposSampleColor.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="MalladoCuerposColor.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
+  </data>
+  <data name="MalladoCuerposColor.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 7pt</value>
+  </data>
+  <data name="MalladoCuerposColor.Location" type="System.Drawing.Point, System.Drawing">
+    <value>15, 197</value>
+  </data>
+  <data name="MalladoCuerposColor.Size" type="System.Drawing.Size, System.Drawing">
+    <value>56, 26</value>
+  </data>
+  <data name="MalladoCuerposColor.TabIndex" type="System.Int32, mscorlib">
+    <value>46</value>
+  </data>
+  <data name="MalladoCuerposColor.Text" xml:space="preserve">
+    <value>Mesh</value>
+  </data>
+  <data name="MalladoCuerposColor.ToolTip" xml:space="preserve">
+    <value>Seleccione el color del mallado de la pala</value>
+  </data>
+  <data name="&gt;&gt;MalladoCuerposColor.Name" xml:space="preserve">
+    <value>MalladoCuerposColor</value>
+  </data>
+  <data name="&gt;&gt;MalladoCuerposColor.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;MalladoCuerposColor.Parent" xml:space="preserve">
+    <value>GrupoDiseño</value>
+  </data>
+  <data name="&gt;&gt;MalladoCuerposColor.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="CuerposColor.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
+  </data>
+  <data name="CuerposColor.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 7pt</value>
+  </data>
+  <data name="CuerposColor.Location" type="System.Drawing.Point, System.Drawing">
+    <value>15, 164</value>
+  </data>
+  <data name="CuerposColor.Size" type="System.Drawing.Size, System.Drawing">
+    <value>56, 26</value>
+  </data>
+  <data name="CuerposColor.TabIndex" type="System.Int32, mscorlib">
+    <value>45</value>
+  </data>
+  <data name="CuerposColor.Text" xml:space="preserve">
+    <value>Surf.</value>
+  </data>
+  <data name="CuerposColor.ToolTip" xml:space="preserve">
+    <value>Seleccione el color de la pala</value>
+  </data>
+  <data name="&gt;&gt;CuerposColor.Name" xml:space="preserve">
+    <value>CuerposColor</value>
+  </data>
+  <data name="&gt;&gt;CuerposColor.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;CuerposColor.Parent" xml:space="preserve">
+    <value>GrupoDiseño</value>
+  </data>
+  <data name="&gt;&gt;CuerposColor.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="ListeDeSuperfices.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
+  </data>
+  <data name="ListeDeSuperfices.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 16</value>
+  </data>
+  <data name="ListeDeSuperfices.Size" type="System.Drawing.Size, System.Drawing">
+    <value>156, 21</value>
+  </data>
+  <data name="ListeDeSuperfices.TabIndex" type="System.Int32, mscorlib">
+    <value>44</value>
+  </data>
+  <data name="&gt;&gt;ListeDeSuperfices.Name" xml:space="preserve">
+    <value>ListeDeSuperfices</value>
+  </data>
+  <data name="&gt;&gt;ListeDeSuperfices.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;ListeDeSuperfices.Parent" xml:space="preserve">
+    <value>GrupoDiseño</value>
+  </data>
+  <data name="&gt;&gt;ListeDeSuperfices.ZOrder" xml:space="preserve">
+    <value>9</value>
+  </data>
+  <data name="IncMallado.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="IncMallado.Location" type="System.Drawing.Point, System.Drawing">
+    <value>110, 96</value>
+  </data>
+  <data name="IncMallado.Size" type="System.Drawing.Size, System.Drawing">
+    <value>15, 14</value>
+  </data>
+  <data name="IncMallado.TabIndex" type="System.Int32, mscorlib">
+    <value>42</value>
+  </data>
+  <data name="IncMallado.ToolTip" xml:space="preserve">
+    <value>Incluir/Excluir</value>
+  </data>
+  <data name="&gt;&gt;IncMallado.Name" xml:space="preserve">
+    <value>IncMallado</value>
+  </data>
+  <data name="&gt;&gt;IncMallado.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;IncMallado.Parent" xml:space="preserve">
+    <value>GrupoDiseño</value>
+  </data>
+  <data name="&gt;&gt;IncMallado.ZOrder" xml:space="preserve">
+    <value>10</value>
+  </data>
+  <data name="Label8.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="Label8.Location" type="System.Drawing.Point, System.Drawing">
+    <value>107, 41</value>
+  </data>
+  <data name="Label8.Size" type="System.Drawing.Size, System.Drawing">
+    <value>47, 13</value>
+  </data>
+  <data name="Label8.TabIndex" type="System.Int32, mscorlib">
+    <value>33</value>
+  </data>
+  <data name="Label8.Text" xml:space="preserve">
+    <value>Transp.:</value>
+  </data>
+  <data name="&gt;&gt;Label8.Name" xml:space="preserve">
+    <value>Label8</value>
+  </data>
+  <data name="&gt;&gt;Label8.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label8.Parent" xml:space="preserve">
+    <value>GrupoDiseño</value>
+  </data>
+  <data name="&gt;&gt;Label8.ZOrder" xml:space="preserve">
+    <value>11</value>
+  </data>
+  <data name="Label7.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="Label7.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 41</value>
+  </data>
+  <data name="Label7.Size" type="System.Drawing.Size, System.Drawing">
+    <value>38, 13</value>
+  </data>
+  <data name="Label7.TabIndex" type="System.Int32, mscorlib">
+    <value>32</value>
+  </data>
+  <data name="Label7.Text" xml:space="preserve">
+    <value>Color:</value>
+  </data>
+  <data name="&gt;&gt;Label7.Name" xml:space="preserve">
+    <value>Label7</value>
+  </data>
+  <data name="&gt;&gt;Label7.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label7.Parent" xml:space="preserve">
+    <value>GrupoDiseño</value>
+  </data>
+  <data name="&gt;&gt;Label7.ZOrder" xml:space="preserve">
+    <value>12</value>
+  </data>
+  <data name="TransparenciaSuperficie.Location" type="System.Drawing.Point, System.Drawing">
+    <value>110, 60</value>
+  </data>
+  <data name="TransparenciaSuperficie.Size" type="System.Drawing.Size, System.Drawing">
+    <value>39, 22</value>
+  </data>
+  <data name="TransparenciaSuperficie.TabIndex" type="System.Int32, mscorlib">
+    <value>28</value>
+  </data>
+  <data name="TransparenciaSuperficie.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
+    <value>Right</value>
+  </data>
+  <data name="TransparenciaSuperficie.ToolTip" xml:space="preserve">
+    <value>Nivel de transparencia</value>
+  </data>
+  <data name="&gt;&gt;TransparenciaSuperficie.Name" xml:space="preserve">
+    <value>TransparenciaSuperficie</value>
+  </data>
+  <data name="&gt;&gt;TransparenciaSuperficie.Type" xml:space="preserve">
+    <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TransparenciaSuperficie.Parent" xml:space="preserve">
+    <value>GrupoDiseño</value>
+  </data>
+  <data name="&gt;&gt;TransparenciaSuperficie.ZOrder" xml:space="preserve">
+    <value>13</value>
+  </data>
+  <data name="MalladoSampleColor.Location" type="System.Drawing.Point, System.Drawing">
+    <value>77, 90</value>
+  </data>
+  <data name="MalladoSampleColor.Size" type="System.Drawing.Size, System.Drawing">
+    <value>27, 26</value>
+  </data>
+  <data name="MalladoSampleColor.TabIndex" type="System.Int32, mscorlib">
+    <value>22</value>
+  </data>
+  <data name="&gt;&gt;MalladoSampleColor.Name" xml:space="preserve">
+    <value>MalladoSampleColor</value>
+  </data>
+  <data name="&gt;&gt;MalladoSampleColor.Type" xml:space="preserve">
+    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;MalladoSampleColor.Parent" xml:space="preserve">
+    <value>GrupoDiseño</value>
+  </data>
+  <data name="&gt;&gt;MalladoSampleColor.ZOrder" xml:space="preserve">
+    <value>14</value>
+  </data>
+  <data name="SuperficieSampleColor.Location" type="System.Drawing.Point, System.Drawing">
+    <value>77, 57</value>
+  </data>
+  <data name="SuperficieSampleColor.Size" type="System.Drawing.Size, System.Drawing">
+    <value>27, 26</value>
+  </data>
+  <data name="SuperficieSampleColor.TabIndex" type="System.Int32, mscorlib">
+    <value>21</value>
+  </data>
+  <data name="&gt;&gt;SuperficieSampleColor.Name" xml:space="preserve">
+    <value>SuperficieSampleColor</value>
+  </data>
+  <data name="&gt;&gt;SuperficieSampleColor.Type" xml:space="preserve">
+    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SuperficieSampleColor.Parent" xml:space="preserve">
+    <value>GrupoDiseño</value>
+  </data>
+  <data name="&gt;&gt;SuperficieSampleColor.ZOrder" xml:space="preserve">
+    <value>15</value>
+  </data>
+  <data name="MalladoPalaColor.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
+  </data>
+  <data name="MalladoPalaColor.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 7pt</value>
+  </data>
+  <data name="MalladoPalaColor.Location" type="System.Drawing.Point, System.Drawing">
+    <value>15, 90</value>
+  </data>
+  <data name="MalladoPalaColor.Size" type="System.Drawing.Size, System.Drawing">
+    <value>56, 26</value>
+  </data>
+  <data name="MalladoPalaColor.TabIndex" type="System.Int32, mscorlib">
+    <value>14</value>
+  </data>
+  <data name="MalladoPalaColor.Text" xml:space="preserve">
+    <value>Mesh</value>
+  </data>
+  <data name="MalladoPalaColor.ToolTip" xml:space="preserve">
+    <value>Seleccione el color del mallado de la pala</value>
+  </data>
+  <data name="&gt;&gt;MalladoPalaColor.Name" xml:space="preserve">
+    <value>MalladoPalaColor</value>
+  </data>
+  <data name="&gt;&gt;MalladoPalaColor.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;MalladoPalaColor.Parent" xml:space="preserve">
+    <value>GrupoDiseño</value>
+  </data>
+  <data name="&gt;&gt;MalladoPalaColor.ZOrder" xml:space="preserve">
+    <value>16</value>
+  </data>
+  <data name="SuperficiesColor.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
+  </data>
+  <data name="SuperficiesColor.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 7pt</value>
+  </data>
+  <data name="SuperficiesColor.Location" type="System.Drawing.Point, System.Drawing">
+    <value>15, 57</value>
+  </data>
+  <data name="SuperficiesColor.Size" type="System.Drawing.Size, System.Drawing">
+    <value>56, 26</value>
+  </data>
+  <data name="SuperficiesColor.TabIndex" type="System.Int32, mscorlib">
+    <value>13</value>
+  </data>
+  <data name="SuperficiesColor.Text" xml:space="preserve">
+    <value>Surf.</value>
+  </data>
+  <data name="SuperficiesColor.ToolTip" xml:space="preserve">
+    <value>Seleccione el color de la pala</value>
+  </data>
+  <data name="&gt;&gt;SuperficiesColor.Name" xml:space="preserve">
+    <value>SuperficiesColor</value>
+  </data>
+  <data name="&gt;&gt;SuperficiesColor.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SuperficiesColor.Parent" xml:space="preserve">
+    <value>GrupoDiseño</value>
+  </data>
+  <data name="&gt;&gt;SuperficiesColor.ZOrder" xml:space="preserve">
+    <value>17</value>
+  </data>
+  <data name="AlphaBlendBox.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="AlphaBlendBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>13, 60</value>
+  </data>
+  <data name="AlphaBlendBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>124, 17</value>
+  </data>
+  <data name="AlphaBlendBox.TabIndex" type="System.Int32, mscorlib">
+    <value>9</value>
+  </data>
+  <data name="AlphaBlendBox.Text" xml:space="preserve">
+    <value>Allow transparency</value>
+  </data>
+  <data name="&gt;&gt;AlphaBlendBox.Name" xml:space="preserve">
+    <value>AlphaBlendBox</value>
+  </data>
+  <data name="&gt;&gt;AlphaBlendBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;AlphaBlendBox.Parent" xml:space="preserve">
+    <value>GroupBox2</value>
+  </data>
+  <data name="&gt;&gt;AlphaBlendBox.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="Antialias2D.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="Antialias2D.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="Antialias2D.Location" type="System.Drawing.Point, System.Drawing">
+    <value>13, 19</value>
+  </data>
+  <data name="Antialias2D.Size" type="System.Drawing.Size, System.Drawing">
+    <value>87, 17</value>
+  </data>
+  <data name="Antialias2D.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="Antialias2D.Text" xml:space="preserve">
+    <value>Antialias 2D</value>
+  </data>
+  <data name="&gt;&gt;Antialias2D.Name" xml:space="preserve">
+    <value>Antialias2D</value>
+  </data>
+  <data name="&gt;&gt;Antialias2D.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Antialias2D.Parent" xml:space="preserve">
+    <value>GroupBox2</value>
+  </data>
+  <data name="&gt;&gt;Antialias2D.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="SmothLines.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="SmothLines.Location" type="System.Drawing.Point, System.Drawing">
+    <value>13, 39</value>
+  </data>
+  <data name="SmothLines.Size" type="System.Drawing.Size, System.Drawing">
+    <value>106, 17</value>
+  </data>
+  <data name="SmothLines.TabIndex" type="System.Int32, mscorlib">
+    <value>8</value>
+  </data>
+  <data name="SmothLines.Text" xml:space="preserve">
+    <value>Line smoothing</value>
+  </data>
+  <data name="&gt;&gt;SmothLines.Name" xml:space="preserve">
+    <value>SmothLines</value>
+  </data>
+  <data name="&gt;&gt;SmothLines.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SmothLines.Parent" xml:space="preserve">
+    <value>GroupBox2</value>
+  </data>
+  <data name="&gt;&gt;SmothLines.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;MapaDePresión.Name" xml:space="preserve">
+    <value>MapaDePresión</value>
+  </data>
+  <data name="&gt;&gt;MapaDePresión.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;MapaDePresión.Parent" xml:space="preserve">
+    <value>GrupoPostProceso</value>
+  </data>
+  <data name="&gt;&gt;MapaDePresión.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;Label9.Name" xml:space="preserve">
+    <value>Label9</value>
+  </data>
+  <data name="&gt;&gt;Label9.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label9.Parent" xml:space="preserve">
+    <value>GrupoPostProceso</value>
+  </data>
+  <data name="&gt;&gt;Label9.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;nudWakesNodesSize.Name" xml:space="preserve">
+    <value>nudWakesNodesSize</value>
+  </data>
+  <data name="&gt;&gt;nudWakesNodesSize.Type" xml:space="preserve">
+    <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;nudWakesNodesSize.Parent" xml:space="preserve">
+    <value>GrupoPostProceso</value>
+  </data>
+  <data name="&gt;&gt;nudWakesNodesSize.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;nudWakeMeshSize.Name" xml:space="preserve">
+    <value>nudWakeMeshSize</value>
+  </data>
+  <data name="&gt;&gt;nudWakeMeshSize.Type" xml:space="preserve">
+    <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;nudWakeMeshSize.Parent" xml:space="preserve">
+    <value>GrupoPostProceso</value>
+  </data>
+  <data name="&gt;&gt;nudWakeMeshSize.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;cbShowWakeNodes.Name" xml:space="preserve">
+    <value>cbShowWakeNodes</value>
+  </data>
+  <data name="&gt;&gt;cbShowWakeNodes.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cbShowWakeNodes.Parent" xml:space="preserve">
+    <value>GrupoPostProceso</value>
+  </data>
+  <data name="&gt;&gt;cbShowWakeNodes.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;cbWakeColorNodes.Name" xml:space="preserve">
+    <value>cbWakeColorNodes</value>
+  </data>
+  <data name="&gt;&gt;cbWakeColorNodes.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cbWakeColorNodes.Parent" xml:space="preserve">
+    <value>GrupoPostProceso</value>
+  </data>
+  <data name="&gt;&gt;cbWakeColorNodes.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="&gt;&gt;NodoEstSampleColor.Name" xml:space="preserve">
+    <value>NodoEstSampleColor</value>
+  </data>
+  <data name="&gt;&gt;NodoEstSampleColor.Type" xml:space="preserve">
+    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;NodoEstSampleColor.Parent" xml:space="preserve">
+    <value>GrupoPostProceso</value>
+  </data>
+  <data name="&gt;&gt;NodoEstSampleColor.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="&gt;&gt;Label10.Name" xml:space="preserve">
+    <value>Label10</value>
+  </data>
+  <data name="&gt;&gt;Label10.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label10.Parent" xml:space="preserve">
+    <value>GrupoPostProceso</value>
+  </data>
+  <data name="&gt;&gt;Label10.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="&gt;&gt;cbShowWakeMesh.Name" xml:space="preserve">
+    <value>cbShowWakeMesh</value>
+  </data>
+  <data name="&gt;&gt;cbShowWakeMesh.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cbShowWakeMesh.Parent" xml:space="preserve">
+    <value>GrupoPostProceso</value>
+  </data>
+  <data name="&gt;&gt;cbShowWakeMesh.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="&gt;&gt;ModeloColor.Name" xml:space="preserve">
+    <value>ModeloColor</value>
+  </data>
+  <data name="&gt;&gt;ModeloColor.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;ModeloColor.Parent" xml:space="preserve">
+    <value>GrupoPostProceso</value>
+  </data>
+  <data name="&gt;&gt;ModeloColor.ZOrder" xml:space="preserve">
+    <value>9</value>
+  </data>
+  <data name="&gt;&gt;cbWakeColorMesh.Name" xml:space="preserve">
+    <value>cbWakeColorMesh</value>
+  </data>
+  <data name="&gt;&gt;cbWakeColorMesh.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cbWakeColorMesh.Parent" xml:space="preserve">
+    <value>GrupoPostProceso</value>
+  </data>
+  <data name="&gt;&gt;cbWakeColorMesh.ZOrder" xml:space="preserve">
+    <value>10</value>
+  </data>
+  <data name="&gt;&gt;btnWakeColorSurface.Name" xml:space="preserve">
+    <value>btnWakeColorSurface</value>
+  </data>
+  <data name="&gt;&gt;btnWakeColorSurface.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;btnWakeColorSurface.Parent" xml:space="preserve">
+    <value>GrupoPostProceso</value>
+  </data>
+  <data name="&gt;&gt;btnWakeColorSurface.ZOrder" xml:space="preserve">
+    <value>11</value>
+  </data>
+  <data name="&gt;&gt;MalladoEstSampleColor.Name" xml:space="preserve">
+    <value>MalladoEstSampleColor</value>
+  </data>
+  <data name="&gt;&gt;MalladoEstSampleColor.Type" xml:space="preserve">
+    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;MalladoEstSampleColor.Parent" xml:space="preserve">
+    <value>GrupoPostProceso</value>
+  </data>
+  <data name="&gt;&gt;MalladoEstSampleColor.ZOrder" xml:space="preserve">
+    <value>12</value>
+  </data>
+  <data name="&gt;&gt;ModeloSampleColor.Name" xml:space="preserve">
+    <value>ModeloSampleColor</value>
+  </data>
+  <data name="&gt;&gt;ModeloSampleColor.Type" xml:space="preserve">
+    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;ModeloSampleColor.Parent" xml:space="preserve">
+    <value>GrupoPostProceso</value>
+  </data>
+  <data name="&gt;&gt;ModeloSampleColor.ZOrder" xml:space="preserve">
+    <value>13</value>
+  </data>
+  <data name="&gt;&gt;IncluirMalladoMod.Name" xml:space="preserve">
+    <value>IncluirMalladoMod</value>
+  </data>
+  <data name="&gt;&gt;IncluirMalladoMod.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;IncluirMalladoMod.Parent" xml:space="preserve">
+    <value>GrupoPostProceso</value>
+  </data>
+  <data name="&gt;&gt;IncluirMalladoMod.ZOrder" xml:space="preserve">
+    <value>14</value>
+  </data>
+  <data name="&gt;&gt;EstelasSampleColor.Name" xml:space="preserve">
+    <value>EstelasSampleColor</value>
+  </data>
+  <data name="&gt;&gt;EstelasSampleColor.Type" xml:space="preserve">
+    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;EstelasSampleColor.Parent" xml:space="preserve">
+    <value>GrupoPostProceso</value>
+  </data>
+  <data name="&gt;&gt;EstelasSampleColor.ZOrder" xml:space="preserve">
+    <value>15</value>
+  </data>
+  <data name="&gt;&gt;cbShowWakeSurface.Name" xml:space="preserve">
+    <value>cbShowWakeSurface</value>
+  </data>
+  <data name="&gt;&gt;cbShowWakeSurface.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cbShowWakeSurface.Parent" xml:space="preserve">
+    <value>GrupoPostProceso</value>
+  </data>
+  <data name="&gt;&gt;cbShowWakeSurface.ZOrder" xml:space="preserve">
+    <value>16</value>
+  </data>
+  <data name="&gt;&gt;TransparenciaModelo.Name" xml:space="preserve">
+    <value>TransparenciaModelo</value>
+  </data>
+  <data name="&gt;&gt;TransparenciaModelo.Type" xml:space="preserve">
+    <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TransparenciaModelo.Parent" xml:space="preserve">
+    <value>GrupoPostProceso</value>
+  </data>
+  <data name="&gt;&gt;TransparenciaModelo.ZOrder" xml:space="preserve">
+    <value>17</value>
+  </data>
+  <data name="&gt;&gt;MalladoColor.Name" xml:space="preserve">
+    <value>MalladoColor</value>
+  </data>
+  <data name="&gt;&gt;MalladoColor.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;MalladoColor.Parent" xml:space="preserve">
+    <value>GrupoPostProceso</value>
+  </data>
+  <data name="&gt;&gt;MalladoColor.ZOrder" xml:space="preserve">
+    <value>18</value>
+  </data>
+  <data name="&gt;&gt;nudWakesSurfaceTrans.Name" xml:space="preserve">
+    <value>nudWakesSurfaceTrans</value>
+  </data>
+  <data name="&gt;&gt;nudWakesSurfaceTrans.Type" xml:space="preserve">
+    <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;nudWakesSurfaceTrans.Parent" xml:space="preserve">
+    <value>GrupoPostProceso</value>
+  </data>
+  <data name="&gt;&gt;nudWakesSurfaceTrans.ZOrder" xml:space="preserve">
+    <value>19</value>
+  </data>
+  <data name="&gt;&gt;MalladoModeloSampleColor.Name" xml:space="preserve">
+    <value>MalladoModeloSampleColor</value>
+  </data>
+  <data name="&gt;&gt;MalladoModeloSampleColor.Type" xml:space="preserve">
+    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;MalladoModeloSampleColor.Parent" xml:space="preserve">
+    <value>GrupoPostProceso</value>
+  </data>
+  <data name="&gt;&gt;MalladoModeloSampleColor.ZOrder" xml:space="preserve">
+    <value>20</value>
+  </data>
+  <data name="GrupoPostProceso.Location" type="System.Drawing.Point, System.Drawing">
+    <value>238, 119</value>
+  </data>
+  <data name="GrupoPostProceso.Size" type="System.Drawing.Size, System.Drawing">
+    <value>238, 234</value>
+  </data>
+  <data name="GrupoPostProceso.TabIndex" type="System.Int32, mscorlib">
+    <value>35</value>
+  </data>
+  <data name="GrupoPostProceso.Text" xml:space="preserve">
+    <value>Postprocess 3D model</value>
+  </data>
+  <data name="&gt;&gt;GrupoPostProceso.Name" xml:space="preserve">
+    <value>GrupoPostProceso</value>
+  </data>
+  <data name="&gt;&gt;GrupoPostProceso.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;GrupoPostProceso.Parent" xml:space="preserve">
+    <value>Postprocess</value>
+  </data>
+  <data name="&gt;&gt;GrupoPostProceso.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="MapaDePresión.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="MapaDePresión.Location" type="System.Drawing.Point, System.Drawing">
+    <value>107, 90</value>
+  </data>
+  <data name="MapaDePresión.Size" type="System.Drawing.Size, System.Drawing">
+    <value>102, 30</value>
+  </data>
+  <data name="MapaDePresión.TabIndex" type="System.Int32, mscorlib">
+    <value>48</value>
+  </data>
+  <data name="MapaDePresión.Text" xml:space="preserve">
+    <value>Colormap</value>
+  </data>
+  <data name="MapaDePresión.ToolTip" xml:space="preserve">
+    <value>Ver mapa de presiones</value>
+  </data>
+  <data name="&gt;&gt;MapaDePresión.Name" xml:space="preserve">
+    <value>MapaDePresión</value>
+  </data>
+  <data name="&gt;&gt;MapaDePresión.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;MapaDePresión.Parent" xml:space="preserve">
+    <value>GrupoPostProceso</value>
+  </data>
+  <data name="&gt;&gt;MapaDePresión.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="Label9.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="Label9.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="Label9.Location" type="System.Drawing.Point, System.Drawing">
+    <value>9, 105</value>
+  </data>
+  <data name="Label9.Size" type="System.Drawing.Size, System.Drawing">
+    <value>44, 13</value>
+  </data>
+  <data name="Label9.TabIndex" type="System.Int32, mscorlib">
+    <value>47</value>
+  </data>
+  <data name="Label9.Text" xml:space="preserve">
+    <value>Wakes:</value>
+  </data>
+  <data name="&gt;&gt;Label9.Name" xml:space="preserve">
+    <value>Label9</value>
+  </data>
+  <data name="&gt;&gt;Label9.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label9.Parent" xml:space="preserve">
+    <value>GrupoPostProceso</value>
+  </data>
+  <data name="&gt;&gt;Label9.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="nudWakesNodesSize.Location" type="System.Drawing.Point, System.Drawing">
+    <value>107, 192</value>
+  </data>
+  <data name="nudWakesNodesSize.Size" type="System.Drawing.Size, System.Drawing">
+    <value>39, 22</value>
+  </data>
+  <data name="nudWakesNodesSize.TabIndex" type="System.Int32, mscorlib">
+    <value>46</value>
+  </data>
+  <data name="nudWakesNodesSize.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
+    <value>Right</value>
+  </data>
+  <data name="nudWakesNodesSize.ToolTip" xml:space="preserve">
+    <value>Nivel de transparencia</value>
+  </data>
+  <data name="&gt;&gt;nudWakesNodesSize.Name" xml:space="preserve">
+    <value>nudWakesNodesSize</value>
+  </data>
+  <data name="&gt;&gt;nudWakesNodesSize.Type" xml:space="preserve">
+    <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;nudWakesNodesSize.Parent" xml:space="preserve">
+    <value>GrupoPostProceso</value>
+  </data>
+  <data name="&gt;&gt;nudWakesNodesSize.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="nudWakeMeshSize.Location" type="System.Drawing.Point, System.Drawing">
+    <value>107, 160</value>
+  </data>
+  <data name="nudWakeMeshSize.Size" type="System.Drawing.Size, System.Drawing">
+    <value>39, 22</value>
+  </data>
+  <data name="nudWakeMeshSize.TabIndex" type="System.Int32, mscorlib">
+    <value>45</value>
+  </data>
+  <data name="nudWakeMeshSize.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
+    <value>Right</value>
+  </data>
+  <data name="nudWakeMeshSize.ToolTip" xml:space="preserve">
+    <value>Nivel de transparencia</value>
+  </data>
+  <data name="&gt;&gt;nudWakeMeshSize.Name" xml:space="preserve">
+    <value>nudWakeMeshSize</value>
+  </data>
+  <data name="&gt;&gt;nudWakeMeshSize.Type" xml:space="preserve">
+    <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;nudWakeMeshSize.Parent" xml:space="preserve">
+    <value>GrupoPostProceso</value>
+  </data>
+  <data name="&gt;&gt;nudWakeMeshSize.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="cbShowWakeNodes.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="cbShowWakeNodes.Location" type="System.Drawing.Point, System.Drawing">
+    <value>152, 195</value>
+  </data>
+  <data name="cbShowWakeNodes.Size" type="System.Drawing.Size, System.Drawing">
+    <value>15, 14</value>
+  </data>
+  <data name="cbShowWakeNodes.TabIndex" type="System.Int32, mscorlib">
+    <value>44</value>
+  </data>
+  <data name="cbShowWakeNodes.ToolTip" xml:space="preserve">
+    <value>Incluir/Excluir</value>
+  </data>
+  <data name="&gt;&gt;cbShowWakeNodes.Name" xml:space="preserve">
+    <value>cbShowWakeNodes</value>
+  </data>
+  <data name="&gt;&gt;cbShowWakeNodes.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cbShowWakeNodes.Parent" xml:space="preserve">
+    <value>GrupoPostProceso</value>
+  </data>
+  <data name="&gt;&gt;cbShowWakeNodes.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="cbWakeColorNodes.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
+  </data>
+  <data name="cbWakeColorNodes.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 7pt</value>
+  </data>
+  <data name="cbWakeColorNodes.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 189</value>
+  </data>
+  <data name="cbWakeColorNodes.Size" type="System.Drawing.Size, System.Drawing">
+    <value>56, 26</value>
+  </data>
+  <data name="cbWakeColorNodes.TabIndex" type="System.Int32, mscorlib">
+    <value>43</value>
+  </data>
+  <data name="cbWakeColorNodes.Text" xml:space="preserve">
+    <value>Nodes</value>
+  </data>
+  <data name="cbWakeColorNodes.ToolTip" xml:space="preserve">
+    <value>Seleccione el color del mallado de las estelas</value>
+  </data>
+  <data name="&gt;&gt;cbWakeColorNodes.Name" xml:space="preserve">
+    <value>cbWakeColorNodes</value>
+  </data>
+  <data name="&gt;&gt;cbWakeColorNodes.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cbWakeColorNodes.Parent" xml:space="preserve">
+    <value>GrupoPostProceso</value>
+  </data>
+  <data name="&gt;&gt;cbWakeColorNodes.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="NodoEstSampleColor.Location" type="System.Drawing.Point, System.Drawing">
+    <value>74, 189</value>
+  </data>
+  <data name="NodoEstSampleColor.Size" type="System.Drawing.Size, System.Drawing">
+    <value>27, 26</value>
+  </data>
+  <data name="NodoEstSampleColor.TabIndex" type="System.Int32, mscorlib">
+    <value>42</value>
+  </data>
+  <data name="&gt;&gt;NodoEstSampleColor.Name" xml:space="preserve">
+    <value>NodoEstSampleColor</value>
+  </data>
+  <data name="&gt;&gt;NodoEstSampleColor.Type" xml:space="preserve">
+    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;NodoEstSampleColor.Parent" xml:space="preserve">
+    <value>GrupoPostProceso</value>
+  </data>
+  <data name="&gt;&gt;NodoEstSampleColor.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="Label10.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="Label10.Location" type="System.Drawing.Point, System.Drawing">
+    <value>9, 20</value>
+  </data>
+  <data name="Label10.Size" type="System.Drawing.Size, System.Drawing">
+    <value>43, 13</value>
+  </data>
+  <data name="Label10.TabIndex" type="System.Int32, mscorlib">
+    <value>40</value>
+  </data>
+  <data name="Label10.Text" xml:space="preserve">
+    <value>Model:</value>
+  </data>
+  <data name="&gt;&gt;Label10.Name" xml:space="preserve">
+    <value>Label10</value>
+  </data>
+  <data name="&gt;&gt;Label10.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label10.Parent" xml:space="preserve">
+    <value>GrupoPostProceso</value>
+  </data>
+  <data name="&gt;&gt;Label10.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="cbShowWakeMesh.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="cbShowWakeMesh.Location" type="System.Drawing.Point, System.Drawing">
+    <value>152, 163</value>
+  </data>
+  <data name="cbShowWakeMesh.Size" type="System.Drawing.Size, System.Drawing">
+    <value>15, 14</value>
+  </data>
+  <data name="cbShowWakeMesh.TabIndex" type="System.Int32, mscorlib">
+    <value>39</value>
+  </data>
+  <data name="cbShowWakeMesh.ToolTip" xml:space="preserve">
+    <value>Incluir/Excluir</value>
+  </data>
+  <data name="&gt;&gt;cbShowWakeMesh.Name" xml:space="preserve">
+    <value>cbShowWakeMesh</value>
+  </data>
+  <data name="&gt;&gt;cbShowWakeMesh.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cbShowWakeMesh.Parent" xml:space="preserve">
+    <value>GrupoPostProceso</value>
+  </data>
+  <data name="&gt;&gt;cbShowWakeMesh.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="ModeloColor.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
+  </data>
+  <data name="ModeloColor.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 7pt</value>
+  </data>
+  <data name="ModeloColor.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 37</value>
+  </data>
+  <data name="ModeloColor.Size" type="System.Drawing.Size, System.Drawing">
+    <value>56, 26</value>
+  </data>
+  <data name="ModeloColor.TabIndex" type="System.Int32, mscorlib">
+    <value>11</value>
+  </data>
+  <data name="ModeloColor.Text" xml:space="preserve">
+    <value>Surf.</value>
+  </data>
+  <data name="ModeloColor.ToolTip" xml:space="preserve">
+    <value>Seleccione el color del modelo general</value>
+  </data>
+  <data name="&gt;&gt;ModeloColor.Name" xml:space="preserve">
+    <value>ModeloColor</value>
+  </data>
+  <data name="&gt;&gt;ModeloColor.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;ModeloColor.Parent" xml:space="preserve">
+    <value>GrupoPostProceso</value>
+  </data>
+  <data name="&gt;&gt;ModeloColor.ZOrder" xml:space="preserve">
+    <value>9</value>
+  </data>
+  <data name="cbWakeColorMesh.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
+  </data>
+  <data name="cbWakeColorMesh.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 7pt</value>
+  </data>
+  <data name="cbWakeColorMesh.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 157</value>
+  </data>
+  <data name="cbWakeColorMesh.Size" type="System.Drawing.Size, System.Drawing">
+    <value>56, 26</value>
+  </data>
+  <data name="cbWakeColorMesh.TabIndex" type="System.Int32, mscorlib">
+    <value>38</value>
+  </data>
+  <data name="cbWakeColorMesh.Text" xml:space="preserve">
+    <value>Mesh</value>
+  </data>
+  <data name="cbWakeColorMesh.ToolTip" xml:space="preserve">
+    <value>Seleccione el color del mallado de las estelas</value>
+  </data>
+  <data name="&gt;&gt;cbWakeColorMesh.Name" xml:space="preserve">
+    <value>cbWakeColorMesh</value>
+  </data>
+  <data name="&gt;&gt;cbWakeColorMesh.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cbWakeColorMesh.Parent" xml:space="preserve">
+    <value>GrupoPostProceso</value>
+  </data>
+  <data name="&gt;&gt;cbWakeColorMesh.ZOrder" xml:space="preserve">
+    <value>10</value>
+  </data>
+  <data name="btnWakeColorSurface.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
+  </data>
+  <data name="btnWakeColorSurface.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 7pt</value>
+  </data>
+  <data name="btnWakeColorSurface.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 124</value>
+  </data>
+  <data name="btnWakeColorSurface.Size" type="System.Drawing.Size, System.Drawing">
+    <value>56, 26</value>
+  </data>
+  <data name="btnWakeColorSurface.TabIndex" type="System.Int32, mscorlib">
+    <value>12</value>
+  </data>
+  <data name="btnWakeColorSurface.Text" xml:space="preserve">
+    <value>Surf.</value>
+  </data>
+  <data name="btnWakeColorSurface.ToolTip" xml:space="preserve">
+    <value>Seleccione el color de las estelas</value>
+  </data>
+  <data name="&gt;&gt;btnWakeColorSurface.Name" xml:space="preserve">
+    <value>btnWakeColorSurface</value>
+  </data>
+  <data name="&gt;&gt;btnWakeColorSurface.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;btnWakeColorSurface.Parent" xml:space="preserve">
+    <value>GrupoPostProceso</value>
+  </data>
+  <data name="&gt;&gt;btnWakeColorSurface.ZOrder" xml:space="preserve">
+    <value>11</value>
+  </data>
+  <data name="MalladoEstSampleColor.Location" type="System.Drawing.Point, System.Drawing">
+    <value>74, 157</value>
+  </data>
+  <data name="MalladoEstSampleColor.Size" type="System.Drawing.Size, System.Drawing">
+    <value>27, 26</value>
+  </data>
+  <data name="MalladoEstSampleColor.TabIndex" type="System.Int32, mscorlib">
+    <value>37</value>
+  </data>
+  <data name="&gt;&gt;MalladoEstSampleColor.Name" xml:space="preserve">
+    <value>MalladoEstSampleColor</value>
+  </data>
+  <data name="&gt;&gt;MalladoEstSampleColor.Type" xml:space="preserve">
+    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;MalladoEstSampleColor.Parent" xml:space="preserve">
+    <value>GrupoPostProceso</value>
+  </data>
+  <data name="&gt;&gt;MalladoEstSampleColor.ZOrder" xml:space="preserve">
+    <value>12</value>
+  </data>
+  <data name="ModeloSampleColor.Location" type="System.Drawing.Point, System.Drawing">
+    <value>74, 37</value>
+  </data>
+  <data name="ModeloSampleColor.Size" type="System.Drawing.Size, System.Drawing">
+    <value>27, 26</value>
+  </data>
+  <data name="ModeloSampleColor.TabIndex" type="System.Int32, mscorlib">
+    <value>25</value>
+  </data>
+  <data name="&gt;&gt;ModeloSampleColor.Name" xml:space="preserve">
+    <value>ModeloSampleColor</value>
+  </data>
+  <data name="&gt;&gt;ModeloSampleColor.Type" xml:space="preserve">
+    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;ModeloSampleColor.Parent" xml:space="preserve">
+    <value>GrupoPostProceso</value>
+  </data>
+  <data name="&gt;&gt;ModeloSampleColor.ZOrder" xml:space="preserve">
+    <value>13</value>
+  </data>
+  <data name="IncluirMalladoMod.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="IncluirMalladoMod.Location" type="System.Drawing.Point, System.Drawing">
+    <value>107, 76</value>
+  </data>
+  <data name="IncluirMalladoMod.Size" type="System.Drawing.Size, System.Drawing">
+    <value>15, 14</value>
+  </data>
+  <data name="IncluirMalladoMod.TabIndex" type="System.Int32, mscorlib">
+    <value>36</value>
+  </data>
+  <data name="IncluirMalladoMod.ToolTip" xml:space="preserve">
+    <value>Incluir/Excluir</value>
+  </data>
+  <data name="&gt;&gt;IncluirMalladoMod.Name" xml:space="preserve">
+    <value>IncluirMalladoMod</value>
+  </data>
+  <data name="&gt;&gt;IncluirMalladoMod.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;IncluirMalladoMod.Parent" xml:space="preserve">
+    <value>GrupoPostProceso</value>
+  </data>
+  <data name="&gt;&gt;IncluirMalladoMod.ZOrder" xml:space="preserve">
+    <value>14</value>
+  </data>
+  <data name="EstelasSampleColor.Location" type="System.Drawing.Point, System.Drawing">
+    <value>74, 124</value>
+  </data>
+  <data name="EstelasSampleColor.Size" type="System.Drawing.Size, System.Drawing">
+    <value>27, 26</value>
+  </data>
+  <data name="EstelasSampleColor.TabIndex" type="System.Int32, mscorlib">
+    <value>26</value>
+  </data>
+  <data name="&gt;&gt;EstelasSampleColor.Name" xml:space="preserve">
+    <value>EstelasSampleColor</value>
+  </data>
+  <data name="&gt;&gt;EstelasSampleColor.Type" xml:space="preserve">
+    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;EstelasSampleColor.Parent" xml:space="preserve">
+    <value>GrupoPostProceso</value>
+  </data>
+  <data name="&gt;&gt;EstelasSampleColor.ZOrder" xml:space="preserve">
+    <value>15</value>
+  </data>
+  <data name="cbShowWakeSurface.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="cbShowWakeSurface.Location" type="System.Drawing.Point, System.Drawing">
+    <value>152, 129</value>
+  </data>
+  <data name="cbShowWakeSurface.Size" type="System.Drawing.Size, System.Drawing">
+    <value>15, 14</value>
+  </data>
+  <data name="cbShowWakeSurface.TabIndex" type="System.Int32, mscorlib">
+    <value>35</value>
+  </data>
+  <data name="cbShowWakeSurface.ToolTip" xml:space="preserve">
+    <value>Incluir/Excluir</value>
+  </data>
+  <data name="&gt;&gt;cbShowWakeSurface.Name" xml:space="preserve">
+    <value>cbShowWakeSurface</value>
+  </data>
+  <data name="&gt;&gt;cbShowWakeSurface.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cbShowWakeSurface.Parent" xml:space="preserve">
+    <value>GrupoPostProceso</value>
+  </data>
+  <data name="&gt;&gt;cbShowWakeSurface.ZOrder" xml:space="preserve">
+    <value>16</value>
+  </data>
+  <data name="TransparenciaModelo.Location" type="System.Drawing.Point, System.Drawing">
+    <value>107, 39</value>
+  </data>
+  <data name="TransparenciaModelo.Size" type="System.Drawing.Size, System.Drawing">
+    <value>39, 22</value>
+  </data>
+  <data name="TransparenciaModelo.TabIndex" type="System.Int32, mscorlib">
+    <value>27</value>
+  </data>
+  <data name="TransparenciaModelo.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
+    <value>Right</value>
+  </data>
+  <data name="TransparenciaModelo.ToolTip" xml:space="preserve">
+    <value>Nivel de transparencia</value>
+  </data>
+  <data name="&gt;&gt;TransparenciaModelo.Name" xml:space="preserve">
+    <value>TransparenciaModelo</value>
+  </data>
+  <data name="&gt;&gt;TransparenciaModelo.Type" xml:space="preserve">
+    <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TransparenciaModelo.Parent" xml:space="preserve">
+    <value>GrupoPostProceso</value>
+  </data>
+  <data name="&gt;&gt;TransparenciaModelo.ZOrder" xml:space="preserve">
+    <value>17</value>
+  </data>
+  <data name="MalladoColor.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
+  </data>
+  <data name="MalladoColor.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 7pt</value>
+  </data>
+  <data name="MalladoColor.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 70</value>
+  </data>
+  <data name="MalladoColor.Size" type="System.Drawing.Size, System.Drawing">
+    <value>56, 26</value>
+  </data>
+  <data name="MalladoColor.TabIndex" type="System.Int32, mscorlib">
+    <value>34</value>
+  </data>
+  <data name="MalladoColor.Text" xml:space="preserve">
+    <value>Mesh</value>
+  </data>
+  <data name="MalladoColor.ToolTip" xml:space="preserve">
+    <value>Seleccione el color del mallado del modelo general</value>
+  </data>
+  <data name="&gt;&gt;MalladoColor.Name" xml:space="preserve">
+    <value>MalladoColor</value>
+  </data>
+  <data name="&gt;&gt;MalladoColor.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;MalladoColor.Parent" xml:space="preserve">
+    <value>GrupoPostProceso</value>
+  </data>
+  <data name="&gt;&gt;MalladoColor.ZOrder" xml:space="preserve">
+    <value>18</value>
+  </data>
+  <data name="nudWakesSurfaceTrans.Location" type="System.Drawing.Point, System.Drawing">
+    <value>107, 126</value>
+  </data>
+  <data name="nudWakesSurfaceTrans.Size" type="System.Drawing.Size, System.Drawing">
+    <value>39, 22</value>
+  </data>
+  <data name="nudWakesSurfaceTrans.TabIndex" type="System.Int32, mscorlib">
+    <value>32</value>
+  </data>
+  <data name="nudWakesSurfaceTrans.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
+    <value>Right</value>
+  </data>
+  <data name="nudWakesSurfaceTrans.ToolTip" xml:space="preserve">
+    <value>Nivel de transparencia</value>
+  </data>
+  <data name="&gt;&gt;nudWakesSurfaceTrans.Name" xml:space="preserve">
+    <value>nudWakesSurfaceTrans</value>
+  </data>
+  <data name="&gt;&gt;nudWakesSurfaceTrans.Type" xml:space="preserve">
+    <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;nudWakesSurfaceTrans.Parent" xml:space="preserve">
+    <value>GrupoPostProceso</value>
+  </data>
+  <data name="&gt;&gt;nudWakesSurfaceTrans.ZOrder" xml:space="preserve">
+    <value>19</value>
+  </data>
+  <data name="MalladoModeloSampleColor.Location" type="System.Drawing.Point, System.Drawing">
+    <value>74, 70</value>
+  </data>
+  <data name="MalladoModeloSampleColor.Size" type="System.Drawing.Size, System.Drawing">
+    <value>27, 26</value>
+  </data>
+  <data name="MalladoModeloSampleColor.TabIndex" type="System.Int32, mscorlib">
+    <value>33</value>
+  </data>
+  <data name="&gt;&gt;MalladoModeloSampleColor.Name" xml:space="preserve">
+    <value>MalladoModeloSampleColor</value>
+  </data>
+  <data name="&gt;&gt;MalladoModeloSampleColor.Type" xml:space="preserve">
+    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;MalladoModeloSampleColor.Parent" xml:space="preserve">
+    <value>GrupoPostProceso</value>
+  </data>
+  <data name="&gt;&gt;MalladoModeloSampleColor.ZOrder" xml:space="preserve">
+    <value>20</value>
+  </data>
+  <data name="&gt;&gt;ResetMapaDePresiones.Name" xml:space="preserve">
+    <value>ResetMapaDePresiones</value>
+  </data>
+  <data name="&gt;&gt;ResetMapaDePresiones.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;ResetMapaDePresiones.Parent" xml:space="preserve">
+    <value>GroupBox1</value>
+  </data>
+  <data name="&gt;&gt;ResetMapaDePresiones.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;Label19.Name" xml:space="preserve">
+    <value>Label19</value>
+  </data>
+  <data name="&gt;&gt;Label19.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label19.Parent" xml:space="preserve">
+    <value>GroupBox1</value>
+  </data>
+  <data name="&gt;&gt;Label19.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;MinPresBox.Name" xml:space="preserve">
+    <value>MinPresBox</value>
+  </data>
+  <data name="&gt;&gt;MinPresBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;MinPresBox.Parent" xml:space="preserve">
+    <value>GroupBox1</value>
+  </data>
+  <data name="&gt;&gt;MinPresBox.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;Label18.Name" xml:space="preserve">
+    <value>Label18</value>
+  </data>
+  <data name="&gt;&gt;Label18.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label18.Parent" xml:space="preserve">
+    <value>GroupBox1</value>
+  </data>
+  <data name="&gt;&gt;Label18.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;MaxPresBox.Name" xml:space="preserve">
+    <value>MaxPresBox</value>
+  </data>
+  <data name="&gt;&gt;MaxPresBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;MaxPresBox.Parent" xml:space="preserve">
+    <value>GroupBox1</value>
+  </data>
+  <data name="&gt;&gt;MaxPresBox.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="GroupBox1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>238, 6</value>
+  </data>
+  <data name="GroupBox1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>238, 107</value>
+  </data>
+  <data name="GroupBox1.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="GroupBox1.Text" xml:space="preserve">
+    <value>Colormap</value>
+  </data>
+  <data name="&gt;&gt;GroupBox1.Name" xml:space="preserve">
+    <value>GroupBox1</value>
+  </data>
+  <data name="&gt;&gt;GroupBox1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;GroupBox1.Parent" xml:space="preserve">
+    <value>Postprocess</value>
+  </data>
+  <data name="&gt;&gt;GroupBox1.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="ResetMapaDePresiones.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
+  </data>
+  <data name="ResetMapaDePresiones.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 7pt</value>
+  </data>
+  <data name="ResetMapaDePresiones.Location" type="System.Drawing.Point, System.Drawing">
+    <value>16, 76</value>
+  </data>
+  <data name="ResetMapaDePresiones.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 23</value>
+  </data>
+  <data name="ResetMapaDePresiones.TabIndex" type="System.Int32, mscorlib">
+    <value>34</value>
+  </data>
+  <data name="ResetMapaDePresiones.Text" xml:space="preserve">
+    <value>Recalculate</value>
+  </data>
+  <data name="&gt;&gt;ResetMapaDePresiones.Name" xml:space="preserve">
+    <value>ResetMapaDePresiones</value>
+  </data>
+  <data name="&gt;&gt;ResetMapaDePresiones.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;ResetMapaDePresiones.Parent" xml:space="preserve">
+    <value>GroupBox1</value>
+  </data>
+  <data name="&gt;&gt;ResetMapaDePresiones.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="Label19.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="Label19.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="Label19.Location" type="System.Drawing.Point, System.Drawing">
+    <value>13, 49</value>
+  </data>
+  <data name="Label19.Size" type="System.Drawing.Size, System.Drawing">
+    <value>78, 13</value>
+  </data>
+  <data name="Label19.TabIndex" type="System.Int32, mscorlib">
+    <value>33</value>
+  </data>
+  <data name="Label19.Text" xml:space="preserve">
+    <value>Cp min (blue):</value>
+  </data>
+  <data name="&gt;&gt;Label19.Name" xml:space="preserve">
+    <value>Label19</value>
+  </data>
+  <data name="&gt;&gt;Label19.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label19.Parent" xml:space="preserve">
+    <value>GroupBox1</value>
+  </data>
+  <data name="&gt;&gt;Label19.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="MinPresBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>113, 46</value>
+  </data>
+  <data name="MinPresBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>82, 22</value>
+  </data>
+  <data name="MinPresBox.TabIndex" type="System.Int32, mscorlib">
+    <value>32</value>
+  </data>
+  <data name="MinPresBox.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
+    <value>Right</value>
+  </data>
+  <data name="MinPresBox.ToolTip" xml:space="preserve">
+    <value>Escala del vector</value>
+  </data>
+  <data name="&gt;&gt;MinPresBox.Name" xml:space="preserve">
+    <value>MinPresBox</value>
+  </data>
+  <data name="&gt;&gt;MinPresBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;MinPresBox.Parent" xml:space="preserve">
+    <value>GroupBox1</value>
+  </data>
+  <data name="&gt;&gt;MinPresBox.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="Label18.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="Label18.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="Label18.Location" type="System.Drawing.Point, System.Drawing">
+    <value>13, 24</value>
+  </data>
+  <data name="Label18.Size" type="System.Drawing.Size, System.Drawing">
+    <value>73, 13</value>
+  </data>
+  <data name="Label18.TabIndex" type="System.Int32, mscorlib">
+    <value>31</value>
+  </data>
+  <data name="Label18.Text" xml:space="preserve">
+    <value>Cp max (red):</value>
+  </data>
+  <data name="&gt;&gt;Label18.Name" xml:space="preserve">
+    <value>Label18</value>
+  </data>
+  <data name="&gt;&gt;Label18.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label18.Parent" xml:space="preserve">
+    <value>GroupBox1</value>
+  </data>
+  <data name="&gt;&gt;Label18.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="MaxPresBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>113, 21</value>
+  </data>
+  <data name="MaxPresBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>82, 22</value>
+  </data>
+  <data name="MaxPresBox.TabIndex" type="System.Int32, mscorlib">
+    <value>30</value>
+  </data>
+  <data name="MaxPresBox.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
+    <value>Right</value>
+  </data>
+  <data name="MaxPresBox.ToolTip" xml:space="preserve">
+    <value>Escala del vector</value>
+  </data>
+  <data name="&gt;&gt;MaxPresBox.Name" xml:space="preserve">
+    <value>MaxPresBox</value>
+  </data>
+  <data name="&gt;&gt;MaxPresBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;MaxPresBox.Parent" xml:space="preserve">
+    <value>GroupBox1</value>
+  </data>
+  <data name="&gt;&gt;MaxPresBox.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;RepresentarDV.Name" xml:space="preserve">
+    <value>RepresentarDV</value>
+  </data>
+  <data name="&gt;&gt;RepresentarDV.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;RepresentarDV.Parent" xml:space="preserve">
+    <value>GroupBox7</value>
+  </data>
+  <data name="&gt;&gt;RepresentarDV.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;Label5.Name" xml:space="preserve">
+    <value>Label5</value>
+  </data>
+  <data name="&gt;&gt;Label5.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label5.Parent" xml:space="preserve">
+    <value>GroupBox7</value>
+  </data>
+  <data name="&gt;&gt;Label5.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;EscalaDV.Name" xml:space="preserve">
+    <value>EscalaDV</value>
+  </data>
+  <data name="&gt;&gt;EscalaDV.Type" xml:space="preserve">
+    <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;EscalaDV.Parent" xml:space="preserve">
+    <value>GroupBox7</value>
+  </data>
+  <data name="&gt;&gt;EscalaDV.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;DVColor.Name" xml:space="preserve">
+    <value>DVColor</value>
+  </data>
+  <data name="&gt;&gt;DVColor.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;DVColor.Parent" xml:space="preserve">
+    <value>GroupBox7</value>
+  </data>
+  <data name="&gt;&gt;DVColor.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;Label6.Name" xml:space="preserve">
+    <value>Label6</value>
+  </data>
+  <data name="&gt;&gt;Label6.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label6.Parent" xml:space="preserve">
+    <value>GroupBox7</value>
+  </data>
+  <data name="&gt;&gt;Label6.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;SaltoVColor.Name" xml:space="preserve">
+    <value>SaltoVColor</value>
+  </data>
+  <data name="&gt;&gt;SaltoVColor.Type" xml:space="preserve">
+    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SaltoVColor.Parent" xml:space="preserve">
+    <value>GroupBox7</value>
+  </data>
+  <data name="&gt;&gt;SaltoVColor.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="&gt;&gt;Label3.Name" xml:space="preserve">
+    <value>Label3</value>
+  </data>
+  <data name="&gt;&gt;Label3.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label3.Parent" xml:space="preserve">
+    <value>GroupBox7</value>
+  </data>
+  <data name="&gt;&gt;Label3.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="&gt;&gt;EscalaVmedia.Name" xml:space="preserve">
+    <value>EscalaVmedia</value>
+  </data>
+  <data name="&gt;&gt;EscalaVmedia.Type" xml:space="preserve">
+    <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;EscalaVmedia.Parent" xml:space="preserve">
+    <value>GroupBox7</value>
+  </data>
+  <data name="&gt;&gt;EscalaVmedia.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="&gt;&gt;VmeanColor.Name" xml:space="preserve">
+    <value>VmeanColor</value>
+  </data>
+  <data name="&gt;&gt;VmeanColor.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;VmeanColor.Parent" xml:space="preserve">
+    <value>GroupBox7</value>
+  </data>
+  <data name="&gt;&gt;VmeanColor.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="&gt;&gt;Label4.Name" xml:space="preserve">
+    <value>Label4</value>
+  </data>
+  <data name="&gt;&gt;Label4.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label4.Parent" xml:space="preserve">
+    <value>GroupBox7</value>
+  </data>
+  <data name="&gt;&gt;Label4.ZOrder" xml:space="preserve">
+    <value>9</value>
+  </data>
+  <data name="&gt;&gt;VmediaColor.Name" xml:space="preserve">
+    <value>VmediaColor</value>
+  </data>
+  <data name="&gt;&gt;VmediaColor.Type" xml:space="preserve">
+    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;VmediaColor.Parent" xml:space="preserve">
+    <value>GroupBox7</value>
+  </data>
+  <data name="&gt;&gt;VmediaColor.ZOrder" xml:space="preserve">
+    <value>10</value>
+  </data>
+  <data name="&gt;&gt;RepresentarVMedia.Name" xml:space="preserve">
+    <value>RepresentarVMedia</value>
+  </data>
+  <data name="&gt;&gt;RepresentarVMedia.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;RepresentarVMedia.Parent" xml:space="preserve">
+    <value>GroupBox7</value>
+  </data>
+  <data name="&gt;&gt;RepresentarVMedia.ZOrder" xml:space="preserve">
+    <value>11</value>
+  </data>
+  <data name="GroupBox7.Location" type="System.Drawing.Point, System.Drawing">
+    <value>7, 119</value>
+  </data>
+  <data name="GroupBox7.Size" type="System.Drawing.Size, System.Drawing">
+    <value>225, 234</value>
+  </data>
+  <data name="GroupBox7.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="GroupBox7.Text" xml:space="preserve">
+    <value>Velocity vectors</value>
+  </data>
+  <data name="&gt;&gt;GroupBox7.Name" xml:space="preserve">
+    <value>GroupBox7</value>
+  </data>
+  <data name="&gt;&gt;GroupBox7.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;GroupBox7.Parent" xml:space="preserve">
+    <value>Postprocess</value>
+  </data>
+  <data name="&gt;&gt;GroupBox7.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="RepresentarDV.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="RepresentarDV.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 101</value>
+  </data>
+  <data name="RepresentarDV.Size" type="System.Drawing.Size, System.Drawing">
+    <value>148, 17</value>
+  </data>
+  <data name="RepresentarDV.TabIndex" type="System.Int32, mscorlib">
+    <value>36</value>
+  </data>
+  <data name="RepresentarDV.Text" xml:space="preserve">
+    <value>Represent velocity jump</value>
+  </data>
+  <data name="RepresentarDV.ToolTip" xml:space="preserve">
+    <value>Incluir/Excluir</value>
+  </data>
+  <data name="&gt;&gt;RepresentarDV.Name" xml:space="preserve">
+    <value>RepresentarDV</value>
+  </data>
+  <data name="&gt;&gt;RepresentarDV.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;RepresentarDV.Parent" xml:space="preserve">
+    <value>GroupBox7</value>
+  </data>
+  <data name="&gt;&gt;RepresentarDV.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="Label5.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="Label5.Location" type="System.Drawing.Point, System.Drawing">
+    <value>9, 156</value>
+  </data>
+  <data name="Label5.Size" type="System.Drawing.Size, System.Drawing">
+    <value>36, 13</value>
+  </data>
+  <data name="Label5.TabIndex" type="System.Int32, mscorlib">
+    <value>35</value>
+  </data>
+  <data name="Label5.Text" xml:space="preserve">
+    <value>Scale:</value>
+  </data>
+  <data name="&gt;&gt;Label5.Name" xml:space="preserve">
+    <value>Label5</value>
+  </data>
+  <data name="&gt;&gt;Label5.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label5.Parent" xml:space="preserve">
+    <value>GroupBox7</value>
+  </data>
+  <data name="&gt;&gt;Label5.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="EscalaDV.Location" type="System.Drawing.Point, System.Drawing">
+    <value>54, 154</value>
+  </data>
+  <data name="EscalaDV.Size" type="System.Drawing.Size, System.Drawing">
+    <value>54, 22</value>
+  </data>
+  <data name="EscalaDV.TabIndex" type="System.Int32, mscorlib">
+    <value>34</value>
+  </data>
+  <data name="EscalaDV.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
+    <value>Right</value>
+  </data>
+  <data name="EscalaDV.ToolTip" xml:space="preserve">
+    <value>Escala del vector</value>
+  </data>
+  <data name="&gt;&gt;EscalaDV.Name" xml:space="preserve">
+    <value>EscalaDV</value>
+  </data>
+  <data name="&gt;&gt;EscalaDV.Type" xml:space="preserve">
+    <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;EscalaDV.Parent" xml:space="preserve">
+    <value>GroupBox7</value>
+  </data>
+  <data name="&gt;&gt;EscalaDV.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="DVColor.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
+  </data>
+  <data name="DVColor.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 7pt</value>
+  </data>
+  <data name="DVColor.Location" type="System.Drawing.Point, System.Drawing">
+    <value>85, 124</value>
+  </data>
+  <data name="DVColor.Size" type="System.Drawing.Size, System.Drawing">
+    <value>60, 24</value>
+  </data>
+  <data name="DVColor.TabIndex" type="System.Int32, mscorlib">
+    <value>33</value>
+  </data>
+  <data name="DVColor.Text" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="DVColor.ToolTip" xml:space="preserve">
+    <value>Seleccionar el color del vector del vector de salto de velocidad</value>
+  </data>
+  <data name="&gt;&gt;DVColor.Name" xml:space="preserve">
+    <value>DVColor</value>
+  </data>
+  <data name="&gt;&gt;DVColor.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;DVColor.Parent" xml:space="preserve">
+    <value>GroupBox7</value>
+  </data>
+  <data name="&gt;&gt;DVColor.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="Label6.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="Label6.Location" type="System.Drawing.Point, System.Drawing">
+    <value>9, 127</value>
+  </data>
+  <data name="Label6.Size" type="System.Drawing.Size, System.Drawing">
+    <value>38, 13</value>
+  </data>
+  <data name="Label6.TabIndex" type="System.Int32, mscorlib">
+    <value>32</value>
+  </data>
+  <data name="Label6.Text" xml:space="preserve">
+    <value>Color:</value>
+  </data>
+  <data name="&gt;&gt;Label6.Name" xml:space="preserve">
+    <value>Label6</value>
+  </data>
+  <data name="&gt;&gt;Label6.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label6.Parent" xml:space="preserve">
+    <value>GroupBox7</value>
+  </data>
+  <data name="&gt;&gt;Label6.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="SaltoVColor.Location" type="System.Drawing.Point, System.Drawing">
+    <value>54, 124</value>
+  </data>
+  <data name="SaltoVColor.Size" type="System.Drawing.Size, System.Drawing">
+    <value>25, 24</value>
+  </data>
+  <data name="SaltoVColor.TabIndex" type="System.Int32, mscorlib">
+    <value>31</value>
+  </data>
+  <data name="&gt;&gt;SaltoVColor.Name" xml:space="preserve">
+    <value>SaltoVColor</value>
+  </data>
+  <data name="&gt;&gt;SaltoVColor.Type" xml:space="preserve">
+    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SaltoVColor.Parent" xml:space="preserve">
+    <value>GroupBox7</value>
+  </data>
+  <data name="&gt;&gt;SaltoVColor.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="Label3.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="Label3.Location" type="System.Drawing.Point, System.Drawing">
+    <value>9, 74</value>
+  </data>
+  <data name="Label3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>36, 13</value>
+  </data>
+  <data name="Label3.TabIndex" type="System.Int32, mscorlib">
+    <value>30</value>
+  </data>
+  <data name="Label3.Text" xml:space="preserve">
+    <value>Scale:</value>
+  </data>
+  <data name="&gt;&gt;Label3.Name" xml:space="preserve">
+    <value>Label3</value>
+  </data>
+  <data name="&gt;&gt;Label3.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label3.Parent" xml:space="preserve">
+    <value>GroupBox7</value>
+  </data>
+  <data name="&gt;&gt;Label3.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="EscalaVmedia.Location" type="System.Drawing.Point, System.Drawing">
+    <value>54, 72</value>
+  </data>
+  <data name="EscalaVmedia.Size" type="System.Drawing.Size, System.Drawing">
+    <value>54, 22</value>
+  </data>
+  <data name="EscalaVmedia.TabIndex" type="System.Int32, mscorlib">
+    <value>29</value>
+  </data>
+  <data name="EscalaVmedia.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
+    <value>Right</value>
+  </data>
+  <data name="EscalaVmedia.ToolTip" xml:space="preserve">
+    <value>Escala del vector</value>
+  </data>
+  <data name="&gt;&gt;EscalaVmedia.Name" xml:space="preserve">
+    <value>EscalaVmedia</value>
+  </data>
+  <data name="&gt;&gt;EscalaVmedia.Type" xml:space="preserve">
+    <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;EscalaVmedia.Parent" xml:space="preserve">
+    <value>GroupBox7</value>
+  </data>
+  <data name="&gt;&gt;EscalaVmedia.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="VmeanColor.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
+  </data>
+  <data name="VmeanColor.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 7pt</value>
+  </data>
+  <data name="VmeanColor.Location" type="System.Drawing.Point, System.Drawing">
+    <value>85, 42</value>
+  </data>
+  <data name="VmeanColor.Size" type="System.Drawing.Size, System.Drawing">
+    <value>60, 24</value>
+  </data>
+  <data name="VmeanColor.TabIndex" type="System.Int32, mscorlib">
+    <value>14</value>
+  </data>
+  <data name="VmeanColor.Text" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="VmeanColor.ToolTip" xml:space="preserve">
+    <value>Seleccionar el color del vector de velocidad media</value>
+  </data>
+  <data name="&gt;&gt;VmeanColor.Name" xml:space="preserve">
+    <value>VmeanColor</value>
+  </data>
+  <data name="&gt;&gt;VmeanColor.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;VmeanColor.Parent" xml:space="preserve">
+    <value>GroupBox7</value>
+  </data>
+  <data name="&gt;&gt;VmeanColor.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="Label4.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="Label4.Location" type="System.Drawing.Point, System.Drawing">
+    <value>9, 45</value>
+  </data>
+  <data name="Label4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>38, 13</value>
+  </data>
+  <data name="Label4.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="Label4.Text" xml:space="preserve">
+    <value>Color:</value>
+  </data>
+  <data name="&gt;&gt;Label4.Name" xml:space="preserve">
+    <value>Label4</value>
+  </data>
+  <data name="&gt;&gt;Label4.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label4.Parent" xml:space="preserve">
+    <value>GroupBox7</value>
+  </data>
+  <data name="&gt;&gt;Label4.ZOrder" xml:space="preserve">
+    <value>9</value>
+  </data>
+  <data name="VmediaColor.Location" type="System.Drawing.Point, System.Drawing">
+    <value>54, 42</value>
+  </data>
+  <data name="VmediaColor.Size" type="System.Drawing.Size, System.Drawing">
+    <value>25, 24</value>
+  </data>
+  <data name="VmediaColor.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;VmediaColor.Name" xml:space="preserve">
+    <value>VmediaColor</value>
+  </data>
+  <data name="&gt;&gt;VmediaColor.Type" xml:space="preserve">
+    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;VmediaColor.Parent" xml:space="preserve">
+    <value>GroupBox7</value>
+  </data>
+  <data name="&gt;&gt;VmediaColor.ZOrder" xml:space="preserve">
+    <value>10</value>
+  </data>
+  <data name="RepresentarVMedia.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="RepresentarVMedia.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 22</value>
+  </data>
+  <data name="RepresentarVMedia.Size" type="System.Drawing.Size, System.Drawing">
+    <value>150, 17</value>
+  </data>
+  <data name="RepresentarVMedia.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="RepresentarVMedia.Text" xml:space="preserve">
+    <value>Represent mean velocity</value>
+  </data>
+  <data name="RepresentarVMedia.ToolTip" xml:space="preserve">
+    <value>Incluir/Excluir</value>
+  </data>
+  <data name="&gt;&gt;RepresentarVMedia.Name" xml:space="preserve">
+    <value>RepresentarVMedia</value>
+  </data>
+  <data name="&gt;&gt;RepresentarVMedia.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;RepresentarVMedia.Parent" xml:space="preserve">
+    <value>GroupBox7</value>
+  </data>
+  <data name="&gt;&gt;RepresentarVMedia.ZOrder" xml:space="preserve">
+    <value>11</value>
+  </data>
+  <data name="&gt;&gt;Label2.Name" xml:space="preserve">
+    <value>Label2</value>
+  </data>
+  <data name="&gt;&gt;Label2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label2.Parent" xml:space="preserve">
+    <value>GroupBox6</value>
+  </data>
+  <data name="&gt;&gt;Label2.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;EscalaCarga.Name" xml:space="preserve">
+    <value>EscalaCarga</value>
+  </data>
+  <data name="&gt;&gt;EscalaCarga.Type" xml:space="preserve">
+    <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;EscalaCarga.Parent" xml:space="preserve">
+    <value>GroupBox6</value>
+  </data>
+  <data name="&gt;&gt;EscalaCarga.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;LoadColor.Name" xml:space="preserve">
+    <value>LoadColor</value>
+  </data>
+  <data name="&gt;&gt;LoadColor.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;LoadColor.Parent" xml:space="preserve">
+    <value>GroupBox6</value>
+  </data>
+  <data name="&gt;&gt;LoadColor.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;Label1.Name" xml:space="preserve">
+    <value>Label1</value>
+  </data>
+  <data name="&gt;&gt;Label1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label1.Parent" xml:space="preserve">
+    <value>GroupBox6</value>
+  </data>
+  <data name="&gt;&gt;Label1.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;ColorCarga.Name" xml:space="preserve">
+    <value>ColorCarga</value>
+  </data>
+  <data name="&gt;&gt;ColorCarga.Type" xml:space="preserve">
+    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;ColorCarga.Parent" xml:space="preserve">
+    <value>GroupBox6</value>
+  </data>
+  <data name="&gt;&gt;ColorCarga.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;RepresentarCarga.Name" xml:space="preserve">
+    <value>RepresentarCarga</value>
+  </data>
+  <data name="&gt;&gt;RepresentarCarga.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;RepresentarCarga.Parent" xml:space="preserve">
+    <value>GroupBox6</value>
+  </data>
+  <data name="&gt;&gt;RepresentarCarga.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="GroupBox6.Location" type="System.Drawing.Point, System.Drawing">
+    <value>7, 6</value>
+  </data>
+  <data name="GroupBox6.Size" type="System.Drawing.Size, System.Drawing">
+    <value>225, 107</value>
+  </data>
+  <data name="GroupBox6.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="GroupBox6.Text" xml:space="preserve">
+    <value>Load vectors</value>
+  </data>
+  <data name="&gt;&gt;GroupBox6.Name" xml:space="preserve">
+    <value>GroupBox6</value>
+  </data>
+  <data name="&gt;&gt;GroupBox6.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;GroupBox6.Parent" xml:space="preserve">
+    <value>Postprocess</value>
+  </data>
+  <data name="&gt;&gt;GroupBox6.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="Label2.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="Label2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>9, 74</value>
+  </data>
+  <data name="Label2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>36, 13</value>
+  </data>
+  <data name="Label2.TabIndex" type="System.Int32, mscorlib">
+    <value>30</value>
+  </data>
+  <data name="Label2.Text" xml:space="preserve">
+    <value>Scale:</value>
+  </data>
+  <data name="&gt;&gt;Label2.Name" xml:space="preserve">
+    <value>Label2</value>
+  </data>
+  <data name="&gt;&gt;Label2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label2.Parent" xml:space="preserve">
+    <value>GroupBox6</value>
+  </data>
+  <data name="&gt;&gt;Label2.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="EscalaCarga.Location" type="System.Drawing.Point, System.Drawing">
+    <value>54, 72</value>
+  </data>
+  <data name="EscalaCarga.Size" type="System.Drawing.Size, System.Drawing">
+    <value>54, 22</value>
+  </data>
+  <data name="EscalaCarga.TabIndex" type="System.Int32, mscorlib">
+    <value>29</value>
+  </data>
+  <data name="EscalaCarga.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
+    <value>Right</value>
+  </data>
+  <data name="EscalaCarga.ToolTip" xml:space="preserve">
+    <value>Escala del vector</value>
+  </data>
+  <data name="&gt;&gt;EscalaCarga.Name" xml:space="preserve">
+    <value>EscalaCarga</value>
+  </data>
+  <data name="&gt;&gt;EscalaCarga.Type" xml:space="preserve">
+    <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;EscalaCarga.Parent" xml:space="preserve">
+    <value>GroupBox6</value>
+  </data>
+  <data name="&gt;&gt;EscalaCarga.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="LoadColor.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
+  </data>
+  <data name="LoadColor.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 7pt</value>
+  </data>
+  <data name="LoadColor.Location" type="System.Drawing.Point, System.Drawing">
+    <value>85, 42</value>
+  </data>
+  <data name="LoadColor.Size" type="System.Drawing.Size, System.Drawing">
+    <value>60, 24</value>
+  </data>
+  <data name="LoadColor.TabIndex" type="System.Int32, mscorlib">
+    <value>14</value>
+  </data>
+  <data name="LoadColor.Text" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="LoadColor.ToolTip" xml:space="preserve">
+    <value>Seleccionar el color del vector de carga</value>
+  </data>
+  <data name="&gt;&gt;LoadColor.Name" xml:space="preserve">
+    <value>LoadColor</value>
+  </data>
+  <data name="&gt;&gt;LoadColor.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;LoadColor.Parent" xml:space="preserve">
+    <value>GroupBox6</value>
+  </data>
+  <data name="&gt;&gt;LoadColor.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="Label1.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="Label1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>9, 45</value>
+  </data>
+  <data name="Label1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>38, 13</value>
+  </data>
+  <data name="Label1.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="Label1.Text" xml:space="preserve">
+    <value>Color:</value>
+  </data>
+  <data name="&gt;&gt;Label1.Name" xml:space="preserve">
+    <value>Label1</value>
+  </data>
+  <data name="&gt;&gt;Label1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label1.Parent" xml:space="preserve">
+    <value>GroupBox6</value>
+  </data>
+  <data name="&gt;&gt;Label1.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="ColorCarga.Location" type="System.Drawing.Point, System.Drawing">
+    <value>54, 42</value>
+  </data>
+  <data name="ColorCarga.Size" type="System.Drawing.Size, System.Drawing">
+    <value>25, 24</value>
+  </data>
+  <data name="ColorCarga.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;ColorCarga.Name" xml:space="preserve">
+    <value>ColorCarga</value>
+  </data>
+  <data name="&gt;&gt;ColorCarga.Type" xml:space="preserve">
+    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;ColorCarga.Parent" xml:space="preserve">
+    <value>GroupBox6</value>
+  </data>
+  <data name="&gt;&gt;ColorCarga.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="RepresentarCarga.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="RepresentarCarga.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 22</value>
+  </data>
+  <data name="RepresentarCarga.Size" type="System.Drawing.Size, System.Drawing">
+    <value>143, 17</value>
+  </data>
+  <data name="RepresentarCarga.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="RepresentarCarga.Text" xml:space="preserve">
+    <value>Represent load vectors</value>
+  </data>
+  <data name="RepresentarCarga.ToolTip" xml:space="preserve">
+    <value>Incluir/Excluir</value>
+  </data>
+  <data name="&gt;&gt;RepresentarCarga.Name" xml:space="preserve">
+    <value>RepresentarCarga</value>
+  </data>
+  <data name="&gt;&gt;RepresentarCarga.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;RepresentarCarga.Parent" xml:space="preserve">
+    <value>GroupBox6</value>
+  </data>
+  <data name="&gt;&gt;RepresentarCarga.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <metadata name="Colores.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
+  <metadata name="FontDialog1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>209, 17</value>
+  </metadata>
+  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>63</value>
+  </metadata>
+  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
+    <value>6, 13</value>
+  </data>
+  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
+    <value>492, 425</value>
+  </data>
+  <data name="$this.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 8.25pt</value>
+  </data>
+  <data name="$this.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 2, 2, 2</value>
+  </data>
+  <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
+    <value>CenterParent</value>
+  </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value>Options</value>
+  </data>
+  <data name="&gt;&gt;Colores.Name" xml:space="preserve">
+    <value>Colores</value>
+  </data>
+  <data name="&gt;&gt;Colores.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ColorDialog, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;ToolTipS.Name" xml:space="preserve">
+    <value>ToolTipS</value>
+  </data>
+  <data name="&gt;&gt;ToolTipS.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolTip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;FontDialog1.Name" xml:space="preserve">
+    <value>FontDialog1</value>
+  </data>
+  <data name="&gt;&gt;FontDialog1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.FontDialog, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;$this.Name" xml:space="preserve">
+    <value>OptionsDialog</value>
+  </data>
+  <data name="&gt;&gt;$this.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Form, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+</root>

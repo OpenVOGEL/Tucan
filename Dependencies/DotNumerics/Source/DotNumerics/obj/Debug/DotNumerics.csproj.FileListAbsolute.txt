@@ -1,0 +1,14 @@
+E:\JADSC\TestProgramas\DotNumerics\DotNumerics\DotNumerics\obj\Debug\ResolveAssemblyReference.cache
+E:\JADSC\TestProgramas\DotNumerics\DotNumerics\DotNumerics\obj\Debug\DotNumerics.LinearAlgebra.MatrixView.resources
+E:\JADSC\TestProgramas\DotNumerics\DotNumerics\DotNumerics\obj\Debug\DotNumerics.csproj.GenerateResource.Cache
+E:\JADSC\TestProgramas\DotNumerics\DotNumerics\DotNumerics\bin\Debug\DotNumerics.dll
+E:\JADSC\TestProgramas\DotNumerics\DotNumerics\DotNumerics\bin\Debug\DotNumerics.pdb
+E:\JADSC\TestProgramas\DotNumerics\DotNumerics\DotNumerics\obj\Debug\DotNumerics.dll
+E:\JADSC\TestProgramas\DotNumerics\DotNumerics\DotNumerics\obj\Debug\DotNumerics.pdb
+C:\Users\JADSC\Software\Projects\DotNumerics\DotNumerics\DotNumerics\bin\Debug\DotNumerics.dll
+C:\Users\JADSC\Software\Projects\DotNumerics\DotNumerics\DotNumerics\bin\Debug\DotNumerics.pdb
+C:\Users\JADSC\Software\Projects\DotNumerics\DotNumerics\DotNumerics\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\JADSC\Software\Projects\DotNumerics\DotNumerics\DotNumerics\obj\Debug\DotNumerics.LinearAlgebra.MatrixView.resources
+C:\Users\JADSC\Software\Projects\DotNumerics\DotNumerics\DotNumerics\obj\Debug\DotNumerics.csproj.GenerateResource.Cache
+C:\Users\JADSC\Software\Projects\DotNumerics\DotNumerics\DotNumerics\obj\Debug\DotNumerics.dll
+C:\Users\JADSC\Software\Projects\DotNumerics\DotNumerics\DotNumerics\obj\Debug\DotNumerics.pdb

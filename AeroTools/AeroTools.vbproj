@@ -1,0 +1,395 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>
+    </SchemaVersion>
+    <ProjectGuid>{5085A290-ADD2-429E-A3A3-CF4158147E27}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>AeroTools</RootNamespace>
+    <AssemblyName>AeroTools</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <MyType>Windows</MyType>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DocumentationFile>AeroTools.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DocumentationFile>AeroTools.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <DefineConstants>WITH_BOUNDED_VORTICES = true, WITH_PARALLEL_MATRIX = true</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionExplicit>On</OptionExplicit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionCompare>Binary</OptionCompare>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionStrict>Off</OptionStrict>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionInfer>On</OptionInfer>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>false</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>AeroTools.pfx</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ReleaseFull|AnyCPU'">
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\ReleaseFull\</OutputPath>
+    <DefineConstants>WITH_BOUNDED_VORTICES = true, WITH_PARALLEL_MATRIX = true</DefineConstants>
+    <DocumentationFile>AeroTools.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisRuleSet>ManagedMinimumRules.ruleset</CodeAnalysisRuleSet>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ReleaseLight|AnyCPU'">
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\ReleaseLight\</OutputPath>
+    <DefineConstants>WITH_BOUNDED_VORTICES = true, WITH_PARALLEL_MATRIX = true</DefineConstants>
+    <DocumentationFile>AeroTools.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisRuleSet>ManagedMinimumRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Cudafy.NET, Version=1.28.5482.15045, Culture=neutral, PublicKeyToken=63a4c9931616906b, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Dependencies\Cudafy.NET.dll</HintPath>
+    </Reference>
+    <Reference Include="Meta.Numerics">
+      <HintPath>..\Dependencies\MetaNumerics\Meta.Numerics.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationFramework" />
+    <Reference Include="SharpGL">
+      <HintPath>..\Dependencies\SharpGL\SharpGL.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="SharpGL.WinForms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=27fc851303210b27, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependencies\SharpGL\SharpGL.WinForms.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpGL.WPF">
+      <HintPath>..\Dependencies\SharpGL\SharpGL.WPF.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Forms.DataVisualization" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+  </ItemGroup>
+  <ItemGroup>
+    <Import Include="Microsoft.VisualBasic" />
+    <Import Include="System" />
+    <Import Include="System.Collections" />
+    <Import Include="System.Collections.Generic" />
+    <Import Include="System.Data" />
+    <Import Include="System.Diagnostics" />
+    <Import Include="System.Linq" />
+    <Import Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="My Project\AssemblyInfo.vb" />
+    <Compile Include="My Project\Application.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Application.myapp</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Resources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Settings.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="UVLM\Models\Aero\BoundedLattice.vb" />
+    <Compile Include="UVLM\Models\Aero\Components\ChordWiseLink.vb" />
+    <Compile Include="UVLM\Models\Aero\Components\PotentialFunctions.vb" />
+    <Compile Include="UVLM\Models\Aero\Components\Primitives.vb" />
+    <Compile Include="UVLM\Models\Aero\Components\VortexRing3.vb" />
+    <Compile Include="UVLM\Models\Aero\Components\VortexRing4.vb" />
+    <Compile Include="UVLM\Models\Aero\TotalAirLoads.vb" />
+    <Compile Include="UVLM\Models\Aero\Components\Vortex.vb" />
+    <Compile Include="UVLM\Models\Aero\Lattice.vb" />
+    <Compile Include="UVLM\Models\Aero\Components\Node.vb" />
+    <Compile Include="UVLM\Models\Aero\Components\VortexRing.vb" />
+    <Compile Include="UVLM\Models\Aero\Components\Polars.vb" />
+    <Compile Include="UVLM\Models\Aero\Wake.vb" />
+    <Compile Include="UVLM\Models\Structural\Library\Components.vb" />
+    <Compile Include="UVLM\Models\Structural\Library\Elements.vb" />
+    <Compile Include="UVLM\Models\Structural\Library\Modal.vb" />
+    <Compile Include="UVLM\Models\Structural\Library\StructuralSettings.vb" />
+    <Compile Include="UVLM\Models\Structural\Linker.vb" />
+    <Compile Include="UVLM\Models\Structural\StructuralCore.vb" />
+    <Compile Include="UVLM\SimulationTools\AeroelasticHistogram.vb" />
+    <Compile Include="UVLM\SimulationTools\SimulationTools.vb" />
+    <Compile Include="UVLM\Solver\UVLM_Solver_Aeroelastic.vb" />
+    <Compile Include="UVLM\Solver\UVLM_Solver_Calculations.vb" />
+    <Compile Include="UVLM\Solver\UVLM_Solver_Airloads.vb" />
+    <Compile Include="UVLM\Solver\UVLM_Solver_Cuda.vb" />
+    <Compile Include="UVLM\Solver\UVLM_Solver_Definitions.vb" />
+    <Compile Include="UVLM\Solver\UVLM_Solver_FlightSim.vb" />
+    <Compile Include="UVLM\Solver\UVLM_Solver_IO.vb" />
+    <Compile Include="UVLM\Solver\UVLM_Solver_Steady.vb" />
+    <Compile Include="UVLM\Solver\UVLM_Solver_Transit.vb" />
+    <Compile Include="UVLM\Settings\Settings.vb" />
+    <Compile Include="VisualModel\Environment\Colormaping.vb" />
+    <Compile Include="VisualModel\Environment\Frames.vb" />
+    <Compile Include="VisualModel\Environment\Properties.vb" />
+    <Compile Include="VisualModel\GUI\Forms\FormAnchors.Designer.vb">
+      <DependentUpon>FormAnchors.vb</DependentUpon>
+    </Compile>
+    <Compile Include="VisualModel\GUI\Forms\FormAnchors.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="VisualModel\GUI\Forms\FormFuselageEditor.Designer.vb">
+      <DependentUpon>FormFuselageEditor.vb</DependentUpon>
+    </Compile>
+    <Compile Include="VisualModel\GUI\Forms\FormFuselageEditor.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="VisualModel\GUI\Forms\FormHistogram.Designer.vb">
+      <DependentUpon>FormHistogram.vb</DependentUpon>
+    </Compile>
+    <Compile Include="VisualModel\GUI\Forms\FormHistogram.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="VisualModel\GUI\Forms\FormJetEngine.Designer.vb">
+      <DependentUpon>FormJetEngine.vb</DependentUpon>
+    </Compile>
+    <Compile Include="VisualModel\GUI\Forms\FormJetEngine.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="VisualModel\GUI\Forms\FormPolarCurve.Designer.vb">
+      <DependentUpon>FormPolarCurve.vb</DependentUpon>
+    </Compile>
+    <Compile Include="VisualModel\GUI\Forms\FormPolarCurve.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="VisualModel\GUI\Forms\FormReport.Designer.vb">
+      <DependentUpon>FormReport.vb</DependentUpon>
+    </Compile>
+    <Compile Include="VisualModel\GUI\Forms\FormReport.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="VisualModel\GUI\Forms\FormResults.Designer.vb">
+      <DependentUpon>FormResults.vb</DependentUpon>
+    </Compile>
+    <Compile Include="VisualModel\GUI\Forms\FormResults.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="VisualModel\GUI\Forms\FormSettings.Designer.vb">
+      <DependentUpon>FormSettings.vb</DependentUpon>
+    </Compile>
+    <Compile Include="VisualModel\GUI\Forms\FormSettings.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="VisualModel\GUI\Forms\FormUnsteadyVelocity.Designer.vb">
+      <DependentUpon>FormUnsteadyVelocity.vb</DependentUpon>
+    </Compile>
+    <Compile Include="VisualModel\GUI\Forms\FormUnsteadyVelocity.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="VisualModel\GUI\Forms\FormProgress.Designer.vb">
+      <DependentUpon>FormProgress.vb</DependentUpon>
+    </Compile>
+    <Compile Include="VisualModel\GUI\Forms\FormProgress.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="VisualModel\GUI\User controls\ForcesPanel.Designer.vb">
+      <DependentUpon>ForcesPanel.vb</DependentUpon>
+    </Compile>
+    <Compile Include="VisualModel\GUI\User controls\ForcesPanel.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="VisualModel\GUI\User controls\Histograms\FlutterTestControl.Designer.vb">
+      <DependentUpon>FlutterTestControl.vb</DependentUpon>
+    </Compile>
+    <Compile Include="VisualModel\GUI\User controls\Histograms\FlutterTestControl.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="VisualModel\GUI\User controls\MiniComponents\ResultBox.Designer.vb">
+      <DependentUpon>ResultBox.vb</DependentUpon>
+    </Compile>
+    <Compile Include="VisualModel\GUI\User controls\MiniComponents\ResultBox.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="VisualModel\GUI\User controls\Polars\CustomPolarControl.Designer.vb">
+      <DependentUpon>CustomPolarControl.vb</DependentUpon>
+    </Compile>
+    <Compile Include="VisualModel\GUI\User controls\Polars\CustomPolarControl.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="VisualModel\GUI\User controls\Polars\PolarPlotter.Designer.vb">
+      <DependentUpon>PolarPlotter.vb</DependentUpon>
+    </Compile>
+    <Compile Include="VisualModel\GUI\User controls\Polars\PolarPlotter.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="VisualModel\GUI\User controls\Polars\QuadraticPolarControl.Designer.vb">
+      <DependentUpon>QuadraticPolarControl.vb</DependentUpon>
+    </Compile>
+    <Compile Include="VisualModel\GUI\User controls\Polars\QuadraticPolarControl.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="VisualModel\GUI\User controls\VelocityControl.Designer.vb">
+      <DependentUpon>VelocityControl.vb</DependentUpon>
+    </Compile>
+    <Compile Include="VisualModel\GUI\User controls\VelocityControl.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="VisualModel\GUI\User controls\WingControl.Designer.vb">
+      <DependentUpon>WingControl.vb</DependentUpon>
+    </Compile>
+    <Compile Include="VisualModel\GUI\User controls\WingControl.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="VisualModel\Interface\Operations.vb" />
+    <Compile Include="VisualModel\Interface\Properties.vb" />
+    <Compile Include="VisualModel\Interface\Proyecto.vb" />
+    <Compile Include="VisualModel\Interface\Results\Results.vb" />
+    <Compile Include="VisualModel\Interface\Selection.vb" />
+    <Compile Include="VisualModel\IO\IOXML.vb" />
+    <Compile Include="VisualModel\Models\Basics\BaseSurface.vb" />
+    <Compile Include="VisualModel\Models\Basics\ChamberdLine.vb" />
+    <Compile Include="VisualModel\Models\Basics\Elements.vb" />
+    <Compile Include="VisualModel\Models\Basics\Mesh.vb" />
+    <Compile Include="VisualModel\Models\Basics\StructuralPartition.vb" />
+    <Compile Include="VisualModel\Models\CalculationModel.vb" />
+    <Compile Include="VisualModel\Models\Components\Empennage.vb" />
+    <Compile Include="VisualModel\Models\Components\Fuselage.vb" />
+    <Compile Include="VisualModel\Models\Components\GeneralSurface.vb" />
+    <Compile Include="VisualModel\Models\Components\JetEngine.vb" />
+    <Compile Include="VisualModel\Models\Components\LiftingSurface.vb" />
+    <Compile Include="VisualModel\Models\Components\Nacelle.vb" />
+    <Compile Include="VisualModel\Models\Components\Wake.vb" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="My Project\Resources.resx">
+      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="VisualModel\GUI\Forms\FormAnchors.resx">
+      <DependentUpon>FormAnchors.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="VisualModel\GUI\Forms\FormFuselageEditor.resx">
+      <DependentUpon>FormFuselageEditor.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="VisualModel\GUI\Forms\FormHistogram.resx">
+      <DependentUpon>FormHistogram.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="VisualModel\GUI\Forms\FormJetEngine.resx">
+      <DependentUpon>FormJetEngine.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="VisualModel\GUI\Forms\FormPolarCurve.resx">
+      <DependentUpon>FormPolarCurve.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="VisualModel\GUI\Forms\FormReport.resx">
+      <DependentUpon>FormReport.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="VisualModel\GUI\Forms\FormResults.resx">
+      <DependentUpon>FormResults.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="VisualModel\GUI\Forms\FormSettings.resx">
+      <DependentUpon>FormSettings.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="VisualModel\GUI\Forms\FormUnsteadyVelocity.resx">
+      <DependentUpon>FormUnsteadyVelocity.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="VisualModel\GUI\Forms\FormProgress.resx">
+      <DependentUpon>FormProgress.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="VisualModel\GUI\User controls\ForcesPanel.resx">
+      <DependentUpon>ForcesPanel.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="VisualModel\GUI\User controls\Histograms\FlutterTestControl.resx">
+      <DependentUpon>FlutterTestControl.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="VisualModel\GUI\User controls\MiniComponents\ResultBox.resx">
+      <DependentUpon>ResultBox.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="VisualModel\GUI\User controls\Polars\CustomPolarControl.resx">
+      <DependentUpon>CustomPolarControl.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="VisualModel\GUI\User controls\Polars\PolarPlotter.resx">
+      <DependentUpon>PolarPlotter.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="VisualModel\GUI\User controls\Polars\QuadraticPolarControl.resx">
+      <DependentUpon>QuadraticPolarControl.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="VisualModel\GUI\User controls\VelocityControl.resx">
+      <DependentUpon>VelocityControl.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="VisualModel\GUI\User controls\WingControl.resx">
+      <DependentUpon>WingControl.vb</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="AeroTools.pfx" />
+    <None Include="My Project\Application.myapp">
+      <Generator>MyApplicationCodeGenerator</Generator>
+      <LastGenOutput>Application.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="My Project\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <CustomToolNamespace>My</CustomToolNamespace>
+      <LastGenOutput>Settings.Designer.vb</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Dependencies\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{94E38DFF-614B-4CBD-B67C-F211BB35CE8B}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DotNumerics\Source\DotNumerics\DotNumerics.csproj">
+      <Project>{48185ef1-b73b-457b-aa37-0bce567c5ab1}</Project>
+      <Name>DotNumerics</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MathTools\MathTools.vbproj">
+      <Project>{7b3d8e3f-d52b-4118-9178-f457444c596d}</Project>
+      <Name>MathTools</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

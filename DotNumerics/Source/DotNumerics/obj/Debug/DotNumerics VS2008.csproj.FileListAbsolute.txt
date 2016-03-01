@@ -1,0 +1,6 @@
+C:\Users\Guillermo\Documents\Otros\DotNumerics\Source\DotNumerics\bin\Debug\DotNumerics.dll
+C:\Users\Guillermo\Documents\Otros\DotNumerics\Source\DotNumerics\bin\Debug\DotNumerics.pdb
+C:\Users\Guillermo\Documents\Otros\DotNumerics\Source\DotNumerics\obj\Debug\DotNumerics.LinearAlgebra.MatrixView.resources
+C:\Users\Guillermo\Documents\Otros\DotNumerics\Source\DotNumerics\obj\Debug\DotNumerics VS2008.csproj.GenerateResource.Cache
+C:\Users\Guillermo\Documents\Otros\DotNumerics\Source\DotNumerics\obj\Debug\DotNumerics.dll
+C:\Users\Guillermo\Documents\Otros\DotNumerics\Source\DotNumerics\obj\Debug\DotNumerics.pdb

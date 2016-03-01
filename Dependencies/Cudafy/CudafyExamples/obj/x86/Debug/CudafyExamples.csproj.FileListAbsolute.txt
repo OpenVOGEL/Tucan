@@ -1,0 +1,11 @@
+C:\Users\Guillermo\Documents\Software\CudafyV1.28\CudafyExamples\bin\Debug\CudafyExamples.exe.config
+C:\Users\Guillermo\Documents\Software\CudafyV1.28\CudafyExamples\obj\x86\Debug\CudafyExamples.csprojResolveAssemblyReference.cache
+C:\Users\Guillermo\Documents\Software\CudafyV1.28\CudafyExamples\bin\Debug\DummyComplexFloat.cu
+C:\Users\Guillermo\Documents\Software\CudafyV1.28\CudafyExamples\bin\Debug\DummyDummyComplexFloatFunction.cu
+C:\Users\Guillermo\Documents\Software\CudafyV1.28\CudafyExamples\bin\Debug\DummyFunction.cu
+C:\Users\Guillermo\Documents\Software\CudafyV1.28\CudafyExamples\bin\Debug\CudafyExamples.exe
+C:\Users\Guillermo\Documents\Software\CudafyV1.28\CudafyExamples\bin\Debug\CudafyExamples.pdb
+C:\Users\Guillermo\Documents\Software\CudafyV1.28\CudafyExamples\bin\Debug\Cudafy.NET.dll
+C:\Users\Guillermo\Documents\Software\CudafyV1.28\CudafyExamples\bin\Debug\Cudafy.NET.xml
+C:\Users\Guillermo\Documents\Software\CudafyV1.28\CudafyExamples\obj\x86\Debug\CudafyExamples.exe
+C:\Users\Guillermo\Documents\Software\CudafyV1.28\CudafyExamples\obj\x86\Debug\CudafyExamples.pdb

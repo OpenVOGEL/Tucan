@@ -1,0 +1,48 @@
+﻿<?xml version="1.0"?>
+<doc>
+<assembly>
+<name>
+VisualTools
+</name>
+</assembly>
+<members>
+<member name="T:VisualTools.Types.ColorSharpGL">
+ <summary>
+ Represents a color to be used on SharpGL
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="T:VisualTools.Types.Colormap">
+ <summary>
+ Provides methods to draw scalar in colors
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:VisualTools.Types.Colormap.ScalarToColor(System.Double,System.Double,System.Double)">
+ <summary>
+ Converts a scalar into a color provided the red and blue extremes
+ </summary>
+ <param name="Escalar">Value to convert</param>
+ <param name="Maximum">Value to be displayed as red</param>
+ <param name="Minimum">Value to be displayed as blue</param>
+ <returns>A color representing the given scalar</returns>
+ <remarks></remarks>
+</member>
+<member name="T:VisualTools.My.Resources.Resources">
+<summary>
+  A strongly-typed resource class, for looking up localized strings, etc.
+</summary>
+</member>
+<member name="P:VisualTools.My.Resources.Resources.ResourceManager">
+<summary>
+  Returns the cached ResourceManager instance used by this class.
+</summary>
+</member>
+<member name="P:VisualTools.My.Resources.Resources.Culture">
+<summary>
+  Overrides the current thread's CurrentUICulture property for all
+  resource lookups using this strongly typed resource class.
+</summary>
+</member>
+</members>
+</doc>

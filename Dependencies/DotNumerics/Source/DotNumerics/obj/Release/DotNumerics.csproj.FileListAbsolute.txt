@@ -1,0 +1,15 @@
+C:\Users\JADSC\Software\Projects\DotNumerics\DotNumerics\DotNumerics\bin\Release\DotNumerics.dll
+C:\Users\JADSC\Software\Projects\DotNumerics\DotNumerics\DotNumerics\bin\Release\DotNumerics.pdb
+C:\Users\JADSC\Software\Projects\DotNumerics\DotNumerics\DotNumerics\obj\Release\ResolveAssemblyReference.cache
+C:\Users\JADSC\Software\Projects\DotNumerics\DotNumerics\DotNumerics\obj\Release\DotNumerics.LinearAlgebra.MatrixView.resources
+C:\Users\JADSC\Software\Projects\DotNumerics\DotNumerics\DotNumerics\obj\Release\DotNumerics.csproj.GenerateResource.Cache
+C:\Users\JADSC\Software\Projects\DotNumerics\DotNumerics\DotNumerics\obj\Release\DotNumerics.dll
+C:\Users\JADSC\Software\Projects\DotNumerics\DotNumerics\DotNumerics\obj\Release\DotNumerics.pdb
+C:\Users\JADSC\Software\Projects\DotNumerics\Source\DotNumerics\bin\Release\DotNumerics.dll
+C:\Users\JADSC\Software\Projects\DotNumerics\Source\DotNumerics\bin\Release\DotNumerics.pdb
+C:\Users\JADSC\Software\Projects\DotNumerics\Source\DotNumerics\obj\Release\ResolveAssemblyReference.cache
+C:\Users\JADSC\Software\Projects\DotNumerics\Source\DotNumerics\obj\Release\DotNumerics.LinearAlgebra.MatrixView.resources
+C:\Users\JADSC\Software\Projects\DotNumerics\Source\DotNumerics\obj\Release\DotNumerics.csproj.GenerateResource.Cache
+C:\Users\JADSC\Software\Projects\DotNumerics\Source\DotNumerics\obj\Release\DotNumerics.dll
+C:\Users\JADSC\Software\Projects\DotNumerics\Source\DotNumerics\obj\Release\DotNumerics.pdb
+C:\Users\JADSC\Software\Projects\DotNumerics\Source\DotNumerics\bin\Release\DotNumerics.XML

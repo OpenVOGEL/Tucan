@@ -1,0 +1,3660 @@
+﻿<?xml version="1.0"?>
+<doc>
+<assembly>
+<name>
+AeroTools
+</name>
+</assembly>
+<members>
+<member name="F:AeroTools.FlightSim.Aircraft.Aircraft.Airloads">
+ <summary>
+ Gathers airloads
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:AeroTools.FlightSim.Aircraft.Aircraft.AeroProperties">
+ <summary>
+ 
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:AeroTools.FlightSim.Aircraft.Aircraft.Basis">
+ <summary>
+ Orthogonal aerodynamic basis (in directions of {L, Y, D})
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:AeroTools.FlightSim.Aircraft.Aircraft.Geometry">
+ <summary>
+ Aircraft main geometric parameters
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:AeroTools.FlightSim.Airloads.Airloads.L">
+ <summary>
+ Lift
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:AeroTools.FlightSim.Airloads.Airloads.D">
+ <summary>
+ Drag
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:AeroTools.FlightSim.Airloads.Airloads.Y">
+ <summary>
+ Lateral force
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:AeroTools.FlightSim.Airloads.Airloads.M">
+ <summary>
+ Pitching moment
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:AeroTools.FlightSim.Airloads.Airloads.N">
+ <summary>
+ Yawing moment
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:AeroTools.FlightSim.Airloads.Airloads.R">
+ <summary>
+ Rolling moment
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:AeroTools.FlightSim.Mechanics.KinematicCoordinates.P">
+ <summary>
+ Relative position vector
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:AeroTools.FlightSim.Mechanics.KinematicCoordinates.e">
+ <summary>
+ Orientation in Euler angles
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:AeroTools.FlightSim.Mechanics.KinematicCoordinates.V">
+ <summary>
+ Relative velocity
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:AeroTools.FlightSim.Mechanics.KinematicCoordinates.O">
+ <summary>
+ Relative angular velocity
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:AeroTools.FlightSim.Mechanics.KinematicCoordinates.dVdt">
+ <summary>
+ Local variation of the velocity vector
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:AeroTools.FlightSim.Mechanics.KinematicCoordinates.dOdt">
+ <summary>
+ Local variation of the angular velocity vector
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:AeroTools.FlightSim.Mechanics.KinematicCoordinates.Alfa">
+ <summary>
+ Atan(Vz/Vy) [rad]
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:AeroTools.FlightSim.Mechanics.KinematicCoordinates.Beta">
+ <summary>
+ Atan(Vy/V) [rad]
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:AeroTools.FlightSim.Mechanics.RigidBody.m">
+ <summary>
+ Mass in Kg
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:AeroTools.FlightSim.Mechanics.RigidBody.I">
+ <summary>
+ Rotational inertia about axes crossing the center of mass
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:AeroTools.FlightSim.Mechanics.RigidBody.B">
+ <summary>
+ Local reference axis vectors
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:AeroTools.FlightSim.Mechanics.RigidBody.Kinematics">
+ <summary>
+ Contains the kinematic coordinates of the last time steps.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.FlightSim.Mechanics.RigidBody.IntegratePosition(MathTools.Algebra.EuclideanSpace.EVector3,MathTools.Algebra.EuclideanSpace.EVector3,System.Double)">
+ <summary>
+ Integrates the position of the rigid body numerically provided the external forces and moments.
+ </summary>
+ <param name="F">External forces</param>
+ <param name="M">External moments about the cm</param>
+ <param name="Dt">Time step</param>
+ <remarks>4th order Rubge-Kutta method used to solve the equations of motion.</remarks>
+</member>
+<member name="T:AeroTools.My.Resources.Resources">
+<summary>
+  Clase de recurso con establecimiento inflexible de tipos, para buscar cadenas traducidas, etc.
+</summary>
+</member>
+<member name="P:AeroTools.My.Resources.Resources.ResourceManager">
+<summary>
+  Devuelve la instancia de ResourceManager almacenada en caché utilizada por esta clase.
+</summary>
+</member>
+<member name="P:AeroTools.My.Resources.Resources.Culture">
+<summary>
+  Reemplaza la propiedad CurrentUICulture del subproceso actual para todas las
+  búsquedas de recursos mediante esta clase de recurso con establecimiento inflexible de tipos.
+</summary>
+</member>
+<member name="P:AeroTools.My.Resources.Resources.BuildMatrix">
+<summary>
+  Busca una cadena traducida similar a Building matrix.
+</summary>
+</member>
+<member name="T:AeroTools.UVLM.Models.Aero.BoundedLattice">
+ <summary>
+ Represents a lattice bounded to a solid surface where several wakes might be convected.
+ </summary>
+</member>
+<member name="M:AeroTools.UVLM.Models.Aero.BoundedLattice.ReEstablishWakes">
+ <summary>
+ This sub repositions the primitive points at the wake. It is used on the aeroelastic analysis.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.UVLM.Models.Aero.BoundedLattice.ClearVelocity(MathTools.Algebra.EuclideanSpace.EVector3)">
+ <summary>
+ Reasigns velocity at each control point.
+ </summary>
+</member>
+<member name="M:AeroTools.UVLM.Models.Aero.BoundedLattice.PopulateWakeRings(System.Double,System.Int32)">
+ <summary>
+ Convect all wakes on the primiteve edges of the bound lattice and adds new nodes and panels at primitive positions.
+ If RemoveOldest is marked as true, oldest wake panels will be removed.
+ </summary>
+</member>
+<member name="M:AeroTools.UVLM.Models.Aero.BoundedLattice.PopulateWakeRingsAndVortices(System.Double,System.Int32)">
+ <summary>
+ Convect all wakes on the primiteve edges of the bound lattice and adds new nodes and panels at primitive positions.
+ If RemoveOldest is marked as true, oldest wake panels will be removed.
+ </summary>
+</member>
+<member name="M:AeroTools.UVLM.Models.Aero.BoundedLattice.PopulateWakeVortices(System.Double,System.Int32,System.Boolean)">
+ <summary>
+ Convect all wakes on the primiteve edges of the bound lattice and adds new nodes and panels at primitive positions.
+ </summary>
+</member>
+<member name="F:AeroTools.UVLM.Models.Aero.BoundedLattice.ChordWiseStripes">
+ <summary>
+ Links to chordwise ring stripes used to calculate skin drag and local CL
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.UVLM.Models.Aero.BoundedLattice.FindSurroundingRings">
+ <summary>
+ Runs through the lattice to assign to each ring its neighbor rings.
+ </summary>
+</member>
+<member name="M:AeroTools.UVLM.Models.Aero.BoundedLattice.CalculatePressure(System.Double)">
+ <summary>
+ Calculates pressure coeficient at each bounded vortex ring.
+ </summary>
+ <param name="SquareVelocity">Square of reference velocity used to adimensionalize pressure</param>
+</member>
+<member name="T:AeroTools.UVLM.Models.Aero.Components.ChorwiseStripe">
+ <summary>
+ Represents a vortex ring stripe where lift and drag can be locally computed
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:AeroTools.UVLM.Models.Aero.Components.ChorwiseStripe.Rings">
+ <summary>
+ Chordwise stripe of vortex rings (from the L.E. to the T.E)
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:AeroTools.UVLM.Models.Aero.Components.ChorwiseStripe.Polars">
+ <summary>
+ Polar curve used to compute the local drag
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.UVLM.Models.Aero.Components.ChorwiseStripe.CL">
+ <summary>
+ Stripe lift coefficient
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.UVLM.Models.Aero.Components.ChorwiseStripe.CDi">
+ <summary>
+ Stripe induced drag coefficient
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.UVLM.Models.Aero.Components.ChorwiseStripe.CDp">
+ <summary>
+ Stripe parasitic drag coefficient
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.UVLM.Models.Aero.Components.ChorwiseStripe.L">
+ <summary>
+ Total stripe lift
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.UVLM.Models.Aero.Components.ChorwiseStripe.Di">
+ <summary>
+ Total stripe induced drag
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.UVLM.Models.Aero.Components.ChorwiseStripe.Dp">
+ <summary>
+ Total stripe induced drag
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.UVLM.Models.Aero.Components.ChorwiseStripe.ML">
+ <summary>
+ Total stripe moment (with respect to the origin).
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.UVLM.Models.Aero.Components.ChorwiseStripe.MDi">
+ <summary>
+ Total stripe moment (with respect to the origin).
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.UVLM.Models.Aero.Components.ChorwiseStripe.MDp">
+ <summary>
+ Total stripe moment (with respect to the origin).
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.UVLM.Models.Aero.Components.ChorwiseStripe.Chord">
+ <summary>
+ Stripe chord
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.UVLM.Models.Aero.Components.ChorwiseStripe.ChordWiseVector">
+ <summary>
+ Vector having the direction of the chord
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.UVLM.Models.Aero.Components.ChorwiseStripe.CenterPoint">
+ <summary>
+ Point located at the geometric center of the chordwise stripe
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.UVLM.Models.Aero.Components.ChorwiseStripe.Compute(MathTools.Algebra.EuclideanSpace.EVector3,System.Double,System.Double,System.Double)">
+ <summary>
+ Calculate stripe lift, drag and area. Cp should be calculated before calling this sub.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:AeroTools.UVLM.Models.Aero.Components.PotentialFunctions.FourPi">
+ <summary>
+ Four times PI
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:AeroTools.UVLM.Models.Aero.Components.PotentialFunctions.Epsilon">
+ <summary>
+ Minimum value of the Biot-Savart denominator
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.UVLM.Models.Aero.Components.PotentialFunctions.GetTriangularUnitSourcePotential(MathTools.Algebra.EuclideanSpace.EVector3,MathTools.Algebra.EuclideanSpace.EVector3,MathTools.Algebra.EuclideanSpace.EVector3,MathTools.Algebra.EuclideanSpace.EVector3,System.Boolean)">
+ <summary>
+ Returns the potential associated to a uniform unit distribution of sources.
+ </summary>
+ <param name="p">Evaluation point</param>
+ <param name="p0">Point 0</param>
+ <param name="p1">Point 1</param>
+ <param name="p2">Point 2</param>
+ <returns>The unit doublets distribution</returns>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.UVLM.Models.Aero.Components.PotentialFunctions.GetTriangularUnitDoubletPotential(MathTools.Algebra.EuclideanSpace.EVector3,MathTools.Algebra.EuclideanSpace.EVector3,MathTools.Algebra.EuclideanSpace.EVector3,MathTools.Algebra.EuclideanSpace.EVector3,System.Boolean,System.Boolean)">
+ <summary>
+ Returns the potential associated to a uniform unit distribution of doublets.
+ </summary>
+ <param name="p">Evaluation point</param>
+ <param name="p0">Point 0</param>
+ <param name="p1">Point 1</param>
+ <param name="p2">Point 2</param>
+ <returns>The unit doublets distribution</returns>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.UVLM.Models.Aero.Components.PotentialFunctions.AddTriangularSourceVelocity(MathTools.Algebra.EuclideanSpace.EVector3,MathTools.Algebra.EuclideanSpace.EVector3,MathTools.Algebra.EuclideanSpace.EVector3,MathTools.Algebra.EuclideanSpace.EVector3,MathTools.Algebra.EuclideanSpace.EVector3@,System.Double,System.Boolean)">
+ <summary>
+ Adds the velocity associated to a unifor distribution of sources.
+ </summary>
+ <param name="p"></param>
+ <param name="p0"></param>
+ <param name="p1"></param>
+ <param name="p2"></param>
+ <param name="Velocity"></param>
+ <param name="factor"></param>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.UVLM.Models.Aero.Components.PotentialFunctions.GetQuadUnitSourcePotential_MeanPlane(MathTools.Algebra.EuclideanSpace.EVector3,MathTools.Algebra.EuclideanSpace.EVector3,MathTools.Algebra.EuclideanSpace.EVector3,MathTools.Algebra.EuclideanSpace.EVector3,MathTools.Algebra.EuclideanSpace.EVector3,MathTools.Algebra.EuclideanSpace.EVector3,System.Boolean)">
+ <summary>
+ Returns the potential associated to a uniform unit distribution of sources.
+ </summary>
+ <param name="p">Evaluation point</param>
+ <param name="p0">Point 0</param>
+ <param name="p1">Point 1</param>
+ <param name="p2">Point 2</param>
+ <param name="p3">Point 3</param>
+ <param name="n">Normal</param>
+ <param name="reversed">Indicates if the normal has been reversed</param>
+ <returns>The unit doublets distribution</returns>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.UVLM.Models.Aero.Components.PotentialFunctions.GetQuadUnitDoubletPotential_MeanPlane(MathTools.Algebra.EuclideanSpace.EVector3,MathTools.Algebra.EuclideanSpace.EVector3,MathTools.Algebra.EuclideanSpace.EVector3,MathTools.Algebra.EuclideanSpace.EVector3,MathTools.Algebra.EuclideanSpace.EVector3,MathTools.Algebra.EuclideanSpace.EVector3,System.Boolean)">
+ <summary>
+ Returns the potential associated to a uniform unit distribution of doublets.
+ </summary>
+ <param name="p">Evaluation point</param>
+ <param name="p0">Point 0</param>
+ <param name="p1">Point 1</param>
+ <param name="p2">Point 2</param>
+ <param name="p3">Point 3</param>
+ <param name="n">Normal</param>
+ <param name="reversed">Indicates if the normal has been reversed</param>
+ <returns>The unit doublets distribution</returns>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.UVLM.Models.Aero.Components.PotentialFunctions.AddQuadSourceVelocity_MeanPlane(MathTools.Algebra.EuclideanSpace.EVector3,MathTools.Algebra.EuclideanSpace.EVector3,MathTools.Algebra.EuclideanSpace.EVector3,MathTools.Algebra.EuclideanSpace.EVector3,MathTools.Algebra.EuclideanSpace.EVector3,MathTools.Algebra.EuclideanSpace.EVector3,MathTools.Algebra.EuclideanSpace.EVector3@,System.Double,System.Boolean)">
+ <summary>
+ Adds the velocity associated to a unifor distribution of sources.
+ </summary>
+ <param name="p"></param>
+ <param name="p0"></param>
+ <param name="p1"></param>
+ <param name="p2"></param>
+ <param name="p3"></param>
+ <param name="n"></param>
+ <param name="Velocity"></param>
+ <param name="factor"></param>
+ <param name="reversed"></param>
+ <remarks></remarks>
+</member>
+<member name="T:AeroTools.UVLM.Models.Aero.Components.VortexRing3">
+ <summary>
+ Represents a ring of 3 vortex segments.
+ Nodes are passed by refference and used to on calculation, they do not belong to this class.
+ </summary>
+</member>
+<member name="M:AeroTools.UVLM.Models.Aero.Components.VortexRing3.#ctor(AeroTools.UVLM.Models.Aero.Components.Node,AeroTools.UVLM.Models.Aero.Components.Node,AeroTools.UVLM.Models.Aero.Components.Node,System.Int32,System.Boolean,System.Boolean)">
+ <summary>
+ Use this constructor to add bounded panels.
+ Geometric entities will be imediatly calculated.
+ </summary>
+</member>
+<member name="M:AeroTools.UVLM.Models.Aero.Components.VortexRing3.#ctor(AeroTools.UVLM.Models.Aero.Components.Node,AeroTools.UVLM.Models.Aero.Components.Node,AeroTools.UVLM.Models.Aero.Components.Node,System.Double,System.Int32,System.Boolean,System.Boolean)">
+ <summary>
+ Use this constructor to add wake panels. Geometric entities will not be calculated here.
+ </summary>
+</member>
+<member name="P:AeroTools.UVLM.Models.Aero.Components.VortexRing3.VelocityW">
+ <summary>
+ This is the velocity induced by the wakes plus the stream velocity.
+ </summary>
+</member>
+<member name="P:AeroTools.UVLM.Models.Aero.Components.VortexRing3.VelocityT">
+ <summary>
+ Total velocity at the control point.
+ </summary>
+</member>
+<member name="P:AeroTools.UVLM.Models.Aero.Components.VortexRing3.VelocityS">
+ <summary>
+ Surface velocity at the control point
+ </summary>
+</member>
+<member name="P:AeroTools.UVLM.Models.Aero.Components.VortexRing3.PotentialW">
+ <summary>
+ Potential induced by wake doublets.
+ </summary>
+</member>
+<member name="P:AeroTools.UVLM.Models.Aero.Components.VortexRing3.G">
+ <summary>
+ Local circulation.
+ </summary>
+</member>
+<member name="P:AeroTools.UVLM.Models.Aero.Components.VortexRing3.DGdt">
+ <summary>
+ First derivative of circulation in time.
+ </summary>
+</member>
+<member name="P:AeroTools.UVLM.Models.Aero.Components.VortexRing3.S">
+ <summary>
+ Local source intensity.
+ </summary>
+</member>
+<member name="P:AeroTools.UVLM.Models.Aero.Components.VortexRing3.Cp">
+ <summary>
+ Local pressure coeficient. When parent lattice "IsSlender" field is true it represents the coeficient of local jump of pressure.
+ </summary>
+</member>
+<member name="P:AeroTools.UVLM.Models.Aero.Components.VortexRing3.Cdi">
+ <summary>
+ Local component of induced drag (only valid for slender rings).
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.UVLM.Models.Aero.Components.VortexRing3.IndexL">
+ <summary>
+ Local index: represents the position of this panel on the local storage.
+ </summary>
+</member>
+<member name="P:AeroTools.UVLM.Models.Aero.Components.VortexRing3.IndexG">
+ <summary>
+ Global index: represents the index of this panel on the influence matrix and G and RHS vectors.
+ </summary>
+</member>
+<member name="F:AeroTools.UVLM.Models.Aero.Components.VortexRing3.FourPi">
+ <summary>
+ Four times PI
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:AeroTools.UVLM.Models.Aero.Components.VortexRing3.Epsilon">
+ <summary>
+ Minimum value of the Biot-Savart denominator
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.UVLM.Models.Aero.Components.VortexRing3.Node(System.Int32)">
+ <summary>
+ Sets or gets a corner node. This property is 1-based.
+ </summary>
+</member>
+<member name="P:AeroTools.UVLM.Models.Aero.Components.VortexRing3.Normal">
+ <summary>
+ Normal vector at the control point.
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.UVLM.Models.Aero.Components.VortexRing3.ControlPoint">
+ <summary>
+ Control point used to impose local boundary conditions.
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.UVLM.Models.Aero.Components.VortexRing3.OuterControlPoint">
+ <summary>
+ Control point used to compute velocity at non slender rings.
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.UVLM.Models.Aero.Components.VortexRing3.Area">
+ <summary>
+ Ring area.
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.UVLM.Models.Aero.Components.VortexRing3.CalculateGeometricEntities">
+ <summary>
+ Calculates all geometric entities associated to the vortex ring.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.UVLM.Models.Aero.Components.VortexRing3.RecalculateNormal">
+ <summary>
+ Calculates the normal vector associated to the vortex ring.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.UVLM.Models.Aero.Components.VortexRing3.GiveDoubletVelocityInfluence(MathTools.Algebra.EuclideanSpace.EVector3,System.Double,System.Boolean)">
+ <summary>
+ Calculates BiotSavart vector at a given point. If WidthG is true vector is scaled by G.
+ </summary>
+ <remarks>
+ Calculation has been optimized by replacing object subs by local code.
+ Value types are used on internal calculations (other versions used reference type EVector3).
+ </remarks>
+</member>
+<member name="M:AeroTools.UVLM.Models.Aero.Components.VortexRing3.AddDoubletVelocityInfluence(MathTools.Algebra.EuclideanSpace.EVector3@,MathTools.Algebra.EuclideanSpace.EVector3,System.Double,System.Boolean)">
+ <summary>
+ Calculates BiotSavart vector at a given point. If WidthG is true vector is scaled by G.
+ </summary>
+ <remarks>
+ Calculation has been optimized by replacing object subs by local code.
+ Value types are used on internal calculations (other versions used reference type EVector3).
+ </remarks>
+</member>
+<member name="M:AeroTools.UVLM.Models.Aero.Components.VortexRing3.AddSourceVelocityInfluence(MathTools.Algebra.EuclideanSpace.EVector3@,MathTools.Algebra.EuclideanSpace.EVector3,System.Double,System.Boolean)">
+ <summary>
+ Adds the influence of the source distribution in the velocity.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.UVLM.Models.Aero.Components.VortexRing3.BiotSavart_ViscousCore(MathTools.Algebra.EuclideanSpace.EVector3,System.Double,System.Boolean)">
+ <summary>
+ Calculates BiotSavart vector at a given point. If WidthG is true vector is scaled by G.
+ </summary>
+ <remarks>
+ Calculation has been optimized by replacing object subs by local code.
+ Value types are used on internal calculations (other versions used reference type EVector3).
+ </remarks>
+</member>
+<member name="M:AeroTools.UVLM.Models.Aero.Components.VortexRing3.AddBiotSavartVector_ViscousCore(MathTools.Algebra.EuclideanSpace.EVector3@,MathTools.Algebra.EuclideanSpace.EVector3,System.Double,System.Boolean)">
+ <summary>
+ Calculates BiotSavart vector at a given point. If WidthG is true vector is scaled by G.
+ </summary>
+ <remarks>
+ Calculation has been optimized by replacing object subs by local code.
+ Value types are used on internal calculations (other versions used reference type EVector3).
+ </remarks>
+</member>
+<member name="M:AeroTools.UVLM.Models.Aero.Components.VortexRing3.StreamwiseInfluence(MathTools.Algebra.EuclideanSpace.EVector3,System.Int32,System.Int32,System.Double)">
+ <summary>
+ Computes the induced velocity at a given point by counting only the stramwise vortices
+ </summary>
+ <param name="Point">Point where influence is to be calculated</param>
+ <param name="N1">First streamwise segment</param>
+ <param name="N2">Second streamwise segment</param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.UVLM.Models.Aero.Components.VortexRing3.GiveDoubletPotentialInfluence(MathTools.Algebra.EuclideanSpace.EVector3,System.Boolean)">
+ <summary>
+ Returns the influence of the velocity in the potential.
+ </summary>
+ <param name="Point">Point influence wants to be calculated.</param>
+ <returns>The velocity potential influence coefficient.</returns>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.UVLM.Models.Aero.Components.VortexRing3.GiveSourcePotentialInfluence(MathTools.Algebra.EuclideanSpace.EVector3,System.Boolean)">
+ <summary>
+ Returns the influence coefficient of the velocity potential.
+ </summary>
+ <param name="Point">Point influence wants to be calculated.</param>
+ <returns>The velocity potential influence coefficient.</returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.UVLM.Models.Aero.Components.VortexRing3.IsPrimitive">
+ <summary>
+ Indicates whether the panel is used to convect wake or not. This conditionates the local circulation.
+ </summary>
+</member>
+<member name="P:AeroTools.UVLM.Models.Aero.Components.VortexRing3.IsSlender">
+ <summary>
+ Indicates whether the surface is slender or not. This will conditionate the calculation of the local pressure coeficient.
+ </summary>
+</member>
+<member name="P:AeroTools.UVLM.Models.Aero.Components.VortexRing3.SurroundingRing(System.UInt16,System.UInt16)">
+ <summary>
+ Provides refference to the local neighbor rings. This field is driven by "FindSurroundingRings" of parent lattice.
+ </summary>
+ <remarks>
+  If there is no ring at the given position "nothing" will be returned.
+ </remarks>
+</member>
+<member name="P:AeroTools.UVLM.Models.Aero.Components.VortexRing3.SurroundingRingsSence(System.UInt16,System.UInt16)">
+ <summary>
+ Sence of the adjacent ring. 1 if same as this ring, -1 if oposite and 0 if there is no assigned ring on that location.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.UVLM.Models.Aero.Components.VortexRing3.HasNeighborAt(System.UInt16,System.UInt16)">
+ <summary>
+ Indicates whether this ring has a neighbor ring at the given position or not.
+ </summary>
+ <param name="side">
+ 1-based index indicating the local position of the boundary line.
+ </param>
+</member>
+<member name="M:AeroTools.UVLM.Models.Aero.Components.VortexRing3.AttachNeighbourAtSide(System.Int16,AeroTools.UVLM.Models.Aero.Components.VortexRing@,System.Int16)">
+ <summary>
+ Attaches a neighbour ring at the following location on the given side.
+ </summary>
+ <param name="side">0-based index indicating the local position of the boundary line.</param>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.UVLM.Models.Aero.Components.VortexRing3.CirculationSence">
+ <summary>
+ Indicates the local circulation sence (1 or -1).
+ </summary>
+</member>
+<member name="P:AeroTools.UVLM.Models.Aero.Components.VortexRing3.Gamma(System.Int32)">
+ <summary>
+ Stores the circulation of each vortex segment composing this ring. Driven by "CalculateGammas".
+ </summary>
+</member>
+<member name="M:AeroTools.UVLM.Models.Aero.Components.VortexRing3.CalculateCP(System.Double)">
+ <summary>
+ Calculates the jump of pressure through the vortex ring.
+ </summary>
+ <param name="VSqr">
+ Square of reference velocity Norm2.
+ </param>
+</member>
+<member name="M:AeroTools.UVLM.Models.Aero.Components.VortexRing3.InitializeSurroundingRings">
+ <summary>
+ Sets surrounding rings to nothing.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="T:AeroTools.UVLM.Models.Aero.Components.VortexRing4">
+ <summary>
+ Represents a ring of 4 vortex segments.
+ Nodes are passed by refference and used to on calculation, they do not belong to this class.
+ </summary>
+</member>
+<member name="M:AeroTools.UVLM.Models.Aero.Components.VortexRing4.#ctor(AeroTools.UVLM.Models.Aero.Components.Node,AeroTools.UVLM.Models.Aero.Components.Node,AeroTools.UVLM.Models.Aero.Components.Node,AeroTools.UVLM.Models.Aero.Components.Node,System.Int32,System.Boolean,System.Boolean)">
+ <summary>
+ Use this constructor to add bounded panels.
+ Geometric entities will be imediatly calculated.
+ </summary>
+</member>
+<member name="M:AeroTools.UVLM.Models.Aero.Components.VortexRing4.#ctor(AeroTools.UVLM.Models.Aero.Components.Node,AeroTools.UVLM.Models.Aero.Components.Node,AeroTools.UVLM.Models.Aero.Components.Node,AeroTools.UVLM.Models.Aero.Components.Node,System.Double,System.Int32,System.Boolean,System.Boolean)">
+ <summary>
+ Use this constructor to add wake panels. Geometric entities will not be calculated here.
+ </summary>
+</member>
+<member name="P:AeroTools.UVLM.Models.Aero.Components.VortexRing4.VelocityW">
+ <summary>
+ This is the velocity induced by the wakes plus the stream velocity.
+ </summary>
+</member>
+<member name="P:AeroTools.UVLM.Models.Aero.Components.VortexRing4.VelocityT">
+ <summary>
+ Total velocity at the control point.
+ </summary>
+</member>
+<member name="P:AeroTools.UVLM.Models.Aero.Components.VortexRing4.VelocityS">
+ <summary>
+ Surface velocity at the control point
+ </summary>
+</member>
+<member name="P:AeroTools.UVLM.Models.Aero.Components.VortexRing4.G">
+ <summary>
+ Local circulation.
+ </summary>
+</member>
+<member name="P:AeroTools.UVLM.Models.Aero.Components.VortexRing4.DGdt">
+ <summary>
+ First derivative of circulation in time.
+ </summary>
+</member>
+<member name="P:AeroTools.UVLM.Models.Aero.Components.VortexRing4.S">
+ <summary>
+ Local source intensity.
+ </summary>
+</member>
+<member name="P:AeroTools.UVLM.Models.Aero.Components.VortexRing4.PotentialW">
+ <summary>
+ Potential induced by wake doublets.
+ </summary>
+</member>
+<member name="P:AeroTools.UVLM.Models.Aero.Components.VortexRing4.Cp">
+ <summary>
+ Local pressure coeficient. When parent lattice "IsSlender" field is true it represents the coeficient of local jump of pressure.
+ </summary>
+</member>
+<member name="P:AeroTools.UVLM.Models.Aero.Components.VortexRing4.Cdi">
+ <summary>
+ Local component of induced drag (only valid for slender rings).
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.UVLM.Models.Aero.Components.VortexRing4.IndexL">
+ <summary>
+ Local index: represents the position of this panel on the local storage.
+ </summary>
+</member>
+<member name="P:AeroTools.UVLM.Models.Aero.Components.VortexRing4.IndexG">
+ <summary>
+ Global index: represents the index of this panel on the influence matrix and G and RHS vectors.
+ </summary>
+</member>
+<member name="F:AeroTools.UVLM.Models.Aero.Components.VortexRing4.FourPi">
+ <summary>
+ Four times PI
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:AeroTools.UVLM.Models.Aero.Components.VortexRing4.Epsilon">
+ <summary>
+ Minimum value of the Biot-Savart denominator
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.UVLM.Models.Aero.Components.VortexRing4.Node(System.Int32)">
+ <summary>
+ Sets or gets a corner node. This property is 1-based.
+ </summary>
+</member>
+<member name="P:AeroTools.UVLM.Models.Aero.Components.VortexRing4.Normal">
+ <summary>
+ Normal vector at the control point.
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.UVLM.Models.Aero.Components.VortexRing4.ControlPoint">
+ <summary>
+ Control point used to impose local boundary conditions.
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.UVLM.Models.Aero.Components.VortexRing4.OuterControlPoint">
+ <summary>
+ Control point used to compute velocity at non slender rings.
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.UVLM.Models.Aero.Components.VortexRing4.Area">
+ <summary>
+ Ring area.
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.UVLM.Models.Aero.Components.VortexRing4.CalculateGeometricEntities">
+ <summary>
+ Calculates all geometric entities associated to the vortex ring.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.UVLM.Models.Aero.Components.VortexRing4.RecalculateNormal">
+ <summary>
+ Calculates all geometric entities associated to the vortex ring.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.UVLM.Models.Aero.Components.VortexRing4.GiveDoubletVelocityInfluence(MathTools.Algebra.EuclideanSpace.EVector3,System.Double,System.Boolean)">
+ <summary>
+ Calculates BiotSavart vector at a given point. If WidthG is true vector is scaled by G.
+ </summary>
+ <remarks>
+ Calculation has been optimized by replacing object subs by local code.
+ Value types are used on internal calculations (other versions used reference type EVector3).
+ </remarks>
+</member>
+<member name="M:AeroTools.UVLM.Models.Aero.Components.VortexRing4.AddDoubletVelocityInfluence(MathTools.Algebra.EuclideanSpace.EVector3@,MathTools.Algebra.EuclideanSpace.EVector3,System.Double,System.Boolean)">
+ <summary>
+ Calculates BiotSavart vector at a given point. If WidthG is true vector is scaled by G.
+ </summary>
+ <remarks>
+ Calculation has been optimized by replacing object subs by local code.
+ Value types are used on internal calculations (other versions used reference type EVector3).
+ </remarks>
+</member>
+<member name="M:AeroTools.UVLM.Models.Aero.Components.VortexRing4.AddSourceVelocityInfluence(MathTools.Algebra.EuclideanSpace.EVector3@,MathTools.Algebra.EuclideanSpace.EVector3,System.Double,System.Boolean)">
+ <summary>
+ Adds the influence of the source distribution in the velocity.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.UVLM.Models.Aero.Components.VortexRing4.BiotSavart_ViscousCore(MathTools.Algebra.EuclideanSpace.EVector3,System.Double,System.Boolean)">
+ <summary>
+ Calculates BiotSavart vector at a given point. If WidthG is true vector is scaled by G.
+ </summary>
+ <remarks>
+ Calculation has been optimized by replacing object subs by local code.
+ Value types are used on internal calculations (other versions used reference type EVector3).
+ </remarks>
+</member>
+<member name="M:AeroTools.UVLM.Models.Aero.Components.VortexRing4.AddBiotSavartVector_ViscousCore(MathTools.Algebra.EuclideanSpace.EVector3@,MathTools.Algebra.EuclideanSpace.EVector3,System.Double,System.Boolean)">
+ <summary>
+ Calculates BiotSavart vector at a given point. If WidthG is true vector is scaled by G.
+ </summary>
+ <remarks>
+ Calculation has been optimized by replacing object subs by local code.
+ Value types are used on internal calculations (other versions used reference type EVector3).
+ </remarks>
+</member>
+<member name="M:AeroTools.UVLM.Models.Aero.Components.VortexRing4.StreamwiseInfluence(MathTools.Algebra.EuclideanSpace.EVector3,System.Int32,System.Int32,System.Double)">
+ <summary>
+ Computes the induced velocity at a given point by counting only the stramwise vortices
+ </summary>
+ <param name="Point">Point where influence is to be calculated</param>
+ <param name="N1">First streamwise segment</param>
+ <param name="N2">Second streamwise segment</param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.UVLM.Models.Aero.Components.VortexRing4.GiveDoubletPotentialInfluence(MathTools.Algebra.EuclideanSpace.EVector3,System.Boolean)">
+ <summary>
+ Returns the influence coefficient of the velocity potential.
+ </summary>
+ <param name="Point">Point influence wants to be calculated.</param>
+ <returns>The velocity potential influence coefficient.</returns>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.UVLM.Models.Aero.Components.VortexRing4.GiveSourcePotentialInfluence(MathTools.Algebra.EuclideanSpace.EVector3,System.Boolean)">
+ <summary>
+ Returns the influence coefficient of the velocity potential.
+ </summary>
+ <param name="Point">Point influence wants to be calculated.</param>
+ <returns>The velocity potential influence coefficient.</returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.UVLM.Models.Aero.Components.VortexRing4.IsPrimitive">
+ <summary>
+ Indicates whether the panel is used to convect wake or not. This conditionates the local circulation.
+ </summary>
+</member>
+<member name="P:AeroTools.UVLM.Models.Aero.Components.VortexRing4.IsSlender">
+ <summary>
+ Indicates whether the surface is slender or not. This will conditionate the calculation of the local pressure coeficient.
+ </summary>
+</member>
+<member name="P:AeroTools.UVLM.Models.Aero.Components.VortexRing4.SurroundingRing(System.UInt16,System.UInt16)">
+ <summary>
+ Provides refference to the local neighbor rings. This field is driven by "FindSurroundingRings" of parent lattice.
+ </summary>
+ <remarks>
+  If there is no ring at the given position "nothing" will be returned.
+ </remarks>
+</member>
+<member name="P:AeroTools.UVLM.Models.Aero.Components.VortexRing4.SurroundingRingsSence(System.UInt16,System.UInt16)">
+ <summary>
+ Sence of the adjacent ring. 1 if same as this ring, -1 if oposite and 0 if there is no assigned ring on that location.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.UVLM.Models.Aero.Components.VortexRing4.HasNeighborAt(System.UInt16,System.UInt16)">
+ <summary>
+ Indicates whether this ring has a neighbor ring at the given position or not.
+ </summary>
+ <param name="side">
+ 1-based index indicating the local position of the boundary line.
+ </param>
+</member>
+<member name="M:AeroTools.UVLM.Models.Aero.Components.VortexRing4.AttachNeighbourAtSide(System.Int16,AeroTools.UVLM.Models.Aero.Components.VortexRing@,System.Int16)">
+ <summary>
+ Attaches a neighbour ring at the following location on the given side.
+ </summary>
+ <param name="side">0-based index indicating the local position of the boundary line.</param>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.UVLM.Models.Aero.Components.VortexRing4.CirculationSence">
+ <summary>
+ Indicates the local circulation sence (1 or -1).
+ </summary>
+</member>
+<member name="P:AeroTools.UVLM.Models.Aero.Components.VortexRing4.Gamma(System.Int32)">
+ <summary>
+ Stores the circulation of each vortex segment composing this ring. Driven by "CalculateGammas".
+ </summary>
+</member>
+<member name="M:AeroTools.UVLM.Models.Aero.Components.VortexRing4.CalculateCP(System.Double)">
+ <summary>
+ Calculates the jump of pressure through the vortex ring.
+ </summary>
+ <param name="SquaredVelocity">
+ Square of reference velocity Norm2.
+ </param>
+</member>
+<member name="M:AeroTools.UVLM.Models.Aero.Components.VortexRing4.InitializeSurroundingRings">
+ <summary>
+ Sets surrounding rings to nothing.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="T:AeroTools.UVLM.Models.Aero.Components.Vortex">
+ <summary>
+ Represents a straight constant-circulation vortex segment
+ </summary>
+</member>
+<member name="F:AeroTools.UVLM.Models.Aero.Components.Vortex.Node1">
+ <summary>
+ First vortex node
+ </summary>
+</member>
+<member name="F:AeroTools.UVLM.Models.Aero.Components.Vortex.Node2">
+ <summary>
+ Second vortex node
+ </summary>
+</member>
+<member name="F:AeroTools.UVLM.Models.Aero.Components.Vortex.Rings">
+ <summary>
+ Adjacent rings.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:AeroTools.UVLM.Models.Aero.Components.Vortex.Sence">
+ <summary>
+ Sence of the adjacent rings.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:AeroTools.UVLM.Models.Aero.Components.Vortex.G">
+ <summary>
+ Intensity
+ </summary>
+</member>
+<member name="F:AeroTools.UVLM.Models.Aero.Components.Vortex.Streamwise">
+ <summary>
+ Indicates if the vortex has been emitted in streamwise direction.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.UVLM.Models.Aero.Components.Vortex.BiotSavart(MathTools.Algebra.EuclideanSpace.EVector3,System.Double,System.Boolean)">
+ <summary>
+ Calculates BiotSavart vector at a given point. If WidthG is true vector is scaled by G.
+ </summary>
+ <remarks>
+ Calculation has been optimized by replacing object subs by local code.
+ Value types are used on internal calculations (other versions used reference type EVector3).
+ </remarks>
+</member>
+<member name="M:AeroTools.UVLM.Models.Aero.Components.Vortex.AddBiotSavartVector(MathTools.Algebra.EuclideanSpace.EVector3@,MathTools.Algebra.EuclideanSpace.EVector3,System.Double,System.Boolean)">
+ <summary>
+ Calculates BiotSavart vector at a given point. If WidthG is true vector is scaled by G.
+ </summary>
+ <remarks>
+ Calculation has been optimized by replacing object subs by local code.
+ Value types are used on internal calculations (other versions used reference type EVector3).
+ </remarks>
+</member>
+<member name="T:AeroTools.UVLM.Models.Aero.Components.Node">
+ <summary>
+ Represents a node on a wake or a bounded lattice.
+ This class does not only hold the position, but also the substantial velocity.
+ </summary>
+</member>
+<member name="F:AeroTools.UVLM.Models.Aero.Components.Node.OriginalPosition">
+ <summary>
+ Position used as reference for translating or rotating (not always used)
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:AeroTools.UVLM.Models.Aero.Components.Node.Position">
+ <summary>
+ Current position
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:AeroTools.UVLM.Models.Aero.Components.Node.Displacement">
+ <summary>
+ Represents a displacement (used on aeroelastic calculation)
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:AeroTools.UVLM.Models.Aero.Components.Node.Velocity">
+ <summary>
+ Absolute velocity
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:AeroTools.UVLM.Models.Aero.Components.Node.IndexL">
+ <summary>
+ Local index.
+ </summary>
+</member>
+<member name="F:AeroTools.UVLM.Models.Aero.Components.Node.IndexG">
+ <summary>
+ Global index.
+ </summary>
+</member>
+<member name="T:AeroTools.UVLM.Models.Aero.Components.VortexRing">
+ <summary>
+ Represents a vortex ring
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.UVLM.Models.Aero.Components.VortexRing.VelocityT">
+ <summary>
+ Total velocity at the control point.
+ </summary>
+</member>
+<member name="P:AeroTools.UVLM.Models.Aero.Components.VortexRing.VelocityW">
+ <summary>
+ This is the velocity induced by the wakes. 
+ </summary>
+</member>
+<member name="P:AeroTools.UVLM.Models.Aero.Components.VortexRing.VelocityS">
+ <summary>
+ Surface velocity at the control point.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.UVLM.Models.Aero.Components.VortexRing.PotentialW">
+ <summary>
+ Potential induced by wake doublets.
+ </summary>
+</member>
+<member name="P:AeroTools.UVLM.Models.Aero.Components.VortexRing.G">
+ <summary>
+ Local circulation.
+ </summary>
+</member>
+<member name="P:AeroTools.UVLM.Models.Aero.Components.VortexRing.DGdt">
+ <summary>
+ First derivative of circulation in time.
+ </summary>
+</member>
+<member name="P:AeroTools.UVLM.Models.Aero.Components.VortexRing.S">
+ <summary>
+ Local source intensity.
+ </summary>
+</member>
+<member name="P:AeroTools.UVLM.Models.Aero.Components.VortexRing.Cp">
+ <summary>
+ Local pressure coeficient. When parent lattice "IsSlender" field is true it represents the coeficient of local jump of pressure.
+ </summary>
+</member>
+<member name="P:AeroTools.UVLM.Models.Aero.Components.VortexRing.Cdi">
+ <summary>
+ Local component of induced drag (only valid for slender rings).
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.UVLM.Models.Aero.Components.VortexRing.IndexL">
+ <summary>
+ Local index: represents the position of this panel on the local storage.
+ </summary>
+</member>
+<member name="P:AeroTools.UVLM.Models.Aero.Components.VortexRing.IndexG">
+ <summary>
+ Global index: represents the index of this panel on the influence matrix and G and RHS vectors.
+ </summary>
+</member>
+<member name="P:AeroTools.UVLM.Models.Aero.Components.VortexRing.Node(System.Int32)">
+ <summary>
+ Sets or gets a corner node. This property is 1-based.
+ </summary>
+</member>
+<member name="P:AeroTools.UVLM.Models.Aero.Components.VortexRing.Normal">
+ <summary>
+ Normal vector at the control point.
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.UVLM.Models.Aero.Components.VortexRing.ControlPoint">
+ <summary>
+ Control point used to impose local boundary conditions.
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.UVLM.Models.Aero.Components.VortexRing.OuterControlPoint">
+ <summary>
+ Control point used to impose local boundary conditions.
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.UVLM.Models.Aero.Components.VortexRing.Area">
+ <summary>
+ Ring area.
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.UVLM.Models.Aero.Components.VortexRing.Reversed">
+ <summary>
+ Indicates if the send of the ring is reversed.
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.UVLM.Models.Aero.Components.VortexRing.CalculateGeometricEntities">
+ <summary>
+ Calculates all geometric entities associated to the vortex ring.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.UVLM.Models.Aero.Components.VortexRing.RecalculateNormal">
+ <summary>
+ Forces the recalculation of the normal.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.UVLM.Models.Aero.Components.VortexRing.GiveDoubletVelocityInfluence(MathTools.Algebra.EuclideanSpace.EVector3,System.Double,System.Boolean)">
+ <summary>
+ Calculates BiotSavart vector at a given point. If WidthG is true vector is scaled by G.
+ </summary>
+ <remarks>
+ Calculation has been optimized by replacing object subs by local code.
+ Value types are used on internal calculations (other versions used reference type EVector3).
+ </remarks>
+</member>
+<member name="M:AeroTools.UVLM.Models.Aero.Components.VortexRing.AddDoubletVelocityInfluence(MathTools.Algebra.EuclideanSpace.EVector3@,MathTools.Algebra.EuclideanSpace.EVector3,System.Double,System.Boolean)">
+ <summary>
+ Calculates BiotSavart vector at a given point. If WidthG is true vector is scaled by G.
+ </summary>
+ <remarks>
+ Calculation has been optimized by replacing object subs by local code.
+ Value types are used on internal calculations (other versions used reference type EVector3).
+ </remarks>
+</member>
+<member name="M:AeroTools.UVLM.Models.Aero.Components.VortexRing.AddSourceVelocityInfluence(MathTools.Algebra.EuclideanSpace.EVector3@,MathTools.Algebra.EuclideanSpace.EVector3,System.Double,System.Boolean)">
+ <summary>
+ Adds the influence of the source distribution in the velocity.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.UVLM.Models.Aero.Components.VortexRing.GiveDoubletPotentialInfluence(MathTools.Algebra.EuclideanSpace.EVector3,System.Boolean)">
+ <summary>
+ Returns the influence of the velocity in the potential.
+ </summary>
+ <param name="Point">Point influence wants to be calculated.</param>
+ <returns>The velocity potential influence coefficient.</returns>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.UVLM.Models.Aero.Components.VortexRing.GiveSourcePotentialInfluence(MathTools.Algebra.EuclideanSpace.EVector3,System.Boolean)">
+ <summary>
+ Returns the influence coefficient of the velocity potential.
+ </summary>
+ <param name="Point">Point influence wants to be calculated.</param>
+ <returns>The velocity potential influence coefficient.</returns>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.UVLM.Models.Aero.Components.VortexRing.StreamwiseInfluence(MathTools.Algebra.EuclideanSpace.EVector3,System.Int32,System.Int32,System.Double)">
+ <summary>
+ Computes the induced velocity at a given point by counting only the streamwise vortices.
+ </summary>
+ <param name="Point">Point where influence is to be calculated</param>
+ <param name="N1">First streamwise segment</param>
+ <param name="N2">Second streamwise segment</param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.UVLM.Models.Aero.Components.VortexRing.CalculateCP(System.Double)">
+ <summary>
+ Calculates the jump of pressure through the vortex ring.
+ </summary>
+ <param name="VSqr">
+ Square of reference velocity Norm2.
+ </param>
+</member>
+<member name="P:AeroTools.UVLM.Models.Aero.Components.VortexRing.IsPrimitive">
+ <summary>
+ Indicates whether the panel is used to convect wake or not. This conditionates the local circulation.
+ </summary>
+</member>
+<member name="P:AeroTools.UVLM.Models.Aero.Components.VortexRing.IsSlender">
+ <summary>
+ Indicates whether the surface is slender or not. This will conditionate the calculation of the local pressure coeficient.
+ </summary>
+</member>
+<member name="P:AeroTools.UVLM.Models.Aero.Components.VortexRing.SurroundingRing(System.UInt16,System.UInt16)">
+ <summary>
+ Provides refference to the local neighbor rings. This field is driven by "FindSurroundingRings" of parent lattice.
+ </summary>
+ <remarks>
+  If there is no ring at the given position "nothing" will be returned.
+ </remarks>
+</member>
+<member name="P:AeroTools.UVLM.Models.Aero.Components.VortexRing.SurroundingRingsSence(System.UInt16,System.UInt16)">
+ <summary>
+ Sence of the adjacent ring. 1 if same as this ring, -1 if oposite and 0 if there is no assigned ring on that location.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.UVLM.Models.Aero.Components.VortexRing.HasNeighborAt(System.UInt16,System.UInt16)">
+ <summary>
+ Indicates whether this ring has a neighbor ring at the given position or not.
+ </summary>
+ <param name="side">
+ 1-based index indicating the local position of the boundary line.
+ </param>
+</member>
+<member name="M:AeroTools.UVLM.Models.Aero.Components.VortexRing.AttachNeighbourAtSide(System.Int16,AeroTools.UVLM.Models.Aero.Components.VortexRing@,System.Int16)">
+ <summary>
+ Attaches a neighbour ring at the following location on the given side.
+ </summary>
+ <param name="side">0-based index indicating the local position of the boundary line.</param>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.UVLM.Models.Aero.Components.VortexRing.CirculationSence">
+ <summary>
+ Indicates the local circulation sence (1 or -1).
+ </summary>
+</member>
+<member name="P:AeroTools.UVLM.Models.Aero.Components.VortexRing.Gamma(System.Int32)">
+ <summary>
+ Stores the circulation of each vortex segment composing this ring. Driven by "CalculateGammas".
+ </summary>
+</member>
+<member name="M:AeroTools.UVLM.Models.Aero.Components.VortexRing.InitializeSurroundingRings">
+ <summary>
+ Sets surrounding rings to nothing.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="T:AeroTools.UVLM.Models.Aero.Components.QuadraticPolar">
+ <summary>
+ Represents a quadratic polar curve
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="T:AeroTools.UVLM.Models.Aero.Primitive">
+ <summary>
+ Represents a border from which wakes will be convected.
+ Nodes and rings should be provided in adyacent order.
+ </summary>
+</member>
+<member name="T:AeroTools.UVLM.Models.Aero.TotalAirLoads">
+ <summary>
+ Gathers the resultants of aerodynamic forces per type.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="T:AeroTools.UVLM.Models.Aero.Lattice">
+ <summary>
+ Base clas for modelling lattices.
+ </summary>
+</member>
+<member name="M:AeroTools.UVLM.Models.Aero.Lattice.AddNode(MathTools.Algebra.EuclideanSpace.EVector3,System.Int32)">
+ <summary>
+ Adds a node to the lattice with an specific local index
+ </summary>
+ <param name="Position"></param>
+</member>
+<member name="M:AeroTools.UVLM.Models.Aero.Lattice.AddNode(MathTools.Algebra.EuclideanSpace.EVector3)">
+ <summary>
+ Adds a node to the lattice with a local index equal to the current number of nodes
+ </summary>
+ <param name="Position"></param>
+</member>
+<member name="M:AeroTools.UVLM.Models.Aero.Lattice.AddVortexRing3(System.Int32,System.Int32,System.Int32,System.Boolean,System.Boolean)">
+ <summary>
+ Adds a vortex ring to the lattice
+ </summary>
+ <param name="N1">Local index of node 3</param>
+ <param name="N2">Local index of node 3</param>
+ <param name="N3">Local index of node 3</param>
+</member>
+<member name="M:AeroTools.UVLM.Models.Aero.Lattice.AddVortexRing4(System.Int32,System.Int32,System.Int32,System.Int32,System.Boolean,System.Boolean)">
+ <summary>
+ Adds a vortex ring to the lattice
+ </summary>
+ <param name="N1">Local index of node 3</param>
+ <param name="N2">Local index of node 3</param>
+ <param name="N3">Local index of node 3</param>
+ <param name="N4">Local index of node 3</param>
+</member>
+<member name="M:AeroTools.UVLM.Models.Aero.Lattice.ClearVelocity(MathTools.Algebra.EuclideanSpace.EVector3)">
+ <summary>
+ Reasigns velocity at each nodal point.
+ </summary>
+</member>
+<member name="M:AeroTools.UVLM.Models.Aero.Lattice.AddInducedVelocity(MathTools.Algebra.EuclideanSpace.EVector3@,MathTools.Algebra.EuclideanSpace.EVector3,System.Double)">
+ <summary>
+ Computed velocity induced by this lattice at Point.
+ </summary>
+ <param name="Point"></param>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.UVLM.Models.Aero.Lattice.PopulateVortices">
+ <summary>
+ Finds all vortices associated to this lattice.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.UVLM.Models.Aero.Lattice.CalculateLatticeParameters">
+ <summary>
+ Calculate vortex rings geometric parameters (control point, normal vector)
+ </summary>
+</member>
+<member name="M:AeroTools.UVLM.Models.Aero.Lattice.Rotate(MathTools.Algebra.EuclideanSpace.OrientationCoordinates)">
+ <summary>
+ Rotates all nodal poins as specified in Orientation about the origin {0,0,0}
+ </summary>
+ <param name="Orientation">Euler angles providing the orientation</param>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.UVLM.Models.Aero.Lattice.RotateAbout(MathTools.Algebra.EuclideanSpace.OrientationCoordinates,MathTools.Algebra.EuclideanSpace.EVector3)">
+ <summary>
+ Rotates all nodal points as specified in Orientation about an specific point.
+ </summary>
+ <param name="Orientation"></param>
+ <param name="Point"></param>
+ <remarks></remarks>
+</member>
+<member name="T:AeroTools.UVLM.Models.Aero.Wake">
+ <summary>
+ Represents a free lattice.
+ </summary>
+</member>
+<member name="P:AeroTools.UVLM.Models.Aero.Wake.Primitive">
+ <summary>
+ Contains information about the sheding edge.
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.UVLM.Models.Aero.Wake.CuttingStep">
+ <summary>
+ Indicates when the wake has to be trimmed.
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.UVLM.Models.Aero.Wake.FixStep">
+ <summary>
+ Indicates if a fixed step has to be used (use this to model a prefixed wake).
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.UVLM.Models.Aero.Wake.FidexedStep">
+ <summary>
+ Step to move the nodal points when the wake convection is prefixed.
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="T:AeroTools.UVLM.Models.Structural.Library.Section">
+ <summary>
+ Gathers global section porperties.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:AeroTools.UVLM.Models.Structural.Library.Section.AE">
+ <summary>
+ Longitudinal stiffness [N/m]
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:AeroTools.UVLM.Models.Structural.Library.Section.GJ">
+ <summary>
+ Torsional rigidity [Nm/rad]
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:AeroTools.UVLM.Models.Structural.Library.Section.EIy">
+ <summary>
+ Flexional rigidity of inertia around local axis y [Nm/rad]
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:AeroTools.UVLM.Models.Structural.Library.Section.EIz">
+ <summary>
+ Flexional rigidity of inertia around local axis z [Nm/rad]
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:AeroTools.UVLM.Models.Structural.Library.Section.rIp">
+ <summary>
+ Torsional moment of inertia [kgm²]
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:AeroTools.UVLM.Models.Structural.Library.Section.m">
+ <summary>
+ Mass per unit length [kg/m]
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:AeroTools.UVLM.Models.Structural.Library.Section.CMy">
+ <summary>
+ Y coordinate of center of mass [m]
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:AeroTools.UVLM.Models.Structural.Library.Section.CMz">
+ <summary>
+ Z coordinate of center of mass [m]
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="T:AeroTools.UVLM.Models.Structural.Library.Material">
+ <summary>
+ Represents a material.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:AeroTools.UVLM.Models.Structural.Library.Material.E">
+ <summary>
+ Young module [N/m²]
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:AeroTools.UVLM.Models.Structural.Library.Material.G">
+ <summary>
+ Transverse module [N/m²]
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:AeroTools.UVLM.Models.Structural.Library.Material.v">
+ <summary>
+ Poisson coefficient
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:AeroTools.UVLM.Models.Structural.Library.Material.Density">
+ <summary>
+ Material density [kg/m³]
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="T:AeroTools.UVLM.Models.Structural.Library.NodalDisplacement">
+ <summary>
+ Represents a nodal displacement.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:AeroTools.UVLM.Models.Structural.Library.NodalDisplacement.Values">
+ <summary>
+ Contains the nodal displacements (Dx, Dy, Dz, Rx, Ry, Rz)
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.UVLM.Models.Structural.Library.NodalDisplacement.VirtualWork(AeroTools.UVLM.Models.Structural.Library.NodalLoad)">
+ <summary>
+ Calculates the virtual work of this displacement with the given load
+ </summary>
+ <param name="Load">Nodal load</param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="T:AeroTools.UVLM.Models.Structural.Library.NodalLoad">
+ <summary>
+ Represents a load on a structural node.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:AeroTools.UVLM.Models.Structural.Library.NodalLoad.Values">
+ <summary>
+ Contains the nodal loads (Px, Py, Pz, Tx, Ty, Tz)
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.UVLM.Models.Structural.Library.NodalLoad.VirtualWork(AeroTools.UVLM.Models.Structural.Library.NodalDisplacement)">
+ <summary>
+ Calculates the virtual work of this load with the given displacement.
+ </summary>
+ <param name="Displacement">Nodal displacement</param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="T:AeroTools.UVLM.Models.Structural.Library.Constrains">
+ <summary>
+ Nodal constrains
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.UVLM.Models.Structural.Library.Constrains.KDx">
+ <summary>
+ Stiffness in x direction
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.UVLM.Models.Structural.Library.Constrains.KDy">
+ <summary>
+ Stiffness in y direction
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.UVLM.Models.Structural.Library.Constrains.KDz">
+ <summary>
+ Stiffness in z direction
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.UVLM.Models.Structural.Library.Constrains.KRx">
+ <summary>
+ Stiffness arround x direction
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.UVLM.Models.Structural.Library.Constrains.KRy">
+ <summary>
+ Stiffness arround y direction
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.UVLM.Models.Structural.Library.Constrains.KRz">
+ <summary>
+ Stiffness arround z direction
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.UVLM.Models.Structural.Library.Constrains.Clamped">
+ <summary>
+ Fixes all degrees of freedom to the base reference frame
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="T:AeroTools.UVLM.Models.Structural.Library.StructuralNode">
+ <summary>
+ Structural node
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.UVLM.Models.Structural.Library.StructuralNode.Index">
+ <summary>
+ Node global index
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.UVLM.Models.Structural.Library.StructuralNode.#ctor(System.Int32)">
+ <summary>
+ Creates a new structural node
+ </summary>
+ <param name="Index">Global index</param>
+ <remarks></remarks>
+</member>
+<member name="T:AeroTools.UVLM.Models.Structural.Library.BeamElement">
+ <summary>
+ Defines a beam element
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="T:AeroTools.UVLM.Models.Structural.Library.GeneralBeamElement">
+ <summary>
+ Models a structural beam element of constant section
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.UVLM.Models.Structural.Library.GeneralBeamElement.GenerateLocalMass">
+ <summary>
+ Generates the element mass matrix in local coordinates
+ </summary>
+ <remarks>Current version only supports non-excentrical section</remarks>
+</member>
+<member name="M:AeroTools.UVLM.Models.Structural.Library.GeneralBeamElement.GenerateLocalStiffness">
+ <summary>
+ Generates the element stiffness matrix in local coordinates
+ </summary>
+ <remarks>Current version only supports non-excentrical section</remarks>
+</member>
+<member name="M:AeroTools.UVLM.Models.Structural.Library.GeneralBeamElement.GenerateGlobalMatrices">
+ <summary>
+ Orientates local mass and stiffness matrices to global directions
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.UVLM.Models.Structural.Library.Mode.Index">
+ <summary>
+ Mode index
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="F:AeroTools.UVLM.Models.Structural.Library.ModalCoordinate.p">
+ <summary>
+ Position
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:AeroTools.UVLM.Models.Structural.Library.ModalCoordinate.v">
+ <summary>
+ Velocity
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:AeroTools.UVLM.Models.Structural.Library.ModalCoordinate.a">
+ <summary>
+ Acceleration
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.UVLM.Models.Structural.Library.ModalCoordinates.Item(System.Int32)">
+ <summary>
+ Modal coordinates for mode a given mode
+ </summary>
+ <param name="mode"></param>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.UVLM.Models.Structural.Library.StructuralSettings.ModalDamping">
+ <summary>
+ Damping associated to the structural modes
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.UVLM.Models.Structural.Library.StructuralSettings.NumberOfModes">
+ <summary>
+ Specifies the number of dynamic modes to be used
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.UVLM.Models.Structural.Library.StructuralSettings.StructuralLinkingStep">
+ <summary>
+ Specifies when at which instant the structure is coupled to the model.
+ (use it when a steady state is required as start condition).
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.UVLM.Models.Structural.Library.StructuralSettings.SubSteps">
+ <summary>
+ Sub steps used to integrate the equations of motion in one aerodynamic step.
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="T:AeroTools.UVLM.Models.Structural.KinematicLink">
+ <summary>
+ Provides a kinematic link between structural and aerodynamic models with 6 DOFs
+ </summary>
+ <remarks>This class is able to convert the motion of an structural node to the nodes of a node-stripe</remarks>
+</member>
+<member name="P:AeroTools.UVLM.Models.Structural.KinematicLink.LinkedStripe">
+ <summary>
+ Collection of aerodynamic nodal points (deformed structure)
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.UVLM.Models.Structural.KinematicLink.LinkedNode">
+ <summary>
+ Structural node which will transfer motion to the linked node-stripe
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.UVLM.Models.Structural.KinematicLink.#ctor(AeroTools.UVLM.Models.Structural.Library.StructuralNode,System.Collections.Generic.List{AeroTools.UVLM.Models.Aero.Components.Node}@)">
+ <summary>
+ Creates a kinematic link
+ </summary>
+ <param name="LinkedNode">Structural node to be linked</param>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.UVLM.Models.Structural.KinematicLink.Link(AeroTools.UVLM.Models.Aero.Components.Node@)">
+ <summary>
+ Links a given aerodynamic node to the structural node associated to this link.
+ </summary>
+ <param name="Node">Aerodinamic node to be linked</param>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.UVLM.Models.Structural.KinematicLink.TransferMotion">
+ <summary>
+ Transfer the motion from the structural model to the aerodynamic model
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="T:AeroTools.UVLM.Models.Structural.MechanicLink">
+ <summary>
+ Provides a mechanic link throug which aerodynamic loads are transfered to the structural model
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.UVLM.Models.Structural.MechanicLink.LinkedStripe">
+ <summary>
+ Collection of vortex rings which will transfer loads to the structure
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.UVLM.Models.Structural.MechanicLink.LinkedElement">
+ <summary>
+ Structural element which will recieve the loads from the panel-stripe
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.UVLM.Models.Structural.MechanicLink.Link(AeroTools.UVLM.Models.Aero.Components.VortexRing@)">
+ <summary>
+ Links a vortex ring to the structural element associated to this link.
+ </summary>
+ <param name="Ring"></param>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.UVLM.Models.Structural.MechanicLink.TransferLoads(MathTools.Algebra.EuclideanSpace.EVector3,System.Double)">
+ <summary>
+ Transfer loads from the aerodynamic model to the structural model
+ </summary>
+ <param name="Velocity">Reference velocity</param>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.UVLM.Models.Structural.MechanicLink.ClearLoads">
+ <summary>
+ Sets the loads to cero
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.UVLM.Models.Structural.MechanicLink.ReloadGeometricEntities">
+ <summary>
+ Resets normal vectors and control points on linked rings
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="T:AeroTools.UVLM.Models.Structural.StructuralLink">
+ <summary>
+ Simulates an aeroelastic interaction by linkin the structural model to the aerodynamic model
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:AeroTools.UVLM.Models.Structural.StructuralLink.StructuralCore">
+ <summary>
+ System structure
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:AeroTools.UVLM.Models.Structural.StructuralLink.KinematicLinks">
+ <summary>
+ Collection of kinematic links
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:AeroTools.UVLM.Models.Structural.StructuralLink.MechanicLinks">
+ <summary>
+ Collection of mechanic links
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:AeroTools.UVLM.Models.Structural.StructuralLink.ModalResponse">
+ <summary>
+ Collection of modal coordinates for each time-step
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:AeroTools.UVLM.Models.Structural.StructuralLink.NewmarkIntegrators">
+ <summary>
+ List of Newmark inegrators for each mode.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:AeroTools.UVLM.Models.Structural.StructuralLink.t">
+ <summary>
+ Current time step
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:AeroTools.UVLM.Models.Structural.StructuralLink.Dt">
+ <summary>
+ Time interval.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:AeroTools.UVLM.Models.Structural.StructuralLink.Initialized">
+ <summary>
+ Indicates if the linker has been initialized
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.UVLM.Models.Structural.StructuralLink.Initialize(System.Double)">
+ <summary>
+ Sets initial conditions for each ODE
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.UVLM.Models.Structural.StructuralLink.Integrate(MathTools.Algebra.EuclideanSpace.EVector3,System.Double)">
+ <summary>
+ Advances one time step in the solution of the structural motion zith the explicit time integration scheme.
+ </summary>
+ <param name="Velocity">Reference velocity used to calculate aerodinamic loads</param>
+ <remarks>This method integrates the uncoupled ecuations of motion</remarks>
+</member>
+<member name="M:AeroTools.UVLM.Models.Structural.StructuralLink.Integrate(MathTools.Algebra.EuclideanSpace.EVector3,System.Double,System.Int32,System.Double)">
+ <summary>
+ Completes one itaration in the aeroelastic coupling with the Newmark implicity time integration scheme.
+ </summary>
+ <param name="Velocity">Reference velocity used to calculate aerodinamic loads</param>
+ <remarks>This method integrates the uncoupled ecuations of motion</remarks>
+ <returns>True when the relative increment of the new prediction in all modal displacements is less than e.</returns>
+</member>
+<member name="M:AeroTools.UVLM.Models.Structural.StructuralLink.WriteBinary(System.String)">
+ <summary>
+ Writes linker to a binary file.
+ </summary>
+ <param name="Path"></param>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.UVLM.Models.Structural.StructuralLink.ReadBinary(System.String,System.Collections.Generic.List{AeroTools.UVLM.Models.Aero.Components.Node}@,System.Collections.Generic.List{AeroTools.UVLM.Models.Aero.Components.VortexRing}@)">
+ <summary>
+ Reads the linker from a binary file.
+ </summary>
+ <param name="Path"></param>
+ <remarks></remarks>
+</member>
+<member name="T:AeroTools.UVLM.Models.Structural.StructuralCore">
+ <summary>
+ Structural model
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:AeroTools.UVLM.Models.Structural.StructuralCore.Modes">
+ <summary>
+ Structure dynamic modes
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.UVLM.Models.Structural.StructuralCore.CreateMatrices(System.String,System.Boolean)">
+ <summary>
+ Generates the structure global stiffness and mass matrices
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.UVLM.Models.Structural.StructuralCore.WriteConstrainedMatrices(System.String,System.String,System.Boolean)">
+ <summary>
+ Writes constrained stiffness and mass matrices to binary files
+ </summary>
+ <param name="PathK"></param>
+ <param name="PathM"></param>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.UVLM.Models.Structural.StructuralCore.FindModes(System.String,System.Int32)">
+ <summary>
+ Calculates structure dynamic modes through inverse iteration method with Gram-Smith orthogonalization 
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.UVLM.Models.Structural.StructuralCore.ReadModes(System.String)">
+ <summary>
+ Read modes from specific path
+ </summary>
+ <param name="DataBasePath"></param>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.UVLM.SimulationTools.UnsteadyVelocity.BaseVelocity">
+ <summary>
+ Base velocity.
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.UVLM.SimulationTools.UnsteadyVelocity.Type">
+ <summary>
+ Profile type.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.UVLM.SimulationTools.UnsteadyVelocity.Velocity(System.Int32)">
+ <summary>
+ 'Gets the velocity at a given time step
+ </summary>
+ <param name="Instant">Time stape (1-based)</param>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.UVLM.SimulationTools.UnsteadyVelocity.nSteps">
+ <summary>
+ Number of steps.
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="T:AeroTools.UVLM.Solver.UVLMSolver">
+ <summary>
+ Provides methods to solve aerodynamic problems through the Unsteady Vortex Lattice Method.
+ Programmed by Guillermo A. Hazebrouck
+ guillermo.hazebrouck@outlook.be
+ </summary> 
+</member>
+<member name="M:AeroTools.UVLM.Solver.UVLMSolver.AeroelasticUnsteadyTransit_(System.String)">
+ <summary>
+ Calculates the unsteady aeroelastic transit provided a velocity profile and a structural model.
+ The explicit Newmark algorithm is used.
+ </summary>
+</member>
+<member name="M:AeroTools.UVLM.Solver.UVLMSolver.AeroelasticUnsteadyTransit(System.String)">
+ <summary>
+ Calculates the unsteady aeroelastic transit provided a velocity profile and a structural model.
+ The implicit Nemark algorithm is used.
+ </summary>
+</member>
+<member name="M:AeroTools.UVLM.Solver.UVLMSolver.IndexateLattices">
+ <summary>
+ Gives to each vortex its corresponding global index on vectors and matrices and returns the number of bounded vortex rings.
+ </summary>
+</member>
+<member name="M:AeroTools.UVLM.Solver.UVLMSolver.BuildMatrixForDoublets(System.Boolean)">
+ <summary>
+ Constructs the matrix of mutual influence coeficients.
+ </summary>
+ <param name="Indexate">Indicates if nodes should be globaly indexated (this is only required once).
+ In that case indexation will occur and matrix and RHS vector will be created.</param>
+</member>
+<member name="M:AeroTools.UVLM.Solver.UVLMSolver.BuildMatrixForSources">
+ <summary>
+ Constructs the matrix of source influence.
+ </summary>
+</member>
+<member name="M:AeroTools.UVLM.Solver.UVLMSolver.BuildRHS_I">
+ <summary>
+ Calculates the right hand side without influence of the wake and without surface motion.
+ </summary>
+</member>
+<member name="M:AeroTools.UVLM.Solver.UVLMSolver.BuildRHS_II(System.Boolean)">
+ <summary>
+ Calculates the right hand side considering the influence of the wake and the surface motion.
+ </summary> 
+</member>
+<member name="M:AeroTools.UVLM.Solver.UVLMSolver.InitializeWakes">
+ <summary>
+ Sets starting nodes at each wake.
+ </summary>
+</member>
+<member name="M:AeroTools.UVLM.Solver.UVLMSolver.AssignDoublets">
+ <summary>
+ Gives to each vortex ring its corresponding circulation.
+ </summary>
+</member>
+<member name="M:AeroTools.UVLM.Solver.UVLMSolver.AssignSources">
+ <summary>
+ Gives to each non-slender vortex ring its corresponding source intensity based on the current stream velocity.
+ </summary>
+</member>
+<member name="M:AeroTools.UVLM.Solver.UVLMSolver.CheckIfThereAreSources">
+ <summary>
+ Checks if there are bounded vortex rings defined as non-slender.
+ </summary>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.UVLM.Solver.UVLMSolver.CalculateVelocityInducedByTheWakesOnBoundedLattices(System.Boolean)">
+ <summary>
+ Calculates rings VelocityW by adding to the local stream velocity the velocity induced by the wakes.
+ </summary>
+</member>
+<member name="M:AeroTools.UVLM.Solver.UVLMSolver.CalculatePotentialInducedByTheWakeOnThickBoundedLattices">
+ <summary>
+ Calculates rings PotentialW by adding the influence of the wakes doublets. Only non-slender rings are accepted.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.UVLM.Solver.UVLMSolver.CalculateTotalVelocityOnBoundedLattices(System.Boolean)">
+ <summary>
+ Calculates rings VelocityT (total local velocity) by adding the StreamVelocity, VelocityW and the velocity induced by the bounded lattices.
+ </summary>
+</member>
+<member name="M:AeroTools.UVLM.Solver.UVLMSolver.CalculateVelocityOnWakes(System.Boolean)">
+ <summary>
+ Calculates the total local velocity at each wake nodal point.
+ </summary>
+</member>
+<member name="M:AeroTools.UVLM.Solver.UVLMSolver.CalculateVelocityAtPoint(MathTools.Algebra.EuclideanSpace.EVector3,System.Boolean,System.Boolean)">
+ <summary>
+ Returns the total induced velocity at the given point (serial computation).
+ </summary>
+</member>
+<member name="M:AeroTools.UVLM.Solver.UVLMSolver.ComputeTrefftzIntegral(MathTools.Algebra.EuclideanSpace.EVector3,MathTools.Algebra.EuclideanSpace.EVector3,System.Collections.Generic.List{AeroTools.UVLM.Solver.UVLMSolver.TrefftzSegment}@,System.Double)">
+ <summary>
+ Computes treftz line integral provided a plane cutting the wake
+ </summary>
+ <param name="Normal"></param>
+ <param name="RPoint"></param>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.UVLM.Solver.UVLMSolver.CalculateAirloads">
+ <summary>
+ Computes the total aerodynamic loads on each bounded lattice
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.UVLM.Solver.UVLMSolver.ComputeInducedDrag">
+ <summary>
+ Computes the induced drag on vortex rings through surface integral (only for slender panels)
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.UVLM.Solver.UVLMSolver.ComputeForcesAndMoments">
+ <summary>
+ Computes all forces and moments. If chordwise stripes are defined, parasitic drag is calculated
+ based on the local lift and polar curve.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.UVLM.Solver.UVLMSolver.AddVelocities(Cudafy.GThread,System.Double[0:,0:],System.Double[0:,0:],System.Double[0:,0:],System.Double[])">
+ <summary>
+ General Kernel to calculate the velocities on the given points.
+ </summary>
+ <param name="thread">Thread information.</param>
+ <param name="VELOCITY_INFO">Array containing the components of the velocity vector.</param>
+ <param name="LOCATION_INFO">Array containing the components of the evaluation points.</param>
+ <param name="VORTEX_INFO">Array containing the vortex information.</param>
+ <param name="CutOff"></param>
+ <remarks>VELOCITY_INFO should be of the same lenght as LOCATION_INFO</remarks>
+</member>
+<member name="P:AeroTools.UVLM.Solver.UVLMSolver.Settings">
+ <summary>
+ Contains all parameters required to run a complete simulation
+ </summary>
+</member>
+<member name="P:AeroTools.UVLM.Solver.UVLMSolver.Lattices">
+ <summary>
+ Contains all bounded lattices
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.UVLM.Solver.UVLMSolver.StructuralLinks">
+ <summary>
+ Stores links between the structure and the aerodynamic lattices
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.UVLM.Solver.UVLMSolver.PolarDataBase">
+ <summary>
+ Gathers all polar curves
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.UVLM.Solver.UVLMSolver.StreamVelocity">
+ <summary>
+ Base stream velocity in m/s
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.UVLM.Solver.UVLMSolver.StreamDensity">
+ <summary>
+ Stream density in kg/m³
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.UVLM.Solver.UVLMSolver.StreamDynamicPressure">
+ <summary>
+ Stream density in Pa
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="E:AeroTools.UVLM.Solver.UVLMSolver.PushProgress">
+ <summary>
+ Occurs when a progress is made.
+ </summary>
+ <param name="Title"></param>
+ <param name="Value"></param>
+ <remarks></remarks>
+</member>
+<member name="E:AeroTools.UVLM.Solver.UVLMSolver.PushMessage">
+ <summary>
+ Occurs when a progress is made.
+ </summary>
+ <param name="Title"></param>
+ <remarks></remarks>
+</member>
+<member name="E:AeroTools.UVLM.Solver.UVLMSolver.CalculationDone">
+ <summary>
+ Occurs when the calculation finishes.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.UVLM.Solver.UVLMSolver.FlightSim(CommonResources.WaitForm@,System.String)">
+ <summary>
+ Convect wakes and calculates loads at the last time step.
+ </summary>
+</member>
+<member name="M:AeroTools.UVLM.Solver.UVLMSolver.GenerateFromExistingModel(AeroTools.Vogel.Models.CalculationModel,System.Boolean,CommonResources.Licencing.ILicenceData)">
+ <summary>
+ Transfers a geometric model to the calculation cell
+ </summary>
+ <param name="Model">Model to be transferred</param>
+ <param name="GenerateStructure">Indicates if a structural link should be created</param>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.UVLM.Solver.UVLMSolver.AddLiftingSurface(AeroTools.Vogel.Models.Components.LiftingSurface@,System.Boolean,System.Boolean)">
+ <summary>
+ Adds a bounded lattice with wakes from a lifting surface.
+ </summary>
+ <param name="Surface"></param>
+ <param name="Symmetric"></param>
+ <param name="GenerateStructure"></param>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.UVLM.Solver.UVLMSolver.FindSurroundingRingsGlobally">
+ <summary>
+ Assign surrounding rings by searching on all lattices
+ </summary>
+</member>
+<member name="M:AeroTools.UVLM.Solver.UVLMSolver.SetCompleteModelOnResults(AeroTools.Vogel.Interface.Postprocess.CalculatedModel@)">
+ <summary>
+ Sets the lattices on the result object
+ </summary>
+ <param name="Results"></param>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.UVLM.Solver.UVLMSolver.ReadFromXML(System.String)">
+ <summary>
+ Read a written step
+ </summary>
+ <param name="FilePath"></param>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.UVLM.Solver.UVLMSolver.WriteToXML(System.String,System.Boolean)">
+ <summary>
+ Writes the current step
+ </summary>
+ <param name="FilePath"></param>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.UVLM.Solver.UVLMSolver.CreateSubFoldersNames(System.String)">
+ <summary>
+ Creates the subfolders where results are stored
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.UVLM.Solver.UVLMSolver.CleanDirectory(AeroTools.UVLM.Solver.UVLMSolver.DataBaseSection)">
+ <summary>
+ Removes all calculation files from the selected path
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.UVLM.Solver.UVLMSolver.SteadyState(System.String)">
+ <summary>
+ Convect wakes and calculates loads at the last time step.
+ </summary>
+</member>
+<member name="M:AeroTools.UVLM.Solver.UVLMSolver.UnsteadyTransit(System.String)">
+ <summary>
+ Calculates the unsteady transit provided a velocity profile.
+ </summary>
+</member>
+<member name="F:AeroTools.UVLM.Settings.SimulationSettings.StreamVelocity">
+ <summary>
+ Free stream velocity amplitude vector (components are scaled by an amplitude factor in unsteady problems).
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:AeroTools.UVLM.Settings.SimulationSettings.Omega">
+ <summary>
+ Angular velocity of aircraft reference frame (not implemented yet).
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:AeroTools.UVLM.Settings.SimulationSettings.Density">
+ <summary>
+ Free stream density in kg/m³
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:AeroTools.UVLM.Settings.SimulationSettings.StaticPressure">
+ <summary>
+ Free stream static pressure in Pa.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:AeroTools.UVLM.Settings.SimulationSettings.Viscocity">
+ <summary>
+ Free stream viscosity
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.UVLM.Settings.SimulationSettings.ClippingStep">
+ <summary>
+ Specifies the global cutting step
+ </summary>
+</member>
+<member name="P:AeroTools.UVLM.Settings.SimulationSettings.SimulationSteps">
+ <summary>
+ Specifies the number of integration steps
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.UVLM.Settings.SimulationSettings.Interval">
+ <summary>
+ Specifies the size of the instegration step
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.UVLM.Settings.SimulationSettings.Cutoff">
+ <summary>
+ Specifies the radius of the region around vortices where the velocity is null
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.UVLM.Settings.SimulationSettings.CalculateCutoff">
+ <summary>
+ Specifies whether the cutoff has to be automatically estimated
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.UVLM.Settings.SimulationSettings.StructuralSettings">
+ <summary>
+ 'Contains structural settings
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.UVLM.Settings.SimulationSettings.UnsteadyVelocity">
+ <summary>
+ Amplitude of free stream velocity components in time.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.UVLM.Settings.SimulationSettings.AeroelasticHistogram">
+ <summary>
+ Contains information about how the simulation parameters vary during an aeroelastic analysis.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.UVLM.Settings.SimulationSettings.CharacteristicLenght">
+ <summary>
+ Parameter used to parametrizise force and moment coeficients.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.UVLM.Settings.SimulationSettings.GlobalPosition">
+ <summary>
+ Global model position
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.UVLM.Settings.SimulationSettings.GlobalRotationCenter">
+ <summary>
+ Global center of rotation
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.UVLM.Settings.SimulationSettings.GlobalOrientation">
+ <summary>
+ Global orientation
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.UVLM.Settings.SimulationSettings.GlobalPanelSurvey">
+ <summary>
+ Indicates if adjacent rings should be searched by proximity and not by indexation.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.UVLM.Settings.SimulationSettings.SurveyTolerance">
+ <summary>
+ Maximum distance between rings to be considered as adjacent.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.UVLM.Settings.SimulationSettings.StrongWakeInfluence">
+ <summary>
+ Indicates if the influence of the wake in the fuselage should be included.
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.UVLM.Settings.SimulationSettings.InitializaParameters">
+ <summary>
+ Sets default values.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.UVLM.Settings.SimulationSettings.Assign(AeroTools.UVLM.Settings.SimulationSettings)">
+ <summary>
+ Copies the object content into another one.
+ </summary>
+ <param name="Simulacion"></param>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.UVLM.Settings.SimulationSettings.GenerateVelocityProfile">
+ <summary>
+ Generates a vector containing the velocity at each time step.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.ResultBox.IsReadOnly">
+ <summary>
+ Indicates if the value is read only.
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:AeroTools.ResultBox.Value">
+ <summary>
+ The value of the contained property.
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:AeroTools.ResultBox.Name">
+ <summary>
+ The name of the contained property.
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:AeroTools.ResultBox.GreekLetter">
+ <summary>
+ Indicates if the font is in greek characters.
+ </summary>
+ <returns></returns>
+</member>
+<member name="T:AeroTools.Vogel.Interface.IOperational">
+ <summary>
+ Interface that implements operations on objects
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="T:AeroTools.Vogel.Interface.Operations">
+ <summary>
+ Operation types
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="T:AeroTools.Vogel.Interface.OperationsTool">
+ <summary>
+ Provides methods to handle gometric operations such as translation and rotation of IOperational objects.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.Vogel.Interface.OperationsTool.Operation">
+ <summary>
+ Specifies the desired geometric operation.
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.Vogel.Interface.OperationsTool.StatusFlag">
+ <summary>
+ Tells the user what the situation is inside the operations tool.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.Vogel.Interface.OperationsTool.SetDestinationObject(AeroTools.Vogel.Interface.IOperational@)">
+ <summary>
+ Loads a refference to the IOperational object that is going to be modified under the current task.
+ It will only work if there is an active operation and no loaded object.
+ </summary>
+ <param name="Obj"></param>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.Vogel.Interface.OperationsTool.SetEntityToQueue(System.Object)">
+ <summary>
+ Adds an item that might be used on the current operation.
+ </summary>
+ <param name="Entity"></param>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.Vogel.Interface.OperationsTool.CancelOperation">
+ <summary>
+ Aborts the current operation.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="T:AeroTools.Vogel.Interface.Postprocess.CalculatedModel">
+ <summary>
+ Stores results for a given time step.
+ </summary>
+</member>
+<member name="P:AeroTools.Vogel.Interface.Postprocess.CalculatedModel.TransitLattices">
+ <summary>
+ Gathers all transit lattices.
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.Vogel.Interface.Postprocess.CalculatedModel.TransitStages">
+ <summary>
+ Indicates the number of loaded stages
+ </summary>
+</member>
+<member name="P:AeroTools.Vogel.Interface.Postprocess.CalculatedModel.TransitLoaded">
+ <summary>
+ Indicates if the simulation frames have been loaded
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.Vogel.Interface.VisualizationProperties.ColorSurface">
+ <summary>
+ Color of the surface
+ </summary>
+</member>
+<member name="P:AeroTools.Vogel.Interface.VisualizationProperties.ColorMesh">
+ <summary>
+ Color of the mesh
+ </summary>
+</member>
+<member name="P:AeroTools.Vogel.Interface.VisualizationProperties.ThicknessMesh">
+ <summary>
+ Thickness of the mesh
+ </summary>
+</member>
+<member name="P:AeroTools.Vogel.Interface.VisualizationProperties.Transparency">
+ <summary>
+ Transparency of the model
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:AeroTools.Vogel.Interface.AircraftProject.Name">
+ <summary>
+ Project name
+ </summary>
+ <returns></returns>
+</member>
+<member name="T:AeroTools.Vogel.Interface.AircraftProject.GLElement">
+ <summary>
+ SharpGL control used to draw this project.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.Vogel.Interface.AircraftProject.SetControlGL(SharpGL.OpenGL@)">
+ <summary>
+ Stablishes a reference to an SharpGL control.
+ </summary>
+ <param name="Control"></param>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.Vogel.Interface.AircraftProject.RepresentOnGL">
+ <summary>
+ Represents the current lists on OpenGL.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.Vogel.Interface.AircraftProject.RefreshOnGL">
+ <summary>
+ Remakes OpenGL lists and redraws.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.Vogel.Interface.AircraftProject.FastRefreshOnGL(System.Int32,System.Int32)">
+ <summary>
+ Redraws by using drawing subs 
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:AeroTools.Vogel.Interface.AircraftProject.ListOfSurfacesToDraw">
+ <summary>
+ OpenGL lists to be drawn.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.Vogel.Interface.AircraftProject.MakeDrawingLists">
+ <summary>
+ Constructs OpenGL lists.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="E:AeroTools.Vogel.Interface.AircraftProject.CalculationDone">
+ <summary>
+ Occurs when the calculation finishes.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.Vogel.Interface.AircraftProject.ImportSurfacesFromXML(System.String)">
+ <summary>
+ Finds lifting surface on a XML resource file and loads them to the current model.
+ </summary>
+ <param name="SourcePath"></param>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.Vogel.Interface.SelectionRecord.ID">
+ <summary>
+ Reads back the code and sets identity credentials.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.Vogel.GUI.GeometricTools.TDrawingTaskManager.BeginTask(AeroTools.Vogel.GUI.GeometricTools.TDrawingTaskManager.ETask,System.Object@)">
+ <summary>
+ Cancels current task and starts the selected one.
+ </summary>
+ <param name="Task"></param>
+ <param name="Data"></param>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.Vogel.GUI.GeometricTools.TDrawingTaskManager.CancelTask">
+ <summary>
+ Stops executing the current task
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.Vogel.GUI.GeometricTools.TDrawingTaskManager.AddDataToTask(System.Object)">
+ <summary>
+ Adds info to the task and checks if the task is ready. If it does, rises the "OnTaskReady" event
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.Vogel.GUI.GeometricTools.TSegment.PA">
+ <summary>
+ Starting point
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.Vogel.GUI.GeometricTools.TSegment.PB">
+ <summary>
+ End point
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.Vogel.GUI.GeometricTools.TSegment.EntityType">
+ <summary>
+ Returns the entity type
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.Vogel.GUI.GeometricTools.TSegment.Longitude">
+ <summary>
+ Total longitude of the segment
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.Vogel.GUI.GeometricTools.TSegment.EvaluatePointAt(System.Double,MathTools.Algebra.EuclideanSpace.EVector2@)">
+ <summary>
+ Evaluates the provided point at a local coordinate s
+ </summary>
+ <param name="s">Local coordinate (from 0 to 1)</param>
+ <param name="Point">Point evaluated at s</param>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.Vogel.GUI.GeometricTools.TArc.PA">
+ <summary>
+ Starting point
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.Vogel.GUI.GeometricTools.TArc.PB">
+ <summary>
+ End point
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.Vogel.GUI.GeometricTools.TArc.Center">
+ <summary>
+ Center point
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.Vogel.GUI.GeometricTools.TArc.EntityType">
+ <summary>
+ Returns the entity type
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.Vogel.GUI.GeometricTools.TArc.Longitude">
+ <summary>
+ Returns the total length of the arc
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.Vogel.GUI.GeometricTools.TArc.EvaluatePointAt(System.Double,MathTools.Algebra.EuclideanSpace.EVector2@)">
+ <summary>
+ Evaluates the provided point at a local coordinate s
+ </summary>
+ <param name="s">Local coordinate (from 0 to 1)</param>
+ <param name="Point">Point evaluated at s</param>
+ <remarks></remarks>
+</member>
+<member name="T:AeroTools.Vogel.Models.Basics.Panel">
+ <summary>
+ Represents a panel on the model.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.Vogel.Models.Basics.Panel.#ctor(System.Int32,System.Int32,System.Int32,System.Int32)">
+ <summary>
+ Generates a quadrilateral element
+ </summary>
+ <param name="N1"></param>
+ <param name="N2"></param>
+ <param name="N3"></param>
+ <param name="N4"></param>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.Vogel.Models.Basics.Panel.#ctor(System.Int32,System.Int32,System.Int32)">
+ <summary>
+ Generates a triangular element
+ </summary>
+ <param name="N1"></param>
+ <param name="N2"></param>
+ <param name="N3"></param>
+ <remarks></remarks>
+</member>
+<member name="T:AeroTools.Vogel.Models.Basics.BaseSurface">
+ <summary>
+ Basic definition of a base surface able to be operated and selected.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.Vogel.Models.Basics.BaseSurface.Selected">
+ <summary>
+ Indicates if the surface is currently selected.
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.Vogel.Models.Basics.BaseSurface.UnselectAll">
+ <summary>
+ Unselects all nodal points.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.Vogel.Models.Basics.BaseSurface.Refresh3DModel(SharpGL.OpenGL@,AeroTools.Vogel.Interface.SelectionModes,System.Int32)">
+ <summary>
+ Refresh the 3D model on a OpenGL control.
+ </summary>
+ <param name="gl"></param>
+ <param name="SelectionMode"></param>
+ <param name="ElementIndex"></param>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.Vogel.Models.Basics.ChamberedLine.#ctor(AeroTools.Vogel.Models.Basics.ChamberType)">
+ <summary>
+ Returns a NACA chamber point provided the position as fraction of the chord.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.Vogel.Models.Basics.ChamberedLine.BasicLine(System.Double)">
+ <summary>
+ Returns the Y coordinate of the basic chamber function given a chordwise coordinate.
+ </summary>
+ <param name="p">Chordwise coordinate</param>
+</member>
+<member name="P:AeroTools.Vogel.Models.Basics.ChamberedLine.ChamberType">
+ <summary>
+ Sets or gets the type of chamber.
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="T:AeroTools.Vogel.Models.Basics.StructuralPartition">
+ <summary>
+ Represents an structural partition
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:AeroTools.Vogel.Models.Basics.StructuralPartition.p">
+ <summary>
+ Position of this partition
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:AeroTools.Vogel.Models.Basics.StructuralPartition.LocalSection">
+ <summary>
+ Section associated to this partition
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="T:AeroTools.Vogel.Models.Components.WingAnchorInfo">
+ <summary>
+ Contains information about a parent wing.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="T:AeroTools.Vogel.Models.Components.AnchorPoint">
+ <summary>
+ Represents a point in the surface where a vertex has to be added.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.Vogel.Models.Components.AnchorPoint.s">
+ <summary>
+ Curvilinear coordinate.
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.Vogel.Models.Components.AnchorPoint.Z">
+ <summary>
+ Longitudinal coordinate.
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.Vogel.Models.Components.AnchorPoint.Perimeter">
+ <summary>
+ Perimeter of the section associated to this anchor point.
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks>Used to find back the cartesian coordinates.</remarks>
+</member>
+<member name="T:AeroTools.Vogel.Models.Components.AnchorLine">
+ <summary>
+ Represents a series of segments that have to be projected on a extruded surface.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.Vogel.Models.Components.AnchorLine.Lines">
+ <summary>
+ Lines of extrusion.
+ </summary>
+</member>
+<member name="P:AeroTools.Vogel.Models.Components.AnchorLine.Projections">
+ <summary>
+ Surface coordinates anchor points.
+ </summary>
+</member>
+<member name="P:AeroTools.Vogel.Models.Components.AnchorLine.BeginIndex">
+ <summary>
+ Indicates the initial position in the mesh where the points were located.
+ </summary>
+</member>
+<member name="P:AeroTools.Vogel.Models.Components.AnchorLine.EndIndex">
+ <summary>
+ Indicates the end position in the mesh where the points were located.
+ </summary>
+</member>
+<member name="P:AeroTools.Vogel.Models.Components.AnchorLine.WingAnchorInfo">
+ <summary>
+ Gather information about the parent lifting surface.
+ </summary>
+</member>
+<member name="P:AeroTools.Vogel.Models.Components.AnchorLine.Generated">
+ <summary>
+ Inidcates if the projections where created.
+ </summary>
+</member>
+<member name="M:AeroTools.Vogel.Models.Components.AnchorLine.TranslatePoints(System.Double,System.Double,System.Double)">
+ <summary>
+ Moves all points the given displacements.
+ </summary>
+</member>
+<member name="M:AeroTools.Vogel.Models.Components.AnchorLine.#ctor(System.Xml.XmlReader)">
+ <summary>
+ Creates a new instance with values read from an xml file.
+ </summary>
+</member>
+<member name="M:AeroTools.Vogel.Models.Components.AnchorLine.#ctor">
+ <summary>
+ Creates a new instance.
+ </summary>
+</member>
+<member name="T:AeroTools.Vogel.Models.Components.CrossSection">
+ <summary>
+ Represents a planar cross section.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.Vogel.Models.Components.CrossSection.Perimeter">
+ <summary>
+ Perimeter of the section.
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.Vogel.Models.Components.CrossSection.GetPoint(System.Double)">
+ <summary>
+ Returns an interpolated point at the given line coordinate s.
+ </summary>
+ <param name="s">Curvilinear coordinate from 0 to 1</param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.Vogel.Models.Components.CrossSection.WriteToXML(System.Xml.XmlWriter@)">
+ <summary>
+ Writes the section to an XML file.
+ </summary>
+ <param name="writer"></param>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.Vogel.Models.Components.CrossSection.ReadFromXML(System.Xml.XmlReader@)">
+ <summary>
+ Reads the wing from an XML file.
+ </summary>
+ <param name="reader"></param>
+ <remarks></remarks>
+</member>
+<member name="T:AeroTools.Vogel.Models.Components.MeshTypes">
+ <summary>
+ All types of meshes.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="T:AeroTools.Vogel.Models.Components.Fuselage">
+ <summary>
+ Represents a surface defined by parallel planar cross sections.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.Vogel.Models.Components.Fuselage.CrossSections">
+ <summary>
+ List containing cross sections used to extrude the surface.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.Vogel.Models.Components.Fuselage.AnchorLines">
+ <summary>
+ Gathers all ankor lines.
+ </summary>
+</member>
+<member name="P:AeroTools.Vogel.Models.Components.Fuselage.MeshType">
+ <summary>
+ Defines the type of mesh
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.Vogel.Models.Components.Fuselage.LongitudinalRefinement">
+ <summary>
+ Indicates the  number of paneles in the transverse direction.
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.Vogel.Models.Components.Fuselage.CrossRefinement">
+ <summary>
+ Indicates the  number of paneles in the transverse direction.
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="F:AeroTools.Vogel.Models.Components.Fuselage._CrossSectionsToDisplay">
+ <summary>
+ List containing cross sections used to extrude the surface.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.Vogel.Models.Components.Fuselage.GenerateMesh">
+ <summary>
+ Generates a triangular or quadrilateral mesh.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.Vogel.Models.Components.Fuselage.GenerateTriangularMesh">
+ <summary>
+ Creates a mesh of triangular panels.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.Vogel.Models.Components.Fuselage.GenerateQuadrilateralMesh">
+ <summary>
+ Generates a structured mesh of quadrilaterals.
+ </summary>
+ <remarks>Cannot handle "Z supperposed" anchors.</remarks>
+</member>
+<member name="M:AeroTools.Vogel.Models.Components.Fuselage.Refresh3DModel(SharpGL.OpenGL@,AeroTools.Vogel.Interface.SelectionModes,System.Int32)">
+ <summary>
+ Regenerates the 3D model in Open GL.
+ </summary>
+ <param name="gl"></param>
+ <param name="SelectionMode"></param>
+ <param name="ElementIndex"></param>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.Vogel.Models.Components.Fuselage.ReadFromXML(System.Xml.XmlReader@)">
+ <summary>
+ Reads the wing from an XML file.
+ </summary>
+ <param name="reader"></param>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.Vogel.Models.Components.Fuselage.WriteToXML(System.Xml.XmlWriter@)">
+ <summary>
+ Writes the wing to an XML file.
+ </summary>
+ <param name="writer"></param>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.Vogel.Models.Components.GeneralSurface.UpdatePosition">
+ <summary>
+ Position the model in relation to the reference position of the nodes (it won't work if there is no reference position). 
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.Vogel.Models.Components.GeneralSurface.UpdateDisplacement(System.Double)">
+ <summary>
+ Updates the position based on the reference nodal position and displacement.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.Vogel.Models.Components.JetEngine.GenerateMesh">
+ <summary>
+ Generates a triangular or quadrilateral mesh.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.Vogel.Models.Components.JetEngine.ReadFromXML(System.Xml.XmlReader@)">
+ <summary>
+ Reads the wing from an XML file.
+ </summary>
+ <param name="reader"></param>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.Vogel.Models.Components.JetEngine.WriteToXML(System.Xml.XmlWriter@)">
+ <summary>
+ Writes the wing to an XML file.
+ </summary>
+ <param name="writer"></param>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.Vogel.Models.Components.WingRegion.LoadGeometry(System.Int32,System.Double,System.Double,System.Double,System.Double,System.Double,System.Double,System.Double,System.Double,System.Int32)">
+ <summary>
+ Load all geometrical parameters.
+ </summary>
+ <param name="SpanPanels">Number of spanwise panels</param>
+ <param name="CuerdaExterna">Tip chord</param>
+ <param name="Longitud">Spanwise length</param>
+ <param name="Flecha">Sweep angle</param>
+ <param name="Diedro">Dihedral angle</param>
+ <param name="Torsión">Twist</param>
+ <param name="EjeDeTorsión">Position of the twisting axis</param>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.Vogel.Models.Components.WingRegion.Assign(AeroTools.Vogel.Models.Components.WingRegion)">
+ <summary>
+ Gets all the constent from an existing wing region.
+ </summary>
+ <param name="PanelExt"></param>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.Vogel.Models.Components.WingRegion.nSpanPanels">
+ <summary>
+ Number of panels in spanwise direction.
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.Vogel.Models.Components.WingRegion.nChordNodes">
+ <summary>
+ Number of nodes in chordwise direction.
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.Vogel.Models.Components.WingRegion.TipChord">
+ <summary>
+ Tip chord length.
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.Vogel.Models.Components.WingRegion.Length">
+ <summary>
+ Spanwise length.
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.Vogel.Models.Components.WingRegion.Sweep">
+ <summary>
+ Sweep angle.
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.Vogel.Models.Components.WingRegion.Dihedral">
+ <summary>
+ Dihedral angle.
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.Vogel.Models.Components.WingRegion.Twist">
+ <summary>
+ Twist angle along the span.
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.Vogel.Models.Components.WingRegion.TwistAxis">
+ <summary>
+ Chordwise position of the twisting axis as fraction of the local chord.
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.Vogel.Models.Components.WingRegion.Chamber">
+ <summary>
+ Describes the form of the cord.
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.Vogel.Models.Components.WingRegion.SpacingType">
+ <summary>
+ Type of spanwise spacing between the stations.
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.Vogel.Models.Components.WingRegion.PolarIndex">
+ <summary>
+ Index of polar curve to be loaded.
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.Vogel.Models.Components.WingRegion.TipSection">
+ <summary>
+ Represents the section at the tip of the panel
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.Vogel.Models.Components.WingRegion.CenterOfShear">
+ <summary>
+ Stablishes the position of the center of shear in relation to the local chord (flap not included)
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.Vogel.Models.Components.WingRegion.PolarFamiliy">
+ <summary>
+ Local polar curve.
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.Vogel.Models.Components.WingRegion.WriteToXML(System.Xml.XmlWriter@)">
+ <summary>
+ Writes the content to an XML file.
+ </summary>
+ <param name="writer"></param>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.Vogel.Models.Components.WingRegion.ReadFromXML(System.Xml.XmlReader@)">
+ <summary>
+ Reads the content from an XML file.
+ </summary>
+ <param name="reader"></param>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.Vogel.Models.Components.LiftingSurface.Lock">
+ <summary>
+ Permite bloquear la edicion del contenido
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.Vogel.Models.Components.LiftingSurface.GlobalPosition">
+ <summary>
+ Position of the rotation point in local coordinates
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.Vogel.Models.Components.LiftingSurface.GlobalOrientation">
+ <summary>
+ Orientation given in Euler coordinates.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.Vogel.Models.Components.LiftingSurface.LocalDirections">
+ <summary>
+ Local directions.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.Vogel.Models.Components.LiftingSurface.LocalOrigin">
+ <summary>
+ Position of the local origin in global coordinates.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.Vogel.Models.Components.LiftingSurface.Symmetric">
+ <summary>
+ Indicates if the mesh has to be symmetric about the plane y = 0.
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.Vogel.Models.Components.LiftingSurface.ConvectWake">
+ <summary>
+ Indicates if the wake has to be convected.
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.Vogel.Models.Components.LiftingSurface.TrailingEdgeConvection">
+ <summary>
+ Indicates if the wake should be convected by the trailing edge only.
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.Vogel.Models.Components.LiftingSurface.CuttingStep">
+ <summary>
+ Indicates at which time-step the wake has to be trimmed.
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.Vogel.Models.Components.LiftingSurface.nNodes">
+ <summary>
+ Number of nodes.
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.Vogel.Models.Components.LiftingSurface.nPanels">
+ <summary>
+ Number of panels.
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.Vogel.Models.Components.LiftingSurface.nChordPanels">
+ <summary>
+ Number of chordwise panels
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.Vogel.Models.Components.LiftingSurface.nSpanPanels">
+ <summary>
+ Number of spanwise panels.
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.Vogel.Models.Components.LiftingSurface.nVortices">
+ <summary>
+ Number of vortex segements.
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.Vogel.Models.Components.LiftingSurface.nWingRegions">
+ <summary>
+ Number of wing regions.
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.Vogel.Models.Components.LiftingSurface.RootChord">
+ <summary>
+ Length of the root chord.
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.Vogel.Models.Components.LiftingSurface.RootFlap">
+ <summary>
+ Length of the root flap (as fraction of the root chord).
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.Vogel.Models.Components.LiftingSurface.FlapPanels">
+ <summary>
+ Number of chordwise flap panels.
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.Vogel.Models.Components.LiftingSurface.CurrentRegionID">
+ <summary>
+ Indicates which regions is currently selected or selects an existing region.
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.Vogel.Models.Components.LiftingSurface.nBoundarySegments">
+ <summary>
+ Number of segments around the perimeter.
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.Vogel.Models.Components.LiftingSurface.nBoundaryNodes">
+ <summary>
+ Number of boundary nodes.
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.Vogel.Models.Components.LiftingSurface.nPrimitiveSegments">
+ <summary>
+ Number of primitive segments.
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.Vogel.Models.Components.LiftingSurface.nPrimitiveNodes">
+ <summary>
+ Number of primitive nodes.
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.Vogel.Models.Components.LiftingSurface.FirstPrimitiveSegment">
+ <summary>
+ Position of the segment defined as firt primitive.
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.Vogel.Models.Components.LiftingSurface.LastPrimitiveSegment">
+ <summary>
+ Position of the segment defined as last primitive.
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.Vogel.Models.Components.LiftingSurface.FirstPrimitiveNode">
+ <summary>
+ Position of the node defined as first primitive (depends on the first primitive segment).
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.Vogel.Models.Components.LiftingSurface.LastPrimitiveNode">
+ <summary>
+ Position of the node defined as last primitive (depends on the last primitive segment).
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.Vogel.Models.Components.LiftingSurface.GetPrimitiveNodeIndex(System.Int32)">
+ <summary>
+ Returns the index of a given primitive node.
+ </summary>
+ <param name="Node"></param>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.Vogel.Models.Components.LiftingSurface.GetPrimitiveNodePosition(System.Int32)">
+ <summary>
+ Returns the location of a given primitive node.
+ </summary>
+ <param name="Nodo"></param>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.Vogel.Models.Components.LiftingSurface.GetPrimitivePanelIndex(System.Int32)">
+ <summary>
+ Returns the index of a given primitive segment.
+ </summary>
+ <param name="Segment"></param>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.Vogel.Models.Components.LiftingSurface.GetPrimitivePanel(System.Int32)">
+ <summary>
+ Returns the panel associated to a given primitive segment.
+ </summary>
+ <param name="Segmento"></param>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.Vogel.Models.Components.LiftingSurface.InitializeRegions">
+ <summary>
+ Loads a simple wing region.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.Vogel.Models.Components.LiftingSurface.AddRegion">
+ <summary>
+ Adds a new region at the end.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.Vogel.Models.Components.LiftingSurface.InsertRegion(System.Int32)">
+ <summary>
+ Insets a new wing region at a given position.
+ </summary>
+ <param name="Posicion"></param>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.Vogel.Models.Components.LiftingSurface.InsertRegion">
+ <summary>
+ Inserts a new wing region after the current one.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.Vogel.Models.Components.LiftingSurface.RemoveCurrentRegion">
+ <summary>
+ Removes the current wing region.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.Vogel.Models.Components.LiftingSurface.CurrentRegion">
+ <summary>
+ Currently active region
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.Vogel.Models.Components.LiftingSurface.GetNodalPoint(System.Int32)">
+ <summary>
+ Returns the instance of a specific nodal point.
+ </summary>
+ <param name="Index"></param>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.Vogel.Models.Components.LiftingSurface.CloneNodalPoint(System.Int32)">
+ <summary>
+ Returns a copy of a given nodal point.
+ </summary>
+ <param name="Index"></param>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.Vogel.Models.Components.LiftingSurface.GetQuadPanel(System.Int32)">
+ <summary>
+ Returns an instance of a given quad panel. If the panel is not found, the first one is returned.
+ </summary>
+ <param name="Index"></param>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.Vogel.Models.Components.LiftingSurface.CloneQuadPanel(System.Int32)">
+ <summary>
+ Returns a copy of a given quad panel.
+ </summary>
+ <param name="Index"></param>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.Vogel.Models.Components.LiftingSurface.IncludeStructure">
+ <summary>
+ Determines whether or not the structure will be included on the calculation.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.Vogel.Models.Components.LiftingSurface.RootSection">
+ <summary>
+ Wing root section.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:AeroTools.Vogel.Models.Components.LiftingSurface._StructuralPartition">
+ <summary>
+ Contains all nodes and segments representing the structure.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.Vogel.Models.Components.LiftingSurface.StructuralPartition">
+ <summary>
+ Represents the structural nodal points
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.Vogel.Models.Components.LiftingSurface.GenerateStructure">
+ <summary>
+ Generates the nodal partition and the section partition.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.Vogel.Models.Components.LiftingSurface.CalculateControlPointsAndNormals">
+ <summary>
+ Calculates the normal vectors and the control points.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.Vogel.Models.Components.LiftingSurface.CalculateBiotSavartVector(System.Int32,MathTools.Algebra.EuclideanSpace.EVector3,System.Double)">
+ <summary>
+ Obsolete function.
+ </summary>
+ <param name="Panel"></param>
+ <param name="PuntoDeControl"></param>
+ <param name="Cutoff"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.Vogel.Models.Components.LiftingSurface.GenerateGeneralSurface(AeroTools.Vogel.Models.Components.GeneralSurface@)">
+ <summary>
+ Generates a general surface from this wing.
+ </summary>
+ <param name="Superficie"></param>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.Vogel.Models.Components.LiftingSurface.Clone">
+ <summary>
+ Generates a copy of the instance.
+ </summary>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.Vogel.Models.Components.LiftingSurface.Translate(MathTools.Algebra.EuclideanSpace.EVector3)">
+ <summary>
+ Translates the surface a given displacement.
+ </summary>
+ <param name="Vector"></param>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.Vogel.Models.Components.LiftingSurface.Orientate(MathTools.Algebra.EuclideanSpace.EVector3,MathTools.Algebra.EuclideanSpace.OrientationCoordinates)">
+ <summary>
+ Orientates the model by the given Euler angles around the specified point.
+ </summary>
+ <param name="Point"></param>
+ <param name="Ori"></param>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.Vogel.Models.Components.LiftingSurface.Align(MathTools.Algebra.EuclideanSpace.EVector3,MathTools.Algebra.EuclideanSpace.EVector3,MathTools.Algebra.EuclideanSpace.EVector3,MathTools.Algebra.EuclideanSpace.EVector3)">
+ <summary>
+ Aligns the surface by means of four reference points (it is not working well).
+ </summary>
+ <param name="Punto1"></param>
+ <param name="Punto2"></param>
+ <param name="Punto3"></param>
+ <param name="Punto4"></param>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.Vogel.Models.Components.LiftingSurface.ReadFromXML(System.Xml.XmlReader@)">
+ <summary>
+ Reads the wing from an XML file.
+ </summary>
+ <param name="reader"></param>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.Vogel.Models.Components.LiftingSurface.WriteToXML(System.Xml.XmlWriter@)">
+ <summary>
+ Writes the wing to an XML file.
+ </summary>
+ <param name="writer"></param>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.Vogel.Models.Components.LiftingSurface.RetriveStringData">
+ <summary>
+ Returns a string with information about this wing.
+ </summary>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.Vogel.Models.CalculationModel.Name">
+ <summary>
+ Project name
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:AeroTools.Vogel.Models.CalculationModel.AddLiftingSurface">
+ <summary>
+ Adds a lifting surface and sets it as current.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.Vogel.Models.CalculationModel.AddNacelle">
+ <summary>
+ Adds a nacelle and sets it as current.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.Vogel.Models.CalculationModel.AddExtrudedBody">
+ <summary>
+ Adds an extruded body
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.Vogel.Models.CalculationModel.AddJetEngine">
+ <summary>
+ Adds a jet engine
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.Vogel.Models.CalculationModel.RemoveLiftingSurface(System.Int32)">
+ <summary>
+ Removes the selected surface if it is not the only one in the list.
+ </summary>
+ <param name="Superficie"></param>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.Vogel.Models.CalculationModel.RemoveBody(System.Int32)">
+ <summary>
+ Removes the selected body if it is not the only one on the list.
+ </summary>
+ <param name="Index"></param>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.Vogel.Models.CalculationModel.RemoveJetEngine(System.Int32)">
+ <summary>
+ Removes the selected jet engine if it is not the only one on the list.
+ </summary>
+ <param name="Index"></param>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.Vogel.Models.CalculationModel.CloneLiftingSurface(System.Int32)">
+ <summary>
+ Generates a copy of the current lifting surface with the option symmetric in true
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.Vogel.Models.CalculationModel.CurrentLiftingSurface">
+ <summary>
+ Currently active lifting surface
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.Vogel.Models.CalculationModel.CurrentBody">
+ <summary>
+ Currently active body
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.Vogel.Models.CalculationModel.CurrentJetEngine">
+ <summary>
+ Currently active jet engine
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.Vogel.Models.CalculationModel.LiftingSurfaceSelected">
+ <summary>
+ Indicates if the current lifting surface exists.
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.Vogel.Models.CalculationModel.BodySelected">
+ <summary>
+ Indicates if the current body exists.
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.Vogel.Models.CalculationModel.JetEngineSelected">
+ <summary>
+ Indicates if the current jet engine exists.
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+</members>
+</doc>
