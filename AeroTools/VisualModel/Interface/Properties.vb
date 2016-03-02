@@ -1,4 +1,6 @@
-﻿Imports System.Xml
+﻿'Copyright (C) 2016 Guillermo Hazebrouck
+
+Imports System.Xml
 Imports System.Drawing
 Imports System.ComponentModel
 Imports AeroTools.VisualModel.IO

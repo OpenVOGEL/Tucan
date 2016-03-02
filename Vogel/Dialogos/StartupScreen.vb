@@ -1,4 +1,6 @@
-﻿Public Class StartupScreen
+﻿'Copyright (C) 2016 Guillermo Hazebrouck
+
+Public Class StartupScreen
 
     Private Sub PantallaDePresentacion_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
 

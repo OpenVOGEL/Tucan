@@ -1,4 +1,6 @@
-﻿Imports AeroTools.UVLM.Models.Aero.Components
+﻿'Copyright (C) 2016 Guillermo Hazebrouck
+
+Imports AeroTools.UVLM.Models.Aero.Components
 Imports System.Drawing
 
 Public Class PolarPlotter
@@ -43,16 +45,18 @@ Public Class PolarPlotter
 
             For i = 1 To ny - 1
 
-                Dim y As Single = i * gH / ny
-                g.DrawLine(GridPen, 0, y, gW, y)
+                Dim y As Single = mY + i * gH / ny
+                g.DrawLine(GridPen, mX, y, mX + gW, y)
 
             Next
 
-            g.DrawLine(AxisPen, 0, gH, gW, gH)
+            g.DrawLine(AxisPen, mX, mY + gH, mX + gW, mY + gH)
+            g.DrawLine(AxisPen, mX, mY, mX, mY + gH)
+            g.DrawLine(AxisPen, mX + gW, mY, mX + gW, mY + gH)
 
             ' Function:
 
-            Dim np As Integer = 50
+            Dim np As Integer = 30
             Dim ymax As Double = 0
             Dim xmin As Double = -1
             Dim xmax As Double = 1
@@ -100,13 +104,9 @@ Public Class PolarPlotter
 
                         Next
 
-                        x = mX + ((Math.Round(xmin / dx * nx)) / nx - xmin / dx) * gW
+                        x = CSng(mX + gW * Math.Abs(xmin) / dx)
                         g.DrawLine(AxisPen, x, mY, x, mY + gH)
-
-                        Dim axis_pen As New Pen(Brushes.DarkGray, 2)
-                        Dim oX As Single = CSng(mX + gW * Math.Abs(xmin) / dx)
-                        g.DrawLine(axis_pen, oX, mY, oX, mY + gH)
-                        g.DrawLine(axis_pen, mX, mY, mX + gW, mY)
+                        g.DrawLine(AxisPen, mX, mY, mX + gW, mY)
 
                         Dim pnts(cPolar.Nodes.Count) As Point
 
@@ -181,14 +181,13 @@ Public Class PolarPlotter
 
                 For i = 1 To nx - 1
 
-                    Dim x As Single = i / nx * gW
+                    Dim x As Single = mX + i / nx * gW
                     g.DrawLine(GridPen, x, 0, x, gH)
 
                 Next
 
-                Dim axis_pen As New Pen(Brushes.DarkGray, 2)
-                g.DrawLine(axis_pen, CSng(0.5 * gW), 0, CSng(0.5 * gW), gH)
-                g.DrawLine(axis_pen, 0, 0, gW, 0)
+                g.DrawLine(AxisPen, mX, mY + gH, mX + gW, mY + gH)
+                g.DrawLine(AxisPen, mX, mY, mX + gW, mY)
 
                 Dim dx As Double = xmax - xmin
 
@@ -206,10 +205,10 @@ Public Class PolarPlotter
                     vals(i).X = xmin + dx * i / np
                     vals(i).Y = Polar.SkinDrag(vals(i).X)
 
-                    pnts(i).X = i / np * gW
-                    pnts(i).Y = gH * (1 - vals(i).Y / ymax)
+                    pnts(i).X = mX + i / np * gW
+                    pnts(i).Y = mY + gH * (1 - vals(i).Y / ymax)
 
-                    If i > 0 Then g.DrawLine(Pens.Blue, pnts(i - 1), pnts(i))
+                    If i > 0 Then g.DrawLine(CurvePen, pnts(i - 1), pnts(i))
 
                 Next
 
@@ -231,13 +230,13 @@ Public Class PolarPlotter
 
                         SelectedPointIndex = i
 
-                        g.FillEllipse(Brushes.Orange, pnt.X - 2, pnt.Y - 2, 4, 4)
-                        g.DrawEllipse(MarkerPen, pnt.X - 2, pnt.Y - 2, 4, 4)
+                        g.FillEllipse(Brushes.Orange, pnt.X - 3, pnt.Y - 3, 6, 6)
+                        g.DrawEllipse(MarkerPen, pnt.X - 3, pnt.Y - 3, 6, 6)
 
                     Else
 
-                        g.FillEllipse(Brushes.White, pnt.X - 2, pnt.Y - 2, 4, 4)
-                        g.DrawEllipse(MarkerPen, pnt.X - 2, pnt.Y - 2, 4, 4)
+                        g.FillEllipse(Brushes.White, pnt.X - 3, pnt.Y - 3, 6, 6)
+                        g.DrawEllipse(MarkerPen, pnt.X - 3, pnt.Y - 3, 6, 6)
 
                     End If
 

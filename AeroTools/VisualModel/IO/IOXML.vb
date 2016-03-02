@@ -1,4 +1,6 @@
-﻿Imports System.Xml
+﻿'Copyright (C) 2016 Guillermo Hazebrouck
+
+Imports System.Xml
 
 Namespace VisualModel.IO
 

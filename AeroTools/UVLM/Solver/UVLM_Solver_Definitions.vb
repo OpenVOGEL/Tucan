@@ -1,10 +1,11 @@
-﻿Imports AeroTools.UVLM.Settings
+﻿'Copyright (C) 2016 Guillermo Hazebrouck
+
+Imports AeroTools.UVLM.Settings
 Imports AeroTools.UVLM.Models.Structural
 Imports MathTools.Algebra.EuclideanSpace
 Imports AeroTools.UVLM.Models.Aero
 Imports AeroTools.UVLM.Models.Aero.Components
 Imports DotNumerics.LinearAlgebra
-Imports CommonResources.Licencing
 
 Namespace UVLM.Solver
 

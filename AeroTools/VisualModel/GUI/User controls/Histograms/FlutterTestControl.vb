@@ -1,4 +1,6 @@
-﻿Imports AeroTools.UVLM.SimulationTools
+﻿'Copyright (C) 2016 Guillermo Hazebrouck
+
+Imports AeroTools.UVLM.SimulationTools
 Imports System.Windows.Forms
 Imports System.Drawing
 Imports MathTools.Algebra.EuclideanSpace

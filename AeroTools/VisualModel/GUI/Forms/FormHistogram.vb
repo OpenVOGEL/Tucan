@@ -1,4 +1,6 @@
-﻿Imports AeroTools.UVLM.Settings
+﻿'Copyright (C) 2016 Guillermo Hazebrouck
+
+Imports AeroTools.UVLM.Settings
 Imports AeroTools.UVLM.SimulationTools
 
 Public Class FormHistogram

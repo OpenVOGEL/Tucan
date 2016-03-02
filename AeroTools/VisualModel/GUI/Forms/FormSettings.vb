@@ -1,4 +1,6 @@
-﻿Imports AeroTools.UVLM.Settings
+﻿'Copyright (C) 2016 Guillermo Hazebrouck
+
+Imports AeroTools.UVLM.Settings
 
 Public Class FormSettings
 

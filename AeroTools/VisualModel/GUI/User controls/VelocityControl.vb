@@ -1,4 +1,6 @@
-﻿Imports System.Threading.Tasks
+﻿'Copyright (C) 2016 Guillermo Hazebrouck
+
+Imports System.Threading.Tasks
 Imports MathTools.Algebra.EuclideanSpace
 Imports AeroTools.VisualModel.Interface
 Imports AeroTools.UVLM.SimulationTools

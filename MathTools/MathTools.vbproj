@@ -68,9 +68,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Algebra\CustomMatrices.vb" />
-    <Compile Include="Algebra\EuclideanSpace_Algebra.vb" />
-    <Compile Include="Algebra\EuclideanSpace_Basics.vb" />
-    <Compile Include="Algebra\EuclideanSpace_Orientation.vb" />
+    <Compile Include="Algebra\EuclideanSpace\Operations.vb" />
+    <Compile Include="Algebra\EuclideanSpace\Vectors.vb" />
+    <Compile Include="Algebra\EuclideanSpace\Orientation.vb" />
     <Compile Include="Conversion\Conversion.vb" />
     <Compile Include="Extesions\Extensions.vb" />
     <Compile Include="Integration\Newmark.vb" />

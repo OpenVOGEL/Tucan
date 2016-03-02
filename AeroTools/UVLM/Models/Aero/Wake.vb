@@ -1,4 +1,6 @@
-﻿Imports System.IO
+﻿'Copyright (C) 2016 Guillermo Hazebrouck
+
+Imports System.IO
 Imports System.Threading.Tasks
 Imports AeroTools.UVLM.Models.Aero.Components
 Imports MathTools.Algebra.EuclideanSpace

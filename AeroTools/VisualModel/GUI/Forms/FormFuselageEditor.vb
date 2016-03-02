@@ -1,8 +1,9 @@
-﻿Imports AeroTools.VisualModel.Models.Components
+﻿'Copyright (C) 2016 Guillermo Hazebrouck
+
+Imports AeroTools.VisualModel.Models.Components
 Imports System.Drawing
 Imports MathTools.Algebra.EuclideanSpace
 Imports System.Windows.Forms
-Imports System.Collections.ObjectModel
 
 Public Class FormFuselageEditor
 

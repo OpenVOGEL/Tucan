@@ -1,4 +1,6 @@
-﻿Imports SharpGL
+﻿'Copyright (C) 2016 Guillermo Hazebrouck
+
+Imports SharpGL
 Imports MathTools.Algebra.EuclideanSpace
 Imports AeroTools.VisualModel.Models
 Imports AeroTools.UVLM.Solver

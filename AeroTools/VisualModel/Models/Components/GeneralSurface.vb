@@ -1,4 +1,6 @@
-﻿Imports SharpGL
+﻿'Copyright (C) 2016 Guillermo Hazebrouck
+
+Imports SharpGL
 Imports AeroTools.VisualModel.Interface
 Imports AeroTools.VisualModel.Models.Basics
 Imports AeroTools.UVLM.Models.Aero

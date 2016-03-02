@@ -1,4 +1,6 @@
-﻿Imports AeroTools.VisualModel.Models.Components
+﻿'Copyright (C) 2016 Guillermo Hazebrouck
+
+Imports AeroTools.VisualModel.Models.Components
 
 Public Class FormJetEngine
 

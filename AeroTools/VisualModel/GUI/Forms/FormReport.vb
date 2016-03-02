@@ -1,4 +1,5 @@
-﻿Imports System.IO
+﻿'Copyright (C) 2016 Guillermo Hazebrouck
+
 Imports AeroTools.UVLM.Models.Aero.Components
 Imports System.Windows.Forms
 Imports AeroTools.UVLM.Models.Structural

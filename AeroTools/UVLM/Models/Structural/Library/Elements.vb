@@ -1,4 +1,6 @@
-﻿Imports MathTools.Algebra.EuclideanSpace
+﻿'Copyright (C) 2016 Guillermo Hazebrouck
+
+Imports MathTools.Algebra.EuclideanSpace
 Imports Meta.Numerics.Matrices
 
 Namespace UVLM.Models.Structural.Library

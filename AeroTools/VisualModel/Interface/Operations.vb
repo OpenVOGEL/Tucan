@@ -1,5 +1,6 @@
-﻿Imports MathTools.Algebra.EuclideanSpace
-Imports VisualTools.VisualModel.Models
+﻿'Copyright (C) 2016 Guillermo Hazebrouck
+
+Imports MathTools.Algebra.EuclideanSpace
 Imports SharpGL
 
 Namespace VisualModel.Interface

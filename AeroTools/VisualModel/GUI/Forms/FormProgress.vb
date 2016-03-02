@@ -1,4 +1,6 @@
-﻿Public Class FormProgress
+﻿'Copyright (C) 2016 Guillermo Hazebrouck
+
+Public Class FormProgress
 
     Public Sub New()
 

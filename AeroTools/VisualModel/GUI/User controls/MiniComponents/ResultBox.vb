@@ -1,4 +1,6 @@
-﻿Imports MathTools.Magnitudes
+﻿'Copyright (C) 2016 Guillermo Hazebrouck
+
+Imports MathTools.Magnitudes
 
 Public Class ResultBox
 

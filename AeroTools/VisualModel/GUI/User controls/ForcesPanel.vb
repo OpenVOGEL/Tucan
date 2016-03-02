@@ -1,4 +1,6 @@
-﻿Imports System.Drawing
+﻿'Copyright (C) 2016 Guillermo Hazebrouck
+
+Imports System.Drawing
 Imports System.Windows.Forms
 Imports AeroTools.UVLM.Models.Aero.Components
 Imports MathTools.Magnitudes

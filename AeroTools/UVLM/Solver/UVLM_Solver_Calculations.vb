@@ -1,14 +1,11 @@
-﻿Imports System.IO
+﻿'Copyright (C) 2016 Guillermo Hazebrouck
+
 Imports DotNumerics.LinearAlgebra
 Imports System.Threading.Tasks
-Imports AeroTools.VisualModel.Interface
 Imports MathTools.Algebra.EuclideanSpace
 Imports MathTools.Extensions
 Imports AeroTools.UVLM.Models.Aero
 Imports AeroTools.UVLM.Models.Aero.Components
-Imports AeroTools.UVLM.Settings
-Imports AeroTools.UVLM.Models.Structural
-Imports System.Xml
 
 #Const WITH_BOUNDED_VORTICES = False
 #Const WITH_PARALLEL_LOOPS = False

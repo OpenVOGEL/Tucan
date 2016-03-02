@@ -1,4 +1,6 @@
-﻿Imports MathTools.Algebra.EuclideanSpace
+﻿'Copyright (C) 2016 Guillermo Hazebrouck
+
+Imports MathTools.Algebra.EuclideanSpace
 Imports SharpGL
 Imports AeroTools.UVLM.Models.Aero
 Imports AeroTools.VisualModel.Models.Basics

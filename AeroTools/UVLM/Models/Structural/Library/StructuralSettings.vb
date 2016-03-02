@@ -1,4 +1,6 @@
-﻿Namespace UVLM.Models.Structural.Library
+﻿'Copyright (C) 2016 Guillermo Hazebrouck
+
+Namespace UVLM.Models.Structural.Library
 
     Public Class StructuralSettings
 

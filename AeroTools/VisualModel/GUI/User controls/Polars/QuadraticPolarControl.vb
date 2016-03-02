@@ -1,4 +1,6 @@
-﻿Imports AeroTools.UVLM.Models.Aero.Components
+﻿'Copyright (C) 2016 Guillermo Hazebrouck
+
+Imports AeroTools.UVLM.Models.Aero.Components
 
 Public Class QuadraticPolarControl
 

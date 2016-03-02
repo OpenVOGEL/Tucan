@@ -1,10 +1,5 @@
-﻿Imports System
-Imports System.Collections.Generic
-Imports System.ComponentModel
-Imports System.Data
-Imports System.Drawing
-Imports System.Text
-Imports System.Windows.Forms
+﻿'Copyright (C) 2016 Guillermo Hazebrouck
+
 Imports MathTools.Algebra.EuclideanSpace
 Imports AeroTools
 Imports AeroTools.VisualModel.Interface

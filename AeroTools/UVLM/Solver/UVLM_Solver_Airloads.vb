@@ -1,5 +1,5 @@
-﻿Imports System.Threading.Tasks
-Imports AeroTools.VisualModel.Interface
+﻿'Copyright (C) 2016 Guillermo Hazebrouck
+
 Imports MathTools.Algebra.EuclideanSpace
 
 Namespace UVLM.Solver

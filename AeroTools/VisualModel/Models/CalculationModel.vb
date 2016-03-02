@@ -1,4 +1,6 @@
-﻿Imports AeroTools.VisualModel.Interface
+﻿'Copyright (C) 2016 Guillermo Hazebrouck
+
+Imports AeroTools.VisualModel.Interface
 Imports AeroTools.VisualModel.Models.Components
 Imports System.Xml
 

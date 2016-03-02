@@ -1,4 +1,6 @@
-﻿Imports AeroTools.UVLM.Models.Structural
+﻿'Copyright (C) 2016 Guillermo Hazebrouck
+
+Imports AeroTools.UVLM.Models.Structural
 Imports DotNumerics.LinearAlgebra
 Imports AeroTools.UVLM.Models.Structural.Library
 

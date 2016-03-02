@@ -1,4 +1,5 @@
-﻿Imports VisualTools.VisualModel.Interface
+﻿'Copyright (C) 2016 Guillermo Hazebrouck
+
 Imports AeroTools.UVLM.SimulationTools
 Imports AeroTools.UVLM.Settings
 

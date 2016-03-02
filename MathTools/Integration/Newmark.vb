@@ -1,4 +1,5 @@
-﻿
+﻿'Copyright (C) 2016 Guillermo Hazebrouck
+
 Namespace Integration
 
     Public Class NewmarkIntegrator

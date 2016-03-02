@@ -1,6 +1,6 @@
-﻿Imports System.IO
-Imports Meta.Numerics.Matrices
-Imports System.Threading.Tasks
+﻿'Copyright (C) 2016 Guillermo Hazebrouck
+
+Imports System.IO
 Imports MathTools.Algebra.EuclideanSpace
 Imports AeroTools.UVLM.Models.Aero.Components
 

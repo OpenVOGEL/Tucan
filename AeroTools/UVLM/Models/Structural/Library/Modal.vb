@@ -1,4 +1,5 @@
-﻿
+﻿'Copyright (C) 2016 Guillermo Hazebrouck
+
 Namespace UVLM.Models.Structural.Library
 
     Public Class Mode

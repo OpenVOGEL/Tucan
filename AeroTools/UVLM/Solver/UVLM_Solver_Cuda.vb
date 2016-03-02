@@ -1,4 +1,6 @@
-﻿Imports AeroTools.UVLM.Models.Aero
+﻿'Copyright (C) 2016 Guillermo Hazebrouck
+
+Imports AeroTools.UVLM.Models.Aero
 Imports AeroTools.UVLM.Models.Aero.Components
 Imports Cudafy
 Imports Cudafy.Translator

@@ -1,4 +1,6 @@
-﻿Imports DotNumerics.LinearAlgebra
+﻿'Copyright (C) 2016 Guillermo Hazebrouck
+
+Imports DotNumerics.LinearAlgebra
 
 Namespace UVLM.Solver
 

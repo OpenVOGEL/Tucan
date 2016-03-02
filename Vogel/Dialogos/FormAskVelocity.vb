@@ -1,4 +1,6 @@
-﻿Imports AeroTools.VisualModel.Models.Basics
+﻿'Copyright (C) 2016 Guillermo Hazebrouck
+
+Imports AeroTools.VisualModel.Models.Basics
 Imports MathTools.Algebra.EuclideanSpace
 
 Public Class FormAskVelocity

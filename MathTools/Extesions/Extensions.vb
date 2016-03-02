@@ -1,4 +1,5 @@
-﻿
+﻿'Copyright (C) 2016 Guillermo Hazebrouck
+
 Imports DotNumerics.LinearAlgebra
 Imports System.Runtime.CompilerServices
 Imports System.IO

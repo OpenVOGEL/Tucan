@@ -1,4 +1,6 @@
-﻿Public Class FormObjects
+﻿'Copyright (C) 2016 Guillermo Hazebrouck
+
+Public Class FormObjects
 
     Private TableOfObjects As DataTable
     Private WithChanges As Boolean = False

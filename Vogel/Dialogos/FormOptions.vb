@@ -1,4 +1,6 @@
-﻿Public Class FormOptions
+﻿'Copyright (C) 2016 Guillermo Hazebrouck
+
+Public Class FormOptions
 
     Public LoadingData As Boolean = True
 

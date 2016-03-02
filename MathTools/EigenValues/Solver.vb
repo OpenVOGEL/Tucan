@@ -1,4 +1,6 @@
-﻿Imports Meta.Numerics.Matrices
+﻿'Copyright (C) 2016 Guillermo Hazebrouck
+
+Imports Meta.Numerics.Matrices
 Imports System.IO
 
 Namespace MathLibrary.EigenValues

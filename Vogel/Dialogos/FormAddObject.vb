@@ -1,4 +1,6 @@
-﻿Public Class SelectObject
+﻿'Copyright (C) 2016 Guillermo Hazebrouck
+
+Public Class SelectObject
 
     Public ReadOnly Property WingSelected As Boolean
         Get

@@ -1,9 +1,8 @@
-﻿Imports System.IO
+﻿'Copyright (C) 2016 Guillermo Hazebrouck
+
+Imports System.IO
 Imports Meta.Numerics.Matrices
-Imports System.Threading.Tasks
-Imports MathTools.Algebra.EuclideanSpace
 Imports MathTools.MathLibrary.EigenValues
-Imports MathTools.MathLibrary.ODEs
 Imports AeroTools.UVLM.Models.Structural.Library
 
 Namespace UVLM.Models.Structural

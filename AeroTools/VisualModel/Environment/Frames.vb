@@ -1,4 +1,6 @@
-﻿Imports SharpGL
+﻿'Copyright (C) 2016 Guillermo Hazebrouck
+
+Imports SharpGL
 Imports MathTools.Algebra.EuclideanSpace
 
 Namespace VisualModel.Environment.Frames

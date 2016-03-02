@@ -1,4 +1,4 @@
-﻿Imports AeroTools.UVLM.Models.Aero.Components
+﻿'Copyright (C) 2016 Guillermo Hazebrouck
 
 Namespace UVLM.Models.Aero
 

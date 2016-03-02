@@ -1,4 +1,5 @@
-﻿Imports AeroTools.VisualModel.Models
+﻿'Copyright (C) 2016 Guillermo Hazebrouck
+
 Imports AeroTools.UVLM.Models.Aero.Components
 
 Public Class FormPolarCurve

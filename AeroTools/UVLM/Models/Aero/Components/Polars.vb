@@ -1,4 +1,6 @@
-﻿Imports MathTools.Algebra.EuclideanSpace
+﻿'Copyright (C) 2016 Guillermo Hazebrouck
+
+Imports MathTools.Algebra.EuclideanSpace
 Imports System.IO
 Imports System.Xml
 Imports AeroTools.VisualModel.IO

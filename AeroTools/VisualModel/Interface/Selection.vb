@@ -1,4 +1,5 @@
-﻿
+﻿'Copyright (C) 2016 Guillermo Hazebrouck
+
 Namespace VisualModel.Interface
 
     Public Enum ComponentTypes As Integer

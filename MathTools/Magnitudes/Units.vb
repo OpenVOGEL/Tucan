@@ -1,4 +1,6 @@
-﻿Namespace Magnitudes
+﻿'Copyright (C) 2016 Guillermo Hazebrouck
+
+Namespace Magnitudes
 
     Public Enum Magnitudes As Short
 
