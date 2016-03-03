@@ -33,7 +33,7 @@ Namespace VisualModel.Models.Components
         Private _FlapChord As Double = 0.3
         Private _SpacingType As ESpacement
 
-        Private _PolarIndex As Integer = -1
+        Private _PolarID As Guid = Guid.Empty
         Private _Chamber As ChamberedLine = New ChamberedLine(ChamberType.NACA4)
 
         ''' <summary>
@@ -47,8 +47,8 @@ Namespace VisualModel.Models.Components
         ''' <param name="Torsión">Twist</param>
         ''' <param name="EjeDeTorsión">Position of the twisting axis</param>
         ''' <remarks></remarks>
-        Public Sub LoadGeometry(ByVal SpanPanels As Integer, ByVal CuerdaExterna As Double, ByVal Longitud As Double, _
-                                ByVal Flecha As Double, ByVal Diedro As Double, ByVal Torsión As Double, ByVal EjeDeTorsión As Double, _
+        Public Sub LoadGeometry(ByVal SpanPanels As Integer, ByVal CuerdaExterna As Double, ByVal Longitud As Double,
+                                ByVal Flecha As Double, ByVal Diedro As Double, ByVal Torsión As Double, ByVal EjeDeTorsión As Double,
                                 ByVal MaxChamber As Double, ByVal PosMaxChamber As Double, ByVal SpacingType As Integer)
 
             If SpanPanels > 0 Then _SpanPanels = SpanPanels
@@ -247,12 +247,12 @@ Namespace VisualModel.Models.Components
         ''' <value></value>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Property PolarIndex As Integer
+        Public Property PolarID As Guid
             Get
-                Return _PolarIndex
+                Return _PolarID
             End Get
-            Set(ByVal value As Integer)
-                _PolarIndex = value
+            Set(ByVal value As Guid)
+                _PolarID = value
             End Set
         End Property
 
@@ -321,22 +321,17 @@ Namespace VisualModel.Models.Components
 
             writer.WriteAttributeString("SpacingType", String.Format("{0}", SpacingType))
 
-            writer.WriteAttributeString("Area", String.Format("{0}", Me.TipSection.AE))
-            writer.WriteAttributeString("Iu", String.Format("{0}", Me.TipSection.GJ))
-            writer.WriteAttributeString("Iv", String.Format("{0}", Me.TipSection.EIy))
-            writer.WriteAttributeString("Iw", String.Format("{0}", Me.TipSection.EIz))
-            writer.WriteAttributeString("Sv", String.Format("{0}", Me.TipSection.CMy))
-            writer.WriteAttributeString("Sw", String.Format("{0}", Me.TipSection.CMz))
-            writer.WriteAttributeString("J", String.Format("{0}", Me.TipSection.rIp))
-            writer.WriteAttributeString("m", String.Format("{0}", Me.TipSection.m))
+            writer.WriteAttributeString("Area", String.Format("{0}", TipSection.AE))
+            writer.WriteAttributeString("Iu", String.Format("{0}", TipSection.GJ))
+            writer.WriteAttributeString("Iv", String.Format("{0}", TipSection.EIy))
+            writer.WriteAttributeString("Iw", String.Format("{0}", TipSection.EIz))
+            writer.WriteAttributeString("Sv", String.Format("{0}", TipSection.CMy))
+            writer.WriteAttributeString("Sw", String.Format("{0}", TipSection.CMz))
+            writer.WriteAttributeString("J", String.Format("{0}", TipSection.rIp))
+            writer.WriteAttributeString("m", String.Format("{0}", TipSection.m))
 
-            writer.WriteAttributeString("SChord", String.Format("{0}", Me.CenterOfShear))
-            If Not IsNothing(PolarFamiliy) Then
-                writer.WriteAttributeString("PolarIndex", String.Format("{0}", PolarFamiliy.Index))
-            Else
-                writer.WriteAttributeString("PolarIndex", String.Format("{0}", -1))
-            End If
-
+            writer.WriteAttributeString("SChord", String.Format("{0}", CenterOfShear))
+            writer.WriteAttributeString("PolarID", String.Format("{0}", _PolarID))
 
         End Sub
 
@@ -372,7 +367,7 @@ Namespace VisualModel.Models.Components
             TipSection.m = IOXML.ReadDouble(reader, "m", 10)
 
             CenterOfShear = IOXML.ReadDouble(reader, "SChord", 0.0)
-            _PolarIndex = IOXML.ReadInteger(reader, "PolarIndex", -1)
+            _PolarID = New Guid(IOXML.ReadString(reader, "PolarID", Guid.Empty.ToString))
 
         End Sub
 

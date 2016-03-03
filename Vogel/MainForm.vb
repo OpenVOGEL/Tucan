@@ -18,7 +18,7 @@ Public Class MainForm
 
         ' Initialize OpenGL control:
 
-        Text = "OpenVOGEL 2016 Beta"
+        Text = "Open VOGEL 2016 Beta"
 
         ControlOpenGL.Dock = DockStyle.Fill
         Project.SetControlGL(ControlOpenGL.OpenGL)
@@ -65,10 +65,9 @@ Public Class MainForm
 
     End Sub
 
-    Public Sub ReportState(ByVal Mensaje As String, Optional ByVal Progreso As Integer = 0)
+    Public Sub ReportState(ByVal Mensaje As String)
 
         lblStatus.Text = Mensaje
-        Barra_de_progreso.Value = Progreso
 
     End Sub
 
@@ -225,18 +224,26 @@ Public Class MainForm
 
     Private Sub btnLoadResults_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnLoadResults.Click
 
-        dlgOpenFile.Filter = "Vogel result files (*.res)|*.res"
+        Try
 
-        Dim Respuesta2 As MsgBoxResult = dlgOpenFile.ShowDialog()
+            dlgOpenFile.Filter = "Vogel result files (*.res)|*.res"
 
-        If Respuesta2 = MsgBoxResult.Ok Then
+            Dim Respuesta2 As MsgBoxResult = dlgOpenFile.ShowDialog()
 
-            Project.ReadResults(dlgOpenFile.FileName)
-            SwitchToPostprocessMode()
+            If Respuesta2 = MsgBoxResult.Ok Then
 
-        End If
+                Project.ReadResults(dlgOpenFile.FileName)
+                SwitchToPostprocessMode()
 
-        Project.RepresentOnGL()
+            End If
+
+            Project.RepresentOnGL()
+
+        Catch
+
+            MsgBox("Could not open the selected result file!")
+
+        End Try
 
     End Sub
 

@@ -6,147 +6,6 @@ AeroTools
 </name>
 </assembly>
 <members>
-<member name="F:AeroTools.FlightSim.Aircraft.Aircraft.Airloads">
- <summary>
- Gathers airloads
- </summary>
- <remarks></remarks>
-</member>
-<member name="F:AeroTools.FlightSim.Aircraft.Aircraft.AeroProperties">
- <summary>
- 
- </summary>
- <remarks></remarks>
-</member>
-<member name="F:AeroTools.FlightSim.Aircraft.Aircraft.Basis">
- <summary>
- Orthogonal aerodynamic basis (in directions of {L, Y, D})
- </summary>
- <remarks></remarks>
-</member>
-<member name="F:AeroTools.FlightSim.Aircraft.Aircraft.Geometry">
- <summary>
- Aircraft main geometric parameters
- </summary>
- <remarks></remarks>
-</member>
-<member name="F:AeroTools.FlightSim.Airloads.Airloads.L">
- <summary>
- Lift
- </summary>
- <remarks></remarks>
-</member>
-<member name="F:AeroTools.FlightSim.Airloads.Airloads.D">
- <summary>
- Drag
- </summary>
- <remarks></remarks>
-</member>
-<member name="F:AeroTools.FlightSim.Airloads.Airloads.Y">
- <summary>
- Lateral force
- </summary>
- <remarks></remarks>
-</member>
-<member name="F:AeroTools.FlightSim.Airloads.Airloads.M">
- <summary>
- Pitching moment
- </summary>
- <remarks></remarks>
-</member>
-<member name="F:AeroTools.FlightSim.Airloads.Airloads.N">
- <summary>
- Yawing moment
- </summary>
- <remarks></remarks>
-</member>
-<member name="F:AeroTools.FlightSim.Airloads.Airloads.R">
- <summary>
- Rolling moment
- </summary>
- <remarks></remarks>
-</member>
-<member name="F:AeroTools.FlightSim.Mechanics.KinematicCoordinates.P">
- <summary>
- Relative position vector
- </summary>
- <remarks></remarks>
-</member>
-<member name="F:AeroTools.FlightSim.Mechanics.KinematicCoordinates.e">
- <summary>
- Orientation in Euler angles
- </summary>
- <remarks></remarks>
-</member>
-<member name="F:AeroTools.FlightSim.Mechanics.KinematicCoordinates.V">
- <summary>
- Relative velocity
- </summary>
- <remarks></remarks>
-</member>
-<member name="F:AeroTools.FlightSim.Mechanics.KinematicCoordinates.O">
- <summary>
- Relative angular velocity
- </summary>
- <remarks></remarks>
-</member>
-<member name="F:AeroTools.FlightSim.Mechanics.KinematicCoordinates.dVdt">
- <summary>
- Local variation of the velocity vector
- </summary>
- <remarks></remarks>
-</member>
-<member name="F:AeroTools.FlightSim.Mechanics.KinematicCoordinates.dOdt">
- <summary>
- Local variation of the angular velocity vector
- </summary>
- <remarks></remarks>
-</member>
-<member name="F:AeroTools.FlightSim.Mechanics.KinematicCoordinates.Alfa">
- <summary>
- Atan(Vz/Vy) [rad]
- </summary>
- <remarks></remarks>
-</member>
-<member name="F:AeroTools.FlightSim.Mechanics.KinematicCoordinates.Beta">
- <summary>
- Atan(Vy/V) [rad]
- </summary>
- <remarks></remarks>
-</member>
-<member name="F:AeroTools.FlightSim.Mechanics.RigidBody.m">
- <summary>
- Mass in Kg
- </summary>
- <remarks></remarks>
-</member>
-<member name="F:AeroTools.FlightSim.Mechanics.RigidBody.I">
- <summary>
- Rotational inertia about axes crossing the center of mass
- </summary>
- <remarks></remarks>
-</member>
-<member name="F:AeroTools.FlightSim.Mechanics.RigidBody.B">
- <summary>
- Local reference axis vectors
- </summary>
- <remarks></remarks>
-</member>
-<member name="F:AeroTools.FlightSim.Mechanics.RigidBody.Kinematics">
- <summary>
- Contains the kinematic coordinates of the last time steps.
- </summary>
- <remarks></remarks>
-</member>
-<member name="M:AeroTools.FlightSim.Mechanics.RigidBody.IntegratePosition(MathTools.Algebra.EuclideanSpace.EVector3,MathTools.Algebra.EuclideanSpace.EVector3,System.Double)">
- <summary>
- Integrates the position of the rigid body numerically provided the external forces and moments.
- </summary>
- <param name="F">External forces</param>
- <param name="M">External moments about the cm</param>
- <param name="Dt">Time step</param>
- <remarks>4th order Rubge-Kutta method used to solve the equations of motion.</remarks>
-</member>
 <member name="T:AeroTools.My.Resources.Resources">
 <summary>
   Clase de recurso con establecimiento inflexible de tipos, para buscar cadenas traducidas, etc.
@@ -2135,12 +1994,12 @@ AeroTools
  </summary>
  <remarks></remarks>
 </member>
-<member name="M:AeroTools.UVLM.Solver.UVLMSolver.FlightSim(CommonResources.WaitForm@,System.String)">
+<member name="M:AeroTools.UVLM.Solver.UVLMSolver.FlightSim(AeroTools.FormProgress@,System.String)">
  <summary>
  Convect wakes and calculates loads at the last time step.
  </summary>
 </member>
-<member name="M:AeroTools.UVLM.Solver.UVLMSolver.GenerateFromExistingModel(AeroTools.Vogel.Models.CalculationModel,System.Boolean,CommonResources.Licencing.ILicenceData)">
+<member name="M:AeroTools.UVLM.Solver.UVLMSolver.GenerateFromExistingModel(AeroTools.VisualModel.Models.CalculationModel,System.Boolean)">
  <summary>
  Transfers a geometric model to the calculation cell
  </summary>
@@ -2148,7 +2007,7 @@ AeroTools
  <param name="GenerateStructure">Indicates if a structural link should be created</param>
  <remarks></remarks>
 </member>
-<member name="M:AeroTools.UVLM.Solver.UVLMSolver.AddLiftingSurface(AeroTools.Vogel.Models.Components.LiftingSurface@,System.Boolean,System.Boolean)">
+<member name="M:AeroTools.UVLM.Solver.UVLMSolver.AddLiftingSurface(AeroTools.VisualModel.Models.Components.LiftingSurface@,System.Boolean,System.Boolean)">
  <summary>
  Adds a bounded lattice with wakes from a lifting surface.
  </summary>
@@ -2162,7 +2021,7 @@ AeroTools
  Assign surrounding rings by searching on all lattices
  </summary>
 </member>
-<member name="M:AeroTools.UVLM.Solver.UVLMSolver.SetCompleteModelOnResults(AeroTools.Vogel.Interface.Postprocess.CalculatedModel@)">
+<member name="M:AeroTools.UVLM.Solver.UVLMSolver.SetCompleteModelOnResults(AeroTools.VisualModel.Interface.Results.CalculatedModel@)">
  <summary>
  Sets the lattices on the result object
  </summary>
@@ -2345,6 +2204,1288 @@ AeroTools
  </summary>
  <remarks></remarks>
 </member>
+<member name="T:AeroTools.VisualModel.Environment.Colormaping.ColorSharpGL">
+ <summary>
+ Represents a color to be used on SharpGL
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="T:AeroTools.VisualModel.Environment.Colormaping.Colormap">
+ <summary>
+ Provides methods to draw scalar in colors
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.VisualModel.Environment.Colormaping.Colormap.ScalarToColor(System.Double,System.Double,System.Double)">
+ <summary>
+ Converts a scalar into a color provided the red and blue extremes
+ </summary>
+ <param name="Escalar">Value to convert</param>
+ <param name="Maximum">Value to be displayed as red</param>
+ <param name="Minimum">Value to be displayed as blue</param>
+ <returns>A color representing the given scalar</returns>
+ <remarks></remarks>
+</member>
+<member name="T:AeroTools.VisualModel.Interface.IOperational">
+ <summary>
+ Interface that implements operations on objects
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="T:AeroTools.VisualModel.Interface.Operations">
+ <summary>
+ Operation types
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="T:AeroTools.VisualModel.Interface.OperationsTool">
+ <summary>
+ Provides methods to handle gometric operations such as translation and rotation of IOperational objects.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.VisualModel.Interface.OperationsTool.Operation">
+ <summary>
+ Specifies the desired geometric operation.
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.VisualModel.Interface.OperationsTool.StatusFlag">
+ <summary>
+ Tells the user what the situation is inside the operations tool.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.VisualModel.Interface.OperationsTool.SetDestinationObject(AeroTools.VisualModel.Interface.IOperational@)">
+ <summary>
+ Loads a refference to the IOperational object that is going to be modified under the current task.
+ It will only work if there is an active operation and no loaded object.
+ </summary>
+ <param name="Obj"></param>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.VisualModel.Interface.OperationsTool.SetEntityToQueue(System.Object)">
+ <summary>
+ Adds an item that might be used on the current operation.
+ </summary>
+ <param name="Entity"></param>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.VisualModel.Interface.OperationsTool.CancelOperation">
+ <summary>
+ Aborts the current operation.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.VisualModel.Interface.VisualizationProperties.ColorSurface">
+ <summary>
+ Color of the surface
+ </summary>
+</member>
+<member name="P:AeroTools.VisualModel.Interface.VisualizationProperties.ColorMesh">
+ <summary>
+ Color of the mesh
+ </summary>
+</member>
+<member name="P:AeroTools.VisualModel.Interface.VisualizationProperties.ThicknessMesh">
+ <summary>
+ Thickness of the mesh
+ </summary>
+</member>
+<member name="P:AeroTools.VisualModel.Interface.VisualizationProperties.Transparency">
+ <summary>
+ Transparency of the model
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:AeroTools.VisualModel.Interface.AircraftProject.Name">
+ <summary>
+ Project name
+ </summary>
+ <returns></returns>
+</member>
+<member name="T:AeroTools.VisualModel.Interface.AircraftProject.GLElement">
+ <summary>
+ SharpGL control used to draw this project.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.VisualModel.Interface.AircraftProject.SetControlGL(SharpGL.OpenGL@)">
+ <summary>
+ Stablishes a reference to an SharpGL control.
+ </summary>
+ <param name="Control"></param>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.VisualModel.Interface.AircraftProject.RepresentOnGL">
+ <summary>
+ Represents the current lists on OpenGL.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.VisualModel.Interface.AircraftProject.RefreshOnGL">
+ <summary>
+ Remakes OpenGL lists and redraws.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.VisualModel.Interface.AircraftProject.FastRefreshOnGL(System.Int32,System.Int32)">
+ <summary>
+ Redraws by using drawing subs 
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:AeroTools.VisualModel.Interface.AircraftProject.ListOfSurfacesToDraw">
+ <summary>
+ OpenGL lists to be drawn.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.VisualModel.Interface.AircraftProject.MakeDrawingLists">
+ <summary>
+ Constructs OpenGL lists.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="E:AeroTools.VisualModel.Interface.AircraftProject.CalculationDone">
+ <summary>
+ Occurs when the calculation finishes.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.VisualModel.Interface.AircraftProject.ImportSurfacesFromXML(System.String)">
+ <summary>
+ Finds lifting surface on a XML resource file and loads them to the current model.
+ </summary>
+ <param name="SourcePath"></param>
+ <remarks></remarks>
+</member>
+<member name="T:AeroTools.VisualModel.Interface.Results.CalculatedModel">
+ <summary>
+ Stores results for a given time step.
+ </summary>
+</member>
+<member name="P:AeroTools.VisualModel.Interface.Results.CalculatedModel.TransitLattices">
+ <summary>
+ Gathers all transit lattices.
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.VisualModel.Interface.Results.CalculatedModel.TransitStages">
+ <summary>
+ Indicates the number of loaded stages
+ </summary>
+</member>
+<member name="P:AeroTools.VisualModel.Interface.Results.CalculatedModel.TransitLoaded">
+ <summary>
+ Indicates if the simulation frames have been loaded
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.VisualModel.Interface.SelectionRecord.ID">
+ <summary>
+ Reads back the code and sets identity credentials.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.VisualModel.IO.IOXML.ReadInteger(System.Xml.XmlReader@,System.String,System.Int32)">
+ <summary>
+ Reads an attribute and converts it into integer.
+ </summary>
+ <param name="r"></param>
+ <param name="Name"></param>
+ <param name="DefValue"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.VisualModel.IO.IOXML.ReadDouble(System.Xml.XmlReader@,System.String,System.Double)">
+ <summary>
+ Reads an attribute and converts it into double taking into account the local decimal separator.
+ </summary>
+ <param name="r"></param>
+ <param name="Name"></param>
+ <param name="DefValue"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.VisualModel.IO.IOXML.ReadString(System.Xml.XmlReader@,System.String,System.String)">
+ <summary>
+ Reads an attribute.
+ </summary>
+ <param name="r"></param>
+ <param name="Name"></param>
+ <param name="DefValue"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.VisualModel.IO.IOXML.ReadBoolean(System.Xml.XmlReader@,System.String,System.Boolean)">
+ <summary>
+ Reads an attribute and converts it into boolean.
+ </summary>
+ <param name="r"></param>
+ <param name="Name"></param>
+ <param name="DefValue"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="T:AeroTools.VisualModel.Models.Basics.BaseSurface">
+ <summary>
+ Basic definition of a base surface able to be operated and selected.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.VisualModel.Models.Basics.BaseSurface.Selected">
+ <summary>
+ Indicates if the surface is currently selected.
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.VisualModel.Models.Basics.BaseSurface.UnselectAll">
+ <summary>
+ Unselects all nodal points.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.VisualModel.Models.Basics.BaseSurface.Refresh3DModel(SharpGL.OpenGL@,AeroTools.VisualModel.Interface.SelectionModes,System.Int32)">
+ <summary>
+ Refresh the 3D model on a OpenGL control.
+ </summary>
+ <param name="gl"></param>
+ <param name="SelectionMode"></param>
+ <param name="ElementIndex"></param>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.VisualModel.Models.Basics.ChamberedLine.#ctor(AeroTools.VisualModel.Models.Basics.ChamberType)">
+ <summary>
+ Returns a NACA chamber point provided the position as fraction of the chord.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.VisualModel.Models.Basics.ChamberedLine.BasicLine(System.Double)">
+ <summary>
+ Returns the Y coordinate of the basic chamber function given a chordwise coordinate.
+ </summary>
+ <param name="p">Chordwise coordinate</param>
+</member>
+<member name="P:AeroTools.VisualModel.Models.Basics.ChamberedLine.ChamberType">
+ <summary>
+ Sets or gets the type of chamber.
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="T:AeroTools.VisualModel.Models.Basics.Panel">
+ <summary>
+ Represents a panel on the model.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.VisualModel.Models.Basics.Panel.#ctor(System.Int32,System.Int32,System.Int32,System.Int32)">
+ <summary>
+ Generates a quadrilateral element
+ </summary>
+ <param name="N1"></param>
+ <param name="N2"></param>
+ <param name="N3"></param>
+ <param name="N4"></param>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.VisualModel.Models.Basics.Panel.#ctor(System.Int32,System.Int32,System.Int32)">
+ <summary>
+ Generates a triangular element
+ </summary>
+ <param name="N1"></param>
+ <param name="N2"></param>
+ <param name="N3"></param>
+ <remarks></remarks>
+</member>
+<member name="T:AeroTools.VisualModel.Models.Basics.StructuralPartition">
+ <summary>
+ Represents an structural partition
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:AeroTools.VisualModel.Models.Basics.StructuralPartition.p">
+ <summary>
+ Position of this partition
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:AeroTools.VisualModel.Models.Basics.StructuralPartition.LocalSection">
+ <summary>
+ Section associated to this partition
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.VisualModel.Models.CalculationModel.Name">
+ <summary>
+ Project name
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:AeroTools.VisualModel.Models.CalculationModel.AddLiftingSurface">
+ <summary>
+ Adds a lifting surface and sets it as current.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.VisualModel.Models.CalculationModel.AddNacelle">
+ <summary>
+ Adds a nacelle and sets it as current.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.VisualModel.Models.CalculationModel.AddExtrudedBody">
+ <summary>
+ Adds an extruded body
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.VisualModel.Models.CalculationModel.AddJetEngine">
+ <summary>
+ Adds a jet engine
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.VisualModel.Models.CalculationModel.RemoveLiftingSurface(System.Int32)">
+ <summary>
+ Removes the selected surface if it is not the only one in the list.
+ </summary>
+ <param name="Superficie"></param>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.VisualModel.Models.CalculationModel.RemoveBody(System.Int32)">
+ <summary>
+ Removes the selected body if it is not the only one on the list.
+ </summary>
+ <param name="Index"></param>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.VisualModel.Models.CalculationModel.RemoveJetEngine(System.Int32)">
+ <summary>
+ Removes the selected jet engine if it is not the only one on the list.
+ </summary>
+ <param name="Index"></param>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.VisualModel.Models.CalculationModel.CloneLiftingSurface(System.Int32)">
+ <summary>
+ Generates a copy of the current lifting surface with the option symmetric in true
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.VisualModel.Models.CalculationModel.CurrentLiftingSurface">
+ <summary>
+ Currently active lifting surface
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.VisualModel.Models.CalculationModel.CurrentBody">
+ <summary>
+ Currently active body
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.VisualModel.Models.CalculationModel.CurrentJetEngine">
+ <summary>
+ Currently active jet engine
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.VisualModel.Models.CalculationModel.LiftingSurfaceSelected">
+ <summary>
+ Indicates if the current lifting surface exists.
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.VisualModel.Models.CalculationModel.BodySelected">
+ <summary>
+ Indicates if the current body exists.
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.VisualModel.Models.CalculationModel.JetEngineSelected">
+ <summary>
+ Indicates if the current jet engine exists.
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="T:AeroTools.VisualModel.Models.Components.WingAnchorInfo">
+ <summary>
+ Contains information about a parent wing.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="T:AeroTools.VisualModel.Models.Components.AnchorPoint">
+ <summary>
+ Represents a point in the surface where a vertex has to be added.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.VisualModel.Models.Components.AnchorPoint.s">
+ <summary>
+ Curvilinear coordinate.
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.VisualModel.Models.Components.AnchorPoint.Z">
+ <summary>
+ Longitudinal coordinate.
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.VisualModel.Models.Components.AnchorPoint.Perimeter">
+ <summary>
+ Perimeter of the section associated to this anchor point.
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks>Used to find back the cartesian coordinates.</remarks>
+</member>
+<member name="T:AeroTools.VisualModel.Models.Components.AnchorLine">
+ <summary>
+ Represents a series of segments that have to be projected on a extruded surface.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.VisualModel.Models.Components.AnchorLine.Lines">
+ <summary>
+ Lines of extrusion.
+ </summary>
+</member>
+<member name="P:AeroTools.VisualModel.Models.Components.AnchorLine.Projections">
+ <summary>
+ Surface coordinates anchor points.
+ </summary>
+</member>
+<member name="P:AeroTools.VisualModel.Models.Components.AnchorLine.BeginIndex">
+ <summary>
+ Indicates the initial position in the mesh where the points were located.
+ </summary>
+</member>
+<member name="P:AeroTools.VisualModel.Models.Components.AnchorLine.EndIndex">
+ <summary>
+ Indicates the end position in the mesh where the points were located.
+ </summary>
+</member>
+<member name="P:AeroTools.VisualModel.Models.Components.AnchorLine.WingAnchorInfo">
+ <summary>
+ Gather information about the parent lifting surface.
+ </summary>
+</member>
+<member name="P:AeroTools.VisualModel.Models.Components.AnchorLine.Generated">
+ <summary>
+ Inidcates if the projections where created.
+ </summary>
+</member>
+<member name="M:AeroTools.VisualModel.Models.Components.AnchorLine.TranslatePoints(System.Double,System.Double,System.Double)">
+ <summary>
+ Moves all points the given displacements.
+ </summary>
+</member>
+<member name="M:AeroTools.VisualModel.Models.Components.AnchorLine.#ctor(System.Xml.XmlReader)">
+ <summary>
+ Creates a new instance with values read from an xml file.
+ </summary>
+</member>
+<member name="M:AeroTools.VisualModel.Models.Components.AnchorLine.#ctor">
+ <summary>
+ Creates a new instance.
+ </summary>
+</member>
+<member name="T:AeroTools.VisualModel.Models.Components.CrossSection">
+ <summary>
+ Represents a planar cross section.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.VisualModel.Models.Components.CrossSection.Perimeter">
+ <summary>
+ Perimeter of the section.
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.VisualModel.Models.Components.CrossSection.GetPoint(System.Double)">
+ <summary>
+ Returns an interpolated point at the given line coordinate s.
+ </summary>
+ <param name="s">Curvilinear coordinate from 0 to 1</param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.VisualModel.Models.Components.CrossSection.WriteToXML(System.Xml.XmlWriter@)">
+ <summary>
+ Writes the section to an XML file.
+ </summary>
+ <param name="writer"></param>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.VisualModel.Models.Components.CrossSection.ReadFromXML(System.Xml.XmlReader@)">
+ <summary>
+ Reads the wing from an XML file.
+ </summary>
+ <param name="reader"></param>
+ <remarks></remarks>
+</member>
+<member name="T:AeroTools.VisualModel.Models.Components.MeshTypes">
+ <summary>
+ All types of meshes.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="T:AeroTools.VisualModel.Models.Components.Fuselage">
+ <summary>
+ Represents a surface defined by parallel planar cross sections.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.VisualModel.Models.Components.Fuselage.CrossSections">
+ <summary>
+ List containing cross sections used to extrude the surface.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.VisualModel.Models.Components.Fuselage.AnchorLines">
+ <summary>
+ Gathers all ankor lines.
+ </summary>
+</member>
+<member name="P:AeroTools.VisualModel.Models.Components.Fuselage.MeshType">
+ <summary>
+ Defines the type of mesh
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.VisualModel.Models.Components.Fuselage.LongitudinalRefinement">
+ <summary>
+ Indicates the  number of paneles in the transverse direction.
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.VisualModel.Models.Components.Fuselage.CrossRefinement">
+ <summary>
+ Indicates the  number of paneles in the transverse direction.
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="F:AeroTools.VisualModel.Models.Components.Fuselage._CrossSectionsToDisplay">
+ <summary>
+ List containing cross sections used to extrude the surface.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.VisualModel.Models.Components.Fuselage.GenerateMesh">
+ <summary>
+ Generates a triangular or quadrilateral mesh.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.VisualModel.Models.Components.Fuselage.GenerateTriangularMesh">
+ <summary>
+ Creates a mesh of triangular panels.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.VisualModel.Models.Components.Fuselage.GenerateQuadrilateralMesh">
+ <summary>
+ Generates a structured mesh of quadrilaterals.
+ </summary>
+ <remarks>Cannot handle "Z supperposed" anchors.</remarks>
+</member>
+<member name="M:AeroTools.VisualModel.Models.Components.Fuselage.Refresh3DModel(SharpGL.OpenGL@,AeroTools.VisualModel.Interface.SelectionModes,System.Int32)">
+ <summary>
+ Regenerates the 3D model in Open GL.
+ </summary>
+ <param name="gl"></param>
+ <param name="SelectionMode"></param>
+ <param name="ElementIndex"></param>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.VisualModel.Models.Components.Fuselage.ReadFromXML(System.Xml.XmlReader@)">
+ <summary>
+ Reads the wing from an XML file.
+ </summary>
+ <param name="reader"></param>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.VisualModel.Models.Components.Fuselage.WriteToXML(System.Xml.XmlWriter@)">
+ <summary>
+ Writes the wing to an XML file.
+ </summary>
+ <param name="writer"></param>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.VisualModel.Models.Components.GeneralSurface.UpdatePosition">
+ <summary>
+ Position the model in relation to the reference position of the nodes (it won't work if there is no reference position). 
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.VisualModel.Models.Components.GeneralSurface.UpdateDisplacement(System.Double)">
+ <summary>
+ Updates the position based on the reference nodal position and displacement.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.VisualModel.Models.Components.JetEngine.GenerateMesh">
+ <summary>
+ Generates a triangular or quadrilateral mesh.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.VisualModel.Models.Components.JetEngine.ReadFromXML(System.Xml.XmlReader@)">
+ <summary>
+ Reads the wing from an XML file.
+ </summary>
+ <param name="reader"></param>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.VisualModel.Models.Components.JetEngine.WriteToXML(System.Xml.XmlWriter@)">
+ <summary>
+ Writes the wing to an XML file.
+ </summary>
+ <param name="writer"></param>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.VisualModel.Models.Components.WingRegion.LoadGeometry(System.Int32,System.Double,System.Double,System.Double,System.Double,System.Double,System.Double,System.Double,System.Double,System.Int32)">
+ <summary>
+ Load all geometrical parameters.
+ </summary>
+ <param name="SpanPanels">Number of spanwise panels</param>
+ <param name="CuerdaExterna">Tip chord</param>
+ <param name="Longitud">Spanwise length</param>
+ <param name="Flecha">Sweep angle</param>
+ <param name="Diedro">Dihedral angle</param>
+ <param name="Torsión">Twist</param>
+ <param name="EjeDeTorsión">Position of the twisting axis</param>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.VisualModel.Models.Components.WingRegion.Assign(AeroTools.VisualModel.Models.Components.WingRegion)">
+ <summary>
+ Gets all the constent from an existing wing region.
+ </summary>
+ <param name="PanelExt"></param>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.VisualModel.Models.Components.WingRegion.nSpanPanels">
+ <summary>
+ Number of panels in spanwise direction.
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.VisualModel.Models.Components.WingRegion.nChordNodes">
+ <summary>
+ Number of nodes in chordwise direction.
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.VisualModel.Models.Components.WingRegion.TipChord">
+ <summary>
+ Tip chord length.
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.VisualModel.Models.Components.WingRegion.Length">
+ <summary>
+ Spanwise length.
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.VisualModel.Models.Components.WingRegion.Sweep">
+ <summary>
+ Sweep angle.
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.VisualModel.Models.Components.WingRegion.Dihedral">
+ <summary>
+ Dihedral angle.
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.VisualModel.Models.Components.WingRegion.Twist">
+ <summary>
+ Twist angle along the span.
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.VisualModel.Models.Components.WingRegion.TwistAxis">
+ <summary>
+ Chordwise position of the twisting axis as fraction of the local chord.
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.VisualModel.Models.Components.WingRegion.Chamber">
+ <summary>
+ Describes the form of the cord.
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.VisualModel.Models.Components.WingRegion.SpacingType">
+ <summary>
+ Type of spanwise spacing between the stations.
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.VisualModel.Models.Components.WingRegion.PolarID">
+ <summary>
+ Index of polar curve to be loaded.
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.VisualModel.Models.Components.WingRegion.TipSection">
+ <summary>
+ Represents the section at the tip of the panel
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.VisualModel.Models.Components.WingRegion.CenterOfShear">
+ <summary>
+ Stablishes the position of the center of shear in relation to the local chord (flap not included)
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.VisualModel.Models.Components.WingRegion.PolarFamiliy">
+ <summary>
+ Local polar curve.
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.VisualModel.Models.Components.WingRegion.WriteToXML(System.Xml.XmlWriter@)">
+ <summary>
+ Writes the content to an XML file.
+ </summary>
+ <param name="writer"></param>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.VisualModel.Models.Components.WingRegion.ReadFromXML(System.Xml.XmlReader@)">
+ <summary>
+ Reads the content from an XML file.
+ </summary>
+ <param name="reader"></param>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.VisualModel.Models.Components.LiftingSurface.Lock">
+ <summary>
+ Permite bloquear la edicion del contenido
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.VisualModel.Models.Components.LiftingSurface.GlobalPosition">
+ <summary>
+ Position of the rotation point in local coordinates
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.VisualModel.Models.Components.LiftingSurface.GlobalOrientation">
+ <summary>
+ Orientation given in Euler coordinates.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.VisualModel.Models.Components.LiftingSurface.LocalDirections">
+ <summary>
+ Local directions.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.VisualModel.Models.Components.LiftingSurface.LocalOrigin">
+ <summary>
+ Position of the local origin in global coordinates.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.VisualModel.Models.Components.LiftingSurface.Symmetric">
+ <summary>
+ Indicates if the mesh has to be symmetric about the plane y = 0.
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.VisualModel.Models.Components.LiftingSurface.ConvectWake">
+ <summary>
+ Indicates if the wake has to be convected.
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.VisualModel.Models.Components.LiftingSurface.TrailingEdgeConvection">
+ <summary>
+ Indicates if the wake should be convected by the trailing edge only.
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.VisualModel.Models.Components.LiftingSurface.CuttingStep">
+ <summary>
+ Indicates at which time-step the wake has to be trimmed.
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.VisualModel.Models.Components.LiftingSurface.nNodes">
+ <summary>
+ Number of nodes.
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.VisualModel.Models.Components.LiftingSurface.nPanels">
+ <summary>
+ Number of panels.
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.VisualModel.Models.Components.LiftingSurface.nChordPanels">
+ <summary>
+ Number of chordwise panels
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.VisualModel.Models.Components.LiftingSurface.nSpanPanels">
+ <summary>
+ Number of spanwise panels.
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.VisualModel.Models.Components.LiftingSurface.nVortices">
+ <summary>
+ Number of vortex segements.
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.VisualModel.Models.Components.LiftingSurface.nWingRegions">
+ <summary>
+ Number of wing regions.
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.VisualModel.Models.Components.LiftingSurface.RootChord">
+ <summary>
+ Length of the root chord.
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.VisualModel.Models.Components.LiftingSurface.RootFlap">
+ <summary>
+ Length of the root flap (as fraction of the root chord).
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.VisualModel.Models.Components.LiftingSurface.FlapPanels">
+ <summary>
+ Number of chordwise flap panels.
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.VisualModel.Models.Components.LiftingSurface.CurrentRegionID">
+ <summary>
+ Indicates which regions is currently selected or selects an existing region.
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.VisualModel.Models.Components.LiftingSurface.nBoundarySegments">
+ <summary>
+ Number of segments around the perimeter.
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.VisualModel.Models.Components.LiftingSurface.nBoundaryNodes">
+ <summary>
+ Number of boundary nodes.
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.VisualModel.Models.Components.LiftingSurface.nPrimitiveSegments">
+ <summary>
+ Number of primitive segments.
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.VisualModel.Models.Components.LiftingSurface.nPrimitiveNodes">
+ <summary>
+ Number of primitive nodes.
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.VisualModel.Models.Components.LiftingSurface.FirstPrimitiveSegment">
+ <summary>
+ Position of the segment defined as firt primitive.
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.VisualModel.Models.Components.LiftingSurface.LastPrimitiveSegment">
+ <summary>
+ Position of the segment defined as last primitive.
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.VisualModel.Models.Components.LiftingSurface.FirstPrimitiveNode">
+ <summary>
+ Position of the node defined as first primitive (depends on the first primitive segment).
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.VisualModel.Models.Components.LiftingSurface.LastPrimitiveNode">
+ <summary>
+ Position of the node defined as last primitive (depends on the last primitive segment).
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.VisualModel.Models.Components.LiftingSurface.GetPrimitiveNodeIndex(System.Int32)">
+ <summary>
+ Returns the index of a given primitive node.
+ </summary>
+ <param name="Node"></param>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.VisualModel.Models.Components.LiftingSurface.GetPrimitiveNodePosition(System.Int32)">
+ <summary>
+ Returns the location of a given primitive node.
+ </summary>
+ <param name="Nodo"></param>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.VisualModel.Models.Components.LiftingSurface.GetPrimitivePanelIndex(System.Int32)">
+ <summary>
+ Returns the index of a given primitive segment.
+ </summary>
+ <param name="Segment"></param>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.VisualModel.Models.Components.LiftingSurface.GetPrimitivePanel(System.Int32)">
+ <summary>
+ Returns the panel associated to a given primitive segment.
+ </summary>
+ <param name="Segmento"></param>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.VisualModel.Models.Components.LiftingSurface.InitializeRegions">
+ <summary>
+ Loads a simple wing region.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.VisualModel.Models.Components.LiftingSurface.AddRegion">
+ <summary>
+ Adds a new region at the end.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.VisualModel.Models.Components.LiftingSurface.InsertRegion(System.Int32)">
+ <summary>
+ Insets a new wing region at a given position.
+ </summary>
+ <param name="Posicion"></param>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.VisualModel.Models.Components.LiftingSurface.InsertRegion">
+ <summary>
+ Inserts a new wing region after the current one.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.VisualModel.Models.Components.LiftingSurface.RemoveCurrentRegion">
+ <summary>
+ Removes the current wing region.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.VisualModel.Models.Components.LiftingSurface.CurrentRegion">
+ <summary>
+ Currently active region
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.VisualModel.Models.Components.LiftingSurface.GetNodalPoint(System.Int32)">
+ <summary>
+ Returns the instance of a specific nodal point.
+ </summary>
+ <param name="Index"></param>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.VisualModel.Models.Components.LiftingSurface.CloneNodalPoint(System.Int32)">
+ <summary>
+ Returns a copy of a given nodal point.
+ </summary>
+ <param name="Index"></param>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.VisualModel.Models.Components.LiftingSurface.GetQuadPanel(System.Int32)">
+ <summary>
+ Returns an instance of a given quad panel. If the panel is not found, the first one is returned.
+ </summary>
+ <param name="Index"></param>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.VisualModel.Models.Components.LiftingSurface.CloneQuadPanel(System.Int32)">
+ <summary>
+ Returns a copy of a given quad panel.
+ </summary>
+ <param name="Index"></param>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.VisualModel.Models.Components.LiftingSurface.IncludeStructure">
+ <summary>
+ Determines whether or not the structure will be included on the calculation.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.VisualModel.Models.Components.LiftingSurface.RootSection">
+ <summary>
+ Wing root section.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:AeroTools.VisualModel.Models.Components.LiftingSurface._StructuralPartition">
+ <summary>
+ Contains all nodes and segments representing the structure.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.VisualModel.Models.Components.LiftingSurface.StructuralPartition">
+ <summary>
+ Represents the structural nodal points
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.VisualModel.Models.Components.LiftingSurface.GenerateStructure">
+ <summary>
+ Generates the nodal partition and the section partition.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.VisualModel.Models.Components.LiftingSurface.CalculateControlPointsAndNormals">
+ <summary>
+ Calculates the normal vectors and the control points.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.VisualModel.Models.Components.LiftingSurface.CalculateBiotSavartVector(System.Int32,MathTools.Algebra.EuclideanSpace.EVector3,System.Double)">
+ <summary>
+ Obsolete function.
+ </summary>
+ <param name="Panel"></param>
+ <param name="PuntoDeControl"></param>
+ <param name="Cutoff"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.VisualModel.Models.Components.LiftingSurface.GenerateGeneralSurface(AeroTools.VisualModel.Models.Components.GeneralSurface@)">
+ <summary>
+ Generates a general surface from this wing.
+ </summary>
+ <param name="Superficie"></param>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.VisualModel.Models.Components.LiftingSurface.Clone">
+ <summary>
+ Generates a copy of the instance.
+ </summary>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.VisualModel.Models.Components.LiftingSurface.Translate(MathTools.Algebra.EuclideanSpace.EVector3)">
+ <summary>
+ Translates the surface a given displacement.
+ </summary>
+ <param name="Vector"></param>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.VisualModel.Models.Components.LiftingSurface.Orientate(MathTools.Algebra.EuclideanSpace.EVector3,MathTools.Algebra.EuclideanSpace.OrientationCoordinates)">
+ <summary>
+ Orientates the model by the given Euler angles around the specified point.
+ </summary>
+ <param name="Point"></param>
+ <param name="Ori"></param>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.VisualModel.Models.Components.LiftingSurface.Align(MathTools.Algebra.EuclideanSpace.EVector3,MathTools.Algebra.EuclideanSpace.EVector3,MathTools.Algebra.EuclideanSpace.EVector3,MathTools.Algebra.EuclideanSpace.EVector3)">
+ <summary>
+ Aligns the surface by means of four reference points (it is not working well).
+ </summary>
+ <param name="Punto1"></param>
+ <param name="Punto2"></param>
+ <param name="Punto3"></param>
+ <param name="Punto4"></param>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.VisualModel.Models.Components.LiftingSurface.ReadFromXML(System.Xml.XmlReader@)">
+ <summary>
+ Reads the wing from an XML file.
+ </summary>
+ <param name="reader"></param>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.VisualModel.Models.Components.LiftingSurface.WriteToXML(System.Xml.XmlWriter@)">
+ <summary>
+ Writes the wing to an XML file.
+ </summary>
+ <param name="writer"></param>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.VisualModel.Models.Components.LiftingSurface.RetriveStringData">
+ <summary>
+ Returns a string with information about this wing.
+ </summary>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.FormProgress.PushMessageWithProgress(System.String,System.Int32)">
+ <summary>
+ Publishes a message and updates the progress.
+ </summary>
+ <param name="Mensaje"></param>
+ <param name="Progreso"></param>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.FormProgress.PushMessage(System.String)">
+ <summary>
+ Publishes a message on the textbox.
+ </summary>
+ <param name="Mensaje"></param>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.FormProgress.PushProgress(System.Single)">
+ <summary>
+ Publishes a progress on the progress bar.
+ </summary>
+ <param name="Progress"></param>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.FormProgress.PushState(System.String)">
+ <summary>
+ Publishes a state on the status label.
+ </summary>
+ <param name="State"></param>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.FormProgress.ClearMessages">
+ <summary>
+ Removes all messages.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="E:AeroTools.FormProgress.CancellationRequested">
+ <summary>
+ Occurs when the user requests a cancelation.
+ </summary>
+ <remarks></remarks>
+</member>
 <member name="P:AeroTools.ResultBox.IsReadOnly">
  <summary>
  Indicates if the value is read only.
@@ -2368,1299 +3509,6 @@ AeroTools
  Indicates if the font is in greek characters.
  </summary>
  <returns></returns>
-</member>
-<member name="M:AeroTools.Vogel.GUI.GeometricTools.TDrawingTaskManager.BeginTask(AeroTools.Vogel.GUI.GeometricTools.TDrawingTaskManager.ETask,System.Object@)">
- <summary>
- Cancels current task and starts the selected one.
- </summary>
- <param name="Task"></param>
- <param name="Data"></param>
- <remarks></remarks>
-</member>
-<member name="M:AeroTools.Vogel.GUI.GeometricTools.TDrawingTaskManager.CancelTask">
- <summary>
- Stops executing the current task
- </summary>
- <remarks></remarks>
-</member>
-<member name="M:AeroTools.Vogel.GUI.GeometricTools.TDrawingTaskManager.AddDataToTask(System.Object)">
- <summary>
- Adds info to the task and checks if the task is ready. If it does, rises the "OnTaskReady" event
- </summary>
- <remarks></remarks>
-</member>
-<member name="P:AeroTools.Vogel.GUI.GeometricTools.TSegment.PA">
- <summary>
- Starting point
- </summary>
- <value></value>
- <returns></returns>
- <remarks></remarks>
-</member>
-<member name="P:AeroTools.Vogel.GUI.GeometricTools.TSegment.PB">
- <summary>
- End point
- </summary>
- <value></value>
- <returns></returns>
- <remarks></remarks>
-</member>
-<member name="P:AeroTools.Vogel.GUI.GeometricTools.TSegment.EntityType">
- <summary>
- Returns the entity type
- </summary>
- <value></value>
- <returns></returns>
- <remarks></remarks>
-</member>
-<member name="P:AeroTools.Vogel.GUI.GeometricTools.TSegment.Longitude">
- <summary>
- Total longitude of the segment
- </summary>
- <value></value>
- <returns></returns>
- <remarks></remarks>
-</member>
-<member name="M:AeroTools.Vogel.GUI.GeometricTools.TSegment.EvaluatePointAt(System.Double,MathTools.Algebra.EuclideanSpace.EVector2@)">
- <summary>
- Evaluates the provided point at a local coordinate s
- </summary>
- <param name="s">Local coordinate (from 0 to 1)</param>
- <param name="Point">Point evaluated at s</param>
- <remarks></remarks>
-</member>
-<member name="P:AeroTools.Vogel.GUI.GeometricTools.TArc.PA">
- <summary>
- Starting point
- </summary>
- <value></value>
- <returns></returns>
- <remarks></remarks>
-</member>
-<member name="P:AeroTools.Vogel.GUI.GeometricTools.TArc.PB">
- <summary>
- End point
- </summary>
- <value></value>
- <returns></returns>
- <remarks></remarks>
-</member>
-<member name="P:AeroTools.Vogel.GUI.GeometricTools.TArc.Center">
- <summary>
- Center point
- </summary>
- <value></value>
- <returns></returns>
- <remarks></remarks>
-</member>
-<member name="P:AeroTools.Vogel.GUI.GeometricTools.TArc.EntityType">
- <summary>
- Returns the entity type
- </summary>
- <value></value>
- <returns></returns>
- <remarks></remarks>
-</member>
-<member name="P:AeroTools.Vogel.GUI.GeometricTools.TArc.Longitude">
- <summary>
- Returns the total length of the arc
- </summary>
- <value></value>
- <returns></returns>
- <remarks></remarks>
-</member>
-<member name="M:AeroTools.Vogel.GUI.GeometricTools.TArc.EvaluatePointAt(System.Double,MathTools.Algebra.EuclideanSpace.EVector2@)">
- <summary>
- Evaluates the provided point at a local coordinate s
- </summary>
- <param name="s">Local coordinate (from 0 to 1)</param>
- <param name="Point">Point evaluated at s</param>
- <remarks></remarks>
-</member>
-<member name="T:AeroTools.Vogel.Interface.IOperational">
- <summary>
- Interface that implements operations on objects
- </summary>
- <remarks></remarks>
-</member>
-<member name="T:AeroTools.Vogel.Interface.Operations">
- <summary>
- Operation types
- </summary>
- <remarks></remarks>
-</member>
-<member name="T:AeroTools.Vogel.Interface.OperationsTool">
- <summary>
- Provides methods to handle gometric operations such as translation and rotation of IOperational objects.
- </summary>
- <remarks></remarks>
-</member>
-<member name="P:AeroTools.Vogel.Interface.OperationsTool.Operation">
- <summary>
- Specifies the desired geometric operation.
- </summary>
- <value></value>
- <returns></returns>
- <remarks></remarks>
-</member>
-<member name="P:AeroTools.Vogel.Interface.OperationsTool.StatusFlag">
- <summary>
- Tells the user what the situation is inside the operations tool.
- </summary>
- <remarks></remarks>
-</member>
-<member name="M:AeroTools.Vogel.Interface.OperationsTool.SetDestinationObject(AeroTools.Vogel.Interface.IOperational@)">
- <summary>
- Loads a refference to the IOperational object that is going to be modified under the current task.
- It will only work if there is an active operation and no loaded object.
- </summary>
- <param name="Obj"></param>
- <remarks></remarks>
-</member>
-<member name="M:AeroTools.Vogel.Interface.OperationsTool.SetEntityToQueue(System.Object)">
- <summary>
- Adds an item that might be used on the current operation.
- </summary>
- <param name="Entity"></param>
- <remarks></remarks>
-</member>
-<member name="M:AeroTools.Vogel.Interface.OperationsTool.CancelOperation">
- <summary>
- Aborts the current operation.
- </summary>
- <remarks></remarks>
-</member>
-<member name="T:AeroTools.Vogel.Interface.Postprocess.CalculatedModel">
- <summary>
- Stores results for a given time step.
- </summary>
-</member>
-<member name="P:AeroTools.Vogel.Interface.Postprocess.CalculatedModel.TransitLattices">
- <summary>
- Gathers all transit lattices.
- </summary>
- <value></value>
- <returns></returns>
- <remarks></remarks>
-</member>
-<member name="P:AeroTools.Vogel.Interface.Postprocess.CalculatedModel.TransitStages">
- <summary>
- Indicates the number of loaded stages
- </summary>
-</member>
-<member name="P:AeroTools.Vogel.Interface.Postprocess.CalculatedModel.TransitLoaded">
- <summary>
- Indicates if the simulation frames have been loaded
- </summary>
- <remarks></remarks>
-</member>
-<member name="P:AeroTools.Vogel.Interface.VisualizationProperties.ColorSurface">
- <summary>
- Color of the surface
- </summary>
-</member>
-<member name="P:AeroTools.Vogel.Interface.VisualizationProperties.ColorMesh">
- <summary>
- Color of the mesh
- </summary>
-</member>
-<member name="P:AeroTools.Vogel.Interface.VisualizationProperties.ThicknessMesh">
- <summary>
- Thickness of the mesh
- </summary>
-</member>
-<member name="P:AeroTools.Vogel.Interface.VisualizationProperties.Transparency">
- <summary>
- Transparency of the model
- </summary>
- <returns></returns>
-</member>
-<member name="P:AeroTools.Vogel.Interface.AircraftProject.Name">
- <summary>
- Project name
- </summary>
- <returns></returns>
-</member>
-<member name="P:AeroTools.Vogel.Interface.AircraftProject.Designer">
- <summary>
- Project designer
- </summary>
- <returns></returns>
-</member>
-<member name="T:AeroTools.Vogel.Interface.AircraftProject.GLElement">
- <summary>
- SharpGL control used to draw this project.
- </summary>
- <remarks></remarks>
-</member>
-<member name="M:AeroTools.Vogel.Interface.AircraftProject.SetControlGL(SharpGL.OpenGL@)">
- <summary>
- Stablishes a reference to an SharpGL control.
- </summary>
- <param name="Control"></param>
- <remarks></remarks>
-</member>
-<member name="M:AeroTools.Vogel.Interface.AircraftProject.RepresentOnGL">
- <summary>
- Represents the current lists on OpenGL.
- </summary>
- <remarks></remarks>
-</member>
-<member name="M:AeroTools.Vogel.Interface.AircraftProject.RefreshOnGL">
- <summary>
- Remakes OpenGL lists and redraws.
- </summary>
- <remarks></remarks>
-</member>
-<member name="M:AeroTools.Vogel.Interface.AircraftProject.FastRefreshOnGL(System.Int32,System.Int32)">
- <summary>
- Redraws by using drawing subs 
- </summary>
- <remarks></remarks>
-</member>
-<member name="F:AeroTools.Vogel.Interface.AircraftProject.ListOfSurfacesToDraw">
- <summary>
- OpenGL lists to be drawn.
- </summary>
- <remarks></remarks>
-</member>
-<member name="M:AeroTools.Vogel.Interface.AircraftProject.MakeDrawingLists">
- <summary>
- Constructs OpenGL lists.
- </summary>
- <remarks></remarks>
-</member>
-<member name="E:AeroTools.Vogel.Interface.AircraftProject.CalculationDone">
- <summary>
- Occurs when the calculation finishes.
- </summary>
- <remarks></remarks>
-</member>
-<member name="M:AeroTools.Vogel.Interface.AircraftProject.ImportSurfacesFromXML(System.String)">
- <summary>
- Finds lifting surface on a XML resource file and loads them to the current model.
- </summary>
- <param name="SourcePath"></param>
- <remarks></remarks>
-</member>
-<member name="P:AeroTools.Vogel.Interface.SelectionRecord.ID">
- <summary>
- Reads back the code and sets identity credentials.
- </summary>
- <remarks></remarks>
-</member>
-<member name="T:AeroTools.Vogel.Models.Basics.Panel">
- <summary>
- Represents a panel on the model.
- </summary>
- <remarks></remarks>
-</member>
-<member name="M:AeroTools.Vogel.Models.Basics.Panel.#ctor(System.Int32,System.Int32,System.Int32,System.Int32)">
- <summary>
- Generates a quadrilateral element
- </summary>
- <param name="N1"></param>
- <param name="N2"></param>
- <param name="N3"></param>
- <param name="N4"></param>
- <remarks></remarks>
-</member>
-<member name="M:AeroTools.Vogel.Models.Basics.Panel.#ctor(System.Int32,System.Int32,System.Int32)">
- <summary>
- Generates a triangular element
- </summary>
- <param name="N1"></param>
- <param name="N2"></param>
- <param name="N3"></param>
- <remarks></remarks>
-</member>
-<member name="T:AeroTools.Vogel.Models.Basics.BaseSurface">
- <summary>
- Basic definition of a base surface able to be operated and selected.
- </summary>
- <remarks></remarks>
-</member>
-<member name="P:AeroTools.Vogel.Models.Basics.BaseSurface.Selected">
- <summary>
- Indicates if the surface is currently selected.
- </summary>
- <value></value>
- <returns></returns>
- <remarks></remarks>
-</member>
-<member name="M:AeroTools.Vogel.Models.Basics.BaseSurface.UnselectAll">
- <summary>
- Unselects all nodal points.
- </summary>
- <remarks></remarks>
-</member>
-<member name="M:AeroTools.Vogel.Models.Basics.BaseSurface.Refresh3DModel(SharpGL.OpenGL@,AeroTools.Vogel.Interface.SelectionModes,System.Int32)">
- <summary>
- Refresh the 3D model on a OpenGL control.
- </summary>
- <param name="gl"></param>
- <param name="SelectionMode"></param>
- <param name="ElementIndex"></param>
- <remarks></remarks>
-</member>
-<member name="M:AeroTools.Vogel.Models.Basics.ChamberedLine.#ctor(AeroTools.Vogel.Models.Basics.ChamberType)">
- <summary>
- Returns a NACA chamber point provided the position as fraction of the chord.
- </summary>
- <remarks></remarks>
-</member>
-<member name="M:AeroTools.Vogel.Models.Basics.ChamberedLine.BasicLine(System.Double)">
- <summary>
- Returns the Y coordinate of the basic chamber function given a chordwise coordinate.
- </summary>
- <param name="p">Chordwise coordinate</param>
-</member>
-<member name="P:AeroTools.Vogel.Models.Basics.ChamberedLine.ChamberType">
- <summary>
- Sets or gets the type of chamber.
- </summary>
- <value></value>
- <returns></returns>
- <remarks></remarks>
-</member>
-<member name="T:AeroTools.Vogel.Models.Basics.StructuralPartition">
- <summary>
- Represents an structural partition
- </summary>
- <remarks></remarks>
-</member>
-<member name="F:AeroTools.Vogel.Models.Basics.StructuralPartition.p">
- <summary>
- Position of this partition
- </summary>
- <remarks></remarks>
-</member>
-<member name="F:AeroTools.Vogel.Models.Basics.StructuralPartition.LocalSection">
- <summary>
- Section associated to this partition
- </summary>
- <remarks></remarks>
-</member>
-<member name="T:AeroTools.Vogel.Models.Components.WingAnchorInfo">
- <summary>
- Contains information about a parent wing.
- </summary>
- <remarks></remarks>
-</member>
-<member name="T:AeroTools.Vogel.Models.Components.AnchorPoint">
- <summary>
- Represents a point in the surface where a vertex has to be added.
- </summary>
- <remarks></remarks>
-</member>
-<member name="P:AeroTools.Vogel.Models.Components.AnchorPoint.s">
- <summary>
- Curvilinear coordinate.
- </summary>
- <value></value>
- <returns></returns>
- <remarks></remarks>
-</member>
-<member name="P:AeroTools.Vogel.Models.Components.AnchorPoint.Z">
- <summary>
- Longitudinal coordinate.
- </summary>
- <value></value>
- <returns></returns>
- <remarks></remarks>
-</member>
-<member name="P:AeroTools.Vogel.Models.Components.AnchorPoint.Perimeter">
- <summary>
- Perimeter of the section associated to this anchor point.
- </summary>
- <value></value>
- <returns></returns>
- <remarks>Used to find back the cartesian coordinates.</remarks>
-</member>
-<member name="T:AeroTools.Vogel.Models.Components.AnchorLine">
- <summary>
- Represents a series of segments that have to be projected on a extruded surface.
- </summary>
- <remarks></remarks>
-</member>
-<member name="P:AeroTools.Vogel.Models.Components.AnchorLine.Lines">
- <summary>
- Lines of extrusion.
- </summary>
-</member>
-<member name="P:AeroTools.Vogel.Models.Components.AnchorLine.Projections">
- <summary>
- Surface coordinates anchor points.
- </summary>
-</member>
-<member name="P:AeroTools.Vogel.Models.Components.AnchorLine.BeginIndex">
- <summary>
- Indicates the initial position in the mesh where the points were located.
- </summary>
-</member>
-<member name="P:AeroTools.Vogel.Models.Components.AnchorLine.EndIndex">
- <summary>
- Indicates the end position in the mesh where the points were located.
- </summary>
-</member>
-<member name="P:AeroTools.Vogel.Models.Components.AnchorLine.WingAnchorInfo">
- <summary>
- Gather information about the parent lifting surface.
- </summary>
-</member>
-<member name="P:AeroTools.Vogel.Models.Components.AnchorLine.Generated">
- <summary>
- Inidcates if the projections where created.
- </summary>
-</member>
-<member name="M:AeroTools.Vogel.Models.Components.AnchorLine.TranslatePoints(System.Double,System.Double,System.Double)">
- <summary>
- Moves all points the given displacements.
- </summary>
-</member>
-<member name="M:AeroTools.Vogel.Models.Components.AnchorLine.#ctor(System.Xml.XmlReader)">
- <summary>
- Creates a new instance with values read from an xml file.
- </summary>
-</member>
-<member name="M:AeroTools.Vogel.Models.Components.AnchorLine.#ctor">
- <summary>
- Creates a new instance.
- </summary>
-</member>
-<member name="T:AeroTools.Vogel.Models.Components.CrossSection">
- <summary>
- Represents a planar cross section.
- </summary>
- <remarks></remarks>
-</member>
-<member name="P:AeroTools.Vogel.Models.Components.CrossSection.Perimeter">
- <summary>
- Perimeter of the section.
- </summary>
- <value></value>
- <returns></returns>
- <remarks></remarks>
-</member>
-<member name="M:AeroTools.Vogel.Models.Components.CrossSection.GetPoint(System.Double)">
- <summary>
- Returns an interpolated point at the given line coordinate s.
- </summary>
- <param name="s">Curvilinear coordinate from 0 to 1</param>
- <returns></returns>
- <remarks></remarks>
-</member>
-<member name="M:AeroTools.Vogel.Models.Components.CrossSection.WriteToXML(System.Xml.XmlWriter@)">
- <summary>
- Writes the section to an XML file.
- </summary>
- <param name="writer"></param>
- <remarks></remarks>
-</member>
-<member name="M:AeroTools.Vogel.Models.Components.CrossSection.ReadFromXML(System.Xml.XmlReader@)">
- <summary>
- Reads the wing from an XML file.
- </summary>
- <param name="reader"></param>
- <remarks></remarks>
-</member>
-<member name="T:AeroTools.Vogel.Models.Components.MeshTypes">
- <summary>
- All types of meshes.
- </summary>
- <remarks></remarks>
-</member>
-<member name="T:AeroTools.Vogel.Models.Components.Fuselage">
- <summary>
- Represents a surface defined by parallel planar cross sections.
- </summary>
- <remarks></remarks>
-</member>
-<member name="P:AeroTools.Vogel.Models.Components.Fuselage.CrossSections">
- <summary>
- List containing cross sections used to extrude the surface.
- </summary>
- <remarks></remarks>
-</member>
-<member name="P:AeroTools.Vogel.Models.Components.Fuselage.AnchorLines">
- <summary>
- Gathers all ankor lines.
- </summary>
-</member>
-<member name="P:AeroTools.Vogel.Models.Components.Fuselage.MeshType">
- <summary>
- Defines the type of mesh
- </summary>
- <value></value>
- <returns></returns>
- <remarks></remarks>
-</member>
-<member name="P:AeroTools.Vogel.Models.Components.Fuselage.LongitudinalRefinement">
- <summary>
- Indicates the  number of paneles in the transverse direction.
- </summary>
- <value></value>
- <returns></returns>
- <remarks></remarks>
-</member>
-<member name="P:AeroTools.Vogel.Models.Components.Fuselage.CrossRefinement">
- <summary>
- Indicates the  number of paneles in the transverse direction.
- </summary>
- <value></value>
- <returns></returns>
- <remarks></remarks>
-</member>
-<member name="F:AeroTools.Vogel.Models.Components.Fuselage._CrossSectionsToDisplay">
- <summary>
- List containing cross sections used to extrude the surface.
- </summary>
- <remarks></remarks>
-</member>
-<member name="M:AeroTools.Vogel.Models.Components.Fuselage.GenerateMesh">
- <summary>
- Generates a triangular or quadrilateral mesh.
- </summary>
- <remarks></remarks>
-</member>
-<member name="M:AeroTools.Vogel.Models.Components.Fuselage.GenerateTriangularMesh">
- <summary>
- Creates a mesh of triangular panels.
- </summary>
- <remarks></remarks>
-</member>
-<member name="M:AeroTools.Vogel.Models.Components.Fuselage.GenerateQuadrilateralMesh">
- <summary>
- Generates a structured mesh of quadrilaterals.
- </summary>
- <remarks>Cannot handle "Z supperposed" anchors.</remarks>
-</member>
-<member name="M:AeroTools.Vogel.Models.Components.Fuselage.Refresh3DModel(SharpGL.OpenGL@,AeroTools.Vogel.Interface.SelectionModes,System.Int32)">
- <summary>
- Regenerates the 3D model in Open GL.
- </summary>
- <param name="gl"></param>
- <param name="SelectionMode"></param>
- <param name="ElementIndex"></param>
- <remarks></remarks>
-</member>
-<member name="M:AeroTools.Vogel.Models.Components.Fuselage.ReadFromXML(System.Xml.XmlReader@)">
- <summary>
- Reads the wing from an XML file.
- </summary>
- <param name="reader"></param>
- <remarks></remarks>
-</member>
-<member name="M:AeroTools.Vogel.Models.Components.Fuselage.WriteToXML(System.Xml.XmlWriter@)">
- <summary>
- Writes the wing to an XML file.
- </summary>
- <param name="writer"></param>
- <remarks></remarks>
-</member>
-<member name="M:AeroTools.Vogel.Models.Components.GeneralSurface.UpdatePosition">
- <summary>
- Position the model in relation to the reference position of the nodes (it won't work if there is no reference position). 
- </summary>
- <remarks></remarks>
-</member>
-<member name="M:AeroTools.Vogel.Models.Components.GeneralSurface.UpdateDisplacement(System.Double)">
- <summary>
- Updates the position based on the reference nodal position and displacement.
- </summary>
- <remarks></remarks>
-</member>
-<member name="M:AeroTools.Vogel.Models.Components.JetEngine.GenerateMesh">
- <summary>
- Generates a triangular or quadrilateral mesh.
- </summary>
- <remarks></remarks>
-</member>
-<member name="M:AeroTools.Vogel.Models.Components.JetEngine.ReadFromXML(System.Xml.XmlReader@)">
- <summary>
- Reads the wing from an XML file.
- </summary>
- <param name="reader"></param>
- <remarks></remarks>
-</member>
-<member name="M:AeroTools.Vogel.Models.Components.JetEngine.WriteToXML(System.Xml.XmlWriter@)">
- <summary>
- Writes the wing to an XML file.
- </summary>
- <param name="writer"></param>
- <remarks></remarks>
-</member>
-<member name="M:AeroTools.Vogel.Models.Components.WingRegion.LoadGeometry(System.Int32,System.Double,System.Double,System.Double,System.Double,System.Double,System.Double,System.Double,System.Double,System.Int32)">
- <summary>
- Load all geometrical parameters.
- </summary>
- <param name="SpanPanels">Number of spanwise panels</param>
- <param name="CuerdaExterna">Tip chord</param>
- <param name="Longitud">Spanwise length</param>
- <param name="Flecha">Sweep angle</param>
- <param name="Diedro">Dihedral angle</param>
- <param name="Torsión">Twist</param>
- <param name="EjeDeTorsión">Position of the twisting axis</param>
- <remarks></remarks>
-</member>
-<member name="M:AeroTools.Vogel.Models.Components.WingRegion.Assign(AeroTools.Vogel.Models.Components.WingRegion)">
- <summary>
- Gets all the constent from an existing wing region.
- </summary>
- <param name="PanelExt"></param>
- <remarks></remarks>
-</member>
-<member name="P:AeroTools.Vogel.Models.Components.WingRegion.nSpanPanels">
- <summary>
- Number of panels in spanwise direction.
- </summary>
- <value></value>
- <returns></returns>
- <remarks></remarks>
-</member>
-<member name="P:AeroTools.Vogel.Models.Components.WingRegion.nChordNodes">
- <summary>
- Number of nodes in chordwise direction.
- </summary>
- <value></value>
- <returns></returns>
- <remarks></remarks>
-</member>
-<member name="P:AeroTools.Vogel.Models.Components.WingRegion.TipChord">
- <summary>
- Tip chord length.
- </summary>
- <value></value>
- <returns></returns>
- <remarks></remarks>
-</member>
-<member name="P:AeroTools.Vogel.Models.Components.WingRegion.Length">
- <summary>
- Spanwise length.
- </summary>
- <value></value>
- <returns></returns>
- <remarks></remarks>
-</member>
-<member name="P:AeroTools.Vogel.Models.Components.WingRegion.Sweep">
- <summary>
- Sweep angle.
- </summary>
- <value></value>
- <returns></returns>
- <remarks></remarks>
-</member>
-<member name="P:AeroTools.Vogel.Models.Components.WingRegion.Dihedral">
- <summary>
- Dihedral angle.
- </summary>
- <value></value>
- <returns></returns>
- <remarks></remarks>
-</member>
-<member name="P:AeroTools.Vogel.Models.Components.WingRegion.Twist">
- <summary>
- Twist angle along the span.
- </summary>
- <value></value>
- <returns></returns>
- <remarks></remarks>
-</member>
-<member name="P:AeroTools.Vogel.Models.Components.WingRegion.TwistAxis">
- <summary>
- Chordwise position of the twisting axis as fraction of the local chord.
- </summary>
- <value></value>
- <returns></returns>
- <remarks></remarks>
-</member>
-<member name="P:AeroTools.Vogel.Models.Components.WingRegion.Chamber">
- <summary>
- Describes the form of the cord.
- </summary>
- <value></value>
- <returns></returns>
- <remarks></remarks>
-</member>
-<member name="P:AeroTools.Vogel.Models.Components.WingRegion.SpacingType">
- <summary>
- Type of spanwise spacing between the stations.
- </summary>
- <value></value>
- <returns></returns>
- <remarks></remarks>
-</member>
-<member name="P:AeroTools.Vogel.Models.Components.WingRegion.PolarIndex">
- <summary>
- Index of polar curve to be loaded.
- </summary>
- <value></value>
- <returns></returns>
- <remarks></remarks>
-</member>
-<member name="P:AeroTools.Vogel.Models.Components.WingRegion.TipSection">
- <summary>
- Represents the section at the tip of the panel
- </summary>
- <remarks></remarks>
-</member>
-<member name="P:AeroTools.Vogel.Models.Components.WingRegion.CenterOfShear">
- <summary>
- Stablishes the position of the center of shear in relation to the local chord (flap not included)
- </summary>
- <value></value>
- <returns></returns>
- <remarks></remarks>
-</member>
-<member name="P:AeroTools.Vogel.Models.Components.WingRegion.PolarFamiliy">
- <summary>
- Local polar curve.
- </summary>
- <value></value>
- <returns></returns>
- <remarks></remarks>
-</member>
-<member name="M:AeroTools.Vogel.Models.Components.WingRegion.WriteToXML(System.Xml.XmlWriter@)">
- <summary>
- Writes the content to an XML file.
- </summary>
- <param name="writer"></param>
- <remarks></remarks>
-</member>
-<member name="M:AeroTools.Vogel.Models.Components.WingRegion.ReadFromXML(System.Xml.XmlReader@)">
- <summary>
- Reads the content from an XML file.
- </summary>
- <param name="reader"></param>
- <remarks></remarks>
-</member>
-<member name="P:AeroTools.Vogel.Models.Components.LiftingSurface.Lock">
- <summary>
- Permite bloquear la edicion del contenido
- </summary>
- <remarks></remarks>
-</member>
-<member name="P:AeroTools.Vogel.Models.Components.LiftingSurface.GlobalPosition">
- <summary>
- Position of the rotation point in local coordinates
- </summary>
- <remarks></remarks>
-</member>
-<member name="P:AeroTools.Vogel.Models.Components.LiftingSurface.GlobalOrientation">
- <summary>
- Orientation given in Euler coordinates.
- </summary>
- <remarks></remarks>
-</member>
-<member name="P:AeroTools.Vogel.Models.Components.LiftingSurface.LocalDirections">
- <summary>
- Local directions.
- </summary>
- <remarks></remarks>
-</member>
-<member name="P:AeroTools.Vogel.Models.Components.LiftingSurface.LocalOrigin">
- <summary>
- Position of the local origin in global coordinates.
- </summary>
- <remarks></remarks>
-</member>
-<member name="P:AeroTools.Vogel.Models.Components.LiftingSurface.Symmetric">
- <summary>
- Indicates if the mesh has to be symmetric about the plane y = 0.
- </summary>
- <value></value>
- <returns></returns>
- <remarks></remarks>
-</member>
-<member name="P:AeroTools.Vogel.Models.Components.LiftingSurface.ConvectWake">
- <summary>
- Indicates if the wake has to be convected.
- </summary>
- <value></value>
- <returns></returns>
- <remarks></remarks>
-</member>
-<member name="P:AeroTools.Vogel.Models.Components.LiftingSurface.TrailingEdgeConvection">
- <summary>
- Indicates if the wake should be convected by the trailing edge only.
- </summary>
- <value></value>
- <returns></returns>
- <remarks></remarks>
-</member>
-<member name="P:AeroTools.Vogel.Models.Components.LiftingSurface.CuttingStep">
- <summary>
- Indicates at which time-step the wake has to be trimmed.
- </summary>
- <value></value>
- <returns></returns>
- <remarks></remarks>
-</member>
-<member name="P:AeroTools.Vogel.Models.Components.LiftingSurface.nNodes">
- <summary>
- Number of nodes.
- </summary>
- <value></value>
- <returns></returns>
- <remarks></remarks>
-</member>
-<member name="P:AeroTools.Vogel.Models.Components.LiftingSurface.nPanels">
- <summary>
- Number of panels.
- </summary>
- <value></value>
- <returns></returns>
- <remarks></remarks>
-</member>
-<member name="P:AeroTools.Vogel.Models.Components.LiftingSurface.nChordPanels">
- <summary>
- Number of chordwise panels
- </summary>
- <value></value>
- <returns></returns>
- <remarks></remarks>
-</member>
-<member name="P:AeroTools.Vogel.Models.Components.LiftingSurface.nSpanPanels">
- <summary>
- Number of spanwise panels.
- </summary>
- <value></value>
- <returns></returns>
- <remarks></remarks>
-</member>
-<member name="P:AeroTools.Vogel.Models.Components.LiftingSurface.nVortices">
- <summary>
- Number of vortex segements.
- </summary>
- <value></value>
- <returns></returns>
- <remarks></remarks>
-</member>
-<member name="P:AeroTools.Vogel.Models.Components.LiftingSurface.nWingRegions">
- <summary>
- Number of wing regions.
- </summary>
- <value></value>
- <returns></returns>
- <remarks></remarks>
-</member>
-<member name="P:AeroTools.Vogel.Models.Components.LiftingSurface.RootChord">
- <summary>
- Length of the root chord.
- </summary>
- <value></value>
- <returns></returns>
- <remarks></remarks>
-</member>
-<member name="P:AeroTools.Vogel.Models.Components.LiftingSurface.RootFlap">
- <summary>
- Length of the root flap (as fraction of the root chord).
- </summary>
- <value></value>
- <returns></returns>
- <remarks></remarks>
-</member>
-<member name="P:AeroTools.Vogel.Models.Components.LiftingSurface.FlapPanels">
- <summary>
- Number of chordwise flap panels.
- </summary>
- <value></value>
- <returns></returns>
- <remarks></remarks>
-</member>
-<member name="P:AeroTools.Vogel.Models.Components.LiftingSurface.CurrentRegionID">
- <summary>
- Indicates which regions is currently selected or selects an existing region.
- </summary>
- <value></value>
- <returns></returns>
- <remarks></remarks>
-</member>
-<member name="P:AeroTools.Vogel.Models.Components.LiftingSurface.nBoundarySegments">
- <summary>
- Number of segments around the perimeter.
- </summary>
- <value></value>
- <returns></returns>
- <remarks></remarks>
-</member>
-<member name="P:AeroTools.Vogel.Models.Components.LiftingSurface.nBoundaryNodes">
- <summary>
- Number of boundary nodes.
- </summary>
- <value></value>
- <returns></returns>
- <remarks></remarks>
-</member>
-<member name="P:AeroTools.Vogel.Models.Components.LiftingSurface.nPrimitiveSegments">
- <summary>
- Number of primitive segments.
- </summary>
- <value></value>
- <returns></returns>
- <remarks></remarks>
-</member>
-<member name="P:AeroTools.Vogel.Models.Components.LiftingSurface.nPrimitiveNodes">
- <summary>
- Number of primitive nodes.
- </summary>
- <value></value>
- <returns></returns>
- <remarks></remarks>
-</member>
-<member name="P:AeroTools.Vogel.Models.Components.LiftingSurface.FirstPrimitiveSegment">
- <summary>
- Position of the segment defined as firt primitive.
- </summary>
- <value></value>
- <returns></returns>
- <remarks></remarks>
-</member>
-<member name="P:AeroTools.Vogel.Models.Components.LiftingSurface.LastPrimitiveSegment">
- <summary>
- Position of the segment defined as last primitive.
- </summary>
- <value></value>
- <returns></returns>
- <remarks></remarks>
-</member>
-<member name="P:AeroTools.Vogel.Models.Components.LiftingSurface.FirstPrimitiveNode">
- <summary>
- Position of the node defined as first primitive (depends on the first primitive segment).
- </summary>
- <value></value>
- <returns></returns>
- <remarks></remarks>
-</member>
-<member name="P:AeroTools.Vogel.Models.Components.LiftingSurface.LastPrimitiveNode">
- <summary>
- Position of the node defined as last primitive (depends on the last primitive segment).
- </summary>
- <value></value>
- <returns></returns>
- <remarks></remarks>
-</member>
-<member name="P:AeroTools.Vogel.Models.Components.LiftingSurface.GetPrimitiveNodeIndex(System.Int32)">
- <summary>
- Returns the index of a given primitive node.
- </summary>
- <param name="Node"></param>
- <value></value>
- <returns></returns>
- <remarks></remarks>
-</member>
-<member name="P:AeroTools.Vogel.Models.Components.LiftingSurface.GetPrimitiveNodePosition(System.Int32)">
- <summary>
- Returns the location of a given primitive node.
- </summary>
- <param name="Nodo"></param>
- <value></value>
- <returns></returns>
- <remarks></remarks>
-</member>
-<member name="P:AeroTools.Vogel.Models.Components.LiftingSurface.GetPrimitivePanelIndex(System.Int32)">
- <summary>
- Returns the index of a given primitive segment.
- </summary>
- <param name="Segment"></param>
- <value></value>
- <returns></returns>
- <remarks></remarks>
-</member>
-<member name="P:AeroTools.Vogel.Models.Components.LiftingSurface.GetPrimitivePanel(System.Int32)">
- <summary>
- Returns the panel associated to a given primitive segment.
- </summary>
- <param name="Segmento"></param>
- <value></value>
- <returns></returns>
- <remarks></remarks>
-</member>
-<member name="M:AeroTools.Vogel.Models.Components.LiftingSurface.InitializeRegions">
- <summary>
- Loads a simple wing region.
- </summary>
- <remarks></remarks>
-</member>
-<member name="M:AeroTools.Vogel.Models.Components.LiftingSurface.AddRegion">
- <summary>
- Adds a new region at the end.
- </summary>
- <remarks></remarks>
-</member>
-<member name="M:AeroTools.Vogel.Models.Components.LiftingSurface.InsertRegion(System.Int32)">
- <summary>
- Insets a new wing region at a given position.
- </summary>
- <param name="Posicion"></param>
- <remarks></remarks>
-</member>
-<member name="M:AeroTools.Vogel.Models.Components.LiftingSurface.InsertRegion">
- <summary>
- Inserts a new wing region after the current one.
- </summary>
- <remarks></remarks>
-</member>
-<member name="M:AeroTools.Vogel.Models.Components.LiftingSurface.RemoveCurrentRegion">
- <summary>
- Removes the current wing region.
- </summary>
- <remarks></remarks>
-</member>
-<member name="P:AeroTools.Vogel.Models.Components.LiftingSurface.CurrentRegion">
- <summary>
- Currently active region
- </summary>
- <value></value>
- <returns></returns>
- <remarks></remarks>
-</member>
-<member name="P:AeroTools.Vogel.Models.Components.LiftingSurface.GetNodalPoint(System.Int32)">
- <summary>
- Returns the instance of a specific nodal point.
- </summary>
- <param name="Index"></param>
- <value></value>
- <returns></returns>
- <remarks></remarks>
-</member>
-<member name="P:AeroTools.Vogel.Models.Components.LiftingSurface.CloneNodalPoint(System.Int32)">
- <summary>
- Returns a copy of a given nodal point.
- </summary>
- <param name="Index"></param>
- <value></value>
- <returns></returns>
- <remarks></remarks>
-</member>
-<member name="P:AeroTools.Vogel.Models.Components.LiftingSurface.GetQuadPanel(System.Int32)">
- <summary>
- Returns an instance of a given quad panel. If the panel is not found, the first one is returned.
- </summary>
- <param name="Index"></param>
- <value></value>
- <returns></returns>
- <remarks></remarks>
-</member>
-<member name="P:AeroTools.Vogel.Models.Components.LiftingSurface.CloneQuadPanel(System.Int32)">
- <summary>
- Returns a copy of a given quad panel.
- </summary>
- <param name="Index"></param>
- <value></value>
- <returns></returns>
- <remarks></remarks>
-</member>
-<member name="P:AeroTools.Vogel.Models.Components.LiftingSurface.IncludeStructure">
- <summary>
- Determines whether or not the structure will be included on the calculation.
- </summary>
- <remarks></remarks>
-</member>
-<member name="P:AeroTools.Vogel.Models.Components.LiftingSurface.RootSection">
- <summary>
- Wing root section.
- </summary>
- <remarks></remarks>
-</member>
-<member name="F:AeroTools.Vogel.Models.Components.LiftingSurface._StructuralPartition">
- <summary>
- Contains all nodes and segments representing the structure.
- </summary>
- <remarks></remarks>
-</member>
-<member name="P:AeroTools.Vogel.Models.Components.LiftingSurface.StructuralPartition">
- <summary>
- Represents the structural nodal points
- </summary>
- <remarks></remarks>
-</member>
-<member name="M:AeroTools.Vogel.Models.Components.LiftingSurface.GenerateStructure">
- <summary>
- Generates the nodal partition and the section partition.
- </summary>
- <remarks></remarks>
-</member>
-<member name="M:AeroTools.Vogel.Models.Components.LiftingSurface.CalculateControlPointsAndNormals">
- <summary>
- Calculates the normal vectors and the control points.
- </summary>
- <remarks></remarks>
-</member>
-<member name="M:AeroTools.Vogel.Models.Components.LiftingSurface.CalculateBiotSavartVector(System.Int32,MathTools.Algebra.EuclideanSpace.EVector3,System.Double)">
- <summary>
- Obsolete function.
- </summary>
- <param name="Panel"></param>
- <param name="PuntoDeControl"></param>
- <param name="Cutoff"></param>
- <returns></returns>
- <remarks></remarks>
-</member>
-<member name="M:AeroTools.Vogel.Models.Components.LiftingSurface.GenerateGeneralSurface(AeroTools.Vogel.Models.Components.GeneralSurface@)">
- <summary>
- Generates a general surface from this wing.
- </summary>
- <param name="Superficie"></param>
- <remarks></remarks>
-</member>
-<member name="M:AeroTools.Vogel.Models.Components.LiftingSurface.Clone">
- <summary>
- Generates a copy of the instance.
- </summary>
- <returns></returns>
- <remarks></remarks>
-</member>
-<member name="M:AeroTools.Vogel.Models.Components.LiftingSurface.Translate(MathTools.Algebra.EuclideanSpace.EVector3)">
- <summary>
- Translates the surface a given displacement.
- </summary>
- <param name="Vector"></param>
- <remarks></remarks>
-</member>
-<member name="M:AeroTools.Vogel.Models.Components.LiftingSurface.Orientate(MathTools.Algebra.EuclideanSpace.EVector3,MathTools.Algebra.EuclideanSpace.OrientationCoordinates)">
- <summary>
- Orientates the model by the given Euler angles around the specified point.
- </summary>
- <param name="Point"></param>
- <param name="Ori"></param>
- <remarks></remarks>
-</member>
-<member name="M:AeroTools.Vogel.Models.Components.LiftingSurface.Align(MathTools.Algebra.EuclideanSpace.EVector3,MathTools.Algebra.EuclideanSpace.EVector3,MathTools.Algebra.EuclideanSpace.EVector3,MathTools.Algebra.EuclideanSpace.EVector3)">
- <summary>
- Aligns the surface by means of four reference points (it is not working well).
- </summary>
- <param name="Punto1"></param>
- <param name="Punto2"></param>
- <param name="Punto3"></param>
- <param name="Punto4"></param>
- <remarks></remarks>
-</member>
-<member name="M:AeroTools.Vogel.Models.Components.LiftingSurface.ReadFromXML(System.Xml.XmlReader@)">
- <summary>
- Reads the wing from an XML file.
- </summary>
- <param name="reader"></param>
- <remarks></remarks>
-</member>
-<member name="M:AeroTools.Vogel.Models.Components.LiftingSurface.WriteToXML(System.Xml.XmlWriter@)">
- <summary>
- Writes the wing to an XML file.
- </summary>
- <param name="writer"></param>
- <remarks></remarks>
-</member>
-<member name="M:AeroTools.Vogel.Models.Components.LiftingSurface.RetriveStringData">
- <summary>
- Returns a string with information about this wing.
- </summary>
- <returns></returns>
- <remarks></remarks>
-</member>
-<member name="P:AeroTools.Vogel.Models.CalculationModel.Name">
- <summary>
- Project name
- </summary>
- <returns></returns>
-</member>
-<member name="M:AeroTools.Vogel.Models.CalculationModel.AddLiftingSurface">
- <summary>
- Adds a lifting surface and sets it as current.
- </summary>
- <remarks></remarks>
-</member>
-<member name="M:AeroTools.Vogel.Models.CalculationModel.AddNacelle">
- <summary>
- Adds a nacelle and sets it as current.
- </summary>
- <remarks></remarks>
-</member>
-<member name="M:AeroTools.Vogel.Models.CalculationModel.AddExtrudedBody">
- <summary>
- Adds an extruded body
- </summary>
- <remarks></remarks>
-</member>
-<member name="M:AeroTools.Vogel.Models.CalculationModel.AddJetEngine">
- <summary>
- Adds a jet engine
- </summary>
- <remarks></remarks>
-</member>
-<member name="M:AeroTools.Vogel.Models.CalculationModel.RemoveLiftingSurface(System.Int32)">
- <summary>
- Removes the selected surface if it is not the only one in the list.
- </summary>
- <param name="Superficie"></param>
- <remarks></remarks>
-</member>
-<member name="M:AeroTools.Vogel.Models.CalculationModel.RemoveBody(System.Int32)">
- <summary>
- Removes the selected body if it is not the only one on the list.
- </summary>
- <param name="Index"></param>
- <remarks></remarks>
-</member>
-<member name="M:AeroTools.Vogel.Models.CalculationModel.RemoveJetEngine(System.Int32)">
- <summary>
- Removes the selected jet engine if it is not the only one on the list.
- </summary>
- <param name="Index"></param>
- <remarks></remarks>
-</member>
-<member name="M:AeroTools.Vogel.Models.CalculationModel.CloneLiftingSurface(System.Int32)">
- <summary>
- Generates a copy of the current lifting surface with the option symmetric in true
- </summary>
- <remarks></remarks>
-</member>
-<member name="P:AeroTools.Vogel.Models.CalculationModel.CurrentLiftingSurface">
- <summary>
- Currently active lifting surface
- </summary>
- <value></value>
- <returns></returns>
- <remarks></remarks>
-</member>
-<member name="P:AeroTools.Vogel.Models.CalculationModel.CurrentBody">
- <summary>
- Currently active body
- </summary>
- <value></value>
- <returns></returns>
- <remarks></remarks>
-</member>
-<member name="P:AeroTools.Vogel.Models.CalculationModel.CurrentJetEngine">
- <summary>
- Currently active jet engine
- </summary>
- <value></value>
- <returns></returns>
- <remarks></remarks>
-</member>
-<member name="P:AeroTools.Vogel.Models.CalculationModel.LiftingSurfaceSelected">
- <summary>
- Indicates if the current lifting surface exists.
- </summary>
- <value></value>
- <returns></returns>
- <remarks></remarks>
-</member>
-<member name="P:AeroTools.Vogel.Models.CalculationModel.BodySelected">
- <summary>
- Indicates if the current body exists.
- </summary>
- <value></value>
- <returns></returns>
- <remarks></remarks>
-</member>
-<member name="P:AeroTools.Vogel.Models.CalculationModel.JetEngineSelected">
- <summary>
- Indicates if the current jet engine exists.
- </summary>
- <value></value>
- <returns></returns>
- <remarks></remarks>
 </member>
 </members>
 </doc>

@@ -18,7 +18,7 @@ Namespace VisualModel.IO
 
             Try
                 Return CInt(r.GetAttribute(Name))
-            Catch ex As Exception
+            Catch
                 Return DefValue
             End Try
 
@@ -41,7 +41,7 @@ Namespace VisualModel.IO
                     value = value.Replace(",", My.Application.Culture.NumberFormat.NumberDecimalSeparator)
                 End If
                 Return CDbl(value)
-            Catch ex As Exception
+            Catch
                 Return DefValue
             End Try
 
@@ -58,8 +58,12 @@ Namespace VisualModel.IO
         Public Shared Function ReadString(ByRef r As XmlReader, ByVal Name As String, ByVal DefValue As String) As String
 
             Try
-                Return r.GetAttribute(Name)
-            Catch ex As Exception
+                Dim value As String = r.GetAttribute(Name)
+                If value IsNot Nothing Then
+                    Return value
+                End If
+                Return DefValue
+            Catch
                 Return DefValue
             End Try
 
@@ -77,7 +81,7 @@ Namespace VisualModel.IO
 
             Try
                 Return CBool(r.GetAttribute(Name))
-            Catch ex As Exception
+            Catch
                 Return DefValue
             End Try
 

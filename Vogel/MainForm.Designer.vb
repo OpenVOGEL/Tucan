@@ -58,7 +58,6 @@ Partial Class MainForm
         Me.ToolStripSeparator4 = New System.Windows.Forms.ToolStripSeparator()
         Me.tsbHelp = New System.Windows.Forms.ToolStripButton()
         Me.ssStatus = New System.Windows.Forms.StatusStrip()
-        Me.Barra_de_progreso = New System.Windows.Forms.ToolStripProgressBar()
         Me.lblStatus = New System.Windows.Forms.ToolStripStatusLabel()
         Me.dlgSaveFile = New System.Windows.Forms.SaveFileDialog()
         Me.dlgOpenFile = New System.Windows.Forms.OpenFileDialog()
@@ -354,15 +353,9 @@ Partial Class MainForm
         '
         'ssStatus
         '
-        Me.ssStatus.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.Barra_de_progreso, Me.lblStatus})
+        Me.ssStatus.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.lblStatus})
         resources.ApplyResources(Me.ssStatus, "ssStatus")
         Me.ssStatus.Name = "ssStatus"
-        '
-        'Barra_de_progreso
-        '
-        Me.Barra_de_progreso.Name = "Barra_de_progreso"
-        resources.ApplyResources(Me.Barra_de_progreso, "Barra_de_progreso")
-        Me.Barra_de_progreso.Style = System.Windows.Forms.ProgressBarStyle.Continuous
         '
         'lblStatus
         '
@@ -618,7 +611,6 @@ Partial Class MainForm
 
     End Sub
     Friend WithEvents ssStatus As System.Windows.Forms.StatusStrip
-    Friend WithEvents Barra_de_progreso As System.Windows.Forms.ToolStripProgressBar
     Friend WithEvents lblStatus As System.Windows.Forms.ToolStripStatusLabel
     Friend WithEvents dlgSaveFile As System.Windows.Forms.SaveFileDialog
     Friend WithEvents dlgOpenFile As System.Windows.Forms.OpenFileDialog

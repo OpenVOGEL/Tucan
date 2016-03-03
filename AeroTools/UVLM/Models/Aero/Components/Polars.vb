@@ -12,7 +12,7 @@ Namespace UVLM.Models.Aero.Components
         Function SkinDrag(ByRef Cl) As Double
         Property Reynolds As Double
         ReadOnly Property Type As PolarType
-        Property Index As Integer
+        Property ID As Guid
         Property Name As String
 
         Sub ReadBinary(ByRef r As BinaryReader)
@@ -40,7 +40,7 @@ Namespace UVLM.Models.Aero.Components
         Public Property Cd0 As Double = 0
         Public Property Cd1 As Double = 0
         Public Property Cd2 As Double = 1
-        Private _Index As Integer = 0
+        Private _ID As Guid = Guid.NewGuid
         Private _Name As String = "Polar"
 
         Public Function SkinDrag(ByRef Cl As Object) As Double Implements IPolarCurve.SkinDrag
@@ -57,12 +57,12 @@ Namespace UVLM.Models.Aero.Components
             End Get
         End Property
 
-        Public Property Index As Integer Implements IPolarCurve.Index
+        Public Property ID As Guid Implements IPolarCurve.ID
             Get
-                Return _Index
+                Return _ID
             End Get
-            Set(ByVal value As Integer)
-                _Index = value
+            Set(ByVal value As Guid)
+                _ID = value
             End Set
         End Property
 
@@ -86,6 +86,7 @@ Namespace UVLM.Models.Aero.Components
 
         Sub ReadBinary(ByRef r As BinaryReader) Implements IPolarCurve.ReadBinary
             Try
+                _ID = New Guid(r.ReadString)
                 _Reynolds = r.ReadDouble
                 Cd0 = r.ReadDouble
                 Cd1 = r.ReadDouble
@@ -100,6 +101,7 @@ Namespace UVLM.Models.Aero.Components
 
         Sub WriteBinary(ByRef w As BinaryWriter) Implements IPolarCurve.WriteBinary
             w.Write(Type)
+            w.Write(_ID.ToString)
             w.Write(_Reynolds)
             w.Write(Cd0)
             w.Write(Cd1)
@@ -123,7 +125,7 @@ Namespace UVLM.Models.Aero.Components
             writer.WriteAttributeString("CD1", String.Format("{0}", Cd1))
             writer.WriteAttributeString("CD2", String.Format("{0}", Cd2))
             writer.WriteAttributeString("Re", String.Format("{0}", Reynolds))
-            writer.WriteAttributeString("Index", String.Format("{0}", Index))
+            writer.WriteAttributeString("ID", String.Format("{0}", ID.ToString))
             writer.WriteAttributeString("Name", String.Format("{0}", Name))
 
         End Sub
@@ -134,7 +136,7 @@ Namespace UVLM.Models.Aero.Components
             Cd1 = IOXML.ReadDouble(reader, "CD1", 0.1)
             Cd2 = IOXML.ReadDouble(reader, "CD2", 1.0)
             Reynolds = IOXML.ReadDouble(reader, "Re", 1.0)
-            Index = IOXML.ReadInteger(reader, "Index", 0.0)
+            ID = New Guid(IOXML.ReadString(reader, "ID", Guid.NewGuid.ToString))
             Name = IOXML.ReadString(reader, "Name", 0.0)
 
         End Sub
@@ -147,14 +149,14 @@ Namespace UVLM.Models.Aero.Components
 
         Implements IPolarCurve
 
-        Private _Index As Integer = 0
+        Private _ID As Guid = Guid.NewGuid
 
-        Public Property Index As Integer Implements IPolarCurve.Index
+        Public Property ID As Guid Implements IPolarCurve.ID
             Get
-                Return _Index
+                Return _ID
             End Get
-            Set(ByVal value As Integer)
-                _Index = value
+            Set(ByVal value As Guid)
+                _ID = value
             End Set
         End Property
 
@@ -191,6 +193,8 @@ Namespace UVLM.Models.Aero.Components
         Sub ReadBinary(ByRef r As BinaryReader) Implements IPolarCurve.ReadBinary
 
             Try
+
+                _ID = New Guid(r.ReadString)
                 _Reynolds = r.ReadDouble
 
                 Nodes.Clear()
@@ -210,6 +214,7 @@ Namespace UVLM.Models.Aero.Components
         Sub WriteBinary(ByRef w As BinaryWriter) Implements IPolarCurve.WriteBinary
 
             w.Write(Type)
+            w.Write(_ID.ToString)
             w.Write(_Reynolds)
 
             w.Write(Nodes.Count)
@@ -222,14 +227,16 @@ Namespace UVLM.Models.Aero.Components
         End Sub
 
         Public Function Clone() As IPolarCurve Implements IPolarCurve.Clone
+
             Dim Polar As New CustomPolar
             For Each p In Nodes
                 Polar.Nodes.Add(New EVector2(p.X, p.Y))
             Next
             Polar._Reynolds = _Reynolds
             Polar.Name = _Name
-            Polar.Index = _Index
+            Polar.ID = _ID
             Return Polar
+
         End Function
 
 #Region " IO "
@@ -244,7 +251,7 @@ Namespace UVLM.Models.Aero.Components
             Next
 
             writer.WriteAttributeString("Re", String.Format("{0}", Reynolds))
-            writer.WriteAttributeString("Index", String.Format("{0}", Index))
+            writer.WriteAttributeString("ID", String.Format("{0}", ID.ToString))
             writer.WriteAttributeString("Name", String.Format("{0}", Name))
 
         End Sub
@@ -260,7 +267,7 @@ Namespace UVLM.Models.Aero.Components
             Next
 
             Reynolds = IOXML.ReadDouble(reader, "Re", 1.0)
-            Index = IOXML.ReadInteger(reader, "Index", 0.0)
+            ID = New Guid(IOXML.ReadString(reader, "ID", Guid.NewGuid.ToString))
             Name = IOXML.ReadString(reader, "Name", 0.0)
 
         End Sub
@@ -295,7 +302,7 @@ Namespace UVLM.Models.Aero.Components
 
         Public Property Name As String = "Polar family"
 
-        Public Property Index As Integer = 0
+        Public Property ID As Guid = Guid.NewGuid
 
         Public Sub SortPolars()
 
@@ -322,7 +329,7 @@ Namespace UVLM.Models.Aero.Components
             writer.WriteStartElement("Info")
             writer.WriteAttributeString("NumberOfPolars", String.Format("{0}", Polars.Count))
             writer.WriteAttributeString("Name", Name)
-            writer.WriteAttributeString("Index", Index.ToString)
+            writer.WriteAttributeString("ID", ID.ToString)
             writer.WriteEndElement()
 
             Dim i As Integer = 0
@@ -331,7 +338,6 @@ Namespace UVLM.Models.Aero.Components
 
                 If TypeOf polar Is QuadraticPolar Then
                     writer.WriteStartElement("QuadraticPolar")
-                    polar.Index = i
                     polar.WriteToXML(writer)
                     writer.WriteEndElement()
                     i += 1
@@ -343,7 +349,6 @@ Namespace UVLM.Models.Aero.Components
 
                 If TypeOf polar Is CustomPolar Then
                     writer.WriteStartElement("CustomPolar")
-                    polar.Index = i
                     polar.WriteToXML(writer)
                     writer.WriteEndElement()
                     i += 1
@@ -359,23 +364,19 @@ Namespace UVLM.Models.Aero.Components
 
             Polars.Clear()
 
-            Dim index As Integer = 0
-
             While reader.Read()
                 Select Case reader.Name
                     Case "Info"
                         Name = IOXML.ReadString(reader, "Name", "Polar family")
-                        Me.Index = IOXML.ReadInteger(reader, "Index", 0)
+                        ID = New Guid(IOXML.ReadString(reader, "ID", Guid.NewGuid.ToString))
                     Case "QuadraticPolar"
                         Dim polar As New QuadraticPolar
                         polar.ReadFromXML(reader)
                         Polars.Add(polar)
-                        index += 1
                     Case "CustomPolar"
                         Dim polar As New CustomPolar
                         polar.ReadFromXML(reader)
                         Polars.Add(polar)
-                        index += 1
                 End Select
             End While
 
@@ -407,7 +408,6 @@ Namespace UVLM.Models.Aero.Components
             w.Write(Polars.Count)
             Dim i As Integer = 0
             For Each Polar In Polars
-                Polar.Index = i
                 i += 1
                 Polar.WriteBinary(w)
             Next
@@ -461,7 +461,6 @@ Namespace UVLM.Models.Aero.Components
             w.Write(Families.Count)
             Dim i As Integer = 0
             For Each family In Families
-                family.Index = i
                 i += 1
                 family.WriteBinary(w)
             Next
@@ -513,7 +512,7 @@ Namespace UVLM.Models.Aero.Components
 
                 Dim newFamily As New PolarFamily
                 newFamily.Name = Family.Name
-                newFamily.Index = Family.Index
+                newFamily.ID = Family.ID
                 db.Families.Add(newFamily)
 
                 For Each Polar In Family.Polars
@@ -533,7 +532,6 @@ Namespace UVLM.Models.Aero.Components
             Dim i As Integer = 0
             For Each family As PolarFamily In Families
                 writer.WriteStartElement("PolarFamily")
-                family.Index = i
                 family.WriteToXML(writer)
                 writer.WriteEndElement()
                 i += 1
@@ -560,6 +558,14 @@ Namespace UVLM.Models.Aero.Components
 
         End Sub
 
+        Friend Function GetFamilyFromID(FamilyID As Guid) As PolarFamily
+            For Each Family In Families
+                If Family.ID.Equals(FamilyID) Then
+                    Return Family
+                End If
+            Next
+            Return Nothing
+        End Function
     End Class
 
 End Namespace

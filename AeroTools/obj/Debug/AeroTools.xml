@@ -2978,7 +2978,7 @@ AeroTools
  <returns></returns>
  <remarks></remarks>
 </member>
-<member name="P:AeroTools.VisualModel.Models.Components.WingRegion.PolarIndex">
+<member name="P:AeroTools.VisualModel.Models.Components.WingRegion.PolarID">
  <summary>
  Index of polar curve to be loaded.
  </summary>

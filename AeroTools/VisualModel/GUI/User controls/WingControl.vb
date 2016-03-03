@@ -812,13 +812,18 @@ Public Class WingControl
     Private Sub btnPolarCurves_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnPolarCurves.Click
 
         If Not IsNothing(PolarDataBase) Then
-            Dim index As Integer = -1
-            If Not IsNothing(Surface.CurrentRegion.PolarFamiliy) Then index = Surface.CurrentRegion.PolarFamiliy.Index
-            Dim form As New FormPolarCurve(PolarDataBase, index)
-            If form.ShowDialog() = vbOK And form.SelectedPolarIndex > -1 And form.SelectedPolarIndex < PolarDataBase.Families.Count Then
-                Surface.CurrentRegion.PolarFamiliy = PolarDataBase.Families(form.SelectedFamilyIndex)
+            Dim ID As Guid = Guid.Empty
+            If Not IsNothing(Surface.CurrentRegion.PolarFamiliy) Then
+                ID = Surface.CurrentRegion.PolarFamiliy.ID
             End If
-        End If
+            Dim form As New FormPolarCurve(PolarDataBase, ID)
+            If form.ShowDialog() = vbOK Then
+                If Not form.SelectedFamilyID.Equals(Guid.Empty) Then
+                    Surface.CurrentRegion.PolarFamiliy = PolarDataBase.GetFamilyFromID(form.SelectedFamilyID)
+                    Surface.CurrentRegion.PolarID = form.SelectedFamilyID
+                End If
+            End If
+            End If
 
     End Sub
 

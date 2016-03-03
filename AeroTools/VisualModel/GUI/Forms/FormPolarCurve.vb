@@ -4,7 +4,7 @@ Imports AeroTools.UVLM.Models.Aero.Components
 
 Public Class FormPolarCurve
 
-    Public Sub New(PolarDataBase As PolarDatabase, SelectedFamiy As Integer)
+    Public Sub New(PolarDataBase As PolarDatabase, SelectedFamiyID As Guid)
 
         InitializeComponent()
 
@@ -22,7 +22,14 @@ Public Class FormPolarCurve
         PolarPlotter.Visible = False
         AddHandler PolarPlotter.PointChanged, AddressOf CustomFrame.RefreshTable
 
-        If lbFamilies.Items.Count > 0 Then lbFamilies.SelectedIndex = SelectedFamiy
+        If lbFamilies.Items.Count > 0 Then
+            For i = 0 To PolarDataBase.Families.Count - 1
+                If PolarDataBase.Families(i).ID.Equals(SelectedFamiyID) Then
+                    lbFamilies.SelectedIndex = i
+                    Exit For
+                End If
+            Next
+        End If
         If lbPolars.Items.Count > 0 Then lbPolars.SelectedIndex = 0
 
         AddHandler CustomFrame.OnNodeChanged, AddressOf PolarPlotter.Refresh
@@ -34,22 +41,22 @@ Public Class FormPolarCurve
     Private CurrentFamily As PolarFamily
     Private CurrentPolar As IPolarCurve
 
-    Public ReadOnly Property SelectedFamilyIndex As Integer
+    Public ReadOnly Property SelectedFamilyID As Guid
         Get
             If IsNothing(CurrentFamily) Then
-                Return -1
+                Return Guid.Empty
             Else
-                Return CurrentFamily.Index
+                Return CurrentFamily.ID
             End If
         End Get
     End Property
 
-    Public ReadOnly Property SelectedPolarIndex As Integer
+    Public ReadOnly Property SelectedPolarID As Guid
         Get
             If IsNothing(CurrentPolar) Then
-                Return -1
+                Return Guid.Empty
             Else
-                Return CurrentPolar.Index
+                Return CurrentPolar.ID
             End If
         End Get
     End Property

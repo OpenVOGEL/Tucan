@@ -6,12 +6,6 @@ Vogel
 </name>
 </assembly>
 <members>
-<member name="T:Vogel.Licence.LicenceData">
- <summary>
- Implemented licence data.
- </summary>
- <remarks></remarks>
-</member>
 <member name="M:Vogel.MainForm.SwitchToDesignMode">
  <summary>
  Changes project mode and window state to design mode.
@@ -38,14 +32,6 @@ Vogel
 <summary>
   Overrides the current thread's CurrentUICulture property for all
   resource lookups using this strongly typed resource class.
-</summary>
-</member>
-<member name="P:Vogel.My.Resources.Resources.Disclamer">
-<summary>
-  Looks up a localized string similar to DISCLAMER: 
-
-THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS&apos;&apos; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
-IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY [rest of string was truncated]&quot;;.
 </summary>
 </member>
 </members>

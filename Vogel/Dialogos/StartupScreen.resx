@@ -129,13 +129,13 @@
     <value>3, 208</value>
   </data>
   <data name="Label1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>177, 36</value>
+    <value>251, 36</value>
   </data>
   <data name="Label1.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
   </data>
   <data name="Label1.Text" xml:space="preserve">
-    <value>VOGEL 2015©</value>
+    <value>Open VOGEL 2016©</value>
   </data>
   <data name="&gt;&gt;Label1.Name" xml:space="preserve">
     <value>Label1</value>
@@ -159,13 +159,13 @@
     <value>5, 242</value>
   </data>
   <data name="Label2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>346, 21</value>
+    <value>368, 21</value>
   </data>
   <data name="Label2.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
   </data>
   <data name="Label2.Text" xml:space="preserve">
-    <value>Aerdynamics and aeroservoelasticity software.</value>
+    <value>Software for aerdynamics and aeroservoelasticity</value>
   </data>
   <data name="&gt;&gt;Label2.Name" xml:space="preserve">
     <value>Label2</value>
@@ -190,19 +190,17 @@
     <value>Candara, 8.25pt</value>
   </data>
   <data name="Label3.Location" type="System.Drawing.Point, System.Drawing">
-    <value>71, 278</value>
+    <value>161, 300</value>
   </data>
   <data name="Label3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>285, 52</value>
+    <value>211, 26</value>
   </data>
   <data name="Label3.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
   </data>
   <data name="Label3.Text" xml:space="preserve">
     <value>This software is copyright protected
-It is strictly forbidden to copy, distribute or use this software
-without previous autorization from the autor
-More info to find in "About..."</value>
+and distrbuted under General Public Licence</value>
   </data>
   <data name="Label3.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
     <value>MiddleRight</value>
@@ -229,13 +227,13 @@ More info to find in "About..."</value>
     <value>6, 263</value>
   </data>
   <data name="LabelLicencia.Size" type="System.Drawing.Size, System.Drawing">
-    <value>118, 15</value>
+    <value>119, 15</value>
   </data>
   <data name="LabelLicencia.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>
   </data>
   <data name="LabelLicencia.Text" xml:space="preserve">
-    <value>Compilation 2015.R0</value>
+    <value>Compilation 2016.R0</value>
   </data>
   <data name="LabelLicencia.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
     <value>MiddleRight</value>
@@ -4243,7 +4241,7 @@ More info to find in "About..."</value>
     <value>1, 1, 1, 1</value>
   </data>
   <data name="Logo.Size" type="System.Drawing.Size, System.Drawing">
-    <value>353, 204</value>
+    <value>370, 204</value>
   </data>
   <data name="Logo.TabIndex" type="System.Int32, mscorlib">
     <value>5</value>
@@ -4267,7 +4265,7 @@ More info to find in "About..."</value>
     <value>6, 13</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>360, 335</value>
+    <value>376, 335</value>
   </data>
   <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
     <value>CenterScreen</value>

@@ -31,3 +31,12 @@ C:\Users\Guillermo\Documents\Software\GeneralTools\2015.R0\MathTools\obj\Release
 C:\Users\Guillermo\Documents\Software\GeneralTools\2015.R0\MathTools\obj\Release\MathTools.dll
 C:\Users\Guillermo\Documents\Software\GeneralTools\2015.R0\MathTools\obj\Release\MathTools.xml
 C:\Users\Guillermo\Documents\Software\GeneralTools\2015.R0\MathTools\obj\Release\MathTools.pdb
+\\GUILLERMO\Users\Guillermo\Source\Repos\OpenVOGEL\MathTools\bin\Release\MathTools.dll
+\\GUILLERMO\Users\Guillermo\Source\Repos\OpenVOGEL\MathTools\bin\Release\MathTools.pdb
+\\GUILLERMO\Users\Guillermo\Source\Repos\OpenVOGEL\MathTools\bin\Release\MathTools.xml
+\\GUILLERMO\Users\Guillermo\Source\Repos\OpenVOGEL\MathTools\obj\Release\MathTools.vbprojResolveAssemblyReference.cache
+\\GUILLERMO\Users\Guillermo\Source\Repos\OpenVOGEL\MathTools\obj\Release\MathTools.Resources.resources
+\\GUILLERMO\Users\Guillermo\Source\Repos\OpenVOGEL\MathTools\obj\Release\MathTools.vbproj.GenerateResource.Cache
+\\GUILLERMO\Users\Guillermo\Source\Repos\OpenVOGEL\MathTools\obj\Release\MathTools.dll
+\\GUILLERMO\Users\Guillermo\Source\Repos\OpenVOGEL\MathTools\obj\Release\MathTools.xml
+\\GUILLERMO\Users\Guillermo\Source\Repos\OpenVOGEL\MathTools\obj\Release\MathTools.pdb

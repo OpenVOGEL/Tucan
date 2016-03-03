@@ -307,10 +307,8 @@ Namespace UVLM.Models.Aero.Components
                 For i = 1 To r.ReadInt32
                     Me.Rings.Add(Rings(r.ReadInt32))
                 Next
-                Dim polarIndex = r.ReadInt32()
-                If polarIndex >= 0 And polarIndex < PolarDB.Families.Count Then
-                    Polars = PolarDB.Families(polarIndex)
-                End If
+                Dim polarID = New Guid(r.ReadString())
+                Polars = PolarDB.GetFamilyFromID(polarID)
             Catch ex As Exception
                 Me.Rings.Clear()
             End Try
@@ -325,9 +323,9 @@ Namespace UVLM.Models.Aero.Components
             Next
 
             If IsNothing(Polars) Then
-                w.Write(-1)
+                w.Write(Guid.Empty.ToString)
             Else
-                w.Write(Polars.Index)
+                w.Write(Polars.ID.ToString)
             End If
 
         End Sub

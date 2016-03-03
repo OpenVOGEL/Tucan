@@ -162,6 +162,7 @@ Public Class ForcesPanel
             Next
 
             cbLattices.SelectedIndex = 0
+            cbResultType.SelectedIndex = 0
 
         End If
 
@@ -352,9 +353,24 @@ Public Class ForcesPanel
 
                             pnt = pnts(SelectedPointIndex)
 
-                            Dim lblPoint As String = String.Format("d = {0:F3}m / CL = {1:F4}", Data(SelectedPointIndex).X, Data(SelectedPointIndex).Y)
+                            Select Case cbResultType.SelectedIndex
 
-                            DrawLabel(g, lblPoint, pnt, FontLabel)
+                                Case 0
+
+                                    Dim lblPoint As String = String.Format("d = {0:F3}m / CL = {1:F4}", Data(SelectedPointIndex).X, Data(SelectedPointIndex).Y)
+                                    DrawLabel(g, lblPoint, pnt, FontLabel)
+
+                                Case 1
+
+                                    Dim lblPoint As String = String.Format("d = {0:F3}m / CDp = {1:F4}", Data(SelectedPointIndex).X, Data(SelectedPointIndex).Y)
+                                    DrawLabel(g, lblPoint, pnt, FontLabel)
+
+                                Case 2
+
+                                    Dim lblPoint As String = String.Format("d = {0:F3}m / CDi = {1:F4}", Data(SelectedPointIndex).X, Data(SelectedPointIndex).Y)
+                                    DrawLabel(g, lblPoint, pnt, FontLabel)
+
+                            End Select
 
                         End If
 

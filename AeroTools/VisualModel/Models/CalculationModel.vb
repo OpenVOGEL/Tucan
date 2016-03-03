@@ -364,8 +364,8 @@ Namespace VisualModel.Models
                                     CurrentLiftingSurface.ReadFromXML(SubReader.ReadSubtree)
                                     For i = 1 To CurrentLiftingSurface.nWingRegions
                                         CurrentLiftingSurface.CurrentRegionID = i
-                                        If CurrentLiftingSurface.CurrentRegion.PolarIndex > -1 And CurrentLiftingSurface.CurrentRegion.PolarIndex < PolarDataBase.Families.Count Then
-                                            CurrentLiftingSurface.CurrentRegion.PolarFamiliy = PolarDataBase.Families(CurrentLiftingSurface.CurrentRegion.PolarIndex)
+                                        If Not CurrentLiftingSurface.CurrentRegion.PolarID.Equals(Guid.Empty) Then
+                                            CurrentLiftingSurface.CurrentRegion.PolarFamiliy = PolarDataBase.GetFamilyFromID(CurrentLiftingSurface.CurrentRegion.PolarID)
                                         End If
                                     Next
 
