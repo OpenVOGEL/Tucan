@@ -44,6 +44,10 @@
     <OptionInfer>On</OptionInfer>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="DotNumerics, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependencies\DotNumerics\Binaries\Release\DotNumerics.dll</HintPath>
+    </Reference>
     <Reference Include="Meta.Numerics">
       <HintPath>..\Dependencies\MetaNumerics\Meta.Numerics.dll</HintPath>
       <Private>False</Private>

@@ -67,26 +67,26 @@ Namespace UVLM.Solver
 
                     For j = 1 To Model.CurrentBody.NumberOfNodes
 
-                        Lattice.AddNode(Model.CurrentBody.NodalPointP(j))
+                        Lattice.AddNode(Model.CurrentBody.NodalPosition(j))
 
                     Next
 
                     For j = 1 To Model.CurrentBody.NumberOfPanels
 
-                        Dim Node1 As Integer = Model.CurrentBody.QuadPanel(j).N1 - 1
-                        Dim Node2 As Integer = Model.CurrentBody.QuadPanel(j).N2 - 1
-                        Dim Node3 As Integer = Model.CurrentBody.QuadPanel(j).N3 - 1
-                        Dim Node4 As Integer = Model.CurrentBody.QuadPanel(j).N4 - 1
-                        Dim Reversed As Boolean = Model.CurrentBody.QuadPanel(j).Reversed
-                        Dim Slender As Boolean = Model.CurrentBody.QuadPanel(j).IsSlender
+                        Dim Node1 As Integer = Model.CurrentBody.Panel(j).N1 - 1
+                        Dim Node2 As Integer = Model.CurrentBody.Panel(j).N2 - 1
+                        Dim Node3 As Integer = Model.CurrentBody.Panel(j).N3 - 1
+                        Dim Node4 As Integer = Model.CurrentBody.Panel(j).N4 - 1
+                        Dim Reversed As Boolean = Model.CurrentBody.Panel(j).Reversed
+                        Dim Slender As Boolean = Model.CurrentBody.Panel(j).IsSlender
 
-                        If Model.CurrentBody.QuadPanel(j).IsTriangular Then
+                        If Model.CurrentBody.Panel(j).IsTriangular Then
                             Lattice.AddVortexRing3(Node1, Node2, Node3, Reversed, Slender)
                         Else
                             Lattice.AddVortexRing4(Node1, Node2, Node3, Node4, Reversed, Slender)
                         End If
 
-                        Lattice.VortexRings(j - 1).IsPrimitive = Model.CurrentBody.QuadPanel(j).IsPrimitive
+                        Lattice.VortexRings(j - 1).IsPrimitive = Model.CurrentBody.Panel(j).IsPrimitive
 
                     Next
 
@@ -108,16 +108,16 @@ Namespace UVLM.Solver
 
                     For j = 1 To Model.CurrentJetEngine.NumberOfNodes
 
-                        Lattice.AddNode(Model.CurrentJetEngine.NodalPointP(j))
+                        Lattice.AddNode(Model.CurrentJetEngine.NodalPosition(j))
 
                     Next
 
                     For j = 1 To Model.CurrentJetEngine.NumberOfPanels
 
-                        Dim Node1 As Integer = Model.CurrentJetEngine.QuadPanel(j).N1 - 1
-                        Dim Node2 As Integer = Model.CurrentJetEngine.QuadPanel(j).N2 - 1
-                        Dim Node3 As Integer = Model.CurrentJetEngine.QuadPanel(j).N3 - 1
-                        Dim Node4 As Integer = Model.CurrentJetEngine.QuadPanel(j).N4 - 1
+                        Dim Node1 As Integer = Model.CurrentJetEngine.Panel(j).N1 - 1
+                        Dim Node2 As Integer = Model.CurrentJetEngine.Panel(j).N2 - 1
+                        Dim Node3 As Integer = Model.CurrentJetEngine.Panel(j).N3 - 1
+                        Dim Node4 As Integer = Model.CurrentJetEngine.Panel(j).N4 - 1
                         Dim Reversed As Boolean = False
                         Dim Slender As Boolean = True
 
@@ -525,7 +525,7 @@ Namespace UVLM.Solver
         ''' </summary>
         ''' <param name="Results"></param>
         ''' <remarks></remarks>
-        Public Sub SetCompleteModelOnResults(ByRef Results As CalculatedModel)
+        Public Sub SetCompleteModelOnResults(ByRef Results As ResultModel)
 
             Results.Loaded = False
             Results.Model.Name = "Results"
@@ -552,27 +552,27 @@ Namespace UVLM.Solver
 
                     If VortexRing.Type = VortexRingType.VR4 Then
 
-                        Results.Model.AgregarPanel(VortexRing.Node(1).IndexG, _
-                                                      VortexRing.Node(2).IndexG, _
-                                                      VortexRing.Node(3).IndexG, _
+                        Results.Model.AddPanel(VortexRing.Node(1).IndexG,
+                                                      VortexRing.Node(2).IndexG,
+                                                      VortexRing.Node(3).IndexG,
                                                       VortexRing.Node(4).IndexG)
 
                     Else
 
-                        Results.Model.AgregarPanel(VortexRing.Node(1).IndexG, _
-                                                      VortexRing.Node(2).IndexG, _
-                                                      VortexRing.Node(3).IndexG, _
+                        Results.Model.AddPanel(VortexRing.Node(1).IndexG,
+                                                      VortexRing.Node(2).IndexG,
+                                                      VortexRing.Node(3).IndexG,
                                                       VortexRing.Node(1).IndexG)
 
                     End If
 
-                    Results.Model.QuadPanel(GlobalIndexRings).Circulation = VortexRing.G
-                    Results.Model.QuadPanel(GlobalIndexRings).Cp = VortexRing.Cp
-                    Results.Model.QuadPanel(GlobalIndexRings).Area = VortexRing.Area
-                    Results.Model.QuadPanel(GlobalIndexRings).NormalVector.Assign(VortexRing.Normal)
-                    Results.Model.QuadPanel(GlobalIndexRings).LocalVelocity.Assign(VortexRing.VelocityT)
-                    Results.Model.QuadPanel(GlobalIndexRings).ControlPoint.Assign(VortexRing.ControlPoint)
-                    Results.Model.QuadPanel(GlobalIndexRings).IsSlender = VortexRing.IsSlender
+                    Results.Model.Panel(GlobalIndexRings).Circulation = VortexRing.G
+                    Results.Model.Panel(GlobalIndexRings).Cp = VortexRing.Cp
+                    Results.Model.Panel(GlobalIndexRings).Area = VortexRing.Area
+                    Results.Model.Panel(GlobalIndexRings).NormalVector.Assign(VortexRing.Normal)
+                    Results.Model.Panel(GlobalIndexRings).LocalVelocity.Assign(VortexRing.VelocityT)
+                    Results.Model.Panel(GlobalIndexRings).ControlPoint.Assign(VortexRing.ControlPoint)
+                    Results.Model.Panel(GlobalIndexRings).IsSlender = VortexRing.IsSlender
                 Next
 
             Next
@@ -582,7 +582,7 @@ Namespace UVLM.Solver
             Results.Model.UpdateColormapWithPressure()
             Results.Model.VisualProps.ShowColormap = True
 
-            Results.Model.GenerateLattice()
+            Results.Model.Mesh.GenerateLattice()
 
             GlobalIndexNodes = 0
             GlobalIndexRings = 0
@@ -600,19 +600,19 @@ Namespace UVLM.Solver
 
                     For Each VortexRing In Wake.VortexRings
                         GlobalIndexRings += 1
-                        Results.Wakes.AgregarPanel(VortexRing.Node(1).IndexG, _
-                                                               VortexRing.Node(2).IndexG, _
-                                                               VortexRing.Node(3).IndexG, _
+                        Results.Wakes.AddPanel(VortexRing.Node(1).IndexG,
+                                                               VortexRing.Node(2).IndexG,
+                                                               VortexRing.Node(3).IndexG,
                                                                VortexRing.Node(4).IndexG)
-                        Results.Wakes.QuadPanel(GlobalIndexRings).Circulation = VortexRing.G
+                        Results.Wakes.Panel(GlobalIndexRings).Circulation = VortexRing.G
 
                     Next
 
                     For Each Vortex In Wake.Vortices
-                        Dim Segment As New Basics.VortexSegment
+                        Dim Segment As New Basics.LatticeSegment
                         Segment.N1 = Vortex.Node1.IndexG
                         Segment.N2 = Vortex.Node2.IndexG
-                        Results.Wakes.Mesh.Vortices.Add(Segment)
+                        Results.Wakes.Mesh.Lattice.Add(Segment)
                     Next
 
                 Next
@@ -679,18 +679,18 @@ Namespace UVLM.Solver
 
                             For Each VortexRing In Lattice.VortexRings
                                 GlobalIndexRings += 1
-                                ModeShapeModel.AgregarPanel(VortexRing.Node(1).IndexG + 1, _
-                                                            VortexRing.Node(2).IndexG + 1, _
-                                                            VortexRing.Node(3).IndexG + 1, _
+                                ModeShapeModel.AddPanel(VortexRing.Node(1).IndexG + 1,
+                                                            VortexRing.Node(2).IndexG + 1,
+                                                            VortexRing.Node(3).IndexG + 1,
                                                             VortexRing.Node(4).IndexG + 1)
-                                ModeShapeModel.QuadPanel(GlobalIndexRings).Circulation = 0.0
-                                ModeShapeModel.QuadPanel(GlobalIndexRings).Cp = 0.0
-                                ModeShapeModel.QuadPanel(GlobalIndexRings).IsSlender = True
+                                ModeShapeModel.Panel(GlobalIndexRings).Circulation = 0.0
+                                ModeShapeModel.Panel(GlobalIndexRings).Cp = 0.0
+                                ModeShapeModel.Panel(GlobalIndexRings).IsSlender = True
                             Next
 
                         Next
 
-                        ModeShapeModel.GenerateLattice()
+                        ModeShapeModel.Mesh.GenerateLattice()
                         ModeShapeModel.FindDisplacementsRange()
                         ModeShapeModel.UpdateColormapWithDisplacements()
                         Results.DynamicModes.Add(ModeShapeModel)
@@ -757,18 +757,18 @@ Namespace UVLM.Solver
 
                         For Each VortexRing In Lattice.VortexRings
                             GlobalIndexRings += 1
-                            _TransitLattice.AgregarPanel(VortexRing.Node(1).IndexG + 1, _
-                                                         VortexRing.Node(2).IndexG + 1, _
-                                                         VortexRing.Node(3).IndexG + 1, _
+                            _TransitLattice.AddPanel(VortexRing.Node(1).IndexG + 1,
+                                                         VortexRing.Node(2).IndexG + 1,
+                                                         VortexRing.Node(3).IndexG + 1,
                                                          VortexRing.Node(4).IndexG + 1)
-                            _TransitLattice.QuadPanel(GlobalIndexRings).Circulation = 0.0
-                            _TransitLattice.QuadPanel(GlobalIndexRings).Cp = 0.0
-                            _TransitLattice.QuadPanel(GlobalIndexRings).IsSlender = True
+                            _TransitLattice.Panel(GlobalIndexRings).Circulation = 0.0
+                            _TransitLattice.Panel(GlobalIndexRings).Cp = 0.0
+                            _TransitLattice.Panel(GlobalIndexRings).IsSlender = True
                         Next
 
                     Next
 
-                    _TransitLattice.GenerateLattice()
+                    _TransitLattice.Mesh.GenerateLattice()
                     Results.TransitLattices.Add(_TransitLattice)
 
                     TimeStep += 1 'Settings.StructuralSettings.SubSteps

@@ -14,7 +14,7 @@ Namespace VisualModel.Models.Components
 
         Private NodalPoints As New List(Of EVector3)
         Private QuadPanels As New List(Of Panel)
-        Private Vortices As New List(Of VortexSegment) ' Matriz de conexion de vórcies
+        Private Vortices As New List(Of LatticeSegment) ' Matriz de conexion de vórcies
 
         Public PasoDeCorte As Integer = 100
 
@@ -209,7 +209,7 @@ Namespace VisualModel.Models.Components
                 Dim Esta As Boolean
                 Dim p As Integer = 1
 
-                Dim Vortex As New VortexSegment
+                Dim Vortex As New LatticeSegment
 
                 Vortex.N1 = QuadPanels(0).N1
                 Vortex.N2 = QuadPanels(0).N2
@@ -255,7 +255,7 @@ Namespace VisualModel.Models.Components
 
                             p = p + 1
 
-                            Vortices.Add(New VortexSegment(N1, N2))
+                            Vortices.Add(New LatticeSegment(N1, N2))
 
                         End If
 
@@ -279,7 +279,7 @@ Namespace VisualModel.Models.Components
 
         End Function
 
-        Public Function ObtenerVortice(ByVal VortexNumber As Integer) As VortexSegment
+        Public Function ObtenerVortice(ByVal VortexNumber As Integer) As LatticeSegment
             Return Vortices.Item(VortexNumber - 1)
         End Function
 

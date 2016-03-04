@@ -179,7 +179,7 @@ Namespace VisualModel.Models.Basics
 
     End Class
 
-    Public Class VortexSegment
+    Public Class LatticeSegment
 
         Public N1 As Integer
         Public N2 As Integer

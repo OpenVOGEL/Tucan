@@ -15,7 +15,7 @@ Namespace VisualModel.Models.Components
     ''' <remarks></remarks>
     Public Class WingAnchorInfo
 
-        Public Property ParentSerialNumber As String
+        Public Property ParentID As Guid
         Public Property AnchorFromTip = False
         Public Property AnchorFromRoot As Boolean = False
 
@@ -150,7 +150,7 @@ Namespace VisualModel.Models.Components
 
                             WingAnchorInfo = New WingAnchorInfo()
 
-                            WingAnchorInfo.ParentSerialNumber = IOXML.ReadString(reader, "ParentSerial", "")
+                            WingAnchorInfo.ParentID = New Guid(IOXML.ReadString(reader, "ParentID", Guid.NewGuid.ToString))
                             WingAnchorInfo.AnchorFromRoot = IOXML.ReadBoolean(reader, "Root", False)
                             WingAnchorInfo.AnchorFromTip = IOXML.ReadBoolean(reader, "Tip", False)
 
@@ -183,7 +183,7 @@ Namespace VisualModel.Models.Components
 
                 writer.WriteStartElement("Info")
 
-                writer.WriteAttributeString("ParentSerial", WingAnchorInfo.ParentSerialNumber)
+                writer.WriteAttributeString("ParentID", WingAnchorInfo.ParentID.ToString)
                 writer.WriteAttributeString("Root", WingAnchorInfo.AnchorFromRoot)
                 writer.WriteAttributeString("Tip", WingAnchorInfo.AnchorFromTip)
                 writer.WriteEndElement()
@@ -399,6 +399,8 @@ Namespace VisualModel.Models.Components
 
         Public Sub New()
 
+            ID = Guid.NewGuid
+            Name = "Fuselage"
             CrossSections = New List(Of CrossSection)
             VisualProps.ThicknessMesh = 1.0
             VisualProps.ShowSurface = True
@@ -406,8 +408,6 @@ Namespace VisualModel.Models.Components
             IncludeInCalculation = True
             AnchorLines = New List(Of AnchorLine)
             CrossRefinement = 10
-            GenerateSerialNumber()
-            Name = "Fuselage"
 
         End Sub
 
@@ -1044,7 +1044,7 @@ Namespace VisualModel.Models.Components
 
                 ' Generate lattice
 
-                Mesh.GenerateVortices()
+                Mesh.GenerateLattice()
 
                 ' Rotate to align with global XYZ
 
@@ -1148,34 +1148,34 @@ Namespace VisualModel.Models.Components
                 Dim Code As Integer = Selection.GetSelectionCode(ComponentTypes.etBody, ElementIndex, EntityTypes.etQuadPanel, 0)
                 Dim Count As Integer = 0
 
-                For Each Panel In Mesh.Panels
+                For Each p In Mesh.Panels
 
                     gl.PushName(Code + Count)
                     gl.Begin(OpenGL.GL_TRIANGLES)
 
-                    Nodo = Mesh.NodalPoints(Panel.N1 - 1)
+                    Nodo = Mesh.NodalPoints(p.N1 - 1)
                     If Me.VisualProps.ShowColormap Then gl.Color(Nodo.Color.R, Nodo.Color.G, Nodo.Color.B)
                     gl.Vertex(Nodo.Position.X, Nodo.Position.Y, Nodo.Position.Z)
 
-                    Nodo = Mesh.NodalPoints(Panel.N2 - 1)
+                    Nodo = Mesh.NodalPoints(p.N2 - 1)
                     If Me.VisualProps.ShowColormap Then gl.Color(Nodo.Color.R, Nodo.Color.G, Nodo.Color.B)
                     gl.Vertex(Nodo.Position.X, Nodo.Position.Y, Nodo.Position.Z)
 
-                    Nodo = Mesh.NodalPoints(Panel.N3 - 1)
+                    Nodo = Mesh.NodalPoints(p.N3 - 1)
                     If Me.VisualProps.ShowColormap Then gl.Color(Nodo.Color.R, Nodo.Color.G, Nodo.Color.B)
                     gl.Vertex(Nodo.Position.X, Nodo.Position.Y, Nodo.Position.Z)
 
-                    If Not Panel.IsTriangular Then
+                    If Not p.IsTriangular Then
 
-                        Nodo = Mesh.NodalPoints(Panel.N3 - 1)
+                        Nodo = Mesh.NodalPoints(p.N3 - 1)
                         If Me.VisualProps.ShowColormap Then gl.Color(Nodo.Color.R, Nodo.Color.G, Nodo.Color.B)
                         gl.Vertex(Nodo.Position.X, Nodo.Position.Y, Nodo.Position.Z)
 
-                        Nodo = Mesh.NodalPoints(Panel.N4 - 1)
+                        Nodo = Mesh.NodalPoints(p.N4 - 1)
                         If Me.VisualProps.ShowColormap Then gl.Color(Nodo.Color.R, Nodo.Color.G, Nodo.Color.B)
                         gl.Vertex(Nodo.Position.X, Nodo.Position.Y, Nodo.Position.Z)
 
-                        Nodo = Mesh.NodalPoints(Panel.N1 - 1)
+                        Nodo = Mesh.NodalPoints(p.N1 - 1)
                         If Me.VisualProps.ShowColormap Then gl.Color(Nodo.Color.R, Nodo.Color.G, Nodo.Color.B)
                         gl.Vertex(Nodo.Position.X, Nodo.Position.Y, Nodo.Position.Z)
 
@@ -1225,10 +1225,10 @@ Namespace VisualModel.Models.Components
 
                 If Mesh.NodalPoints.Count > 0 Then
 
-                    For i = 0 To Mesh.Vortices.Count - 1
+                    For i = 0 To Mesh.Lattice.Count - 1
 
-                        Nodo1 = Mesh.NodalPoints(Mesh.Vortices(i).N1 - 1).Position
-                        Nodo2 = Mesh.NodalPoints(Mesh.Vortices(i).N2 - 1).Position
+                        Nodo1 = Mesh.NodalPoints(Mesh.Lattice(i).N1 - 1).Position
+                        Nodo2 = Mesh.NodalPoints(Mesh.Lattice(i).N2 - 1).Position
 
                         gl.Vertex(Nodo1.X, Nodo1.Y, Nodo1.Z)
                         gl.Vertex(Nodo2.X, Nodo2.Y, Nodo2.Z)
@@ -1537,8 +1537,7 @@ Namespace VisualModel.Models.Components
                     Case "Identity"
 
                         Name = reader.GetAttribute("Name")
-                        SerialNumber = reader.GetAttribute("SN")
-                        If IsNothing(SerialNumber) OrElse SerialNumber = "" Then GenerateSerialNumber()
+                        ID = New Guid(IOXML.ReadString(reader, "ID", Guid.NewGuid.ToString))
                         MeshType = IOXML.ReadInteger(reader, "MeshType", MeshTypes.StructuredQuadrilaterals)
                         CrossRefinement = IOXML.ReadInteger(reader, "NPS", 10)
                         LongitudinalRefinement = IOXML.ReadInteger(reader, "NPZ", 10)
@@ -1574,7 +1573,7 @@ Namespace VisualModel.Models.Components
 
             writer.WriteStartElement("Identity")
             writer.WriteAttributeString("Name", Name)
-            writer.WriteAttributeString("SN", SerialNumber)
+            writer.WriteAttributeString("ID", ID.ToString)
             writer.WriteAttributeString("MeshType", CInt(MeshType))
             writer.WriteAttributeString("NPS", CInt(CrossRefinement))
             writer.WriteAttributeString("NPZ", CInt(LongitudinalRefinement))
@@ -1712,7 +1711,7 @@ Namespace VisualModel.Models.Components
                 p.IsSlender = False
             Next
 
-            Mesh.GenerateVortices()
+            Mesh.GenerateLattice()
 
         End Sub
 
@@ -1754,7 +1753,7 @@ Namespace VisualModel.Models.Components
                 p.IsSlender = False
             Next
 
-            Mesh.GenerateVortices()
+            Mesh.GenerateLattice()
 
         End Sub
 
@@ -1825,7 +1824,7 @@ Namespace VisualModel.Models.Components
                 p.IsSlender = False
             Next
 
-            Mesh.GenerateVortices()
+            Mesh.GenerateLattice()
 
         End Sub
 

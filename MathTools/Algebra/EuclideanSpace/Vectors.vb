@@ -669,9 +669,9 @@ Namespace Algebra.EuclideanSpace
 
 End Namespace
 
-Public Structure LimitValues
+Public Class LimitValues
 
-    Public Maximum As Double
-    Public Minimum As Double
+    Public Property Maximum As Double
+    Public Property Minimum As Double
 
-End Structure
+End Class

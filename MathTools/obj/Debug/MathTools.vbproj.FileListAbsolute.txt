@@ -42,9 +42,12 @@ C:\Users\Guillermo\Documents\Software\OpenVogel\2016.Beta\MathTools\obj\Debug\Ma
 \\GUILLERMO\Users\Guillermo\Source\Repos\OpenVOGEL\MathTools\bin\Debug\MathTools.dll
 \\GUILLERMO\Users\Guillermo\Source\Repos\OpenVOGEL\MathTools\bin\Debug\MathTools.pdb
 \\GUILLERMO\Users\Guillermo\Source\Repos\OpenVOGEL\MathTools\bin\Debug\MathTools.xml
-\\GUILLERMO\Users\Guillermo\Source\Repos\OpenVOGEL\MathTools\obj\Debug\MathTools.vbprojResolveAssemblyReference.cache
 \\GUILLERMO\Users\Guillermo\Source\Repos\OpenVOGEL\MathTools\obj\Debug\MathTools.Resources.resources
 \\GUILLERMO\Users\Guillermo\Source\Repos\OpenVOGEL\MathTools\obj\Debug\MathTools.vbproj.GenerateResource.Cache
 \\GUILLERMO\Users\Guillermo\Source\Repos\OpenVOGEL\MathTools\obj\Debug\MathTools.dll
 \\GUILLERMO\Users\Guillermo\Source\Repos\OpenVOGEL\MathTools\obj\Debug\MathTools.xml
 \\GUILLERMO\Users\Guillermo\Source\Repos\OpenVOGEL\MathTools\obj\Debug\MathTools.pdb
+\\GUILLERMO\Users\Guillermo\Source\Repos\OpenVOGEL\MathTools\bin\Debug\DotNumerics.dll
+\\GUILLERMO\Users\Guillermo\Source\Repos\OpenVOGEL\MathTools\bin\Debug\DotNumerics.pdb
+\\GUILLERMO\Users\Guillermo\Source\Repos\OpenVOGEL\MathTools\bin\Debug\DotNumerics.xml
+\\GUILLERMO\Users\Guillermo\Source\Repos\OpenVOGEL\MathTools\obj\Debug\MathTools.vbprojResolveAssemblyReference.cache

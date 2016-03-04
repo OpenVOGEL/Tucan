@@ -80,8 +80,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Dependencies\Cudafy.NET.dll</HintPath>
     </Reference>
-    <Reference Include="DotNumerics, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="DotNumerics">
       <HintPath>..\Dependencies\DotNumerics\Binaries\Release\DotNumerics.dll</HintPath>
     </Reference>
     <Reference Include="Meta.Numerics">
@@ -281,7 +280,7 @@
     <Compile Include="VisualModel\Interface\Operations.vb" />
     <Compile Include="VisualModel\Interface\Properties.vb" />
     <Compile Include="VisualModel\Interface\Proyecto.vb" />
-    <Compile Include="VisualModel\Interface\Results\Results.vb" />
+    <Compile Include="VisualModel\Interface\Results\ResultModel.vb" />
     <Compile Include="VisualModel\Interface\Selection.vb" />
     <Compile Include="VisualModel\IO\IOXML.vb" />
     <Compile Include="VisualModel\Models\Basics\BaseSurface.vb" />

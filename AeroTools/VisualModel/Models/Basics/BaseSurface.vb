@@ -4,6 +4,7 @@ Imports MathTools.Algebra.EuclideanSpace
 Imports AeroTools.VisualModel.Interface
 Imports SharpGL
 Imports System.Xml
+Imports MathTools
 
 Namespace VisualModel.Models.Basics
 
@@ -16,22 +17,65 @@ Namespace VisualModel.Models.Basics
         Implements IOperational
         Implements ISelectable
 
+        ''' <summary>
+        ''' Surface identifier.
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property ID As Guid
+
+        ''' <summary>
+        ''' Surface name.
+        ''' </summary>
+        ''' <returns></returns>
         Public Property Name As String
+
+        ''' <summary>
+        ''' Mesh.
+        ''' </summary>
+        ''' <returns></returns>
         Public Property Mesh As Mesh
+
+        ''' <summary>
+        ''' Surface visual properties.
+        ''' </summary>
+        ''' <returns></returns>
         Public Property VisualProps As VisualizationProperties
 
-        Public Property AccessPath As String
+        ''' <summary>
+        ''' Indicates if the surface participates in the calculation model.
+        ''' </summary>
+        ''' <returns></returns>
         Public Property IncludeInCalculation As Boolean = False
+
+        ''' <summary>
+        ''' Indicate if the GUI has to block the content of this surface.
+        ''' </summary>
+        ''' <returns></returns>
         Public Property LockContent As Boolean = True
 
+        ''' <summary>
+        ''' Position of the surface in the global coordinates system.
+        ''' </summary>
+        ''' <returns></returns>
         Public Property Position As New EVector3
-        Public Property CenterOfRotation As New EVector3
-        Public Property Orientation As New OrientationCoordinates
-        Public Property Scales As Double = 1.0
 
-        Public PressureRange As MathTools.LimitValues
-        Public DisplacementRange As MathTools.LimitValues
-        Public Property SerialNumber As String
+        ''' <summary>
+        ''' Center of rotation of the surface in the local coordinates system.
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property CenterOfRotation As New EVector3
+
+        ''' <summary>
+        ''' Orientation of the surface.
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property Orientation As New OrientationCoordinates
+
+        ''' <summary>
+        ''' Scale of this surface.
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property SizeScale As Double = 1.0
 
 #Region " Operations "
 
@@ -81,13 +125,6 @@ Namespace VisualModel.Models.Basics
 
         End Sub
 
-        Public Sub GenerateSerialNumber()
-
-            Dim inst As Date = Now
-            SerialNumber = Guid.NewGuid.ToString()
-
-        End Sub
-
 #Region " Meshing "
 
         ''' <summary>
@@ -100,85 +137,6 @@ Namespace VisualModel.Models.Basics
         Public MustOverride Sub Refresh3DModel(ByRef gl As OpenGL, Optional ByVal SelectionMode As SelectionModes = SelectionModes.smNoSelection, Optional ByVal ElementIndex As Integer = 0)
 
         Public MustOverride Sub GenerateMesh()
-
-        Public Function GenerateLattice() As Boolean
-
-            Try
-
-                Mesh.Vortices.Clear()
-
-                ' Arma la matriz de conexiones de vortices:
-
-                Dim N1 As Integer
-                Dim N2 As Integer
-                Dim Esta As Boolean
-
-                Dim FirstVortex As New VortexSegment
-
-                FirstVortex.N1 = Mesh.Panels(0).N1
-                FirstVortex.N2 = Mesh.Panels(0).N2
-
-                Mesh.Vortices.Add(FirstVortex)
-
-                For i = 1 To Mesh.Panels.Count
-
-                    For k = 1 To 4
-
-                        Select Case k
-                            Case 1
-                                N1 = Mesh.Panels.Item(i - 1).N1
-                                N2 = Mesh.Panels.Item(i - 1).N2
-                            Case 2
-                                N1 = Mesh.Panels.Item(i - 1).N2
-                                N2 = Mesh.Panels.Item(i - 1).N3
-                            Case 3
-                                N1 = Mesh.Panels.Item(i - 1).N3
-                                N2 = Mesh.Panels.Item(i - 1).N4
-                            Case 4
-                                N1 = Mesh.Panels.Item(i - 1).N4
-                                N2 = Mesh.Panels.Item(i - 1).N1
-                        End Select
-
-                        Esta = False
-
-                        For m = 0 To Mesh.Vortices.Count - 1
-
-                            If Mesh.Vortices.Item(m).N1 = N1 And Mesh.Vortices.Item(m).N2 = N2 Then
-
-                                Esta = True
-
-                            ElseIf Mesh.Vortices.Item(m).N1 = N2 And Mesh.Vortices.Item(m).N2 = N1 Then
-
-                                Esta = True
-
-                            End If
-
-                        Next
-
-                        If Esta = False Then
-
-                            Dim Vortex As New VortexSegment
-
-                            Vortex.N1 = N1
-                            Vortex.N2 = N2
-
-                            Mesh.Vortices.Add(Vortex)
-
-                        End If
-
-                    Next
-
-                Next
-
-                Return True
-
-            Catch ex As Exception
-
-                Return False
-
-            End Try
-
-        End Function
 
 #End Region
 

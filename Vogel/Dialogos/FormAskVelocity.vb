@@ -26,7 +26,7 @@ Public Class FormAskVelocity
 
             Dim PuntoSeleccionado As Integer = PuntoDeControl.Value
 
-            Dim Panel As Panel = MainForm.Project.Results.Model.QuadPanel(PuntoSeleccionado)
+            Dim Panel As Panel = MainForm.Project.Results.Model.Panel(PuntoSeleccionado)
 
             Punto.Assign(Panel.ControlPoint)
 

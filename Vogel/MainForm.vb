@@ -794,10 +794,10 @@ ErrSub:
                                         ttSelectedEntity.Show(String.Format("Lattice node {0}", sr.EntityIndex), ControlOpenGL)
                                         lblStatus.Text = String.Format("{1}: Node {0} ({2:F2}, {3:F2}, {4:F2})", sr.EntityIndex,
                                                                                   .CurrentBody.Name,
-                                                                                  .CurrentBody.NodalPointP(sr.EntityIndex).X,
-                                                                                  .CurrentBody.NodalPointP(sr.EntityIndex).Y,
-                                                                                  .CurrentBody.NodalPointP(sr.EntityIndex).Z)
-                                        Project.Model.OperationsTool.SetEntityToQueue(.CurrentBody.NodalPointP(sr.EntityIndex))
+                                                                                  .CurrentBody.NodalPosition(sr.EntityIndex).X,
+                                                                                  .CurrentBody.NodalPosition(sr.EntityIndex).Y,
+                                                                                  .CurrentBody.NodalPosition(sr.EntityIndex).Z)
+                                        Project.Model.OperationsTool.SetEntityToQueue(.CurrentBody.NodalPosition(sr.EntityIndex))
 
                                         KeepSearching = False
                                         Exit For

@@ -9,7 +9,7 @@ Namespace VisualModel.Models.Basics
 
         Public NodalPoints As New List(Of NodalPoint) ' Es la que se utiliza para el resto del calculo. Es igual a la original por la matriz de orientacion, mas un vector de translacion
         Public Panels As New List(Of Panel)
-        Public Vortices As New List(Of VortexSegment) ' Matriz de conexion de vórcies
+        Public Lattice As New List(Of LatticeSegment) ' Matriz de conexion de vórcies
 
         Public Sub Translate(ByVal Vector As EVector3)
 
@@ -62,71 +62,80 @@ Namespace VisualModel.Models.Basics
 
         End Sub
 
-        Public Sub GenerateVortices()
+        Public Sub GenerateLattice()
 
-            Dim N1 As Integer
-            Dim N2 As Integer
-            Dim m As Integer
-            Dim Found As Boolean
+            Try
 
-            Vortices.Clear()
+                Lattice.Clear()
 
-            Dim VortexSegement As New VortexSegment
+                ' Arma la matriz de conexiones de vortices:
 
-            VortexSegement.N1 = Panels.Item(0).N1
-            VortexSegement.N2 = Panels.Item(0).N2
+                Dim N1 As Integer
+                Dim N2 As Integer
+                Dim Esta As Boolean
 
-            Vortices.Add(VortexSegement)
+                Dim FirstSegment As New LatticeSegment
 
-            For i = 1 To Panels.Count
+                FirstSegment.N1 = Panels(0).N1
+                FirstSegment.N2 = Panels(0).N2
 
-                For k = 1 To 4
+                Lattice.Add(FirstSegment)
 
-                    Select Case k
-                        Case 1
-                            N1 = Panels.Item(i - 1).N1
-                            N2 = Panels.Item(i - 1).N2
-                        Case 2
-                            N1 = Panels.Item(i - 1).N2
-                            N2 = Panels.Item(i - 1).N3
-                        Case 3
-                            N1 = Panels.Item(i - 1).N3
-                            N2 = Panels.Item(i - 1).N4
-                        Case 4
-                            N1 = Panels.Item(i - 1).N4
-                            N2 = Panels.Item(i - 1).N1
-                    End Select
+                For i = 1 To Panels.Count
 
-                    Found = False
+                    For k = 1 To 4
 
-                    For m = 0 To Vortices.Count - 1
+                        Select Case k
+                            Case 1
+                                N1 = Panels.Item(i - 1).N1
+                                N2 = Panels.Item(i - 1).N2
+                            Case 2
+                                N1 = Panels.Item(i - 1).N2
+                                N2 = Panels.Item(i - 1).N3
+                            Case 3
+                                N1 = Panels.Item(i - 1).N3
+                                N2 = Panels.Item(i - 1).N4
+                            Case 4
+                                N1 = Panels.Item(i - 1).N4
+                                N2 = Panels.Item(i - 1).N1
+                        End Select
 
-                        If Vortices.Item(m).N1 = N1 And Vortices.Item(m).N2 = N2 Then
+                        Esta = False
 
-                            Found = True
+                        For m = 0 To Lattice.Count - 1
 
-                        ElseIf Vortices.Item(m).N1 = N2 And Vortices.Item(m).N2 = N1 Then
+                            If Lattice.Item(m).N1 = N1 And Lattice.Item(m).N2 = N2 Then
 
-                            Found = True
+                                Esta = True
+
+                            ElseIf Lattice.Item(m).N1 = N2 And Lattice.Item(m).N2 = N1 Then
+
+                                Esta = True
+
+                            End If
+
+                        Next
+
+                        If Esta = False Then
+
+                            Dim Segment As New LatticeSegment
+
+                            Segment.N1 = N1
+                            Segment.N2 = N2
+
+                            Lattice.Add(Segment)
 
                         End If
 
                     Next
 
-                    If Found = False Then
-
-                        Dim Vortex As New VortexSegment
-
-                        Vortex.N1 = N1
-                        Vortex.N2 = N2
-
-                        Vortices.Add(Vortex)
-
-                    End If
-
                 Next
 
-            Next
+            Catch
+
+                Throw New Exception("Error while generating lattice of segments.")
+
+            End Try
 
         End Sub
 

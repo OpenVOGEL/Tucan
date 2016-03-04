@@ -12,7 +12,7 @@ Namespace VisualModel.Interface.Results
     ''' <summary>
     ''' Stores results for a given time step.
     ''' </summary>
-    Public Class CalculatedModel
+    Public Class ResultModel
 
         Public Name As String
         Public TimeStep As Integer
@@ -267,7 +267,7 @@ Namespace VisualModel.Interface.Results
             GL.Color(0.0#, 0.0#, 0.0#)
             GL.Begin(SharpGL.OpenGL.GL_LINES)
 
-            For Each Vortex In TransitLattices(TimeStep).Mesh.Vortices
+            For Each Vortex In TransitLattices(TimeStep).Mesh.Lattice
 
                 GL.Vertex(TransitLattices(TimeStep).Mesh.NodalPoints(Vortex.N1 - 1).Position.X,
                           TransitLattices(TimeStep).Mesh.NodalPoints(Vortex.N1 - 1).Position.Y,

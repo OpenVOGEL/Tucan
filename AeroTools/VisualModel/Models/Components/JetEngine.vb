@@ -125,7 +125,7 @@ Namespace VisualModel.Models.Components
 
             Mesh.Translate(Position)
 
-            GenerateLattice()
+            Mesh.GenerateLattice()
 
         End Sub
 
@@ -163,27 +163,27 @@ Namespace VisualModel.Models.Components
                     gl.PushName(Code + i)
                     gl.Begin(OpenGL.GL_TRIANGLES)
 
-                    Nodo = NodalPoint((QuadPanel(i).N1))
+                    Nodo = NodalPoint((Panel(i).N1))
                     If VisualProps.ShowColormap Then gl.Color(Nodo.Color.R, Nodo.Color.G, Nodo.Color.B)
                     gl.Vertex(Nodo.Position.X, Nodo.Position.Y, Nodo.Position.Z)
 
-                    Nodo = NodalPoint((QuadPanel(i).N2))
+                    Nodo = NodalPoint((Panel(i).N2))
                     If VisualProps.ShowColormap Then gl.Color(Nodo.Color.R, Nodo.Color.G, Nodo.Color.B)
                     gl.Vertex(Nodo.Position.X, Nodo.Position.Y, Nodo.Position.Z)
 
-                    Nodo = NodalPoint((QuadPanel(i).N3))
+                    Nodo = NodalPoint((Panel(i).N3))
                     If VisualProps.ShowColormap Then gl.Color(Nodo.Color.R, Nodo.Color.G, Nodo.Color.B)
                     gl.Vertex(Nodo.Position.X, Nodo.Position.Y, Nodo.Position.Z)
 
-                    Nodo = NodalPoint((QuadPanel(i).N3))
+                    Nodo = NodalPoint((Panel(i).N3))
                     If VisualProps.ShowColormap Then gl.Color(Nodo.Color.R, Nodo.Color.G, Nodo.Color.B)
                     gl.Vertex(Nodo.Position.X, Nodo.Position.Y, Nodo.Position.Z)
 
-                    Nodo = NodalPoint((QuadPanel(i).N4))
+                    Nodo = NodalPoint((Panel(i).N4))
                     If VisualProps.ShowColormap Then gl.Color(Nodo.Color.R, Nodo.Color.G, Nodo.Color.B)
                     gl.Vertex(Nodo.Position.X, Nodo.Position.Y, Nodo.Position.Z)
 
-                    Nodo = NodalPoint((QuadPanel(i).N1))
+                    Nodo = NodalPoint((Panel(i).N1))
                     If VisualProps.ShowColormap Then gl.Color(Nodo.Color.R, Nodo.Color.G, Nodo.Color.B)
                     gl.Vertex(Nodo.Position.X, Nodo.Position.Y, Nodo.Position.Z)
 
@@ -238,10 +238,10 @@ Namespace VisualModel.Models.Components
 
                 gl.Color(Me.VisualProps.ColorMesh.R / 255, Me.VisualProps.ColorMesh.G / 255, Me.VisualProps.ColorMesh.B / 255)
 
-                For i = 1 To NumberOfVortices
+                For i = 1 To NumberOfSegments
 
-                    Nodo1 = Me.NodalPointP(Me.Vortex(i).N1)
-                    Nodo2 = Me.NodalPointP(Me.Vortex(i).N2)
+                    Nodo1 = Me.NodalPosition(Me.Segment(i).N1)
+                    Nodo2 = Me.NodalPosition(Me.Segment(i).N2)
 
                     gl.Vertex(Nodo1.X, Nodo1.Y, Nodo1.Z)
                     gl.Vertex(Nodo2.X, Nodo2.Y, Nodo2.Z)
@@ -254,8 +254,8 @@ Namespace VisualModel.Models.Components
 
                     For i = 1 To NumberOfPanels
 
-                        Nodo1 = Me.QuadPanel(i).ControlPoint
-                        Vector = Me.QuadPanel(i).LocalVelocity
+                        Nodo1 = Me.Panel(i).ControlPoint
+                        Vector = Me.Panel(i).LocalVelocity
 
                         gl.Vertex(Nodo1.X, Nodo1.Y, Nodo1.Z)
                         gl.Vertex(Nodo1.X + VisualProps.ScaleVelocity * Vector.X, Nodo1.Y + VisualProps.ScaleVelocity * Vector.Y, Nodo1.Z + VisualProps.ScaleVelocity * Vector.Z)
@@ -270,9 +270,9 @@ Namespace VisualModel.Models.Components
 
                     For i = 1 To NumberOfPanels
 
-                        Nodo1 = QuadPanel(i).ControlPoint
-                        Carga.Assign(QuadPanel(i).NormalVector)
-                        Carga.Scale(VisualProps.ScalePressure * QuadPanel(i).Cp * QuadPanel(i).Area)
+                        Nodo1 = Panel(i).ControlPoint
+                        Carga.Assign(Panel(i).NormalVector)
+                        Carga.Scale(VisualProps.ScalePressure * Panel(i).Cp * Panel(i).Area)
 
                         gl.Vertex(Nodo1.X, Nodo1.Y, Nodo1.Z)
                         gl.Vertex(Nodo1.X + Carga.X, Nodo1.Y + Carga.Y, Nodo1.Z + Carga.Z)
@@ -317,8 +317,7 @@ Namespace VisualModel.Models.Components
                     Case "Identity"
 
                         Name = reader.GetAttribute("Name")
-                        SerialNumber = reader.GetAttribute("SN")
-                        If IsNothing(SerialNumber) OrElse SerialNumber = "" Then GenerateSerialNumber()
+                        ID = New Guid(IOXML.ReadString(reader, "ID", Guid.NewGuid.ToString))
                         Resolution = IOXML.ReadInteger(reader, "RE", 10)
                         FrontDiameter = IOXML.ReadDouble(reader, "FD", 1)
                         BackDiameter = IOXML.ReadDouble(reader, "BD", 0.5)
@@ -357,7 +356,7 @@ Namespace VisualModel.Models.Components
 
             writer.WriteStartElement("Identity")
             writer.WriteAttributeString("Name", Name)
-            writer.WriteAttributeString("SN", SerialNumber)
+            writer.WriteAttributeString("ID", ID.ToString)
             writer.WriteAttributeString("FD", CDbl(FrontDiameter))
             writer.WriteAttributeString("BD", CDbl(BackDiameter))
             writer.WriteAttributeString("FL", CDbl(FrontLength))

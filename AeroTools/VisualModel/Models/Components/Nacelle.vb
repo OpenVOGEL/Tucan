@@ -278,7 +278,7 @@ Namespace VisualModel.Models.Components
 
             GenerateLattice()
 
-            CalculateControlPointsAndNormalVectors()
+            GenerateControlPointsAndNormalVectors()
 
         End Sub
 
@@ -465,7 +465,7 @@ Namespace VisualModel.Models.Components
 
             GenerateLattice()
 
-            CalculateControlPointsAndNormalVectors()
+            GenerateControlPointsAndNormalVectors()
 
         End Sub
 

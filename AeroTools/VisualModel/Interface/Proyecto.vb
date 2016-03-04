@@ -30,7 +30,7 @@ Namespace VisualModel.Interface
         Public Property FilePath As String = ""
         Public Property SimulationSettings As New SimulationSettings
         Public Property Model As CalculationModel
-        Public Property Results As New CalculatedModel
+        Public Property Results As New ResultModel
         Public Property VelocityPlane As New VelocityPlane
         Public Property CalculationCore As UVLMSolver
 

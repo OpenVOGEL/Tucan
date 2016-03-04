@@ -76,3 +76,4 @@ C:\Users\Guillermo\Documents\Software\OpenVogel\2016.Beta\Vogel\obj\Debug\Vogel.
 \\GUILLERMO\Users\Guillermo\Source\Repos\OpenVOGEL\Vogel\obj\Debug\ig\Vogel.resources.dll
 \\GUILLERMO\Users\Guillermo\Source\Repos\OpenVOGEL\Vogel\obj\Debug\Vogel.exe.manifest
 \\GUILLERMO\Users\Guillermo\Source\Repos\OpenVOGEL\Vogel\obj\Debug\Vogel.application
+\\GUILLERMO\Users\Guillermo\Source\Repos\OpenVOGEL\Vogel\bin\Debug\DotNumerics.xml

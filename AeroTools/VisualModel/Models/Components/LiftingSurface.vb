@@ -483,6 +483,7 @@ Namespace VisualModel.Models.Components
             Mesh = New Mesh()
 
             Name = "Lifting surface"
+            ID = Guid.NewGuid
 
             nChordPanels = 5
             RootChord = 1.0#
@@ -505,8 +506,6 @@ Namespace VisualModel.Models.Components
             GenerateMesh()
 
             VisualProps = New VisualizationProperties(ComponentTypes.etLiftingSurface)
-
-            GenerateSerialNumber()
 
         End Sub
 
@@ -571,7 +570,7 @@ Namespace VisualModel.Models.Components
         ''' <remarks></remarks>
         Public ReadOnly Property nVortices As Integer
             Get
-                Return Me.Mesh.Vortices.Count
+                Return Me.Mesh.Lattice.Count
             End Get
         End Property
 
@@ -1016,8 +1015,8 @@ Namespace VisualModel.Models.Components
 
 #Region " 3D model and vortices generation "
 
-        Public Function GetVortex(ByVal VortexNumber As Integer) As VortexSegment
-            Return Mesh.Vortices.Item(VortexNumber - 1)
+        Public Function GetVortex(ByVal VortexNumber As Integer) As LatticeSegment
+            Return Mesh.Lattice.Item(VortexNumber - 1)
         End Function
 
         Public Overrides Sub GenerateMesh()
@@ -1357,7 +1356,7 @@ Namespace VisualModel.Models.Components
                 Mesh.Panels(GetPrimitivePanelIndex(i) - 1).IsPrimitive = True
             Next
 
-            GenerateLattice()
+            Mesh.GenerateLattice()
 
             ' Local base:
 
@@ -2504,7 +2503,7 @@ Namespace VisualModel.Models.Components
             Next
 
             For i = 1 To Me.nPanels
-                Superficie.AgregarPanel(Me.GetQuadPanel(i))
+                Superficie.AddPanel(Me.GetQuadPanel(i))
             Next
 
         End Sub
@@ -2697,8 +2696,7 @@ Namespace VisualModel.Models.Components
                     Case "Identity"
 
                         Name = reader.GetAttribute("Name")
-                        SerialNumber = reader.GetAttribute("SN")
-                        If IsNothing(SerialNumber) OrElse SerialNumber = "" Then GenerateSerialNumber()
+                        ID = New Guid(IOXML.ReadString(reader, "ID", Guid.NewGuid.ToString))
 
                     Case "MacroPanel", String.Format("MacroPanel{0}", count)
 
@@ -2730,7 +2728,7 @@ Namespace VisualModel.Models.Components
 
             writer.WriteStartElement("Identity")
             writer.WriteAttributeString("Name", Name)
-            writer.WriteAttributeString("SN", SerialNumber)
+            writer.WriteAttributeString("ID", ID.ToString)
             writer.WriteEndElement()
 
             ' Surface properties:
@@ -2807,7 +2805,7 @@ Namespace VisualModel.Models.Components
             Data += "Surface data:" & vbNewLine
             Data += String.Format("Total number of nodal points: {0}", Mesh.NodalPoints.Count) & vbNewLine
             Data += String.Format("Total number of vortex rings: {0}", Mesh.Panels.Count) & vbNewLine
-            Data += String.Format("Total number of vortex segments: {0}", Mesh.Vortices.Count) & vbNewLine
+            Data += String.Format("Total number of vortex segments: {0}", Mesh.Lattice.Count) & vbNewLine
 
             Me.CalculateControlPointsAndNormals()
 
