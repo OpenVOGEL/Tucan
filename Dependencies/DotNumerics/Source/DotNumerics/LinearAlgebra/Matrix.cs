@@ -108,7 +108,6 @@ namespace DotNumerics.LinearAlgebra
             return C;
         }
 
-
         #endregion
         
         #region Overloading Operators

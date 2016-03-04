@@ -8,3 +8,11 @@ C:\Users\Guillermo\Documents\Software\DotNumerics\Source\DotNumerics\bin\Release
 C:\Users\Guillermo\Documents\Software\DotNumerics\Source\DotNumerics\bin\Vogel\DotNumerics.dll
 C:\Users\Guillermo\Documents\Software\DotNumerics\Source\DotNumerics\bin\Vogel\DotNumerics.pdb
 C:\Users\Guillermo\Documents\Software\DotNumerics\Source\DotNumerics\bin\Vogel\DotNumerics.XML
+C:\Users\Guillermo\Documents\Software\Solutions\Dependencies\DotNumerics\Source\DotNumerics\bin\Vogel\DotNumerics.dll
+C:\Users\Guillermo\Documents\Software\Solutions\Dependencies\DotNumerics\Source\DotNumerics\bin\Vogel\DotNumerics.pdb
+C:\Users\Guillermo\Documents\Software\Solutions\Dependencies\DotNumerics\Source\DotNumerics\bin\Vogel\DotNumerics.XML
+C:\Users\Guillermo\Documents\Software\Solutions\Dependencies\DotNumerics\Source\DotNumerics\obj\Release\DotNumerics VS2008.csprojResolveAssemblyReference.cache
+C:\Users\Guillermo\Documents\Software\Solutions\Dependencies\DotNumerics\Source\DotNumerics\obj\Release\DotNumerics.LinearAlgebra.MatrixView.resources
+C:\Users\Guillermo\Documents\Software\Solutions\Dependencies\DotNumerics\Source\DotNumerics\obj\Release\DotNumerics VS2008.csproj.GenerateResource.Cache
+C:\Users\Guillermo\Documents\Software\Solutions\Dependencies\DotNumerics\Source\DotNumerics\obj\Release\DotNumerics.dll
+C:\Users\Guillermo\Documents\Software\Solutions\Dependencies\DotNumerics\Source\DotNumerics\obj\Release\DotNumerics.pdb
