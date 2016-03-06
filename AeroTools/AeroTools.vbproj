@@ -78,10 +78,7 @@
   <ItemGroup>
     <Reference Include="Cudafy.NET, Version=1.28.5482.15045, Culture=neutral, PublicKeyToken=63a4c9931616906b, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>Dependencies\Cudafy.NET.dll</HintPath>
-    </Reference>
-    <Reference Include="DotNumerics">
-      <HintPath>..\Dependencies\DotNumerics\Binaries\Release\DotNumerics.dll</HintPath>
+      <HintPath>..\Dependencies\Cudafy\bin\Cudafy.NET.dll</HintPath>
     </Reference>
     <Reference Include="Meta.Numerics">
       <HintPath>..\Dependencies\MetaNumerics\Meta.Numerics.dll</HintPath>
@@ -378,6 +375,10 @@
     <Service Include="{94E38DFF-614B-4CBD-B67C-F211BB35CE8B}" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Dependencies\DotNumerics\Source\DotNumerics\DotNumerics.csproj">
+      <Project>{48185ef1-b73b-457b-aa37-0bce567c5ab1}</Project>
+      <Name>DotNumerics</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MathTools\MathTools.vbproj">
       <Project>{7b3d8e3f-d52b-4118-9178-f457444c596d}</Project>
       <Name>MathTools</Name>

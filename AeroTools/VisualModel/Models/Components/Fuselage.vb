@@ -222,6 +222,8 @@ Namespace VisualModel.Models.Components
     ''' <remarks></remarks>
     Public Class CrossSection
 
+        Implements IComparable
+
         Public Property Z As Double = 0.0#
 
         Public Property Vertices As New List(Of EVector2)
@@ -322,6 +324,20 @@ Namespace VisualModel.Models.Components
 
                 Return Nothing
 
+            End If
+
+        End Function
+
+        Public Function CompareTo(obj As Object) As Integer Implements IComparable.CompareTo
+
+            Dim otherSection As CrossSection = obj
+
+            If otherSection.Z > Z Then
+                Return -1
+            ElseIf otherSection.Z = Z
+                Return 0
+            Else
+                Return 1
             End If
 
         End Function

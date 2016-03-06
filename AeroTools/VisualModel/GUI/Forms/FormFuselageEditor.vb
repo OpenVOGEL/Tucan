@@ -4,6 +4,7 @@ Imports AeroTools.VisualModel.Models.Components
 Imports System.Drawing
 Imports MathTools.Algebra.EuclideanSpace
 Imports System.Windows.Forms
+Imports MathTools
 
 Public Class FormFuselageEditor
 
@@ -20,11 +21,9 @@ Public Class FormFuselageEditor
         _LiftingSurfaces = LiftingSurfaces
 
         LoadSections()
+        CurrentSectionIndex = 0
         ObtainGlobalExtremeCoordinates()
         LoadLiftingSurfaces()
-
-        btnUp.Enabled = False
-        btnDown.Enabled = False
 
         If _Fuselage.MeshType = MeshTypes.StructuredQuadrilaterals Then
             rbQuads.Checked = True
@@ -42,9 +41,11 @@ Public Class FormFuselageEditor
     End Sub
 
     Private Sub SetUpControls()
+
         nudPosition.DecimalPlaces = 3
         nudPosition.Minimum = -10000000
         nudPosition.Maximum = 10000000
+
     End Sub
 
     Private Sub LoadSections()
@@ -56,8 +57,6 @@ Public Class FormFuselageEditor
             lbSections.Items.Add(String.Format("Section {0}", index))
             index += 1
         Next
-
-        CurrentSectionIndex = 0
 
     End Sub
 
@@ -81,7 +80,7 @@ Public Class FormFuselageEditor
             Return lbSections.SelectedIndex
         End Get
         Set(ByVal value As Integer)
-            lbSections.SelectedIndex = value
+            If value >= 0 And value < lbSections.Items.Count Then lbSections.SelectedIndex = value
         End Set
     End Property
 
@@ -104,9 +103,10 @@ Public Class FormFuselageEditor
 
     Private Sub UpdateGeometricParameters()
 
-        Dim mw As Single = _URg.X - _BLg.X
-        Dim mh As Single = _URg.Y - _BLg.Y
-        _scale = 0.75 * Math.Min(pbSections.Height / mh, pbSections.Width / mw)
+        Dim mW As Single = Math.Max(0.1, _URg.X - _BLg.X)
+        Dim mH As Single = Math.Max(0.1, _URg.Y - _BLg.Y)
+
+        _scale = 0.75 * Math.Min(pbSections.Height / mH, pbSections.Width / mW)
         _mcenter = New EVector2(_BLg.X, 0.5 * (_BLg.Y + _URg.Y))
         _gcenter = New PointF(0.5 * pbSections.Width, 0.5 * pbSections.Height)
 
@@ -125,10 +125,6 @@ Public Class FormFuselageEditor
         p.Y = -_scale * (v.Y - _mcenter.Y) + _gcenter.Y + panningDisplacement.Y
         Return p
     End Function
-
-    Private Sub EvaluateScreenPoint(ByVal drawingPoint As PointF, ByRef modelPoint As EVector3)
-
-    End Sub
 
     Private MarkerPen As New Pen(Color.Black, 1)
 
@@ -219,31 +215,44 @@ Public Class FormFuselageEditor
 
             End If
 
-            End If
+        End If
 
     End Sub
 
     Private _URg As New EVector2
     Private _BLg As New EVector2
+    Private _Zlimits As New LimitValues
 
     Public Sub ObtainGlobalExtremeCoordinates()
 
-        Dim firstone As Boolean = True
+        Dim firstSection As Boolean = True
+        Dim firstVertex As Boolean = True
 
         _URg.X = 0
         _URg.Y = 0
         _BLg.X = 0
         _BLg.Y = 0
+        _Zlimits.Minimum = 0
+        _Zlimits.Maximum = 0
 
         For Each Section In _Fuselage.CrossSections
 
+            If firstSection Then
+                _Zlimits.Minimum = Section.Z
+                _Zlimits.Maximum = Section.Z
+                firstSection = False
+            Else
+                _Zlimits.Minimum = Math.Min(_Zlimits.Minimum, Section.Z)
+                _Zlimits.Maximum = Math.Max(_Zlimits.Maximum, Section.Z)
+            End If
+
             For Each Vertex In Section.Vertices
-                If firstone Then
+                If firstvertex Then
                     _URg.X = Vertex.X
                     _URg.Y = Vertex.Y
                     _BLg.X = Vertex.X
                     _BLg.Y = Vertex.Y
-                    firstone = False
+                    firstvertex = False
                 Else
                     _URg.X = Math.Max(_URg.X, Vertex.X)
                     _URg.Y = Math.Max(_URg.Y, Vertex.Y)
@@ -358,7 +367,7 @@ Public Class FormFuselageEditor
     End Sub
 
     Private Sub SetAnkor(ByVal s As Object, ByVal e As MouseEventArgs) Handles pbSections.MouseDown
-        If e.Button = Windows.Forms.MouseButtons.Middle Then
+        If e.Button = MouseButtons.Middle Then
             panning = True
             panningAnkor.X = e.X - panningDisplacement.X
             panningAnkor.Y = e.Y - panningDisplacement.Y
@@ -366,8 +375,14 @@ Public Class FormFuselageEditor
         Refresh()
     End Sub
 
-    Public Sub RemoveAnkor(ByVal s As Object, ByVal e As MouseEventArgs) Handles pbSections.MouseUp
+    Public Sub pbSections_MouseUp(ByVal s As Object, ByVal e As MouseEventArgs) Handles pbSections.MouseUp
+
         panning = False
+
+        ObtainGlobalExtremeCoordinates()
+
+        Refresh()
+
     End Sub
 
     Private _SelectedVertexIndex As Integer = -1
@@ -447,7 +462,9 @@ Public Class FormFuselageEditor
     End Sub
 
     Public Sub StopMovingVertex(ByVal s As Object, ByVal e As MouseEventArgs) Handles pbSections.MouseUp
+
         movingVertex = False
+
     End Sub
 
     Private Sub AddPoint(ByVal s As Object, ByVal e As EventArgs) Handles btnAddPoint.Click
@@ -459,6 +476,24 @@ Public Class FormFuselageEditor
             newVertex.Y = 0.5 * (CurrentSection.Vertices(_SelectedVertexIndex).Y + CurrentSection.Vertices(_SelectedVertexIndex + 1).Y)
 
             CurrentSection.Vertices.Insert(_SelectedVertexIndex + 1, newVertex)
+
+            Refresh()
+
+        Else
+
+            Dim newVertex As New EVector2
+
+            If CurrentSection.Vertices.Count > 0 Then
+                newVertex.Y = 0.1
+            End If
+
+            CurrentSection.Vertices.Add(newVertex)
+
+            _SelectedVertexIndex = 0
+
+            ObtainGlobalExtremeCoordinates()
+
+            UpdateGeometricParameters()
 
             Refresh()
 
@@ -713,8 +748,125 @@ Public Class FormFuselageEditor
 
     Private Sub btnOK_Click(sender As Object, e As EventArgs) Handles btnOK.Click
 
+        _Fuselage.CrossSections.Sort()
+
         LoadWingAnchorsToBody()
 
     End Sub
 
+    Private DashedPen As New Pen(Color.Gray, 1)
+    Private SelectedLinePen As New Pen(Color.Black, 2)
+
+    Private Sub pbSideView_Paint(sender As Object, e As PaintEventArgs) Handles pbSideView.Paint
+
+        DashedPen.DashPattern = {5, 2}
+
+        ' Draw here a simple sketch of the side view of the sections
+
+        ' maring:
+
+        Dim mx As Single = 10
+        Dim my As Single = 10
+
+        ' origin:
+
+        Dim ox As Single = 0.5 * pbSideView.Width
+        Dim oy As Single = 0.5 * pbSideView.Height
+
+        ' center coordinates of the model:
+
+        Dim xmean As Single = 0.5 * (_Zlimits.Minimum + _Zlimits.Maximum)
+        Dim ymean As Single = 0.5 * (_URg.Y + _BLg.Y)
+
+        ' lenght and height of the model:
+
+        Dim dx As Single = _Zlimits.Maximum - _Zlimits.Minimum
+        Dim dy As Single = _URg.Y - _BLl.Y
+
+        ' width and height of the graph:
+
+        Dim mW As Single = pbSideView.Width - 2 * mx
+        Dim mH As Single = pbSideView.Height - 2 * my
+
+        ' scale of the graph:
+
+        Dim scale As Single = Math.Min(mW / dx, mH / dy)
+
+        ' drawing:
+
+        Dim g As Graphics = e.Graphics
+
+        g.SmoothingMode = Drawing2D.SmoothingMode.AntiAlias
+
+        Dim y0_m1 As Single = 0
+        Dim y1_m1 As Single = 0
+        Dim z_m1 As Single = 0
+
+        Dim first As Boolean = True
+        Dim i As Integer = 0
+
+        For Each Section In _Fuselage.CrossSections
+
+            Dim z As Single = ox + (Section.Z - xmean) * scale
+
+            If Section.Vertices.Count > 0 Then
+
+                Dim ymax_v As Single = Section.Vertices(0).Y
+                Dim ymin_v As Single = Section.Vertices(0).Y
+
+                For Each Vertex In Section.Vertices
+
+                    ymax_v = Math.Max(ymax_v, Vertex.Y)
+                    ymin_v = Math.Min(ymin_v, Vertex.Y)
+
+                Next
+
+                Dim y0 As Single = oy + (ymean - ymax_v) * scale
+                Dim y1 As Single = oy + (ymean - ymin_v) * scale
+
+                If i = lbSections.SelectedIndex Then
+                    g.DrawLine(SelectedLinePen, z, y0, z, y1)
+                Else
+                    g.DrawLine(MarkerPen, z, y0, z, y1)
+                End If
+
+                g.FillEllipse(Brushes.White, z - 2, y0 - 2, 4, 4)
+                g.DrawEllipse(MarkerPen, z - 2, y0 - 2, 4, 4)
+
+                g.FillEllipse(Brushes.White, z - 2, y1 - 2, 4, 4)
+                g.DrawEllipse(MarkerPen, z - 2, y1 - 2, 4, 4)
+
+                If Not first Then
+
+                    g.DrawLine(DashedPen, z_m1, y0_m1, z, y0)
+                    g.DrawLine(DashedPen, z_m1, y1_m1, z, y1)
+
+                End If
+
+                first = False
+
+                y0_m1 = y0
+                y1_m1 = y1
+                z_m1 = z
+
+            End If
+
+            i += 1
+
+        Next
+
+    End Sub
+
+    Private Sub FormFuselageEditor_Resize(sender As Object, e As EventArgs) Handles MyBase.Resize
+
+        pbSections.Refresh()
+        pbSideView.Refresh()
+
+    End Sub
+
+    Private Sub nudPosition_ValueChanged(sender As Object, e As EventArgs) Handles nudPosition.ValueChanged
+
+        pbSideView.Refresh()
+
+    End Sub
 End Class

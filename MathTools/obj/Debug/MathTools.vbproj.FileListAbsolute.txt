@@ -49,5 +49,4 @@ C:\Users\Guillermo\Documents\Software\OpenVogel\2016.Beta\MathTools\obj\Debug\Ma
 \\GUILLERMO\Users\Guillermo\Source\Repos\OpenVOGEL\MathTools\obj\Debug\MathTools.pdb
 \\GUILLERMO\Users\Guillermo\Source\Repos\OpenVOGEL\MathTools\bin\Debug\DotNumerics.dll
 \\GUILLERMO\Users\Guillermo\Source\Repos\OpenVOGEL\MathTools\bin\Debug\DotNumerics.pdb
-\\GUILLERMO\Users\Guillermo\Source\Repos\OpenVOGEL\MathTools\bin\Debug\DotNumerics.xml
 \\GUILLERMO\Users\Guillermo\Source\Repos\OpenVOGEL\MathTools\obj\Debug\MathTools.vbprojResolveAssemblyReference.cache

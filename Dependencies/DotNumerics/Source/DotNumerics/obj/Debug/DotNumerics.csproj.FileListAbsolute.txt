@@ -37,3 +37,9 @@ C:\Users\Guillermo\Documents\Software\OpenVogel\2016.Beta\DotNumerics\Source\Dot
 C:\Users\Guillermo\Documents\Software\OpenVogel\2016.Beta\DotNumerics\Source\DotNumerics\obj\Debug\DotNumerics.csproj.GenerateResource.Cache
 C:\Users\Guillermo\Documents\Software\OpenVogel\2016.Beta\DotNumerics\Source\DotNumerics\obj\Debug\DotNumerics.dll
 C:\Users\Guillermo\Documents\Software\OpenVogel\2016.Beta\DotNumerics\Source\DotNumerics\obj\Debug\DotNumerics.pdb
+\\GUILLERMO\Users\Guillermo\Source\Repos\OpenVOGEL\Dependencies\DotNumerics\Source\DotNumerics\bin\Debug\DotNumerics.dll
+\\GUILLERMO\Users\Guillermo\Source\Repos\OpenVOGEL\Dependencies\DotNumerics\Source\DotNumerics\bin\Debug\DotNumerics.pdb
+\\GUILLERMO\Users\Guillermo\Source\Repos\OpenVOGEL\Dependencies\DotNumerics\Source\DotNumerics\obj\Debug\DotNumerics.LinearAlgebra.MatrixView.resources
+\\GUILLERMO\Users\Guillermo\Source\Repos\OpenVOGEL\Dependencies\DotNumerics\Source\DotNumerics\obj\Debug\DotNumerics.csproj.GenerateResource.Cache
+\\GUILLERMO\Users\Guillermo\Source\Repos\OpenVOGEL\Dependencies\DotNumerics\Source\DotNumerics\obj\Debug\DotNumerics.dll
+\\GUILLERMO\Users\Guillermo\Source\Repos\OpenVOGEL\Dependencies\DotNumerics\Source\DotNumerics\obj\Debug\DotNumerics.pdb

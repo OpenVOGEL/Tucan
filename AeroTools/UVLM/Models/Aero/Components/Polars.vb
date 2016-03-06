@@ -386,6 +386,7 @@ Namespace UVLM.Models.Aero.Components
 
         Public Overloads Sub ReadBinary(ByRef r As BinaryReader)
             Try
+                ID = New Guid(r.ReadString)
                 For i = 1 To r.ReadInt32
                     Dim type As Short = r.ReadInt16
                     Select Case type
@@ -405,12 +406,17 @@ Namespace UVLM.Models.Aero.Components
         End Sub
 
         Public Overloads Sub WriteBinary(ByRef w As BinaryWriter)
+
+            w.Write(ID.ToString)
+
             w.Write(Polars.Count)
+
             Dim i As Integer = 0
             For Each Polar In Polars
                 i += 1
                 Polar.WriteBinary(w)
             Next
+
         End Sub
 
         Public Function SkinDrag(Cl As Double, Re As Double)

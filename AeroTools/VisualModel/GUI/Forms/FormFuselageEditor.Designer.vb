@@ -25,8 +25,6 @@ Partial Class FormFuselageEditor
         Me.lbSections = New System.Windows.Forms.ListBox()
         Me.btnAddSection = New System.Windows.Forms.Button()
         Me.btnRemoveSection = New System.Windows.Forms.Button()
-        Me.btnUp = New System.Windows.Forms.Button()
-        Me.btnDown = New System.Windows.Forms.Button()
         Me.pbSections = New System.Windows.Forms.PictureBox()
         Me.nudPosition = New System.Windows.Forms.NumericUpDown()
         Me.lblPosition = New System.Windows.Forms.Label()
@@ -48,12 +46,15 @@ Partial Class FormFuselageEditor
         Me.tbName = New System.Windows.Forms.TextBox()
         Me.rbQuads = New System.Windows.Forms.RadioButton()
         Me.rbTriangles = New System.Windows.Forms.RadioButton()
+        Me.pbSideView = New System.Windows.Forms.PictureBox()
+        Me.Label3 = New System.Windows.Forms.Label()
         CType(Me.pbSections, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.nudPosition, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.nudX, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.nudY, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.nudNPS, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.nudNPZ, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.pbSideView, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'lbSections
@@ -96,38 +97,6 @@ Partial Class FormFuselageEditor
         Me.btnRemoveSection.Text = "Remove"
         Me.btnRemoveSection.UseVisualStyleBackColor = False
         '
-        'btnUp
-        '
-        Me.btnUp.BackColor = System.Drawing.Color.White
-        Me.btnUp.FlatAppearance.BorderColor = System.Drawing.Color.Gray
-        Me.btnUp.FlatAppearance.CheckedBackColor = System.Drawing.Color.White
-        Me.btnUp.FlatAppearance.MouseDownBackColor = System.Drawing.Color.PaleGreen
-        Me.btnUp.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DeepSkyBlue
-        Me.btnUp.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btnUp.Font = New System.Drawing.Font("Microsoft Sans Serif", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnUp.Location = New System.Drawing.Point(196, 77)
-        Me.btnUp.Name = "btnUp"
-        Me.btnUp.Size = New System.Drawing.Size(58, 23)
-        Me.btnUp.TabIndex = 105
-        Me.btnUp.Text = "Up"
-        Me.btnUp.UseVisualStyleBackColor = False
-        '
-        'btnDown
-        '
-        Me.btnDown.BackColor = System.Drawing.Color.White
-        Me.btnDown.FlatAppearance.BorderColor = System.Drawing.Color.Gray
-        Me.btnDown.FlatAppearance.CheckedBackColor = System.Drawing.Color.White
-        Me.btnDown.FlatAppearance.MouseDownBackColor = System.Drawing.Color.PaleGreen
-        Me.btnDown.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DeepSkyBlue
-        Me.btnDown.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btnDown.Font = New System.Drawing.Font("Microsoft Sans Serif", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnDown.Location = New System.Drawing.Point(196, 101)
-        Me.btnDown.Name = "btnDown"
-        Me.btnDown.Size = New System.Drawing.Size(58, 23)
-        Me.btnDown.TabIndex = 106
-        Me.btnDown.Text = "Down"
-        Me.btnDown.UseVisualStyleBackColor = False
-        '
         'pbSections
         '
         Me.pbSections.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
@@ -138,12 +107,13 @@ Partial Class FormFuselageEditor
         Me.pbSections.Cursor = System.Windows.Forms.Cursors.Cross
         Me.pbSections.Location = New System.Drawing.Point(260, 6)
         Me.pbSections.Name = "pbSections"
-        Me.pbSections.Size = New System.Drawing.Size(440, 416)
+        Me.pbSections.Size = New System.Drawing.Size(482, 315)
         Me.pbSections.TabIndex = 107
         Me.pbSections.TabStop = False
         '
         'nudPosition
         '
+        Me.nudPosition.Increment = New Decimal(New Integer() {1, 0, 0, 65536})
         Me.nudPosition.Location = New System.Drawing.Point(164, 130)
         Me.nudPosition.Name = "nudPosition"
         Me.nudPosition.Size = New System.Drawing.Size(67, 22)
@@ -169,7 +139,7 @@ Partial Class FormFuselageEditor
         Me.btnOK.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DeepSkyBlue
         Me.btnOK.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.btnOK.Font = New System.Drawing.Font("Microsoft Sans Serif", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnOK.Location = New System.Drawing.Point(623, 428)
+        Me.btnOK.Location = New System.Drawing.Point(665, 480)
         Me.btnOK.Name = "btnOK"
         Me.btnOK.Size = New System.Drawing.Size(77, 23)
         Me.btnOK.TabIndex = 111
@@ -350,11 +320,36 @@ Partial Class FormFuselageEditor
         Me.rbTriangles.Text = "Triangles"
         Me.rbTriangles.UseVisualStyleBackColor = True
         '
+        'pbSideView
+        '
+        Me.pbSideView.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.pbSideView.BackColor = System.Drawing.Color.White
+        Me.pbSideView.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.pbSideView.Cursor = System.Windows.Forms.Cursors.Cross
+        Me.pbSideView.Location = New System.Drawing.Point(260, 340)
+        Me.pbSideView.Name = "pbSideView"
+        Me.pbSideView.Size = New System.Drawing.Size(482, 134)
+        Me.pbSideView.TabIndex = 140
+        Me.pbSideView.TabStop = False
+        '
+        'Label3
+        '
+        Me.Label3.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.Label3.AutoSize = True
+        Me.Label3.Location = New System.Drawing.Point(257, 324)
+        Me.Label3.Name = "Label3"
+        Me.Label3.Size = New System.Drawing.Size(55, 13)
+        Me.Label3.TabIndex = 141
+        Me.Label3.Text = "Side view"
+        '
         'FormFuselageEditor
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(706, 460)
+        Me.ClientSize = New System.Drawing.Size(748, 512)
+        Me.Controls.Add(Me.Label3)
+        Me.Controls.Add(Me.pbSideView)
         Me.Controls.Add(Me.tbName)
         Me.Controls.Add(Me.lblNPZ)
         Me.Controls.Add(Me.nudNPZ)
@@ -375,8 +370,6 @@ Partial Class FormFuselageEditor
         Me.Controls.Add(Me.lblPosition)
         Me.Controls.Add(Me.nudPosition)
         Me.Controls.Add(Me.pbSections)
-        Me.Controls.Add(Me.btnDown)
-        Me.Controls.Add(Me.btnUp)
         Me.Controls.Add(Me.btnRemoveSection)
         Me.Controls.Add(Me.btnAddSection)
         Me.Controls.Add(Me.lbSections)
@@ -395,6 +388,7 @@ Partial Class FormFuselageEditor
         CType(Me.nudY, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.nudNPS, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.nudNPZ, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.pbSideView, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -402,8 +396,6 @@ Partial Class FormFuselageEditor
     Friend WithEvents lbSections As System.Windows.Forms.ListBox
     Friend WithEvents btnAddSection As System.Windows.Forms.Button
     Friend WithEvents btnRemoveSection As System.Windows.Forms.Button
-    Friend WithEvents btnUp As System.Windows.Forms.Button
-    Friend WithEvents btnDown As System.Windows.Forms.Button
     Friend WithEvents pbSections As System.Windows.Forms.PictureBox
     Friend WithEvents nudPosition As System.Windows.Forms.NumericUpDown
     Friend WithEvents lblPosition As System.Windows.Forms.Label
@@ -425,4 +417,6 @@ Partial Class FormFuselageEditor
     Friend WithEvents tbName As System.Windows.Forms.TextBox
     Friend WithEvents rbQuads As Windows.Forms.RadioButton
     Friend WithEvents rbTriangles As Windows.Forms.RadioButton
+    Friend WithEvents pbSideView As Windows.Forms.PictureBox
+    Friend WithEvents Label3 As Windows.Forms.Label
 End Class
