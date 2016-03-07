@@ -50,7 +50,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>9UTEjS2s6xuhKSyb/lRAyK420Ks=</dsig:DigestValue>
+        <dsig:DigestValue>GZjDUG4R/ZElf3NK+QkISkzdhCk=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -74,7 +74,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>U+S+2j9ea3OQQ79MTXsoNjZ9pnw=</dsig:DigestValue>
+        <dsig:DigestValue>2H+gIouIqRIIar/1LXBXpkMKr14=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -86,7 +86,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>jtR/RV3lmzPnF8l2y2aEP9+xFyA=</dsig:DigestValue>
+        <dsig:DigestValue>TUi9FqDtmkNP0IVSnpZJ7plQqQ4=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -146,7 +146,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>j2LFp7j0eyz/VapI2p+IsAFgI+M=</dsig:DigestValue>
+        <dsig:DigestValue>joQaY1MuHavgXxhqY1zDRkoj0SA=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -158,7 +158,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>TCBdokxtzy++2ey7/argYr4t2jE=</dsig:DigestValue>
+        <dsig:DigestValue>goykoLpuymIiV1Km9S01oi2ia2c=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
