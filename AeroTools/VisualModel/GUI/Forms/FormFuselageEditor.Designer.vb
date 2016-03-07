@@ -48,6 +48,7 @@ Partial Class FormFuselageEditor
         Me.rbTriangles = New System.Windows.Forms.RadioButton()
         Me.pbSideView = New System.Windows.Forms.PictureBox()
         Me.Label3 = New System.Windows.Forms.Label()
+        Me.Label4 = New System.Windows.Forms.Label()
         CType(Me.pbSections, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.nudPosition, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.nudX, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -103,11 +104,10 @@ Partial Class FormFuselageEditor
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.pbSections.BackColor = System.Drawing.Color.White
-        Me.pbSections.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.pbSections.Cursor = System.Windows.Forms.Cursors.Cross
-        Me.pbSections.Location = New System.Drawing.Point(260, 6)
+        Me.pbSections.Location = New System.Drawing.Point(260, 25)
         Me.pbSections.Name = "pbSections"
-        Me.pbSections.Size = New System.Drawing.Size(482, 315)
+        Me.pbSections.Size = New System.Drawing.Size(482, 296)
         Me.pbSections.TabIndex = 107
         Me.pbSections.TabStop = False
         '
@@ -325,7 +325,6 @@ Partial Class FormFuselageEditor
         Me.pbSideView.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.pbSideView.BackColor = System.Drawing.Color.White
-        Me.pbSideView.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.pbSideView.Cursor = System.Windows.Forms.Cursors.Cross
         Me.pbSideView.Location = New System.Drawing.Point(260, 340)
         Me.pbSideView.Name = "pbSideView"
@@ -343,11 +342,21 @@ Partial Class FormFuselageEditor
         Me.Label3.TabIndex = 141
         Me.Label3.Text = "Side view"
         '
+        'Label4
+        '
+        Me.Label4.AutoSize = True
+        Me.Label4.Location = New System.Drawing.Point(260, 9)
+        Me.Label4.Name = "Label4"
+        Me.Label4.Size = New System.Drawing.Size(75, 13)
+        Me.Label4.TabIndex = 142
+        Me.Label4.Text = "Cross section"
+        '
         'FormFuselageEditor
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(748, 512)
+        Me.Controls.Add(Me.Label4)
         Me.Controls.Add(Me.Label3)
         Me.Controls.Add(Me.pbSideView)
         Me.Controls.Add(Me.tbName)
@@ -419,4 +428,5 @@ Partial Class FormFuselageEditor
     Friend WithEvents rbTriangles As Windows.Forms.RadioButton
     Friend WithEvents pbSideView As Windows.Forms.PictureBox
     Friend WithEvents Label3 As Windows.Forms.Label
+    Friend WithEvents Label4 As Windows.Forms.Label
 End Class

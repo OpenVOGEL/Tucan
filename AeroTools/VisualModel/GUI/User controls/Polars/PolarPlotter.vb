@@ -49,6 +49,8 @@ Public Class PolarPlotter
 
             Dim g As Graphics = e.Graphics
 
+            g.DrawRectangle(Pens.DarkGray, 0, 0, e.ClipRectangle.Width - 1, e.ClipRectangle.Height - 1)
+
             g.SmoothingMode = Drawing2D.SmoothingMode.AntiAlias
 
             Dim gW As Integer = Width - 2 * mX

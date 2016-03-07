@@ -28,12 +28,11 @@ Partial Class PolarPlotter
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.DoubleBuffered = True
         Me.Margin = New System.Windows.Forms.Padding(0)
         Me.Name = "PolarPlotter"
         Me.Padding = New System.Windows.Forms.Padding(5)
-        Me.Size = New System.Drawing.Size(240, 262)
+        Me.Size = New System.Drawing.Size(242, 264)
         Me.ResumeLayout(False)
 
     End Sub

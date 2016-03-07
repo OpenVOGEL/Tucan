@@ -147,6 +147,7 @@ Public Class ForcesPanel
         pbLoadingGraph.Height = Height - pbLoadingGraph.Top - 10
         pbLoadingGraph.Anchor = AnchorStyles.Top Or AnchorStyles.Bottom Or AnchorStyles.Left Or AnchorStyles.Right
         pbLoadingGraph.BackColor = Color.White
+        pbLoadingGraph.BorderStyle = BorderStyle.None
         AddHandler pbLoadingGraph.MouseMove, AddressOf pgLoadingGraph_MouseMove
         AddHandler pbLoadingGraph.Paint, AddressOf DrawLoad
         AddHandler cbResultType.SelectedIndexChanged, AddressOf pbLoadingGraph.Refresh
@@ -281,6 +282,8 @@ Public Class ForcesPanel
                     If xmax > 0 And ymax > 0 Then
 
                         Dim g As Graphics = e.Graphics
+
+                        g.DrawRectangle(Pens.DarkGray, 0, 0, e.ClipRectangle.Width - 1, e.ClipRectangle.Height - 1)
 
                         g.SmoothingMode = Drawing2D.SmoothingMode.HighQuality
 

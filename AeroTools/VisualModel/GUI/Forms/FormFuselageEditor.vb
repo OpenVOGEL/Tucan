@@ -102,9 +102,10 @@ Public Class FormFuselageEditor
     Private Sub SelectSection() Handles lbSections.SelectedIndexChanged
         _SelectedVertexIndex = -1
         CoordinateControlsEnabled = False
+        allowZevent = False
+        If CurrentSection IsNot Nothing Then nudPosition.Value = CurrentSection.Z
+        allowZevent = True
         Refresh()
-        nudPosition.DataBindings.Clear()
-        nudPosition.DataBindings.Add("Value", CurrentSection, "Z")
     End Sub
 
     Private Enum CrossSectionStyle As Byte
@@ -113,7 +114,7 @@ Public Class FormFuselageEditor
     End Enum
 
     Private _scale As Single
-    Private _mcenter As EVector2
+    Private _mcenter As New EVector2
     Private _gcenter As PointF
 
     Private Sub UpdateGeometricParameters()
@@ -122,8 +123,9 @@ Public Class FormFuselageEditor
         Dim mH As Single = Math.Max(0.1, _URg.Y - _BLg.Y)
 
         _scale = 0.75 * Math.Min(pbSections.Height / mH, pbSections.Width / mW)
-        _mcenter = New EVector2(_BLg.X, 0.5 * (_BLg.Y + _URg.Y))
-        _gcenter = New PointF(0.5 * pbSections.Width, 0.5 * pbSections.Height)
+        _mcenter.SetCoordinates(_BLg.X, 0.5 * (_BLg.Y + _URg.Y))
+        _gcenter.X = 0.5 * pbSections.Width
+        _gcenter.Y = 0.5 * pbSections.Height
 
     End Sub
 
@@ -141,15 +143,130 @@ Public Class FormFuselageEditor
         Return p
     End Function
 
+    Private _URg As New EVector2
+    Private _BLg As New EVector2
+    Private _Zlimits As New LimitValues
+
+    Public Sub ObtainGlobalExtremeCoordinates()
+
+        Dim firstSection As Boolean = True
+        Dim firstVertex As Boolean = True
+
+        _URg.X = 0
+        _URg.Y = 0
+        _BLg.X = 0
+        _BLg.Y = 0
+        _Zlimits.Minimum = 0
+        _Zlimits.Maximum = 0
+
+        For Each Section In _Fuselage.CrossSections
+
+            If firstSection Then
+                _Zlimits.Minimum = Section.Z
+                _Zlimits.Maximum = Section.Z
+                firstSection = False
+            Else
+                _Zlimits.Minimum = Math.Min(_Zlimits.Minimum, Section.Z)
+                _Zlimits.Maximum = Math.Max(_Zlimits.Maximum, Section.Z)
+            End If
+
+            For Each Vertex In Section.Vertices
+                If firstvertex Then
+                    _URg.X = Vertex.X
+                    _URg.Y = Vertex.Y
+                    _BLg.X = Vertex.X
+                    _BLg.Y = Vertex.Y
+                    firstvertex = False
+                Else
+                    _URg.X = Math.Max(_URg.X, Vertex.X)
+                    _URg.Y = Math.Max(_URg.Y, Vertex.Y)
+                    _BLg.X = Math.Min(_BLg.X, Vertex.X)
+                    _BLg.Y = Math.Min(_BLg.Y, Vertex.Y)
+                End If
+            Next
+
+        Next
+
+    End Sub
+
+    Private _URl As New EVector2
+    Private _BLl As New EVector2
+
+    Public Sub ObtainExtremeCoordinates(ByVal Section As CrossSection)
+
+        Dim firstone As Boolean = True
+
+        _URl.X = 0
+        _URl.Y = 0
+        _BLl.X = 0
+        _BLl.Y = 0
+
+        If Not IsNothing(Section) Then
+
+            For Each Vertex In Section.Vertices
+                If firstone Then
+                    _URl.X = Vertex.X
+                    _URl.Y = Vertex.Y
+                    _BLl.X = Vertex.X
+                    _BLl.Y = Vertex.Y
+                    firstone = False
+                Else
+                    _URl.X = Math.Max(_URl.X, Vertex.X)
+                    _URl.Y = Math.Max(_URl.Y, Vertex.Y)
+                    _BLl.X = Math.Min(_BLl.X, Vertex.X)
+                    _BLl.Y = Math.Min(_BLl.Y, Vertex.Y)
+                End If
+            Next
+
+        End If
+
+    End Sub
+
+    Private Sub pbDrawing_Paint(ByVal sender As System.Object, ByVal e As System.Windows.Forms.PaintEventArgs) Handles pbSections.Paint
+
+        Dim g As Graphics = e.Graphics
+
+        g.DrawRectangle(Pens.DarkGray, 0, 0, e.ClipRectangle.Width - 1, e.ClipRectangle.Height - 1)
+
+        g.SmoothingMode = Drawing2D.SmoothingMode.HighQuality
+
+        ' Draw axes:
+
+        UpdateGeometricParameters()
+
+        Dim ori As PointF = GetPoint(0, 0)
+
+        XaxisPen.EndCap = Drawing2D.LineCap.ArrowAnchor
+        YaxisPen.EndCap = Drawing2D.LineCap.ArrowAnchor
+
+        g.DrawLine(XaxisPen, ori.X, ori.Y, ori.X + AXIS_LENGHT, ori.Y)
+        g.DrawLine(YaxisPen, ori.X, ori.Y, ori.X, ori.Y - AXIS_LENGHT)
+
+        g.FillEllipse(Brushes.White, ori.X - 2, ori.Y - 2, 4, 4)
+        g.DrawEllipse(MarkerPen, ori.X - 2, ori.Y - 2, 4, 4)
+
+        ' Draw sections:
+
+        Dim style As CrossSectionStyle = CrossSectionStyle.Inactive
+
+        For i = 0 To _Fuselage.CrossSections.Count - 1
+            If i <> CurrentSectionIndex Then
+                DrawSection(CrossSectionStyle.Inactive, _Fuselage.CrossSections(i), g)
+            End If
+        Next
+
+        DrawSection(CrossSectionStyle.Active, CurrentSection, g)
+
+    End Sub
+
     Private MarkerPen As New Pen(Color.Black, 1)
+    Private FontLabel As New Font("Segoe UI", 6.5)
 
     Private Sub DrawSection(ByVal Style As CrossSectionStyle, ByVal Section As CrossSection, ByVal g As Graphics)
 
         ObtainExtremeCoordinates(Section)
 
         If Not IsNothing(CurrentSection) Then
-
-            g.SmoothingMode = Drawing2D.SmoothingMode.AntiAlias
 
             UpdateGeometricParameters()
 
@@ -233,101 +350,6 @@ Public Class FormFuselageEditor
         End If
 
     End Sub
-
-    Private _URg As New EVector2
-    Private _BLg As New EVector2
-    Private _Zlimits As New LimitValues
-
-    Public Sub ObtainGlobalExtremeCoordinates()
-
-        Dim firstSection As Boolean = True
-        Dim firstVertex As Boolean = True
-
-        _URg.X = 0
-        _URg.Y = 0
-        _BLg.X = 0
-        _BLg.Y = 0
-        _Zlimits.Minimum = 0
-        _Zlimits.Maximum = 0
-
-        For Each Section In _Fuselage.CrossSections
-
-            If firstSection Then
-                _Zlimits.Minimum = Section.Z
-                _Zlimits.Maximum = Section.Z
-                firstSection = False
-            Else
-                _Zlimits.Minimum = Math.Min(_Zlimits.Minimum, Section.Z)
-                _Zlimits.Maximum = Math.Max(_Zlimits.Maximum, Section.Z)
-            End If
-
-            For Each Vertex In Section.Vertices
-                If firstvertex Then
-                    _URg.X = Vertex.X
-                    _URg.Y = Vertex.Y
-                    _BLg.X = Vertex.X
-                    _BLg.Y = Vertex.Y
-                    firstvertex = False
-                Else
-                    _URg.X = Math.Max(_URg.X, Vertex.X)
-                    _URg.Y = Math.Max(_URg.Y, Vertex.Y)
-                    _BLg.X = Math.Min(_BLg.X, Vertex.X)
-                    _BLg.Y = Math.Min(_BLg.Y, Vertex.Y)
-                End If
-            Next
-
-        Next
-
-    End Sub
-
-    Private _URl As New EVector2
-    Private _BLl As New EVector2
-
-    Public Sub ObtainExtremeCoordinates(ByVal Section As CrossSection)
-
-        Dim firstone As Boolean = True
-
-        _URl.X = 0
-        _URl.Y = 0
-        _BLl.X = 0
-        _BLl.Y = 0
-
-        If Not IsNothing(Section) Then
-
-            For Each Vertex In Section.Vertices
-                If firstone Then
-                    _URl.X = Vertex.X
-                    _URl.Y = Vertex.Y
-                    _BLl.X = Vertex.X
-                    _BLl.Y = Vertex.Y
-                    firstone = False
-                Else
-                    _URl.X = Math.Max(_URl.X, Vertex.X)
-                    _URl.Y = Math.Max(_URl.Y, Vertex.Y)
-                    _BLl.X = Math.Min(_BLl.X, Vertex.X)
-                    _BLl.Y = Math.Min(_BLl.Y, Vertex.Y)
-                End If
-            Next
-
-        End If
-
-    End Sub
-
-    Private Sub pbDrawing_Paint(ByVal sender As System.Object, ByVal e As System.Windows.Forms.PaintEventArgs) Handles pbSections.Paint
-
-        Dim style As CrossSectionStyle = CrossSectionStyle.Inactive
-
-        For i = 0 To _Fuselage.CrossSections.Count - 1
-            If i <> CurrentSectionIndex Then
-                DrawSection(CrossSectionStyle.Inactive, _Fuselage.CrossSections(i), e.Graphics)
-            End If
-        Next
-
-        DrawSection(CrossSectionStyle.Active, CurrentSection, e.Graphics)
-
-    End Sub
-
-    Private FontLabel As New Font("Segoe UI", 6.5)
 
     Private Sub DrawLabel(g As Graphics, Content As String, Point As PointF, Font As Font, Optional Leg As Integer = 10, Optional Mrg As Integer = 2)
 
@@ -770,6 +792,10 @@ Public Class FormFuselageEditor
     End Sub
 
     Private DashedPen As New Pen(Color.Gray, 1)
+    Private XaxisPen As New Pen(Color.Green, 2)
+    Private YaxisPen As New Pen(Color.Red, 2)
+    Private ZaxisPen As New Pen(Color.Magenta, 2)
+    Private Const AXIS_LENGHT As Single = 25
     Private SelectedLinePen As New Pen(Color.Black, 2)
 
     Private Sub pbSideView_Paint(sender As Object, e As PaintEventArgs) Handles pbSideView.Paint
@@ -778,10 +804,16 @@ Public Class FormFuselageEditor
 
         ' Draw here a simple sketch of the side view of the sections
 
+        Dim g As Graphics = e.Graphics
+
+        g.DrawRectangle(Pens.DarkGray, 0, 0, e.ClipRectangle.Width - 1, e.ClipRectangle.Height - 1)
+
+        g.SmoothingMode = Drawing2D.SmoothingMode.HighQuality
+
         ' maring:
 
-        Dim mx As Single = 10
-        Dim my As Single = 10
+        Dim mx As Single = 15
+        Dim my As Single = 15
 
         ' origin:
 
@@ -805,70 +837,118 @@ Public Class FormFuselageEditor
 
         ' scale of the graph:
 
-        Dim scale As Single = Math.Min(mW / dx, mH / dy)
+        If dx > 0 And dy > 0 Then
 
-        ' drawing:
+            Dim scale As Single = Math.Min(mW / dx, mH / dy)
 
-        Dim g As Graphics = e.Graphics
+            ' Draw axes:
 
-        g.SmoothingMode = Drawing2D.SmoothingMode.AntiAlias
+            Dim z As Single = ox - xmean * scale
+            Dim y As Single = oy + ymean * scale
 
-        Dim y0_m1 As Single = 0
-        Dim y1_m1 As Single = 0
-        Dim z_m1 As Single = 0
+            ZaxisPen.EndCap = Drawing2D.LineCap.ArrowAnchor
+            YaxisPen.EndCap = Drawing2D.LineCap.ArrowAnchor
 
-        Dim first As Boolean = True
-        Dim i As Integer = 0
+            g.DrawLine(ZaxisPen, z, y, z + AXIS_LENGHT, y)
+            g.DrawLine(YaxisPen, z, y, z, y - AXIS_LENGHT)
 
-        For Each Section In _Fuselage.CrossSections
+            g.FillEllipse(Brushes.White, z - 2, y - 2, 4, 4)
+            g.DrawEllipse(MarkerPen, z - 2, y - 2, 4, 4)
 
-            Dim z As Single = ox + (Section.Z - xmean) * scale
+            ' backward values
 
-            If Section.Vertices.Count > 0 Then
+            Dim y0_m1 As Single = 0
+            Dim y1_m1 As Single = 0
+            Dim z_m1 As Single = 0
 
-                Dim ymax_v As Single = Section.Vertices(0).Y
-                Dim ymin_v As Single = Section.Vertices(0).Y
+            Dim first As Boolean = True
+            Dim i As Integer = 0
 
-                For Each Vertex In Section.Vertices
+            For Each Section In _Fuselage.CrossSections
 
-                    ymax_v = Math.Max(ymax_v, Vertex.Y)
-                    ymin_v = Math.Min(ymin_v, Vertex.Y)
+                z = ox + (Section.Z - xmean) * scale
 
-                Next
+                If Section.Vertices.Count > 0 Then
 
-                Dim y0 As Single = oy + (ymean - ymax_v) * scale
-                Dim y1 As Single = oy + (ymean - ymin_v) * scale
+                    Dim ymax_v As Single = Section.Vertices(0).Y
+                    Dim ymin_v As Single = Section.Vertices(0).Y
 
-                If i = lbSections.SelectedIndex Then
-                    g.DrawLine(SelectedLinePen, z, y0, z, y1)
-                Else
-                    g.DrawLine(MarkerPen, z, y0, z, y1)
+                    For Each Vertex In Section.Vertices
+
+                        ymax_v = Math.Max(ymax_v, Vertex.Y)
+                        ymin_v = Math.Min(ymin_v, Vertex.Y)
+
+                    Next
+
+                    Dim y0 As Single = oy + (ymean - ymax_v) * scale
+                    Dim y1 As Single = oy + (ymean - ymin_v) * scale
+
+                    If i = lbSections.SelectedIndex Then
+
+                        ' draw the Z coordinate
+
+                        g.DrawLine(Pens.Orange, z, 0, z, pbSideView.Height)
+
+                        Dim pnts(2) As Point
+
+                        pnts(0).X = z
+                        pnts(0).Y = 10.0F
+                        pnts(1).X = z - 3.0F
+                        pnts(1).Y = 0F
+                        pnts(2).X = z + 3.0F
+                        pnts(2).Y = 0
+
+                        g.FillPolygon(Brushes.Gray, pnts)
+
+                        pnts(0).Y = pbSideView.Height - 10.0F
+                        pnts(1).Y = pbSideView.Height
+                        pnts(2).Y = pbSideView.Height
+
+                        g.FillPolygon(Brushes.Gray, pnts)
+
+                        Dim lblZ As String = String.Format("{0:F3}m", Section.Z)
+
+                        Dim lblZsize = g.MeasureString(lblZ, FontLabel)
+
+                        g.FillRectangle(Brushes.Orange, z - 0.5F * lblZsize.Width - 2.0F, 10.0F, lblZsize.Width + 4.0F, lblZsize.Height + 4.0F)
+                        g.DrawString(lblZ, FontLabel, Brushes.Brown, z - 0.5F * lblZsize.Width, 12.0F)
+
+                        ' Draw section segment:
+
+                        g.DrawLine(SelectedLinePen, z, y0, z, y1)
+
+                    Else
+
+                        g.DrawLine(MarkerPen, z, y0, z, y1)
+
+                    End If
+
+                    If Not first Then
+
+                        g.DrawLine(DashedPen, z_m1, y0_m1, z, y0)
+                        g.DrawLine(DashedPen, z_m1, y1_m1, z, y1)
+
+                    End If
+
+                    first = False
+
+                    g.FillEllipse(Brushes.White, z - 2, y0 - 2, 4, 4)
+                    g.DrawEllipse(MarkerPen, z - 2, y0 - 2, 4, 4)
+
+                    g.FillEllipse(Brushes.White, z - 2, y1 - 2, 4, 4)
+                    g.DrawEllipse(MarkerPen, z - 2, y1 - 2, 4, 4)
+
+                    y0_m1 = y0
+                    y1_m1 = y1
+                    z_m1 = z
+
                 End If
 
-                g.FillEllipse(Brushes.White, z - 2, y0 - 2, 4, 4)
-                g.DrawEllipse(MarkerPen, z - 2, y0 - 2, 4, 4)
+                i += 1
 
-                g.FillEllipse(Brushes.White, z - 2, y1 - 2, 4, 4)
-                g.DrawEllipse(MarkerPen, z - 2, y1 - 2, 4, 4)
+            Next
 
-                If Not first Then
-
-                    g.DrawLine(DashedPen, z_m1, y0_m1, z, y0)
-                    g.DrawLine(DashedPen, z_m1, y1_m1, z, y1)
-
-                End If
-
-                first = False
-
-                y0_m1 = y0
-                y1_m1 = y1
-                z_m1 = z
-
-            End If
-
-            i += 1
-
-        Next
+        End If
 
     End Sub
 
@@ -879,9 +959,15 @@ Public Class FormFuselageEditor
 
     End Sub
 
+    Private allowZevent As Boolean = False
+
     Private Sub nudPosition_ValueChanged(sender As Object, e As EventArgs) Handles nudPosition.ValueChanged
 
-        pbSideView.Refresh()
+        If allowZevent And CurrentSection IsNot Nothing Then
+            CurrentSection.Z = nudPosition.Value
+            pbSideView.Refresh()
+        End If
 
     End Sub
+
 End Class
