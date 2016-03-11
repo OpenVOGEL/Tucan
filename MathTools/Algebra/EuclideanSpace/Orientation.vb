@@ -21,34 +21,46 @@ Namespace Algebra.EuclideanSpace
     ''' Represents an orientation in Euler angles
     ''' </summary>
     ''' <remarks></remarks>
-    Public Class OrientationCoordinates
+    Public Class EulerAngles
 
-        Public Psi As Double
-        Public Tita As Double
-        Public Fi As Double
+        Public Property Psi As Double
+        Public Property Tita As Double
+        Public Property Fi As Double
+        Public Property Secuence As RotationSecuence = RotationSecuence.ZYX
+
+        Public Enum RotationSecuence As Byte
+
+            ZYX = 0
+            XYZ = 1
+
+            ' Other secuences can be added here, but you have to add the transformation matrix.
+
+        End Enum
 
         Public Sub SetToCero()
-            Me.Psi = 0
-            Me.Tita = 0
-            Me.Fi = 0
+            Psi = 0
+            Tita = 0
+            Fi = 0
         End Sub
 
-        Public Function ToRadians() As OrientationCoordinates
+        Public Function ToRadians() As EulerAngles
 
-            Dim NuevaOrientacion As New OrientationCoordinates
+            Dim OrientationInRadians As New EulerAngles
             Dim Conversion As Double = Math.PI / 180
-            NuevaOrientacion.Psi = Me.Psi * Conversion
-            NuevaOrientacion.Tita = Me.Tita * Conversion
-            NuevaOrientacion.Fi = Me.Fi * Conversion
-            Return NuevaOrientacion
+            OrientationInRadians.Psi = Psi * Conversion
+            OrientationInRadians.Tita = Tita * Conversion
+            OrientationInRadians.Fi = Fi * Conversion
+            OrientationInRadians.Secuence = Secuence
+            Return OrientationInRadians
 
         End Function
 
-        Public Sub Assign(ByVal Ori As OrientationCoordinates)
+        Public Sub Assign(ByVal Euler As EulerAngles)
 
-            Me.Fi = Ori.Fi
-            Me.Psi = Ori.Psi
-            Me.Tita = Ori.Tita
+            Fi = Euler.Fi
+            Psi = Euler.Psi
+            Tita = Euler.Tita
+            Secuence = Euler.Secuence
 
         End Sub
 

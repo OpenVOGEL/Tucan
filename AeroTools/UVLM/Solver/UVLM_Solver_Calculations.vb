@@ -570,7 +570,7 @@ Namespace UVLM.Solver
 
                         If WithStreamOmega Then
 
-                            Ring.VelocityT.AddCrossProduct(Ring.ControlPoint, _StreamOmega) ' Add stream angular velocity
+                            Ring.VelocityT.AddCrossProduct(_StreamOmega, Ring.ControlPoint) ' Add stream angular velocity
 
                         End If
 
@@ -610,7 +610,7 @@ Namespace UVLM.Solver
 
                     If WithStreamOmega Then
 
-                        Ring.VelocityT.AddCrossProduct(Ring.ControlPoint, _StreamOmega) ' Add stream angular velocity
+                        Ring.VelocityT.AddCrossProduct(_StreamOmega, Ring.ControlPoint) ' Add stream angular velocity
 
                     End If
 
@@ -661,7 +661,7 @@ Namespace UVLM.Solver
 
                                                      NodalPoint.Velocity.Assign(_StreamVelocity)
 
-                                                     If WithStreamOmega Then NodalPoint.Velocity.AddCrossProduct(NodalPoint.Position, _StreamOmega)
+                                                     If WithStreamOmega Then NodalPoint.Velocity.AddCrossProduct(_StreamOmega, NodalPoint.Position)
 
                                                      For Each OtherLattice As BoundedLattice In Lattices
 
@@ -694,7 +694,7 @@ Namespace UVLM.Solver
             If Total Then
 
                 Velocity.Assign(_StreamVelocity)
-                If WithStreamOmega Then Velocity.AddCrossProduct(Point, _StreamOmega)
+                If WithStreamOmega Then Velocity.AddCrossProduct(_StreamOmega, Point)
 
             End If
 

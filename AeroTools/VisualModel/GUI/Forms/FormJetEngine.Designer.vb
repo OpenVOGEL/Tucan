@@ -388,6 +388,7 @@ Partial Class FormJetEngine
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow
         Me.Name = "FormJetEngine"
         Me.Padding = New System.Windows.Forms.Padding(4)
+        Me.ShowIcon = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
         Me.Text = "Jet engine editor"
         CType(Me.nudY, System.ComponentModel.ISupportInitialize).EndInit()

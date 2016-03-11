@@ -1202,14 +1202,14 @@ AeroTools
  Calculate vortex rings geometric parameters (control point, normal vector)
  </summary>
 </member>
-<member name="M:AeroTools.UVLM.Models.Aero.Lattice.Rotate(MathTools.Algebra.EuclideanSpace.OrientationCoordinates)">
+<member name="M:AeroTools.UVLM.Models.Aero.Lattice.Rotate(MathTools.Algebra.EuclideanSpace.EulerAngles)">
  <summary>
  Rotates all nodal poins as specified in Orientation about the origin {0,0,0}
  </summary>
  <param name="Orientation">Euler angles providing the orientation</param>
  <remarks></remarks>
 </member>
-<member name="M:AeroTools.UVLM.Models.Aero.Lattice.RotateAbout(MathTools.Algebra.EuclideanSpace.OrientationCoordinates,MathTools.Algebra.EuclideanSpace.EVector3)">
+<member name="M:AeroTools.UVLM.Models.Aero.Lattice.RotateAbout(MathTools.Algebra.EuclideanSpace.EulerAngles,MathTools.Algebra.EuclideanSpace.EVector3)">
  <summary>
  Rotates all nodal points as specified in Orientation about an specific point.
  </summary>
@@ -3541,7 +3541,7 @@ AeroTools
  <param name="Vector"></param>
  <remarks></remarks>
 </member>
-<member name="M:AeroTools.VisualModel.Models.Components.LiftingSurface.Orientate(MathTools.Algebra.EuclideanSpace.EVector3,MathTools.Algebra.EuclideanSpace.OrientationCoordinates)">
+<member name="M:AeroTools.VisualModel.Models.Components.LiftingSurface.Orientate(MathTools.Algebra.EuclideanSpace.EVector3,MathTools.Algebra.EuclideanSpace.EulerAngles)">
  <summary>
  Orientates the model by the given Euler angles around the specified point.
  </summary>

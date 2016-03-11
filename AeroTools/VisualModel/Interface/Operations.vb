@@ -27,7 +27,7 @@ Namespace VisualModel.Interface
     Public Interface IOperational
 
         Sub Translate(ByVal Vector As EVector3)
-        Sub Orientate(ByVal Point As EVector3, ByVal Ori As OrientationCoordinates)
+        Sub Orientate(ByVal Point As EVector3, ByVal Ori As EulerAngles)
         Sub Scale(ByVal Scale As Double)
         Sub Align(ByVal P1 As EVector3, ByVal P2 As EVector3, ByVal P3 As EVector3, ByVal P4 As EVector3)
 
@@ -57,7 +57,7 @@ Namespace VisualModel.Interface
 
         Private _Scalars As New List(Of Double)
         Private _Points As New List(Of EVector3)
-        Private _Orientations As New List(Of OrientationCoordinates)
+        Private _Orientations As New List(Of EulerAngles)
         Private _DestinationObject As IOperational
         Private _StatusFlag As String
         Private _Operation As Operations = Operations.NoOperation
@@ -115,7 +115,7 @@ Namespace VisualModel.Interface
                 _Points.Add(Entity)
             End If
 
-            If TypeOf Entity Is OrientationCoordinates Then
+            If TypeOf Entity Is EulerAngles Then
                 _Orientations.Add(Entity)
             End If
 

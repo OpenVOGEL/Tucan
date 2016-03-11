@@ -18,6 +18,7 @@
 Imports System.Drawing
 Imports AeroTools.UVLM.Models.Aero.Components
 Imports AeroTools.VisualModel.Models.Components
+Imports MathTools.Algebra.EuclideanSpace
 
 Public Class WingControl
 
@@ -42,13 +43,13 @@ Public Class WingControl
 
         Ready = False
 
-        Me.PolarDataBase = PolarDataBase
+        PolarDataBase = PolarDataBase
 
         Surface = SuperficieDeReferencia
-        Me.ShowSurfaceState()
+        ShowSurfaceState()
 
-        Me.LoadSuperficieToForm()
-        Me.LoadRegionToForm()
+        LoadSuperficieToForm()
+        LoadRegionToForm()
 
     End Sub
 
@@ -58,9 +59,9 @@ Public Class WingControl
 
         Ready = False
 
-        Me.ShowSurfaceState()
-        Me.LoadSuperficieToForm()
-        Me.LoadRegionToForm()
+        ShowSurfaceState()
+        LoadSuperficieToForm()
+        LoadRegionToForm()
 
     End Sub
 
@@ -100,10 +101,10 @@ Public Class WingControl
             TipoEspaciamiento = 3
         End If
 
-        Surface.CurrentRegion.LoadGeometry(NPTramo_Box.Value, Cuerda_box.Value, _
-                                                                                                         Longitud_box.Value, Sweepback_box.Value, _
-                                                                                                         Dihedro_box.Value, Torsion_box.Value, _
-                                                                                                         EjeTorsion_box.Value, CMax_box.Value, _
+        Surface.CurrentRegion.LoadGeometry(NPTramo_Box.Value, Cuerda_box.Value,
+                                                                                                         Longitud_box.Value, Sweepback_box.Value,
+                                                                                                         Dihedro_box.Value, Torsion_box.Value,
+                                                                                                         EjeTorsion_box.Value, CMax_box.Value,
                                                                                                          PCMax_box.Value, TipoEspaciamiento)
         Surface.RootFlap = nudRootFlap.Value
         Surface.FlapPanels = nudFlapPanels.Value
@@ -140,6 +141,7 @@ Public Class WingControl
         Surface.GlobalOrientation.Psi = Me.PsioBox.Value
         Surface.GlobalOrientation.Tita = Me.TitaoBox.Value
         Surface.GlobalOrientation.Fi = Me.FioBox.Value
+        Surface.GlobalOrientation.Secuence = Math.Max(0, cbSecuence.SelectedIndex)
         Surface.CenterOfRotation.X = Me.PxoBox.Value
         Surface.CenterOfRotation.Y = Me.PyoBox.Value
         Surface.CenterOfRotation.Z = Me.PzoBox.Value
@@ -167,29 +169,30 @@ Public Class WingControl
 
         Ready = False
 
-        Me.SurfaceNameText.Text = Surface.Name
+        SurfaceNameText.Text = Surface.Name
 
-        Me.SectorActualNumericUpDown.Maximum = Surface.nWingRegions
-        Me.SectorActualNumericUpDown.Minimum = 1
-        Me.SectorActualNumericUpDown.Value = Surface.CurrentRegionID
+        SectorActualNumericUpDown.Maximum = Surface.nWingRegions
+        SectorActualNumericUpDown.Minimum = 1
+        SectorActualNumericUpDown.Value = Surface.CurrentRegionID
 
-        Me.CuerdaRaiz_box.Value = Surface.RootChord
-        Me.nudRootFlap.Value = Surface.RootFlap
-        Me.nudFlapPanels.Value = Surface.FlapPanels
-        Me.NPCuerda_Box.Value = Surface.nChordPanels
-        Me.NSectores_box.Value = Surface.nWingRegions
+        CuerdaRaiz_box.Value = Surface.RootChord
+        nudRootFlap.Value = Surface.RootFlap
+        nudFlapPanels.Value = Surface.FlapPanels
+        NPCuerda_Box.Value = Surface.nChordPanels
+        NSectores_box.Value = Surface.nWingRegions
 
-        Me.PxBox.Value = Surface.GlobalPosition.X
-        Me.PyBox.Value = Surface.GlobalPosition.Y
-        Me.PzBox.Value = Surface.GlobalPosition.Z
-        Me.SimetriaEnXZ.Checked = Surface.Symmetric
+        PxBox.Value = Surface.GlobalPosition.X
+        PyBox.Value = Surface.GlobalPosition.Y
+        PzBox.Value = Surface.GlobalPosition.Z
+        SimetriaEnXZ.Checked = Surface.Symmetric
 
-        Me.PsioBox.Value = Surface.GlobalOrientation.Psi
-        Me.TitaoBox.Value = Surface.GlobalOrientation.Tita
-        Me.FioBox.Value = Surface.GlobalOrientation.Fi
-        Me.PxoBox.Value = Surface.CenterOfRotation.X
-        Me.PyoBox.Value = Surface.CenterOfRotation.Y
-        Me.PzoBox.Value = Surface.CenterOfRotation.Z
+        PsioBox.Value = Surface.GlobalOrientation.Psi
+        TitaoBox.Value = Surface.GlobalOrientation.Tita
+        FioBox.Value = Surface.GlobalOrientation.Fi
+        cbSecuence.SelectedIndex = Surface.GlobalOrientation.Secuence
+        PxoBox.Value = Surface.CenterOfRotation.X
+        PyoBox.Value = Surface.CenterOfRotation.Y
+        PzoBox.Value = Surface.CenterOfRotation.Z
 
         LimitarPrimitivas()
 
@@ -198,9 +201,9 @@ Public Class WingControl
         ConvectarEstela.Checked = Surface.ConvectWake
         cbTrailingEdge.Checked = Surface.TrailingEdgeConvection
 
-        Me.MostrarPrimitivas.Checked = Surface.VisualProps.ShowPrimitives
+        MostrarPrimitivas.Checked = Surface.VisualProps.ShowPrimitives
 
-        Me.nudCuttingStep.Value = Surface.CuttingStep
+        nudCuttingStep.Value = Surface.CuttingStep
 
         nudRootArea.Value = Surface.RootSection.AE / 1000 ' Nm to kNm
         nudRootIu.Value = Surface.RootSection.GJ
@@ -224,16 +227,16 @@ Public Class WingControl
 
         Ready = False
 
-        Me.NPTramo_Box.Value = Surface.CurrentRegion.nSpanPanels
-        Me.Cuerda_box.Value = Surface.CurrentRegion.TipChord
-        Me.Longitud_box.Value = Surface.CurrentRegion.Length
-        Me.Sweepback_box.Value = Surface.CurrentRegion.Sweep
-        Me.Dihedro_box.Value = Surface.CurrentRegion.Dihedral
-        Me.Torsion_box.Value = Surface.CurrentRegion.Twist
-        Me.EjeTorsion_box.Value = Surface.CurrentRegion.TwistAxis
+        NPTramo_Box.Value = Surface.CurrentRegion.nSpanPanels
+        Cuerda_box.Value = Surface.CurrentRegion.TipChord
+        Longitud_box.Value = Surface.CurrentRegion.Length
+        Sweepback_box.Value = Surface.CurrentRegion.Sweep
+        Dihedro_box.Value = Surface.CurrentRegion.Dihedral
+        Torsion_box.Value = Surface.CurrentRegion.Twist
+        EjeTorsion_box.Value = Surface.CurrentRegion.TwistAxis
 
-        Me.CMax_box.Value = Surface.CurrentRegion.Chamber.Dimension(VisualModel.Models.Basics.ChamberDim.MaxChamber)
-        Me.PCMax_box.Value = Surface.CurrentRegion.Chamber.Dimension(VisualModel.Models.Basics.ChamberDim.PosMaxChamber)
+        CMax_box.Value = Surface.CurrentRegion.Chamber.Dimension(VisualModel.Models.Basics.ChamberDim.MaxChamber)
+        PCMax_box.Value = Surface.CurrentRegion.Chamber.Dimension(VisualModel.Models.Basics.ChamberDim.PosMaxChamber)
 
         Select Case Surface.CurrentRegion.SpacingType
             Case 1
@@ -356,7 +359,7 @@ Public Class WingControl
 
     End Sub
 
-    Public Sub Dibujar_Perfil(ByVal Cmax As Double, ByVal PCmax As Double, ByVal n As Integer, _
+    Public Sub Dibujar_Perfil(ByVal Cmax As Double, ByVal PCmax As Double, ByVal n As Integer,
                              ByVal wid As Double, ByVal hgt As Double, ByRef g As Graphics)
 
         ' SUBRUTINA QUE DIBUJA LA LINEA MEDIA DEL PERFIL CON LOS DATOS DE REFERENCIA
@@ -762,6 +765,10 @@ Public Class WingControl
         Me.GetGeometry(False)
     End Sub
 
+    Private Sub cbSecuence_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbSecuence.SelectedIndexChanged
+        GetGeometry()
+    End Sub
+
 #End Region
 
 #Region " Others "
@@ -838,7 +845,7 @@ Public Class WingControl
                     Surface.CurrentRegion.PolarID = form.SelectedFamilyID
                 End If
             End If
-            End If
+        End If
 
     End Sub
 
@@ -862,8 +869,9 @@ Public Class WingControl
     End Sub
 
     Private Sub cbTrailingEdge_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cbTrailingEdge.CheckedChanged
-        Me.GetGeometry()
+        GetGeometry()
         SegmentoPrimitivo1.Enabled = Not cbTrailingEdge.Checked
         SegmentoPrimitivo2.Enabled = Not cbTrailingEdge.Checked
     End Sub
+
 End Class

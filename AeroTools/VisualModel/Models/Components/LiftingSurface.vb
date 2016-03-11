@@ -410,7 +410,7 @@ Namespace VisualModel.Models.Components
         ''' Orientation given in Euler coordinates.
         ''' </summary>
         ''' <remarks></remarks>
-        Public Property GlobalOrientation As New OrientationCoordinates
+        Public Property GlobalOrientation As New EulerAngles
 
         ''' <summary>
         ''' Local directions.
@@ -1428,440 +1428,6 @@ Namespace VisualModel.Models.Components
 
         End Sub
 
-        'Public Sub GenerateLattice_II(ByVal ExtNPC As Integer)
-
-        '    ' Clear the mesh:
-
-        '    Mesh.NodalPoints.Clear()
-        '    Mesh.QuadPanels.Clear()
-
-        '    ' Determine the number of elements:
-
-        '    _nChordNodes = _nChordPanels + 1
-        '    _nSpanNodes = 1
-        '    _nSpanPanels = 0
-
-        '    For i = 0 To nWingRegions - 1
-
-        '        _nSpanNodes = _WingRegions.Item(i).nChordNodes + _nSpanNodes
-        '        _nSpanPanels = _WingRegions.Item(i).nSpanPanels + _nSpanPanels
-
-        '    Next
-
-        '    _nBoundaryNodes = 2 * _nChordNodes + 2 * _nSpanNodes ' Numero de nodos en el contorno
-        '    _nBoundarySegments = 2 * _nChordPanels + 2 * _nSpanPanels ' Numero de paneles en el contorno
-
-        '    Me.SetPrimitives()
-
-        '    ' Load quad panels (base on indices only):
-
-        '    For p = 1 To _nSpanPanels
-
-        '        For q = 1 To _nChordPanels
-
-        '            Dim Panel As New QuadPanel
-
-        '            Panel.N1 = (p - 1) * _nChordNodes + q
-        '            Panel.N2 = (p - 1) * _nChordNodes + q + 1
-        '            Panel.N3 = p * _nChordNodes + q + 1
-        '            Panel.N4 = p * _nChordNodes + q
-
-        '            Mesh.QuadPanels.Add(Panel)
-
-        '        Next
-
-        '    Next
-
-        '    ' Build the boundary index matrix
-
-        '    ReDim _BoundaryNodes(_nBoundaryNodes)
-        '    ReDim _BoundaryPanels(_nBoundarySegments)
-
-        '    Dim s As Integer
-
-        '    s = 1
-        '    For q = 1 To _nChordPanels + 1
-        '        _BoundaryNodes(s) = q
-        '        s = s + 1
-        '    Next
-        '    For p = 1 To _nSpanPanels - 1
-        '        _BoundaryNodes(s) = (p + 1) * (_nChordPanels + 1)
-        '        s = s + 1
-        '    Next
-        '    For q = 1 To _nChordPanels + 1
-        '        _BoundaryNodes(s) = (_nChordPanels + 1) * (_nSpanPanels + 1) - (q - 1)
-        '        s = s + 1
-        '    Next
-        '    For p = 1 To _nSpanPanels - 1
-        '        _BoundaryNodes(s) = (_nSpanPanels + 1 - p) * (_nChordPanels + 1) - _nChordPanels
-        '        s = s + 1
-        '    Next
-
-        '    _BoundaryNodes(_nBoundaryNodes) = 1
-
-        '    s = 1
-        '    For p = 1 To _nChordPanels
-        '        _BoundaryPanels(s) = p
-        '        s = s + 1
-        '    Next
-        '    For p = 1 To _nSpanPanels
-        '        _BoundaryPanels(s) = _nChordPanels * p
-        '        s = s + 1
-        '    Next
-        '    For p = 1 To _nChordPanels
-        '        _BoundaryPanels(s) = _nChordPanels * _nSpanPanels - (p - 1)
-        '        s = s + 1
-        '    Next
-        '    For p = 1 To _nSpanPanels
-        '        _BoundaryPanels(s) = _nChordPanels * _nSpanPanels - p * _nChordPanels + 1
-        '        s = s + 1
-        '    Next
-
-        '    ' Build rotation matrix:
-
-        '    Dim GlobalRotationMatrix As New RotationMatrix
-        '    GlobalRotationMatrix.Generate(Me.GlobalOrientation.ToRadians)
-
-        '    ' Locate root chord nodes:
-
-        '    Dim nodeCounter As Integer = 1
-
-        '    Dim chamber As Double = _WingRegions(0).Chamber.Dimension(ChamberDim.MaxChamber)
-        '    Dim chamberLoc As Double = _WingRegions(0).Chamber.Dimension(ChamberDim.PosMaxChamber)
-
-        '    Dim flap As Double = RootFlap
-
-        '    For i = 1 To _nChordNodes
-
-        '        Dim X As Double
-
-        '        If _WingRegions(0).Chamber.Flapped Then
-
-        '            If i <= _nChordNodes - FlapPanels Then
-        '                X = (i - 1) / (_nChordNodes - FlapPanels - 1) * (1 - flap)
-        '            Else
-        '                X = (1 - flap) + (i - _nChordNodes + FlapPanels) / FlapPanels * flap
-        '            End If
-
-        '        Else
-
-        '            X = (i - 1) / _nChordPanels
-
-        '        End If
-
-        '        Dim MidLinePoint As New EVector2
-
-        '        _WingRegions(0).Chamber.EvaluatePoint(MidLinePoint, X)
-        '        MidLinePoint.X *= _RootChord
-        '        MidLinePoint.Y *= _RootChord
-
-        '        Dim WingPoint As New NodalPoint(MidLinePoint.X, 0, MidLinePoint.Y)
-
-        '        If Me.Symmetric Then WingPoint.Position.Y = -WingPoint.Position.Y
-        '        WingPoint.Position.Substract(CenterOfRotation)
-        '        WingPoint.Position.Rotate(GlobalRotationMatrix)
-        '        WingPoint.Position.Add(CenterOfRotation)
-        '        WingPoint.Position.Add(GlobalPosition)
-
-        '        Me.Mesh.NodalPoints.Add(WingPoint)
-
-        '        nodeCounter += 1
-
-        '    Next
-
-        '    ' Comienza a asignar la geometria a cada macro panel:
-
-        '    Dim PlaneDirections As New EBase3
-
-        '    For i = 1 To nWingRegions
-
-        '        Dim OuterPoints(_nChordNodes) As EVector3
-
-        '        'Inicia las variables comunes del panel:
-
-        '        Dim mpIndex As Integer = i - 1
-
-        '        chamber = _WingRegions(mpIndex).Chamber.Dimension(ChamberDim.MaxChamber)
-        '        chamberLoc = _WingRegions(mpIndex).Chamber.Dimension(ChamberDim.PosMaxChamber)
-        '        Dim delta As Double = _WingRegions(mpIndex).Sweep / 180.0 * Math.PI
-        '        Dim gamma As Double = _WingRegions(mpIndex).Dihedral / 180.0 * Math.PI
-        '        Dim twist As Double = 0.0#
-
-        '        'Inicia el origen de coordenadas local:
-
-        '        If i = 1 Then
-
-        '            leadingEdge.X = 0.0#
-        '            leadingEdge.Y = 0.0#
-        '            leadingEdge.Z = 0.0#
-        '            twist = 0.0#
-
-        '        Else
-
-        '            leadingEdge.X = XBp
-        '            leadingEdge.Y = YBp
-        '            leadingEdge.Z = ZBp
-        '            twist = (twist + _WingRegions(mpIndex - 1).Twist / 180.0 * Math.PI) * Math.Cos(gamma)  ' Prueba!!!
-
-        '        End If
-
-        '        If i = 1 Then
-        '            Chordi = _RootChord
-        '            Chordf = _WingRegions(mpIndex).RootChord
-        '        Else
-        '            Chordi = _WingRegions(mpIndex - 1).RootChord
-        '            Chordf = _WingRegions(mpIndex).RootChord
-        '        End If
-
-        '        Stramo = _WingRegions(mpIndex).Length
-        '        Sigma1 = 1 - 1 / _WingRegions.Item(mpIndex).nSpanPanels
-        '        Scolumn1 = Stramo - Chordf / _nChordPanels
-        '        Sigma2 = 1 / _WingRegions.Item(mpIndex).nSpanPanels
-        '        Scolumn2 = Chordi / _nChordPanels
-
-        '        C1 = (Scolumn1 - Stramo * Sigma1) / (Sigma1 ^ 2 - Sigma1)
-        '        B1 = Stramo - C1
-
-        '        E = ((Scolumn1 - Stramo * Sigma1) - (Sigma1 ^ 3 - Sigma1)) / (Sigma1 ^ 2 - Sigma1)
-        '        D2 = (Scolumn2 - Stramo * Sigma2) / (Sigma2 ^ 3 + E * Sigma2 ^ 2 - Sigma2 * (E + 1))
-        '        C2 = E * D2
-        '        B2 = Stramo - C2 - D2
-
-        '        ' Genera la geometria de cada segemento de cuerda:
-
-        '        For k = 1 To _WingRegions(mpIndex).nSpanPanels
-
-        '            ' a) Calculates the distance to the column in spanwise direction
-
-        '            Y = k / _WingRegions.Item(mpIndex).nSpanPanels
-
-        '            Select Case _WingRegions.Item(mpIndex).SpacingType
-        '                Case WingRegion.ESpacement.Constant
-        '                    Y_stripe = Stramo * Y
-        '                Case WingRegion.ESpacement.Cuadratic
-        '                    Y_stripe = B1 * Y + C1 * Y ^ 2
-        '                Case WingRegion.ESpacement.Qubic
-        '                    Y_stripe = B2 * Y + C2 * Y ^ 2 + D2 * Y ^ 3
-        '            End Select
-
-        '            'Calculates the local chord and the position of Scolumn
-
-        '            Chord = Chordi + (Chordf - Chordi) * Y_stripe / Stramo
-
-        '            If mpIndex = 0 Then
-
-        '                Ttwist = _WingRegions(mpIndex).TwistAxis '* k / NPS(i, j)
-
-        '            Else
-
-        '                Ttwist = _WingRegions(mpIndex - 1).TwistAxis + (_WingRegions.Item(mpIndex - 1).TwistAxis - _WingRegions.Item(mpIndex - 1).TwistAxis) * Y_stripe / Stramo
-
-        '            End If
-
-        '            'Calculates the twisting angle
-
-        '            Phi = _WingRegions(mpIndex).Twist * Y / 180.0 * Math.PI
-        '            flap = _WingRegions(mpIndex).Chamber.FlapChord
-        '            Dim deflection As Double = _WingRegions(mpIndex).Chamber.FlapDeflection / 180 * Math.PI
-
-        '            For l = 1 To _nChordNodes ' For each nodal point in the current column...
-
-        '                'Calculates the distance from the nodal point to the leading edge
-
-        '                If mpIndex = 0 Then
-        '                    flap = RootFlap + (_WingRegions(0).Chamber.FlapChord - RootFlap) * Y
-        '                Else
-        '                    flap = _WingRegions(mpIndex - 1).Chamber.FlapChord + (_WingRegions(mpIndex).Chamber.FlapChord - _WingRegions(mpIndex - 1).Chamber.FlapChord) * Y
-        '                End If
-
-        '                If _WingRegions(mpIndex).Chamber.Flapped Then
-
-        '                    If l <= _nChordNodes - FlapPanels Then
-        '                        X = (l - 1) / (_nChordNodes - FlapPanels - 1) * (1 - flap)
-        '                    Else
-        '                        X = (1 - flap) + (l - _nChordNodes + FlapPanels) / FlapPanels * flap
-        '                    End If
-
-        '                Else
-
-        '                    X = (l - 1) / _nChordPanels
-
-        '                End If
-
-        '                'Calculates the chamber
-
-        '                Dim pLoc As New EVector2
-        '                _WingRegions(mpIndex).Chamber.EvaluatePoint(pLoc, X)
-        '                pLoc.X *= _RootChord
-        '                pLoc.Y *= _RootChord
-
-        '                'Twisting
-
-        '                Pij.X = Math.Cos(Phi) * (pLoc.X - Ttwist * Chord) + Math.Sin(Phi) * pLoc.Y + Y_stripe * Math.Tan(delta) + Ttwist * Chord
-        '                Pij.Y = Y_stripe
-        '                Pij.Z = -Math.Sin(Phi) * (pLoc.X - Ttwist * Chord) + Math.Cos(Phi) * pLoc.Y
-
-        '                'Overal twisting
-
-        '                Dim NewPoint As New NodalPoint
-
-        '                NewPoint.Position.X = Pij.X * Math.Cos(twist) + Pij.Z * Math.Sin(twist) + leadingEdge.X
-        '                NewPoint.Position.Y = Pij.X * Math.Sin(gamma) * Math.Sin(twist) + Pij.Y * Math.Cos(gamma) - Pij.Z * Math.Sin(gamma) * Math.Cos(twist) + leadingEdge.Y
-        '                NewPoint.Position.Z = -Pij.X * Math.Cos(gamma) * Math.Sin(twist) + Pij.Y * Math.Sin(gamma) + Pij.Z * Math.Cos(gamma) * Math.Cos(twist) + leadingEdge.Z
-
-        '                If k = _WingRegions(mpIndex).nSpanPanels And l = 1 Then
-        '                    XBp = NewPoint.Position.X
-        '                    YBp = NewPoint.Position.Y
-        '                    ZBp = NewPoint.Position.Z
-        '                End If
-
-        '                'Posicionamiento, simetria y orientacion:
-
-        '                If Me.Symmetric Then NewPoint.Position.Y = -NewPoint.Position.Y
-        '                NewPoint.Position.Substract(CenterOfRotation)
-        '                NewPoint.Position.Rotate(GlobalRotationMatrix)
-        '                NewPoint.Position.Add(CenterOfRotation)
-        '                NewPoint.Position.Add(GlobalPosition)
-
-        '                Mesh.NodalPoints.Add(NewPoint)
-
-        '                nodeCounter += 1
-
-        '            Next
-
-        '        Next
-
-        '    Next
-
-        '    ' Arma la matriz de conexiones de Mesh.Vortices:
-
-        '    Dim N1 As Integer
-        '    Dim N2 As Integer
-        '    Dim m As Integer
-        '    Dim Esta As Boolean
-
-        '    Mesh.Vortices.Clear()
-
-        '    Dim VortexSegement As New VortexSegment
-
-        '    VortexSegement.N1 = Mesh.QuadPanels.Item(0).N1
-        '    VortexSegement.N2 = Mesh.QuadPanels.Item(0).N2
-
-        '    Mesh.Vortices.Add(VortexSegement)
-
-        '    For i = 1 To nPanels
-
-        '        For k = 1 To 4
-
-        '            Select Case k
-        '                Case 1
-        '                    N1 = Mesh.QuadPanels.Item(i - 1).N1
-        '                    N2 = Mesh.QuadPanels.Item(i - 1).N2
-        '                Case 2
-        '                    N1 = Mesh.QuadPanels.Item(i - 1).N2
-        '                    N2 = Mesh.QuadPanels.Item(i - 1).N3
-        '                Case 3
-        '                    N1 = Mesh.QuadPanels.Item(i - 1).N3
-        '                    N2 = Mesh.QuadPanels.Item(i - 1).N4
-        '                Case 4
-        '                    N1 = Mesh.QuadPanels.Item(i - 1).N4
-        '                    N2 = Mesh.QuadPanels.Item(i - 1).N1
-        '            End Select
-
-        '            Esta = False
-
-        '            For m = 0 To Mesh.Vortices.Count - 1
-
-        '                If Mesh.Vortices.Item(m).N1 = N1 And Mesh.Vortices.Item(m).N2 = N2 Then
-
-        '                    Esta = True
-
-        '                ElseIf Mesh.Vortices.Item(m).N1 = N2 And Mesh.Vortices.Item(m).N2 = N1 Then
-
-        '                    Esta = True
-
-        '                End If
-
-        '            Next
-
-        '            If Esta = False Then
-
-        '                Dim Vortex As New VortexSegment
-
-        '                Vortex.N1 = N1
-        '                Vortex.N2 = N2
-
-        '                Mesh.Vortices.Add(Vortex)
-
-        '            End If
-
-        '        Next
-
-        '    Next
-
-        '    '_NV = p
-
-        '    ' Asigna la propiedad de panel convectivo
-
-        '    For i = Me.FirstPrimitiveSegment To Me.LastPrimitiveSegement
-        '        Me.GetQuadPanel(Me.GetPrimitivePanelIndex(i)).IsPrimitive = True
-        '    Next
-
-        '    ' Local base:
-
-        '    LocalDirections.U.X = 0.5
-        '    LocalDirections.U.Y = 0.0
-        '    LocalDirections.U.Z = 0.0
-        '    LocalDirections.U.Rotate(GlobalRotationMatrix)
-
-        '    LocalDirections.V.X = 0.0
-        '    LocalDirections.V.Y = 0.5
-        '    LocalDirections.V.Z = 0.0
-        '    LocalDirections.V.Rotate(GlobalRotationMatrix)
-
-        '    LocalDirections.W.X = 0.0
-        '    LocalDirections.W.Y = 0.0
-        '    LocalDirections.W.Z = 0.5
-        '    LocalDirections.W.Rotate(GlobalRotationMatrix)
-
-        '    ' Direction points:
-
-        '    _DirectionPoints.U.X = 0.5
-        '    _DirectionPoints.U.Y = 0.0
-        '    _DirectionPoints.U.Z = 0.0
-        '    _DirectionPoints.U.Substract(CenterOfRotation)
-        '    _DirectionPoints.U.Rotate(GlobalRotationMatrix)
-        '    _DirectionPoints.U.Add(CenterOfRotation)
-        '    _DirectionPoints.U.Add(GlobalPosition)
-
-        '    _DirectionPoints.V.X = 0.0
-        '    _DirectionPoints.V.Y = 0.5
-        '    _DirectionPoints.V.Z = 0.0
-        '    _DirectionPoints.V.Substract(CenterOfRotation)
-        '    _DirectionPoints.V.Rotate(GlobalRotationMatrix)
-        '    _DirectionPoints.V.Add(CenterOfRotation)
-        '    _DirectionPoints.V.Add(GlobalPosition)
-
-        '    _DirectionPoints.W.X = 0.0
-        '    _DirectionPoints.W.Y = 0.0
-        '    _DirectionPoints.W.Z = 0.5
-        '    _DirectionPoints.W.Substract(CenterOfRotation)
-        '    _DirectionPoints.W.Rotate(GlobalRotationMatrix)
-        '    _DirectionPoints.W.Add(CenterOfRotation)
-        '    _DirectionPoints.W.Add(GlobalPosition)
-
-        '    ' Local origin
-
-        '    LocalOrigin.SetToCero()
-        '    LocalOrigin.Substract(CenterOfRotation)
-        '    LocalOrigin.Rotate(GlobalRotationMatrix)
-        '    LocalOrigin.Add(CenterOfRotation)
-        '    LocalOrigin.Add(GlobalPosition)
-
-        '    GenerateStructure()
-
-        'End Sub
-
         Public Overrides Sub Refresh3DModel(ByRef gl As OpenGL, Optional ByVal SelectionMode As SelectionModes = SelectionModes.smNoSelection, Optional ByVal ElementIndex As Integer = 0)
 
             ' Version para OpenGL
@@ -2577,11 +2143,11 @@ Namespace VisualModel.Models.Components
         ''' <remarks></remarks>
         Public Overrides Sub Translate(ByVal Vector As EVector3)
 
-            Me.GlobalPosition.X += Vector.X
-            Me.GlobalPosition.Y += Vector.Y
-            Me.GlobalPosition.Z += Vector.Z
+            GlobalPosition.X += Vector.X
+            GlobalPosition.Y += Vector.Y
+            GlobalPosition.Z += Vector.Z
 
-            Me.GenerateMesh()
+            GenerateMesh()
 
         End Sub
 
@@ -2591,11 +2157,11 @@ Namespace VisualModel.Models.Components
         ''' <param name="Point"></param>
         ''' <param name="Ori"></param>
         ''' <remarks></remarks>
-        Public Overrides Sub Orientate(ByVal Point As EVector3, ByVal Ori As OrientationCoordinates)
+        Public Overrides Sub Orientate(ByVal Point As EVector3, ByVal Ori As EulerAngles)
 
             CenterOfRotation.Assign(Point)
             GlobalOrientation.Assign(Ori)
-            Me.GenerateMesh()
+            GenerateMesh()
 
         End Sub
 
@@ -2685,6 +2251,7 @@ Namespace VisualModel.Models.Components
                         GlobalOrientation.Psi = IOXML.ReadDouble(reader, "OGPsi", 0.0)
                         GlobalOrientation.Tita = IOXML.ReadDouble(reader, "OGTita", 0.0)
                         GlobalOrientation.Fi = IOXML.ReadDouble(reader, "OGFi", 0.0)
+                        GlobalOrientation.Secuence = IOXML.ReadInteger(reader, "OGSecuence", CInt(EulerAngles.RotationSecuence.ZYX))
 
                         CenterOfRotation.X = IOXML.ReadDouble(reader, "PCRX", 0.0)
                         CenterOfRotation.Y = IOXML.ReadDouble(reader, "PCRY", 0.0)
@@ -2750,22 +2317,23 @@ Namespace VisualModel.Models.Components
 
             writer.WriteStartElement("SurfaceProperties")
 
-            writer.WriteAttributeString("RootChord", String.Format("{0}", Me.RootChord))
+            writer.WriteAttributeString("RootChord", String.Format("{0}", RootChord))
             writer.WriteAttributeString("RootFlap", String.Format("{0}", RootFlap))
             writer.WriteAttributeString("FlapPanels", String.Format("{0}", FlapPanels))
             writer.WriteAttributeString("Include", String.Format("{0}", IncludeInCalculation))
 
-            writer.WriteAttributeString("PGX", String.Format("{0}", Me.GlobalPosition.X))
-            writer.WriteAttributeString("PGY", String.Format("{0}", Me.GlobalPosition.Y))
-            writer.WriteAttributeString("PGZ", String.Format("{0}", Me.GlobalPosition.Z))
+            writer.WriteAttributeString("PGX", String.Format("{0}", GlobalPosition.X))
+            writer.WriteAttributeString("PGY", String.Format("{0}", GlobalPosition.Y))
+            writer.WriteAttributeString("PGZ", String.Format("{0}", GlobalPosition.Z))
 
-            writer.WriteAttributeString("OGPsi", String.Format("{0}", Me.GlobalOrientation.Psi))
-            writer.WriteAttributeString("OGTita", String.Format("{0}", Me.GlobalOrientation.Tita))
-            writer.WriteAttributeString("OGFi", String.Format("{0}", Me.GlobalOrientation.Fi))
+            writer.WriteAttributeString("OGPsi", String.Format("{0}", GlobalOrientation.Psi))
+            writer.WriteAttributeString("OGTita", String.Format("{0}", GlobalOrientation.Tita))
+            writer.WriteAttributeString("OGFi", String.Format("{0}", GlobalOrientation.Fi))
+            writer.WriteAttributeString("OGSecuence", String.Format("{0}", CInt(GlobalOrientation.Secuence)))
 
-            writer.WriteAttributeString("PCRX", String.Format("{0}", Me.CenterOfRotation.X))
-            writer.WriteAttributeString("PCRY", String.Format("{0}", Me.CenterOfRotation.Y))
-            writer.WriteAttributeString("PCRZ", String.Format("{0}", Me.CenterOfRotation.Z))
+            writer.WriteAttributeString("PCRX", String.Format("{0}", CenterOfRotation.X))
+            writer.WriteAttributeString("PCRY", String.Format("{0}", CenterOfRotation.Y))
+            writer.WriteAttributeString("PCRZ", String.Format("{0}", CenterOfRotation.Z))
 
             writer.WriteAttributeString("PRIM1", String.Format("{0}", FirstPrimitiveSegment))
             writer.WriteAttributeString("PRIM2", String.Format("{0}", LastPrimitiveSegment))

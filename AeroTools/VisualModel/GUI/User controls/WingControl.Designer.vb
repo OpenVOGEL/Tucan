@@ -188,6 +188,8 @@ Partial Class WingControl
         Me.btSurfaceData = New System.Windows.Forms.Button()
         Me.SurfaceNameText = New System.Windows.Forms.TextBox()
         Me.btnOk = New System.Windows.Forms.Button()
+        Me.cbSecuence = New System.Windows.Forms.ComboBox()
+        Me.Label80 = New System.Windows.Forms.Label()
         Me.PanelDeEdicion.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         Me.tcRootProperties.SuspendLayout()
@@ -2075,6 +2077,8 @@ Partial Class WingControl
         '
         Me.GroupBox7.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.GroupBox7.Controls.Add(Me.Label80)
+        Me.GroupBox7.Controls.Add(Me.cbSecuence)
         Me.GroupBox7.Controls.Add(Me.NoRotar)
         Me.GroupBox7.Controls.Add(Me.CentroDeRotacionAlOrigen)
         Me.GroupBox7.Controls.Add(Me.Label23)
@@ -2092,7 +2096,7 @@ Partial Class WingControl
         Me.GroupBox7.Font = New System.Drawing.Font("Segoe UI", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.GroupBox7.Location = New System.Drawing.Point(6, 101)
         Me.GroupBox7.Name = "GroupBox7"
-        Me.GroupBox7.Size = New System.Drawing.Size(287, 118)
+        Me.GroupBox7.Size = New System.Drawing.Size(287, 158)
         Me.GroupBox7.TabIndex = 86
         Me.GroupBox7.TabStop = False
         Me.GroupBox7.Text = "Rotation (local coordinates)"
@@ -2236,33 +2240,33 @@ Partial Class WingControl
         'Label68
         '
         Me.Label68.AutoSize = True
-        Me.Label68.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!)
+        Me.Label68.Font = New System.Drawing.Font("Segoe UI", 8.25!)
         Me.Label68.ImeMode = System.Windows.Forms.ImeMode.NoControl
         Me.Label68.Location = New System.Drawing.Point(9, 21)
         Me.Label68.Name = "Label68"
-        Me.Label68.Size = New System.Drawing.Size(14, 13)
+        Me.Label68.Size = New System.Drawing.Size(13, 13)
         Me.Label68.TabIndex = 63
         Me.Label68.Text = "X"
         '
         'Label69
         '
         Me.Label69.AutoSize = True
-        Me.Label69.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!)
+        Me.Label69.Font = New System.Drawing.Font("Segoe UI", 8.25!)
         Me.Label69.ImeMode = System.Windows.Forms.ImeMode.NoControl
         Me.Label69.Location = New System.Drawing.Point(9, 42)
         Me.Label69.Name = "Label69"
-        Me.Label69.Size = New System.Drawing.Size(14, 13)
+        Me.Label69.Size = New System.Drawing.Size(12, 13)
         Me.Label69.TabIndex = 64
         Me.Label69.Text = "Y"
         '
         'Label70
         '
         Me.Label70.AutoSize = True
-        Me.Label70.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!)
+        Me.Label70.Font = New System.Drawing.Font("Segoe UI", 8.25!)
         Me.Label70.ImeMode = System.Windows.Forms.ImeMode.NoControl
         Me.Label70.Location = New System.Drawing.Point(9, 63)
         Me.Label70.Name = "Label70"
-        Me.Label70.Size = New System.Drawing.Size(14, 13)
+        Me.Label70.Size = New System.Drawing.Size(13, 13)
         Me.Label70.TabIndex = 65
         Me.Label70.Text = "Z"
         '
@@ -2328,6 +2332,27 @@ Partial Class WingControl
         Me.btnOk.TabIndex = 70
         Me.btnOk.Text = "Close"
         Me.btnOk.UseVisualStyleBackColor = False
+        '
+        'cbSecuence
+        '
+        Me.cbSecuence.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cbSecuence.FormattingEnabled = True
+        Me.cbSecuence.Items.AddRange(New Object() {"ZYX", "XYZ"})
+        Me.cbSecuence.Location = New System.Drawing.Point(138, 132)
+        Me.cbSecuence.Name = "cbSecuence"
+        Me.cbSecuence.Size = New System.Drawing.Size(85, 20)
+        Me.cbSecuence.TabIndex = 105
+        '
+        'Label80
+        '
+        Me.Label80.AutoSize = True
+        Me.Label80.Font = New System.Drawing.Font("Segoe UI", 6.75!)
+        Me.Label80.ImeMode = System.Windows.Forms.ImeMode.NoControl
+        Me.Label80.Location = New System.Drawing.Point(135, 116)
+        Me.Label80.Name = "Label80"
+        Me.Label80.Size = New System.Drawing.Size(79, 12)
+        Me.Label80.TabIndex = 106
+        Me.Label80.Text = "Rotation secuence:"
         '
         'WingControl
         '
@@ -2587,5 +2612,6 @@ Partial Class WingControl
     Friend WithEvents cbTrailingEdge As System.Windows.Forms.CheckBox
     Friend WithEvents Label79 As System.Windows.Forms.Label
     Friend WithEvents tpIntertia As System.Windows.Forms.TabPage
-
+    Friend WithEvents cbSecuence As Windows.Forms.ComboBox
+    Friend WithEvents Label80 As Windows.Forms.Label
 End Class

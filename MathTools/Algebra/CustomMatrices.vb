@@ -29,6 +29,7 @@ Namespace Algebra.CustomMatrices
         End Sub
 
         Private FElements(,) As Double
+
         Public Property Element(ByVal i As Integer, ByVal j As Integer) As Double
             Get
                 If Not FTransponse Then
@@ -47,6 +48,7 @@ Namespace Algebra.CustomMatrices
         End Property
 
         Private FRows As Integer
+
         Public ReadOnly Property Rows As Integer
             Get
                 If Not FTransponse Then
@@ -58,6 +60,7 @@ Namespace Algebra.CustomMatrices
         End Property
 
         Private FColumns As Integer
+
         Public ReadOnly Property Columns As Integer
             Get
                 If Not FTransponse Then
@@ -69,6 +72,7 @@ Namespace Algebra.CustomMatrices
         End Property
 
         Private FTransponse As Boolean
+
         Public Sub Transponse()
             FTransponse = Not FTransponse
         End Sub
@@ -247,17 +251,44 @@ Namespace Algebra.CustomMatrices
 
         End Sub
 
-        Public Sub Generate(ByVal Orientation As OrientationCoordinates)
+        Public Sub Generate(ByVal Orientation As EulerAngles)
 
-            Item(1, 1) = Math.Cos(Orientation.Psi) * Math.Cos(Orientation.Tita)
-            Item(1, 2) = Math.Cos(Orientation.Psi) * Math.Sin(Orientation.Tita) * Math.Sin(Orientation.Fi) - Math.Sin(Orientation.Psi) * Math.Cos(Orientation.Fi)
-            Item(1, 3) = Math.Sin(Orientation.Psi) * Math.Sin(Orientation.Fi) + Math.Cos(Orientation.Psi) * Math.Sin(Orientation.Tita) * Math.Cos(Orientation.Fi)
-            Item(2, 1) = Math.Sin(Orientation.Psi) * Math.Cos(Orientation.Tita)
-            Item(2, 2) = Math.Sin(Orientation.Psi) * Math.Sin(Orientation.Tita) * Math.Sin(Orientation.Fi) + Math.Cos(Orientation.Psi) * Math.Cos(Orientation.Fi)
-            Item(2, 3) = Math.Sin(Orientation.Psi) * Math.Sin(Orientation.Tita) * Math.Cos(Orientation.Fi) - Math.Cos(Orientation.Psi) * Math.Sin(Orientation.Fi)
-            Item(3, 1) = -Math.Sin(Orientation.Tita)
-            Item(3, 2) = Math.Cos(Orientation.Tita) * Math.Sin(Orientation.Fi)
-            Item(3, 3) = Math.Cos(Orientation.Tita) * Math.Cos(Orientation.Fi)
+            Dim c1 As Double = Math.Cos(Orientation.Psi)
+            Dim s1 As Double = Math.Sin(Orientation.Psi)
+
+            Dim c2 As Double = Math.Cos(Orientation.Tita)
+            Dim s2 As Double = Math.Sin(Orientation.Tita)
+
+            Dim c3 As Double = Math.Cos(Orientation.Fi)
+            Dim s3 As Double = Math.Sin(Orientation.Fi)
+
+            Select Case Orientation.Secuence
+
+                Case EulerAngles.RotationSecuence.ZYX
+
+                    Item(1, 1) = c1 * c2
+                    Item(1, 2) = c1 * s2 * s3 - s1 * c3
+                    Item(1, 3) = s1 * s3 + c1 * s2 * c3
+                    Item(2, 1) = s1 * c2
+                    Item(2, 2) = s1 * s2 * s3 + c1 * c3
+                    Item(2, 3) = s1 * s2 * c3 - c1 * s3
+                    Item(3, 1) = -s2
+                    Item(3, 2) = c2 * s3
+                    Item(3, 3) = c2 * c3
+
+                Case EulerAngles.RotationSecuence.XYZ
+
+                    Item(1, 1) = c2 * c3
+                    Item(1, 2) = -c2 * s3
+                    Item(1, 3) = s2
+                    Item(2, 1) = c1 * s3 + c3 * s1 * s2
+                    Item(2, 2) = c1 * c3 - s1 * s2 * s3
+                    Item(2, 3) = -c2 * s1
+                    Item(3, 1) = s1 * s3 - c1 * c3 * s2
+                    Item(3, 2) = c3 * s1 + c1 * s2 * s3
+                    Item(3, 3) = c1 * c2
+
+            End Select
 
         End Sub
 

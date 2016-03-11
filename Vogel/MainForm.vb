@@ -662,7 +662,7 @@ ErrSub:
 
     Private PosicionInicialDelMouse As New Drawing.Point
     Private PosicionInicialDelLaCamara As New EVector3
-    Private OricentacionInicialDeLaCamara As New OrientationCoordinates
+    Private OricentacionInicialDeLaCamara As New EulerAngles
 
     Private Sub ControlOpenGL_MouseMove(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles ControlOpenGL.MouseMove
 

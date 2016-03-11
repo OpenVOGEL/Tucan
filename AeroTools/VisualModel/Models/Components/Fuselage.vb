@@ -503,11 +503,18 @@ Namespace VisualModel.Models.Components
 
         Private Function GetPoint(ByVal z As Double, ByVal s As Double) As EVector3
 
-            Dim i_f As Integer = 0
+            Dim i_f As Integer = 1
+            Dim _z As Double = z
+
+            If _z < CrossSections(0).Z Then
+                _z = CrossSections(0).Z
+            ElseIf _z > CrossSections(CrossSections.Count - 1).Z
+                _z = CrossSections(CrossSections.Count - 1).Z
+            End If
 
             For i = 1 To CrossSections.Count - 1
 
-                If CrossSections(i).Z >= z Then
+                If CrossSections(i).Z >= _z Then
                     i_f = i
                     Exit For
                 End If
@@ -517,9 +524,9 @@ Namespace VisualModel.Models.Components
             Dim point_i = CrossSections(i_f).GetPoint(s)
             Dim point_f = CrossSections(i_f - 1).GetPoint(s)
 
-            Dim f As Double = (CrossSections(i_f).Z - z) / (CrossSections(i_f).Z - CrossSections(i_f - 1).Z)
+            Dim f As Double = (CrossSections(i_f).Z - _z) / (CrossSections(i_f).Z - CrossSections(i_f - 1).Z)
 
-            Return New EVector3((1 - f) * point_i.X + f * point_f.X, (1 - f) * point_i.Y + f * point_f.Y, z)
+            Return New EVector3((1 - f) * point_i.X + f * point_f.X, (1 - f) * point_i.Y + f * point_f.Y, _z)
 
         End Function
 

@@ -84,7 +84,7 @@ Namespace VisualModel.Models.Basics
         ''' Orientation of the surface.
         ''' </summary>
         ''' <returns></returns>
-        Public Property Orientation As New OrientationCoordinates
+        Public Property Orientation As New EulerAngles
 
         ''' <summary>
         ''' Scale of this surface.
@@ -100,7 +100,7 @@ Namespace VisualModel.Models.Basics
 
         End Sub
 
-        Public Overridable Sub Orientate(ByVal Point As EVector3, ByVal Ori As OrientationCoordinates) Implements IOperational.Orientate
+        Public Overridable Sub Orientate(ByVal Point As EVector3, ByVal Ori As EulerAngles) Implements IOperational.Orientate
 
             Mesh.Rotate(Point, Ori)
 

@@ -121,7 +121,7 @@ Public Class FormSettings
         End Set
     End Property
 
-    Private _AllowFlowRotation As Boolean = False
+    Private _AllowFlowRotation As Boolean = True
 
     Public WriteOnly Property AllowFlowRotation As Boolean
         Set(ByVal value As Boolean)

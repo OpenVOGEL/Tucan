@@ -332,7 +332,7 @@ Namespace UVLM.Models.Aero
         ''' </summary>
         ''' <param name="Orientation">Euler angles providing the orientation</param>
         ''' <remarks></remarks>
-        Public Sub Rotate(ByVal Orientation As OrientationCoordinates)
+        Public Sub Rotate(ByVal Orientation As EulerAngles)
 
             Dim m As New MathTools.Algebra.CustomMatrices.RotationMatrix
             m.Generate(Orientation)
@@ -351,7 +351,7 @@ Namespace UVLM.Models.Aero
         ''' <param name="Orientation"></param>
         ''' <param name="Point"></param>
         ''' <remarks></remarks>
-        Public Sub RotateAbout(ByVal Orientation As OrientationCoordinates, ByVal Point As EVector3)
+        Public Sub RotateAbout(ByVal Orientation As EulerAngles, ByVal Point As EVector3)
 
             Dim m As New MathTools.Algebra.CustomMatrices.RotationMatrix
             m.Generate(Orientation)

@@ -25,7 +25,7 @@ Namespace VisualModel.Environment.Properties
 
     Public Class VisualizationParameters
 
-        Public CameraOrientation As OrientationCoordinates
+        Public CameraOrientation As EulerAngles
         Public CameraPosition As EVector3
         Public Proximity As Double = 1
         Public OrthoProjection As Boolean
@@ -40,7 +40,7 @@ Namespace VisualModel.Environment.Properties
 
         Public Sub IniciarParametros()
 
-            CameraOrientation = New OrientationCoordinates
+            CameraOrientation = New EulerAngles
             CameraOrientation.Psi = 0.0
             CameraOrientation.Tita = 0.0
             CameraOrientation.Fi = 0.0

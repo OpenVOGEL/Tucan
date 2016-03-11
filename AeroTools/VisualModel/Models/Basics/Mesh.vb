@@ -36,7 +36,7 @@ Namespace VisualModel.Models.Basics
 
         End Sub
 
-        Public Sub Rotate(ByVal ReferencePoint As EVector3, ByVal Ori As OrientationCoordinates)
+        Public Sub Rotate(ByVal ReferencePoint As EVector3, ByVal Ori As EulerAngles)
 
             Dim M As New RotationMatrix
             M.Generate(Ori)

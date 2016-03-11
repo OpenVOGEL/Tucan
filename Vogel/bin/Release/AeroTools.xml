@@ -1202,14 +1202,14 @@ AeroTools
  Calculate vortex rings geometric parameters (control point, normal vector)
  </summary>
 </member>
-<member name="M:AeroTools.UVLM.Models.Aero.Lattice.Rotate(MathTools.Algebra.EuclideanSpace.OrientationCoordinates)">
+<member name="M:AeroTools.UVLM.Models.Aero.Lattice.Rotate(MathTools.Algebra.EuclideanSpace.EulerAngles)">
  <summary>
  Rotates all nodal poins as specified in Orientation about the origin {0,0,0}
  </summary>
  <param name="Orientation">Euler angles providing the orientation</param>
  <remarks></remarks>
 </member>
-<member name="M:AeroTools.UVLM.Models.Aero.Lattice.RotateAbout(MathTools.Algebra.EuclideanSpace.OrientationCoordinates,MathTools.Algebra.EuclideanSpace.EVector3)">
+<member name="M:AeroTools.UVLM.Models.Aero.Lattice.RotateAbout(MathTools.Algebra.EuclideanSpace.EulerAngles,MathTools.Algebra.EuclideanSpace.EVector3)">
  <summary>
  Rotates all nodal points as specified in Orientation about an specific point.
  </summary>
@@ -2021,7 +2021,7 @@ AeroTools
  Assign surrounding rings by searching on all lattices
  </summary>
 </member>
-<member name="M:AeroTools.UVLM.Solver.UVLMSolver.SetCompleteModelOnResults(AeroTools.VisualModel.Interface.Results.CalculatedModel@)">
+<member name="M:AeroTools.UVLM.Solver.UVLMSolver.SetCompleteModelOnResults(AeroTools.VisualModel.Interface.Results.ResultModel@)">
  <summary>
  Sets the lattices on the result object
  </summary>
@@ -2362,12 +2362,12 @@ AeroTools
  <param name="SourcePath"></param>
  <remarks></remarks>
 </member>
-<member name="T:AeroTools.VisualModel.Interface.Results.CalculatedModel">
+<member name="T:AeroTools.VisualModel.Interface.Results.ResultModel">
  <summary>
  Stores results for a given time step.
  </summary>
 </member>
-<member name="P:AeroTools.VisualModel.Interface.Results.CalculatedModel.TransitLattices">
+<member name="P:AeroTools.VisualModel.Interface.Results.ResultModel.TransitLattices">
  <summary>
  Gathers all transit lattices.
  </summary>
@@ -2375,12 +2375,12 @@ AeroTools
  <returns></returns>
  <remarks></remarks>
 </member>
-<member name="P:AeroTools.VisualModel.Interface.Results.CalculatedModel.TransitStages">
+<member name="P:AeroTools.VisualModel.Interface.Results.ResultModel.TransitStages">
  <summary>
  Indicates the number of loaded stages
  </summary>
 </member>
-<member name="P:AeroTools.VisualModel.Interface.Results.CalculatedModel.TransitLoaded">
+<member name="P:AeroTools.VisualModel.Interface.Results.ResultModel.TransitLoaded">
  <summary>
  Indicates if the simulation frames have been loaded
  </summary>
@@ -2437,6 +2437,66 @@ AeroTools
  Basic definition of a base surface able to be operated and selected.
  </summary>
  <remarks></remarks>
+</member>
+<member name="P:AeroTools.VisualModel.Models.Basics.BaseSurface.ID">
+ <summary>
+ Surface identifier.
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:AeroTools.VisualModel.Models.Basics.BaseSurface.Name">
+ <summary>
+ Surface name.
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:AeroTools.VisualModel.Models.Basics.BaseSurface.Mesh">
+ <summary>
+ Mesh.
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:AeroTools.VisualModel.Models.Basics.BaseSurface.VisualProps">
+ <summary>
+ Surface visual properties.
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:AeroTools.VisualModel.Models.Basics.BaseSurface.IncludeInCalculation">
+ <summary>
+ Indicates if the surface participates in the calculation model.
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:AeroTools.VisualModel.Models.Basics.BaseSurface.LockContent">
+ <summary>
+ Indicate if the GUI has to block the content of this surface.
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:AeroTools.VisualModel.Models.Basics.BaseSurface.Position">
+ <summary>
+ Position of the surface in the global coordinates system.
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:AeroTools.VisualModel.Models.Basics.BaseSurface.CenterOfRotation">
+ <summary>
+ Center of rotation of the surface in the local coordinates system.
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:AeroTools.VisualModel.Models.Basics.BaseSurface.Orientation">
+ <summary>
+ Orientation of the surface.
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:AeroTools.VisualModel.Models.Basics.BaseSurface.SizeScale">
+ <summary>
+ Scale of this surface.
+ </summary>
+ <returns></returns>
 </member>
 <member name="P:AeroTools.VisualModel.Models.Basics.BaseSurface.Selected">
  <summary>
@@ -2846,6 +2906,75 @@ AeroTools
  <param name="writer"></param>
  <remarks></remarks>
 </member>
+<member name="T:AeroTools.VisualModel.Models.Components.GeneralSurface">
+ <summary>
+ Represents a multi-purpose surface for post-processing.
+ </summary>
+</member>
+<member name="M:AeroTools.VisualModel.Models.Components.GeneralSurface.Clear">
+ <summary>
+ Clears the mesh.
+ </summary>
+</member>
+<member name="P:AeroTools.VisualModel.Models.Components.GeneralSurface.AccessPath">
+ <summary>
+ Location of this lattice in the database.
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:AeroTools.VisualModel.Models.Components.GeneralSurface.PressureRange">
+ <summary>
+ Extreme values of the local pressure.
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:AeroTools.VisualModel.Models.Components.GeneralSurface.DisplacementRange">
+ <summary>
+ Maximum and minimum displacements.
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:AeroTools.VisualModel.Models.Components.GeneralSurface.NodalPosition(System.Int32)">
+ <summary>
+ Position of a nodal point.
+ </summary>
+ <param name="Node"></param>
+ <returns></returns>
+</member>
+<member name="P:AeroTools.VisualModel.Models.Components.GeneralSurface.NodalPoint(System.Int32)">
+ <summary>
+ Nodal point.
+ </summary>
+ <param name="Node"></param>
+ <returns></returns>
+</member>
+<member name="P:AeroTools.VisualModel.Models.Components.GeneralSurface.ClonedPanel(System.Int32)">
+ <summary>
+ Returns a clone of a panel.
+ </summary>
+ <param name="Node"></param>
+ <returns></returns>
+</member>
+<member name="P:AeroTools.VisualModel.Models.Components.GeneralSurface.Panel(System.Int32)">
+ <summary>
+ Mesh panel.
+ </summary>
+ <param name="Node"></param>
+ <returns></returns>
+</member>
+<member name="P:AeroTools.VisualModel.Models.Components.GeneralSurface.Segment(System.Int32)">
+ <summary>
+ Lattice segment.
+ </summary>
+ <param name="SegmentNumber"></param>
+ <returns></returns>
+</member>
+<member name="M:AeroTools.VisualModel.Models.Components.GeneralSurface.LoadFromLattice(AeroTools.UVLM.Models.Aero.Lattice)">
+ <summary>
+ Loads the geometry from a calculation model lattice.
+ </summary>
+ <param name="Lattice"></param>
+</member>
 <member name="M:AeroTools.VisualModel.Models.Components.GeneralSurface.UpdatePosition">
  <summary>
  Position the model in relation to the reference position of the nodes (it won't work if there is no reference position). 
@@ -2857,6 +2986,12 @@ AeroTools
  Updates the position based on the reference nodal position and displacement.
  </summary>
  <remarks></remarks>
+</member>
+<member name="M:AeroTools.VisualModel.Models.Components.GeneralSurface.LoadFromTextFile">
+ <summary>
+ Loads the data from a text file (using the access path).
+ </summary>
+ <returns></returns>
 </member>
 <member name="M:AeroTools.VisualModel.Models.Components.JetEngine.GenerateMesh">
  <summary>
@@ -3406,7 +3541,7 @@ AeroTools
  <param name="Vector"></param>
  <remarks></remarks>
 </member>
-<member name="M:AeroTools.VisualModel.Models.Components.LiftingSurface.Orientate(MathTools.Algebra.EuclideanSpace.EVector3,MathTools.Algebra.EuclideanSpace.OrientationCoordinates)">
+<member name="M:AeroTools.VisualModel.Models.Components.LiftingSurface.Orientate(MathTools.Algebra.EuclideanSpace.EVector3,MathTools.Algebra.EuclideanSpace.EulerAngles)">
  <summary>
  Orientates the model by the given Euler angles around the specified point.
  </summary>

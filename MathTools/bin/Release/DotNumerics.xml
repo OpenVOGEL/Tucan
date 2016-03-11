@@ -2730,213 +2730,9 @@
              storage spacing between elements of DX
             </param>
         </member>
-        <member name="T:DotNumerics.ODE.OdeAdamsMoulton">
-            <summary>
-            Solves an initial-value problem for nonstiff ordinary differential equations using 
-            the Adams-Moulton method.
-            dy(i)/dt = f(i,t,y(1),y(2),...,y(N)).
-            </summary>
-        </member>
         <member name="T:DotNumerics.ODE.DVode.xBaseOdeGearsAndAdamsMoulton">
             <summary>
             Represents a base class for the Adams-Moulton and Gear’s BDF classes. 
-            </summary>
-        </member>
-        <member name="T:DotNumerics.ODE.xOdeBase">
-             <summary>
-            Represents the base class for the Odes. 
-             </summary>
-        </member>
-        <member name="F:DotNumerics.ODE.xOdeBase._NEquations">
-            <summary>
-            The number of equations
-            </summary>
-        </member>
-        <member name="F:DotNumerics.ODE.xOdeBase._T0">
-            <summary>
-            The initial independent variable value.
-            </summary>
-        </member>
-        <member name="F:DotNumerics.ODE.xOdeBase._Y0">
-            <summary>
-            The initial conditions.
-            </summary>
-        </member>
-        <member name="F:DotNumerics.ODE.xOdeBase._Y">
-            <summary>
-            Array used to set the initial values and to return the solution in some ODE solvers.
-            This array must be initialized equal to the initial values in the first call.
-            </summary>
-        </member>
-        <member name="F:DotNumerics.ODE.xOdeBase._InvokeSetInitialValues">
-            <summary>
-            Indicated if the SetInitialValues method need to be invoked.
-            </summary>
-        </member>
-        <member name="F:DotNumerics.ODE.xOdeBase._InvokeInitializeODEs">
-            <summary>
-            Indicated if the InitializeODEs method need to be invoked.
-            </summary>
-        </member>
-        <member name="F:DotNumerics.ODE.xOdeBase._Errors">
-            <summary>
-            Array containing the exception messages.
-            </summary>
-        </member>
-        <member name="F:DotNumerics.ODE.xOdeBase._ITolAdamsGears">
-            <summary>
-            For AdamsMoulton and  OdeGearsBDF:
-            
-            MeITol = An indicator for the type of error control.
-            
-              ITOL         RTOL       ATOL          EWT(i)
-            MeITol =1     scalar     scalar     RTOL*ABS(Y(i)) + ATOL
-            MeITol =2     scalar     array      RTOL*ABS(Y(i)) + ATOL(i)
-            MeITol =3     array      scalar     RTOL(i)*ABS(Y(i)) + ATOL
-            MeITol =4     array      array      RTOL(i)*ABS(Y(i)) + ATOL(i)
-            </summary>
-        </member>
-        <member name="F:DotNumerics.ODE.xOdeBase._ITolRK">
-             <summary>
-            For Runge-Kutta
-            
-             ITol = An indicator for the type of error control.
-             
-             ITOL=0: BOTH RTOL AND ATOL ARE SCALARS.
-             ITOL=1: BOTH RTOL AND ATOL ARE VECTORS. 
-             </summary>
-        </member>
-        <member name="F:DotNumerics.ODE.xOdeBase._RelTol">
-            <summary>
-            A relative error tolerance parameter.
-            The input parameters ITOL, RTOL, and ATOL determine
-            the error control performed by the solver.  The solver will
-            control the vector e = (e(i)) of estimated local errors
-            in Y, according to an inequality of the form
-            rms-norm of ( e(i)/EWT(i) )   .le.   1,
-            where       EWT(i) = RTOL(i)*abs(Y(i)) + ATOL(i),
-            </summary>
-        </member>
-        <member name="F:DotNumerics.ODE.xOdeBase._RelTolArray">
-            <summary>
-            A relative error tolerance parameter, either a scalar or an array of length NEQ. 
-            </summary>
-        </member>
-        <member name="F:DotNumerics.ODE.xOdeBase._AbsTol">
-            <summary>
-            An absolute error tolerance parameter
-            </summary>
-        </member>
-        <member name="F:DotNumerics.ODE.xOdeBase._AbsTolArray">
-            <summary>
-            An absolute error tolerance parameter(array of length NEQ)
-            </summary>
-        </member>
-        <member name="F:DotNumerics.ODE.xOdeBase._RWork">
-            <summary>
-            MeRWork= A real working array (double precision)
-            </summary>
-        </member>
-        <member name="F:DotNumerics.ODE.xOdeBase._Lrw">
-            <summary>
-            MeLrw= The length of the array RWORK
-            </summary>
-        </member>
-        <member name="F:DotNumerics.ODE.xOdeBase._IWork">
-            <summary>
-            MeIWork= An integer work array.
-            </summary>
-        </member>
-        <member name="F:DotNumerics.ODE.xOdeBase._Liw">
-            <summary>
-            MeLiw= the length of the array IWORK
-            </summary>
-        </member>
-        <member name="F:DotNumerics.ODE.xOdeBase._RPar">
-            <summary>
-            User-specified array used to communicate real parameters
-            </summary>
-        </member>
-        <member name="F:DotNumerics.ODE.xOdeBase._IPar">
-            <summary>
-            User-specified array used to communicate integer parameter
-            </summary>
-        </member>
-        <member name="M:DotNumerics.ODE.xOdeBase.SetInitialValues(System.Double,System.Double[])">
-            <summary>
-            Sets the initial values for the differential equations.
-            </summary>
-            <param name="t0">The initial value for the independent variable.</param>
-            <param name="y0">A vector of size N containing the initial conditions. N is the number of differential equations.</param>
-            <remarks>
-            This method should be invoked before to start the integration.
-            When this method is invoked, the ODE solver is restarted.
-            </remarks>
-        </member>
-        <member name="M:DotNumerics.ODE.xOdeBase.InitializeSizeDependentVariables(System.Int32)">
-            <summary>
-            InitializeInternal the size dependent variables:
-            Number of equations, Relative tolerances,  Absolute tolerances, Working space
-            </summary>
-            <param name="numEquations">The number of equations.</param>
-        </member>
-        <member name="M:DotNumerics.ODE.xOdeBase.InitializeWorkingSpace">
-            <summary>
-            Inicializa elespacio nesesitado por la surutinas. Se requiere que estend dedfinidas las proiedades
-            que definen dicho espacio, por ejemplo el numero de equaciones.
-            </summary>
-        </member>
-        <member name="M:DotNumerics.ODE.xOdeBase.InitializeODEs(DotNumerics.ODE.OdeFunction,System.Int32)">
-            <summary>
-            Method that initialize the ODE to solve.
-            </summary>
-            <param name="function">A function that evaluates the right side of the differential equations.</param>
-            <param name="numEquations">The number of differential equations.</param>
-        </member>
-        <member name="M:DotNumerics.ODE.xOdeBase.InitializeODEs(DotNumerics.ODE.OdeFunction,System.Int32,System.Double,System.Double[])">
-            <summary>
-            Method that initialize the ODE to solve.
-            </summary>
-            <param name="function">A function that evaluates the right side of the differential equations.</param>
-            <param name="numEquations">The number of differential equations.</param>
-            <param name="t0">The initial value for the independent variable.</param>
-            <param name="y0">A vector of size N containing the initial conditions. N is the number of differential equations.</param>
-        </member>
-        <member name="P:DotNumerics.ODE.xOdeBase.RelTolArray">
-            <summary>
-            A relative error tolerance array ( length numEquations).
-            </summary>
-            <remarks>
-            If ErrorToleranceType = ErrorToleranceEnum.Array the estimated local error in Y(i) is controlled to be less than RelTolArray[I]*Abs(Y(I))+AbsTolArray[i].
-            </remarks>
-        </member>
-        <member name="P:DotNumerics.ODE.xOdeBase.RelTol">
-            <summary>
-            A relative error tolerance parameter.
-            </summary>
-            <remarks>
-            If ErrorToleranceType = ErrorToleranceEnum.Scalar the estimated local error in Y(i) is controlled to be less than RelTol*Abs(Y[i]) + AbsTol.
-            </remarks>
-        </member>
-        <member name="P:DotNumerics.ODE.xOdeBase.AbsTol">
-            <summary>
-            An absolute error tolerance parameter
-            </summary>
-            <remarks>
-            If ErrorToleranceType = ErrorToleranceEnum.Scalar the estimated local error in Y(i) is controlled to be less than RelTol*Abs(Y[i]) + AbsTol.
-            </remarks>
-        </member>
-        <member name="P:DotNumerics.ODE.xOdeBase.AbsTolArray">
-            <summary>
-            An absolute error tolerance array (length numEquations). 
-            </summary>
-            <remarks>
-            If ErrorToleranceType = ErrorToleranceEnum.Array the estimated local error in Y(i) is controlled to be less than RelTolArray[I]*Abs(Y(I))+AbsTolArray[i].
-            </remarks>
-        </member>
-        <member name="P:DotNumerics.ODE.xOdeBase.ErrorToleranceType">
-            <summary>
-            Specifies the type of the relative error and absolute error tolerances. 
             </summary>
         </member>
         <member name="F:DotNumerics.ODE.DVode.xBaseOdeGearsAndAdamsMoulton._ITask">
@@ -3056,6 +2852,13 @@
             que definen dicho espacio, por ejemplo el numero de equaciones.
             </summary>
         </member>
+        <member name="T:DotNumerics.ODE.OdeAdamsMoulton">
+            <summary>
+            Solves an initial-value problem for nonstiff ordinary differential equations using 
+            the Adams-Moulton method.
+            dy(i)/dt = f(i,t,y(1),y(2),...,y(N)).
+            </summary>
+        </member>
         <member name="M:DotNumerics.ODE.OdeAdamsMoulton.#ctor">
             <summary>
             Initializes a new instance of the OdeAdamsMoulton class.
@@ -3129,83 +2932,6 @@
             the explicit Runge-Kutta method of order (4)5.
             dy(i)/dt = f(i,t,y(1),y(2),...,y(N)).  
             </summary>
-        </member>
-        <member name="T:DotNumerics.ODE.xBaseOdeRungeKutta">
-             <summary>
-            Represents a base class for the Runge-Kutta classes. 
-             </summary>
-        </member>
-        <member name="F:DotNumerics.ODE.xBaseOdeRungeKutta._RKSolOut">
-            <summary>
-            The Sub for the solution.
-            </summary>
-        </member>
-        <member name="F:DotNumerics.ODE.xBaseOdeRungeKutta._Solution">
-            <summary>
-            The array containing the solution of the ODEs [T, Y1,Y2,...]
-            </summary>
-        </member>
-        <member name="F:DotNumerics.ODE.xBaseOdeRungeKutta._IOut">
-            <summary>
-            SWITCH FOR CALLING THE SUBROUTINE SOLOUTR:
-            IOUT=0: SUBROUTINE IS NEVER CALLED
-            IOUT=1: SUBROUTINE IS USED FOR OUTPUT.
-            IOUT=2: DENSE OUTPUT IS PERFORMED IN SOLOUTR
-            (IN THIS CASE WORK(5) MUST BE SPECIFIED)
-            </summary>
-        </member>
-        <member name="F:DotNumerics.ODE.xBaseOdeRungeKutta._IDID">
-            <summary>
-            REPORTS ON SUCCESSFULNESS UPON RETURN:
-            IDID= 1  COMPUTATION SUCCESSFUL,
-            IDID= 2  COMPUT. SUCCESSFUL (INTERRUPTED BY SOLOUTR)
-            IDID=-1  INPUT IS NOT CONSISTENT,
-            IDID=-2  LARGER NMAX IS NEEDED,
-            IDID=-3  STEP SIZE BECOMES TOO SMALL.
-            IDID=-4  PROBLEM IS PROBABLY STIFF (INTERRUPTED).
-            </summary>
-        </member>
-        <member name="M:DotNumerics.ODE.xBaseOdeRungeKutta.Solve(System.Double[],System.Double[])">
-            <summary>
-             Computes the solution of the differntial equations.
-            </summary>
-            <param name="y0">A vector of size N containing the initial conditions ( at t0). N is the number of differential equations.</param>
-            <param name="tspan">A vector specifying the interval of integration (t0,..,tf).</param>
-            <returns>
-            A matrix that contains the solution of the differential equations [T, y1,..,yN]. 
-            The first column contains the time points and each row corresponds to the solution at a time returned in the corresponding row.
-            </returns>
-        </member>
-        <member name="M:DotNumerics.ODE.xBaseOdeRungeKutta.Solve(System.Double[],System.Double,System.Double,System.Double)">
-            <summary>
-            Computes the solution of the differntial equations.
-            </summary>
-            <param name="y0">A vector of size N containing the initial conditions. N is the number of differential equations.</param>
-            <param name="t0">The initial independent variable value.</param>
-            <param name="deltaT">The step for the interval of integration (t0, t0+deltaT, t0+2*deltaT,...,tf).</param>
-            <param name="tf">The final independent variable value.</param>
-            <returns>
-            A matrix that contains the solution of the differential equations [T, y1,..,yN]. 
-            The first column contains the time points and each row corresponds to the solution at a time returned in the corresponding row.
-            </returns>
-        </member>
-        <member name="M:DotNumerics.ODE.xBaseOdeRungeKutta.Solve(System.Double[],System.Double,System.Double,System.Double,DotNumerics.ODE.OdeSolution)">
-            <summary>
-            Computes the solution of the differntial equations.
-            </summary>
-            <param name="y0">A vector of size N containing the initial conditions. N is the number of differential equations.</param>
-            <param name="t0">The initial independent variable value.</param>
-            <param name="deltaT">The step for the interval of integration (t0, t0+deltaT, t0+2*deltaT,...,tf).</param>
-            <param name="tf">The final independent variable value.</param>
-            <param name="solution">A delegate where to return the solution.</param>
-        </member>
-        <member name="M:DotNumerics.ODE.xBaseOdeRungeKutta.Solve(System.Double[],System.Double[],DotNumerics.ODE.OdeSolution)">
-            <summary>
-             Computes the solution of the differntial equations.
-            </summary>
-            <param name="y0">A vector of size N containing the initial conditions ( at t0). N is the number of differential equations.</param>
-            <param name="tspan">A vector specifying the interval of integration (t0,..,tf).</param>
-            <param name="solution">A delegate where to return the solution.</param>
         </member>
         <member name="M:DotNumerics.ODE.OdeExplicitRungeKutta45.#ctor">
             <summary>
@@ -3951,163 +3677,279 @@
             <param name="index">El indice corresponiente al tiempo deseado.</param>
             <returns>El tiempo de integracio.</returns>
         </member>
-        <member name="T:DotNumerics.Complex">
+        <member name="T:DotNumerics.ODE.xBaseOdeRungeKutta">
+             <summary>
+            Represents a base class for the Runge-Kutta classes. 
+             </summary>
+        </member>
+        <member name="F:DotNumerics.ODE.xBaseOdeRungeKutta._RKSolOut">
             <summary>
-            Represents a Complex number.
+            The Sub for the solution.
             </summary>
         </member>
-        <member name="M:DotNumerics.Complex.#ctor(System.Double,System.Double)">
+        <member name="F:DotNumerics.ODE.xBaseOdeRungeKutta._Solution">
             <summary>
-            Initializes a new instance of the Complex class.
+            The array containing the solution of the ODEs [T, Y1,Y2,...]
             </summary>
-            <param name="real">The real part of the Complex number.</param>
-            <param name="imaginary">The imaginary part of the complex number. </param>
         </member>
-        <member name="M:DotNumerics.Complex.op_Addition(DotNumerics.Complex,DotNumerics.Complex)">
+        <member name="F:DotNumerics.ODE.xBaseOdeRungeKutta._IOut">
             <summary>
-            Complex addition.
+            SWITCH FOR CALLING THE SUBROUTINE SOLOUTR:
+            IOUT=0: SUBROUTINE IS NEVER CALLED
+            IOUT=1: SUBROUTINE IS USED FOR OUTPUT.
+            IOUT=2: DENSE OUTPUT IS PERFORMED IN SOLOUTR
+            (IN THIS CASE WORK(5) MUST BE SPECIFIED)
             </summary>
-            <param name="z1">The left side of the addition operator.</param>
-            <param name="z2">The right side matrix of the addition operator.</param>
-            <returns>A value that represents the result of the addition.</returns>
         </member>
-        <member name="M:DotNumerics.Complex.op_UnaryPlus(DotNumerics.Complex)">
+        <member name="F:DotNumerics.ODE.xBaseOdeRungeKutta._IDID">
             <summary>
-            Unary addition.
+            REPORTS ON SUCCESSFULNESS UPON RETURN:
+            IDID= 1  COMPUTATION SUCCESSFUL,
+            IDID= 2  COMPUT. SUCCESSFUL (INTERRUPTED BY SOLOUTR)
+            IDID=-1  INPUT IS NOT CONSISTENT,
+            IDID=-2  LARGER NMAX IS NEEDED,
+            IDID=-3  STEP SIZE BECOMES TOO SMALL.
+            IDID=-4  PROBLEM IS PROBABLY STIFF (INTERRUPTED).
             </summary>
-            <param name="c">The value.</param>
-            <returns>The value.</returns>
         </member>
-        <member name="M:DotNumerics.Complex.op_UnaryNegation(DotNumerics.Complex)">
+        <member name="M:DotNumerics.ODE.xBaseOdeRungeKutta.Solve(System.Double[],System.Double[])">
             <summary>
-            Unary minus.
+             Computes the solution of the differntial equations.
             </summary>
-            <param name="c">The value</param>
-            <returns> -value</returns>
-        </member>
-        <member name="M:DotNumerics.Complex.op_Subtraction(DotNumerics.Complex,DotNumerics.Complex)">
-            <summary>
-            Complex subtraction.
-            </summary>
-            <param name="z1">The left side of the operator.</param>
-            <param name="z2">The right side of the operator.</param>
-            <returns>A value that represents the result of the operation.</returns>
-        </member>
-        <member name="M:DotNumerics.Complex.op_Multiply(DotNumerics.Complex,DotNumerics.Complex)">
-            <summary>
-            Complex multiplication.
-            </summary>
-            <param name="z1">The left side of the operator.</param>
-            <param name="z2">The right side of the operator.</param>
-            <returns>A value that represents the result of the operation.</returns>
-        </member>
-        <member name="M:DotNumerics.Complex.op_Multiply(System.Double,DotNumerics.Complex)">
-            <summary>
-            Complex multiplication.
-            </summary>
-            <param name="z1">The left side of the operator.</param>
-            <param name="z2">The right side of the operator.</param>
-            <returns>A value that represents the result of the operation.</returns>
-        </member>
-        <member name="M:DotNumerics.Complex.op_Multiply(DotNumerics.Complex,System.Double)">
-            <summary>
-            Complex multiplication.
-            </summary>
-            <param name="z1">The left side of the operator.</param>
-            <param name="z2">The right side of the operator.</param>
-            <returns>A value that represents the result of the operation.</returns>
-        </member>
-        <member name="M:DotNumerics.Complex.op_Division(DotNumerics.Complex,DotNumerics.Complex)">
-            <summary>
-            Complex division.
-            </summary>
-            <param name="z1">The left side of the operator.</param>
-            <param name="z2">The right side of the operator.</param>
-            <returns>A value that represents the result of the operation.</returns>
-        </member>
-        <member name="M:DotNumerics.Complex.op_Equality(DotNumerics.Complex,DotNumerics.Complex)">
-            <summary>
-            Equality operator.
-            </summary>
-            <param name="z1">The left side of the operator.</param>
-            <param name="z2">The right side of the operator.</param>
-            <returns>A value that represents the result of the operation.</returns>
-        </member>
-        <member name="M:DotNumerics.Complex.op_Inequality(DotNumerics.Complex,DotNumerics.Complex)">
-            <summary>
-            Inequality operator.
-            </summary>
-            <param name="z1">The left side of the operator.</param>
-            <param name="z2">The right side of the operator.</param>
-            <returns>A value that represents the result of the operation.</returns>
-        </member>
-        <member name="M:DotNumerics.Complex.Equals(System.Object)">
-            <summary>
-            Indicates whether this instance and a specific object are equals.
-            </summary>
-            <param name="obj">Another object to compare to.</param>
-            <returns>true if obj and this instance are the same type and represent the same value;
-            otherwise, false.</returns>
-        </member>
-        <member name="M:DotNumerics.Complex.GetHashCode">
-            <summary>
-            Returns the hash code for this instance.
-            </summary>
-            <returns>A 32-bit signed integer that is the hash code for this instance.</returns>
-        </member>
-        <member name="M:DotNumerics.Complex.ToString">
-            <summary>
-            Converts this instance to its equivalent string representation.
-            </summary>
-            <returns>The string representation.</returns>
-        </member>
-        <member name="M:DotNumerics.Complex.ToString(System.String)">
-            <summary>
-            Converts this instance to its equivalent string representation,
-            using the specified format.
-            </summary>
-            <param name="format">A numeric format string.</param>
-            <returns>The string representation of the value of this instance as specified by format.</returns>
-        </member>
-        <member name="M:DotNumerics.Complex.ToString(System.String,System.IFormatProvider)">
-            <summary>
-             Converts the numeric value of this instance to its equivalent string representation
-             using the specified format and culture-specific format information.
-            </summary>
-            <param name="format">
-            A numeric format string.
-            </param>
-            <param name="formatProvider">
-            An System.IFormatProvider that supplies culture-specific formatting information.
-            </param>
+            <param name="y0">A vector of size N containing the initial conditions ( at t0). N is the number of differential equations.</param>
+            <param name="tspan">A vector specifying the interval of integration (t0,..,tf).</param>
             <returns>
-            The string representation of the value of this instance as specified by format and provider.
+            A matrix that contains the solution of the differential equations [T, y1,..,yN]. 
+            The first column contains the time points and each row corresponds to the solution at a time returned in the corresponding row.
             </returns>
         </member>
-        <member name="P:DotNumerics.Complex.Real">
+        <member name="M:DotNumerics.ODE.xBaseOdeRungeKutta.Solve(System.Double[],System.Double,System.Double,System.Double)">
             <summary>
-            Gets or sets the real value of the complex number.
+            Computes the solution of the differntial equations.
+            </summary>
+            <param name="y0">A vector of size N containing the initial conditions. N is the number of differential equations.</param>
+            <param name="t0">The initial independent variable value.</param>
+            <param name="deltaT">The step for the interval of integration (t0, t0+deltaT, t0+2*deltaT,...,tf).</param>
+            <param name="tf">The final independent variable value.</param>
+            <returns>
+            A matrix that contains the solution of the differential equations [T, y1,..,yN]. 
+            The first column contains the time points and each row corresponds to the solution at a time returned in the corresponding row.
+            </returns>
+        </member>
+        <member name="M:DotNumerics.ODE.xBaseOdeRungeKutta.Solve(System.Double[],System.Double,System.Double,System.Double,DotNumerics.ODE.OdeSolution)">
+            <summary>
+            Computes the solution of the differntial equations.
+            </summary>
+            <param name="y0">A vector of size N containing the initial conditions. N is the number of differential equations.</param>
+            <param name="t0">The initial independent variable value.</param>
+            <param name="deltaT">The step for the interval of integration (t0, t0+deltaT, t0+2*deltaT,...,tf).</param>
+            <param name="tf">The final independent variable value.</param>
+            <param name="solution">A delegate where to return the solution.</param>
+        </member>
+        <member name="M:DotNumerics.ODE.xBaseOdeRungeKutta.Solve(System.Double[],System.Double[],DotNumerics.ODE.OdeSolution)">
+            <summary>
+             Computes the solution of the differntial equations.
+            </summary>
+            <param name="y0">A vector of size N containing the initial conditions ( at t0). N is the number of differential equations.</param>
+            <param name="tspan">A vector specifying the interval of integration (t0,..,tf).</param>
+            <param name="solution">A delegate where to return the solution.</param>
+        </member>
+        <member name="T:DotNumerics.ODE.xOdeBase">
+             <summary>
+            Represents the base class for the Odes. 
+             </summary>
+        </member>
+        <member name="F:DotNumerics.ODE.xOdeBase._NEquations">
+            <summary>
+            The number of equations
             </summary>
         </member>
-        <member name="P:DotNumerics.Complex.Imaginary">
+        <member name="F:DotNumerics.ODE.xOdeBase._T0">
             <summary>
-            Gets or sets the imaginary value of the complex number.
+            The initial independent variable value.
             </summary>
         </member>
-        <member name="P:DotNumerics.Complex.Conjugate">
+        <member name="F:DotNumerics.ODE.xOdeBase._Y0">
             <summary>
-            Returns the conjugate of this complex number. 
+            The initial conditions.
             </summary>
         </member>
-        <member name="P:DotNumerics.Complex.Modulus">
+        <member name="F:DotNumerics.ODE.xOdeBase._Y">
             <summary>
-            Gets the modulus or absolute value of this complex number. 
+            Array used to set the initial values and to return the solution in some ODE solvers.
+            This array must be initialized equal to the initial values in the first call.
             </summary>
         </member>
-        <member name="P:DotNumerics.Complex.Argument">
+        <member name="F:DotNumerics.ODE.xOdeBase._InvokeSetInitialValues">
             <summary>
-            Gets or stes the argument of a this complex number. 
+            Indicated if the SetInitialValues method need to be invoked.
             </summary>
+        </member>
+        <member name="F:DotNumerics.ODE.xOdeBase._InvokeInitializeODEs">
+            <summary>
+            Indicated if the InitializeODEs method need to be invoked.
+            </summary>
+        </member>
+        <member name="F:DotNumerics.ODE.xOdeBase._Errors">
+            <summary>
+            Array containing the exception messages.
+            </summary>
+        </member>
+        <member name="F:DotNumerics.ODE.xOdeBase._ITolAdamsGears">
+            <summary>
+            For AdamsMoulton and  OdeGearsBDF:
+            
+            MeITol = An indicator for the type of error control.
+            
+              ITOL         RTOL       ATOL          EWT(i)
+            MeITol =1     scalar     scalar     RTOL*ABS(Y(i)) + ATOL
+            MeITol =2     scalar     array      RTOL*ABS(Y(i)) + ATOL(i)
+            MeITol =3     array      scalar     RTOL(i)*ABS(Y(i)) + ATOL
+            MeITol =4     array      array      RTOL(i)*ABS(Y(i)) + ATOL(i)
+            </summary>
+        </member>
+        <member name="F:DotNumerics.ODE.xOdeBase._ITolRK">
+             <summary>
+            For Runge-Kutta
+            
+             ITol = An indicator for the type of error control.
+             
+             ITOL=0: BOTH RTOL AND ATOL ARE SCALARS.
+             ITOL=1: BOTH RTOL AND ATOL ARE VECTORS. 
+             </summary>
+        </member>
+        <member name="F:DotNumerics.ODE.xOdeBase._RelTol">
+            <summary>
+            A relative error tolerance parameter.
+            The input parameters ITOL, RTOL, and ATOL determine
+            the error control performed by the solver.  The solver will
+            control the vector e = (e(i)) of estimated local errors
+            in Y, according to an inequality of the form
+            rms-norm of ( e(i)/EWT(i) )   .le.   1,
+            where       EWT(i) = RTOL(i)*abs(Y(i)) + ATOL(i),
+            </summary>
+        </member>
+        <member name="F:DotNumerics.ODE.xOdeBase._RelTolArray">
+            <summary>
+            A relative error tolerance parameter, either a scalar or an array of length NEQ. 
+            </summary>
+        </member>
+        <member name="F:DotNumerics.ODE.xOdeBase._AbsTol">
+            <summary>
+            An absolute error tolerance parameter
+            </summary>
+        </member>
+        <member name="F:DotNumerics.ODE.xOdeBase._AbsTolArray">
+            <summary>
+            An absolute error tolerance parameter(array of length NEQ)
+            </summary>
+        </member>
+        <member name="F:DotNumerics.ODE.xOdeBase._RWork">
+            <summary>
+            MeRWork= A real working array (double precision)
+            </summary>
+        </member>
+        <member name="F:DotNumerics.ODE.xOdeBase._Lrw">
+            <summary>
+            MeLrw= The length of the array RWORK
+            </summary>
+        </member>
+        <member name="F:DotNumerics.ODE.xOdeBase._IWork">
+            <summary>
+            MeIWork= An integer work array.
+            </summary>
+        </member>
+        <member name="F:DotNumerics.ODE.xOdeBase._Liw">
+            <summary>
+            MeLiw= the length of the array IWORK
+            </summary>
+        </member>
+        <member name="F:DotNumerics.ODE.xOdeBase._RPar">
+            <summary>
+            User-specified array used to communicate real parameters
+            </summary>
+        </member>
+        <member name="F:DotNumerics.ODE.xOdeBase._IPar">
+            <summary>
+            User-specified array used to communicate integer parameter
+            </summary>
+        </member>
+        <member name="P:DotNumerics.ODE.xOdeBase.RelTolArray">
+            <summary>
+            A relative error tolerance array ( length numEquations).
+            </summary>
+            <remarks>
+            If ErrorToleranceType = ErrorToleranceEnum.Array the estimated local error in Y(i) is controlled to be less than RelTolArray[I]*Abs(Y(I))+AbsTolArray[i].
+            </remarks>
+        </member>
+        <member name="P:DotNumerics.ODE.xOdeBase.RelTol">
+            <summary>
+            A relative error tolerance parameter.
+            </summary>
+            <remarks>
+            If ErrorToleranceType = ErrorToleranceEnum.Scalar the estimated local error in Y(i) is controlled to be less than RelTol*Abs(Y[i]) + AbsTol.
+            </remarks>
+        </member>
+        <member name="P:DotNumerics.ODE.xOdeBase.AbsTol">
+            <summary>
+            An absolute error tolerance parameter
+            </summary>
+            <remarks>
+            If ErrorToleranceType = ErrorToleranceEnum.Scalar the estimated local error in Y(i) is controlled to be less than RelTol*Abs(Y[i]) + AbsTol.
+            </remarks>
+        </member>
+        <member name="P:DotNumerics.ODE.xOdeBase.AbsTolArray">
+            <summary>
+            An absolute error tolerance array (length numEquations). 
+            </summary>
+            <remarks>
+            If ErrorToleranceType = ErrorToleranceEnum.Array the estimated local error in Y(i) is controlled to be less than RelTolArray[I]*Abs(Y(I))+AbsTolArray[i].
+            </remarks>
+        </member>
+        <member name="P:DotNumerics.ODE.xOdeBase.ErrorToleranceType">
+            <summary>
+            Specifies the type of the relative error and absolute error tolerances. 
+            </summary>
+        </member>
+        <member name="M:DotNumerics.ODE.xOdeBase.SetInitialValues(System.Double,System.Double[])">
+            <summary>
+            Sets the initial values for the differential equations.
+            </summary>
+            <param name="t0">The initial value for the independent variable.</param>
+            <param name="y0">A vector of size N containing the initial conditions. N is the number of differential equations.</param>
+            <remarks>
+            This method should be invoked before to start the integration.
+            When this method is invoked, the ODE solver is restarted.
+            </remarks>
+        </member>
+        <member name="M:DotNumerics.ODE.xOdeBase.InitializeSizeDependentVariables(System.Int32)">
+            <summary>
+            InitializeInternal the size dependent variables:
+            Number of equations, Relative tolerances,  Absolute tolerances, Working space
+            </summary>
+            <param name="numEquations">The number of equations.</param>
+        </member>
+        <member name="M:DotNumerics.ODE.xOdeBase.InitializeWorkingSpace">
+            <summary>
+            Inicializa elespacio nesesitado por la surutinas. Se requiere que estend dedfinidas las proiedades
+            que definen dicho espacio, por ejemplo el numero de equaciones.
+            </summary>
+        </member>
+        <member name="M:DotNumerics.ODE.xOdeBase.InitializeODEs(DotNumerics.ODE.OdeFunction,System.Int32)">
+            <summary>
+            Method that initialize the ODE to solve.
+            </summary>
+            <param name="function">A function that evaluates the right side of the differential equations.</param>
+            <param name="numEquations">The number of differential equations.</param>
+        </member>
+        <member name="M:DotNumerics.ODE.xOdeBase.InitializeODEs(DotNumerics.ODE.OdeFunction,System.Int32,System.Double,System.Double[])">
+            <summary>
+            Method that initialize the ODE to solve.
+            </summary>
+            <param name="function">A function that evaluates the right side of the differential equations.</param>
+            <param name="numEquations">The number of differential equations.</param>
+            <param name="t0">The initial value for the independent variable.</param>
+            <param name="y0">A vector of size N containing the initial conditions. N is the number of differential equations.</param>
         </member>
         <member name="M:DotNumerics.FortranLibrary.FortranLib.LEN_TRIM(System.String)">
              <summary>
@@ -4353,55 +4195,305 @@
              <param name="startIndex"></param>
              <returns></returns>
         </member>
+        <member name="T:DotNumerics.Complex">
+            <summary>
+            Represents a Complex number.
+            </summary>
+        </member>
+        <member name="M:DotNumerics.Complex.#ctor(System.Double,System.Double)">
+            <summary>
+            Initializes a new instance of the Complex class.
+            </summary>
+            <param name="real">The real part of the Complex number.</param>
+            <param name="imaginary">The imaginary part of the complex number. </param>
+        </member>
+        <member name="P:DotNumerics.Complex.Real">
+            <summary>
+            Gets or sets the real value of the complex number.
+            </summary>
+        </member>
+        <member name="P:DotNumerics.Complex.Imaginary">
+            <summary>
+            Gets or sets the imaginary value of the complex number.
+            </summary>
+        </member>
+        <member name="P:DotNumerics.Complex.Conjugate">
+            <summary>
+            Returns the conjugate of this complex number. 
+            </summary>
+        </member>
+        <member name="P:DotNumerics.Complex.Modulus">
+            <summary>
+            Gets the modulus or absolute value of this complex number. 
+            </summary>
+        </member>
+        <member name="P:DotNumerics.Complex.Argument">
+            <summary>
+            Gets or stes the argument of a this complex number. 
+            </summary>
+        </member>
+        <member name="M:DotNumerics.Complex.op_Addition(DotNumerics.Complex,DotNumerics.Complex)">
+            <summary>
+            Complex addition.
+            </summary>
+            <param name="z1">The left side of the addition operator.</param>
+            <param name="z2">The right side matrix of the addition operator.</param>
+            <returns>A value that represents the result of the addition.</returns>
+        </member>
+        <member name="M:DotNumerics.Complex.op_UnaryPlus(DotNumerics.Complex)">
+            <summary>
+            Unary addition.
+            </summary>
+            <param name="c">The value.</param>
+            <returns>The value.</returns>
+        </member>
+        <member name="M:DotNumerics.Complex.op_UnaryNegation(DotNumerics.Complex)">
+            <summary>
+            Unary minus.
+            </summary>
+            <param name="c">The value</param>
+            <returns> -value</returns>
+        </member>
+        <member name="M:DotNumerics.Complex.op_Subtraction(DotNumerics.Complex,DotNumerics.Complex)">
+            <summary>
+            Complex subtraction.
+            </summary>
+            <param name="z1">The left side of the operator.</param>
+            <param name="z2">The right side of the operator.</param>
+            <returns>A value that represents the result of the operation.</returns>
+        </member>
+        <member name="M:DotNumerics.Complex.op_Multiply(DotNumerics.Complex,DotNumerics.Complex)">
+            <summary>
+            Complex multiplication.
+            </summary>
+            <param name="z1">The left side of the operator.</param>
+            <param name="z2">The right side of the operator.</param>
+            <returns>A value that represents the result of the operation.</returns>
+        </member>
+        <member name="M:DotNumerics.Complex.op_Multiply(System.Double,DotNumerics.Complex)">
+            <summary>
+            Complex multiplication.
+            </summary>
+            <param name="z1">The left side of the operator.</param>
+            <param name="z2">The right side of the operator.</param>
+            <returns>A value that represents the result of the operation.</returns>
+        </member>
+        <member name="M:DotNumerics.Complex.op_Multiply(DotNumerics.Complex,System.Double)">
+            <summary>
+            Complex multiplication.
+            </summary>
+            <param name="z1">The left side of the operator.</param>
+            <param name="z2">The right side of the operator.</param>
+            <returns>A value that represents the result of the operation.</returns>
+        </member>
+        <member name="M:DotNumerics.Complex.op_Division(DotNumerics.Complex,DotNumerics.Complex)">
+            <summary>
+            Complex division.
+            </summary>
+            <param name="z1">The left side of the operator.</param>
+            <param name="z2">The right side of the operator.</param>
+            <returns>A value that represents the result of the operation.</returns>
+        </member>
+        <member name="M:DotNumerics.Complex.op_Equality(DotNumerics.Complex,DotNumerics.Complex)">
+            <summary>
+            Equality operator.
+            </summary>
+            <param name="z1">The left side of the operator.</param>
+            <param name="z2">The right side of the operator.</param>
+            <returns>A value that represents the result of the operation.</returns>
+        </member>
+        <member name="M:DotNumerics.Complex.op_Inequality(DotNumerics.Complex,DotNumerics.Complex)">
+            <summary>
+            Inequality operator.
+            </summary>
+            <param name="z1">The left side of the operator.</param>
+            <param name="z2">The right side of the operator.</param>
+            <returns>A value that represents the result of the operation.</returns>
+        </member>
+        <member name="M:DotNumerics.Complex.Equals(System.Object)">
+            <summary>
+            Indicates whether this instance and a specific object are equals.
+            </summary>
+            <param name="obj">Another object to compare to.</param>
+            <returns>true if obj and this instance are the same type and represent the same value;
+            otherwise, false.</returns>
+        </member>
+        <member name="M:DotNumerics.Complex.GetHashCode">
+            <summary>
+            Returns the hash code for this instance.
+            </summary>
+            <returns>A 32-bit signed integer that is the hash code for this instance.</returns>
+        </member>
+        <member name="M:DotNumerics.Complex.ToString">
+            <summary>
+            Converts this instance to its equivalent string representation.
+            </summary>
+            <returns>The string representation.</returns>
+        </member>
+        <member name="M:DotNumerics.Complex.ToString(System.String)">
+            <summary>
+            Converts this instance to its equivalent string representation,
+            using the specified format.
+            </summary>
+            <param name="format">A numeric format string.</param>
+            <returns>The string representation of the value of this instance as specified by format.</returns>
+        </member>
+        <member name="M:DotNumerics.Complex.ToString(System.String,System.IFormatProvider)">
+            <summary>
+             Converts the numeric value of this instance to its equivalent string representation
+             using the specified format and culture-specific format information.
+            </summary>
+            <param name="format">
+            A numeric format string.
+            </param>
+            <param name="formatProvider">
+            An System.IFormatProvider that supplies culture-specific formatting information.
+            </param>
+            <returns>
+            The string representation of the value of this instance as specified by format and provider.
+            </returns>
+        </member>
         <member name="T:DotNumerics.LinearAlgebra.BandMatrix">
             <summary>
             Represents a Band Matrix.
             </summary>
+        </member>
+        <member name="M:DotNumerics.LinearAlgebra.BandMatrix.#ctor(System.Int32,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Initializes a new instance of the BandMatrix class of the given size.
+            </summary>
+            <param name="rows">Number of rows.</param>
+            <param name="columns">Number of columns.</param>
+            <param name="lowerBandWidth">Number of bands below the main diagonal</param>
+            <param name="upperBandWidth">Number of bands above the main diagonal</param>
+        </member>
+        <member name="M:DotNumerics.LinearAlgebra.BandMatrix.#ctor(System.Int32,System.Int32,System.Int32,System.Int32,System.Double[])">
+            <summary>
+            Initializes a new instance of the BandMatrix class of the given size using a array
+            </summary>
+            <param name="rows">Number of rows.</param>
+            <param name="columns">Number of columns.</param>
+            <param name="lowerBandWidth">Number of bands below the main diagonal</param>
+            <param name="upperBandWidth">Number of bands above the main diagonal</param>
+            <param name="Data">The matix data </param>
+        </member>
+        <member name="M:DotNumerics.LinearAlgebra.BandMatrix.op_Addition(DotNumerics.LinearAlgebra.BandMatrix,DotNumerics.LinearAlgebra.BandMatrix)">
+            <summary>
+            Matrix addition.
+            </summary>
+            <param name="A">The left side matrix of the addition operator.</param>
+            <param name="B">The right side matrix of the addition operator.</param>
+            <returns>A matrix that represents the result of the matrix addition.</returns>
+        </member>
+        <member name="M:DotNumerics.LinearAlgebra.BandMatrix.op_Subtraction(DotNumerics.LinearAlgebra.BandMatrix,DotNumerics.LinearAlgebra.BandMatrix)">
+            <summary>
+            Matrix subtraction.
+            </summary>
+            <param name="A"> The left side matrix of the subtraction operator.</param>
+            <param name="B">The right side matrix of the subtraction operator.</param>
+            <returns>A matrix that represents the result of the matrix subtraction.</returns>
+        </member>
+        <member name="M:DotNumerics.LinearAlgebra.BandMatrix.op_Multiply(System.Double,DotNumerics.LinearAlgebra.BandMatrix)">
+            <summary>
+            Scalar-Matrix multiplication.
+            </summary>
+            <param name="s"> The left side scalar of the multiplication operator.</param>
+            <param name="A">The right side matrix of the multiplication operator.</param>
+            <returns>A matrix that represents the result of the multiplication.</returns>
+        </member>
+        <member name="M:DotNumerics.LinearAlgebra.BandMatrix.Clone">
+            <summary>
+            Creates a copy of the matrix.
+            </summary>
+            <returns>The copy of the Matrix.</returns>
+        </member>
+        <member name="M:DotNumerics.LinearAlgebra.BandMatrix.Random(System.Int32,System.Int32,System.Int32,System.Int32)">
+            <summary>Generate a BandMatrix with random elements</summary>
+            <param name="rows">Number of rows.</param>
+            <param name="columns">Number of columns.</param>
+            <param name="lowerBandWidth">Number of bands below the main diagonal</param>
+            <param name="upperBandWidth">Number of bands above the main diagonal</param>
         </member>
         <member name="T:DotNumerics.LinearAlgebra.BaseBandMatrix">
             <summary>
             Represents the base class for band matrices.
             </summary>
         </member>
+        <member name="F:DotNumerics.LinearAlgebra.BaseBandMatrix.MeLowerBandWidth">
+            <summary>
+            Number of bands below the main diagonal (lowerBandWidth)
+            </summary>
+        </member>
+        <member name="F:DotNumerics.LinearAlgebra.BaseBandMatrix.MeUpperBandWidth">
+            <summary>
+            Number of bands above the main diagonal (upperBandWidth)
+            </summary>
+        </member>
+        <member name="M:DotNumerics.LinearAlgebra.BaseBandMatrix.#ctor(System.Int32,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Initializes a new instance of the BandMatrix class of the given size.
+            </summary>
+            <param name="rows">Number of rows.</param>
+            <param name="columns">Number of columns.</param>
+            <param name="lowerBandWidth">Number of bands below the main diagonal</param>
+            <param name="upperBandWidth">Number of bands above the main diagonal</param>
+        </member>
+        <member name="M:DotNumerics.LinearAlgebra.BaseBandMatrix.#ctor(System.Int32,System.Int32,System.Int32,System.Int32,System.Double[])">
+            <summary>
+            Initializes a new instance of the BandMatrix class of the given size using a array
+            </summary>
+            <param name="rows">Number of rows.</param>
+            <param name="columns">Number of columns.</param>
+            <param name="lowerBandWidth">Number of bands below the main diagonal</param>
+            <param name="upperBandWidth">Number of bands above the main diagonal</param>
+            <param name="Data">The matix data </param>
+        </member>
+        <member name="M:DotNumerics.LinearAlgebra.BaseBandMatrix.#ctor(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Initializes a new instance of the BandMatrix class of the given size using a array
+            </summary>
+            <param name="size">Size</param>
+            <param name="lowerBandWidth">Number of bands below the main diagonal</param>
+            <param name="upperBandWidth">Number of bands above the main diagonal</param>
+        </member>
+        <member name="M:DotNumerics.LinearAlgebra.BaseBandMatrix.#ctor(System.Int32,System.Int32,System.Int32,System.Double[])">
+            <summary>
+            Initializes a new instance of the BandMatrix class of the given size using a array
+            </summary>
+            <param name="size">Size</param>
+            <param name="Data">The matix data </param>
+            <param name="lowerBandWidth">Number of bands below the main diagonal</param>
+            <param name="upperBandWidth">Number of bands above the main diagonal</param>
+        </member>
+        <member name="P:DotNumerics.LinearAlgebra.BaseBandMatrix.Item(System.Int32,System.Int32)">
+            <summary>
+            Returns the value of a element of the matrix.
+            </summary>
+            <param name="row">The row value (zero-based).</param>
+            <param name="column">The column value (zero-based).</param>
+            <returns>The matrix value at (row, column).</returns>
+        </member>
+        <member name="P:DotNumerics.LinearAlgebra.BaseBandMatrix.LowerBandWidth">
+            <summary>
+            Number of bands below the main diagonal (lowerBandWidth)
+            </summary>
+        </member>
+        <member name="P:DotNumerics.LinearAlgebra.BaseBandMatrix.UpperBandWidth">
+            <summary>
+            Number of bands above the main diagonal (upperBandWidth)
+            </summary>
+        </member>
+        <member name="M:DotNumerics.LinearAlgebra.BaseBandMatrix.op_Implicit(DotNumerics.LinearAlgebra.BaseBandMatrix)~DotNumerics.LinearAlgebra.Matrix">
+            <summary>
+            Implicit BaseBandMatrix to Matrix conversion.
+            </summary>
+            <param name="bandMatrix">The BandMatrix</param>
+            <returns>The Matrix.</returns>
+        </member>
         <member name="T:DotNumerics.LinearAlgebra.BaseMatrix">
             <summary>
             Represents a Base Matrix.
             </summary>
-        </member>
-        <member name="T:DotNumerics.LinearAlgebra.IMatrix`1">
-            <summary>
-            Interface for a Matrix
-            </summary>
-        </member>
-        <member name="M:DotNumerics.LinearAlgebra.IMatrix`1.CopyToArray">
-            <summary>
-             Copy the elements of this matrix to a rectangular array.
-            </summary>
-            <returns>A rectangular array.</returns>
-        </member>
-        <member name="M:DotNumerics.LinearAlgebra.IMatrix`1.CopyToJaggedArray">
-            <summary>
-             Copy the elements of this matrix to a jagged array.
-            </summary>
-            <returns>A jagged array</returns>
-        </member>
-        <member name="P:DotNumerics.LinearAlgebra.IMatrix`1.RowCount">
-            <summary>
-            Returns the number of rows.
-            </summary>
-        </member>
-        <member name="P:DotNumerics.LinearAlgebra.IMatrix`1.ColumnCount">
-            <summary>
-            Returns the number of columns.
-            </summary>
-        </member>
-        <member name="P:DotNumerics.LinearAlgebra.IMatrix`1.Item(System.Int32,System.Int32)">
-            <summary>
-            Gets or set the value of a element of this Matrix.
-            </summary>
-            <param name="row">The row value (zero-based).</param>
-            <param name="column">The column value (zero-based).</param>
-            <returns>The Matrix element at (row, column).</returns>
         </member>
         <member name="F:DotNumerics.LinearAlgebra.BaseMatrix._Data">
             <summary>
@@ -4446,6 +4538,34 @@
             </summary>
             <param name="size">Size</param>
             <param name="data">The data</param>
+        </member>
+        <member name="P:DotNumerics.LinearAlgebra.BaseMatrix.Data">
+            <summary>
+            Los datos de la matriz
+            </summary>
+        </member>
+        <member name="P:DotNumerics.LinearAlgebra.BaseMatrix.RowCount">
+            <summary>
+            Returns the number of rows.
+            </summary>
+        </member>
+        <member name="P:DotNumerics.LinearAlgebra.BaseMatrix.ColumnCount">
+            <summary>
+            Returns the number of columns.
+            </summary>
+        </member>
+        <member name="P:DotNumerics.LinearAlgebra.BaseMatrix.IsSquare">
+            <summary>
+            Gets a value indicating if the matrix is square.
+            </summary>
+        </member>
+        <member name="P:DotNumerics.LinearAlgebra.BaseMatrix.Item(System.Int32,System.Int32)">
+            <summary>
+            Gets or set the value of a element of this matrix.
+            </summary>
+            <param name="row">The row value (zero-based).</param>
+            <param name="column">The column value (zero-based).</param>
+            <returns>The matrix element at (row, column).</returns>
         </member>
         <member name="M:DotNumerics.LinearAlgebra.BaseMatrix.CheckMatrixDimensions(DotNumerics.LinearAlgebra.BaseMatrix)">
             <summary>Check if size(this) == size(B) </summary>
@@ -4602,6 +4722,10 @@
             </summary>
             <returns>The transposed matrix.</returns>
         </member>
+        <member name="P:DotNumerics.LinearAlgebra.BaseMatrix.Trace">
+            <summary>Returns the trace of the matrix.</summary>
+            <returns>Sum of the diagonal elements.</returns>
+        </member>
         <member name="M:DotNumerics.LinearAlgebra.BaseMatrix.op_Multiply(DotNumerics.LinearAlgebra.BaseMatrix,DotNumerics.LinearAlgebra.BaseMatrix)">
             <summary>
             Matrix multiplication.
@@ -4637,165 +4761,6 @@
             Copy all elements of this matrix to a jagged array.
             </summary>
             <returns>A jagged array.</returns>
-        </member>
-        <member name="P:DotNumerics.LinearAlgebra.BaseMatrix.Data">
-            <summary>
-            Los datos de la matriz
-            </summary>
-        </member>
-        <member name="P:DotNumerics.LinearAlgebra.BaseMatrix.RowCount">
-            <summary>
-            Returns the number of rows.
-            </summary>
-        </member>
-        <member name="P:DotNumerics.LinearAlgebra.BaseMatrix.ColumnCount">
-            <summary>
-            Returns the number of columns.
-            </summary>
-        </member>
-        <member name="P:DotNumerics.LinearAlgebra.BaseMatrix.IsSquare">
-            <summary>
-            Gets a value indicating if the matrix is square.
-            </summary>
-        </member>
-        <member name="P:DotNumerics.LinearAlgebra.BaseMatrix.Item(System.Int32,System.Int32)">
-            <summary>
-            Gets or set the value of a element of this matrix.
-            </summary>
-            <param name="row">The row value (zero-based).</param>
-            <param name="column">The column value (zero-based).</param>
-            <returns>The matrix element at (row, column).</returns>
-        </member>
-        <member name="P:DotNumerics.LinearAlgebra.BaseMatrix.Trace">
-            <summary>Returns the trace of the matrix.</summary>
-            <returns>Sum of the diagonal elements.</returns>
-        </member>
-        <member name="F:DotNumerics.LinearAlgebra.BaseBandMatrix.MeLowerBandWidth">
-            <summary>
-            Number of bands below the main diagonal (lowerBandWidth)
-            </summary>
-        </member>
-        <member name="F:DotNumerics.LinearAlgebra.BaseBandMatrix.MeUpperBandWidth">
-            <summary>
-            Number of bands above the main diagonal (upperBandWidth)
-            </summary>
-        </member>
-        <member name="M:DotNumerics.LinearAlgebra.BaseBandMatrix.#ctor(System.Int32,System.Int32,System.Int32,System.Int32)">
-            <summary>
-            Initializes a new instance of the BandMatrix class of the given size.
-            </summary>
-            <param name="rows">Number of rows.</param>
-            <param name="columns">Number of columns.</param>
-            <param name="lowerBandWidth">Number of bands below the main diagonal</param>
-            <param name="upperBandWidth">Number of bands above the main diagonal</param>
-        </member>
-        <member name="M:DotNumerics.LinearAlgebra.BaseBandMatrix.#ctor(System.Int32,System.Int32,System.Int32,System.Int32,System.Double[])">
-            <summary>
-            Initializes a new instance of the BandMatrix class of the given size using a array
-            </summary>
-            <param name="rows">Number of rows.</param>
-            <param name="columns">Number of columns.</param>
-            <param name="lowerBandWidth">Number of bands below the main diagonal</param>
-            <param name="upperBandWidth">Number of bands above the main diagonal</param>
-            <param name="Data">The matix data </param>
-        </member>
-        <member name="M:DotNumerics.LinearAlgebra.BaseBandMatrix.#ctor(System.Int32,System.Int32,System.Int32)">
-            <summary>
-            Initializes a new instance of the BandMatrix class of the given size using a array
-            </summary>
-            <param name="size">Size</param>
-            <param name="lowerBandWidth">Number of bands below the main diagonal</param>
-            <param name="upperBandWidth">Number of bands above the main diagonal</param>
-        </member>
-        <member name="M:DotNumerics.LinearAlgebra.BaseBandMatrix.#ctor(System.Int32,System.Int32,System.Int32,System.Double[])">
-            <summary>
-            Initializes a new instance of the BandMatrix class of the given size using a array
-            </summary>
-            <param name="size">Size</param>
-            <param name="Data">The matix data </param>
-            <param name="lowerBandWidth">Number of bands below the main diagonal</param>
-            <param name="upperBandWidth">Number of bands above the main diagonal</param>
-        </member>
-        <member name="M:DotNumerics.LinearAlgebra.BaseBandMatrix.op_Implicit(DotNumerics.LinearAlgebra.BaseBandMatrix)~DotNumerics.LinearAlgebra.Matrix">
-            <summary>
-            Implicit BaseBandMatrix to Matrix conversion.
-            </summary>
-            <param name="bandMatrix">The BandMatrix</param>
-            <returns>The Matrix.</returns>
-        </member>
-        <member name="P:DotNumerics.LinearAlgebra.BaseBandMatrix.Item(System.Int32,System.Int32)">
-            <summary>
-            Returns the value of a element of the matrix.
-            </summary>
-            <param name="row">The row value (zero-based).</param>
-            <param name="column">The column value (zero-based).</param>
-            <returns>The matrix value at (row, column).</returns>
-        </member>
-        <member name="P:DotNumerics.LinearAlgebra.BaseBandMatrix.LowerBandWidth">
-            <summary>
-            Number of bands below the main diagonal (lowerBandWidth)
-            </summary>
-        </member>
-        <member name="P:DotNumerics.LinearAlgebra.BaseBandMatrix.UpperBandWidth">
-            <summary>
-            Number of bands above the main diagonal (upperBandWidth)
-            </summary>
-        </member>
-        <member name="M:DotNumerics.LinearAlgebra.BandMatrix.#ctor(System.Int32,System.Int32,System.Int32,System.Int32)">
-            <summary>
-            Initializes a new instance of the BandMatrix class of the given size.
-            </summary>
-            <param name="rows">Number of rows.</param>
-            <param name="columns">Number of columns.</param>
-            <param name="lowerBandWidth">Number of bands below the main diagonal</param>
-            <param name="upperBandWidth">Number of bands above the main diagonal</param>
-        </member>
-        <member name="M:DotNumerics.LinearAlgebra.BandMatrix.#ctor(System.Int32,System.Int32,System.Int32,System.Int32,System.Double[])">
-            <summary>
-            Initializes a new instance of the BandMatrix class of the given size using a array
-            </summary>
-            <param name="rows">Number of rows.</param>
-            <param name="columns">Number of columns.</param>
-            <param name="lowerBandWidth">Number of bands below the main diagonal</param>
-            <param name="upperBandWidth">Number of bands above the main diagonal</param>
-            <param name="Data">The matix data </param>
-        </member>
-        <member name="M:DotNumerics.LinearAlgebra.BandMatrix.op_Addition(DotNumerics.LinearAlgebra.BandMatrix,DotNumerics.LinearAlgebra.BandMatrix)">
-            <summary>
-            Matrix addition.
-            </summary>
-            <param name="A">The left side matrix of the addition operator.</param>
-            <param name="B">The right side matrix of the addition operator.</param>
-            <returns>A matrix that represents the result of the matrix addition.</returns>
-        </member>
-        <member name="M:DotNumerics.LinearAlgebra.BandMatrix.op_Subtraction(DotNumerics.LinearAlgebra.BandMatrix,DotNumerics.LinearAlgebra.BandMatrix)">
-            <summary>
-            Matrix subtraction.
-            </summary>
-            <param name="A"> The left side matrix of the subtraction operator.</param>
-            <param name="B">The right side matrix of the subtraction operator.</param>
-            <returns>A matrix that represents the result of the matrix subtraction.</returns>
-        </member>
-        <member name="M:DotNumerics.LinearAlgebra.BandMatrix.op_Multiply(System.Double,DotNumerics.LinearAlgebra.BandMatrix)">
-            <summary>
-            Scalar-Matrix multiplication.
-            </summary>
-            <param name="s"> The left side scalar of the multiplication operator.</param>
-            <param name="A">The right side matrix of the multiplication operator.</param>
-            <returns>A matrix that represents the result of the multiplication.</returns>
-        </member>
-        <member name="M:DotNumerics.LinearAlgebra.BandMatrix.Clone">
-            <summary>
-            Creates a copy of the matrix.
-            </summary>
-            <returns>The copy of the Matrix.</returns>
-        </member>
-        <member name="M:DotNumerics.LinearAlgebra.BandMatrix.Random(System.Int32,System.Int32,System.Int32,System.Int32)">
-            <summary>Generate a BandMatrix with random elements</summary>
-            <param name="rows">Number of rows.</param>
-            <param name="columns">Number of columns.</param>
-            <param name="lowerBandWidth">Number of bands below the main diagonal</param>
-            <param name="upperBandWidth">Number of bands above the main diagonal</param>
         </member>
         <member name="T:DotNumerics.LinearAlgebra.ComplexMatrix">
             <summary>
@@ -4845,6 +4810,34 @@
             </summary>
             <param name="size">Size</param>
             <param name="Data">The data</param>
+        </member>
+        <member name="P:DotNumerics.LinearAlgebra.ComplexMatrix.Data">
+            <summary>
+            Los datos de la matriz
+            </summary>
+        </member>
+        <member name="P:DotNumerics.LinearAlgebra.ComplexMatrix.RowCount">
+            <summary>
+            Returns the number of rows.
+            </summary>
+        </member>
+        <member name="P:DotNumerics.LinearAlgebra.ComplexMatrix.ColumnCount">
+            <summary>
+            Returns the number of columns.
+            </summary>
+        </member>
+        <member name="P:DotNumerics.LinearAlgebra.ComplexMatrix.IsSquare">
+            <summary>
+            Gets a value indicating if the matrix is square.
+            </summary>
+        </member>
+        <member name="P:DotNumerics.LinearAlgebra.ComplexMatrix.Item(System.Int32,System.Int32)">
+            <summary>
+            Returns the value of a element of the matrix.
+            </summary>
+            <param name="row">The row value (zero-based).</param>
+            <param name="column">The column value (zero-based).</param>
+            <returns>The matrix value at (row, column).</returns>
         </member>
         <member name="M:DotNumerics.LinearAlgebra.ComplexMatrix.CheckMatrixDimensions(DotNumerics.LinearAlgebra.ComplexMatrix)">
             <summary>Check if size(this) == size(B) </summary>
@@ -4981,34 +4974,6 @@
             </summary>
             <returns>A jagged array.</returns>
         </member>
-        <member name="P:DotNumerics.LinearAlgebra.ComplexMatrix.Data">
-            <summary>
-            Los datos de la matriz
-            </summary>
-        </member>
-        <member name="P:DotNumerics.LinearAlgebra.ComplexMatrix.RowCount">
-            <summary>
-            Returns the number of rows.
-            </summary>
-        </member>
-        <member name="P:DotNumerics.LinearAlgebra.ComplexMatrix.ColumnCount">
-            <summary>
-            Returns the number of columns.
-            </summary>
-        </member>
-        <member name="P:DotNumerics.LinearAlgebra.ComplexMatrix.IsSquare">
-            <summary>
-            Gets a value indicating if the matrix is square.
-            </summary>
-        </member>
-        <member name="P:DotNumerics.LinearAlgebra.ComplexMatrix.Item(System.Int32,System.Int32)">
-            <summary>
-            Returns the value of a element of the matrix.
-            </summary>
-            <param name="row">The row value (zero-based).</param>
-            <param name="column">The column value (zero-based).</param>
-            <returns>The matrix value at (row, column).</returns>
-        </member>
         <member name="T:DotNumerics.LinearAlgebra.ComplexVector">
             <summary>
             Represents a Complex Vector.
@@ -5051,6 +5016,23 @@
             </summary>
             <param name="type">The vector type</param>
             <param name="data">The array whose elements are copied to the vector.</param>
+        </member>
+        <member name="P:DotNumerics.LinearAlgebra.ComplexVector.Data">
+            <summary>
+            Los datos del vector
+            </summary>
+        </member>
+        <member name="P:DotNumerics.LinearAlgebra.ComplexVector.Length">
+            <summary>
+            Returns the number of rows.
+            </summary>
+        </member>
+        <member name="P:DotNumerics.LinearAlgebra.ComplexVector.Item(System.Int32)">
+            <summary>
+            Gets or sets the element at the specified index.
+            </summary>
+            <param name="index">The zero-based index of the element to get or set.</param>
+            <returns>The element at the specified index.</returns>
         </member>
         <member name="M:DotNumerics.LinearAlgebra.ComplexVector.op_Addition(DotNumerics.LinearAlgebra.ComplexVector,DotNumerics.LinearAlgebra.ComplexVector)">
             <summary>
@@ -5218,23 +5200,6 @@
             Returns the equivalent string representation of the vector.
             </summary>
             <returns>The string representation of the vector.</returns>
-        </member>
-        <member name="P:DotNumerics.LinearAlgebra.ComplexVector.Data">
-            <summary>
-            Los datos del vector
-            </summary>
-        </member>
-        <member name="P:DotNumerics.LinearAlgebra.ComplexVector.Length">
-            <summary>
-            Returns the number of rows.
-            </summary>
-        </member>
-        <member name="P:DotNumerics.LinearAlgebra.ComplexVector.Item(System.Int32)">
-            <summary>
-            Gets or sets the element at the specified index.
-            </summary>
-            <param name="index">The zero-based index of the element to get or set.</param>
-            <returns>The element at the specified index.</returns>
         </member>
         <member name="M:DotNumerics.LinearAlgebra.CSEispack.CBABK2.Run(System.Int32,System.Int32,System.Int32,System.Int32,System.Double[],System.Int32,System.Int32,System.Double[]@,System.Int32,System.Double[]@,System.Int32)">
              <param name="NM">
@@ -25358,6 +25323,41 @@
             <param name="EigenVectors">The eigenvectors.</param>
             <returns>The eigenvalues.</returns>
         </member>
+        <member name="T:DotNumerics.LinearAlgebra.IMatrix`1">
+            <summary>
+            Interface for a Matrix
+            </summary>
+        </member>
+        <member name="P:DotNumerics.LinearAlgebra.IMatrix`1.RowCount">
+            <summary>
+            Returns the number of rows.
+            </summary>
+        </member>
+        <member name="P:DotNumerics.LinearAlgebra.IMatrix`1.ColumnCount">
+            <summary>
+            Returns the number of columns.
+            </summary>
+        </member>
+        <member name="P:DotNumerics.LinearAlgebra.IMatrix`1.Item(System.Int32,System.Int32)">
+            <summary>
+            Gets or set the value of a element of this Matrix.
+            </summary>
+            <param name="row">The row value (zero-based).</param>
+            <param name="column">The column value (zero-based).</param>
+            <returns>The Matrix element at (row, column).</returns>
+        </member>
+        <member name="M:DotNumerics.LinearAlgebra.IMatrix`1.CopyToArray">
+            <summary>
+             Copy the elements of this matrix to a rectangular array.
+            </summary>
+            <returns>A rectangular array.</returns>
+        </member>
+        <member name="M:DotNumerics.LinearAlgebra.IMatrix`1.CopyToJaggedArray">
+            <summary>
+             Copy the elements of this matrix to a jagged array.
+            </summary>
+            <returns>A jagged array</returns>
+        </member>
         <member name="T:DotNumerics.LinearAlgebra.LinearEquations">
             <summary>
             Computes the solution to a system of linear equations.
@@ -25653,6 +25653,21 @@
             Initializes a new instance of the MatrixView class.
             </summary>
         </member>
+        <member name="P:DotNumerics.LinearAlgebra.MatrixView.ReadOnly">
+            <summary>
+            Gets or sets a value indicating whether the user can edit the cells of the control.
+            </summary>
+        </member>
+        <member name="P:DotNumerics.LinearAlgebra.MatrixView.FormatProvider">
+            <summary>
+            Gets or sets the object used to provide culture-specific formatting of System.Windows.Forms.DataGridView cell values.
+            </summary>
+        </member>
+        <member name="P:DotNumerics.LinearAlgebra.MatrixView.Format">
+            <summary>
+            Gets or sets the format string applied to the textual content of a cell.
+            </summary>
+        </member>
         <member name="M:DotNumerics.LinearAlgebra.MatrixView.Matrix(DotNumerics.LinearAlgebra.BaseMatrix)">
             <summary>
             Sets the matrix to show.
@@ -25690,21 +25705,6 @@
             <summary> 
             Required method for Designer support - do not modify 
             the contents of this method with the code editor.
-            </summary>
-        </member>
-        <member name="P:DotNumerics.LinearAlgebra.MatrixView.ReadOnly">
-            <summary>
-            Gets or sets a value indicating whether the user can edit the cells of the control.
-            </summary>
-        </member>
-        <member name="P:DotNumerics.LinearAlgebra.MatrixView.FormatProvider">
-            <summary>
-            Gets or sets the object used to provide culture-specific formatting of System.Windows.Forms.DataGridView cell values.
-            </summary>
-        </member>
-        <member name="P:DotNumerics.LinearAlgebra.MatrixView.Format">
-            <summary>
-            Gets or sets the format string applied to the textual content of a cell.
             </summary>
         </member>
         <member name="T:DotNumerics.LinearAlgebra.SingularValueDecomposition">
@@ -25784,6 +25784,14 @@
             <param name="BandWidth">Number of bands below or above the main diagonal</param>
             <param name="Data">The matix data </param>>
         </member>
+        <member name="P:DotNumerics.LinearAlgebra.SymmetricBandMatrix.Item(System.Int32,System.Int32)">
+            <summary>
+            Returns the value of a element of the matrix.
+            </summary>
+            <param name="row">The row value (zero-based).</param>
+            <param name="column">The column value (zero-based).</param>
+            <returns>The matrix value at (row, column).</returns>
+        </member>
         <member name="M:DotNumerics.LinearAlgebra.SymmetricBandMatrix.Clone">
             <summary>
             Creates a copy of the matrix.
@@ -25819,14 +25827,6 @@
             <param name="A">The right side matrix of the multiplication operator.</param>
             <returns>A matrix that represents the result of the multiplication.</returns>
         </member>
-        <member name="P:DotNumerics.LinearAlgebra.SymmetricBandMatrix.Item(System.Int32,System.Int32)">
-            <summary>
-            Returns the value of a element of the matrix.
-            </summary>
-            <param name="row">The row value (zero-based).</param>
-            <param name="column">The column value (zero-based).</param>
-            <returns>The matrix value at (row, column).</returns>
-        </member>
         <member name="T:DotNumerics.LinearAlgebra.SymmetricMatrix">
             <summary>
             Represents a  symmetric matrix.
@@ -25844,6 +25844,14 @@
             </summary>
             <param name="size">Size</param>
             <param name="Data">The data</param>
+        </member>
+        <member name="P:DotNumerics.LinearAlgebra.SymmetricMatrix.Item(System.Int32,System.Int32)">
+            <summary>
+            Returns the value of a element of the matrix.
+            </summary>
+            <param name="row">The row value (zero-based).</param>
+            <param name="column">The column value (zero-based).</param>
+            <returns>The matrix value at (row, column).</returns>
         </member>
         <member name="M:DotNumerics.LinearAlgebra.SymmetricMatrix.Random(System.Int32)">
             <summary>
@@ -25896,14 +25904,6 @@
             </summary>
             <param name="symmetricMatrix">The SymmetricMatrix.</param>
             <returns>The matrix.</returns>
-        </member>
-        <member name="P:DotNumerics.LinearAlgebra.SymmetricMatrix.Item(System.Int32,System.Int32)">
-            <summary>
-            Returns the value of a element of the matrix.
-            </summary>
-            <param name="row">The row value (zero-based).</param>
-            <param name="column">The column value (zero-based).</param>
-            <returns>The matrix value at (row, column).</returns>
         </member>
         <member name="T:DotNumerics.LinearAlgebra.TridiagonalMatrix">
             <summary>
@@ -26000,6 +26000,28 @@
             </summary>
             <param name="type">The vector type</param>
             <param name="data">The array whose elements are copied to the vector.</param>
+        </member>
+        <member name="P:DotNumerics.LinearAlgebra.Vector.Data">
+            <summary>
+            Los datos del vector
+            </summary>
+        </member>
+        <member name="P:DotNumerics.LinearAlgebra.Vector.Length">
+            <summary>
+            Returns the number of elements.
+            </summary>
+        </member>
+        <member name="P:DotNumerics.LinearAlgebra.Vector.Type">
+            <summary>
+            The vector type.
+            </summary>
+        </member>
+        <member name="P:DotNumerics.LinearAlgebra.Vector.Item(System.Int32)">
+            <summary>
+            Gets or sets the element at the specified index.
+            </summary>
+            <param name="index">The zero-based index of the element to get or set.</param>
+            <returns>The element at the specified index.</returns>
         </member>
         <member name="M:DotNumerics.LinearAlgebra.Vector.op_Addition(DotNumerics.LinearAlgebra.Vector,DotNumerics.LinearAlgebra.Vector)">
             <summary>
@@ -26229,28 +26251,6 @@
             Returns the equivalent string representation of the vector.
             </summary>
             <returns>The string representation of the vector.</returns>
-        </member>
-        <member name="P:DotNumerics.LinearAlgebra.Vector.Data">
-            <summary>
-            Los datos del vector
-            </summary>
-        </member>
-        <member name="P:DotNumerics.LinearAlgebra.Vector.Length">
-            <summary>
-            Returns the number of elements.
-            </summary>
-        </member>
-        <member name="P:DotNumerics.LinearAlgebra.Vector.Type">
-            <summary>
-            The vector type.
-            </summary>
-        </member>
-        <member name="P:DotNumerics.LinearAlgebra.Vector.Item(System.Int32)">
-            <summary>
-            Gets or sets the element at the specified index.
-            </summary>
-            <param name="index">The zero-based index of the element to get or set.</param>
-            <returns>The element at the specified index.</returns>
         </member>
         <member name="M:DotNumerics.Optimization.Cobyla.COBYLA.Run(System.Int32,System.Int32,System.Double[]@,System.Int32,System.Double,System.Double,System.Int32,System.Int32@,System.Double[]@,System.Int32,System.Int32[]@,System.Int32)">
              <param name="N">
@@ -27652,56 +27652,6 @@
             Class used to minimizes a function of several variables by using Limited memory Broyden–Fletcher–Goldfarb–Shanno (L-BFGS) method. This class can be used for unconstrained and bounded constrained minimization.
             </summary>
         </member>
-        <member name="T:DotNumerics.Optimization.xMinimizationBase">
-            <summary>
-            Represents a base class for optimization classes. 
-            </summary>
-        </member>
-        <member name="F:DotNumerics.Optimization.xMinimizationBase._Variables">
-            <summary>
-            All the variables.
-            </summary>
-        </member>
-        <member name="F:DotNumerics.Optimization.xMinimizationBase._FreeVariables">
-            <summary>
-            The initial guess .
-            </summary>
-        </member>
-        <member name="F:DotNumerics.Optimization.xMinimizationBase._Tolerance">
-            <summary>
-            Desired accuracy for the solution.
-            </summary>
-        </member>
-        <member name="F:DotNumerics.Optimization.xMinimizationBase._MaxFunEvaluations">
-            <summary>
-            Maximum number of function evaluations.
-            </summary>
-        </member>
-        <member name="F:DotNumerics.Optimization.xMinimizationBase._FunEvaluations">
-            <summary>
-            The number of function evaluations used to compute the minimum.
-            </summary>
-        </member>
-        <member name="F:DotNumerics.Optimization.xMinimizationBase._NumFreeVariables">
-            <summary>
-            The number of variables.
-            </summary>
-        </member>
-        <member name="P:DotNumerics.Optimization.xMinimizationBase.MaxFunEvaluations">
-            <summary>
-            Maximum number of function evaluations.
-            </summary>
-        </member>
-        <member name="P:DotNumerics.Optimization.xMinimizationBase.FunEvaluations">
-            <summary>
-            The number of function evaluations used to compute the minimum.
-            </summary>
-        </member>
-        <member name="P:DotNumerics.Optimization.xMinimizationBase.Tolerance">
-            <summary>
-            Desired accuracy for the solution.
-            </summary>
-        </member>
         <member name="F:DotNumerics.Optimization.L_BFGS_B._AccuracyFactor">
             <summary>
             Accuracy factor
@@ -27710,6 +27660,13 @@
         <member name="M:DotNumerics.Optimization.L_BFGS_B.#ctor">
             <summary>
             Initializes a new instance of the L_BFG_S class.
+            </summary>
+        </member>
+        <member name="P:DotNumerics.Optimization.L_BFGS_B.AccuracyFactor">
+            <summary>
+            Accuracy factor. The iteration will stop when (f^k - f^{k+1})/max{|f^k|,|f^{k+1}|,1} is least than AccuracyFactor*epsmch
+            where epsmch is the machine precision. Typical values for AccuracyFactor: 1E12 for low accuracy; 1E7 for moderate accuracy; 
+            1E1 for extremely high accuracy.
             </summary>
         </member>
         <member name="M:DotNumerics.Optimization.L_BFGS_B.ComputeMin(DotNumerics.Optimization.OptMultivariateFunction,DotNumerics.Optimization.OptMultivariateGradient,System.Double[])">
@@ -27739,13 +27696,6 @@
             <param name="variables">Array of size N containing the varaibles.</param>
             <returns>Array containing the solution.</returns>
         </member>
-        <member name="P:DotNumerics.Optimization.L_BFGS_B.AccuracyFactor">
-            <summary>
-            Accuracy factor. The iteration will stop when (f^k - f^{k+1})/max{|f^k|,|f^{k+1}|,1} is least than AccuracyFactor*epsmch
-            where epsmch is the machine precision. Typical values for AccuracyFactor: 1E12 for low accuracy; 1E7 for moderate accuracy; 
-            1E1 for extremely high accuracy.
-            </summary>
-        </member>
         <member name="T:DotNumerics.Optimization.OptMultivariateFunction">
             <summary>
             Evaluates the function to be minimized.
@@ -27763,74 +27713,6 @@
         <member name="T:DotNumerics.Optimization.OptBoundVariable">
             <summary>
             Represents a varaible that can be used in optimization classes with bounded constrains.
-            </summary>
-        </member>
-        <member name="T:DotNumerics.Optimization.OptVariable">
-            <summary>
-            Represents a varaible that can be used in optimization classes.
-            </summary>
-        </member>
-        <member name="F:DotNumerics.Optimization.OptVariable._Name">
-            <summary>
-            The variable name.
-            </summary>
-        </member>
-        <member name="F:DotNumerics.Optimization.OptVariable._InitialGuess">
-            <summary>
-            The initial guess for this variable.
-            </summary>
-        </member>
-        <member name="F:DotNumerics.Optimization.OptVariable._Fixed">
-            <summary>
-            Value that indicates if the variable is fixed.
-            </summary>
-        </member>
-        <member name="M:DotNumerics.Optimization.OptVariable.#ctor">
-            <summary>
-            Initializes a new instance of the OptVariable class.
-            </summary>
-        </member>
-        <member name="M:DotNumerics.Optimization.OptVariable.#ctor(System.Double)">
-            <summary>
-            Initializes a new instance of the OptVariable class.
-            </summary>
-            <param name="initialGuess">The initial guess.</param>
-        </member>
-        <member name="M:DotNumerics.Optimization.OptVariable.#ctor(System.String,System.Double)">
-            <summary>
-            Initializes a new instance of the OptVariable class.
-            </summary>
-            <param name="name">The variable name.</param>
-            <param name="initialGuess">The initial guess.</param>
-        </member>
-        <member name="M:DotNumerics.Optimization.OptVariable.#ctor(System.Double,System.Boolean)">
-            <summary>
-            Initializes a new instance of the OptVariable class.
-            </summary>
-            <param name="initialGuess">The initial guess.</param>
-            <param name="isFixed">Value that indicates if the variable is fixed.</param>
-        </member>
-        <member name="M:DotNumerics.Optimization.OptVariable.#ctor(System.String,System.Double,System.Boolean)">
-            <summary>
-            Initializes a new instance of the OptVariable class.
-            </summary>
-            <param name="name">The variable name.</param>
-            <param name="initialGuess">The initial guess.</param>
-            <param name="isFixed">Value that indicates if the variable is fixed.</param>
-        </member>
-        <member name="P:DotNumerics.Optimization.OptVariable.Name">
-            <summary>
-            The variable name.
-            </summary>
-        </member>
-        <member name="P:DotNumerics.Optimization.OptVariable.InitialGuess">
-            <summary>
-            The initial guess for this variable.
-            </summary>
-        </member>
-        <member name="P:DotNumerics.Optimization.OptVariable.Fixed">
-            <summary>
-            Value that indicates if the variable is fixed.
             </summary>
         </member>
         <member name="F:DotNumerics.Optimization.OptBoundVariable._LowerBound">
@@ -28129,6 +28011,74 @@
             The default value is 1. This value modifies the changes and accuracy of this variable. 
             </summary>
         </member>
+        <member name="T:DotNumerics.Optimization.OptVariable">
+            <summary>
+            Represents a varaible that can be used in optimization classes.
+            </summary>
+        </member>
+        <member name="F:DotNumerics.Optimization.OptVariable._Name">
+            <summary>
+            The variable name.
+            </summary>
+        </member>
+        <member name="F:DotNumerics.Optimization.OptVariable._InitialGuess">
+            <summary>
+            The initial guess for this variable.
+            </summary>
+        </member>
+        <member name="F:DotNumerics.Optimization.OptVariable._Fixed">
+            <summary>
+            Value that indicates if the variable is fixed.
+            </summary>
+        </member>
+        <member name="M:DotNumerics.Optimization.OptVariable.#ctor">
+            <summary>
+            Initializes a new instance of the OptVariable class.
+            </summary>
+        </member>
+        <member name="M:DotNumerics.Optimization.OptVariable.#ctor(System.Double)">
+            <summary>
+            Initializes a new instance of the OptVariable class.
+            </summary>
+            <param name="initialGuess">The initial guess.</param>
+        </member>
+        <member name="M:DotNumerics.Optimization.OptVariable.#ctor(System.String,System.Double)">
+            <summary>
+            Initializes a new instance of the OptVariable class.
+            </summary>
+            <param name="name">The variable name.</param>
+            <param name="initialGuess">The initial guess.</param>
+        </member>
+        <member name="M:DotNumerics.Optimization.OptVariable.#ctor(System.Double,System.Boolean)">
+            <summary>
+            Initializes a new instance of the OptVariable class.
+            </summary>
+            <param name="initialGuess">The initial guess.</param>
+            <param name="isFixed">Value that indicates if the variable is fixed.</param>
+        </member>
+        <member name="M:DotNumerics.Optimization.OptVariable.#ctor(System.String,System.Double,System.Boolean)">
+            <summary>
+            Initializes a new instance of the OptVariable class.
+            </summary>
+            <param name="name">The variable name.</param>
+            <param name="initialGuess">The initial guess.</param>
+            <param name="isFixed">Value that indicates if the variable is fixed.</param>
+        </member>
+        <member name="P:DotNumerics.Optimization.OptVariable.Name">
+            <summary>
+            The variable name.
+            </summary>
+        </member>
+        <member name="P:DotNumerics.Optimization.OptVariable.InitialGuess">
+            <summary>
+            The initial guess for this variable.
+            </summary>
+        </member>
+        <member name="P:DotNumerics.Optimization.OptVariable.Fixed">
+            <summary>
+            Value that indicates if the variable is fixed.
+            </summary>
+        </member>
         <member name="T:DotNumerics.Optimization.Simplex">
             <summary>
             Class used to minimizes a function of several variables by using the Nelder-Mead (Simplex) method. This class can be used for unconstrained and bounded constrained minimization.
@@ -28249,6 +28199,21 @@
             Initializes a new instance of the MinTruncatedNewton class.
             </summary>
         </member>
+        <member name="P:DotNumerics.Optimization.TruncatedNewton.Accuracy">
+            <summary>
+            The accuracy of the computed function values.
+            </summary>
+        </member>
+        <member name="P:DotNumerics.Optimization.TruncatedNewton.SearchSeverity">
+            <summary>
+            The severity of the linesearch.
+            </summary>
+        </member>
+        <member name="P:DotNumerics.Optimization.TruncatedNewton.MaximunStep">
+            <summary>
+            The maximum allowable step in the linesearch.
+            </summary>
+        </member>
         <member name="M:DotNumerics.Optimization.TruncatedNewton.ComputeMin(DotNumerics.Optimization.OptMultivariateFunction,DotNumerics.Optimization.OptMultivariateGradient,System.Double[])">
             <summary>
             Computes the minimum point of a function of several variables.
@@ -28275,21 +28240,6 @@
             <param name="gradient">A delegate that computes the gradient.</param>
             <param name="variables">Array of size N containing the varaibles.</param>
             <returns>Array containing the solution.</returns>
-        </member>
-        <member name="P:DotNumerics.Optimization.TruncatedNewton.Accuracy">
-            <summary>
-            The accuracy of the computed function values.
-            </summary>
-        </member>
-        <member name="P:DotNumerics.Optimization.TruncatedNewton.SearchSeverity">
-            <summary>
-            The severity of the linesearch.
-            </summary>
-        </member>
-        <member name="P:DotNumerics.Optimization.TruncatedNewton.MaximunStep">
-            <summary>
-            The maximum allowable step in the linesearch.
-            </summary>
         </member>
         <member name="F:DotNumerics.Optimization.TN.TNDriver.MeF">
             <summary>
@@ -28458,6 +28408,56 @@
              <param name="V">
              AND STORES THE RESULT IN THE VECTOR GV (FINITE-DIFFERENCE VERSION)
             </param>
+        </member>
+        <member name="T:DotNumerics.Optimization.xMinimizationBase">
+            <summary>
+            Represents a base class for optimization classes. 
+            </summary>
+        </member>
+        <member name="F:DotNumerics.Optimization.xMinimizationBase._Variables">
+            <summary>
+            All the variables.
+            </summary>
+        </member>
+        <member name="F:DotNumerics.Optimization.xMinimizationBase._FreeVariables">
+            <summary>
+            The initial guess .
+            </summary>
+        </member>
+        <member name="F:DotNumerics.Optimization.xMinimizationBase._Tolerance">
+            <summary>
+            Desired accuracy for the solution.
+            </summary>
+        </member>
+        <member name="F:DotNumerics.Optimization.xMinimizationBase._MaxFunEvaluations">
+            <summary>
+            Maximum number of function evaluations.
+            </summary>
+        </member>
+        <member name="F:DotNumerics.Optimization.xMinimizationBase._FunEvaluations">
+            <summary>
+            The number of function evaluations used to compute the minimum.
+            </summary>
+        </member>
+        <member name="F:DotNumerics.Optimization.xMinimizationBase._NumFreeVariables">
+            <summary>
+            The number of variables.
+            </summary>
+        </member>
+        <member name="P:DotNumerics.Optimization.xMinimizationBase.MaxFunEvaluations">
+            <summary>
+            Maximum number of function evaluations.
+            </summary>
+        </member>
+        <member name="P:DotNumerics.Optimization.xMinimizationBase.FunEvaluations">
+            <summary>
+            The number of function evaluations used to compute the minimum.
+            </summary>
+        </member>
+        <member name="P:DotNumerics.Optimization.xMinimizationBase.Tolerance">
+            <summary>
+            Desired accuracy for the solution.
+            </summary>
         </member>
     </members>
 </doc>

@@ -160,7 +160,7 @@ Namespace UVLM.Solver
 
             End Try
 
-            ' Sed information to lattice:
+            ' Set information to lattice:
 
             i = 0
 
@@ -178,7 +178,7 @@ Namespace UVLM.Solver
 
                     If WithStreamOmega Then
 
-                        Ring.VelocityW.AddCrossProduct(Ring.ControlPoint, _StreamOmega) ' Add stream angular velocity
+                        Ring.VelocityW.AddCrossProduct(_StreamOmega, Ring.ControlPoint) ' Add stream angular velocity
 
                     End If
 

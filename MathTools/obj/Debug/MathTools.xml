@@ -142,7 +142,7 @@ MathTools
  </summary>
  <remarks></remarks>
 </member>
-<member name="T:MathTools.Algebra.EuclideanSpace.OrientationCoordinates">
+<member name="T:MathTools.Algebra.EuclideanSpace.EulerAngles">
  <summary>
  Represents an orientation in Euler angles
  </summary>

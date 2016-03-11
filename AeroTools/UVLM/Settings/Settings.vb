@@ -186,7 +186,7 @@ Namespace UVLM.Settings
         ''' Global orientation
         ''' </summary>
         ''' <remarks></remarks>
-        Public Property GlobalOrientation As New OrientationCoordinates
+        Public Property GlobalOrientation As New EulerAngles
 
         ''' <summary>
         ''' Indicates if adjacent rings should be searched by proximity and not by indexation.

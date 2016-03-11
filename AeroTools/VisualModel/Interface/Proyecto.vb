@@ -193,7 +193,7 @@ Namespace VisualModel.Interface
 
             Dim Origen As New EVector3
             Dim Punto As EVector3 = VisualizationParameters.CameraPosition
-            Dim Orientacion As OrientationCoordinates = VisualizationParameters.CameraOrientation
+            Dim Orientacion As EulerAngles = VisualizationParameters.CameraOrientation
 
             ControlGL.RenderMode(OpenGL.GL_RENDER)
             ControlGL.MatrixMode(OpenGL.GL_PROJECTION)
@@ -257,7 +257,7 @@ Namespace VisualModel.Interface
 
             Dim Origen As New EVector3
             Dim Punto As EVector3 = VisualizationParameters.CameraPosition
-            Dim Orientacion As OrientationCoordinates = VisualizationParameters.CameraOrientation
+            Dim Orientacion As EulerAngles = VisualizationParameters.CameraOrientation
 
             ControlGL.RenderMode(OpenGL.GL_RENDER)
             ControlGL.MatrixMode(OpenGL.GL_PROJECTION)
@@ -583,7 +583,7 @@ Namespace VisualModel.Interface
 
             Dim Origen As New EVector3
             Dim Punto As EVector3 = VisualizationParameters.CameraPosition
-            Dim Orientacion As OrientationCoordinates = VisualizationParameters.CameraOrientation
+            Dim Orientacion As EulerAngles = VisualizationParameters.CameraOrientation
 
             ControlGL.RenderMode(OpenGL.GL_RENDER)
             ControlGL.MatrixMode(OpenGL.GL_PROJECTION)
@@ -628,7 +628,7 @@ Namespace VisualModel.Interface
 
             Dim Origen As New EVector3
             Dim Punto As EVector3 = VisualizationParameters.CameraPosition
-            Dim Orientacion As OrientationCoordinates = VisualizationParameters.CameraOrientation
+            Dim Orientacion As EulerAngles = VisualizationParameters.CameraOrientation
 
             ControlGL.Translate(VisualizationParameters.CameraPosition.X, VisualizationParameters.CameraPosition.Y, 0)
             ControlGL.Rotate(Orientacion.Fi, Orientacion.Tita, Orientacion.Psi)
