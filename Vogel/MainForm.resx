@@ -150,7 +150,7 @@
     <value>0</value>
   </data>
   <data name="ControlOpenGL.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 13</value>
+    <value>24, 39</value>
   </data>
   <data name="ControlOpenGL.Size" type="System.Drawing.Size, System.Drawing">
     <value>217, 108</value>
@@ -1325,7 +1325,7 @@
     <value>True</value>
   </metadata>
   <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>107</value>
+    <value>88</value>
   </metadata>
   <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
     <value>6, 13</value>

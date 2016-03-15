@@ -1,6 +1,6 @@
-﻿'## Open VOGEL ##
+﻿'Open VOGEL (www.openvogel.com)
 'Open source software for aerodynamics
-'Copyright (C) 2016 Guillermo Hazebrouck (gahazebrouck@gmail.com)
+'Copyright (C) 2016 Guillermo Hazebrouck (guillermo.hazebrouck@openvogel.com)
 
 'This program Is free software: you can redistribute it And/Or modify
 'it under the terms Of the GNU General Public License As published by
@@ -19,7 +19,6 @@ Imports MathTools.Algebra.EuclideanSpace
 Imports AeroTools.VisualModel.Interface
 Imports SharpGL
 Imports System.Xml
-Imports MathTools
 
 Namespace VisualModel.Models.Basics
 
@@ -30,6 +29,7 @@ Namespace VisualModel.Models.Basics
     Public MustInherit Class BaseSurface
 
         Implements IOperational
+
         Implements ISelectable
 
         ''' <summary>
