@@ -1,6 +1,6 @@
-Open VOGEL - AeroTools (https://sites.google.com/site/gahvogel/)
+Open VOGEL - AeroTools (https://www.openvogel.com)
 
-Copyright (c) 2016 Guillermo Augusto Hazebrouck (gahazebrouck@gmail.com)
+Copyright (c) 2016 Guillermo Augusto Hazebrouck (guillermo.hazebrouck@openvogel.com)
 
 Open VOGEL is distributed under the GNU General Public License (GPL). 
 Any software produced with Open VOGEL, must also be released under the GPL. 
