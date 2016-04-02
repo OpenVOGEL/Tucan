@@ -2355,13 +2355,6 @@ AeroTools
  </summary>
  <remarks></remarks>
 </member>
-<member name="M:AeroTools.VisualModel.Interface.AircraftProject.ImportSurfacesFromXML(System.String)">
- <summary>
- Finds lifting surface on a XML resource file and loads them to the current model.
- </summary>
- <param name="SourcePath"></param>
- <remarks></remarks>
-</member>
 <member name="T:AeroTools.VisualModel.Interface.Results.ResultModel">
  <summary>
  Stores results for a given time step.
@@ -2586,7 +2579,31 @@ AeroTools
 </member>
 <member name="P:AeroTools.VisualModel.Models.CalculationModel.Name">
  <summary>
- Project name
+ Project name.
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:AeroTools.VisualModel.Models.CalculationModel.Objects">
+ <summary>
+ List of model objects.
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:AeroTools.VisualModel.Models.CalculationModel.Selection">
+ <summary>
+ Selection tool.
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:AeroTools.VisualModel.Models.CalculationModel.OperationsTool">
+ <summary>
+ Tool that provides back up info while operating (moving or aligning objects).
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:AeroTools.VisualModel.Models.CalculationModel.PolarDataBase">
+ <summary>
+ Polars.
  </summary>
  <returns></returns>
 </member>
@@ -2614,79 +2631,10 @@ AeroTools
  </summary>
  <remarks></remarks>
 </member>
-<member name="M:AeroTools.VisualModel.Models.CalculationModel.RemoveLiftingSurface(System.Int32)">
- <summary>
- Removes the selected surface if it is not the only one in the list.
- </summary>
- <param name="Superficie"></param>
- <remarks></remarks>
-</member>
-<member name="M:AeroTools.VisualModel.Models.CalculationModel.RemoveBody(System.Int32)">
- <summary>
- Removes the selected body if it is not the only one on the list.
- </summary>
- <param name="Index"></param>
- <remarks></remarks>
-</member>
-<member name="M:AeroTools.VisualModel.Models.CalculationModel.RemoveJetEngine(System.Int32)">
- <summary>
- Removes the selected jet engine if it is not the only one on the list.
- </summary>
- <param name="Index"></param>
- <remarks></remarks>
-</member>
-<member name="M:AeroTools.VisualModel.Models.CalculationModel.CloneLiftingSurface(System.Int32)">
+<member name="M:AeroTools.VisualModel.Models.CalculationModel.CloneObject(System.Int32)">
  <summary>
  Generates a copy of the current lifting surface with the option symmetric in true
  </summary>
- <remarks></remarks>
-</member>
-<member name="P:AeroTools.VisualModel.Models.CalculationModel.CurrentLiftingSurface">
- <summary>
- Currently active lifting surface
- </summary>
- <value></value>
- <returns></returns>
- <remarks></remarks>
-</member>
-<member name="P:AeroTools.VisualModel.Models.CalculationModel.CurrentBody">
- <summary>
- Currently active body
- </summary>
- <value></value>
- <returns></returns>
- <remarks></remarks>
-</member>
-<member name="P:AeroTools.VisualModel.Models.CalculationModel.CurrentJetEngine">
- <summary>
- Currently active jet engine
- </summary>
- <value></value>
- <returns></returns>
- <remarks></remarks>
-</member>
-<member name="P:AeroTools.VisualModel.Models.CalculationModel.LiftingSurfaceSelected">
- <summary>
- Indicates if the current lifting surface exists.
- </summary>
- <value></value>
- <returns></returns>
- <remarks></remarks>
-</member>
-<member name="P:AeroTools.VisualModel.Models.CalculationModel.BodySelected">
- <summary>
- Indicates if the current body exists.
- </summary>
- <value></value>
- <returns></returns>
- <remarks></remarks>
-</member>
-<member name="P:AeroTools.VisualModel.Models.CalculationModel.JetEngineSelected">
- <summary>
- Indicates if the current jet engine exists.
- </summary>
- <value></value>
- <returns></returns>
  <remarks></remarks>
 </member>
 <member name="T:AeroTools.VisualModel.Models.Components.WingAnchorInfo">

@@ -71,7 +71,7 @@ Public Class FormHistogram
 
     Private Sub SelectNewHistogram()
 
-        If _LocalHistogram IsNot Nothing AndAlso cbHistogramType.SelectedItem <> CInt(_LocalHistogram.Type) Then
+        If _LocalHistogram IsNot Nothing AndAlso cbHistogramType.SelectedIndex <> CInt(_LocalHistogram.Type) Then
             Return
         End If
 

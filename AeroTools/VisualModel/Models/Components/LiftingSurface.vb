@@ -392,31 +392,13 @@ Namespace VisualModel.Models.Components
 
     Public Class LiftingSurface
 
-        Inherits BaseSurface
+        Inherits Surface
 
         ''' <summary>
         ''' Permite bloquear la edicion del contenido
         ''' </summary>
         ''' <remarks></remarks>
         Public Property Lock As Boolean = False
-
-        ''' <summary>
-        ''' Position of the rotation point in local coordinates
-        ''' </summary>
-        ''' <remarks></remarks>
-        Public Property GlobalPosition As New EVector3
-
-        ''' <summary>
-        ''' Orientation given in Euler coordinates.
-        ''' </summary>
-        ''' <remarks></remarks>
-        Public Property GlobalOrientation As New EulerAngles
-
-        ''' <summary>
-        ''' Local directions.
-        ''' </summary>
-        ''' <remarks></remarks>
-        Public Property LocalDirections As New EBase3
 
         ''' <summary>
         ''' Position of the local origin in global coordinates.
@@ -500,7 +482,7 @@ Namespace VisualModel.Models.Components
             Name = "Lifting surface"
             ID = Guid.NewGuid
 
-            nChordPanels = 5
+            NumberOfChordPanels = 5
             RootChord = 1.0#
             RootFlap = 0.2
             FlapPanels = 3
@@ -511,44 +493,16 @@ Namespace VisualModel.Models.Components
             FirstPrimitiveSegment = 1
             LastPrimitiveSegment = 1
 
-            GlobalPosition.SetToCero()
-            CenterOfRotation.SetToCero()
-            GlobalOrientation.SetToCero()
-
-            FirstPrimitiveSegment = nChordPanels + 1
+            FirstPrimitiveSegment = NumberOfChordPanels + 1
             LastPrimitiveSegment = FirstPrimitiveSegment + _WingRegions(0).nSpanPanels - 1
 
             GenerateMesh()
 
-            VisualProps = New VisualizationProperties(ComponentTypes.etLiftingSurface)
+            VisualProperties = New VisualProperties(ComponentTypes.etLiftingSurface)
 
         End Sub
 
 #Region " Geometry and mesh properties "
-
-        ''' <summary>
-        ''' Number of nodes.
-        ''' </summary>
-        ''' <value></value>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
-        Public ReadOnly Property nNodes As Integer
-            Get
-                Return Me.Mesh.NodalPoints.Count
-            End Get
-        End Property
-
-        ''' <summary>
-        ''' Number of panels.
-        ''' </summary>
-        ''' <value></value>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
-        Public ReadOnly Property nPanels As Integer
-            Get
-                Return Mesh.Panels.Count
-            End Get
-        End Property
 
         ''' <summary>
         ''' Number of chordwise panels
@@ -556,7 +510,7 @@ Namespace VisualModel.Models.Components
         ''' <value></value>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Property nChordPanels As Integer
+        Public Property NumberOfChordPanels As Integer
             Get
                 Return _nChordPanels
             End Get
@@ -571,21 +525,9 @@ Namespace VisualModel.Models.Components
         ''' <value></value>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public ReadOnly Property nSpanPanels As Integer
+        Public ReadOnly Property NumberOfSpanPanels As Integer
             Get
                 Return _nSpanPanels
-            End Get
-        End Property
-
-        ''' <summary>
-        ''' Number of vortex segements.
-        ''' </summary>
-        ''' <value></value>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
-        Public ReadOnly Property nVortices As Integer
-            Get
-                Return Me.Mesh.Lattice.Count
             End Get
         End Property
 
@@ -595,9 +537,9 @@ Namespace VisualModel.Models.Components
         ''' <value></value>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public ReadOnly Property nWingRegions As Integer
+        Public ReadOnly Property NumberOfWingRegions As Integer
             Get
-                Return Me._WingRegions.Count
+                Return _WingRegions.Count
             End Get
         End Property
 
@@ -639,10 +581,10 @@ Namespace VisualModel.Models.Components
         ''' <remarks></remarks>
         Public Property FlapPanels As Integer
             Set(ByVal value As Integer)
-                If value < nChordPanels Then
+                If value < NumberOfChordPanels Then
                     _FlapPanels = value
                 Else
-                    _FlapPanels = nChordPanels - 1
+                    _FlapPanels = NumberOfChordPanels - 1
                 End If
             End Set
             Get
@@ -661,7 +603,7 @@ Namespace VisualModel.Models.Components
                 Return _CurrentWingRegion + 1
             End Get
             Set(ByVal value As Integer)
-                If value >= 1 And value <= nWingRegions Then
+                If value >= 1 And value <= NumberOfWingRegions Then
                     _CurrentWingRegion = value - 1
                 Else
                     'FMacroPanelActual = 0
@@ -681,7 +623,7 @@ Namespace VisualModel.Models.Components
         ''' <remarks></remarks>
         Public ReadOnly Property nBoundarySegments
             Get
-                Return Me._nBoundarySegments
+                Return _nBoundarySegments
             End Get
         End Property
 
@@ -693,7 +635,7 @@ Namespace VisualModel.Models.Components
         ''' <remarks></remarks>
         Public ReadOnly Property nBoundaryNodes
             Get
-                Return Me._nBoundaryNodes
+                Return _nBoundaryNodes
             End Get
         End Property
 
@@ -806,7 +748,7 @@ Namespace VisualModel.Models.Components
         Public ReadOnly Property GetPrimitiveNodePosition(ByVal Nodo As Integer) As EVector3
             Get
                 If Nodo >= 1 And Nodo <= Me._nBoundaryNodes Then
-                    Return Me.CloneNodalPoint(_BoundaryNodes(Nodo))
+                    Return Mesh.Nodes(_BoundaryNodes(Nodo)).Position
                 Else
                     Return New EVector3
                 End If
@@ -823,7 +765,7 @@ Namespace VisualModel.Models.Components
         Public ReadOnly Property GetPrimitivePanelIndex(ByVal Segment As Integer) As Integer
             Get
                 If Segment >= 1 And Segment <= Me._nBoundarySegments Then
-                    Return Me._BoundaryPanels(Segment)
+                    Return _BoundaryPanels(Segment)
                 Else
                     Return 1
                 End If
@@ -882,7 +824,7 @@ Namespace VisualModel.Models.Components
         ''' <remarks></remarks>
         Public Overloads Sub InsertRegion(ByVal Posicion As Integer)
 
-            If Posicion >= 1 And Posicion <= nWingRegions Then
+            If Posicion >= 1 And Posicion <= NumberOfWingRegions Then
 
                 Dim NewMacroPanel As New WingRegion
                 NewMacroPanel.LoadGeometry(4, 1.0#, 1.0#, 0.0#, 0.0#, 0.0#, 0.5#, 0.0#, 0.25#, 1)
@@ -910,7 +852,7 @@ Namespace VisualModel.Models.Components
         ''' <remarks></remarks>
         Public Sub RemoveCurrentRegion()
 
-            If nWingRegions > 1 Then
+            If NumberOfWingRegions > 1 Then
 
                 Me._WingRegions.RemoveAt(_CurrentWingRegion)
                 _CurrentWingRegion = Math.Max(0, _CurrentWingRegion - 1)
@@ -933,105 +875,10 @@ Namespace VisualModel.Models.Components
 
 #End Region
 
-#Region " Nodal points "
-
-        ''' <summary>
-        ''' Returns the instance of a specific nodal point.
-        ''' </summary>
-        ''' <param name="Index"></param>
-        ''' <value></value>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
-        Public ReadOnly Property GetNodalPoint(ByVal Index As Integer) As EVector3
-            Get
-                If Index <= nNodes And Index > 0 Then
-                    Return Mesh.NodalPoints(Index - 1).Position 'Recordar que el nodo 1 corresponde al indice 0 en la matriz
-                Else
-                    Return New EVector3
-                End If
-            End Get
-        End Property
-
-        ''' <summary>
-        ''' Returns a copy of a given nodal point.
-        ''' </summary>
-        ''' <param name="Index"></param>
-        ''' <value></value>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
-        Public ReadOnly Property CloneNodalPoint(ByVal Index As Integer) As EVector3
-            Get
-                Dim EuNode As New EVector3
-
-                If Index <= nNodes And Index > 0 Then
-                    EuNode.X = Mesh.NodalPoints(Index - 1).Position.X 'Recordar que el nodo 1 corresponde al indice 0 en la matriz
-                    EuNode.Y = Mesh.NodalPoints(Index - 1).Position.Y
-                    EuNode.Z = Mesh.NodalPoints(Index - 1).Position.Z
-                Else
-                    EuNode.X = 0
-                    EuNode.Y = 0
-                    EuNode.Z = 0
-                End If
-                Return EuNode
-            End Get
-        End Property
-
-#End Region
-
-#Region " Quad panels "
-
-        ''' <summary>
-        ''' Returns an instance of a given quad panel. If the panel is not found, the first one is returned.
-        ''' </summary>
-        ''' <param name="Index"></param>
-        ''' <value></value>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
-        Public ReadOnly Property GetQuadPanel(ByVal Index As Integer) As Panel
-            Get
-                If Index <= Me.nPanels And Index > 0 Then
-                    Return Mesh.Panels.Item(Index - 1)
-                Else
-                    Return Mesh.Panels.Item(0)
-                End If
-            End Get
-        End Property
-
-        ''' <summary>
-        ''' Returns a copy of a given quad panel.
-        ''' </summary>
-        ''' <param name="Index"></param>
-        ''' <value></value>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
-        Public ReadOnly Property CloneQuadPanel(ByVal Index As Integer) As Panel
-            Get
-
-                Dim QuadPanel As New Panel
-                If Index <= Me.nPanels And Index > 0 Then
-
-                    QuadPanel.N1 = Mesh.Panels.Item(Index - 1).N1
-                    QuadPanel.N2 = Mesh.Panels.Item(Index - 1).N2
-                    QuadPanel.N3 = Mesh.Panels.Item(Index - 1).N3
-                    QuadPanel.N4 = Mesh.Panels.Item(Index - 1).N4
-                    QuadPanel.Circulation = Mesh.Panels.Item(Index - 1).Circulation
-                    QuadPanel.NormalVector.X = Mesh.Panels.Item(Index - 1).NormalVector.X
-                    QuadPanel.NormalVector.Y = Mesh.Panels.Item(Index - 1).NormalVector.Y
-                    QuadPanel.NormalVector.Z = Mesh.Panels.Item(Index - 1).NormalVector.Z
-                    QuadPanel.GlobalIndex = Mesh.Panels.Item(Index - 1).GlobalIndex
-
-                End If
-
-                Return QuadPanel
-            End Get
-        End Property
-
-#End Region
-
 #Region " 3D model and vortices generation "
 
         Public Function GetVortex(ByVal VortexNumber As Integer) As LatticeSegment
-            Return Mesh.Lattice.Item(VortexNumber - 1)
+            Return Mesh.Lattice.Item(VortexNumber)
         End Function
 
         Public Overrides Sub GenerateMesh()
@@ -1067,7 +914,7 @@ Namespace VisualModel.Models.Components
             _nSpanNodes = 1
             _nSpanPanels = 0
 
-            For i = 0 To nWingRegions - 1
+            For i = 0 To NumberOfWingRegions - 1
 
                 _nSpanNodes = _WingRegions.Item(i).nChordNodes + _nSpanNodes
                 _nSpanPanels = _WingRegions.Item(i).nSpanPanels + _nSpanPanels
@@ -1081,14 +928,14 @@ Namespace VisualModel.Models.Components
 
             ' Clear the mesh:
 
-            Mesh.NodalPoints.Clear()
+            Mesh.Nodes.Clear()
             Mesh.Panels.Clear()
 
             ' Load quad panels (base on indices only):
 
             For p = 1 To _nSpanPanels
 
-                For q = 1 To _nChordPanels
+                For q = 0 To _nChordPanels - 1
 
                     Dim Panel As New Panel
 
@@ -1150,8 +997,9 @@ Namespace VisualModel.Models.Components
 
             ' Build rotation matrix:
 
-            Dim RotationM As New RotationMatrix
-            RotationM.Generate(Me.GlobalOrientation.ToRadians)
+            Dim rotationMatrix As New RotationMatrix
+
+            rotationMatrix.Generate(Orientation.ToRadians)
 
             ' Locate root chord nodes:
 
@@ -1164,9 +1012,13 @@ Namespace VisualModel.Models.Components
                 If _WingRegions(0).Chamber.Flapped Then
 
                     If i <= _nChordNodes - FlapPanels Then
+
                         X = (i - 1) / (_nChordNodes - FlapPanels - 1) * (1 - flap)
+
                     Else
+
                         X = (1 - flap) + (i - _nChordNodes + FlapPanels) / FlapPanels * flap
+
                     End If
 
                 Else
@@ -1178,21 +1030,24 @@ Namespace VisualModel.Models.Components
                 Dim pLoc As New EVector2
 
                 Dim deflection As Single = _WingRegions(0).Chamber.FlapDeflection
+
                 _WingRegions(0).Chamber.FlapDeflection = 0
                 _WingRegions(0).Chamber.EvaluatePoint(pLoc, X)
+
                 pLoc.X *= _RootChord
                 pLoc.Y *= _RootChord
+
                 _WingRegions(0).Chamber.FlapDeflection = deflection
 
                 Dim Point As New NodalPoint(pLoc.X, 0, pLoc.Y)
 
-                If Me.Symmetric Then Point.Position.Y = -Point.Position.Y
+                If Symmetric Then Point.Position.Y = -Point.Position.Y
                 Point.Position.Substract(CenterOfRotation)
-                Point.Position.Rotate(RotationM)
+                Point.Position.Rotate(rotationMatrix)
                 Point.Position.Add(CenterOfRotation)
-                Point.Position.Add(GlobalPosition)
+                Point.Position.Add(Position)
 
-                Me.Mesh.NodalPoints.Add(Point)
+                Mesh.Nodes.Add(Point)
 
                 nodeCounter += 1
 
@@ -1202,7 +1057,7 @@ Namespace VisualModel.Models.Components
 
             Dim leadingEdge As New EVector3
 
-            For wrCount = 1 To nWingRegions
+            For wrCount = 1 To NumberOfWingRegions
 
                 'Inicia las variables comunes del panel:
 
@@ -1260,12 +1115,14 @@ Namespace VisualModel.Models.Components
                     Y = k / _WingRegions.Item(mpIndex).nSpanPanels
 
                     Select Case _WingRegions.Item(mpIndex).SpacingType
+
                         Case WingRegion.ESpacement.Constant
                             Y_stripe = Stramo * Y
                         Case WingRegion.ESpacement.Cuadratic
                             Y_stripe = B1 * Y + C1 * Y ^ 2
                         Case WingRegion.ESpacement.Qubic
                             Y_stripe = B2 * Y + C2 * Y ^ 2 + D2 * Y ^ 3
+
                     End Select
 
                     'Calculates the local chord and the position of Scolumn
@@ -1349,11 +1206,11 @@ Namespace VisualModel.Models.Components
                         'Posicionamiento, simetria y orientacion:
 
                         point.Position.Substract(CenterOfRotation)
-                        point.Position.Rotate(RotationM)
+                        point.Position.Rotate(rotationMatrix)
                         point.Position.Add(CenterOfRotation)
-                        point.Position.Add(GlobalPosition)
+                        point.Position.Add(Position)
 
-                        Mesh.NodalPoints.Add(point)
+                        Mesh.Nodes.Add(point)
 
                         nodeCounter += 1
 
@@ -1367,7 +1224,7 @@ Namespace VisualModel.Models.Components
 
             ' Assign property to primitive panels
 
-            For i = Me.FirstPrimitiveSegment To Me.LastPrimitiveSegment
+            For i = FirstPrimitiveSegment To LastPrimitiveSegment
                 Mesh.Panels(GetPrimitivePanelIndex(i) - 1).IsPrimitive = True
             Next
 
@@ -1378,17 +1235,17 @@ Namespace VisualModel.Models.Components
             LocalDirections.U.X = 0.5
             LocalDirections.U.Y = 0.0
             LocalDirections.U.Z = 0.0
-            LocalDirections.U.Rotate(RotationM)
+            LocalDirections.U.Rotate(rotationMatrix)
 
             LocalDirections.V.X = 0.0
             LocalDirections.V.Y = 0.5
             LocalDirections.V.Z = 0.0
-            LocalDirections.V.Rotate(RotationM)
+            LocalDirections.V.Rotate(rotationMatrix)
 
             LocalDirections.W.X = 0.0
             LocalDirections.W.Y = 0.0
             LocalDirections.W.Z = 0.5
-            LocalDirections.W.Rotate(RotationM)
+            LocalDirections.W.Rotate(rotationMatrix)
 
             ' Direction points:
 
@@ -1396,35 +1253,39 @@ Namespace VisualModel.Models.Components
             _DirectionPoints.U.Y = 0.0
             _DirectionPoints.U.Z = 0.0
             _DirectionPoints.U.Substract(CenterOfRotation)
-            _DirectionPoints.U.Rotate(RotationM)
+            _DirectionPoints.U.Rotate(rotationMatrix)
             _DirectionPoints.U.Add(CenterOfRotation)
-            _DirectionPoints.U.Add(GlobalPosition)
+            _DirectionPoints.U.Add(Position)
 
             _DirectionPoints.V.X = 0.0
             _DirectionPoints.V.Y = 0.5
             _DirectionPoints.V.Z = 0.0
             _DirectionPoints.V.Substract(CenterOfRotation)
-            _DirectionPoints.V.Rotate(RotationM)
+            _DirectionPoints.V.Rotate(rotationMatrix)
             _DirectionPoints.V.Add(CenterOfRotation)
-            _DirectionPoints.V.Add(GlobalPosition)
+            _DirectionPoints.V.Add(Position)
 
             _DirectionPoints.W.X = 0.0
             _DirectionPoints.W.Y = 0.0
             _DirectionPoints.W.Z = 0.5
             _DirectionPoints.W.Substract(CenterOfRotation)
-            _DirectionPoints.W.Rotate(RotationM)
+            _DirectionPoints.W.Rotate(rotationMatrix)
             _DirectionPoints.W.Add(CenterOfRotation)
-            _DirectionPoints.W.Add(GlobalPosition)
+            _DirectionPoints.W.Add(Position)
 
-            ' Local origin
+            ' Local origin²
 
             LocalOrigin.SetToCero()
             LocalOrigin.Substract(CenterOfRotation)
-            LocalOrigin.Rotate(RotationM)
+            LocalOrigin.Rotate(rotationMatrix)
             LocalOrigin.Add(CenterOfRotation)
-            LocalOrigin.Add(GlobalPosition)
+            LocalOrigin.Add(Position)
 
             GenerateStructure()
+
+            ' Launch base sub to raise update event.
+
+            MyBase.GenerateMesh()
 
         End Sub
 
@@ -1436,7 +1297,7 @@ Namespace VisualModel.Models.Components
 
             ' Panels:
 
-            If VisualProps.VisualizationMode = VisualizationMode.Lattice Then
+            If VisualProperties.VisualizationMode = VisualizationMode.Lattice Then
 
                 Dim Nodo As EVector3
 
@@ -1445,14 +1306,14 @@ Namespace VisualModel.Models.Components
                 Dim p As Integer = 0
 
                 Dim PColor As New EVector3
-                PColor.X = Me.VisualProps.ColorPrimitives.R / 255
-                PColor.Y = Me.VisualProps.ColorPrimitives.G / 255
-                PColor.Z = Me.VisualProps.ColorPrimitives.B / 255
+                PColor.X = VisualProperties.ColorPrimitives.R / 255
+                PColor.Y = VisualProperties.ColorPrimitives.G / 255
+                PColor.Z = VisualProperties.ColorPrimitives.B / 255
                 Dim SColor As New EVector3
                 If Not Selected Then
-                    SColor.X = Me.VisualProps.ColorSurface.R / 255
-                    SColor.Y = Me.VisualProps.ColorSurface.G / 255
-                    SColor.Z = Me.VisualProps.ColorSurface.B / 255
+                    SColor.X = VisualProperties.ColorSurface.R / 255
+                    SColor.Y = VisualProperties.ColorSurface.G / 255
+                    SColor.Z = VisualProperties.ColorSurface.B / 255
                 Else
                     ' default selected color is {255, 194, 14} (orange)
                     SColor.X = 1
@@ -1461,21 +1322,21 @@ Namespace VisualModel.Models.Components
                 End If
 
                 Dim Transparency As Double
-                If VisualProps.VisualizationMode = VisualizationMode.Lattice Then
-                    Transparency = VisualProps.Transparency
-                ElseIf VisualProps.VisualizationMode = VisualizationMode.Structural Then
+                If VisualProperties.VisualizationMode = VisualizationMode.Lattice Then
+                    Transparency = VisualProperties.Transparency
+                ElseIf VisualProperties.VisualizationMode = VisualizationMode.Structural Then
                     Transparency = 0.4
                 End If
 
                 For Each Panel In Mesh.Panels
 
-                    p += 1
-
                     gl.PushName(Code + p)
+
+                    p += 1
 
                     gl.Begin(OpenGL.GL_TRIANGLES)
 
-                    If Panel.IsPrimitive And Me.VisualProps.ShowPrimitives Then
+                    If Panel.IsPrimitive And VisualProperties.ShowPrimitives Then
                         gl.Color(PColor.X, PColor.Y, PColor.Z, Transparency)
                     Else
                         gl.Color(SColor.X, SColor.Y, SColor.Z, Transparency)
@@ -1483,26 +1344,26 @@ Namespace VisualModel.Models.Components
 
                     ' First triangle:
 
-                    Nodo = GetNodalPoint(Panel.N1)
+                    Nodo = Mesh.Nodes(Panel.N1).Position
                     gl.Vertex(Nodo.X, Nodo.Y, Nodo.Z)
 
-                    Nodo = GetNodalPoint(Panel.N2)
+                    Nodo = Mesh.Nodes(Panel.N2).Position
                     gl.Vertex(Nodo.X, Nodo.Y, Nodo.Z)
 
-                    Nodo = GetNodalPoint(Panel.N3)
+                    Nodo = Mesh.Nodes(Panel.N3).Position
                     gl.Vertex(Nodo.X, Nodo.Y, Nodo.Z)
 
                     ' Second triangle:
 
                     If Not Panel.IsTriangular Then
 
-                        Nodo = GetNodalPoint(Panel.N3)
+                        Nodo = Mesh.Nodes(Panel.N3).Position
                         gl.Vertex(Nodo.X, Nodo.Y, Nodo.Z)
 
-                        Nodo = GetNodalPoint(Panel.N4)
+                        Nodo = Mesh.Nodes(Panel.N4).Position
                         gl.Vertex(Nodo.X, Nodo.Y, Nodo.Z)
 
-                        Nodo = GetNodalPoint(Panel.N1)
+                        Nodo = Mesh.Nodes(Panel.N1).Position
                         gl.Vertex(Nodo.X, Nodo.Y, Nodo.Z)
 
                     End If
@@ -1511,26 +1372,26 @@ Namespace VisualModel.Models.Components
 
                         ' First triangle:
 
-                        Nodo = GetNodalPoint(Panel.N1)
+                        Nodo = Mesh.Nodes(Panel.N1).Position
                         gl.Vertex(Nodo.X, -Nodo.Y, Nodo.Z)
 
-                        Nodo = GetNodalPoint(Panel.N2)
+                        Nodo = Mesh.Nodes(Panel.N2).Position
                         gl.Vertex(Nodo.X, -Nodo.Y, Nodo.Z)
 
-                        Nodo = GetNodalPoint(Panel.N3)
+                        Nodo = Mesh.Nodes(Panel.N3).Position
                         gl.Vertex(Nodo.X, -Nodo.Y, Nodo.Z)
 
                         ' Second triangle:
 
                         If Not Panel.IsTriangular Then
 
-                            Nodo = GetNodalPoint(Panel.N3)
+                            Nodo = Mesh.Nodes(Panel.N3).Position
                             gl.Vertex(Nodo.X, -Nodo.Y, Nodo.Z)
 
-                            Nodo = GetNodalPoint(Panel.N4)
+                            Nodo = Mesh.Nodes(Panel.N4).Position
                             gl.Vertex(Nodo.X, -Nodo.Y, Nodo.Z)
 
-                            Nodo = GetNodalPoint(Panel.N1)
+                            Nodo = Mesh.Nodes(Panel.N1).Position
                             gl.Vertex(Nodo.X, -Nodo.Y, Nodo.Z)
 
                         End If
@@ -1546,9 +1407,9 @@ Namespace VisualModel.Models.Components
 
             ' Nodes:
 
-            If VisualProps.VisualizationMode = VisualizationMode.Lattice Then
+            If VisualProperties.VisualizationMode = VisualizationMode.Lattice Then
 
-                gl.PointSize(VisualProps.SizeNodes)
+                gl.PointSize(VisualProperties.SizeNodes)
                 gl.Color(0.0F, 0.0F, 0.0F)
 
                 gl.InitNames()
@@ -1557,17 +1418,24 @@ Namespace VisualModel.Models.Components
                 Dim p As Integer = 0
                 Dim Nodo As EVector3
 
-                For Each Node In Mesh.NodalPoints
-
-                    p += 1
+                For Each Node In Mesh.Nodes
 
                     If SelectionMode = SelectionModes.smNodePicking Or Node.Active Then
+
                         gl.PushName(Code + p)
+
                         gl.Begin(OpenGL.GL_POINTS)
-                        Nodo = GetNodalPoint(p)
+
+                        Nodo = Mesh.Nodes(p).Position
+
                         gl.Vertex(Nodo.X, Nodo.Y, Nodo.Z)
+
                         gl.End()
+
                         gl.PopName()
+
+                        p += 1
+
                     End If
 
                 Next
@@ -1576,7 +1444,7 @@ Namespace VisualModel.Models.Components
 
             ' Genera el mallado:
 
-            If VisualProps.VisualizationMode = VisualizationMode.Lattice Or VisualProps.VisualizationMode = VisualizationMode.Structural Then
+            If VisualProperties.VisualizationMode = VisualizationMode.Lattice Or VisualProperties.VisualizationMode = VisualizationMode.Structural Then
 
                 Dim SColor As New EVector3
                 SColor.X = 0.75
@@ -1584,14 +1452,14 @@ Namespace VisualModel.Models.Components
                 SColor.Z = 0.75
                 Dim Thickness As Double = 1.0
 
-                If (VisualProps.VisualizationMode = VisualizationMode.Lattice) Then
-                    SColor.X = VisualProps.ColorMesh.R / 255
-                    SColor.Y = VisualProps.ColorMesh.G / 255
-                    SColor.Z = VisualProps.ColorMesh.B / 255
-                    Thickness = VisualProps.ThicknessMesh
+                If (VisualProperties.VisualizationMode = VisualizationMode.Lattice) Then
+                    SColor.X = VisualProperties.ColorMesh.R / 255
+                    SColor.Y = VisualProperties.ColorMesh.G / 255
+                    SColor.Z = VisualProperties.ColorMesh.B / 255
+                    Thickness = VisualProperties.ThicknessMesh
                 End If
 
-                If Me.VisualProps.ShowMesh Then
+                If VisualProperties.ShowMesh Then
 
                     gl.InitNames()
 
@@ -1603,13 +1471,13 @@ Namespace VisualModel.Models.Components
 
                     Code = Selection.GetSelectionCode(ComponentTypes.etLiftingSurface, ElementIndex, EntityTypes.etVortex, 0)
 
-                    For i = 1 To nVortices
+                    For i = 0 To NumberOfSegments - 1
 
                         gl.PushName(Code + i)
 
                         gl.Begin(OpenGL.GL_LINES)
-                        Nodo1 = GetNodalPoint(GetVortex(i).N1)
-                        Nodo2 = GetNodalPoint(GetVortex(i).N2)
+                        Nodo1 = Mesh.Nodes(GetVortex(i).N1).Position
+                        Nodo2 = Mesh.Nodes(GetVortex(i).N2).Position
 
                         gl.Vertex(Nodo1.X, Nodo1.Y, Nodo1.Z)
                         gl.Vertex(Nodo2.X, Nodo2.Y, Nodo2.Z)
@@ -1617,8 +1485,8 @@ Namespace VisualModel.Models.Components
                         If Symmetric Then
 
                             gl.Begin(OpenGL.GL_LINES)
-                            Nodo1 = GetNodalPoint(GetVortex(i).N1)
-                            Nodo2 = GetNodalPoint(GetVortex(i).N2)
+                            Nodo1 = Mesh.Nodes(GetVortex(i).N1).Position
+                            Nodo2 = Mesh.Nodes(GetVortex(i).N2).Position
 
                             gl.Vertex(Nodo1.X, -Nodo1.Y, Nodo1.Z)
                             gl.Vertex(Nodo2.X, -Nodo2.Y, Nodo2.Z)
@@ -1634,7 +1502,7 @@ Namespace VisualModel.Models.Components
 
             End If
 
-            If VisualProps.VisualizationMode = VisualizationMode.Structural Then
+            If VisualProperties.VisualizationMode = VisualizationMode.Structural Then
 
                 gl.Color(0, 0, 0)
 
@@ -1697,7 +1565,7 @@ Namespace VisualModel.Models.Components
                         Nodo2.Z + _StructuralPartition(i).Basis.V.Z * _StructuralPartition(i).LocalSection.CMy)
                     gl.End()
 
-                    If VisualProps.ShowLocalCoordinates Then
+                    If VisualProperties.ShowLocalCoordinates Then
 
                         Dim base As EBase3 = _StructuralPartition(i).Basis
                         Dim l As Double
@@ -1733,7 +1601,7 @@ Namespace VisualModel.Models.Components
 
             ' Show local coordinates:
 
-            If VisualProps.ShowLocalCoordinates Then
+            If VisualProperties.ShowLocalCoordinates Then
 
                 gl.LineWidth(2.0)
                 gl.Begin(OpenGL.GL_LINES)
@@ -1759,8 +1627,8 @@ Namespace VisualModel.Models.Components
         Private Sub SetPrimitives()
 
             If TrailingEdgeConvection Then
-                _PrimitiveData(1, 1) = nChordPanels + 1
-                _PrimitiveData(1, 2) = FirstPrimitiveNode + nSpanPanels - 1
+                _PrimitiveData(1, 1) = NumberOfChordPanels + 1
+                _PrimitiveData(1, 2) = FirstPrimitiveNode + NumberOfSpanPanels - 1
             End If
 
             ' Se asegura de que el maximo es mayor que el minimo, y que la cantidad de paneles esta dentro del limite:
@@ -1775,8 +1643,8 @@ Namespace VisualModel.Models.Components
             _PrimitiveData(2, 1) = _PrimitiveData(1, 1)  ' Primer nodo primitivo
             _PrimitiveData(2, 2) = _PrimitiveData(1, 2) + 1 ' Ultimo nodo primitivo
 
-            _nPrimitiveNodes = Me._PrimitiveData(2, 2) - Me._PrimitiveData(2, 1) + 1 ' Mumero de nodos primitivos
-            _nPrimitivePanels = Me._PrimitiveData(1, 2) - Me._PrimitiveData(1, 1) + 1  ' Numero de paneles primitivos
+            _nPrimitiveNodes = _PrimitiveData(2, 2) - _PrimitiveData(2, 1) + 1 ' Mumero de nodos primitivos
+            _nPrimitivePanels = _PrimitiveData(1, 2) - _PrimitiveData(1, 1) + 1  ' Numero de paneles primitivos
 
         End Sub
 
@@ -1838,12 +1706,12 @@ Namespace VisualModel.Models.Components
 
                 For i = i0 To Panel.nSpanPanels
 
-                    lePoint = Mesh.NodalPoints(sp * _nChordNodes).Position
+                    lePoint = Mesh.Nodes(sp * _nChordNodes).Position
 
                     If Panel.Chamber.Flapped Then
-                        tePoint = Mesh.NodalPoints((sp + 1) * _nChordNodes - 1 - FlapPanels).Position
+                        tePoint = Mesh.Nodes((sp + 1) * _nChordNodes - 1 - FlapPanels).Position
                     Else
-                        tePoint = Mesh.NodalPoints((sp + 1) * _nChordNodes - 1).Position
+                        tePoint = Mesh.Nodes((sp + 1) * _nChordNodes - 1).Position
                     End If
 
                     Dim pStructural As New EVector3
@@ -1942,21 +1810,21 @@ Namespace VisualModel.Models.Components
                 Dim Diagonal1 As New EVector3
                 Dim Diagonal2 As New EVector3
 
-                For i = 1 To Me.nPanels
+                For i = 0 To NumberOfPanels - 1
 
-                    Nodo1 = Me.CloneNodalPoint(Me.GetQuadPanel(i).N1)
-                    Nodo2 = Me.CloneNodalPoint(Me.GetQuadPanel(i).N2)
-                    Nodo3 = Me.CloneNodalPoint(Me.GetQuadPanel(i).N3)
-                    Nodo4 = Me.CloneNodalPoint(Me.GetQuadPanel(i).N4)
+                    Nodo1 = Mesh.Nodes(Mesh.Panels(i).N1).Position
+                    Nodo2 = Mesh.Nodes(Mesh.Panels(i).N2).Position
+                    Nodo3 = Mesh.Nodes(Mesh.Panels(i).N3).Position
+                    Nodo4 = Mesh.Nodes(Mesh.Panels(i).N4).Position
 
                     Vector1 = Nodo1.GetVectorToPoint(Nodo2)
                     Vector2 = Nodo2.GetVectorToPoint(Nodo3)
                     Vector3 = Nodo3.GetVectorToPoint(Nodo4)
                     Vector4 = Nodo4.GetVectorToPoint(Nodo1)
 
-                    Me.GetQuadPanel(i).ControlPoint.X = 0.25 * (Nodo1.X + Nodo2.X + Nodo3.X + Nodo4.X)
-                    Me.GetQuadPanel(i).ControlPoint.Y = 0.25 * (Nodo1.Y + Nodo2.Y + Nodo3.Y + Nodo4.Y)
-                    Me.GetQuadPanel(i).ControlPoint.Z = 0.25 * (Nodo1.Z + Nodo2.Z + Nodo3.Z + Nodo4.Z)
+                    Mesh.Panels(i).ControlPoint.X = 0.25 * (Nodo1.X + Nodo2.X + Nodo3.X + Nodo4.X)
+                    Mesh.Panels(i).ControlPoint.Y = 0.25 * (Nodo1.Y + Nodo2.Y + Nodo3.Y + Nodo4.Y)
+                    Mesh.Panels(i).ControlPoint.Z = 0.25 * (Nodo1.Z + Nodo2.Z + Nodo3.Z + Nodo4.Z)
 
                     Diagonal1.X = Nodo2.X - Nodo4.X
                     Diagonal1.Y = Nodo2.Y - Nodo4.Y
@@ -1966,8 +1834,8 @@ Namespace VisualModel.Models.Components
                     Diagonal2.Y = Nodo3.Y - Nodo1.Y
                     Diagonal2.Z = Nodo3.Z - Nodo1.Z
 
-                    Me.GetQuadPanel(i).NormalVector = Algebra.VectorProduct(Diagonal1, Diagonal2).NormalizedDirection
-                    Me.GetQuadPanel(i).Area = 0.5 * Algebra.VectorProduct(Vector1, Vector2).EuclideanNorm + 0.5 * Algebra.VectorProduct(Vector3, Vector4).EuclideanNorm
+                    Mesh.Panels(i).NormalVector = Algebra.VectorProduct(Diagonal1, Diagonal2).NormalizedDirection
+                    Mesh.Panels(i).Area = 0.5 * Algebra.VectorProduct(Vector1, Vector2).EuclideanNorm + 0.5 * Algebra.VectorProduct(Vector3, Vector4).EuclideanNorm
 
                 Next
 
@@ -1979,135 +1847,43 @@ Namespace VisualModel.Models.Components
 
         End Sub
 
-        ''' <summary>
-        ''' Obsolete function.
-        ''' </summary>
-        ''' <param name="Panel"></param>
-        ''' <param name="PuntoDeControl"></param>
-        ''' <param name="Cutoff"></param>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
-        Public Function CalculateBiotSavartVector(ByVal Panel As Integer, ByVal PuntoDeControl As EVector3, ByVal Cutoff As Double) As EVector3
-
-            Dim Coeficiente As Double = 0.0#
-            Dim Denominador As Double
-            Const Constante As Double = 4 * Math.PI
-            Dim L As New EVector3
-            Dim R1 As New EVector3
-            Dim R2 As New EVector3
-            Dim de As New EVector3
-
-            Dim VectorDeBiotSavartParcial As New EVector3
-            Dim VectorDeBiotSavart As New EVector3
-
-            'Vórtice 1
-
-            L = Algebra.SubstractVectors(Me.CloneNodalPoint(Me.GetQuadPanel(Panel).N2), Me.CloneNodalPoint(Me.GetQuadPanel(Panel).N1))
-            R1 = Algebra.SubstractVectors(PuntoDeControl, Me.CloneNodalPoint(Me.GetQuadPanel(Panel).N1))
-            R2 = Algebra.SubstractVectors(PuntoDeControl, Me.CloneNodalPoint(Me.GetQuadPanel(Panel).N2))
-            de = Algebra.SubstractVectors(R1.NormalizedDirection, R2.NormalizedDirection)
-
-            Denominador = Constante * Algebra.VectorProduct(L, R1).SquareEuclideanNorm
-
-            If Denominador > Cutoff Then
-
-                VectorDeBiotSavartParcial = Algebra.ScalarProduct(1 / Denominador * Algebra.InnerProduct(L, de), Algebra.VectorProduct(L, R1))
-                VectorDeBiotSavart = Algebra.AddVectors(VectorDeBiotSavart, VectorDeBiotSavartParcial)
-
-            End If
-
-            'Vórtice 2
-
-            L = Algebra.SubstractVectors(Me.CloneNodalPoint(Me.GetQuadPanel(Panel).N3), Me.CloneNodalPoint(Me.GetQuadPanel(Panel).N2))
-            R1 = Algebra.SubstractVectors(PuntoDeControl, Me.CloneNodalPoint(Me.GetQuadPanel(Panel).N2))
-            R2 = Algebra.SubstractVectors(PuntoDeControl, Me.CloneNodalPoint(Me.GetQuadPanel(Panel).N3))
-            de = Algebra.SubstractVectors(R1.NormalizedDirection, R2.NormalizedDirection)
-
-            Denominador = Constante * Algebra.VectorProduct(L, R1).SquareEuclideanNorm
-
-            If Denominador > Cutoff Then
-
-                VectorDeBiotSavartParcial = Algebra.ScalarProduct(1 / Denominador * Algebra.InnerProduct(L, de), Algebra.VectorProduct(L, R1))
-                VectorDeBiotSavart = Algebra.AddVectors(VectorDeBiotSavart, VectorDeBiotSavartParcial)
-
-            End If
-
-            'Vórtice 3
-
-            L = Algebra.SubstractVectors(Me.CloneNodalPoint(Me.GetQuadPanel(Panel).N4), Me.CloneNodalPoint(Me.GetQuadPanel(Panel).N3))
-            R1 = Algebra.SubstractVectors(PuntoDeControl, Me.CloneNodalPoint(Me.GetQuadPanel(Panel).N3))
-            R2 = Algebra.SubstractVectors(PuntoDeControl, Me.CloneNodalPoint(Me.GetQuadPanel(Panel).N4))
-            de = Algebra.SubstractVectors(R1.NormalizedDirection, R2.NormalizedDirection)
-
-            Denominador = Constante * Algebra.VectorProduct(L, R1).SquareEuclideanNorm
-
-            If Denominador > Cutoff Then
-
-                VectorDeBiotSavartParcial = Algebra.ScalarProduct(1 / Denominador * Algebra.InnerProduct(L, de), Algebra.VectorProduct(L, R1))
-                VectorDeBiotSavart = Algebra.AddVectors(VectorDeBiotSavart, VectorDeBiotSavartParcial)
-
-            End If
-
-            'Vórtice 4
-
-            L = Algebra.SubstractVectors(Me.CloneNodalPoint(Me.GetQuadPanel(Panel).N1), Me.CloneNodalPoint(Me.GetQuadPanel(Panel).N4))
-            R1 = Algebra.SubstractVectors(PuntoDeControl, Me.CloneNodalPoint(Me.GetQuadPanel(Panel).N4))
-            R2 = Algebra.SubstractVectors(PuntoDeControl, Me.CloneNodalPoint(Me.GetQuadPanel(Panel).N1))
-            de = Algebra.SubstractVectors(R1.NormalizedDirection, R2.NormalizedDirection)
-
-            Denominador = Constante * Algebra.VectorProduct(L, R1).SquareEuclideanNorm
-
-            If Denominador > Cutoff Then
-
-                VectorDeBiotSavartParcial = Algebra.ScalarProduct(1 / Denominador * Algebra.InnerProduct(L, de), Algebra.VectorProduct(L, R1))
-                VectorDeBiotSavart = Algebra.AddVectors(VectorDeBiotSavart, VectorDeBiotSavartParcial)
-
-            End If
-
-            Return VectorDeBiotSavart
-
-        End Function
-
 #End Region
 
 #Region " Other methods "
 
-        ''' <summary>
-        ''' Generates a general surface from this wing.
-        ''' </summary>
-        ''' <param name="Superficie"></param>
-        ''' <remarks></remarks>
-        Public Sub GenerateGeneralSurface(ByRef Superficie As GeneralSurface)
+        '''' <summary>
+        '''' Generates a general surface from this wing.
+        '''' </summary>
+        '''' <param name="Superficie"></param>
+        '''' <remarks></remarks>
+        'Public Sub GenerateGeneralSurface(ByRef Superficie As ResultContainer)
 
-            For i = 1 To Me.nNodes
-                Superficie.AddNodalPoint(Me.GetNodalPoint(i))
-            Next
+        '    For i = 0 To NumberOfNodes - 1
+        '        Superficie.AddNodalPoint(Mesh.Nodes(i).Position)
+        '    Next
 
-            For i = 1 To Me.nPanels
-                Superficie.AddPanel(Me.GetQuadPanel(i))
-            Next
+        '    For i = 0 To NumberOfPanels - 1
+        '        Superficie.AddPanel(Mesh.Panels(i))
+        '    Next
 
-        End Sub
+        'End Sub
 
         ''' <summary>
         ''' Generates a copy of the instance.
         ''' </summary>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Function Clone() As LiftingSurface
+        Public Overrides Function Clone() As Surface
 
             Dim Surface As New LiftingSurface
 
-            Surface.RootChord = Me.RootChord
-            Surface.nChordPanels = Me.nChordPanels
+            Surface.RootChord = RootChord
+            Surface.NumberOfChordPanels = NumberOfChordPanels
             Surface.Symmetric = True
-            Surface.GlobalPosition.Assign(Me.GlobalPosition)
-            Surface.CenterOfRotation.Assign(Me.CenterOfRotation)
-            Surface.GlobalOrientation.Assign(Me.GlobalOrientation)
-            Surface.FirstPrimitiveSegment = Me.FirstPrimitiveSegment
-            Surface.LastPrimitiveSegment = Me.LastPrimitiveSegment
-            Surface.ConvectWake = Me.ConvectWake
-            Surface.RootSection.Assign(Me.RootSection)
+            Surface.FirstPrimitiveSegment = FirstPrimitiveSegment
+            Surface.LastPrimitiveSegment = LastPrimitiveSegment
+            Surface.ConvectWake = ConvectWake
+            Surface.RootSection.Assign(RootSection)
 
             ' Add panels:
 
@@ -2120,7 +1896,7 @@ Namespace VisualModel.Models.Components
                 End If
 
                 Surface._WingRegions(p).Assign(Panel)
-                Surface._WingRegions(p).TipSection.Assign(Me._WingRegions(p).TipSection)
+                Surface._WingRegions(p).TipSection.Assign(_WingRegions(p).TipSection)
 
                 p += 1
 
@@ -2134,55 +1910,26 @@ Namespace VisualModel.Models.Components
 
 #End Region
 
-#Region " Operaciones geometricas "
-
-        ''' <summary>
-        ''' Translates the surface a given displacement.
-        ''' </summary>
-        ''' <param name="Vector"></param>
-        ''' <remarks></remarks>
-        Public Overrides Sub Translate(ByVal Vector As EVector3)
-
-            GlobalPosition.X += Vector.X
-            GlobalPosition.Y += Vector.Y
-            GlobalPosition.Z += Vector.Z
-
-            GenerateMesh()
-
-        End Sub
-
-        ''' <summary>
-        ''' Orientates the model by the given Euler angles around the specified point.
-        ''' </summary>
-        ''' <param name="Point"></param>
-        ''' <param name="Ori"></param>
-        ''' <remarks></remarks>
-        Public Overrides Sub Orientate(ByVal Point As EVector3, ByVal Ori As EulerAngles)
-
-            CenterOfRotation.Assign(Point)
-            GlobalOrientation.Assign(Ori)
-            GenerateMesh()
-
-        End Sub
+#Region " Geometrical opperations "
 
         ''' <summary>
         ''' Aligns the surface by means of four reference points (it is not working well).
         ''' </summary>
-        ''' <param name="Punto1"></param>
-        ''' <param name="Punto2"></param>
-        ''' <param name="Punto3"></param>
-        ''' <param name="Punto4"></param>
+        ''' <param name="Point1"></param>
+        ''' <param name="Point2"></param>
+        ''' <param name="Point3"></param>
+        ''' <param name="Point4"></param>
         ''' <remarks></remarks>
-        Public Overrides Sub Align(ByVal Punto1 As EVector3, ByVal Punto2 As EVector3, ByVal Punto3 As EVector3, ByVal Punto4 As EVector3)
+        Public Overrides Sub Align(ByVal Point1 As EVector3, ByVal Point2 As EVector3, ByVal Point3 As EVector3, ByVal Point4 As EVector3)
 
             ' Rotate arround P1 in order to align segments:
 
-            Me.CenterOfRotation.X = Punto2.X
-            Me.CenterOfRotation.Y = Punto2.Y
-            Me.CenterOfRotation.Z = Punto2.Z
+            Me.CenterOfRotation.X = Point2.X
+            Me.CenterOfRotation.Y = Point2.Y
+            Me.CenterOfRotation.Z = Point2.Z
 
-            Dim V1 As EVector3 = Punto1 - Punto3
-            Dim V2 As EVector3 = Punto2 - Punto4
+            Dim V1 As EVector3 = Point1 - Point3
+            Dim V2 As EVector3 = Point2 - Point4
 
             Dim V1h As New EVector2
 
@@ -2202,7 +1949,7 @@ Namespace VisualModel.Models.Components
 
             Dim Sign As Integer = Math.Sign(V2ho.X * V1ho.X + V2ho.Y * V1ho.Y)
 
-            Me.GlobalOrientation.Psi += Sign * Math.Acos(V1h.X * V2h.X + V1h.Y * V2h.Y) * 180 / Math.PI
+            Orientation.Psi += Sign * Math.Acos(V1h.X * V2h.X + V1h.Y * V2h.Y) * 180 / Math.PI
 
             'Dim Vertical As New EVector3
             'Vertical.Z = V1.Z - V2.Z
@@ -2210,11 +1957,11 @@ Namespace VisualModel.Models.Components
 
             ' Translate P1 to P2:
 
-            Me.GlobalPosition.X = Punto2.X
-            Me.GlobalPosition.Y = Punto2.Y
-            Me.GlobalPosition.Z = Punto2.Z
+            Position.X = Point2.X
+            Position.Y = Point2.Y
+            Position.Z = Point2.Z
 
-            Me.GenerateMesh()
+            GenerateMesh()
 
         End Sub
 
@@ -2244,14 +1991,14 @@ Namespace VisualModel.Models.Components
                         FlapPanels = IOXML.ReadInteger(reader, "FlapPanels", 3)
                         IncludeInCalculation = IOXML.ReadBoolean(reader, "Include", True)
 
-                        GlobalPosition.X = IOXML.ReadDouble(reader, "PGX", 0.0)
-                        GlobalPosition.Y = IOXML.ReadDouble(reader, "PGY", 0.0)
-                        GlobalPosition.Z = IOXML.ReadDouble(reader, "PGZ", 0.0)
+                        Position.X = IOXML.ReadDouble(reader, "PGX", 0.0)
+                        Position.Y = IOXML.ReadDouble(reader, "PGY", 0.0)
+                        Position.Z = IOXML.ReadDouble(reader, "PGZ", 0.0)
 
-                        GlobalOrientation.Psi = IOXML.ReadDouble(reader, "OGPsi", 0.0)
-                        GlobalOrientation.Tita = IOXML.ReadDouble(reader, "OGTita", 0.0)
-                        GlobalOrientation.Fi = IOXML.ReadDouble(reader, "OGFi", 0.0)
-                        GlobalOrientation.Secuence = IOXML.ReadInteger(reader, "OGSecuence", CInt(EulerAngles.RotationSecuence.ZYX))
+                        Orientation.Psi = IOXML.ReadDouble(reader, "OGPsi", 0.0)
+                        Orientation.Tita = IOXML.ReadDouble(reader, "OGTita", 0.0)
+                        Orientation.Fi = IOXML.ReadDouble(reader, "OGFi", 0.0)
+                        Orientation.Secuence = IOXML.ReadInteger(reader, "OGSecuence", CInt(EulerAngles.RotationSecuence.ZYX))
 
                         CenterOfRotation.X = IOXML.ReadDouble(reader, "PCRX", 0.0)
                         CenterOfRotation.Y = IOXML.ReadDouble(reader, "PCRY", 0.0)
@@ -2273,7 +2020,7 @@ Namespace VisualModel.Models.Components
                         RootSection.rIp = IOXML.ReadDouble(reader, "RootJ", 0.0)
                         RootSection.m = IOXML.ReadDouble(reader, "Rootm", 0.0)
 
-                        nChordPanels = IOXML.ReadInteger(reader, "NumberChordRings", 6)
+                        NumberOfChordPanels = IOXML.ReadInteger(reader, "NumberChordRings", 6)
 
                     Case "Identity"
 
@@ -2289,7 +2036,7 @@ Namespace VisualModel.Models.Components
 
                     Case "VisualProperties"
 
-                        VisualProps.ReadFromXML(reader.ReadSubtree)
+                        VisualProperties.ReadFromXML(reader.ReadSubtree)
 
                 End Select
 
@@ -2322,14 +2069,14 @@ Namespace VisualModel.Models.Components
             writer.WriteAttributeString("FlapPanels", String.Format("{0}", FlapPanels))
             writer.WriteAttributeString("Include", String.Format("{0}", IncludeInCalculation))
 
-            writer.WriteAttributeString("PGX", String.Format("{0}", GlobalPosition.X))
-            writer.WriteAttributeString("PGY", String.Format("{0}", GlobalPosition.Y))
-            writer.WriteAttributeString("PGZ", String.Format("{0}", GlobalPosition.Z))
+            writer.WriteAttributeString("PGX", String.Format("{0}", Position.X))
+            writer.WriteAttributeString("PGY", String.Format("{0}", Position.Y))
+            writer.WriteAttributeString("PGZ", String.Format("{0}", Position.Z))
 
-            writer.WriteAttributeString("OGPsi", String.Format("{0}", GlobalOrientation.Psi))
-            writer.WriteAttributeString("OGTita", String.Format("{0}", GlobalOrientation.Tita))
-            writer.WriteAttributeString("OGFi", String.Format("{0}", GlobalOrientation.Fi))
-            writer.WriteAttributeString("OGSecuence", String.Format("{0}", CInt(GlobalOrientation.Secuence)))
+            writer.WriteAttributeString("OGPsi", String.Format("{0}", Orientation.Psi))
+            writer.WriteAttributeString("OGTita", String.Format("{0}", Orientation.Tita))
+            writer.WriteAttributeString("OGFi", String.Format("{0}", Orientation.Fi))
+            writer.WriteAttributeString("OGSecuence", String.Format("{0}", CInt(Orientation.Secuence)))
 
             writer.WriteAttributeString("PCRX", String.Format("{0}", CenterOfRotation.X))
             writer.WriteAttributeString("PCRY", String.Format("{0}", CenterOfRotation.Y))
@@ -2351,14 +2098,14 @@ Namespace VisualModel.Models.Components
             writer.WriteAttributeString("RootJ", String.Format("{0}", RootSection.rIp))
             writer.WriteAttributeString("Rootm", String.Format("{0}", RootSection.m))
 
-            writer.WriteAttributeString("NumberChordRings", String.Format("{0}", nChordPanels))
-            writer.WriteAttributeString("NumberMacroPanels", String.Format("{0}", nWingRegions))
+            writer.WriteAttributeString("NumberChordRings", String.Format("{0}", NumberOfChordPanels))
+            writer.WriteAttributeString("NumberMacroPanels", String.Format("{0}", NumberOfWingRegions))
 
             writer.WriteEndElement()
 
             ' Macro panels:
 
-            For i = 1 To nWingRegions
+            For i = 1 To NumberOfWingRegions
 
                 CurrentRegionID = i
 
@@ -2371,7 +2118,7 @@ Namespace VisualModel.Models.Components
             ' Visual properties:
 
             writer.WriteStartElement("VisualProperties")
-            VisualProps.WriteToXML(writer)
+            VisualProperties.WriteToXML(writer)
             writer.WriteEndElement()
 
         End Sub
@@ -2386,7 +2133,7 @@ Namespace VisualModel.Models.Components
             Dim Data As String = ""
 
             Data += "Surface data:" & vbNewLine
-            Data += String.Format("Total number of nodal points: {0}", Mesh.NodalPoints.Count) & vbNewLine
+            Data += String.Format("Total number of nodal points: {0}", Mesh.Nodes.Count) & vbNewLine
             Data += String.Format("Total number of vortex rings: {0}", Mesh.Panels.Count) & vbNewLine
             Data += String.Format("Total number of vortex segments: {0}", Mesh.Lattice.Count) & vbNewLine
 

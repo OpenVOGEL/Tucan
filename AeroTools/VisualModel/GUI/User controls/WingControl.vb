@@ -43,7 +43,7 @@ Public Class WingControl
 
         Ready = False
 
-        PolarDataBase = PolarDataBase
+        Me.PolarDataBase = PolarDataBase
 
         Surface = SuperficieDeReferencia
         ShowSurfaceState()
@@ -132,22 +132,12 @@ Public Class WingControl
         Surface.RootSection.CMz = nudCMzRoot.Value
 
         Surface.Name = SurfaceNameText.Text
-        Surface.nChordPanels = NPCuerda_Box.Value
-        Surface.GlobalPosition.X = Me.PxBox.Value
-        Surface.GlobalPosition.Y = Me.PyBox.Value
-        Surface.GlobalPosition.Z = Me.PzBox.Value
-        Surface.RootChord = Me.CuerdaRaiz_box.Value
+        Surface.NumberOfChordPanels = NPCuerda_Box.Value
+        Surface.RootChord = CuerdaRaiz_box.Value
 
-        Surface.GlobalOrientation.Psi = Me.PsioBox.Value
-        Surface.GlobalOrientation.Tita = Me.TitaoBox.Value
-        Surface.GlobalOrientation.Fi = Me.FioBox.Value
-        Surface.GlobalOrientation.Secuence = Math.Max(0, cbSecuence.SelectedIndex)
-        Surface.CenterOfRotation.X = Me.PxoBox.Value
-        Surface.CenterOfRotation.Y = Me.PyoBox.Value
-        Surface.CenterOfRotation.Z = Me.PzoBox.Value
-        Surface.ConvectWake = Me.ConvectarEstela.Checked
+        Surface.ConvectWake = ConvectarEstela.Checked
         Surface.TrailingEdgeConvection = cbTrailingEdge.Checked
-        Surface.VisualProps.ShowPrimitives = Me.MostrarPrimitivas.Checked
+        Surface.VisualProperties.ShowPrimitives = MostrarPrimitivas.Checked
 
         Surface.Symmetric = SimetriaEnXZ.Checked
 
@@ -171,28 +161,17 @@ Public Class WingControl
 
         SurfaceNameText.Text = Surface.Name
 
-        SectorActualNumericUpDown.Maximum = Surface.nWingRegions
+        SectorActualNumericUpDown.Maximum = Surface.NumberOfWingRegions
         SectorActualNumericUpDown.Minimum = 1
         SectorActualNumericUpDown.Value = Surface.CurrentRegionID
 
         CuerdaRaiz_box.Value = Surface.RootChord
         nudRootFlap.Value = Surface.RootFlap
         nudFlapPanels.Value = Surface.FlapPanels
-        NPCuerda_Box.Value = Surface.nChordPanels
-        NSectores_box.Value = Surface.nWingRegions
+        NPCuerda_Box.Value = Surface.NumberOfChordPanels
+        NSectores_box.Value = Surface.NumberOfWingRegions
 
-        PxBox.Value = Surface.GlobalPosition.X
-        PyBox.Value = Surface.GlobalPosition.Y
-        PzBox.Value = Surface.GlobalPosition.Z
         SimetriaEnXZ.Checked = Surface.Symmetric
-
-        PsioBox.Value = Surface.GlobalOrientation.Psi
-        TitaoBox.Value = Surface.GlobalOrientation.Tita
-        FioBox.Value = Surface.GlobalOrientation.Fi
-        cbSecuence.SelectedIndex = Surface.GlobalOrientation.Secuence
-        PxoBox.Value = Surface.CenterOfRotation.X
-        PyoBox.Value = Surface.CenterOfRotation.Y
-        PzoBox.Value = Surface.CenterOfRotation.Z
 
         LimitarPrimitivas()
 
@@ -201,7 +180,7 @@ Public Class WingControl
         ConvectarEstela.Checked = Surface.ConvectWake
         cbTrailingEdge.Checked = Surface.TrailingEdgeConvection
 
-        MostrarPrimitivas.Checked = Surface.VisualProps.ShowPrimitives
+        MostrarPrimitivas.Checked = Surface.VisualProperties.ShowPrimitives
 
         nudCuttingStep.Value = Surface.CuttingStep
 
@@ -284,10 +263,10 @@ Public Class WingControl
         Surface.AddRegion()
 
         Ready = False
-        Me.SectorActualNumericUpDown.Maximum = Surface.nWingRegions
+        Me.SectorActualNumericUpDown.Maximum = Surface.NumberOfWingRegions
         Me.SectorActualNumericUpDown.Minimum = 1
         Me.SectorActualNumericUpDown.Value = Surface.CurrentRegionID
-        Me.NSectores_box.Value = Surface.nWingRegions
+        Me.NSectores_box.Value = Surface.NumberOfWingRegions
         Ready = True
 
         LoadRegionToForm()
@@ -307,7 +286,7 @@ Public Class WingControl
         Surface.InsertRegion()
 
         Ready = False
-        Me.SectorActualNumericUpDown.Maximum = Surface.nWingRegions
+        Me.SectorActualNumericUpDown.Maximum = Surface.NumberOfWingRegions
         Me.SectorActualNumericUpDown.Minimum = 1
         Me.SectorActualNumericUpDown.Value = Surface.CurrentRegionID
         Ready = True
@@ -611,44 +590,44 @@ Public Class WingControl
         Me.GetGeometry()
     End Sub
 
-    Private Sub CambiarOrigenX(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles PxBox.ValueChanged
+    Private Sub CambiarOrigenX(ByVal sender As System.Object, ByVal e As System.EventArgs)
         Me.GetGeometry()
     End Sub
 
-    Private Sub CambiarOrigenY(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles PyBox.ValueChanged
+    Private Sub CambiarOrigenY(ByVal sender As System.Object, ByVal e As System.EventArgs)
         Me.GetGeometry()
     End Sub
 
-    Private Sub CambiarOrigenZ(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles PzBox.ValueChanged
+    Private Sub CambiarOrigenZ(ByVal sender As System.Object, ByVal e As System.EventArgs)
         Me.GetGeometry()
     End Sub
 
-    Private Sub CambiarCentroX(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles PxoBox.ValueChanged
+    Private Sub CambiarCentroX(ByVal sender As System.Object, ByVal e As System.EventArgs)
         Me.GetGeometry()
     End Sub
 
-    Private Sub CambiarCentroY(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles PyoBox.ValueChanged
+    Private Sub CambiarCentroY(ByVal sender As System.Object, ByVal e As System.EventArgs)
         Me.GetGeometry()
     End Sub
 
-    Private Sub CambiarCentroZ(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles PzoBox.ValueChanged
+    Private Sub CambiarCentroZ(ByVal sender As System.Object, ByVal e As System.EventArgs)
         Me.GetGeometry()
     End Sub
 
-    Private Sub CambiarPsi(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles PsioBox.ValueChanged
+    Private Sub CambiarPsi(ByVal sender As System.Object, ByVal e As System.EventArgs)
         Me.GetGeometry()
     End Sub
 
-    Private Sub CambiarTita(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TitaoBox.ValueChanged
+    Private Sub CambiarTita(ByVal sender As System.Object, ByVal e As System.EventArgs)
         Me.GetGeometry()
     End Sub
 
-    Private Sub CambiarPhi(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles FioBox.ValueChanged
+    Private Sub CambiarPhi(ByVal sender As System.Object, ByVal e As System.EventArgs)
         Me.GetGeometry()
     End Sub
 
     Private Sub MostrarSuperficie(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnHideSurface.Click
-        Surface.VisualProps.ShowSurface = Not Surface.VisualProps.ShowSurface
+        Surface.VisualProperties.ShowSurface = Not Surface.VisualProperties.ShowSurface
         Me.ShowSurfaceState()
     End Sub
 
@@ -765,7 +744,7 @@ Public Class WingControl
         Me.GetGeometry(False)
     End Sub
 
-    Private Sub cbSecuence_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbSecuence.SelectedIndexChanged
+    Private Sub cbSecuence_SelectedIndexChanged(sender As Object, e As EventArgs)
         GetGeometry()
     End Sub
 
@@ -793,7 +772,7 @@ Public Class WingControl
             btnLockSurface.BackColor = Color.White
         End If
 
-        If Surface.VisualProps.ShowSurface Then
+        If Surface.VisualProperties.ShowSurface Then
             btnHideSurface.BackColor = Color.White
         Else
             btnHideSurface.BackColor = Color.DeepSkyBlue
@@ -801,30 +780,10 @@ Public Class WingControl
 
     End Sub
 
-    Private Sub AlOrigen_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles AlOrigen.Click
-        Surface.GlobalPosition.SetToCero()
-        LoadSuperficieToForm()
-        Surface.GenerateMesh()
-        RaiseEvent RefreshGL()
-    End Sub
-
-    Private Sub CentroDeRotacionAlOrigen_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CentroDeRotacionAlOrigen.Click
-        Surface.CenterOfRotation.SetToCero()
-        LoadSuperficieToForm()
-        Surface.GenerateMesh()
-        RaiseEvent RefreshGL()
-    End Sub
-
-    Private Sub NoRotar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles NoRotar.Click
-        Surface.GlobalOrientation.SetToCero()
-        LoadSuperficieToForm()
-        Surface.GenerateMesh()
-        RaiseEvent RefreshGL()
-    End Sub
-
     Private Sub Cuadro_de_Perfil_Paint(ByVal sender As System.Object, ByVal e As System.Windows.Forms.PaintEventArgs) Handles Cuadro_de_Perfil.Paint
 
         Dim g As Graphics = e.Graphics
+
         Dibujar_Perfil(CMax_box.Value, PCMax_box.Value, NPCuerda_Box.Value, Cuadro_de_Perfil.Width, Cuadro_de_Perfil.Height, g)
 
     End Sub
@@ -852,9 +811,9 @@ Public Class WingControl
     Private Sub tcMacroPanelProperties_Selected(ByVal sender As System.Object, ByVal e As System.Windows.Forms.TabControlEventArgs) Handles tcMacroPanelProperties.Selected
         Select Case tcMacroPanelProperties.SelectedIndex
             Case 0, 1, 2, 3
-                Surface.VisualProps.VisualizationMode = VisualModel.Interface.VisualizationMode.Lattice
+                Surface.VisualProperties.VisualizationMode = VisualModel.Interface.VisualizationMode.Lattice
             Case 4
-                Surface.VisualProps.VisualizationMode = VisualModel.Interface.VisualizationMode.Structural
+                Surface.VisualProperties.VisualizationMode = VisualModel.Interface.VisualizationMode.Structural
         End Select
 
         RaiseEvent RefreshGL()

@@ -41,9 +41,9 @@ Namespace UVLM.Settings
     End Enum
 
     Public Enum CalculationType As Byte
-        ctSteady = 1
-        ctUnsteady = 2
-        ctAeroelastic = 3
+        ctSteady = 0
+        ctUnsteady = 1
+        ctAeroelastic = 2
     End Enum
 
     Public Class SimulationSettings
@@ -52,31 +52,31 @@ Namespace UVLM.Settings
         ''' Free stream velocity amplitude vector (components are scaled by an amplitude factor in unsteady problems).
         ''' </summary>
         ''' <remarks></remarks>
-        Public StreamVelocity As New EVector3
+        Public Property StreamVelocity As New EVector3
 
         ''' <summary>
         ''' Angular velocity of aircraft reference frame (not implemented yet).
         ''' </summary>
         ''' <remarks></remarks>
-        Public Omega As New EVector3
+        Public Property Omega As New EVector3
 
         ''' <summary>
         ''' Free stream density in kg/m³
         ''' </summary>
         ''' <remarks></remarks>
-        Public Density As Double = 1.225#
+        Public Property Density As Double = 1.225#
 
         ''' <summary>
         ''' Free stream static pressure in Pa.
         ''' </summary>
         ''' <remarks></remarks>
-        Public StaticPressure As Double = 101300.0#
+        Public Property StaticPressure As Double = 101300.0#
 
         ''' <summary>
         ''' Free stream viscosity
         ''' </summary>
         ''' <remarks></remarks>
-        Public Viscocity As Double = 0.0000178#
+        Public Property Viscocity As Double = 0.0000178#
 
         Private _ClippingStep As Integer = 1
 

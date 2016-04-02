@@ -31,7 +31,7 @@ Namespace VisualModel.Interface
 
     End Enum
 
-    Public Class VisualizationProperties
+    Public Class VisualProperties
 
         Implements INotifyPropertyChanged
 
@@ -178,6 +178,7 @@ Namespace VisualModel.Interface
         End Property
 
         Public Sub New(ByVal ElementType As ComponentTypes)
+
             Select Case ElementType
 
                 Case ComponentTypes.etLiftingSurface
@@ -194,9 +195,6 @@ Namespace VisualModel.Interface
                     ShowSurface = True
                     ShowPrimitives = True
                     ShowNodes = False
-                    ShowVelocityVectors = True
-                    ShowLoadVectors = True
-                    ShowColormap = True
 
                     Transparency = 1.0#
                     ThicknessMesh = 1.0#
@@ -204,22 +202,37 @@ Namespace VisualModel.Interface
                     ScaleVelocity = 0.01#
                     ScalePressure = 1.0#
 
-                Case ComponentTypes.etBody
+                Case ComponentTypes.etFuselage
 
-                    ColorSurface = System.Drawing.Color.LightGray
-                    ColorMesh = System.Drawing.Color.Black
-                    ColorNodes = System.Drawing.Color.Black
-                    ColorVelocity = System.Drawing.Color.BlueViolet
-                    ColorLoads = System.Drawing.Color.Red
+                    ColorSurface = Color.LightGray
+                    ColorMesh = Color.Black
+                    ColorNodes = Color.Black
+                    ColorVelocity = Color.BlueViolet
+                    ColorLoads = Color.Red
                     Transparency = 1.0#
                     ThicknessMesh = 0.1#
                     SizeNodes = 4.0#
                     ScaleVelocity = 0.01#
                     ScalePressure = 1.0#
+                    ShowMesh = True
+                    ShowSurface = True
                     ShowNodes = False
-                    ShowVelocityVectors = True
-                    ShowLoadVectors = True
-                    ShowColormap = False
+
+                Case ComponentTypes.etJetEngine
+
+                    ColorSurface = Color.SteelBlue
+                    ColorMesh = Color.Black
+                    ColorNodes = Color.Black
+                    ColorVelocity = Color.BlueViolet
+                    ColorLoads = Color.Red
+                    Transparency = 1.0#
+                    ThicknessMesh = 0.1#
+                    SizeNodes = 4.0#
+                    ScaleVelocity = 0.01#
+                    ScalePressure = 1.0#
+                    ShowMesh = True
+                    ShowSurface = True
+                    ShowNodes = False
 
             End Select
         End Sub

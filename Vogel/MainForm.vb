@@ -20,6 +20,7 @@ Imports AeroTools
 Imports AeroTools.VisualModel.Interface
 Imports AeroTools.VisualModel.Models.Components
 Imports AeroTools.UVLM.Settings
+Imports AeroTools.VisualModel.Models.Basics
 
 Public Class MainForm
 
@@ -31,14 +32,12 @@ Public Class MainForm
 
     Private Sub Main_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
 
-        ' Initialize OpenGL control:
+        Text = "Open VOGEL 2016 - Beta 2"
 
-        Text = "Open VOGEL 2016 Beta"
+        ' Initialize OpenGL control:
 
         ControlOpenGL.Dock = DockStyle.Fill
         Project.SetControlGL(ControlOpenGL.OpenGL)
-
-        Contenedor.ContentPanel.Height = 0
 
         ' Force design mode:
 
@@ -46,8 +45,12 @@ Public Class MainForm
 
         FormCargado = True
 
-        AddHandler tsmFieldEvaluation.Click, AddressOf ShowVelocityPlane
-        AddHandler tsbFieldEvaluation.Click, AddressOf ShowVelocityPlane
+        mrRibbon.Project = Project
+        AddHandler mrRibbon.PushMessage, AddressOf PushMessage
+        AddHandler mrRibbon.EditSurface, AddressOf ShowEditor
+        AddHandler mrRibbon.EditVelocityPlane, AddressOf ShowVelocityPlaneFrame
+        AddHandler mrRibbon.SwitchToDesignMode, AddressOf SwitchToDesignMode
+        AddHandler mrRibbon.SwitchToResultsMode, AddressOf SwitchToPostprocessMode
 
         ' Read command line arguments:
 
@@ -65,7 +68,7 @@ Public Class MainForm
                     If IO.File.Exists(argument) And IO.Path.GetExtension(argument) = ".vog" Then
 
                         MsgBox(String.Format("Trying to open file {0}", argument))
-                        Me.OpenProject(argument)
+                        'Me.OpenProject(argument)
                         Exit For
 
                     End If
@@ -80,230 +83,9 @@ Public Class MainForm
 
     End Sub
 
-    Public Sub ReportState(ByVal Mensaje As String)
+    Public Sub PushMessage(ByVal Mensaje As String)
 
         lblStatus.Text = Mensaje
-
-    End Sub
-
-#End Region
-
-#Region " Save project "
-
-    Private Sub GuardarToolStripButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnSaveProject.Click
-
-        SaveProject()
-
-    End Sub
-
-    Private Sub SaveProject()
-
-        Try
-
-            If Me.Project.ExistsOnDatabase Then
-                Project.WriteToXML()
-            Else
-                SaveProjectAs()
-            End If
-
-            lblStatus.Text = "The proyect has been saved"
-
-        Catch ex As Exception
-
-            Dim GuardarConOtroNombre As MsgBoxResult = MsgBox("An exception was raised while saving the project! Do you wish to save it under a different name?", MsgBoxStyle.OkCancel, "Error!")
-            If GuardarConOtroNombre = MsgBoxResult.Ok Then Me.SaveProjectAs()
-
-        End Try
-
-    End Sub
-
-    Public Function SaveProjectAs() As Boolean
-
-        Dim Result As Boolean = False
-
-        Try
-            Dim Respuesta As DialogResult
-
-            dlgSaveFile.Filter = "Vogel proyect files (*.vog)|*.vog"
-            Respuesta = dlgSaveFile.ShowDialog()
-            If Respuesta = Windows.Forms.DialogResult.OK Then
-                Me.Project.FilePath = dlgSaveFile.FileName
-                Project.WriteToXML()
-                Result = True
-            End If
-        Catch ex As Exception
-            MsgBox("Error while saving project!", MsgBoxStyle.OkOnly, "Error!")
-            Result = False
-        End Try
-
-        Return Result
-
-    End Function
-
-    Private Sub GuardarToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnSaveAs.Click
-        Me.SaveProjectAs()
-    End Sub
-
-#End Region
-
-#Region " Open project "
-
-    Private Overloads Sub OpenProject()
-
-        Dim Respuesta1 As MsgBoxResult = MsgBox("Current project will be closed. Do you wish to save it?", vbYesNoCancel, "Opening exsisting project")
-
-        Select Case Respuesta1
-
-            Case MsgBoxResult.Yes
-
-                ' If the project has never been saved call save as.
-
-                Dim Saved As Boolean = True
-
-                If Me.Project.ExistsOnDatabase Then
-                    Me.SaveProject()
-                Else
-                    Saved = SaveProjectAs()
-                End If
-
-                If Saved Then
-                    Me.Project.RestartProject()
-                    Me.WingControlPanel.Hide()
-                    Me.SwitchToDesignMode()
-                Else
-                    Exit Sub
-                End If
-
-            Case MsgBoxResult.Cancel
-                Exit Sub
-
-            Case MsgBoxResult.No
-                Me.WingControlPanel.Hide()
-                Me.SwitchToDesignMode()
-
-        End Select
-
-        Try
-
-            dlgOpenFile.Filter = "Vogel proyect files (*.vog)|*.vog"
-
-            Dim Respuesta2 As MsgBoxResult = dlgOpenFile.ShowDialog()
-
-            If Respuesta2 = MsgBoxResult.Ok Then
-
-                Project.RestartProject()
-                Project.FilePath = dlgOpenFile.FileName
-                Project.ReadFromXML()
-
-                SwitchToDesignMode()
-
-            End If
-
-        Catch ex As Exception
-            MsgBox("Error while reading proyect data file. File data might be corrupted.", MsgBoxStyle.OkOnly, "Error")
-            FileClose(200)
-        End Try
-
-    End Sub
-
-    Private Overloads Sub OpenProject(ByVal Path As String)
-
-        Try
-
-            Me.Project.RestartProject()
-            Me.Project.FilePath = Path
-            Project.ReadFromXML()
-            Me.SwitchToDesignMode()
-            Me.Text = "UVLM Solver - " & Me.Project.Name
-
-        Catch ex As Exception
-            MsgBox("Error while reading proyect data file. File data might be corrupted.", MsgBoxStyle.OkOnly, "Error")
-            FileClose(200)
-        End Try
-
-    End Sub
-
-    Private Sub AbrirToolStripButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
-
-        Me.OpenProject()
-
-    End Sub
-
-    Private Sub AbrirToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnOpenFile.Click, btnOpenProject.Click
-        Me.OpenProject()
-    End Sub
-
-#End Region
-
-#Region " Open results file "
-
-    Private Sub btnLoadResults_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnLoadResults.Click
-
-        Try
-
-            dlgOpenFile.Filter = "Vogel result files (*.res)|*.res"
-
-            Dim Respuesta2 As MsgBoxResult = dlgOpenFile.ShowDialog()
-
-            If Respuesta2 = MsgBoxResult.Ok Then
-
-                Project.ReadResults(dlgOpenFile.FileName)
-                SwitchToPostprocessMode()
-
-            End If
-
-            Project.RepresentOnGL()
-
-        Catch
-
-            MsgBox("Could not open the selected result file!")
-
-        End Try
-
-    End Sub
-
-#End Region
-
-#Region " New project "
-
-    Private Sub btnNewProject_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnNewProject.Click
-
-        Me.GenerateNewProject()
-
-    End Sub
-
-    Public Sub GenerateNewProject()
-
-        Dim Respuesta As MsgBoxResult = MsgBox("¿Desea guardar el proyecto actual antes de crear o abrir uno nuevo?", vbYesNoCancel, "Comenzar un nuevo proyecto")
-
-        On Error GoTo ErrSub
-
-        Select Case Respuesta
-
-            Case MsgBoxResult.Yes
-
-                SaveProject()
-                Project.RestartProject()
-                SwitchToDesignMode()
-                WingControlPanel.Hide()
-
-            Case MsgBoxResult.No
-
-                Project.RestartProject()
-                SwitchToDesignMode()
-                WingControlPanel.Hide()
-
-            Case MsgBoxResult.Cancel
-
-        End Select
-
-        Me.PostProcesoCargado = False
-
-        Exit Sub
-
-ErrSub:
-
-        MsgBox("Error al crear el nuevo proyecto!", MsgBoxStyle.Exclamation, "Error")
 
     End Sub
 
@@ -361,29 +143,9 @@ ErrSub:
 
     End Sub
 
-    Private Sub btnStartSteady_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnStartSteady.Click
-        Me.Calculate(CalculationType.ctSteady)
-    End Sub
-
-    Private Sub btnStartUnsteady_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnStartUnsteady.Click
-        Me.Calculate(CalculationType.ctUnsteady)
-    End Sub
-
-    Private Sub btnStartAeroelastic_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnStartAeroelastic.Click
-        Me.Calculate(CalculationType.ctAeroelastic)
-    End Sub
-
 #End Region
 
 #Region " Switching modes "
-
-    Private Sub btnDesign_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnDesign.Click
-        Me.SwitchToDesignMode()
-    End Sub
-
-    Private Sub btnPostprocess_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnPostprocess.Click
-        Me.SwitchToPostprocessMode()
-    End Sub
 
     ''' <summary>
     ''' Changes project mode and window state to design mode.
@@ -392,42 +154,18 @@ ErrSub:
     Public Sub SwitchToDesignMode()
 
         SetUpLiftingSurfaceEditor()
-        SetUpVelocityPlaneFrame()
 
-        Project.DesignMode()
+        If VelocityControlPanel IsNot Nothing Then
+            VelocityControlPanel.Visible = False
+        End If
 
-        btnDesign.Checked = True
-        btnPostprocess.Checked = False
+        WingControlPanel.Visible = False
 
-        ' Hide/show tool strip buttons:
+        ContractLeftPanel()
 
-        btnOpenObjectsManager.Enabled = True
-        btnPlayStop.Visible = False
-        btnFieldEvaluation.Visible = False
-        btTranslate.Visible = True
-        btnAlign.Visible = False ' this operation needs to be reviewed
-        VelocityControlPanel.Visible = False
-        btnPlayStop.Visible = False
-        tbDisplacementScale.Visible = False
-        cbModes.Visible = False
-        lblResultScale.Visible = False
-        lblResultType.Visible = False
-        btnPlayStop.Visible = False
-        tsbFieldEvaluation.Visible = False
-        tss10.Visible = False
-        sepResults.Visible = False
-
-        ' Stop the transit (if it was on)
-
-        StopTransit()
-
-        ' Hide show user controls:
-
-        Me.VelocityControlPanel.Visible = False
-        Me.WingControlPanel.Visible = False
         ' Represent:
 
-        Me.Project.RepresentOnGL()
+        Project.RepresentOnGL()
 
     End Sub
 
@@ -439,131 +177,23 @@ ErrSub:
 
         Try
 
-            If Project.Results.Loaded Then
+            SetUpVelocityPlaneFrame()
 
-                SetUpLiftingSurfaceEditor()
-                SetUpVelocityPlaneFrame()
-
-                Project.PostprocessMode()
-                btnPlayStop.Visible = True
-                btnFieldEvaluation.Enabled = True
-                btnFieldEvaluation.Visible = True
+            If WingControlPanel IsNot Nothing Then
                 WingControlPanel.Visible = False
-                btTranslate.Visible = False
-                btnAlign.Visible = False
-                btnDesign.Checked = False
-                btnPostprocess.Checked = True
-                btnPlayStop.Enabled = Project.Results.TransitLoaded
-                tbDisplacementScale.Enabled = Project.Results.TransitLoaded
-                btnPlayStop.Visible = Project.Results.TransitLoaded
-                tsbFieldEvaluation.Visible = True
-                tss10.Visible = True
-
-                cbModes.Items.Clear()
-
-                If Not IsNothing(Project.Results.DynamicModes) Then
-
-                    If Project.Results.DynamicModes.Count > 0 Then
-
-                        Me.tbDisplacementScale.Visible = True
-
-                        cbModes.Visible = True
-                        cbModes.Items.Add("Results")
-                        lblResultType.Visible = True
-                        lblResultScale.Visible = True
-                        tbDisplacementScale.Visible = True
-                        sepResults.Visible = True
-
-                        For i = 0 To Project.Results.DynamicModes.Count - 1
-                            cbModes.Items.Add(Project.Results.DynamicModes(i).Name)
-                        Next
-
-                        cbModes.SelectedIndex = 0
-
-                    Else
-
-                        cbModes.Visible = False
-                        lblResultType.Visible = False
-                        lblResultScale.Visible = False
-                        tbDisplacementScale.Visible = False
-                        sepResults.Visible = False
-
-                    End If
-
-                End If
-
-            Else
-
-                MsgBox("No results have been loaded.",
-                        MsgBoxStyle.Information, "Results are not available")
-
             End If
+
+            VelocityControlPanel.Visible = False
+
+            ContractLeftPanel()
 
         Catch ex As Exception
 
             MsgBox("Unable to switch to post-processing mode! Results data might be corrupted.", MsgBoxStyle.Critical, "Error")
-            Me.Project.Results.Clear()
-            Me.SwitchToDesignMode()
+            Project.Results.Clear()
+            SwitchToDesignMode()
 
         End Try
-
-    End Sub
-
-#End Region
-
-#Region " Show dialogs "
-
-    Private Sub ShowVelocityPlane(ByVal sender As System.Object, ByVal e As System.EventArgs)
-        ShowVelocityPlaneFrame()
-    End Sub
-
-    Private Sub btnLocalVelocity_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnLocalVelocity.Click
-        FormAskVelocity.ShowDialog()
-    End Sub
-
-    Private Sub btnSettings_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnSettings.Click
-
-        If Project.InterfaceMode = InterfaceModes.Design Then
-
-            Dim FormSettings = New FormSettings()
-
-            FormSettings.Settings = Project.SimulationSettings
-
-            If (FormSettings.ShowDialog()) = Windows.Forms.DialogResult.OK Then
-                FormSettings.GetSettings()
-            End If
-
-        Else
-            Try
-
-                Dim FormSettings = New FormSettings()
-                FormSettings.Settings = Project.Results.SimulationSettings
-                FormSettings.ShowDialog()
-
-            Catch ex As Exception
-                MsgBox("Unable to load the simulation parameters of the results", MsgBoxStyle.Exclamation)
-            End Try
-
-        End If
-
-    End Sub
-
-    Private Sub btnShowResults_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnShowResults.Click
-
-        If (Not Project.CalculationCore Is Nothing) Then
-            Dim FormReport As New FormReport
-            FormReport.Owner = Me
-            FormReport.ReportResults(Project.CalculationCore)
-            FormReport.ShowDialog()
-        Else
-            MsgBox("Results are not available. Load a results file or execute the calculation first.")
-        End If
-
-    End Sub
-
-    Private Sub btnOpenObjectsManager_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnOpenObjectsManager.Click
-
-        FormObjects.ShowDialog()
 
     End Sub
 
@@ -578,22 +208,10 @@ ErrSub:
     Private Sub SetUpLiftingSurfaceEditor()
 
         If IsNothing(WingControlPanel) Then
-            Me.WingControlPanel = New WingControl
+            WingControlPanel = New WingControl
             AddHandler WingControlPanel.RefreshGL, AddressOf Project.RefreshOnGL
             AddHandler WingControlPanel.OnClose, AddressOf ContractLeftPanel
         End If
-
-    End Sub
-
-    Public Sub ShowLiftingSurfaceEditor()
-
-        SetUpLiftingSurfaceEditor()
-        WingControlPanel.InitializeControl(Me.Project.Model.CurrentLiftingSurface, Project.Model.PolarDataBase)
-        WingControlPanel.Parent = scMain.Panel1
-        scMain.Panel1Collapsed = False
-        scMain.SplitterDistance = WingControlPanel.Width
-        WingControlPanel.Dock = DockStyle.Top
-        WingControlPanel.Show()
 
     End Sub
 
@@ -610,7 +228,7 @@ ErrSub:
     Public Sub ShowVelocityPlaneFrame()
 
         SetUpVelocityPlaneFrame()
-        VelocityControlPanel.IniciarControl(Me.Project)
+        VelocityControlPanel.IniciarControl(Project)
         VelocityControlPanel.Parent = scMain.Panel1
         scMain.Panel1Collapsed = False
         scMain.SplitterDistance = VelocityControlPanel.Width
@@ -619,24 +237,62 @@ ErrSub:
 
     End Sub
 
-    Public Sub ShowFuselageEditor()
+    Public Sub ShowLiftingSurfaceEditor(Surface As LiftingSurface)
 
-        If TypeOf (Project.Model.CurrentBody) Is Fuselage Then
-            Dim Fuselage As Fuselage = Project.Model.CurrentBody
-            Dim FuselageForm As New FormFuselageEditor(Fuselage, Project.Model.LiftingSurfaces)
-            FuselageForm.ShowDialog()
-            Fuselage.GenerateMesh()
-        End If
+        SetUpLiftingSurfaceEditor()
+        WingControlPanel.InitializeControl(Surface, Project.Model.PolarDataBase)
+        WingControlPanel.Parent = scMain.Panel1
+        scMain.Panel1Collapsed = False
+        scMain.SplitterDistance = WingControlPanel.Width
+        WingControlPanel.Dock = DockStyle.Top
+        WingControlPanel.Show()
 
     End Sub
 
-    Public Sub ShowJetEngineDialog()
+    Public Sub ShowFuselageEditor(Fuselage As Fuselage)
 
-        Dim JetEngine As JetEngine = Project.Model.CurrentJetEngine
+        Dim Wings As New List(Of LiftingSurface)
+
+        For Each otherSurface In Project.Model.Objects
+            If TypeOf otherSurface Is LiftingSurface Then
+                Wings.Add(otherSurface)
+            End If
+        Next
+
+        Dim FuselageForm As New FormFuselageEditor(Fuselage, Wings)
+        FuselageForm.ShowDialog()
+        Fuselage.GenerateMesh()
+
+    End Sub
+
+    Public Sub ShowJetEngineEditor(JetEngine As JetEngine)
+
         Dim JetEngineForm As New FormJetEngine(JetEngine)
         AddHandler JetEngineForm.UpdateModel, AddressOf Project.RepresentOnGL
         JetEngineForm.ShowDialog()
         JetEngine.GenerateMesh()
+
+    End Sub
+
+    Public Sub ShowEditor(ByRef Surface As Surface)
+
+        If Surface IsNot Nothing Then
+
+            If TypeOf Surface Is LiftingSurface Then
+
+                ShowLiftingSurfaceEditor(Surface)
+
+            ElseIf TypeOf Surface Is Fuselage
+
+                ShowFuselageEditor(Surface)
+
+            ElseIf TypeOf Surface Is JetEngine
+
+                ShowJetEngineEditor(Surface)
+
+            End If
+
+        End If
 
     End Sub
 
@@ -650,31 +306,23 @@ ErrSub:
 
 #End Region
 
-#Region " Exit "
-
-    Private Sub SalirToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnExit.Click
-        Me.Close()
-    End Sub
-
-#End Region
-
 #Region " Control GL "
 
-    Private PosicionInicialDelMouse As New Drawing.Point
-    Private PosicionInicialDelLaCamara As New EVector3
-    Private OricentacionInicialDeLaCamara As New EulerAngles
+    Private MouseDownPosition As New Drawing.Point
+    Private CameraStartPosition As New EVector3
+    Private CameraOrientation As New EulerAngles
 
     Private Sub ControlOpenGL_MouseMove(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles ControlOpenGL.MouseMove
 
-        If Project.VisualizationParameters.Panning Then
-            Project.VisualizationParameters.CameraPosition.X = PosicionInicialDelLaCamara.X + (e.Location.X - PosicionInicialDelMouse.X)
-            Project.VisualizationParameters.CameraPosition.Y = PosicionInicialDelLaCamara.Y + (PosicionInicialDelMouse.Y - e.Location.Y)
+        If Project.Visualization.Panning Then
+            Project.Visualization.CameraPosition.X = CameraStartPosition.X + (e.Location.X - MouseDownPosition.X)
+            Project.Visualization.CameraPosition.Y = CameraStartPosition.Y + (MouseDownPosition.Y - e.Location.Y)
             'Proyecto.RepresentOnGL()
         End If
 
-        If Project.VisualizationParameters.Rotating Then
-            Project.VisualizationParameters.CameraOrientation.Psi = OricentacionInicialDeLaCamara.Psi + 0.25 * (e.Location.X - PosicionInicialDelMouse.X)
-            Project.VisualizationParameters.CameraOrientation.Fi = OricentacionInicialDeLaCamara.Fi + 0.25 * (e.Location.Y - PosicionInicialDelMouse.Y)
+        If Project.Visualization.Rotating Then
+            Project.Visualization.CameraOrientation.Psi = CameraOrientation.Psi + 0.25 * (e.Location.X - MouseDownPosition.X)
+            Project.Visualization.CameraOrientation.Fi = CameraOrientation.Fi + 0.25 * (e.Location.Y - MouseDownPosition.Y)
             'Proyecto.RepresentOnGL()
         End If
 
@@ -683,16 +331,16 @@ ErrSub:
     Private Sub ControlOpenGL_MouseDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles ControlOpenGL.MouseDown
 
         If e.Button = MouseButtons.Middle Then
-            Project.VisualizationParameters.Panning = True
-            PosicionInicialDelMouse = e.Location
-            PosicionInicialDelLaCamara.Assign(Project.VisualizationParameters.CameraPosition)
+            Project.Visualization.Panning = True
+            MouseDownPosition = e.Location
+            CameraStartPosition.Assign(Project.Visualization.CameraPosition)
         End If
 
         If e.Button = MouseButtons.Right Then
-            Project.VisualizationParameters.Rotating = True
-            PosicionInicialDelMouse = e.Location
-            OricentacionInicialDeLaCamara.Psi = Project.VisualizationParameters.CameraOrientation.Psi
-            OricentacionInicialDeLaCamara.Fi = Project.VisualizationParameters.CameraOrientation.Fi
+            Project.Visualization.Rotating = True
+            MouseDownPosition = e.Location
+            CameraOrientation.Psi = Project.Visualization.CameraOrientation.Psi
+            CameraOrientation.Fi = Project.Visualization.CameraOrientation.Fi
         End If
 
         If e.Button = MouseButtons.Left Then
@@ -732,31 +380,29 @@ ErrSub:
 
                             If sr.ComponentType = ComponentTypes.etLiftingSurface Then
 
-                                Project.Model.OperationsTool.SetDestinationObject(.CurrentLiftingSurface)
+                                Dim wing As LiftingSurface = .Objects(sr.ComponentIndex)
 
-                                If Project.Model.OperationsTool.Operation = Operations.NoOperation Then
-                                    ShowLiftingSurfaceEditor()
-                                End If
+                                Project.Model.OperationsTool.SetDestinationObject(wing)
 
-                            End If
+                                mrRibbon.ChangeSurfaceIndex(sr.ComponentIndex)
 
-                            If Not IsNothing(.CurrentLiftingSurface) Then
+                                'If Project.Model.OperationsTool.Operation = Operations.NoOperation Then
+                                '    ShowLiftingSurfaceEditor(wing)
+                                'End If
 
                                 ttSelectedEntity.Show(String.Format("Structural element {0}", sr.EntityIndex), ControlOpenGL)
                                 lblStatus.Text = String.Format("Structural element {0} at {1}; AE = {2,6:F2}; GJ = {3,6:F2}; EIx = {4,6:F2}; EIy = {4,6:F2}", sr.EntityIndex,
-                                                                          .CurrentLiftingSurface.Name,
-                                                                          .CurrentLiftingSurface.StructuralPartition(sr.EntityIndex).LocalSection.AE,
-                                                                          .CurrentLiftingSurface.StructuralPartition(sr.EntityIndex).LocalSection.GJ,
-                                                                          .CurrentLiftingSurface.StructuralPartition(sr.EntityIndex).LocalSection.EIy,
-                                                                          .CurrentLiftingSurface.StructuralPartition(sr.EntityIndex).LocalSection.EIz)
-
-                                'Proyecto.Modelo.OperationsTool.SetEntityToQueue(.CurrentLiftingSurface.ObtenerPuntoNodal(sr.EntityIndex))
-
-                                KeepSearching = False
-
-                                Exit For
+                                                                              wing.Name,
+                                                                              wing.StructuralPartition(sr.EntityIndex).LocalSection.AE,
+                                                                              wing.StructuralPartition(sr.EntityIndex).LocalSection.GJ,
+                                                                              wing.StructuralPartition(sr.EntityIndex).LocalSection.EIy,
+                                                                              wing.StructuralPartition(sr.EntityIndex).LocalSection.EIz)
 
                             End If
+
+                            KeepSearching = False
+
+                            Exit For
 
                         End If
 
@@ -772,52 +418,54 @@ ErrSub:
 
                                 If sr.ComponentType = ComponentTypes.etLiftingSurface Then
 
-                                    Project.Model.OperationsTool.SetDestinationObject(.CurrentLiftingSurface)
+                                    Dim wing As LiftingSurface = .Objects(sr.ComponentIndex)
 
-                                    If Project.Model.OperationsTool.Operation = Operations.NoOperation Then
-                                        ShowLiftingSurfaceEditor()
-                                    End If
+                                    Project.Model.OperationsTool.SetDestinationObject(wing)
 
-                                    If Not IsNothing(.CurrentLiftingSurface) Then
+                                    mrRibbon.ChangeSurfaceIndex(sr.ComponentIndex)
 
-                                        ttSelectedEntity.Show(String.Format("Lattice node {0}", sr.EntityIndex), ControlOpenGL)
-                                        lblStatus.Text = String.Format("{1}: Node {0} ({2:F2}, {3:F2}, {4:F2})", sr.EntityIndex,
-                                                                                  .CurrentLiftingSurface.Name,
-                                                                                  .CurrentLiftingSurface.GetNodalPoint(sr.EntityIndex).X,
-                                                                                  .CurrentLiftingSurface.GetNodalPoint(sr.EntityIndex).Y,
-                                                                                  .CurrentLiftingSurface.GetNodalPoint(sr.EntityIndex).Z)
-                                        Project.Model.OperationsTool.SetEntityToQueue(.CurrentLiftingSurface.GetNodalPoint(sr.EntityIndex))
+                                    'If Project.Model.OperationsTool.Operation = Operations.NoOperation Then
+                                    '    ShowLiftingSurfaceEditor(wing)
+                                    'End If
 
-                                        KeepSearching = False
+                                    ttSelectedEntity.Show(String.Format("Lattice node {0}", sr.EntityIndex), ControlOpenGL)
+                                    lblStatus.Text = String.Format("{1}: Node {0} ({2:F2}, {3:F2}, {4:F2})", sr.EntityIndex,
+                                                                                  wing.Name,
+                                                                                  wing.Mesh.Nodes(sr.EntityIndex).Position.X,
+                                                                                  wing.Mesh.Nodes(sr.EntityIndex).Position.Y,
+                                                                                  wing.Mesh.Nodes(sr.EntityIndex).Position.Z)
 
-                                        Exit For
+                                    Project.Model.OperationsTool.SetEntityToQueue(wing.Mesh.Nodes(sr.EntityIndex))
 
-                                    End If
+                                    KeepSearching = False
+
+                                    Exit For
 
                                 End If
 
-                                If sr.ComponentType = ComponentTypes.etBody Then
+                                If sr.ComponentType = ComponentTypes.etFuselage Then
 
-                                    Project.Model.OperationsTool.SetDestinationObject(.CurrentBody)
+                                    Dim body As Fuselage = .Objects(sr.ComponentIndex)
 
-                                    If Not IsNothing(.CurrentBody) Then
+                                    Project.Model.OperationsTool.SetDestinationObject(body)
 
-                                        If Project.Model.OperationsTool.Operation = Operations.NoOperation Then
-                                            ShowFuselageEditor()
-                                        End If
+                                    mrRibbon.ChangeSurfaceIndex(sr.ComponentIndex)
 
-                                        ttSelectedEntity.Show(String.Format("Lattice node {0}", sr.EntityIndex), ControlOpenGL)
-                                        lblStatus.Text = String.Format("{1}: Node {0} ({2:F2}, {3:F2}, {4:F2})", sr.EntityIndex,
-                                                                                  .CurrentBody.Name,
-                                                                                  .CurrentBody.NodalPosition(sr.EntityIndex).X,
-                                                                                  .CurrentBody.NodalPosition(sr.EntityIndex).Y,
-                                                                                  .CurrentBody.NodalPosition(sr.EntityIndex).Z)
-                                        Project.Model.OperationsTool.SetEntityToQueue(.CurrentBody.NodalPosition(sr.EntityIndex))
+                                    'If Project.Model.OperationsTool.Operation = Operations.NoOperation Then
+                                    '    ShowFuselageEditor(body)
+                                    'End If
 
-                                        KeepSearching = False
-                                        Exit For
+                                    ttSelectedEntity.Show(String.Format("Lattice node {0}", sr.EntityIndex), ControlOpenGL)
+                                    lblStatus.Text = String.Format("{1}: Node {0} ({2:F2}, {3:F2}, {4:F2})", sr.EntityIndex,
+                                                                                  body.Name,
+                                                                                  body.Mesh.Nodes(sr.EntityIndex).Position.X,
+                                                                                  body.Mesh.Nodes(sr.EntityIndex).Position.Y,
+                                                                                  body.Mesh.Nodes(sr.EntityIndex).Position.Z)
+                                    Project.Model.OperationsTool.SetEntityToQueue(body.Mesh.Nodes(sr.EntityIndex).Position)
 
-                                    End If
+                                    KeepSearching = False
+
+                                    Exit For
 
                                 End If
 
@@ -840,65 +488,67 @@ ErrSub:
 
                                     If sr.ComponentType = ComponentTypes.etLiftingSurface Then
 
-                                        Project.Model.OperationsTool.SetDestinationObject(.CurrentLiftingSurface)
+                                        Dim wing As LiftingSurface = .Objects(sr.ComponentIndex)
 
-                                        If Project.Model.OperationsTool.Operation = Operations.NoOperation Then
-                                            ShowLiftingSurfaceEditor()
-                                        End If
+                                        Project.Model.OperationsTool.SetDestinationObject(wing)
 
-                                        If Not IsNothing(.CurrentLiftingSurface) Then
+                                        mrRibbon.ChangeSurfaceIndex(sr.ComponentIndex)
 
-                                            ttSelectedEntity.Show(String.Format("Vortex ring {0}", sr.EntityIndex), ControlOpenGL)
-                                            lblStatus.Text = String.Format("{1}: Vortex ring {0}", sr.EntityIndex,
-                                                                                      .CurrentLiftingSurface.Name)
+                                        'If Project.Model.OperationsTool.Operation = Operations.NoOperation Then
+                                        '    ShowLiftingSurfaceEditor(wing)
+                                        'End If
 
-                                            KeepSearching = False
-                                            Exit For
+                                        ttSelectedEntity.Show(String.Format("Vortex ring {0}", sr.EntityIndex), ControlOpenGL)
+                                        lblStatus.Text = String.Format("{1}: Vortex ring {0}", sr.EntityIndex,
+                                                                                      wing.Name)
 
-                                        End If
+                                        KeepSearching = False
+
+                                        Exit For
 
                                     End If
 
-                                    If sr.ComponentType = ComponentTypes.etBody Then
+                                    If sr.ComponentType = ComponentTypes.etFuselage Then
 
-                                        Project.Model.OperationsTool.SetDestinationObject(.CurrentBody)
+                                        Dim body As Fuselage = .Objects(sr.ComponentIndex)
 
-                                        If Not IsNothing(.CurrentBody) Then
+                                        Project.Model.OperationsTool.SetDestinationObject(body)
 
-                                            If Project.Model.OperationsTool.Operation = Operations.NoOperation Then
-                                                ShowFuselageEditor()
-                                            End If
+                                        mrRibbon.ChangeSurfaceIndex(sr.ComponentIndex)
 
-                                            ttSelectedEntity.Show(String.Format("Vortex ring {0}", sr.EntityIndex), ControlOpenGL)
-                                            lblStatus.Text = String.Format("{1}: Vortex ring {0}", sr.EntityIndex,
-                                                                                      .CurrentBody.Name)
+                                        'If Project.Model.OperationsTool.Operation = Operations.NoOperation Then
+                                        '    ShowFuselageEditor(body)
+                                        'End If
 
-                                            KeepSearching = False
-                                            Exit For
+                                        ttSelectedEntity.Show(String.Format("Vortex ring {0}", sr.EntityIndex), ControlOpenGL)
+                                        lblStatus.Text = String.Format("{1}: Vortex ring {0}", sr.EntityIndex,
+                                                                                      body.Name)
 
-                                        End If
+                                        KeepSearching = False
+
+                                        Exit For
 
                                     End If
 
                                     If sr.ComponentType = ComponentTypes.etJetEngine Then
 
-                                        Project.Model.OperationsTool.SetDestinationObject(.CurrentJetEngine)
+                                        Dim nacelle As JetEngine = .Objects(sr.ComponentIndex)
 
-                                        If Not IsNothing(.CurrentJetEngine) Then
+                                        Project.Model.OperationsTool.SetDestinationObject(nacelle)
 
-                                            If Project.Model.OperationsTool.Operation = Operations.NoOperation Then
-                                                ShowJetEngineDialog()
-                                            End If
+                                        mrRibbon.ChangeSurfaceIndex(sr.ComponentIndex)
 
-                                            ttSelectedEntity.Show(String.Format("Vortex ring {0}", sr.EntityIndex), ControlOpenGL)
-                                            lblStatus.Text = String.Format("{1}: Vortex ring {0}", sr.EntityIndex,
-                                                                                      .CurrentJetEngine.Name)
+                                        'If Project.Model.OperationsTool.Operation = Operations.NoOperation Then
+                                        '    ShowJetEngineEditor(nacelle)
+                                        'End If
 
-                                            KeepSearching = False
+                                        ttSelectedEntity.Show(String.Format("Vortex ring {0}", sr.EntityIndex), ControlOpenGL)
+                                        lblStatus.Text = String.Format("{1}: Vortex ring {0}", sr.EntityIndex,
+                                                                                     nacelle.Name)
 
-                                            Exit For
+                                        KeepSearching = False
 
-                                        End If
+                                        Exit For
 
                                     End If
 
@@ -925,8 +575,8 @@ ErrSub:
     End Sub
 
     Private Sub ControlOpenGL_MouseUp(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles ControlOpenGL.MouseUp
-        Project.VisualizationParameters.Panning = False
-        Project.VisualizationParameters.Rotating = False
+        Project.Visualization.Panning = False
+        Project.Visualization.Rotating = False
         Project.RepresentOnGL()
     End Sub
 
@@ -934,10 +584,10 @@ ErrSub:
         If e.KeyCode = Keys.M Then
             If Project.Model.Selection.MultipleSelection = False Then
                 Project.Model.Selection.MultipleSelection = True
-                ReportState("Selección múltiple activada")
+                PushMessage("Selección múltiple activada")
             Else
                 Project.Model.Selection.MultipleSelection = False
-                ReportState("Selección múltiple desactivada")
+                PushMessage("Selección múltiple desactivada")
             End If
         End If
     End Sub
@@ -955,10 +605,12 @@ ErrSub:
     End Sub
 
     Private Sub ControlOpenGL_Resized(sender As Object, e As EventArgs) Handles ControlOpenGL.Resized
+
         If Project IsNot Nothing Then
             Project.ControlGLWidth = ControlOpenGL.Width
             Project.ControlGLHeight = ControlOpenGL.Height
         End If
+
     End Sub
 
 #End Region
@@ -970,29 +622,29 @@ ErrSub:
         Select Case Vista
 
             Case "XY"
-                Project.VisualizationParameters.CameraOrientation.Psi = 0
-                Project.VisualizationParameters.CameraOrientation.Fi = 0
+                Project.Visualization.CameraOrientation.Psi = 0
+                Project.Visualization.CameraOrientation.Fi = 0
                 lblStatus.Text = "XY view"
 
             Case "ZY"
-                Project.VisualizationParameters.CameraOrientation.Psi = 90
-                Project.VisualizationParameters.CameraOrientation.Fi = -90
+                Project.Visualization.CameraOrientation.Psi = 90
+                Project.Visualization.CameraOrientation.Fi = -90
                 lblStatus.Text = "ZY view"
 
             Case "ZX"
-                Project.VisualizationParameters.CameraOrientation.Psi = 0
-                Project.VisualizationParameters.CameraOrientation.Fi = -90
+                Project.Visualization.CameraOrientation.Psi = 0
+                Project.Visualization.CameraOrientation.Fi = -90
                 lblStatus.Text = "ZX view"
 
             Case "Isometrica"
-                Project.VisualizationParameters.CameraOrientation.Psi = 30
-                Project.VisualizationParameters.CameraOrientation.Fi = -60
+                Project.Visualization.CameraOrientation.Psi = 30
+                Project.Visualization.CameraOrientation.Fi = -60
                 lblStatus.Text = "Free view"
 
             Case "Center"
-                Project.VisualizationParameters.CameraPosition.X = 0
-                Project.VisualizationParameters.CameraPosition.Y = 0
-                Project.VisualizationParameters.CameraPosition.Z = 0
+                Project.Visualization.CameraPosition.X = 0
+                Project.Visualization.CameraPosition.Y = 0
+                Project.Visualization.CameraPosition.Z = 0
 
         End Select
 
@@ -1004,62 +656,19 @@ ErrSub:
 
 #Region " Other event handlers "
 
-    Private Sub btnViewTop_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnViewTop.Click
-        LoadViewParameters("XY")
-    End Sub
-
-    Private Sub btnViewFront_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnViewFront.Click
-        LoadViewParameters("ZY")
-    End Sub
-
-    Private Sub btnViewLeft_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnViewLeft.Click
-        LoadViewParameters("ZX")
-    End Sub
-
-    Private Sub btnView3D_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnView3D.Click
-        LoadViewParameters("Isometrica")
-    End Sub
-
-    Private Sub btnViewCenter_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnViewCenter.Click
-        LoadViewParameters("Center")
-    End Sub
-
     Private Sub sbHorizontal_Scroll(ByVal sender As System.Object, ByVal e As System.Windows.Forms.ScrollEventArgs) Handles sbHorizontal.Scroll
-        Project.VisualizationParameters.CameraOrientation.Psi = Me.sbHorizontal.Value
+        Project.Visualization.CameraOrientation.Psi = Me.sbHorizontal.Value
         Project.RepresentOnGL()
     End Sub
 
     Private Sub sbVertical_Scroll(ByVal sender As System.Object, ByVal e As System.Windows.Forms.ScrollEventArgs) Handles sbVertical.Scroll
-        Project.VisualizationParameters.CameraOrientation.Fi = Me.sbVertical.Value
+        Project.Visualization.CameraOrientation.Fi = Me.sbVertical.Value
         Project.RepresentOnGL()
     End Sub
 
     Private Sub MainForm_MouseWheel(ByVal sender As Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles MyBase.MouseWheel
-        Project.VisualizationParameters.Proximity = Project.VisualizationParameters.Proximity + 0.05 * Project.SimulationSettings.CharacteristicLenght * e.Delta
+        Project.Visualization.Proximity = Project.Visualization.Proximity + 0.05 * Project.SimulationSettings.CharacteristicLenght * e.Delta
         Project.RepresentOnGL()
-    End Sub
-
-    Private Sub btnViewOptions_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnViewOptions.Click
-        FormOptions.ShowDialog()
-    End Sub
-
-    Private Sub btnImportSurfaces_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnImportSurfaces.Click
-
-        Dim dialog As New OpenFileDialog
-        Dim result As DialogResult = dialog.ShowDialog(Me)
-
-        If result = DialogResult.OK Then
-            Project.ImportSurfacesFromXML(dialog.FileName)
-        End If
-
-    End Sub
-
-    Private Sub btTranslate_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btTranslate.Click
-        Project.Model.OperationsTool.Operation = Operations.Translate
-    End Sub
-
-    Private Sub btnAlign_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnAlign.Click
-        Project.Model.OperationsTool.Operation = Operations.Align
     End Sub
 
     Private Sub MainForm_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown
@@ -1069,41 +678,7 @@ ErrSub:
         End If
     End Sub
 
-    Private Sub tsbHelp_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles tsbHelp.Click
-        AboutDialog.ShowDialog()
-    End Sub
-
-    Private Sub cbModels_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cbModes.SelectedIndexChanged
-
-        If cbModes.SelectedIndex > -1 And cbModes.SelectedIndex < Project.Results.DynamicModes.Count + 1 Then
-            If (cbModes.SelectedIndex = 0) Then
-                Project.Results.VisualizeModes = False
-            Else
-                Project.Results.VisualizeModes = True
-                Project.Results.SelectedModeIndex = cbModes.SelectedIndex - 1
-                Dim Scale As Double = Convert.ToDouble(tbDisplacementScale.Text)
-                Project.Results.SelectedMode.UpdateDisplacement(Scale)
-            End If
-            Project.RefreshOnGL()
-        End If
-
-    End Sub
-
-    Private Sub tbDisplacementScale_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles tbDisplacementScale.TextChanged
-
-        Try
-            Dim Scale As Double = Convert.ToDouble(tbDisplacementScale.Text)
-            If Not IsNothing(Project.Results.SelectedMode) Then
-                Project.Results.SelectedMode.UpdateDisplacement(Scale)
-                Project.RefreshOnGL()
-            End If
-        Catch ex As Exception
-
-        End Try
-
-    End Sub
-
-    Private Sub btnUnsteadyHistogram_Click(sender As Object, e As EventArgs) Handles btnUnsteadyHistogram.Click
+    Private Sub btnUnsteadyHistogram_Click(sender As Object, e As EventArgs)
 
         Select Case Project.InterfaceMode
             Case InterfaceModes.Design
@@ -1116,7 +691,7 @@ ErrSub:
 
     End Sub
 
-    Private Sub btnAeroelasticHistogram_Click(sender As Object, e As EventArgs) Handles btnAeroelasticHistogram.Click
+    Private Sub btnAeroelasticHistogram_Click(sender As Object, e As EventArgs)
 
         Select Case Project.InterfaceMode
 
@@ -1134,48 +709,10 @@ ErrSub:
 
     End Sub
 
-#End Region
+    Private Sub lblWebSite_Click(sender As Object, e As EventArgs) Handles lblWebSite.Click
 
-#Region " Simulation "
+        Process.Start("http://www.openvogel.com")
 
-    Private _Simulating As Boolean = False
-    Private _CurrentFrame As Integer = 0
-    Private _timer As New Timer
-
-    Private Sub tsbPlayStop_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnPlayStop.Click
-
-        If Project.Results.TransitLoaded Then
-
-            If Not Project.Simulating Then
-                _timer.Interval = Project.Results.SimulationSettings.Interval * 1000 / Project.Results.SimulationSettings.StructuralSettings.SubSteps
-                Project.Simulating = True
-                _timer.Start()
-                btnPlayStop.Text = "Stop"
-                ReportState(String.Format("Simulating. Rate {0}f/{1}s", Project.Results.SimulationSettings.StructuralSettings.SubSteps, Project.Results.SimulationSettings.Interval))
-            Else
-                Project.Simulating = False
-                _timer.Stop()
-                btnPlayStop.Text = "Play"
-                ReportState("Simulation stopped")
-            End If
-
-        Else
-
-            Project.Simulating = False
-
-        End If
-
-    End Sub
-
-    Private Sub SimulationTimer_Tick(ByVal sender As System.Object, ByVal e As System.EventArgs)
-        If _CurrentFrame > Project.Results.TransitStages Then _CurrentFrame = 0
-        Project.RepresentResultsTransitWithOpenGL(_CurrentFrame)
-        _CurrentFrame += 1
-    End Sub
-
-    Private Sub StopTransit()
-        Project.Simulating = False
-        _timer.Stop()
     End Sub
 
 #End Region

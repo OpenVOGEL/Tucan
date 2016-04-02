@@ -46,8 +46,8 @@ C:\Users\Guillermo\Documents\Software\OpenVogel\2016.Beta\DotNumerics\Source\Dot
 \\GUILLERMO\Users\Guillermo\Source\Repos\OpenVOGEL\Dependencies\DotNumerics\Source\DotNumerics\bin\Vogel\DotNumerics.dll
 \\GUILLERMO\Users\Guillermo\Source\Repos\OpenVOGEL\Dependencies\DotNumerics\Source\DotNumerics\bin\Vogel\DotNumerics.pdb
 \\GUILLERMO\Users\Guillermo\Source\Repos\OpenVOGEL\Dependencies\DotNumerics\Source\DotNumerics\bin\Vogel\DotNumerics.XML
-\\GUILLERMO\Users\Guillermo\Source\Repos\OpenVOGEL\Dependencies\DotNumerics\Source\DotNumerics\obj\Release\DotNumerics.csprojResolveAssemblyReference.cache
 \\GUILLERMO\Users\Guillermo\Source\Repos\OpenVOGEL\Dependencies\DotNumerics\Source\DotNumerics\obj\Release\DotNumerics.LinearAlgebra.MatrixView.resources
 \\GUILLERMO\Users\Guillermo\Source\Repos\OpenVOGEL\Dependencies\DotNumerics\Source\DotNumerics\obj\Release\DotNumerics.csproj.GenerateResource.Cache
 \\GUILLERMO\Users\Guillermo\Source\Repos\OpenVOGEL\Dependencies\DotNumerics\Source\DotNumerics\obj\Release\DotNumerics.dll
 \\GUILLERMO\Users\Guillermo\Source\Repos\OpenVOGEL\Dependencies\DotNumerics\Source\DotNumerics\obj\Release\DotNumerics.pdb
+\\GUILLERMO\Users\Guillermo\Source\Repos\OpenVOGEL\Dependencies\DotNumerics\Source\DotNumerics\obj\Release\DotNumerics.csprojResolveAssemblyReference.cache

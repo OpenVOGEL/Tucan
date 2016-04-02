@@ -26,7 +26,7 @@ Namespace VisualModel.Interface
     ''' <remarks></remarks>
     Public Interface IOperational
 
-        Sub Translate(ByVal Vector As EVector3)
+        Sub MoveTo(ByVal Vector As EVector3)
         Sub Orientate(ByVal Point As EVector3, ByVal Ori As EulerAngles)
         Sub Scale(ByVal Scale As Double)
         Sub Align(ByVal P1 As EVector3, ByVal P2 As EVector3, ByVal P3 As EVector3, ByVal P4 As EVector3)
@@ -157,7 +157,7 @@ Namespace VisualModel.Interface
                     Case Operations.Translate
 
                         If _Points.Count >= 2 Then
-                            _DestinationObject.Translate(_Points(1) - _Points(0))
+                            _DestinationObject.MoveTo(_Points(1) - _Points(0))
                             RaiseTaskReady()
                         End If
 

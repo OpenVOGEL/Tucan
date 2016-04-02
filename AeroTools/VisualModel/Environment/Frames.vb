@@ -22,128 +22,133 @@ Namespace VisualModel.Environment.Frames
 
     Public Class ReferenceFrame
 
-        Public ColorDelWireFrame As System.Drawing.Color = Drawing.Color.LightGray
-        Public Xmax As Double = 5
-        Public Ymax As Double = 5
-        Public Xmin As Double = -5
-        Public Ymin As Double = -5
-        Public Z As Double = 0
-        Public ConMarcacionFina As Boolean = True
-        Public ConMarcacionGruesa As Boolean = True
+        Public Property ColorDelWireFrame As System.Drawing.Color = Drawing.Color.LightGray
+        Public Property Xmax As Double = 5
+        Public Property Ymax As Double = 5
+        Public Property Xmin As Double = -5
+        Public Property Ymin As Double = -5
+        Public Property Z As Double = 0
+        Public Property WithGrossMarker As Boolean = True
+        Public Property WithFineMarker As Boolean = True
+        Public Property Visible As Boolean = True
 
-        Public Sub CreateWireFrame(ByRef gl As OpenGL)
+        Public Sub GenerateWireFrame(ByRef gl As OpenGL)
 
-            gl.LineWidth(1.0F)
-            gl.Begin(OpenGL.GL_LINES)
-
-            gl.Color(ColorDelWireFrame.R / 255, ColorDelWireFrame.G / 255, ColorDelWireFrame.B / 255)
-
-            gl.Vertex(Xmin, Ymin, Z)
-            gl.Vertex(Xmax, Ymin, Z)
-
-            gl.Vertex(Xmax, Ymin, Z)
-            gl.Vertex(Xmax, Ymax, Z)
-
-            gl.Vertex(Xmax, Ymax, Z)
-            gl.Vertex(Xmin, Ymax, Z)
-
-            gl.Vertex(Xmin, Ymax, Z)
-            gl.Vertex(Xmin, Ymin, Z)
-
-            Dim Punto As New EVector3
-            Dim Xm As Double = 0.0
-            Dim Ym As Double = 0.0
-            Dim Zm As Double = 0.0
-            Dim i As Integer = 0
-
-            gl.End()
-
-            If ConMarcacionGruesa Then
+            If Visible Then
 
                 gl.LineWidth(1.0F)
                 gl.Begin(OpenGL.GL_LINES)
 
-                ' Marcacion gruesa en direccion X:
+                gl.Color(ColorDelWireFrame.R / 255, ColorDelWireFrame.G / 255, ColorDelWireFrame.B / 255)
 
-                Punto.Z = 0.0#
-                Do While Xm < Xmax
-                    gl.Vertex(Xm, -0.085, Z)
-                    gl.Vertex(Xm, 0.085, Z)
-                    Xm = Xm + 1
-                Loop
+                gl.Vertex(Xmin, Ymin, Z)
+                gl.Vertex(Xmax, Ymin, Z)
 
-                Xm = -1
-                Do While Xm > Xmin
-                    gl.Vertex(Xm, -0.085, Z)
-                    gl.Vertex(Xm, 0.085, Z)
-                    Xm = Xm - 1
-                Loop
+                gl.Vertex(Xmax, Ymin, Z)
+                gl.Vertex(Xmax, Ymax, Z)
 
-                ' Marcacion gruesa en direccion Y:
+                gl.Vertex(Xmax, Ymax, Z)
+                gl.Vertex(Xmin, Ymax, Z)
 
-                Ym = 0
-                Do While Ym < Ymax
-                    gl.Vertex(0.085, Ym, Z)
-                    gl.Vertex(-0.085, Ym, Z)
-                    Ym = Ym + 1
-                Loop
+                gl.Vertex(Xmin, Ymax, Z)
+                gl.Vertex(Xmin, Ymin, Z)
 
-                Ym = -1
-                Do While Ym > Ymin
-                    gl.Vertex(0.085, Ym, Z)
-                    gl.Vertex(-0.085, Ym, Z)
-                    Ym = Ym - 1
-                Loop
+                Dim Punto As New EVector3
+                Dim Xm As Double = 0.0
+                Dim Ym As Double = 0.0
+                Dim Zm As Double = 0.0
+                Dim i As Integer = 0
 
                 gl.End()
 
-            End If
+                If WithFineMarker Then
 
-            If ConMarcacionFina Then
+                    gl.LineWidth(1.0F)
+                    gl.Begin(OpenGL.GL_LINES)
 
-                gl.LineWidth(0.5F)
+                    ' Marcacion gruesa en direccion X:
 
-                gl.Begin(OpenGL.GL_LINES)
+                    Punto.Z = 0.0#
+                    Do While Xm < Xmax
+                        gl.Vertex(Xm, -0.085, Z)
+                        gl.Vertex(Xm, 0.085, Z)
+                        Xm = Xm + 1
+                    Loop
 
-                ' Marcacion fina en direccion X:
+                    Xm = -1
+                    Do While Xm > Xmin
+                        gl.Vertex(Xm, -0.085, Z)
+                        gl.Vertex(Xm, 0.085, Z)
+                        Xm = Xm - 1
+                    Loop
 
-                i = 0
-                Xm = 0.2
-                Do While Xm < Xmax And Xm <> i
-                    gl.Vertex(Xm, -0.05, Z)
-                    gl.Vertex(Xm, 0.085, Z)
-                    Xm = Xm + 0.2
-                Loop
+                    ' Marcacion gruesa en direccion Y:
 
-                i = 0
-                Xm = -0.2
-                Do While Xm > Xmin And Xm <> i
-                    gl.Vertex(Xm, -0.05, Z)
-                    gl.Vertex(Xm, 0.05, Z)
-                    Xm = Xm - 0.2
-                    i = i - 1
-                Loop
+                    Ym = 0
+                    Do While Ym < Ymax
+                        gl.Vertex(0.085, Ym, Z)
+                        gl.Vertex(-0.085, Ym, Z)
+                        Ym = Ym + 1
+                    Loop
 
-                ' Marcacion fina en direccion Y:
+                    Ym = -1
+                    Do While Ym > Ymin
+                        gl.Vertex(0.085, Ym, Z)
+                        gl.Vertex(-0.085, Ym, Z)
+                        Ym = Ym - 1
+                    Loop
 
-                i = 0
-                Ym = 0.2
-                Do While Ym < Ymax And Ym <> i
-                    gl.Vertex(0.05, Ym, Z)
-                    gl.Vertex(-0.05, Ym, Z)
-                    Ym = Ym + 0.2
-                Loop
+                    gl.End()
 
-                i = 0
-                Ym = -0.2
-                Do While Ym > Ymin And Ym <> i
-                    gl.Vertex(0.05, Ym, Z)
-                    gl.Vertex(-0.05, Ym, Z)
-                    Ym = Ym - 0.2
-                    i = i - 1
-                Loop
+                End If
 
-                gl.End()
+                If WithGrossMarker Then
+
+                    gl.LineWidth(0.5F)
+
+                    gl.Begin(OpenGL.GL_LINES)
+
+                    ' Marcacion fina en direccion X:
+
+                    i = 0
+                    Xm = 0.2
+                    Do While Xm < Xmax And Xm <> i
+                        gl.Vertex(Xm, -0.05, Z)
+                        gl.Vertex(Xm, 0.085, Z)
+                        Xm = Xm + 0.2
+                    Loop
+
+                    i = 0
+                    Xm = -0.2
+                    Do While Xm > Xmin And Xm <> i
+                        gl.Vertex(Xm, -0.05, Z)
+                        gl.Vertex(Xm, 0.05, Z)
+                        Xm = Xm - 0.2
+                        i = i - 1
+                    Loop
+
+                    ' Marcacion fina en direccion Y:
+
+                    i = 0
+                    Ym = 0.2
+                    Do While Ym < Ymax And Ym <> i
+                        gl.Vertex(0.05, Ym, Z)
+                        gl.Vertex(-0.05, Ym, Z)
+                        Ym = Ym + 0.2
+                    Loop
+
+                    i = 0
+                    Ym = -0.2
+                    Do While Ym > Ymin And Ym <> i
+                        gl.Vertex(0.05, Ym, Z)
+                        gl.Vertex(-0.05, Ym, Z)
+                        Ym = Ym - 0.2
+                        i = i - 1
+                    Loop
+
+                    gl.End()
+
+                End If
 
             End If
 
@@ -155,7 +160,7 @@ Namespace VisualModel.Environment.Frames
 
         Public Extension As Double = 1.0F
 
-        Public Sub CrearWireFrame(ByRef gl As OpenGL)
+        Public Sub GenerateWireFrame(ByRef gl As OpenGL)
 
             gl.LineWidth(2.0F)
             gl.Begin(OpenGL.GL_LINES)

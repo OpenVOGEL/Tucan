@@ -20,7 +20,7 @@ Public Class FormProgress
     Public Sub New()
 
         InitializeComponent()
-        Me.pgCalculationProgress.Maximum = 100
+        pgCalculationProgress.Maximum = 100
 
     End Sub
 
@@ -34,8 +34,8 @@ Public Class FormProgress
         If InvokeRequired Then
             BeginInvoke(New PushMessageProgressCallback(AddressOf PushMessageWithProgress), Mensaje, Progreso)
         Else
-            Me.pgCalculationProgress.Value = Math.Min(100, Progreso)
-            Me.tbOperationsList.AppendText(String.Format("At {0}: {1}", Now, Mensaje) & vbNewLine)
+            pgCalculationProgress.Value = Math.Min(100, Progreso)
+            tbOperationsList.AppendText(String.Format("At {0}: {1}", Now, Mensaje) & vbNewLine)
         End If
     End Sub
 
@@ -50,7 +50,7 @@ Public Class FormProgress
         If InvokeRequired Then
             BeginInvoke(New PushMessageCallback(AddressOf PushMessage), Mensaje)
         Else
-            Me.tbOperationsList.AppendText(String.Format("At {0}: {1}", Now, Mensaje) & vbNewLine)
+            tbOperationsList.AppendText(String.Format("At {0}: {1}", Now, Mensaje) & vbNewLine)
         End If
     End Sub
 
@@ -65,7 +65,7 @@ Public Class FormProgress
         If InvokeRequired Then
             BeginInvoke(New Action(Of Single)(AddressOf PushProgress), Progress)
         Else
-            Me.pgCalculationProgress.Value = Math.Min(Math.Min(100, Progress), 100)
+            pgCalculationProgress.Value = Math.Min(Math.Min(100, Progress), 100)
         End If
     End Sub
 
@@ -100,16 +100,35 @@ Public Class FormProgress
     ''' <remarks></remarks>
     Public Event CancellationRequested()
 
-    Private Sub CancelCalculation() Handles btnCancel.Click
+    Private Sub btnCancel_Click() Handles btnCancel.Click
 
         RaiseEvent CancellationRequested()
+
+        If _CloseModus Then
+
+            Close()
+
+        End If
 
     End Sub
 
     Private Sub WaitForm_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
-        Me.pgCalculationProgress.Maximum = 100
-        Me.pgCalculationProgress.Value = 0
-        Me.tbOperationsList.AppendText(String.Format("At {0}: {1}", Now, "Starting...") & vbNewLine)
+        pgCalculationProgress.Maximum = 100
+        pgCalculationProgress.Value = 0
+        tbOperationsList.AppendText(String.Format("At {0}: {1}", Now, "Starting...") & vbNewLine)
+    End Sub
+
+    Private _CloseModus As Boolean = False
+
+    Public Sub ChangeToCloseModus()
+
+        If InvokeRequired Then
+            BeginInvoke(New Action(AddressOf ChangeToCloseModus))
+        Else
+            btnCancel.Text = "Close"
+            _CloseModus = True
+        End If
+
     End Sub
 
 End Class

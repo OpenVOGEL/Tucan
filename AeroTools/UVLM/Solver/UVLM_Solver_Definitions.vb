@@ -136,6 +136,11 @@ Namespace UVLM.Solver
         ''' <remarks></remarks>
         Public Event CalculationDone()
 
+        ''' <summary>
+        ''' Occurs when the calculation is automatically aborted.
+        ''' </summary>
+        Public Event CalculationAborted()
+
     End Class
 
 End Namespace

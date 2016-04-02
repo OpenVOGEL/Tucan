@@ -63,10 +63,7 @@ C:\Users\Guillermo\Documents\Software\OpenVogel\2016.Beta\Vogel\obj\Debug\Vogel.
 \\GUILLERMO\Users\Guillermo\Source\Repos\OpenVOGEL\Vogel\bin\Debug\Meta.Numerics.xml
 \\GUILLERMO\Users\Guillermo\Source\Repos\OpenVOGEL\Vogel\bin\Debug\DotNumerics.pdb
 \\GUILLERMO\Users\Guillermo\Source\Repos\OpenVOGEL\Vogel\obj\Debug\OpenVOGEL.vbprojResolveAssemblyReference.cache
-\\GUILLERMO\Users\Guillermo\Source\Repos\OpenVOGEL\Vogel\obj\Debug\Vogel.SelectObject.resources
 \\GUILLERMO\Users\Guillermo\Source\Repos\OpenVOGEL\Vogel\obj\Debug\Vogel.AboutDialog.resources
-\\GUILLERMO\Users\Guillermo\Source\Repos\OpenVOGEL\Vogel\obj\Debug\Vogel.FormObjects.resources
-\\GUILLERMO\Users\Guillermo\Source\Repos\OpenVOGEL\Vogel\obj\Debug\Vogel.FormOptions.resources
 \\GUILLERMO\Users\Guillermo\Source\Repos\OpenVOGEL\Vogel\obj\Debug\Vogel.StartupScreen.resources
 \\GUILLERMO\Users\Guillermo\Source\Repos\OpenVOGEL\Vogel\obj\Debug\Vogel.FormAskVelocity.resources
 \\GUILLERMO\Users\Guillermo\Source\Repos\OpenVOGEL\Vogel\obj\Debug\Vogel.MainForm.resources

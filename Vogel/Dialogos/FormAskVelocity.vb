@@ -32,16 +32,18 @@ Public Class FormAskVelocity
         Result = ""
 
         Dim Punto As New EVector3
-        If Me.EnPuntoGeneral.Checked Then
+
+        If EnPuntoGeneral.Checked Then
             Punto.X = XBox.Value
             Punto.Y = YBox.Value
             Punto.Z = ZBox.Value
         End If
-        If Me.EnPuntoDeControl.Checked Then
+
+        If EnPuntoDeControl.Checked Then
 
             Dim PuntoSeleccionado As Integer = PuntoDeControl.Value
 
-            Dim Panel As Panel = MainForm.Project.Results.Model.Panel(PuntoSeleccionado)
+            Dim Panel As Panel = MainForm.Project.Results.Model.Mesh.Panels(PuntoSeleccionado)
 
             Punto.Assign(Panel.ControlPoint)
 

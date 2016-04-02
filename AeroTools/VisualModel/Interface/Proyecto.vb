@@ -59,9 +59,9 @@ Namespace VisualModel.Interface
 
             VelocityPlane.GenerarMallado()
 
-            VisualizationParameters.IniciarParametros()
+            Visualization.Initialize()
 
-            VisualizationParameters.Proximity = 100
+            Visualization.Proximity = 100
 
             Results.InitializeResults()
 
@@ -74,11 +74,9 @@ Namespace VisualModel.Interface
         Public Sub RestartProject()
 
             Name = "New aircraft"
-            Model.LiftingSurfaces.Clear()
-            Model.Fuselages.Clear()
-            Model.JetEngines.Clear()
+            Model.Objects.Clear()
             SimulationSettings.InitializaParameters()
-            VisualizationParameters.IniciarParametros()
+            Visualization.Initialize()
             Results.InitializeResults()
             RefreshOnGL()
 
@@ -106,8 +104,11 @@ Namespace VisualModel.Interface
         End Property
 
         Public Sub DesignMode()
+
             _InterfaceMode = InterfaceModes.Design
+
             RefreshOnGL()
+
         End Sub
 
         Public Sub PostprocessMode()
@@ -136,7 +137,7 @@ Namespace VisualModel.Interface
 
 #Region " Visualization and selection with SharpGL "
 
-        Public VisualizationParameters As New VisualizationParameters
+        Public Property Visualization As New VisualizationParameters
 
         Private ControlGL As OpenGL
 
@@ -177,23 +178,23 @@ Namespace VisualModel.Interface
 
             'FastRefreshOnGL()
 
-            ControlGL.ClearColor(VisualizationParameters.ScreenColor.R / 255, VisualizationParameters.ScreenColor.G / 255, VisualizationParameters.ScreenColor.B / 255, VisualizationParameters.ScreenColor.A / 255)
+            ControlGL.ClearColor(Visualization.ScreenColor.R / 255, Visualization.ScreenColor.G / 255, Visualization.ScreenColor.B / 255, Visualization.ScreenColor.A / 255)
 
             ControlGL.Clear(OpenGL.GL_COLOR_BUFFER_BIT)
             ControlGL.Clear(OpenGL.GL_DEPTH_BUFFER_BIT)
 
-            If VisualizationParameters.AllowAlphaBlending Then
+            If Visualization.AllowAlphaBlending Then
                 ControlGL.Enable(OpenGL.GL_BLEND)
                 ControlGL.BlendFunc(OpenGL.GL_SRC_ALPHA, OpenGL.GL_ONE_MINUS_SRC_ALPHA)
             Else
                 ControlGL.Disable(OpenGL.GL_BLEND)
             End If
 
-            If VisualizationParameters.AllowLineSmoothing Then ControlGL.Enable(OpenGL.GL_LINE_SMOOTH) Else ControlGL.Disable(OpenGL.GL_LINE_SMOOTH)
+            If Visualization.AllowLineSmoothing Then ControlGL.Enable(OpenGL.GL_LINE_SMOOTH) Else ControlGL.Disable(OpenGL.GL_LINE_SMOOTH)
 
             Dim Origen As New EVector3
-            Dim Punto As EVector3 = VisualizationParameters.CameraPosition
-            Dim Orientacion As EulerAngles = VisualizationParameters.CameraOrientation
+            Dim Punto As EVector3 = Visualization.CameraPosition
+            Dim Orientacion As EulerAngles = Visualization.CameraOrientation
 
             ControlGL.RenderMode(OpenGL.GL_RENDER)
             ControlGL.MatrixMode(OpenGL.GL_PROJECTION)
@@ -202,14 +203,14 @@ Namespace VisualModel.Interface
 
             ControlGL.Ortho(-0.5 * ControlGLWidth, 0.5 * ControlGLWidth, -0.5 * ControlGLHeight, 0.5 * ControlGLHeight, -100000, 100000)
 
-            ControlGL.Translate(VisualizationParameters.CameraPosition.X, VisualizationParameters.CameraPosition.Y, 0)
+            ControlGL.Translate(Visualization.CameraPosition.X, Visualization.CameraPosition.Y, 0)
             ControlGL.Rotate(Orientacion.Fi, Orientacion.Tita, Orientacion.Psi)
-            ControlGL.Scale(VisualizationParameters.Proximity, VisualizationParameters.Proximity, VisualizationParameters.Proximity)
+            ControlGL.Scale(Visualization.Proximity, Visualization.Proximity, Visualization.Proximity)
 
             For Each List In ListOfSurfacesToDraw
-                If Not VisualizationParameters.Panning And Not VisualizationParameters.Rotating Or
-                   (VisualizationParameters.Panning And List.ShowOnPan) Or
-                   (VisualizationParameters.Rotating And List.ShowOnRotate) Then
+                If Not Visualization.Panning And Not Visualization.Rotating Or
+                   (Visualization.Panning And List.ShowOnPan) Or
+                   (Visualization.Rotating And List.ShowOnRotate) Then
                     ControlGL.CallList(List.Name)
                 End If
             Next
@@ -241,23 +242,23 @@ Namespace VisualModel.Interface
         ''' <remarks></remarks>
         Private Sub FastRefreshOnGL(Width As Integer, Height As Integer)
 
-            ControlGL.ClearColor(VisualizationParameters.ScreenColor.R / 255, VisualizationParameters.ScreenColor.G / 255, VisualizationParameters.ScreenColor.B / 255, VisualizationParameters.ScreenColor.A / 255)
+            ControlGL.ClearColor(Visualization.ScreenColor.R / 255, Visualization.ScreenColor.G / 255, Visualization.ScreenColor.B / 255, Visualization.ScreenColor.A / 255)
 
             ControlGL.Clear(OpenGL.GL_COLOR_BUFFER_BIT)
             ControlGL.Clear(OpenGL.GL_DEPTH_BUFFER_BIT)
 
-            If VisualizationParameters.AllowAlphaBlending Then
+            If Visualization.AllowAlphaBlending Then
                 ControlGL.Enable(OpenGL.GL_BLEND)
                 ControlGL.BlendFunc(OpenGL.GL_SRC_ALPHA, OpenGL.GL_ONE_MINUS_SRC_ALPHA)
             Else
                 ControlGL.Disable(OpenGL.GL_BLEND)
             End If
 
-            If VisualizationParameters.AllowLineSmoothing Then ControlGL.Enable(OpenGL.GL_LINE_SMOOTH) Else ControlGL.Disable(OpenGL.GL_LINE_SMOOTH)
+            If Visualization.AllowLineSmoothing Then ControlGL.Enable(OpenGL.GL_LINE_SMOOTH) Else ControlGL.Disable(OpenGL.GL_LINE_SMOOTH)
 
             Dim Origen As New EVector3
-            Dim Punto As EVector3 = VisualizationParameters.CameraPosition
-            Dim Orientacion As EulerAngles = VisualizationParameters.CameraOrientation
+            Dim Punto As EVector3 = Visualization.CameraPosition
+            Dim Orientacion As EulerAngles = Visualization.CameraOrientation
 
             ControlGL.RenderMode(OpenGL.GL_RENDER)
             ControlGL.MatrixMode(OpenGL.GL_PROJECTION)
@@ -266,13 +267,13 @@ Namespace VisualModel.Interface
 
             ControlGL.Ortho(-0.5 * Width, 0.5 * Width, -0.5 * Height, 0.5 * Height, -100000, 100000)
 
-            ControlGL.Translate(VisualizationParameters.CameraPosition.X, VisualizationParameters.CameraPosition.Y, 0)
+            ControlGL.Translate(Visualization.CameraPosition.X, Visualization.CameraPosition.Y, 0)
             ControlGL.Rotate(Orientacion.Fi, Orientacion.Tita, Orientacion.Psi)
-            ControlGL.Scale(VisualizationParameters.Proximity, VisualizationParameters.Proximity, VisualizationParameters.Proximity)
+            ControlGL.Scale(Visualization.Proximity, Visualization.Proximity, Visualization.Proximity)
 
-            VisualizationParameters.Axes.Extension = SimulationSettings.CharacteristicLenght
-            VisualizationParameters.Axes.CrearWireFrame(ControlGL)
-            VisualizationParameters.ReferenceFrame.CreateWireFrame(ControlGL)
+            Visualization.Axes.Extension = SimulationSettings.CharacteristicLenght
+            Visualization.Axes.GenerateWireFrame(ControlGL)
+            Visualization.ReferenceFrame.GenerateWireFrame(ControlGL)
 
             'Simulacion.RepresentarVectorDeVelocidad(GL, New EVector3)
 
@@ -281,31 +282,11 @@ Namespace VisualModel.Interface
 
                 Case InterfaceModes.Design
 
-                    For i = 0 To Model.LiftingSurfaces.Count - 1
+                    For i = 0 To Model.Objects.Count - 1
 
-                        If Model.LiftingSurfaces(i).VisualProps.ShowSurface Then
+                        If Model.Objects(i).VisualProperties.ShowSurface Then
 
-                            Model.LiftingSurfaces(i).Refresh3DModel(ControlGL)
-
-                        End If
-
-                    Next
-
-                    For i = 0 To Model.Fuselages.Count - 1
-
-                        If Model.Fuselages(i).VisualProps.ShowSurface Then
-
-                            Model.Fuselages(i).Refresh3DModel(ControlGL)
-
-                        End If
-
-                    Next
-
-                    For i = 0 To Model.JetEngines.Count - 1
-
-                        If Model.JetEngines(i).VisualProps.ShowSurface Then
-
-                            Model.JetEngines(i).Refresh3DModel(ControlGL)
+                            Model.Objects(i).Refresh3DModel(ControlGL)
 
                         End If
 
@@ -321,7 +302,7 @@ Namespace VisualModel.Interface
 
                     Else
 
-                        If Results.Model.VisualProps.ShowSurface Then
+                        If Results.Model.VisualProperties.ShowSurface Then
 
                             Results.Model.Refresh3DModel(ControlGL)
 
@@ -363,7 +344,7 @@ Namespace VisualModel.Interface
 
             ListOfSurfacesToDraw.Clear()
 
-            VisualizationParameters.Axes.Extension = SimulationSettings.CharacteristicLenght
+            Visualization.Axes.Extension = SimulationSettings.CharacteristicLenght
 
             Dim Coordinates As GLElement
             Coordinates.Name = ControlGL.GenLists(1)
@@ -371,7 +352,7 @@ Namespace VisualModel.Interface
             Coordinates.ShowOnRotate = True
             ListOfSurfacesToDraw.Add(Coordinates)
             ControlGL.NewList(Coordinates.Name, OpenGL.GL_COMPILE)
-            VisualizationParameters.Axes.CrearWireFrame(ControlGL)
+            Visualization.Axes.GenerateWireFrame(ControlGL)
             ControlGL.EndList()
 
             Dim Reference As GLElement
@@ -380,7 +361,7 @@ Namespace VisualModel.Interface
             Reference.ShowOnRotate = True
             ListOfSurfacesToDraw.Add(Reference)
             ControlGL.NewList(Reference.Name, OpenGL.GL_COMPILE)
-            VisualizationParameters.ReferenceFrame.CreateWireFrame(ControlGL)
+            Visualization.ReferenceFrame.GenerateWireFrame(ControlGL)
             ControlGL.EndList()
 
             'Simulacion.RepresentarVectorDeVelocidad(GL, New EVector3)
@@ -390,26 +371,9 @@ Namespace VisualModel.Interface
 
                 Case InterfaceModes.Design
 
-                    For Each LiftingSurface In Model.LiftingSurfaces
+                    For Each Surface In Model.Objects
 
-                        If LiftingSurface.VisualProps.ShowSurface Then
-
-                            Dim List As GLElement
-                            List.Name = ControlGL.GenLists(1)
-                            List.ShowOnPan = True
-                            List.ShowOnRotate = True
-                            ListOfSurfacesToDraw.Add(List)
-                            ControlGL.NewList(List.Name, OpenGL.GL_COMPILE)
-                            LiftingSurface.Refresh3DModel(ControlGL)
-                            ControlGL.EndList()
-
-                        End If
-
-                    Next
-
-                    For Each Body In Model.Fuselages
-
-                        If Body.VisualProps.ShowSurface Then
+                        If Surface.VisualProperties.ShowSurface Then
 
                             Dim List As GLElement
                             List.Name = ControlGL.GenLists(1)
@@ -417,24 +381,7 @@ Namespace VisualModel.Interface
                             List.ShowOnRotate = True
                             ListOfSurfacesToDraw.Add(List)
                             ControlGL.NewList(List.Name, OpenGL.GL_COMPILE)
-                            Body.Refresh3DModel(ControlGL)
-                            ControlGL.EndList()
-
-                        End If
-
-                    Next
-
-                    For Each JetEngine In Model.JetEngines
-
-                        If JetEngine.VisualProps.ShowSurface Then
-
-                            Dim List As GLElement
-                            List.Name = ControlGL.GenLists(1)
-                            List.ShowOnPan = True
-                            List.ShowOnRotate = True
-                            ListOfSurfacesToDraw.Add(List)
-                            ControlGL.NewList(List.Name, OpenGL.GL_COMPILE)
-                            JetEngine.Refresh3DModel(ControlGL)
+                            Surface.Refresh3DModel(ControlGL)
                             ControlGL.EndList()
 
                         End If
@@ -456,7 +403,7 @@ Namespace VisualModel.Interface
 
                         ' Results:
 
-                        If Results.Model.VisualProps.ShowSurface Then
+                        If Results.Model.VisualProperties.ShowSurface Then
                             Dim List As GLElement
                             List.Name = ControlGL.GenLists(1)
                             List.ShowOnPan = True
@@ -567,23 +514,23 @@ Namespace VisualModel.Interface
 
         Public Sub RepresentResultsTransitWithOpenGL(ByVal TimeStep As Integer)
 
-            ControlGL.ClearColor(VisualizationParameters.ScreenColor.R / 255, VisualizationParameters.ScreenColor.G / 255, VisualizationParameters.ScreenColor.B / 255, VisualizationParameters.ScreenColor.A / 255)
+            ControlGL.ClearColor(Visualization.ScreenColor.R / 255, Visualization.ScreenColor.G / 255, Visualization.ScreenColor.B / 255, Visualization.ScreenColor.A / 255)
 
             ControlGL.Clear(OpenGL.GL_COLOR_BUFFER_BIT)
             ControlGL.Clear(OpenGL.GL_DEPTH_BUFFER_BIT)
 
-            If VisualizationParameters.AllowAlphaBlending Then
+            If Visualization.AllowAlphaBlending Then
                 ControlGL.Enable(OpenGL.GL_BLEND)
                 ControlGL.BlendFunc(OpenGL.GL_SRC_ALPHA, OpenGL.GL_ONE_MINUS_SRC_ALPHA)
             Else
                 ControlGL.Disable(OpenGL.GL_BLEND)
             End If
 
-            If VisualizationParameters.AllowLineSmoothing Then ControlGL.Enable(OpenGL.GL_LINE_SMOOTH) Else ControlGL.Disable(OpenGL.GL_LINE_SMOOTH)
+            If Visualization.AllowLineSmoothing Then ControlGL.Enable(OpenGL.GL_LINE_SMOOTH) Else ControlGL.Disable(OpenGL.GL_LINE_SMOOTH)
 
             Dim Origen As New EVector3
-            Dim Punto As EVector3 = VisualizationParameters.CameraPosition
-            Dim Orientacion As EulerAngles = VisualizationParameters.CameraOrientation
+            Dim Punto As EVector3 = Visualization.CameraPosition
+            Dim Orientacion As EulerAngles = Visualization.CameraOrientation
 
             ControlGL.RenderMode(OpenGL.GL_RENDER)
             ControlGL.MatrixMode(OpenGL.GL_PROJECTION)
@@ -592,13 +539,13 @@ Namespace VisualModel.Interface
 
             ControlGL.Ortho(-0.5 * ControlGLWidth, 0.5 * ControlGLWidth, -0.5 * ControlGLHeight, 0.5 * ControlGLHeight, -100000, 100000)
 
-            ControlGL.Translate(VisualizationParameters.CameraPosition.X, VisualizationParameters.CameraPosition.Y, 0)
+            ControlGL.Translate(Visualization.CameraPosition.X, Visualization.CameraPosition.Y, 0)
             ControlGL.Rotate(Orientacion.Fi, Orientacion.Tita, Orientacion.Psi)
-            ControlGL.Scale(VisualizationParameters.Proximity, VisualizationParameters.Proximity, VisualizationParameters.Proximity)
+            ControlGL.Scale(Visualization.Proximity, Visualization.Proximity, Visualization.Proximity)
 
-            VisualizationParameters.Axes.Extension = SimulationSettings.CharacteristicLenght
-            VisualizationParameters.Axes.CrearWireFrame(ControlGL)
-            VisualizationParameters.ReferenceFrame.CreateWireFrame(ControlGL)
+            Visualization.Axes.Extension = SimulationSettings.CharacteristicLenght
+            Visualization.Axes.GenerateWireFrame(ControlGL)
+            Visualization.ReferenceFrame.GenerateWireFrame(ControlGL)
 
             SimulationSettings.RepresentVelocityVector(ControlGL, Origen)
 
@@ -610,7 +557,7 @@ Namespace VisualModel.Interface
 
         Private Sub SelectElementAtDesignWithOpenGL(ByVal X As Double, ByVal Y As Double)
 
-            ControlGL.ClearColor(VisualizationParameters.ScreenColor.R / 255, VisualizationParameters.ScreenColor.G / 255, VisualizationParameters.ScreenColor.B / 255, VisualizationParameters.ScreenColor.A / 255)
+            ControlGL.ClearColor(Visualization.ScreenColor.R / 255, Visualization.ScreenColor.G / 255, Visualization.ScreenColor.B / 255, Visualization.ScreenColor.A / 255)
 
             Dim Buffer(OpenGL.GL_SELECTION_BUFFER_SIZE) As UInteger
             ControlGL.SelectBuffer(512, Buffer)
@@ -627,12 +574,12 @@ Namespace VisualModel.Interface
             ControlGL.Ortho(-0.5 * ControlGLWidth, 0.5 * ControlGLWidth, -0.5 * ControlGLHeight, 0.5 * ControlGLHeight, -100000, 100000)
 
             Dim Origen As New EVector3
-            Dim Punto As EVector3 = VisualizationParameters.CameraPosition
-            Dim Orientacion As EulerAngles = VisualizationParameters.CameraOrientation
+            Dim Punto As EVector3 = Visualization.CameraPosition
+            Dim Orientacion As EulerAngles = Visualization.CameraOrientation
 
-            ControlGL.Translate(VisualizationParameters.CameraPosition.X, VisualizationParameters.CameraPosition.Y, 0)
+            ControlGL.Translate(Visualization.CameraPosition.X, Visualization.CameraPosition.Y, 0)
             ControlGL.Rotate(Orientacion.Fi, Orientacion.Tita, Orientacion.Psi)
-            ControlGL.Scale(VisualizationParameters.Proximity, VisualizationParameters.Proximity, VisualizationParameters.Proximity)
+            ControlGL.Scale(Visualization.Proximity, Visualization.Proximity, Visualization.Proximity)
 
             'VisualizationParameters.EjeDeCoordenadas.Extension = SimulationSettings.CharacteristicLenght
             'VisualizationParameters.EjeDeCoordenadas.CrearWireFrame(GL)
@@ -640,48 +587,18 @@ Namespace VisualModel.Interface
 
             SimulationSettings.RepresentVelocityVector(ControlGL, Origen)
 
-            For i = 0 To Model.LiftingSurfaces.Count - 1
+            For i = 0 To Model.Objects.Count - 1
 
-                If Not IsNothing(Model.LiftingSurfaces(i)) Then
+                If Model.Objects(i) IsNot Nothing Then
 
-                    Model.LiftingSurfaces(i).Selected = False ' unselect the surface
+                    Model.Objects(i).Selected = False ' unselect the surface
 
-                    If Not Model.Selection.MultipleSelection Then Model.LiftingSurfaces(i).UnselectAll()
+                    If Not Model.Selection.MultipleSelection Then Model.Objects(i).UnselectAll()
 
-                    If Model.LiftingSurfaces(i).VisualProps.ShowSurface Then
-                        Model.LiftingSurfaces(i).Refresh3DModel(ControlGL, Model.Selection.SelectionMode, i)
-                    End If
+                    If Model.Objects(i).VisualProperties.ShowSurface Then
 
-                End If
+                        Model.Objects(i).Refresh3DModel(ControlGL, Model.Selection.SelectionMode, i)
 
-            Next
-
-            For i = 0 To Model.Fuselages.Count - 1
-
-                If (Not IsNothing(Model.Fuselages(i))) Then
-
-                    Model.Fuselages(i).Selected = False ' unselect the surface
-
-                    If Not Model.Selection.MultipleSelection Then Model.Fuselages(i).UnselectAll()
-
-                    If Model.Fuselages(i).VisualProps.ShowSurface Then
-                        Model.Fuselages(i).Refresh3DModel(ControlGL, Model.Selection.SelectionMode, i)
-                    End If
-
-                End If
-
-            Next
-
-            For i = 0 To Model.JetEngines.Count - 1
-
-                If (Not IsNothing(Model.JetEngines(i))) Then
-
-                    Model.JetEngines(i).Selected = False ' unselect the surface
-
-                    If Not Model.Selection.MultipleSelection Then Model.JetEngines(i).UnselectAll()
-
-                    If Model.JetEngines(i).VisualProps.ShowSurface Then
-                        Model.JetEngines(i).Refresh3DModel(ControlGL, Model.Selection.SelectionMode, i)
                     End If
 
                 End If
@@ -717,27 +634,7 @@ Namespace VisualModel.Interface
 
                         ' It will only select one element of each entity type. This is to avoid confusion as geometric actions are excecuted.
 
-                        Select Case SelectedItem.ComponentType
-
-                            Case ComponentTypes.etLiftingSurface
-                                Model.CurrentLiftingSurfaceID = SelectedItem.ComponentIndex + 1
-                                If (Not IsNothing(Model.CurrentLiftingSurface)) Then
-                                    Model.CurrentLiftingSurface.Selected = True
-                                End If
-
-                            Case ComponentTypes.etBody
-                                Model.CurrentBodyID = SelectedItem.ComponentIndex + 1
-                                If (Not IsNothing(Model.CurrentBody)) Then
-                                    Model.CurrentBody.Selected = True
-                                End If
-
-                            Case ComponentTypes.etJetEngine
-                                Model.CurrentJetEngineID = SelectedItem.ComponentIndex + 1
-                                If (Not IsNothing(Model.CurrentJetEngine)) Then
-                                    Model.CurrentJetEngine.Selected = True
-                                End If
-
-                        End Select
+                        Model.Objects(SelectedItem.ComponentIndex).Selected = True
 
                         Select Case SelectedItem.EntityType
 
@@ -843,11 +740,16 @@ Namespace VisualModel.Interface
             CalculationForm.Show()
             CalculationForm.PushMessage("Preparing calculation cell")
             SimulationSettings.AnalysisType = Type
+
             Try
+
                 CalculationCore = New UVLMSolver(Model, SimulationSettings, Type = CalculationType.ctAeroelastic)
+
                 AddHandler CalculationCore.PushProgress, AddressOf CalculationForm.PushMessageWithProgress
                 AddHandler CalculationCore.PushMessage, AddressOf CalculationForm.PushMessage
                 AddHandler CalculationCore.CalculationDone, AddressOf CalculationFinished
+                AddHandler CalculationCore.CalculationDone, AddressOf CalculationForm.ChangeToCloseModus
+                AddHandler CalculationCore.CalculationAborted, AddressOf CalculationAborted
 
                 Dim StartingTime As Date = Now
                 Results.SimulationSettings = CalculationCore.Settings
@@ -877,8 +779,10 @@ Namespace VisualModel.Interface
                 CalculationWorker.RunWorkerAsync()
 
             Catch ex As Exception
+                CalculationWorker.CancelAsync()
                 CalculationForm.PushMessage(String.Format("Calculation exited with exception: ""{0}"".", ex.Message))
                 CalculationForm.PushState("Exited with exception!")
+                CalculationForm.ChangeToCloseModus()
                 Return
             End Try
 
@@ -887,9 +791,17 @@ Namespace VisualModel.Interface
         Private Sub CalculationFinished()
 
             CalculationForm.PushMessage("Loading results")
-            CalculationCore.SetCompleteModelOnResults(Me.Results)
+            CalculationCore.SetCompleteModelOnResults(Results)
             CalculationForm.PushMessage("Ready")
             CalculationForm.PushState("Calculation done")
+            RaiseEvent CalculationDone()
+
+        End Sub
+
+        Private Sub CalculationAborted()
+
+            CalculationForm.PushMessage("Calculation aborted")
+            CalculationForm.ChangeToCloseModus()
             RaiseEvent CalculationDone()
 
         End Sub
@@ -925,7 +837,7 @@ Namespace VisualModel.Interface
                             SimulationSettings.ReadFromXML(reader.ReadSubtree)
 
                         Case "Visualization"
-                            VisualizationParameters.ReadFromXML(reader.ReadSubtree)
+                            Visualization.ReadFromXML(reader.ReadSubtree)
 
                         Case "VelocityPlane"
                             VelocityPlane.ReadFromXML(reader.ReadSubtree)
@@ -959,7 +871,7 @@ Namespace VisualModel.Interface
             writer.WriteEndElement()
 
             writer.WriteStartElement("Visualization")
-            VisualizationParameters.SaveToXML(writer)
+            Visualization.SaveToXML(writer)
             writer.WriteEndElement()
 
             writer.WriteStartElement("VelocityPlane")
@@ -972,56 +884,11 @@ Namespace VisualModel.Interface
 
         End Sub
 
-        ''' <summary>
-        ''' Finds lifting surface on a XML resource file and loads them to the current model.
-        ''' </summary>
-        ''' <param name="SourcePath"></param>
-        ''' <remarks></remarks>
-        Public Sub ImportSurfacesFromXML(ByVal SourcePath As String)
-
-            If Not System.IO.File.Exists(SourcePath) Then
-                MsgBox("The selected file does not exist! Not surfaces added.")
-                Exit Sub
-            End If
-
-            Dim reader As XmlReader = XmlReader.Create(SourcePath)
-
-            If reader.ReadToFollowing("Project", "TProject") Then
-
-                Name = reader.GetAttribute("Name")
-
-                If reader.ReadToFollowing("Model", "TModel") Then
-
-                    Name = reader("Name")
-
-                    If reader.ReadToDescendant("ModelProperties") Then
-
-                        Dim LiftingSurfaces As Integer = CInt(reader.GetAttribute("NumberOfLiftingSurfaces"))
-
-                        For i = 1 To LiftingSurfaces
-
-                            Model.AddLiftingSurface()
-
-                            If reader.ReadToFollowing(String.Format("LiftingSurface{0}", i), "TLiftingSurface") Then
-                                Model.CurrentLiftingSurface.ReadFromXML(reader)
-                            End If
-
-                        Next
-
-                    End If
-
-
-                End If
-
-            End If
-
-        End Sub
-
         Public Sub ReadResults(ByVal FilePath As String)
 
             CalculationCore = New UVLMSolver()
             CalculationCore.ReadFromXML(FilePath)
-            CalculationCore.SetCompleteModelOnResults(Me.Results)
+            CalculationCore.SetCompleteModelOnResults(Results)
 
         End Sub
 

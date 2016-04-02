@@ -26,6 +26,14 @@ Namespace UVLM.Solver
         ''' </summary>
         Public Sub UnsteadyTransit(ByVal DataBasePath As String)
 
+            If _WithSources Then
+
+                RaiseEvent PushMessage("Cannot run transit analysis with thick bodies")
+                RaiseEvent CalculationAborted()
+                Exit Sub
+
+            End If
+
             CreateSubFoldersNames(DataBasePath)
             CreateSubFolder(DataBaseSection.Unsteady)
             CleanDirectory(DataBaseSection.Unsteady)

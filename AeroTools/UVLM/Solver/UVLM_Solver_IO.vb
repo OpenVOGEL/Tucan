@@ -42,7 +42,9 @@ Namespace UVLM.Solver
             ' Import polar database:
 
             If Not IsNothing(Model.PolarDataBase) Then
+
                 PolarDataBase = Model.PolarDataBase.Clone()
+
             End If
 
             ' Add lifting surfaces:
@@ -51,57 +53,62 @@ Namespace UVLM.Solver
 
             Dim count As Integer = 0
 
-            For i = 1 To Model.LiftingSurfaces.Count
+            For i = 0 To Model.Objects.Count - 1
 
-                Model.CurrentLiftingSurfaceID = i
+                If TypeOf Model.Objects(i) Is LiftingSurface AndAlso Model.Objects(i).IncludeInCalculation Then
 
-                If Model.CurrentLiftingSurface.IncludeInCalculation Then
+                    Dim Wing As LiftingSurface = Model.Objects(i)
 
                     count += 1
 
-                    AddLiftingSurface(Model.CurrentLiftingSurface, False, GenerateStructure)
+                    AddLiftingSurface(Wing, False, GenerateStructure)
 
-                    If Model.CurrentLiftingSurface.Symmetric Then
-                        AddLiftingSurface(Model.CurrentLiftingSurface, True, GenerateStructure)
+                    If Wing.Symmetric Then
+                        AddLiftingSurface(Wing, True, GenerateStructure)
                     End If
 
                 End If
 
             Next
 
-            Dim n As Integer = Model.Fuselages.Count
+            ' Add fuselages:
 
-            For i = 1 To n
+            For i = 0 To Model.Objects.Count - 1
 
-                Model.CurrentBodyID = i
+                If TypeOf Model.Objects(i) Is Fuselage AndAlso Model.Objects(i).IncludeInCalculation Then
 
-                If Model.BodySelected AndAlso Model.CurrentBody.IncludeInCalculation Then
+                    Dim Body As Fuselage = Model.Objects(i)
 
                     Dim Lattice As New BoundedLattice
+
                     Me.Lattices.Add(Lattice)
 
-                    For j = 1 To Model.CurrentBody.NumberOfNodes
+                    For j = 0 To Body.NumberOfNodes - 1
 
-                        Lattice.AddNode(Model.CurrentBody.NodalPosition(j))
+                        Lattice.AddNode(Body.Mesh.Nodes(j).Position)
 
                     Next
 
-                    For j = 1 To Model.CurrentBody.NumberOfPanels
+                    For j = 0 To Body.NumberOfPanels - 1
 
-                        Dim Node1 As Integer = Model.CurrentBody.Panel(j).N1 - 1
-                        Dim Node2 As Integer = Model.CurrentBody.Panel(j).N2 - 1
-                        Dim Node3 As Integer = Model.CurrentBody.Panel(j).N3 - 1
-                        Dim Node4 As Integer = Model.CurrentBody.Panel(j).N4 - 1
-                        Dim Reversed As Boolean = Model.CurrentBody.Panel(j).Reversed
-                        Dim Slender As Boolean = Model.CurrentBody.Panel(j).IsSlender
+                        Dim Node1 As Integer = Body.Mesh.Panels(j).N1
+                        Dim Node2 As Integer = Body.Mesh.Panels(j).N2
+                        Dim Node3 As Integer = Body.Mesh.Panels(j).N3
+                        Dim Node4 As Integer = Body.Mesh.Panels(j).N4
+                        Dim Reversed As Boolean = Body.Mesh.Panels(j).Reversed
+                        Dim Slender As Boolean = Body.Mesh.Panels(j).IsSlender
 
-                        If Model.CurrentBody.Panel(j).IsTriangular Then
+                        If Body.Mesh.Panels(j).IsTriangular Then
+
                             Lattice.AddVortexRing3(Node1, Node2, Node3, Reversed, Slender)
+
                         Else
+
                             Lattice.AddVortexRing4(Node1, Node2, Node3, Node4, Reversed, Slender)
+
                         End If
 
-                        Lattice.VortexRings(j - 1).IsPrimitive = Model.CurrentBody.Panel(j).IsPrimitive
+                        Lattice.VortexRings(j).IsPrimitive = Body.Mesh.Panels(j).IsPrimitive
 
                     Next
 
@@ -111,28 +118,30 @@ Namespace UVLM.Solver
 
             Next
 
-            For i = 1 To Model.JetEngines.Count
+            ' Add jet engine nacelles:
 
-                Model.CurrentJetEngineID = i
+            For i = 0 To Model.Objects.Count - 1
 
-                If Model.JetEngineSelected AndAlso Model.CurrentJetEngine.IncludeInCalculation Then
+                If TypeOf Model.Objects(i) Is JetEngine AndAlso Model.Objects(i).IncludeInCalculation Then
+
+                    Dim Nacelle As JetEngine = Model.Objects(i)
 
                     Dim Lattice As New BoundedLattice
 
                     Lattices.Add(Lattice)
 
-                    For j = 1 To Model.CurrentJetEngine.NumberOfNodes
+                    For j = 0 To Nacelle.NumberOfNodes - 1
 
-                        Lattice.AddNode(Model.CurrentJetEngine.NodalPosition(j))
+                        Lattice.AddNode(Nacelle.Mesh.Nodes(j).Position)
 
                     Next
 
-                    For j = 1 To Model.CurrentJetEngine.NumberOfPanels
+                    For j = 0 To Nacelle.NumberOfPanels - 1
 
-                        Dim Node1 As Integer = Model.CurrentJetEngine.Panel(j).N1 - 1
-                        Dim Node2 As Integer = Model.CurrentJetEngine.Panel(j).N2 - 1
-                        Dim Node3 As Integer = Model.CurrentJetEngine.Panel(j).N3 - 1
-                        Dim Node4 As Integer = Model.CurrentJetEngine.Panel(j).N4 - 1
+                        Dim Node1 As Integer = Nacelle.Mesh.Panels(j).N1
+                        Dim Node2 As Integer = Nacelle.Mesh.Panels(j).N2
+                        Dim Node3 As Integer = Nacelle.Mesh.Panels(j).N3
+                        Dim Node4 As Integer = Nacelle.Mesh.Panels(j).N4
                         Dim Reversed As Boolean = False
                         Dim Slender As Boolean = True
 
@@ -145,7 +154,9 @@ Namespace UVLM.Solver
             Next
 
             If Lattices.Count = 0 Then
+
                 Throw New Exception("There are no lattices in the calculation model")
+
             End If
 
             ' Set global indices in the elements (to access circulation from matrices)
@@ -185,9 +196,9 @@ Namespace UVLM.Solver
 
             Lattices.Add(Lattice)
 
-            For j = 1 To Surface.nNodes
+            For j = 0 To Surface.NumberOfNodes - 1
 
-                Lattice.AddNode(Surface.GetNodalPoint(j))
+                Lattice.AddNode(Surface.Mesh.Nodes(j).Position)
 
                 If Symmetric Then Lattice.Nodes(Lattice.Nodes.Count - 1).Position.Y *= -1
 
@@ -195,12 +206,12 @@ Namespace UVLM.Solver
 
             ' Add rings:
 
-            For j = 1 To Surface.nPanels
+            For j = 0 To Surface.NumberOfPanels - 1
 
-                Dim Node1 As Integer = Surface.GetQuadPanel(j).N1 - 1
-                Dim Node2 As Integer = Surface.GetQuadPanel(j).N2 - 1
-                Dim Node3 As Integer = Surface.GetQuadPanel(j).N3 - 1
-                Dim Node4 As Integer = Surface.GetQuadPanel(j).N4 - 1
+                Dim Node1 As Integer = Surface.Mesh.Panels(j).N1
+                Dim Node2 As Integer = Surface.Mesh.Panels(j).N2
+                Dim Node3 As Integer = Surface.Mesh.Panels(j).N3
+                Dim Node4 As Integer = Surface.Mesh.Panels(j).N4
 
                 Lattice.AddVortexRing4(Node1, Node2, Node3, Node4, False, True)
 
@@ -258,7 +269,7 @@ Namespace UVLM.Solver
                 Dim ln As Integer = -1 ' > linked node
 
                 kLink = New KinematicLink(StructuralLink.StructuralCore.Nodes(snCount))
-                For n = 0 To Surface.nChordPanels
+                For n = 0 To Surface.NumberOfChordPanels
                     ln += 1
                     kLink.Link(Lattice.Nodes(ln))
                 Next
@@ -289,7 +300,7 @@ Namespace UVLM.Solver
                     Dim len As Integer = ln + 1 '(leading edge lattice node index)
 
                     kLink = New KinematicLink(StructuralLink.StructuralCore.Nodes(snCount))
-                    For n = 0 To Surface.nChordPanels
+                    For n = 0 To Surface.NumberOfChordPanels
                         ln += 1
                         kLink.Link(Lattice.Nodes(ln))
                     Next
@@ -300,7 +311,7 @@ Namespace UVLM.Solver
                     ' Add mechanic link:
 
                     mLink = New MechanicLink(element)
-                    For r = 0 To Surface.nChordPanels - 1
+                    For r = 0 To Surface.NumberOfChordPanels - 1
                         lv += 1
                         mLink.Link(Lattice.VortexRings(lv))
                     Next
@@ -338,7 +349,7 @@ Namespace UVLM.Solver
 
             Dim count As Integer = 0
 
-            For j = 1 To Surface.nWingRegions
+            For j = 1 To Surface.NumberOfWingRegions
 
                 Surface.CurrentRegionID = j
 
@@ -350,7 +361,7 @@ Namespace UVLM.Solver
 
                     Stripe.Polars = Surface.CurrentRegion.PolarFamiliy
 
-                    For p = 1 To Surface.nChordPanels
+                    For p = 1 To Surface.NumberOfChordPanels
                         Stripe.Rings.Add(Lattice.VortexRings(count))
                         count += 1
                     Next
@@ -543,6 +554,7 @@ Namespace UVLM.Solver
         Public Sub SetCompleteModelOnResults(ByRef Results As ResultModel)
 
             Results.Loaded = False
+            Results.TransitLoaded = False
             Results.Model.Name = "Results"
             Results.Model.Clear()
             Results.DynamicModes.Clear()
@@ -550,15 +562,17 @@ Namespace UVLM.Solver
 
             Dim CantidadDeSuperficies As Integer = 0
 
-            Dim GlobalIndexNodes As Integer = 0
-            Dim GlobalIndexRings As Integer = 0
+            Dim GlobalIndexNodes As Integer = -1
+            Dim GlobalIndexRings As Integer = -1
 
             For Each Lattice In Lattices
 
                 For Each NodalPoint In Lattice.Nodes
+
                     GlobalIndexNodes += 1
                     NodalPoint.IndexG = GlobalIndexNodes
                     Results.Model.AddNodalPoint(NodalPoint.Position)
+
                 Next
 
                 For Each VortexRing In Lattice.VortexRings
@@ -568,26 +582,27 @@ Namespace UVLM.Solver
                     If VortexRing.Type = VortexRingType.VR4 Then
 
                         Results.Model.AddPanel(VortexRing.Node(1).IndexG,
-                                                      VortexRing.Node(2).IndexG,
-                                                      VortexRing.Node(3).IndexG,
-                                                      VortexRing.Node(4).IndexG)
+                                               VortexRing.Node(2).IndexG,
+                                               VortexRing.Node(3).IndexG,
+                                               VortexRing.Node(4).IndexG)
 
                     Else
 
                         Results.Model.AddPanel(VortexRing.Node(1).IndexG,
-                                                      VortexRing.Node(2).IndexG,
-                                                      VortexRing.Node(3).IndexG,
-                                                      VortexRing.Node(1).IndexG)
+                                               VortexRing.Node(2).IndexG,
+                                               VortexRing.Node(3).IndexG,
+                                               VortexRing.Node(1).IndexG)
 
                     End If
 
-                    Results.Model.Panel(GlobalIndexRings).Circulation = VortexRing.G
-                    Results.Model.Panel(GlobalIndexRings).Cp = VortexRing.Cp
-                    Results.Model.Panel(GlobalIndexRings).Area = VortexRing.Area
-                    Results.Model.Panel(GlobalIndexRings).NormalVector.Assign(VortexRing.Normal)
-                    Results.Model.Panel(GlobalIndexRings).LocalVelocity.Assign(VortexRing.VelocityT)
-                    Results.Model.Panel(GlobalIndexRings).ControlPoint.Assign(VortexRing.ControlPoint)
-                    Results.Model.Panel(GlobalIndexRings).IsSlender = VortexRing.IsSlender
+                    Results.Model.Mesh.Panels(GlobalIndexRings).Circulation = VortexRing.G
+                    Results.Model.Mesh.Panels(GlobalIndexRings).Cp = VortexRing.Cp
+                    Results.Model.Mesh.Panels(GlobalIndexRings).Area = VortexRing.Area
+                    Results.Model.Mesh.Panels(GlobalIndexRings).NormalVector.Assign(VortexRing.Normal)
+                    Results.Model.Mesh.Panels(GlobalIndexRings).LocalVelocity.Assign(VortexRing.VelocityT)
+                    Results.Model.Mesh.Panels(GlobalIndexRings).ControlPoint.Assign(VortexRing.ControlPoint)
+                    Results.Model.Mesh.Panels(GlobalIndexRings).IsSlender = VortexRing.IsSlender
+
                 Next
 
             Next
@@ -595,12 +610,12 @@ Namespace UVLM.Solver
             Results.Model.FindPressureRange()
             Results.Model.DistributePressureOnNodes()
             Results.Model.UpdateColormapWithPressure()
-            Results.Model.VisualProps.ShowColormap = True
+            Results.Model.VisualProperties.ShowColormap = True
 
             Results.Model.Mesh.GenerateLattice()
 
-            GlobalIndexNodes = 0
-            GlobalIndexRings = 0
+            GlobalIndexNodes = -1
+            GlobalIndexRings = -1
             Results.Wakes.Clear()
 
             For Each Lattice In Lattices
@@ -608,18 +623,20 @@ Namespace UVLM.Solver
                 For Each Wake In Lattice.Wakes
 
                     For Each NodalPoint In Wake.Nodes
+
                         GlobalIndexNodes += 1
                         NodalPoint.IndexG = GlobalIndexNodes
                         Results.Wakes.AddNodalPoint(NodalPoint.Position)
+
                     Next
 
                     For Each VortexRing In Wake.VortexRings
                         GlobalIndexRings += 1
                         Results.Wakes.AddPanel(VortexRing.Node(1).IndexG,
-                                                               VortexRing.Node(2).IndexG,
-                                                               VortexRing.Node(3).IndexG,
-                                                               VortexRing.Node(4).IndexG)
-                        Results.Wakes.Panel(GlobalIndexRings).Circulation = VortexRing.G
+                                               VortexRing.Node(2).IndexG,
+                                               VortexRing.Node(3).IndexG,
+                                               VortexRing.Node(4).IndexG)
+                        Results.Wakes.Mesh.Panels(GlobalIndexRings).Circulation = VortexRing.G
 
                     Next
 
@@ -634,83 +651,92 @@ Namespace UVLM.Solver
 
             Next
 
-            Results.Wakes.VisualProps.ShowMesh = True
-            'Resultados.Wakes.GenerateLattice()
+            Results.Wakes.VisualProperties.ShowMesh = True
 
-            If Not IsNothing(StructuralLinks) Then
+            If StructuralLinks IsNot Nothing Then
 
                 For Each sl As StructuralLink In StructuralLinks
 
-                    For Each Mode As Mode In sl.StructuralCore.Modes
+                    If sl.StructuralCore.Modes IsNot Nothing Then
 
-                        Dim ModeShapeModel As New GeneralSurface()
+                        For Each Mode As Mode In sl.StructuralCore.Modes
 
-                        ModeShapeModel.Name = String.Format("Mode {0} - {1:F3}Hz", Mode.Index, Mode.w / (2 * Math.PI))
-                        ModeShapeModel.VisualProps.ColorMesh = System.Drawing.Color.Maroon
-                        ModeShapeModel.VisualProps.ColorSurface = System.Drawing.Color.Orange
-                        ModeShapeModel.VisualProps.Transparency = 1.0
-                        ModeShapeModel.VisualProps.ShowSurface = True
-                        ModeShapeModel.VisualProps.ShowMesh = True
-                        ModeShapeModel.VisualProps.ShowNodes = False
-                        ModeShapeModel.VisualProps.ThicknessMesh = 0.8
-                        ModeShapeModel.VisualProps.ShowNodes = False
-                        ModeShapeModel.VisualProps.ShowLoadVectors = False
-                        ModeShapeModel.VisualProps.ShowVelocityVectors = False
-                        ModeShapeModel.VisualProps.ShowColormap = True
+                            Dim ModalShapeModel As New ResultContainer()
 
-                        ' Reset all displacements:
+                            ModalShapeModel.Name = String.Format("Mode {0} - {1:F3}Hz", Mode.Index, Mode.w / (2 * Math.PI))
+                            ModalShapeModel.VisualProperties.ColorMesh = Drawing.Color.Maroon
+                            ModalShapeModel.VisualProperties.ColorSurface = Drawing.Color.Orange
+                            ModalShapeModel.VisualProperties.Transparency = 1.0
+                            ModalShapeModel.VisualProperties.ShowSurface = True
+                            ModalShapeModel.VisualProperties.ShowMesh = True
+                            ModalShapeModel.VisualProperties.ShowNodes = False
+                            ModalShapeModel.VisualProperties.ThicknessMesh = 0.8
+                            ModalShapeModel.VisualProperties.ShowNodes = False
+                            ModalShapeModel.VisualProperties.ShowLoadVectors = False
+                            ModalShapeModel.VisualProperties.ShowVelocityVectors = False
+                            ModalShapeModel.VisualProperties.ShowColormap = True
 
-                        For Each Othersl As StructuralLink In StructuralLinks
-                            Othersl.StructuralCore.ResetDisplacements()
-                            For Each kl As KinematicLink In Othersl.KinematicLinks
+                            ' Reset all displacements:
+
+                            For Each Othersl As StructuralLink In StructuralLinks
+                                Othersl.StructuralCore.ResetDisplacements()
+                                For Each kl As KinematicLink In Othersl.KinematicLinks
+                                    kl.TransferMotion()
+                                Next
+                            Next
+
+                            ' Load the displacement associated with the current mode:
+
+                            sl.StructuralCore.TransferModeShapeToNodes(Mode.Index, 1.0)
+
+                            For Each kl As KinematicLink In sl.KinematicLinks
+
                                 kl.TransferMotion()
-                            Next
-                        Next
 
-                        ' Load the displacement associated with the current mode:
-
-                        sl.StructuralCore.TransferModeShapeToNodes(Mode.Index, 1.0)
-
-                        For Each kl As KinematicLink In sl.KinematicLinks
-
-                            kl.TransferMotion()
-
-                        Next
-
-                        ' Make a lattice based on the current modal displacement:
-
-                        GlobalIndexNodes = 0
-                        GlobalIndexRings = 0
-
-                        For Each Lattice In Lattices
-
-                            For Each NodalPoint In Lattice.Nodes
-                                NodalPoint.IndexG = GlobalIndexNodes
-                                GlobalIndexNodes += 1
-                                ModeShapeModel.AddNodalPoint(NodalPoint.OriginalPosition, NodalPoint.Displacement)
                             Next
 
-                            ModeShapeModel.UpdateDisplacement()
+                            ' Make a lattice based on the current modal displacement:
 
-                            For Each VortexRing In Lattice.VortexRings
-                                GlobalIndexRings += 1
-                                ModeShapeModel.AddPanel(VortexRing.Node(1).IndexG + 1,
+                            GlobalIndexNodes = -1
+                            GlobalIndexRings = -1
+
+                            For Each Lattice In Lattices
+
+                                For Each NodalPoint In Lattice.Nodes
+
+                                    NodalPoint.IndexG = GlobalIndexNodes
+                                    GlobalIndexNodes += 1
+                                    ModalShapeModel.AddNodalPoint(NodalPoint.OriginalPosition, NodalPoint.Displacement)
+
+                                Next
+
+                                ModalShapeModel.UpdateDisplacement()
+
+                                For Each VortexRing In Lattice.VortexRings
+
+                                    GlobalIndexRings += 1
+
+                                    ModalShapeModel.AddPanel(VortexRing.Node(1).IndexG + 1,
                                                             VortexRing.Node(2).IndexG + 1,
                                                             VortexRing.Node(3).IndexG + 1,
                                                             VortexRing.Node(4).IndexG + 1)
-                                ModeShapeModel.Panel(GlobalIndexRings).Circulation = 0.0
-                                ModeShapeModel.Panel(GlobalIndexRings).Cp = 0.0
-                                ModeShapeModel.Panel(GlobalIndexRings).IsSlender = True
+
+                                    ModalShapeModel.Mesh.Panels(GlobalIndexRings).Circulation = 0.0
+                                    ModalShapeModel.Mesh.Panels(GlobalIndexRings).Cp = 0.0
+                                    ModalShapeModel.Mesh.Panels(GlobalIndexRings).IsSlender = True
+
+                                Next
+
                             Next
+
+                            ModalShapeModel.Mesh.GenerateLattice()
+                            ModalShapeModel.FindDisplacementsRange()
+                            ModalShapeModel.UpdateColormapWithDisplacements()
+                            Results.DynamicModes.Add(ModalShapeModel)
 
                         Next
 
-                        ModeShapeModel.Mesh.GenerateLattice()
-                        ModeShapeModel.FindDisplacementsRange()
-                        ModeShapeModel.UpdateColormapWithDisplacements()
-                        Results.DynamicModes.Add(ModeShapeModel)
-
-                    Next
+                    End If
 
                 Next
 
@@ -733,10 +759,10 @@ Namespace UVLM.Solver
 
                     ' Make a lattice based on the current modal displacement:
 
-                    Dim _TransitLattice As New GeneralSurface()
+                    Dim _TransitLattice As New ResultContainer()
 
-                    GlobalIndexNodes = 0
-                    GlobalIndexRings = 0
+                    GlobalIndexNodes = -1
+                    GlobalIndexRings = -1
 
                     For Each Lattice In Lattices
 
@@ -756,9 +782,9 @@ Namespace UVLM.Solver
 
                                 For ModeIndex = 0 To Link.StructuralCore.Modes.Count - 1
 
-                                    NodalDisplacement.X += Results.DynamicModes(ModeIndex + FirstModeIndex).NodalPoint(GlobalIndexNodes).Displacement.X * ModalResponse(ModeIndex).p
-                                    NodalDisplacement.Y += Results.DynamicModes(ModeIndex + FirstModeIndex).NodalPoint(GlobalIndexNodes).Displacement.Y * ModalResponse(ModeIndex).p
-                                    NodalDisplacement.Z += Results.DynamicModes(ModeIndex + FirstModeIndex).NodalPoint(GlobalIndexNodes).Displacement.Z * ModalResponse(ModeIndex).p
+                                    NodalDisplacement.X += Results.DynamicModes(ModeIndex + FirstModeIndex).Mesh.Nodes(GlobalIndexNodes).Displacement.X * ModalResponse(ModeIndex).p
+                                    NodalDisplacement.Y += Results.DynamicModes(ModeIndex + FirstModeIndex).Mesh.Nodes(GlobalIndexNodes).Displacement.Y * ModalResponse(ModeIndex).p
+                                    NodalDisplacement.Z += Results.DynamicModes(ModeIndex + FirstModeIndex).Mesh.Nodes(GlobalIndexNodes).Displacement.Z * ModalResponse(ModeIndex).p
 
                                 Next
 
@@ -771,14 +797,17 @@ Namespace UVLM.Solver
                         Next
 
                         For Each VortexRing In Lattice.VortexRings
+
                             GlobalIndexRings += 1
+
                             _TransitLattice.AddPanel(VortexRing.Node(1).IndexG + 1,
                                                          VortexRing.Node(2).IndexG + 1,
                                                          VortexRing.Node(3).IndexG + 1,
                                                          VortexRing.Node(4).IndexG + 1)
-                            _TransitLattice.Panel(GlobalIndexRings).Circulation = 0.0
-                            _TransitLattice.Panel(GlobalIndexRings).Cp = 0.0
-                            _TransitLattice.Panel(GlobalIndexRings).IsSlender = True
+                            _TransitLattice.Mesh.Panels(GlobalIndexRings).Circulation = 0.0
+                            _TransitLattice.Mesh.Panels(GlobalIndexRings).Cp = 0.0
+                            _TransitLattice.Mesh.Panels(GlobalIndexRings).IsSlender = True
+
                         Next
 
                     Next

@@ -25,7 +25,7 @@ Partial Class WingControl
         Me.btnLockSurface = New System.Windows.Forms.Button()
         Me.btnHideSurface = New System.Windows.Forms.Button()
         Me.PanelDeEdicion = New System.Windows.Forms.TabControl()
-        Me.TabPage1 = New System.Windows.Forms.TabPage()
+        Me.tbDesign = New System.Windows.Forms.TabPage()
         Me.tcRootProperties = New System.Windows.Forms.TabControl()
         Me.TabPage4 = New System.Windows.Forms.TabPage()
         Me.Label1 = New System.Windows.Forms.Label()
@@ -159,39 +159,13 @@ Partial Class WingControl
         Me.nudArea = New System.Windows.Forms.NumericUpDown()
         Me.Label19 = New System.Windows.Forms.Label()
         Me.Label4 = New System.Windows.Forms.Label()
-        Me.TabPage2 = New System.Windows.Forms.TabPage()
-        Me.GroupBox8 = New System.Windows.Forms.GroupBox()
-        Me.AlOrigen = New System.Windows.Forms.Button()
-        Me.PzBox = New System.Windows.Forms.NumericUpDown()
-        Me.PyBox = New System.Windows.Forms.NumericUpDown()
-        Me.PxBox = New System.Windows.Forms.NumericUpDown()
-        Me.Label62 = New System.Windows.Forms.Label()
-        Me.Label63 = New System.Windows.Forms.Label()
-        Me.Label64 = New System.Windows.Forms.Label()
-        Me.GroupBox7 = New System.Windows.Forms.GroupBox()
-        Me.NoRotar = New System.Windows.Forms.Button()
-        Me.CentroDeRotacionAlOrigen = New System.Windows.Forms.Button()
-        Me.Label23 = New System.Windows.Forms.Label()
-        Me.Label24 = New System.Windows.Forms.Label()
-        Me.Label25 = New System.Windows.Forms.Label()
-        Me.FioBox = New System.Windows.Forms.NumericUpDown()
-        Me.TitaoBox = New System.Windows.Forms.NumericUpDown()
-        Me.PsioBox = New System.Windows.Forms.NumericUpDown()
-        Me.PzoBox = New System.Windows.Forms.NumericUpDown()
-        Me.PyoBox = New System.Windows.Forms.NumericUpDown()
-        Me.PxoBox = New System.Windows.Forms.NumericUpDown()
-        Me.Label68 = New System.Windows.Forms.Label()
-        Me.Label69 = New System.Windows.Forms.Label()
-        Me.Label70 = New System.Windows.Forms.Label()
-        Me.TabPage9 = New System.Windows.Forms.TabPage()
+        Me.tbInquire = New System.Windows.Forms.TabPage()
         Me.tbSurfaceData = New System.Windows.Forms.TextBox()
         Me.btSurfaceData = New System.Windows.Forms.Button()
         Me.SurfaceNameText = New System.Windows.Forms.TextBox()
         Me.btnOk = New System.Windows.Forms.Button()
-        Me.cbSecuence = New System.Windows.Forms.ComboBox()
-        Me.Label80 = New System.Windows.Forms.Label()
         Me.PanelDeEdicion.SuspendLayout()
-        Me.TabPage1.SuspendLayout()
+        Me.tbDesign.SuspendLayout()
         Me.tcRootProperties.SuspendLayout()
         Me.TabPage4.SuspendLayout()
         CType(Me.NPCuerda_Box, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -241,19 +215,7 @@ Partial Class WingControl
         CType(Me.nudIv, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.nudIu, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.nudArea, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.TabPage2.SuspendLayout()
-        Me.GroupBox8.SuspendLayout()
-        CType(Me.PzBox, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.PyBox, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.PxBox, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.GroupBox7.SuspendLayout()
-        CType(Me.FioBox, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.TitaoBox, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.PsioBox, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.PzoBox, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.PyoBox, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.PxoBox, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.TabPage9.SuspendLayout()
+        Me.tbInquire.SuspendLayout()
         Me.SuspendLayout()
         '
         'btnLockSurface
@@ -292,9 +254,8 @@ Partial Class WingControl
         '
         'PanelDeEdicion
         '
-        Me.PanelDeEdicion.Controls.Add(Me.TabPage1)
-        Me.PanelDeEdicion.Controls.Add(Me.TabPage2)
-        Me.PanelDeEdicion.Controls.Add(Me.TabPage9)
+        Me.PanelDeEdicion.Controls.Add(Me.tbDesign)
+        Me.PanelDeEdicion.Controls.Add(Me.tbInquire)
         Me.PanelDeEdicion.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.PanelDeEdicion.Location = New System.Drawing.Point(5, 36)
         Me.PanelDeEdicion.Margin = New System.Windows.Forms.Padding(8)
@@ -303,22 +264,22 @@ Partial Class WingControl
         Me.PanelDeEdicion.Size = New System.Drawing.Size(307, 536)
         Me.PanelDeEdicion.TabIndex = 65
         '
-        'TabPage1
+        'tbDesign
         '
-        Me.TabPage1.BackColor = System.Drawing.SystemColors.Control
-        Me.TabPage1.Controls.Add(Me.tcRootProperties)
-        Me.TabPage1.Controls.Add(Me.btnAddPanel)
-        Me.TabPage1.Controls.Add(Me.btnDeletePanel)
-        Me.TabPage1.Controls.Add(Me.btnInsertPanel)
-        Me.TabPage1.Controls.Add(Me.SectorActualNumericUpDown)
-        Me.TabPage1.Controls.Add(Me.tcMacroPanelProperties)
-        Me.TabPage1.Controls.Add(Me.Label4)
-        Me.TabPage1.Location = New System.Drawing.Point(4, 22)
-        Me.TabPage1.Name = "TabPage1"
-        Me.TabPage1.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage1.Size = New System.Drawing.Size(299, 510)
-        Me.TabPage1.TabIndex = 0
-        Me.TabPage1.Text = "Design"
+        Me.tbDesign.BackColor = System.Drawing.SystemColors.Control
+        Me.tbDesign.Controls.Add(Me.tcRootProperties)
+        Me.tbDesign.Controls.Add(Me.btnAddPanel)
+        Me.tbDesign.Controls.Add(Me.btnDeletePanel)
+        Me.tbDesign.Controls.Add(Me.btnInsertPanel)
+        Me.tbDesign.Controls.Add(Me.SectorActualNumericUpDown)
+        Me.tbDesign.Controls.Add(Me.tcMacroPanelProperties)
+        Me.tbDesign.Controls.Add(Me.Label4)
+        Me.tbDesign.Location = New System.Drawing.Point(4, 22)
+        Me.tbDesign.Name = "tbDesign"
+        Me.tbDesign.Padding = New System.Windows.Forms.Padding(3)
+        Me.tbDesign.Size = New System.Drawing.Size(299, 510)
+        Me.tbDesign.TabIndex = 0
+        Me.tbDesign.Text = "Design"
         '
         'tcRootProperties
         '
@@ -894,7 +855,7 @@ Partial Class WingControl
         Me.SimetriaEnXZ.Name = "SimetriaEnXZ"
         Me.SimetriaEnXZ.Size = New System.Drawing.Size(212, 24)
         Me.SimetriaEnXZ.TabIndex = 59
-        Me.SimetriaEnXZ.Text = "Symmetrize about plane y = 0"
+        Me.SimetriaEnXZ.Text = "Symmetric about plane y = 0"
         Me.SimetriaEnXZ.UseVisualStyleBackColor = True
         '
         'PanelEspaciamiento
@@ -1956,331 +1917,17 @@ Partial Class WingControl
         Me.Label4.TabIndex = 11
         Me.Label4.Text = "Region:"
         '
-        'TabPage2
+        'tbInquire
         '
-        Me.TabPage2.BackColor = System.Drawing.Color.Transparent
-        Me.TabPage2.Controls.Add(Me.GroupBox8)
-        Me.TabPage2.Controls.Add(Me.GroupBox7)
-        Me.TabPage2.Location = New System.Drawing.Point(4, 22)
-        Me.TabPage2.Name = "TabPage2"
-        Me.TabPage2.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage2.Size = New System.Drawing.Size(299, 510)
-        Me.TabPage2.TabIndex = 1
-        Me.TabPage2.Text = "Position"
-        '
-        'GroupBox8
-        '
-        Me.GroupBox8.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.GroupBox8.Controls.Add(Me.AlOrigen)
-        Me.GroupBox8.Controls.Add(Me.PzBox)
-        Me.GroupBox8.Controls.Add(Me.PyBox)
-        Me.GroupBox8.Controls.Add(Me.PxBox)
-        Me.GroupBox8.Controls.Add(Me.Label62)
-        Me.GroupBox8.Controls.Add(Me.Label63)
-        Me.GroupBox8.Controls.Add(Me.Label64)
-        Me.GroupBox8.Font = New System.Drawing.Font("Segoe UI", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.GroupBox8.Location = New System.Drawing.Point(6, 6)
-        Me.GroupBox8.Name = "GroupBox8"
-        Me.GroupBox8.Size = New System.Drawing.Size(287, 95)
-        Me.GroupBox8.TabIndex = 87
-        Me.GroupBox8.TabStop = False
-        Me.GroupBox8.Text = "Rotation-center global position"
-        '
-        'AlOrigen
-        '
-        Me.AlOrigen.BackColor = System.Drawing.Color.White
-        Me.AlOrigen.FlatAppearance.BorderColor = System.Drawing.Color.Gray
-        Me.AlOrigen.FlatAppearance.MouseDownBackColor = System.Drawing.Color.PaleGreen
-        Me.AlOrigen.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DeepSkyBlue
-        Me.AlOrigen.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.AlOrigen.Location = New System.Drawing.Point(138, 17)
-        Me.AlOrigen.Name = "AlOrigen"
-        Me.AlOrigen.Size = New System.Drawing.Size(50, 22)
-        Me.AlOrigen.TabIndex = 84
-        Me.AlOrigen.Text = "To origin"
-        Me.AlOrigen.UseVisualStyleBackColor = False
-        '
-        'PzBox
-        '
-        Me.PzBox.DecimalPlaces = 4
-        Me.PzBox.Font = New System.Drawing.Font("Segoe UI", 8.25!)
-        Me.PzBox.Increment = New Decimal(New Integer() {1, 0, 0, 65536})
-        Me.PzBox.Location = New System.Drawing.Point(29, 59)
-        Me.PzBox.Maximum = New Decimal(New Integer() {99999, 0, 0, 0})
-        Me.PzBox.Minimum = New Decimal(New Integer() {99999, 0, 0, -2147483648})
-        Me.PzBox.Name = "PzBox"
-        Me.PzBox.Size = New System.Drawing.Size(85, 22)
-        Me.PzBox.TabIndex = 83
-        Me.PzBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        '
-        'PyBox
-        '
-        Me.PyBox.DecimalPlaces = 4
-        Me.PyBox.Font = New System.Drawing.Font("Segoe UI", 8.25!)
-        Me.PyBox.Increment = New Decimal(New Integer() {1, 0, 0, 65536})
-        Me.PyBox.Location = New System.Drawing.Point(29, 38)
-        Me.PyBox.Maximum = New Decimal(New Integer() {99999, 0, 0, 0})
-        Me.PyBox.Minimum = New Decimal(New Integer() {99999, 0, 0, -2147483648})
-        Me.PyBox.Name = "PyBox"
-        Me.PyBox.Size = New System.Drawing.Size(85, 22)
-        Me.PyBox.TabIndex = 82
-        Me.PyBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        '
-        'PxBox
-        '
-        Me.PxBox.DecimalPlaces = 4
-        Me.PxBox.Font = New System.Drawing.Font("Segoe UI", 8.25!)
-        Me.PxBox.Increment = New Decimal(New Integer() {1, 0, 0, 65536})
-        Me.PxBox.Location = New System.Drawing.Point(29, 17)
-        Me.PxBox.Maximum = New Decimal(New Integer() {99999, 0, 0, 0})
-        Me.PxBox.Minimum = New Decimal(New Integer() {99999, 0, 0, -2147483648})
-        Me.PxBox.Name = "PxBox"
-        Me.PxBox.Size = New System.Drawing.Size(85, 22)
-        Me.PxBox.TabIndex = 81
-        Me.PxBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        '
-        'Label62
-        '
-        Me.Label62.AutoSize = True
-        Me.Label62.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!)
-        Me.Label62.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.Label62.Location = New System.Drawing.Point(8, 19)
-        Me.Label62.Name = "Label62"
-        Me.Label62.Size = New System.Drawing.Size(14, 13)
-        Me.Label62.TabIndex = 75
-        Me.Label62.Text = "X"
-        '
-        'Label63
-        '
-        Me.Label63.AutoSize = True
-        Me.Label63.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!)
-        Me.Label63.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.Label63.Location = New System.Drawing.Point(8, 40)
-        Me.Label63.Name = "Label63"
-        Me.Label63.Size = New System.Drawing.Size(14, 13)
-        Me.Label63.TabIndex = 76
-        Me.Label63.Text = "Y"
-        '
-        'Label64
-        '
-        Me.Label64.AutoSize = True
-        Me.Label64.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!)
-        Me.Label64.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.Label64.Location = New System.Drawing.Point(8, 61)
-        Me.Label64.Name = "Label64"
-        Me.Label64.Size = New System.Drawing.Size(14, 13)
-        Me.Label64.TabIndex = 77
-        Me.Label64.Text = "Z"
-        '
-        'GroupBox7
-        '
-        Me.GroupBox7.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.GroupBox7.Controls.Add(Me.Label80)
-        Me.GroupBox7.Controls.Add(Me.cbSecuence)
-        Me.GroupBox7.Controls.Add(Me.NoRotar)
-        Me.GroupBox7.Controls.Add(Me.CentroDeRotacionAlOrigen)
-        Me.GroupBox7.Controls.Add(Me.Label23)
-        Me.GroupBox7.Controls.Add(Me.Label24)
-        Me.GroupBox7.Controls.Add(Me.Label25)
-        Me.GroupBox7.Controls.Add(Me.FioBox)
-        Me.GroupBox7.Controls.Add(Me.TitaoBox)
-        Me.GroupBox7.Controls.Add(Me.PsioBox)
-        Me.GroupBox7.Controls.Add(Me.PzoBox)
-        Me.GroupBox7.Controls.Add(Me.PyoBox)
-        Me.GroupBox7.Controls.Add(Me.PxoBox)
-        Me.GroupBox7.Controls.Add(Me.Label68)
-        Me.GroupBox7.Controls.Add(Me.Label69)
-        Me.GroupBox7.Controls.Add(Me.Label70)
-        Me.GroupBox7.Font = New System.Drawing.Font("Segoe UI", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.GroupBox7.Location = New System.Drawing.Point(6, 101)
-        Me.GroupBox7.Name = "GroupBox7"
-        Me.GroupBox7.Size = New System.Drawing.Size(287, 158)
-        Me.GroupBox7.TabIndex = 86
-        Me.GroupBox7.TabStop = False
-        Me.GroupBox7.Text = "Rotation (local coordinates)"
-        '
-        'NoRotar
-        '
-        Me.NoRotar.BackColor = System.Drawing.Color.White
-        Me.NoRotar.FlatAppearance.BorderColor = System.Drawing.Color.Gray
-        Me.NoRotar.FlatAppearance.MouseDownBackColor = System.Drawing.Color.PaleGreen
-        Me.NoRotar.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DeepSkyBlue
-        Me.NoRotar.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.NoRotar.Location = New System.Drawing.Point(138, 88)
-        Me.NoRotar.Name = "NoRotar"
-        Me.NoRotar.Size = New System.Drawing.Size(50, 22)
-        Me.NoRotar.TabIndex = 101
-        Me.NoRotar.Text = "To cero"
-        Me.NoRotar.UseVisualStyleBackColor = False
-        '
-        'CentroDeRotacionAlOrigen
-        '
-        Me.CentroDeRotacionAlOrigen.BackColor = System.Drawing.Color.White
-        Me.CentroDeRotacionAlOrigen.FlatAppearance.BorderColor = System.Drawing.Color.Gray
-        Me.CentroDeRotacionAlOrigen.FlatAppearance.MouseDownBackColor = System.Drawing.Color.PaleGreen
-        Me.CentroDeRotacionAlOrigen.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DeepSkyBlue
-        Me.CentroDeRotacionAlOrigen.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.CentroDeRotacionAlOrigen.Location = New System.Drawing.Point(29, 88)
-        Me.CentroDeRotacionAlOrigen.Name = "CentroDeRotacionAlOrigen"
-        Me.CentroDeRotacionAlOrigen.Size = New System.Drawing.Size(50, 22)
-        Me.CentroDeRotacionAlOrigen.TabIndex = 100
-        Me.CentroDeRotacionAlOrigen.Text = "To origin"
-        Me.CentroDeRotacionAlOrigen.UseVisualStyleBackColor = False
-        '
-        'Label23
-        '
-        Me.Label23.AutoSize = True
-        Me.Label23.Font = New System.Drawing.Font("Symbol", 9.75!)
-        Me.Label23.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.Label23.Location = New System.Drawing.Point(120, 60)
-        Me.Label23.Name = "Label23"
-        Me.Label23.Size = New System.Drawing.Size(15, 16)
-        Me.Label23.TabIndex = 99
-        Me.Label23.Text = "j"
-        '
-        'Label24
-        '
-        Me.Label24.AutoSize = True
-        Me.Label24.Font = New System.Drawing.Font("Symbol", 9.75!)
-        Me.Label24.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.Label24.Location = New System.Drawing.Point(119, 19)
-        Me.Label24.Name = "Label24"
-        Me.Label24.Size = New System.Drawing.Size(17, 16)
-        Me.Label24.TabIndex = 98
-        Me.Label24.Text = "y"
-        '
-        'Label25
-        '
-        Me.Label25.AutoSize = True
-        Me.Label25.Font = New System.Drawing.Font("Symbol", 9.75!)
-        Me.Label25.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.Label25.Location = New System.Drawing.Point(120, 42)
-        Me.Label25.Name = "Label25"
-        Me.Label25.Size = New System.Drawing.Size(15, 16)
-        Me.Label25.TabIndex = 97
-        Me.Label25.Text = "q"
-        '
-        'FioBox
-        '
-        Me.FioBox.DecimalPlaces = 3
-        Me.FioBox.Font = New System.Drawing.Font("Segoe UI", 8.25!)
-        Me.FioBox.Location = New System.Drawing.Point(138, 61)
-        Me.FioBox.Maximum = New Decimal(New Integer() {360, 0, 0, 0})
-        Me.FioBox.Minimum = New Decimal(New Integer() {360, 0, 0, -2147483648})
-        Me.FioBox.Name = "FioBox"
-        Me.FioBox.Size = New System.Drawing.Size(85, 22)
-        Me.FioBox.TabIndex = 89
-        Me.FioBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        '
-        'TitaoBox
-        '
-        Me.TitaoBox.DecimalPlaces = 3
-        Me.TitaoBox.Font = New System.Drawing.Font("Segoe UI", 8.25!)
-        Me.TitaoBox.Location = New System.Drawing.Point(138, 40)
-        Me.TitaoBox.Maximum = New Decimal(New Integer() {360, 0, 0, 0})
-        Me.TitaoBox.Minimum = New Decimal(New Integer() {360, 0, 0, -2147483648})
-        Me.TitaoBox.Name = "TitaoBox"
-        Me.TitaoBox.Size = New System.Drawing.Size(85, 22)
-        Me.TitaoBox.TabIndex = 88
-        Me.TitaoBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        '
-        'PsioBox
-        '
-        Me.PsioBox.DecimalPlaces = 3
-        Me.PsioBox.Font = New System.Drawing.Font("Segoe UI", 8.25!)
-        Me.PsioBox.Location = New System.Drawing.Point(138, 19)
-        Me.PsioBox.Maximum = New Decimal(New Integer() {360, 0, 0, 0})
-        Me.PsioBox.Minimum = New Decimal(New Integer() {360, 0, 0, -2147483648})
-        Me.PsioBox.Name = "PsioBox"
-        Me.PsioBox.Size = New System.Drawing.Size(85, 22)
-        Me.PsioBox.TabIndex = 87
-        Me.PsioBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        '
-        'PzoBox
-        '
-        Me.PzoBox.DecimalPlaces = 4
-        Me.PzoBox.Font = New System.Drawing.Font("Segoe UI", 8.25!)
-        Me.PzoBox.Increment = New Decimal(New Integer() {1, 0, 0, 65536})
-        Me.PzoBox.Location = New System.Drawing.Point(29, 61)
-        Me.PzoBox.Maximum = New Decimal(New Integer() {99999, 0, 0, 0})
-        Me.PzoBox.Minimum = New Decimal(New Integer() {99999, 0, 0, -2147483648})
-        Me.PzoBox.Name = "PzoBox"
-        Me.PzoBox.Size = New System.Drawing.Size(85, 22)
-        Me.PzoBox.TabIndex = 86
-        Me.PzoBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        '
-        'PyoBox
-        '
-        Me.PyoBox.DecimalPlaces = 4
-        Me.PyoBox.Font = New System.Drawing.Font("Segoe UI", 8.25!)
-        Me.PyoBox.Increment = New Decimal(New Integer() {1, 0, 0, 65536})
-        Me.PyoBox.Location = New System.Drawing.Point(29, 40)
-        Me.PyoBox.Maximum = New Decimal(New Integer() {99999, 0, 0, 0})
-        Me.PyoBox.Minimum = New Decimal(New Integer() {99999, 0, 0, -2147483648})
-        Me.PyoBox.Name = "PyoBox"
-        Me.PyoBox.Size = New System.Drawing.Size(85, 22)
-        Me.PyoBox.TabIndex = 85
-        Me.PyoBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        '
-        'PxoBox
-        '
-        Me.PxoBox.DecimalPlaces = 4
-        Me.PxoBox.Font = New System.Drawing.Font("Segoe UI", 8.25!)
-        Me.PxoBox.Increment = New Decimal(New Integer() {1, 0, 0, 65536})
-        Me.PxoBox.Location = New System.Drawing.Point(29, 19)
-        Me.PxoBox.Maximum = New Decimal(New Integer() {99999, 0, 0, 0})
-        Me.PxoBox.Minimum = New Decimal(New Integer() {99999, 0, 0, -2147483648})
-        Me.PxoBox.Name = "PxoBox"
-        Me.PxoBox.Size = New System.Drawing.Size(85, 22)
-        Me.PxoBox.TabIndex = 84
-        Me.PxoBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        '
-        'Label68
-        '
-        Me.Label68.AutoSize = True
-        Me.Label68.Font = New System.Drawing.Font("Segoe UI", 8.25!)
-        Me.Label68.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.Label68.Location = New System.Drawing.Point(9, 21)
-        Me.Label68.Name = "Label68"
-        Me.Label68.Size = New System.Drawing.Size(13, 13)
-        Me.Label68.TabIndex = 63
-        Me.Label68.Text = "X"
-        '
-        'Label69
-        '
-        Me.Label69.AutoSize = True
-        Me.Label69.Font = New System.Drawing.Font("Segoe UI", 8.25!)
-        Me.Label69.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.Label69.Location = New System.Drawing.Point(9, 42)
-        Me.Label69.Name = "Label69"
-        Me.Label69.Size = New System.Drawing.Size(12, 13)
-        Me.Label69.TabIndex = 64
-        Me.Label69.Text = "Y"
-        '
-        'Label70
-        '
-        Me.Label70.AutoSize = True
-        Me.Label70.Font = New System.Drawing.Font("Segoe UI", 8.25!)
-        Me.Label70.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.Label70.Location = New System.Drawing.Point(9, 63)
-        Me.Label70.Name = "Label70"
-        Me.Label70.Size = New System.Drawing.Size(13, 13)
-        Me.Label70.TabIndex = 65
-        Me.Label70.Text = "Z"
-        '
-        'TabPage9
-        '
-        Me.TabPage9.Controls.Add(Me.tbSurfaceData)
-        Me.TabPage9.Controls.Add(Me.btSurfaceData)
-        Me.TabPage9.Location = New System.Drawing.Point(4, 22)
-        Me.TabPage9.Name = "TabPage9"
-        Me.TabPage9.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage9.Size = New System.Drawing.Size(299, 510)
-        Me.TabPage9.TabIndex = 2
-        Me.TabPage9.Text = "Inquire"
-        Me.TabPage9.UseVisualStyleBackColor = True
+        Me.tbInquire.Controls.Add(Me.tbSurfaceData)
+        Me.tbInquire.Controls.Add(Me.btSurfaceData)
+        Me.tbInquire.Location = New System.Drawing.Point(4, 22)
+        Me.tbInquire.Name = "tbInquire"
+        Me.tbInquire.Padding = New System.Windows.Forms.Padding(3)
+        Me.tbInquire.Size = New System.Drawing.Size(299, 510)
+        Me.tbInquire.TabIndex = 2
+        Me.tbInquire.Text = "Inquire"
+        Me.tbInquire.UseVisualStyleBackColor = True
         '
         'tbSurfaceData
         '
@@ -2333,27 +1980,6 @@ Partial Class WingControl
         Me.btnOk.Text = "Close"
         Me.btnOk.UseVisualStyleBackColor = False
         '
-        'cbSecuence
-        '
-        Me.cbSecuence.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.cbSecuence.FormattingEnabled = True
-        Me.cbSecuence.Items.AddRange(New Object() {"ZYX", "XYZ"})
-        Me.cbSecuence.Location = New System.Drawing.Point(138, 132)
-        Me.cbSecuence.Name = "cbSecuence"
-        Me.cbSecuence.Size = New System.Drawing.Size(85, 20)
-        Me.cbSecuence.TabIndex = 105
-        '
-        'Label80
-        '
-        Me.Label80.AutoSize = True
-        Me.Label80.Font = New System.Drawing.Font("Segoe UI", 6.75!)
-        Me.Label80.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.Label80.Location = New System.Drawing.Point(135, 116)
-        Me.Label80.Name = "Label80"
-        Me.Label80.Size = New System.Drawing.Size(79, 12)
-        Me.Label80.TabIndex = 106
-        Me.Label80.Text = "Rotation secuence:"
-        '
         'WingControl
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -2366,8 +1992,8 @@ Partial Class WingControl
         Me.Name = "WingControl"
         Me.Size = New System.Drawing.Size(312, 603)
         Me.PanelDeEdicion.ResumeLayout(False)
-        Me.TabPage1.ResumeLayout(False)
-        Me.TabPage1.PerformLayout()
+        Me.tbDesign.ResumeLayout(False)
+        Me.tbDesign.PerformLayout()
         Me.tcRootProperties.ResumeLayout(False)
         Me.TabPage4.ResumeLayout(False)
         Me.TabPage4.PerformLayout()
@@ -2426,22 +2052,8 @@ Partial Class WingControl
         CType(Me.nudIv, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.nudIu, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.nudArea, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.TabPage2.ResumeLayout(False)
-        Me.GroupBox8.ResumeLayout(False)
-        Me.GroupBox8.PerformLayout()
-        CType(Me.PzBox, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.PyBox, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.PxBox, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.GroupBox7.ResumeLayout(False)
-        Me.GroupBox7.PerformLayout()
-        CType(Me.FioBox, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.TitaoBox, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.PsioBox, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.PzoBox, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.PyoBox, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.PxoBox, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.TabPage9.ResumeLayout(False)
-        Me.TabPage9.PerformLayout()
+        Me.tbInquire.ResumeLayout(False)
+        Me.tbInquire.PerformLayout()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -2449,7 +2061,7 @@ Partial Class WingControl
     Friend WithEvents btnLockSurface As System.Windows.Forms.Button
     Friend WithEvents btnHideSurface As System.Windows.Forms.Button
     Friend WithEvents PanelDeEdicion As System.Windows.Forms.TabControl
-    Friend WithEvents TabPage1 As System.Windows.Forms.TabPage
+    Friend WithEvents tbDesign As System.Windows.Forms.TabPage
     Friend WithEvents btnAddPanel As System.Windows.Forms.Button
     Friend WithEvents NPCuerda_Box As System.Windows.Forms.NumericUpDown
     Friend WithEvents btnDeletePanel As System.Windows.Forms.Button
@@ -2506,32 +2118,8 @@ Partial Class WingControl
     Friend WithEvents Label1 As System.Windows.Forms.Label
     Friend WithEvents Label2 As System.Windows.Forms.Label
     Friend WithEvents Label6 As System.Windows.Forms.Label
-    Friend WithEvents TabPage2 As System.Windows.Forms.TabPage
-    Friend WithEvents GroupBox8 As System.Windows.Forms.GroupBox
-    Friend WithEvents PzBox As System.Windows.Forms.NumericUpDown
-    Friend WithEvents PyBox As System.Windows.Forms.NumericUpDown
-    Friend WithEvents PxBox As System.Windows.Forms.NumericUpDown
-    Friend WithEvents Label62 As System.Windows.Forms.Label
-    Friend WithEvents Label63 As System.Windows.Forms.Label
-    Friend WithEvents Label64 As System.Windows.Forms.Label
-    Friend WithEvents GroupBox7 As System.Windows.Forms.GroupBox
-    Friend WithEvents Label23 As System.Windows.Forms.Label
-    Friend WithEvents Label24 As System.Windows.Forms.Label
-    Friend WithEvents Label25 As System.Windows.Forms.Label
-    Friend WithEvents FioBox As System.Windows.Forms.NumericUpDown
-    Friend WithEvents TitaoBox As System.Windows.Forms.NumericUpDown
-    Friend WithEvents PsioBox As System.Windows.Forms.NumericUpDown
-    Friend WithEvents PzoBox As System.Windows.Forms.NumericUpDown
-    Friend WithEvents PyoBox As System.Windows.Forms.NumericUpDown
-    Friend WithEvents PxoBox As System.Windows.Forms.NumericUpDown
-    Friend WithEvents Label68 As System.Windows.Forms.Label
-    Friend WithEvents Label69 As System.Windows.Forms.Label
-    Friend WithEvents Label70 As System.Windows.Forms.Label
     Friend WithEvents SurfaceNameText As System.Windows.Forms.TextBox
     Friend WithEvents btnOk As System.Windows.Forms.Button
-    Friend WithEvents AlOrigen As System.Windows.Forms.Button
-    Friend WithEvents NoRotar As System.Windows.Forms.Button
-    Friend WithEvents CentroDeRotacionAlOrigen As System.Windows.Forms.Button
     Friend WithEvents Label18 As System.Windows.Forms.Label
     Friend WithEvents nudCuttingStep As System.Windows.Forms.NumericUpDown
     Friend WithEvents TabPage3 As System.Windows.Forms.TabPage
@@ -2556,7 +2144,7 @@ Partial Class WingControl
     Friend WithEvents Label50 As System.Windows.Forms.Label
     Friend WithEvents nudRootArea As System.Windows.Forms.NumericUpDown
     Friend WithEvents Label51 As System.Windows.Forms.Label
-    Friend WithEvents TabPage9 As System.Windows.Forms.TabPage
+    Friend WithEvents tbInquire As System.Windows.Forms.TabPage
     Friend WithEvents btSurfaceData As System.Windows.Forms.Button
     Friend WithEvents tbSurfaceData As System.Windows.Forms.TextBox
     Friend WithEvents nud_J As System.Windows.Forms.NumericUpDown
@@ -2612,6 +2200,4 @@ Partial Class WingControl
     Friend WithEvents cbTrailingEdge As System.Windows.Forms.CheckBox
     Friend WithEvents Label79 As System.Windows.Forms.Label
     Friend WithEvents tpIntertia As System.Windows.Forms.TabPage
-    Friend WithEvents cbSecuence As Windows.Forms.ComboBox
-    Friend WithEvents Label80 As Windows.Forms.Label
 End Class

@@ -29,6 +29,14 @@ Namespace UVLM.Solver
         ''' </summary>
         Public Sub AeroelasticUnsteadyTransit_(ByVal DataBasePath As String)
 
+            If _WithSources Then
+
+                RaiseEvent PushMessage("Cannot run aeroelastic analysis with thick bodies. Calculation stopped.")
+                RaiseEvent CalculationDone()
+                Exit Sub
+
+            End If
+
             ' Create database:
 
             RaiseEvent PushMessage("Creating database structure")
@@ -242,6 +250,14 @@ Namespace UVLM.Solver
         ''' The implicit Nemark algorithm is used.
         ''' </summary>
         Public Sub AeroelasticUnsteadyTransit(ByVal DataBasePath As String)
+
+            If _WithSources Then
+
+                RaiseEvent PushMessage("Cannot run aeroelastic analysis with thick bodies")
+                RaiseEvent CalculationAborted()
+                Exit Sub
+
+            End If
 
             ' Create database:
 

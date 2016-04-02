@@ -15,24 +15,6 @@
 'You should have received a copy Of the GNU General Public License
 'along with this program.  If Not, see < http:  //www.gnu.org/licenses/>.
 
-Public Class SelectObject
-
-    Public ReadOnly Property WingSelected As Boolean
-        Get
-            Return rbLiftingSurface.Enabled And rbLiftingSurface.Checked
-        End Get
-    End Property
-
-    Public ReadOnly Property FuselageSelected As Boolean
-        Get
-            Return rbFuselage.Enabled And rbFuselage.Checked
-        End Get
-    End Property
-
-    Public ReadOnly Property JetEngineSelected As Boolean
-        Get
-            Return rbJetEngine.Enabled And rbJetEngine.Checked
-        End Get
-    End Property
+Public Class FormSelectObject
 
 End Class

@@ -315,3 +315,5 @@ C:\Users\Guillermo\Documents\Software\OpenVogel\2016.Beta\AeroTools\obj\Debug\Ae
 \\GUILLERMO\Users\Guillermo\Source\Repos\OpenVOGEL\AeroTools\obj\Debug\AeroTools.xml
 \\GUILLERMO\Users\Guillermo\Source\Repos\OpenVOGEL\AeroTools\obj\Debug\AeroTools.pdb
 \\GUILLERMO\Users\Guillermo\Source\Repos\OpenVOGEL\AeroTools\bin\Debug\Cudafy.NET.xml
+\\GUILLERMO\Users\Guillermo\Source\Repos\OpenVOGEL\AeroTools\obj\Debug\AeroTools.FormSelectObject.resources
+\\GUILLERMO\Users\Guillermo\Source\Repos\OpenVOGEL\AeroTools\obj\Debug\AeroTools.MainRibbon.resources

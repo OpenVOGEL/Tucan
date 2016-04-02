@@ -84,11 +84,12 @@ Partial Class FormProgress
         Me.btnCancel.Text = "Stop"
         Me.btnCancel.UseVisualStyleBackColor = True
         '
-        'WaitForm
+        'FormProgress
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(435, 338)
+        Me.ControlBox = False
         Me.Controls.Add(Me.btnCancel)
         Me.Controls.Add(Me.tbOperationsList)
         Me.Controls.Add(Me.lbState)
@@ -96,7 +97,7 @@ Partial Class FormProgress
         Me.Controls.Add(Me.pgCalculationProgress)
         Me.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow
-        Me.Name = "WaitForm"
+        Me.Name = "FormProgress"
         Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Calculating"

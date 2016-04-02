@@ -26,9 +26,13 @@ Namespace VisualModel.Models.Components
 
     Public Class JetEngine
 
-        Inherits GeneralSurface
+        Inherits Surface
 
         Public Sub New()
+
+            Mesh = New Mesh()
+
+            VisualProperties = New VisualProperties(ComponentTypes.etJetEngine)
 
             Length = 2
             FrontDiameter = 1
@@ -39,9 +43,10 @@ Namespace VisualModel.Models.Components
 
             GenerateMesh()
 
-            VisualProps.ShowSurface = True
-            VisualProps.ShowMesh = True
+            VisualProperties.ShowSurface = True
+            VisualProperties.ShowMesh = True
             IncludeInCalculation = True
+
 
         End Sub
 
@@ -63,7 +68,7 @@ Namespace VisualModel.Models.Components
         ''' <remarks></remarks>
         Public Overrides Sub GenerateMesh()
 
-            Mesh.NodalPoints.Clear()
+            Mesh.Nodes.Clear()
             Mesh.Panels.Clear()
 
             For i = 0 To 3
@@ -97,7 +102,7 @@ Namespace VisualModel.Models.Components
 
                     Dim p As New EVector3(x, r * Math.Cos(angle), r * Math.Sin(angle))
 
-                    Mesh.NodalPoints.Add(New NodalPoint(p))
+                    Mesh.Nodes.Add(New NodalPoint(p))
 
                     If i > 0 Then
 
@@ -108,10 +113,10 @@ Namespace VisualModel.Models.Components
 
                         If j < Resolution Then
 
-                            N1 = (i - 1) * (Resolution + 1) + j + 1
-                            N2 = (i - 1) * (Resolution + 1) + j + 2
-                            N3 = i * (Resolution + 1) + j + 2
-                            N4 = i * (Resolution + 1) + j + 1
+                            N1 = (i - 1) * (Resolution + 1) + j + 0
+                            N2 = (i - 1) * (Resolution + 1) + j + 1
+                            N3 = i * (Resolution + 1) + j + 1
+                            N4 = i * (Resolution + 1) + j + 0
 
                             Dim q As New Panel(N1, N2, N3, N4)
 
@@ -119,10 +124,10 @@ Namespace VisualModel.Models.Components
 
                         Else
 
-                            N1 = (i - 1) * (Resolution + 1) + j + 1
-                            N2 = (i - 1) * (Resolution + 1) + 1
-                            N3 = i * (Resolution + 1) + 1
-                            N4 = i * (Resolution + 1) + j + 1
+                            N1 = (i - 1) * (Resolution + 1) + j + 0
+                            N2 = (i - 1) * (Resolution + 1) + 0
+                            N3 = i * (Resolution + 1) + 0
+                            N4 = i * (Resolution + 1) + j + 0
 
                             Dim q As New Panel(N1, N2, N3, N4)
 
@@ -136,11 +141,15 @@ Namespace VisualModel.Models.Components
 
             Next
 
-            Mesh.Rotate(New EVector3, Orientation)
+            Mesh.Rotate(CenterOfRotation, Orientation.ToRadians)
 
             Mesh.Translate(Position)
 
             Mesh.GenerateLattice()
+
+            ' Launch base sub to raise update event.
+
+            MyBase.GenerateMesh()
 
         End Sub
 
@@ -154,52 +163,55 @@ Namespace VisualModel.Models.Components
 
             Dim Nodo As NodalPoint
 
-            If Me.VisualProps.ShowSurface Then
+            If Me.VisualProperties.ShowSurface Then
 
                 ' load homogeneous color:
                 Dim SColor As New EVector3
+
                 If Not Selected Then
-                    SColor.X = Me.VisualProps.ColorSurface.R / 255
-                    SColor.Y = Me.VisualProps.ColorSurface.G / 255
-                    SColor.Z = Me.VisualProps.ColorSurface.B / 255
+                    SColor.X = Me.VisualProperties.ColorSurface.R / 255
+                    SColor.Y = Me.VisualProperties.ColorSurface.G / 255
+                    SColor.Z = Me.VisualProperties.ColorSurface.B / 255
                 Else
                     ' default selected color is {255, 194, 14} (orange)
                     SColor.X = 1
                     SColor.Y = 0.76078
                     SColor.Z = 0.0549
                 End If
-                gl.Color(SColor.X, SColor.Y, SColor.Z, Me.VisualProps.Transparency)
+
+                gl.Color(SColor.X, SColor.Y, SColor.Z, Me.VisualProperties.Transparency)
 
                 gl.InitNames()
+
                 Dim Code As Integer = Selection.GetSelectionCode(ComponentTypes.etJetEngine, ElementIndex, EntityTypes.etQuadPanel, 0)
 
-                For i = 1 To NumberOfPanels
+                For i = 0 To NumberOfPanels - 1
 
                     gl.PushName(Code + i)
                     gl.Begin(OpenGL.GL_TRIANGLES)
 
-                    Nodo = NodalPoint((Panel(i).N1))
-                    If VisualProps.ShowColormap Then gl.Color(Nodo.Color.R, Nodo.Color.G, Nodo.Color.B)
+                    Nodo = Mesh.Nodes((Mesh.Panels(i).N1))
+                    If VisualProperties.ShowColormap Then gl.Color(Nodo.Color.R, Nodo.Color.G, Nodo.Color.B)
                     gl.Vertex(Nodo.Position.X, Nodo.Position.Y, Nodo.Position.Z)
 
-                    Nodo = NodalPoint((Panel(i).N2))
-                    If VisualProps.ShowColormap Then gl.Color(Nodo.Color.R, Nodo.Color.G, Nodo.Color.B)
+                    Nodo = Mesh.Nodes((Mesh.Panels(i).N2))
+                    If VisualProperties.ShowColormap Then gl.Color(Nodo.Color.R, Nodo.Color.G, Nodo.Color.B)
                     gl.Vertex(Nodo.Position.X, Nodo.Position.Y, Nodo.Position.Z)
 
-                    Nodo = NodalPoint((Panel(i).N3))
-                    If VisualProps.ShowColormap Then gl.Color(Nodo.Color.R, Nodo.Color.G, Nodo.Color.B)
+                    Nodo = Mesh.Nodes((Mesh.Panels(i).N3))
+                    If VisualProperties.ShowColormap Then gl.Color(Nodo.Color.R, Nodo.Color.G, Nodo.Color.B)
                     gl.Vertex(Nodo.Position.X, Nodo.Position.Y, Nodo.Position.Z)
 
-                    Nodo = NodalPoint((Panel(i).N3))
-                    If VisualProps.ShowColormap Then gl.Color(Nodo.Color.R, Nodo.Color.G, Nodo.Color.B)
+                    Nodo = Mesh.Nodes((Mesh.Panels(i).N3))
+                    If VisualProperties.ShowColormap Then gl.Color(Nodo.Color.R, Nodo.Color.G, Nodo.Color.B)
                     gl.Vertex(Nodo.Position.X, Nodo.Position.Y, Nodo.Position.Z)
 
-                    Nodo = NodalPoint((Panel(i).N4))
-                    If VisualProps.ShowColormap Then gl.Color(Nodo.Color.R, Nodo.Color.G, Nodo.Color.B)
+                    Nodo = Mesh.Nodes((Mesh.Panels(i).N4))
+                    If VisualProperties.ShowColormap Then gl.Color(Nodo.Color.R, Nodo.Color.G, Nodo.Color.B)
                     gl.Vertex(Nodo.Position.X, Nodo.Position.Y, Nodo.Position.Z)
 
-                    Nodo = NodalPoint((Panel(i).N1))
-                    If VisualProps.ShowColormap Then gl.Color(Nodo.Color.R, Nodo.Color.G, Nodo.Color.B)
+                    Nodo = Mesh.Nodes((Mesh.Panels(i).N1))
+                    If VisualProperties.ShowColormap Then gl.Color(Nodo.Color.R, Nodo.Color.G, Nodo.Color.B)
                     gl.Vertex(Nodo.Position.X, Nodo.Position.Y, Nodo.Position.Z)
 
                     gl.End()
@@ -223,14 +235,14 @@ Namespace VisualModel.Models.Components
                 gl.InitNames()
                 Dim Code As Integer = Selection.GetSelectionCode(ComponentTypes.etJetEngine, ElementIndex, EntityTypes.etNode, 0)
 
-                gl.PointSize(VisualProps.SizeNodes)
-                gl.Color(Me.VisualProps.ColorNodes.R / 255, Me.VisualProps.ColorNodes.G / 255, Me.VisualProps.ColorNodes.B / 255)
+                gl.PointSize(VisualProperties.SizeNodes)
+                gl.Color(Me.VisualProperties.ColorNodes.R / 255, Me.VisualProperties.ColorNodes.G / 255, Me.VisualProperties.ColorNodes.B / 255)
 
-                For i = 1 To NumberOfNodes
+                For i = 0 To NumberOfNodes - 1
 
                     gl.PushName(Code + i)
                     gl.Begin(OpenGL.GL_POINTS)
-                    Nodo = Me.NodalPoint(i)
+                    Nodo = Mesh.Nodes(i)
                     gl.Vertex(Nodo.Position.X, Nodo.Position.Y, Nodo.Position.Z)
                     gl.End()
                     gl.PopName()
@@ -241,9 +253,9 @@ Namespace VisualModel.Models.Components
 
             ' Genera el mallado:
 
-            If Me.VisualProps.ShowMesh Then
+            If VisualProperties.ShowMesh Then
 
-                gl.LineWidth(VisualProps.ThicknessMesh)
+                gl.LineWidth(VisualProperties.ThicknessMesh)
                 gl.Begin(OpenGL.GL_LINES)
 
                 Dim Nodo1 As EVector3
@@ -251,43 +263,43 @@ Namespace VisualModel.Models.Components
                 Dim Vector As EVector3
                 Dim Carga As New EVector3
 
-                gl.Color(Me.VisualProps.ColorMesh.R / 255, Me.VisualProps.ColorMesh.G / 255, Me.VisualProps.ColorMesh.B / 255)
+                gl.Color(Me.VisualProperties.ColorMesh.R / 255, Me.VisualProperties.ColorMesh.G / 255, Me.VisualProperties.ColorMesh.B / 255)
 
-                For i = 1 To NumberOfSegments
+                For i = 0 To NumberOfSegments - 1
 
-                    Nodo1 = Me.NodalPosition(Me.Segment(i).N1)
-                    Nodo2 = Me.NodalPosition(Me.Segment(i).N2)
+                    Nodo1 = Mesh.Nodes(Mesh.Lattice(i).N1).Position
+                    Nodo2 = Mesh.Nodes(Mesh.Lattice(i).N2).Position
 
                     gl.Vertex(Nodo1.X, Nodo1.Y, Nodo1.Z)
                     gl.Vertex(Nodo2.X, Nodo2.Y, Nodo2.Z)
 
                 Next
 
-                gl.Color(Me.VisualProps.ColorVelocity.R / 255, Me.VisualProps.ColorVelocity.G / 255, Me.VisualProps.ColorVelocity.B / 255)
+                gl.Color(Me.VisualProperties.ColorVelocity.R / 255, Me.VisualProperties.ColorVelocity.G / 255, Me.VisualProperties.ColorVelocity.B / 255)
 
-                If VisualProps.ShowVelocityVectors Then
+                If VisualProperties.ShowVelocityVectors Then
 
-                    For i = 1 To NumberOfPanels
+                    For i = 0 To NumberOfPanels - 1
 
-                        Nodo1 = Me.Panel(i).ControlPoint
-                        Vector = Me.Panel(i).LocalVelocity
+                        Nodo1 = Mesh.Panels(i).ControlPoint
+                        Vector = Mesh.Panels(i).LocalVelocity
 
                         gl.Vertex(Nodo1.X, Nodo1.Y, Nodo1.Z)
-                        gl.Vertex(Nodo1.X + VisualProps.ScaleVelocity * Vector.X, Nodo1.Y + VisualProps.ScaleVelocity * Vector.Y, Nodo1.Z + VisualProps.ScaleVelocity * Vector.Z)
+                        gl.Vertex(Nodo1.X + VisualProperties.ScaleVelocity * Vector.X, Nodo1.Y + VisualProperties.ScaleVelocity * Vector.Y, Nodo1.Z + VisualProperties.ScaleVelocity * Vector.Z)
 
                     Next
 
                 End If
 
-                gl.Color(Me.VisualProps.ColorLoads.R / 255, Me.VisualProps.ColorLoads.G / 255, Me.VisualProps.ColorLoads.B / 255)
+                gl.Color(Me.VisualProperties.ColorLoads.R / 255, Me.VisualProperties.ColorLoads.G / 255, Me.VisualProperties.ColorLoads.B / 255)
 
-                If VisualProps.ShowLoadVectors Then
+                If VisualProperties.ShowLoadVectors Then
 
-                    For i = 1 To NumberOfPanels
+                    For i = 0 To NumberOfPanels - 1
 
-                        Nodo1 = Panel(i).ControlPoint
-                        Carga.Assign(Panel(i).NormalVector)
-                        Carga.Scale(VisualProps.ScalePressure * Panel(i).Cp * Panel(i).Area)
+                        Nodo1 = Mesh.Panels(i).ControlPoint
+                        Carga.Assign(Mesh.Panels(i).NormalVector)
+                        Carga.Scale(VisualProperties.ScalePressure * Mesh.Panels(i).Cp * Mesh.Panels(i).Area)
 
                         gl.Vertex(Nodo1.X, Nodo1.Y, Nodo1.Z)
                         gl.Vertex(Nodo1.X + Carga.X, Nodo1.Y + Carga.Y, Nodo1.Z + Carga.Z)
@@ -350,7 +362,7 @@ Namespace VisualModel.Models.Components
 
                     Case "VisualProperties"
 
-                        VisualProps.ReadFromXML(reader.ReadSubtree)
+                        VisualProperties.ReadFromXML(reader.ReadSubtree)
 
                 End Select
 
@@ -392,7 +404,7 @@ Namespace VisualModel.Models.Components
             ' Visual properties:
 
             writer.WriteStartElement("VisualProperties")
-            VisualProps.WriteToXML(writer)
+            VisualProperties.WriteToXML(writer)
             writer.WriteEndElement()
 
         End Sub
@@ -416,11 +428,20 @@ Namespace VisualModel.Models.Components
 
             GenerateMesh()
 
-            VisualProps.ShowSurface = True
-            VisualProps.ShowMesh = True
+            VisualProperties.ShowSurface = True
+            VisualProperties.ShowMesh = True
             IncludeInCalculation = True
 
         End Sub
+
+        Public Overrides Function Clone() As Surface
+
+            Dim ClonedEngine As New JetEngine
+            ClonedEngine.CopyFrom(Me)
+            ClonedEngine.Position.Y *= -1
+            Return ClonedEngine
+
+        End Function
 
 #End Region
 

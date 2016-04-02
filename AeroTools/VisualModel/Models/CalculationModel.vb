@@ -18,50 +18,44 @@
 Imports AeroTools.VisualModel.Interface
 Imports AeroTools.VisualModel.Models.Components
 Imports System.Xml
+Imports AeroTools.VisualModel.Models.Basics
+Imports AeroTools.UVLM.Models.Aero.Components
 
 Namespace VisualModel.Models
 
     Public Class CalculationModel
 
         ''' <summary>
-        ''' Project name
+        ''' Project name.
         ''' </summary>
         ''' <returns></returns>
         Public Property Name As String
 
-        Public Property LiftingSurfaces As New List(Of LiftingSurface)
-        Public Property Fuselages As New List(Of GeneralSurface)
-        Public Property JetEngines As New List(Of JetEngine)
+        ''' <summary>
+        ''' List of model objects.
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property Objects As New List(Of Surface)
 
-        Private _CurrentLiftingSurfaceIndex As Integer = 0
-        Private _CurrentBodyIndex As Integer = 0
-        Private _CurrentJetIndex As Integer = 0
-
+        ''' <summary>
+        ''' Selection tool.
+        ''' </summary>
+        ''' <returns></returns>
         Public Property Selection As New Selection
+
+        ''' <summary>
+        ''' Tool that provides back up info while operating (moving or aligning objects).
+        ''' </summary>
+        ''' <returns></returns>
         Public Property OperationsTool As New OperationsTool
-        Public Property PolarDataBase As New UVLM.Models.Aero.Components.PolarDatabase
 
-#Region " Iniciar "
+        ''' <summary>
+        ''' Polars.
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property PolarDataBase As New PolarDatabase
 
-        Public Sub New()
-
-        End Sub
-
-        Public Sub InitializeLiftingSurfaces()
-
-            Dim StartingSurface As New LiftingSurface
-            StartingSurface.Name = String.Format("Lifting surface {0}", LiftingSurfaces.Count)
-            LiftingSurfaces.Add(StartingSurface)
-
-        End Sub
-
-        Public Sub InitializeBodies()
-
-        End Sub
-
-#End Region
-
-#Region " Add or remove objects "
+#Region " Add and clone objects "
 
         ''' <summary>
         ''' Adds a lifting surface and sets it as current.
@@ -69,11 +63,9 @@ Namespace VisualModel.Models
         ''' <remarks></remarks>
         Public Sub AddLiftingSurface()
 
-            Dim NewSurface = New LiftingSurface
-            NewSurface.Name = String.Format("Lifting surface {0}", LiftingSurfaces.Count)
-            NewSurface.LocalOrigin.X = LiftingSurfaces.Count
-            LiftingSurfaces.Add(NewSurface)
-            CurrentLiftingSurfaceID = LiftingSurfaces.Count
+            Dim NewLiftingSurface = New LiftingSurface
+            NewLiftingSurface.Name = String.Format("Wing - {0}", Objects.Count)
+            Objects.Add(NewLiftingSurface)
 
         End Sub
 
@@ -87,19 +79,15 @@ Namespace VisualModel.Models
             NewNacelle.Name = "Nacelle"
             NewNacelle.GenerateLattice()
             NewNacelle.IncludeInCalculation = True
-            NewNacelle.Position.SetToCero()
-            NewNacelle.CenterOfRotation.SetToCero()
-            NewNacelle.Orientation.SetToCero()
-            NewNacelle.VisualProps.ShowColormap = False
-            NewNacelle.VisualProps.ShowLoadVectors = False
-            NewNacelle.VisualProps.ShowNodes = False
-            NewNacelle.VisualProps.ShowVelocityVectors = False
-            NewNacelle.VisualProps.ShowPrimitives = False
-            NewNacelle.VisualProps.ShowSurface = True
-            NewNacelle.VisualProps.ShowMesh = True
+            NewNacelle.VisualProperties.ShowColormap = False
+            NewNacelle.VisualProperties.ShowLoadVectors = False
+            NewNacelle.VisualProperties.ShowNodes = False
+            NewNacelle.VisualProperties.ShowVelocityVectors = False
+            NewNacelle.VisualProperties.ShowPrimitives = False
+            NewNacelle.VisualProperties.ShowSurface = True
+            NewNacelle.VisualProperties.ShowMesh = True
 
-            Me.Fuselages.Add(NewNacelle)
-            Me.CurrentBodyID = Me.Fuselages.Count
+            Objects.Add(NewNacelle)
 
         End Sub
 
@@ -110,22 +98,20 @@ Namespace VisualModel.Models
         Public Sub AddExtrudedBody()
 
             Dim NewFuselage As New Fuselage
-            NewFuselage.Name = String.Format("Fuselage {0}", Fuselages.Count)
-            'NewFuselage.GenerateExample()
+            NewFuselage.Name = String.Format("Fuselage - {0}", Objects.Count)
             NewFuselage.IncludeInCalculation = True
             NewFuselage.Position.SetToCero()
             NewFuselage.CenterOfRotation.SetToCero()
             NewFuselage.Orientation.SetToCero()
-            NewFuselage.VisualProps.ShowColormap = False
-            NewFuselage.VisualProps.ShowLoadVectors = False
-            NewFuselage.VisualProps.ShowNodes = False
-            NewFuselage.VisualProps.ShowVelocityVectors = False
-            NewFuselage.VisualProps.ShowPrimitives = False
-            NewFuselage.VisualProps.ShowSurface = True
-            NewFuselage.VisualProps.ShowMesh = True
+            NewFuselage.VisualProperties.ShowColormap = False
+            NewFuselage.VisualProperties.ShowLoadVectors = False
+            NewFuselage.VisualProperties.ShowNodes = False
+            NewFuselage.VisualProperties.ShowVelocityVectors = False
+            NewFuselage.VisualProperties.ShowPrimitives = False
+            NewFuselage.VisualProperties.ShowSurface = True
+            NewFuselage.VisualProperties.ShowMesh = True
 
-            Me.Fuselages.Add(NewFuselage)
-            Me.CurrentBodyID = Me.Fuselages.Count
+            Objects.Add(NewFuselage)
 
         End Sub
 
@@ -136,209 +122,35 @@ Namespace VisualModel.Models
         Public Sub AddJetEngine()
 
             Dim Engine As New JetEngine
-            Engine.Name = String.Format("Jet engine {0}", JetEngines.Count)
+            Engine.Name = String.Format("Jet engine - {0}", Objects.Count)
             Engine.GenerateMesh()
             Engine.IncludeInCalculation = True
-            Engine.Position.SetToCero()
-            Engine.CenterOfRotation.SetToCero()
-            Engine.Orientation.SetToCero()
-            Engine.VisualProps.ShowColormap = False
-            Engine.VisualProps.ShowLoadVectors = False
-            Engine.VisualProps.ShowNodes = False
-            Engine.VisualProps.ShowVelocityVectors = False
-            Engine.VisualProps.ShowPrimitives = False
-            Engine.VisualProps.ShowSurface = True
-            Engine.VisualProps.ShowMesh = True
+            Engine.VisualProperties.ShowColormap = False
+            Engine.VisualProperties.ShowLoadVectors = False
+            Engine.VisualProperties.ShowNodes = False
+            Engine.VisualProperties.ShowVelocityVectors = False
+            Engine.VisualProperties.ShowPrimitives = False
+            Engine.VisualProperties.ShowSurface = True
+            Engine.VisualProperties.ShowMesh = True
 
-            JetEngines.Add(Engine)
-            CurrentJetEngineID = JetEngines.Count
+            Objects.Add(Engine)
 
         End Sub
-
-        ''' <summary>
-        ''' Removes the selected surface if it is not the only one in the list.
-        ''' </summary>
-        ''' <param name="Superficie"></param>
-        ''' <remarks></remarks>
-        Public Sub RemoveLiftingSurface(ByVal Superficie As Integer)
-
-            If Superficie >= 1 And Superficie <= Me.LiftingSurfaces.Count Then
-                Me.LiftingSurfaces.RemoveAt(Superficie - 1)
-            End If
-
-        End Sub
-
-        ''' <summary>
-        ''' Removes the selected body if it is not the only one on the list.
-        ''' </summary>
-        ''' <param name="Index"></param>
-        ''' <remarks></remarks>
-        Public Sub RemoveBody(ByVal Index As Integer)
-
-            If Index >= 1 And Index <= Fuselages.Count Then
-                Fuselages.RemoveAt(Index - 1)
-            End If
-
-        End Sub
-
-        ''' <summary>
-        ''' Removes the selected jet engine if it is not the only one on the list.
-        ''' </summary>
-        ''' <param name="Index"></param>
-        ''' <remarks></remarks>
-        Public Sub RemoveJetEngine(ByVal Index As Integer)
-
-            If Index >= 1 And Index <= JetEngines.Count Then
-                JetEngines.RemoveAt(Index - 1)
-            End If
-
-        End Sub
-
 
         ''' <summary>
         ''' Generates a copy of the current lifting surface with the option symmetric in true
         ''' </summary>
         ''' <remarks></remarks>
-        Public Sub CloneLiftingSurface(ByVal Index As Integer)
+        Public Sub CloneObject(ByVal Index As Integer)
 
-            If Index > 0 And Index <= LiftingSurfaces.Count Then
-                Me.LiftingSurfaces.Add(Me.LiftingSurfaces(Index - 1).Clone)
-                Me.CurrentLiftingSurfaceID = LiftingSurfaces.Count
-                CurrentLiftingSurface.Symmetric = True
+            If Index > 0 And Index <= Objects.Count Then
+                Dim newSurface As Surface = Objects(Index).Clone
+                If newSurface IsNot Nothing Then
+                    Objects.Add(newSurface)
+                End If
             End If
 
         End Sub
-
-#End Region
-
-#Region " Objects "
-
-        ''' <summary>
-        ''' Currently active lifting surface
-        ''' </summary>
-        ''' <value></value>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
-        Public ReadOnly Property CurrentLiftingSurface As LiftingSurface
-            Get
-                If 0 <= _CurrentLiftingSurfaceIndex AndAlso _CurrentLiftingSurfaceIndex < LiftingSurfaces.Count Then
-                    Return LiftingSurfaces(_CurrentLiftingSurfaceIndex)
-                Else
-                    Return Nothing
-                End If
-            End Get
-        End Property
-
-        ''' <summary>
-        ''' Currently active body
-        ''' </summary>
-        ''' <value></value>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
-        Public ReadOnly Property CurrentBody As GeneralSurface
-            Get
-                If 0 <= _CurrentBodyIndex AndAlso _CurrentBodyIndex < Fuselages.Count Then
-                    Return Fuselages(_CurrentBodyIndex)
-                Else
-                    Return Nothing
-                End If
-            End Get
-        End Property
-
-        ''' <summary>
-        ''' Currently active jet engine
-        ''' </summary>
-        ''' <value></value>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
-        Public ReadOnly Property CurrentJetEngine As JetEngine
-            Get
-                If 0 <= _CurrentJetIndex AndAlso _CurrentJetIndex < JetEngines.Count Then
-                    Return JetEngines(_CurrentJetIndex)
-                Else
-                    Return Nothing
-                End If
-            End Get
-        End Property
-
-#End Region
-
-#Region " Objects marking "
-
-        Public Property CurrentLiftingSurfaceID As Integer
-            Get
-                Return Me._CurrentLiftingSurfaceIndex + 1
-            End Get
-            Set(ByVal value As Integer)
-                If value >= 1 And value <= LiftingSurfaces.Count Then
-                    _CurrentLiftingSurfaceIndex = value - 1
-                Else
-                    _CurrentLiftingSurfaceIndex = 0
-                End If
-            End Set
-        End Property
-
-        Public Property CurrentBodyID As Integer
-            Get
-                Return Me._CurrentBodyIndex + 1
-            End Get
-            Set(ByVal value As Integer)
-                If value >= 1 And value <= Me.Fuselages.Count Then
-                    _CurrentBodyIndex = value - 1
-                Else
-                    _CurrentBodyIndex = 0
-                End If
-            End Set
-        End Property
-
-        Public Property CurrentJetEngineID As Integer
-            Get
-                Return _CurrentJetIndex + 1
-            End Get
-            Set(ByVal value As Integer)
-                If value >= 1 And value <= JetEngines.Count Then
-                    _CurrentJetIndex = value - 1
-                Else
-                    _CurrentJetIndex = 0
-                End If
-            End Set
-        End Property
-
-        ''' <summary>
-        ''' Indicates if the current lifting surface exists.
-        ''' </summary>
-        ''' <value></value>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
-        Public ReadOnly Property LiftingSurfaceSelected As Boolean
-            Get
-                Return Not IsNothing(CurrentLiftingSurface)
-            End Get
-        End Property
-
-        ''' <summary>
-        ''' Indicates if the current body exists.
-        ''' </summary>
-        ''' <value></value>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
-        Public ReadOnly Property BodySelected As Boolean
-            Get
-                Return Not IsNothing(CurrentBody)
-            End Get
-        End Property
-
-        ''' <summary>
-        ''' Indicates if the current jet engine exists.
-        ''' </summary>
-        ''' <value></value>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
-        Public ReadOnly Property JetEngineSelected As Boolean
-            Get
-                Return Not IsNothing(CurrentJetEngine)
-            End Get
-        End Property
 
 #End Region
 
@@ -364,41 +176,43 @@ Namespace VisualModel.Models
 
                         SubReader.Read()
 
-                        Dim Index As Integer = 1
-
                         While SubReader.Read
 
                             If SubReader.NodeType = XmlNodeType.Element Then
 
-                                If SubReader.Name = String.Format("LiftingSurface{0}", Index) Or SubReader.Name = "LiftingSurface" Then
+                                If SubReader.Name = "LiftingSurface" Then
 
-                                    AddLiftingSurface()
+                                    Dim LiftingSurface As New LiftingSurface()
 
-                                    CurrentLiftingSurfaceID = Index
+                                    LiftingSurface.ReadFromXML(SubReader.ReadSubtree)
 
-                                    CurrentLiftingSurface.ReadFromXML(SubReader.ReadSubtree)
-                                    For i = 1 To CurrentLiftingSurface.nWingRegions
-                                        CurrentLiftingSurface.CurrentRegionID = i
-                                        If Not CurrentLiftingSurface.CurrentRegion.PolarID.Equals(Guid.Empty) Then
-                                            CurrentLiftingSurface.CurrentRegion.PolarFamiliy = PolarDataBase.GetFamilyFromID(CurrentLiftingSurface.CurrentRegion.PolarID)
+                                    For i = 1 To LiftingSurface.NumberOfWingRegions
+
+                                        LiftingSurface.CurrentRegionID = i
+
+                                        If Not LiftingSurface.CurrentRegion.PolarID.Equals(Guid.Empty) Then
+                                            LiftingSurface.CurrentRegion.PolarFamiliy = PolarDataBase.GetFamilyFromID(LiftingSurface.CurrentRegion.PolarID)
                                         End If
+
                                     Next
 
-                                    Index += 1
+                                    Objects.Add(LiftingSurface)
 
                                 ElseIf SubReader.Name = "ExtrudedSurface" Then
 
                                     Dim ExtrudedSurface As New Fuselage
+
                                     ExtrudedSurface.ReadFromXML(reader.ReadSubtree)
 
-                                    Fuselages.Add(ExtrudedSurface)
+                                    Objects.Add(ExtrudedSurface)
 
                                 ElseIf SubReader.Name = "JetEngine" Then
 
                                     Dim JetEngine As New JetEngine
+
                                     JetEngine.ReadFromXML(reader.ReadSubtree)
 
-                                    JetEngines.Add(JetEngine)
+                                    Objects.Add(JetEngine)
 
                                 End If
 
@@ -427,45 +241,37 @@ Namespace VisualModel.Models
 
             writer.WriteStartElement("ModelProperties")
 
-            writer.WriteAttributeString("NumberOfLiftingSurfaces", String.Format("{0}", LiftingSurfaces.Count))
+            For i = 0 To Objects.Count - 1
 
-            For i = 1 To LiftingSurfaces.Count
+                If TypeOf Objects(i) Is LiftingSurface Then
 
-                CurrentLiftingSurfaceID = i
+                    writer.WriteStartElement("LiftingSurface")
 
-                writer.WriteStartElement("LiftingSurface")
-
-                CurrentLiftingSurface.WriteToXML(writer)
-
-                writer.WriteEndElement()
-
-            Next
-
-            For i = 1 To Fuselages.Count
-
-                CurrentBodyID = i
-
-                If TypeOf (CurrentBody) Is Fuselage Then
-
-                    writer.WriteStartElement("ExtrudedSurface")
-
-                    CurrentBody.WriteToXML(writer)
+                    Objects(i).WriteToXML(writer)
 
                     writer.WriteEndElement()
 
                 End If
 
-            Next
+                If TypeOf Objects(i) Is Fuselage Then
 
-            For i = 1 To JetEngines.Count
+                    writer.WriteStartElement("ExtrudedSurface")
 
-                CurrentJetEngineID = i
+                    Objects(i).WriteToXML(writer)
 
-                writer.WriteStartElement("JetEngine")
+                    writer.WriteEndElement()
 
-                CurrentJetEngine.WriteToXML(writer)
+                End If
 
-                writer.WriteEndElement()
+                If TypeOf Objects(i) Is JetEngine Then
+
+                    writer.WriteStartElement("JetEngine")
+
+                    Objects(i).WriteToXML(writer)
+
+                    writer.WriteEndElement()
+
+                End If
 
             Next
 

@@ -32,14 +32,14 @@ Namespace VisualModel.Models.Components
     ''' <summary>
     ''' Represents a multi-purpose surface for post-processing.
     ''' </summary>
-    Public Class GeneralSurface
+    Public Class ResultContainer
 
-        Inherits BaseSurface
+        Inherits Surface
 
         Public Sub New()
 
             Mesh = New Mesh()
-            VisualProps = New VisualizationProperties(ComponentTypes.etBody)
+            VisualProperties = New VisualProperties(ComponentTypes.etFuselage)
 
         End Sub
 
@@ -48,7 +48,7 @@ Namespace VisualModel.Models.Components
         ''' </summary>
         Public Sub Clear()
 
-            Mesh.NodalPoints.Clear()
+            Mesh.Nodes.Clear()
             Mesh.Panels.Clear()
             Mesh.Lattice.Clear()
 
@@ -74,37 +74,11 @@ Namespace VisualModel.Models.Components
         ''' <returns></returns>
         Public Property DisplacementRange As New LimitValues
 
-        Public ReadOnly Property NumberOfSegments As Integer
-            Get
-                Return Mesh.Lattice.Count
-            End Get
-        End Property
-
-        Public ReadOnly Property NumberOfNodes As Integer
-            Get
-                If Not IsNothing(Mesh.NodalPoints) Then
-                    Return Mesh.NodalPoints.Count 'Me.FNN
-                Else
-                    Return 0
-                End If
-            End Get
-        End Property
-
-        Public ReadOnly Property NumberOfPanels As Integer
-            Get
-                If Not IsNothing(Mesh.Panels) Then
-                    Return Mesh.Panels.Count 'Me.FNP
-                Else
-                    Return 0
-                End If
-            End Get
-        End Property
-
         Private _GeometryLoaded As Boolean = False
 
         Public ReadOnly Property GeometryLoaded As Boolean
             Get
-                If _GeometryLoaded And Not IsNothing(Mesh.NodalPoints) And Not IsNothing(Mesh.Panels) Then
+                If _GeometryLoaded And Not IsNothing(Mesh.Nodes) And Not IsNothing(Mesh.Panels) Then
                     Return True
                 Else
                     Return False
@@ -120,121 +94,11 @@ Namespace VisualModel.Models.Components
 
         End Sub
 
-#Region " Data properties "
-
-        ''' <summary>
-        ''' Position of a nodal point.
-        ''' </summary>
-        ''' <param name="Node"></param>
-        ''' <returns></returns>
-        Public Property NodalPosition(ByVal Node As Integer) As EVector3
-            Get
-                Dim EuNode As New EVector3
-
-                If Node <= NumberOfNodes And Node > 0 Then
-                    EuNode.X = Me.Mesh.NodalPoints.Item(Node - 1).Position.X 'Recordar que el nodo 1 corresponde al indice 0 en la matriz
-                    EuNode.Y = Me.Mesh.NodalPoints.Item(Node - 1).Position.Y
-                    EuNode.Z = Me.Mesh.NodalPoints.Item(Node - 1).Position.Z
-                Else
-                    EuNode.X = 0
-                    EuNode.Y = 0
-                    EuNode.Z = 0
-                End If
-                Return EuNode
-            End Get
-            Set(ByVal value As EVector3)
-                If Node <= Me.Mesh.NodalPoints.Count Then
-                    Me.Mesh.NodalPoints(Node).Position = value
-                End If
-            End Set
-        End Property
-
-        ''' <summary>
-        ''' Nodal point.
-        ''' </summary>
-        ''' <param name="Node"></param>
-        ''' <returns></returns>
-        Public ReadOnly Property NodalPoint(ByVal Node As Integer) As NodalPoint
-            Get
-                Dim EuNode As New NodalPoint
-
-                If Node <= NumberOfNodes And Node > 0 Then
-                    Return Me.Mesh.NodalPoints.Item(Node - 1)
-                Else
-                    Return New NodalPoint
-                End If
-
-            End Get
-        End Property
-
-        ''' <summary>
-        ''' Returns a clone of a panel.
-        ''' </summary>
-        ''' <param name="Node"></param>
-        ''' <returns></returns>
-        Public ReadOnly Property ClonedPanel(ByVal Node As Integer) As Panel
-            Get
-                Dim _QuadPanel As New Panel
-
-                If Node <= Me.NumberOfPanels And Node > 0 Then
-
-                    _QuadPanel.N1 = Mesh.Panels.Item(Node - 1).N1
-                    _QuadPanel.N2 = Mesh.Panels.Item(Node - 1).N2
-                    _QuadPanel.N3 = Mesh.Panels.Item(Node - 1).N3
-                    _QuadPanel.N4 = Mesh.Panels.Item(Node - 1).N4
-
-                    Return _QuadPanel
-
-                Else
-
-                    _QuadPanel.N1 = Mesh.Panels.Item(0).N1
-                    _QuadPanel.N2 = Mesh.Panels.Item(0).N2
-                    _QuadPanel.N3 = Mesh.Panels.Item(0).N3
-                    _QuadPanel.N4 = Mesh.Panels.Item(0).N4
-
-                    Return _QuadPanel
-
-                End If
-            End Get
-        End Property
-
-        ''' <summary>
-        ''' Mesh panel.
-        ''' </summary>
-        ''' <param name="Node"></param>
-        ''' <returns></returns>
-        Public ReadOnly Property Panel(ByVal Node As Integer) As Panel
-            Get
-                If Node <= Me.NumberOfPanels And Node > 0 Then
-                    Return Mesh.Panels.Item(Node - 1)
-                Else
-                    Return New Panel
-                End If
-            End Get
-        End Property
-
-        ''' <summary>
-        ''' Lattice segment.
-        ''' </summary>
-        ''' <param name="SegmentNumber"></param>
-        ''' <returns></returns>
-        Public ReadOnly Property Segment(ByVal SegmentNumber As Integer) As LatticeSegment
-            Get
-                If SegmentNumber >= 1 And SegmentNumber <= NumberOfSegments Then
-                    Return Mesh.Lattice.Item(SegmentNumber - 1)
-                Else
-                    Return New LatticeSegment
-                End If
-            End Get
-        End Property
-
-#End Region
-
 #Region " Add elements "
 
         Public Overloads Sub AddNodalPoint(ByVal X As Double, ByVal Y As Double, ByVal Z As Double)
 
-            Dim Posicion As Integer = Mesh.NodalPoints.Count - 1
+            Dim Posicion As Integer = Mesh.Nodes.Count - 1
 
             Dim NodalPoint As New NodalPoint
 
@@ -243,7 +107,7 @@ Namespace VisualModel.Models.Components
             NodalPoint.Position.Y = Y
             NodalPoint.Position.Z = Z
 
-            Me.Mesh.NodalPoints.Add(NodalPoint)
+            Me.Mesh.Nodes.Add(NodalPoint)
 
         End Sub
 
@@ -257,7 +121,7 @@ Namespace VisualModel.Models.Components
                 NodalPoint.Position.Add(Displacement)
             End If
 
-            Me.Mesh.NodalPoints.Add(NodalPoint)
+            Me.Mesh.Nodes.Add(NodalPoint)
 
         End Sub
 
@@ -312,83 +176,88 @@ Namespace VisualModel.Models.Components
 
             Dim Nodo As NodalPoint
 
-            If Me.VisualProps.ShowSurface Then
+            If VisualProperties.ShowSurface Then
 
                 ' load homogeneous color:
-                Dim SColor As New EVector3
+
+                Dim cX As Double
+                Dim cY As Double
+                Dim cZ As Double
+
                 If Not Selected Then
-                    SColor.X = Me.VisualProps.ColorSurface.R / 255
-                    SColor.Y = Me.VisualProps.ColorSurface.G / 255
-                    SColor.Z = Me.VisualProps.ColorSurface.B / 255
+
+                    cX = VisualProperties.ColorSurface.R / 255
+                    cY = VisualProperties.ColorSurface.G / 255
+                    cZ = VisualProperties.ColorSurface.B / 255
+
                 Else
+
                     ' default selected color is {255, 194, 14} (orange)
-                    SColor.X = 1
-                    SColor.Y = 0.76078
-                    SColor.Z = 0.0549
+
+                    cX = 1
+                    cY = 0.76078
+                    cZ = 0.0549
+
                 End If
-                gl.Color(SColor.X, SColor.Y, SColor.Z, Me.VisualProps.Transparency)
+
+                gl.Color(cX, cY, cZ, VisualProperties.Transparency)
 
                 gl.InitNames()
-                Dim Code As Integer = Selection.GetSelectionCode(ComponentTypes.etBody, ElementIndex, EntityTypes.etQuadPanel, 0)
 
-                For i = 1 To NumberOfPanels
+                Dim Code As Integer = Selection.GetSelectionCode(ComponentTypes.etFuselage, ElementIndex, EntityTypes.etQuadPanel, 0)
+
+                For i = 0 To NumberOfPanels - 1
 
                     gl.PushName(Code + i)
                     gl.Begin(OpenGL.GL_TRIANGLES)
 
-                    Nodo = NodalPoint((Panel(i).N1))
-                    If VisualProps.ShowColormap Then gl.Color(Nodo.Color.R, Nodo.Color.G, Nodo.Color.B)
+                    Nodo = Mesh.Nodes((Mesh.Panels(i).N1))
+                    If VisualProperties.ShowColormap Then gl.Color(Nodo.Color.R, Nodo.Color.G, Nodo.Color.B)
                     gl.Vertex(Nodo.Position.X, Nodo.Position.Y, Nodo.Position.Z)
 
-                    Nodo = NodalPoint((Panel(i).N2))
-                    If VisualProps.ShowColormap Then gl.Color(Nodo.Color.R, Nodo.Color.G, Nodo.Color.B)
+                    Nodo = Mesh.Nodes((Mesh.Panels(i).N2))
+                    If VisualProperties.ShowColormap Then gl.Color(Nodo.Color.R, Nodo.Color.G, Nodo.Color.B)
                     gl.Vertex(Nodo.Position.X, Nodo.Position.Y, Nodo.Position.Z)
 
-                    Nodo = NodalPoint((Panel(i).N3))
-                    If VisualProps.ShowColormap Then gl.Color(Nodo.Color.R, Nodo.Color.G, Nodo.Color.B)
+                    Nodo = Mesh.Nodes((Mesh.Panels(i).N3))
+                    If VisualProperties.ShowColormap Then gl.Color(Nodo.Color.R, Nodo.Color.G, Nodo.Color.B)
                     gl.Vertex(Nodo.Position.X, Nodo.Position.Y, Nodo.Position.Z)
 
-                    Nodo = NodalPoint((Panel(i).N3))
-                    If VisualProps.ShowColormap Then gl.Color(Nodo.Color.R, Nodo.Color.G, Nodo.Color.B)
+                    Nodo = Mesh.Nodes((Mesh.Panels(i).N3))
+                    If VisualProperties.ShowColormap Then gl.Color(Nodo.Color.R, Nodo.Color.G, Nodo.Color.B)
                     gl.Vertex(Nodo.Position.X, Nodo.Position.Y, Nodo.Position.Z)
 
-                    Nodo = NodalPoint((Panel(i).N4))
-                    If VisualProps.ShowColormap Then gl.Color(Nodo.Color.R, Nodo.Color.G, Nodo.Color.B)
+                    Nodo = Mesh.Nodes((Mesh.Panels(i).N4))
+                    If VisualProperties.ShowColormap Then gl.Color(Nodo.Color.R, Nodo.Color.G, Nodo.Color.B)
                     gl.Vertex(Nodo.Position.X, Nodo.Position.Y, Nodo.Position.Z)
 
-                    Nodo = NodalPoint((Panel(i).N1))
-                    If VisualProps.ShowColormap Then gl.Color(Nodo.Color.R, Nodo.Color.G, Nodo.Color.B)
+                    Nodo = Mesh.Nodes((Mesh.Panels(i).N1))
+                    If VisualProperties.ShowColormap Then gl.Color(Nodo.Color.R, Nodo.Color.G, Nodo.Color.B)
                     gl.Vertex(Nodo.Position.X, Nodo.Position.Y, Nodo.Position.Z)
 
                     gl.End()
                     gl.PopName()
 
-                    'Dim p As EVector3 = Me.QuadPanel(i).ControlPoint
-                    'Dim v As EVector3 = Me.QuadPanel(i).NormalVector
-
-                    'gl.Begin(OpenGL.GL_LINES)
-                    'gl.Color(1, 0.7, 0.05)
-                    'gl.Vertex(p.X, p.Y, p.Z)
-                    'gl.Vertex(p.X + v.X, p.Y + v.Y, p.Z + v.Z)
-                    'gl.End()
-
                 Next
 
             End If
 
-            If SelectionMode = SelectionModes.smNodePicking Then
+            ' Show nodes:
+
+            If VisualProperties.ShowNodes Then
 
                 gl.InitNames()
-                Dim Code As Integer = Selection.GetSelectionCode(ComponentTypes.etBody, ElementIndex, EntityTypes.etNode, 0)
+                Dim Code As Integer = Selection.GetSelectionCode(ComponentTypes.etFuselage, ElementIndex, EntityTypes.etNode, 0)
 
-                gl.PointSize(VisualProps.SizeNodes)
-                gl.Color(Me.VisualProps.ColorNodes.R / 255, Me.VisualProps.ColorNodes.G / 255, Me.VisualProps.ColorNodes.B / 255)
+                gl.PointSize(VisualProperties.SizeNodes)
 
-                For i = 1 To NumberOfNodes
+                gl.Color(VisualProperties.ColorNodes.R / 255, VisualProperties.ColorNodes.G / 255, VisualProperties.ColorNodes.B / 255)
+
+                For i = 0 To NumberOfNodes - 1
 
                     gl.PushName(Code + i)
                     gl.Begin(OpenGL.GL_POINTS)
-                    Nodo = Me.NodalPoint(i)
+                    Nodo = Mesh.Nodes(i)
                     gl.Vertex(Nodo.Position.X, Nodo.Position.Y, Nodo.Position.Z)
                     gl.End()
                     gl.PopName()
@@ -397,11 +266,11 @@ Namespace VisualModel.Models.Components
 
             End If
 
-            ' Genera el mallado:
+            ' Show lattice:
 
-            If Me.VisualProps.ShowMesh Then
+            If VisualProperties.ShowMesh Then
 
-                gl.LineWidth(VisualProps.ThicknessMesh)
+                gl.LineWidth(VisualProperties.ThicknessMesh)
                 gl.Begin(OpenGL.GL_LINES)
 
                 Dim Nodo1 As EVector3
@@ -409,43 +278,43 @@ Namespace VisualModel.Models.Components
                 Dim Vector As EVector3
                 Dim Carga As New EVector3
 
-                gl.Color(Me.VisualProps.ColorMesh.R / 255, Me.VisualProps.ColorMesh.G / 255, Me.VisualProps.ColorMesh.B / 255)
+                gl.Color(VisualProperties.ColorMesh.R / 255, VisualProperties.ColorMesh.G / 255, VisualProperties.ColorMesh.B / 255)
 
-                For i = 1 To NumberOfSegments
+                For i = 0 To NumberOfSegments - 1
 
-                    Nodo1 = Me.NodalPosition(Me.Segment(i).N1)
-                    Nodo2 = Me.NodalPosition(Me.Segment(i).N2)
+                    Nodo1 = Mesh.Nodes(Mesh.Lattice(i).N1).Position
+                    Nodo2 = Mesh.Nodes(Mesh.Lattice(i).N2).Position
 
                     gl.Vertex(Nodo1.X, Nodo1.Y, Nodo1.Z)
                     gl.Vertex(Nodo2.X, Nodo2.Y, Nodo2.Z)
 
                 Next
 
-                gl.Color(Me.VisualProps.ColorVelocity.R / 255, Me.VisualProps.ColorVelocity.G / 255, Me.VisualProps.ColorVelocity.B / 255)
+                gl.Color(VisualProperties.ColorVelocity.R / 255, VisualProperties.ColorVelocity.G / 255, VisualProperties.ColorVelocity.B / 255)
 
-                If VisualProps.ShowVelocityVectors Then
+                If VisualProperties.ShowVelocityVectors Then
 
-                    For i = 1 To NumberOfPanels
+                    For i = 0 To NumberOfPanels - 1
 
-                        Nodo1 = Me.Panel(i).ControlPoint
-                        Vector = Me.Panel(i).LocalVelocity
+                        Nodo1 = Mesh.Panels(i).ControlPoint
+                        Vector = Mesh.Panels(i).LocalVelocity
 
                         gl.Vertex(Nodo1.X, Nodo1.Y, Nodo1.Z)
-                        gl.Vertex(Nodo1.X + VisualProps.ScaleVelocity * Vector.X, Nodo1.Y + VisualProps.ScaleVelocity * Vector.Y, Nodo1.Z + VisualProps.ScaleVelocity * Vector.Z)
+                        gl.Vertex(Nodo1.X + VisualProperties.ScaleVelocity * Vector.X, Nodo1.Y + VisualProperties.ScaleVelocity * Vector.Y, Nodo1.Z + VisualProperties.ScaleVelocity * Vector.Z)
 
                     Next
 
                 End If
 
-                gl.Color(Me.VisualProps.ColorLoads.R / 255, Me.VisualProps.ColorLoads.G / 255, Me.VisualProps.ColorLoads.B / 255)
+                gl.Color(VisualProperties.ColorLoads.R / 255, VisualProperties.ColorLoads.G / 255, VisualProperties.ColorLoads.B / 255)
 
-                If VisualProps.ShowLoadVectors Then
+                If VisualProperties.ShowLoadVectors Then
 
-                    For i = 1 To NumberOfPanels
+                    For i = 0 To NumberOfPanels - 1
 
-                        Nodo1 = Panel(i).ControlPoint
-                        Carga.Assign(Panel(i).NormalVector)
-                        Carga.Scale(VisualProps.ScalePressure * Panel(i).Cp * Panel(i).Area)
+                        Nodo1 = Mesh.Panels(i).ControlPoint
+                        Carga.Assign(Mesh.Panels(i).NormalVector)
+                        Carga.Scale(VisualProperties.ScalePressure * Mesh.Panels(i).Cp * Mesh.Panels(i).Area)
 
                         gl.Vertex(Nodo1.X, Nodo1.Y, Nodo1.Z)
                         gl.Vertex(Nodo1.X + Carga.X, Nodo1.Y + Carga.Y, Nodo1.Z + Carga.Z)
@@ -458,47 +327,15 @@ Namespace VisualModel.Models.Components
 
             End If
 
-            If _SelectedControlPoint >= 1 And _SelectedControlPoint <= Me.NumberOfPanels Then
+            If SelectionMode = SelectionModes.smNodePicking And _SelectedControlPoint >= 0 And _SelectedControlPoint < NumberOfPanels Then
 
-                gl.PointSize(2 * Me.VisualProps.SizeNodes)
-                gl.Color(VisualProps.ColorNodes.R / 255, VisualProps.ColorNodes.G / 255, VisualProps.ColorNodes.B / 255)
+                gl.PointSize(2 * VisualProperties.SizeNodes)
+                gl.Color(VisualProperties.ColorNodes.R / 255, VisualProperties.ColorNodes.G / 255, VisualProperties.ColorNodes.B / 255)
                 gl.Begin(OpenGL.GL_POINTS)
 
-                gl.Vertex(Me.Panel(_SelectedControlPoint).ControlPoint.X, Me.Panel(_SelectedControlPoint).ControlPoint.Y, Me.Panel(_SelectedControlPoint).ControlPoint.Z)
+                gl.Vertex(Mesh.Panels(_SelectedControlPoint).ControlPoint.X, Mesh.Panels(_SelectedControlPoint).ControlPoint.Y, Mesh.Panels(_SelectedControlPoint).ControlPoint.Z)
 
                 gl.End()
-
-            End If
-
-        End Sub
-
-        ''' <summary>
-        ''' Position the model in relation to the reference position of the nodes (it won't work if there is no reference position). 
-        ''' </summary>
-        ''' <remarks></remarks>
-        Public Sub UpdatePosition()
-
-            Dim M As New RotationMatrix
-
-            M.Generate(Me.Orientation.ToRadians)
-
-            If NumberOfNodes > 0 Then
-
-                For i = 0 To NumberOfNodes - 1
-
-                    If Not IsNothing(Me.Mesh.NodalPoints(i).ReferencePosition) Then
-
-                        Me.Mesh.NodalPoints(i).Position.X = Me.Mesh.NodalPoints(i).ReferencePosition.X - Me.CenterOfRotation.X
-                        Me.Mesh.NodalPoints(i).Position.Y = Me.Mesh.NodalPoints(i).ReferencePosition.Y - Me.CenterOfRotation.Y
-                        Me.Mesh.NodalPoints(i).Position.Z = Me.Mesh.NodalPoints(i).ReferencePosition.Z - Me.CenterOfRotation.Z
-                        Me.Mesh.NodalPoints(i).Position.Rotate(M)
-                        Me.Mesh.NodalPoints(i).Position.Add(Me.Position.X + Me.CenterOfRotation.X,
-                                                            Me.Position.Y + Me.CenterOfRotation.Y,
-                                                            Me.Position.Y + Me.CenterOfRotation.Z)
-                        Me.Mesh.NodalPoints(i).Position.Scale(SizeScale)
-
-                    End If
-                Next
 
             End If
 
@@ -514,11 +351,11 @@ Namespace VisualModel.Models.Components
 
                 For i = 0 To NumberOfNodes - 1
 
-                    If (Not IsNothing(Me.Mesh.NodalPoints(i).ReferencePosition)) And (Not IsNothing(Me.Mesh.NodalPoints(i).Displacement)) Then
+                    If (Not IsNothing(Mesh.Nodes(i).ReferencePosition)) And (Not IsNothing(Mesh.Nodes(i).Displacement)) Then
 
-                        Me.Mesh.NodalPoints(i).Position.X = Me.Mesh.NodalPoints(i).ReferencePosition.X + Scale * Me.Mesh.NodalPoints(i).Displacement.X
-                        Me.Mesh.NodalPoints(i).Position.Y = Me.Mesh.NodalPoints(i).ReferencePosition.Y + Scale * Me.Mesh.NodalPoints(i).Displacement.Y
-                        Me.Mesh.NodalPoints(i).Position.Z = Me.Mesh.NodalPoints(i).ReferencePosition.Z + Scale * Me.Mesh.NodalPoints(i).Displacement.Z
+                        Mesh.Nodes(i).Position.X = Mesh.Nodes(i).ReferencePosition.X + Scale * Mesh.Nodes(i).Displacement.X
+                        Mesh.Nodes(i).Position.Y = Mesh.Nodes(i).ReferencePosition.Y + Scale * Mesh.Nodes(i).Displacement.Y
+                        Mesh.Nodes(i).Position.Z = Mesh.Nodes(i).ReferencePosition.Z + Scale * Mesh.Nodes(i).Displacement.Z
 
                     End If
                 Next
@@ -527,6 +364,9 @@ Namespace VisualModel.Models.Components
 
         End Sub
 
+        ''' <summary>
+        ''' Obsolete sub.
+        ''' </summary>
         Public Sub SearchForAdjacentPanels()
 
             ' Asigna los paneles adyacentes
@@ -543,36 +383,38 @@ Namespace VisualModel.Models.Components
 
             Try
 
-                For i = 1 To Me.NumberOfPanels
+                For i = 0 To NumberOfPanels - 1
 
                     For k = 1 To 4
 
                         Select Case k
                             Case 1
-                                N1 = Mesh.Panels.Item(i - 1).N1
-                                N2 = Mesh.Panels.Item(i - 1).N2
+                                N1 = Mesh.Panels(i).N1
+                                N2 = Mesh.Panels(i).N2
                             Case 2
-                                N1 = Mesh.Panels.Item(i - 1).N2
-                                N2 = Mesh.Panels.Item(i - 1).N3
+                                N1 = Mesh.Panels(i).N2
+                                N2 = Mesh.Panels(i).N3
                             Case 3
-                                N1 = Mesh.Panels.Item(i - 1).N3
-                                N2 = Mesh.Panels.Item(i - 1).N4
+                                N1 = Mesh.Panels(i).N3
+                                N2 = Mesh.Panels(i).N4
                             Case 4
-                                N1 = Mesh.Panels.Item(i - 1).N4
-                                N2 = Mesh.Panels.Item(i - 1).N1
+                                N1 = Mesh.Panels(i).N4
+                                N2 = Mesh.Panels(i).N1
                         End Select
 
-                        For m = 0 To Me.Mesh.Lattice.Count - 1
+                        For m = 0 To Mesh.Lattice.Count - 1
 
                             If Mesh.Lattice(m).N1 = N1 And Mesh.Lattice(m).N2 = N2 Then
 
                                 ' El panel adyacente 1 es el que sigue el mismo orden de nodos que el segmento
-                                Me.Segment(m).PanelAdyacente1 = Me.Panel(i)
+
+                                Mesh.Lattice(m).PanelAdyacente1 = Mesh.Panels(i)
 
                             ElseIf Mesh.Lattice(m).N1 = N2 And Mesh.Lattice(m).N2 = N1 Then
 
                                 ' El panel adyacente 2 es el que sigue el orden de nodos opuesto al del segmento
-                                Me.Segment(m).PanelAdyacente2 = Me.Panel(i)
+
+                                Mesh.Lattice(m).PanelAdyacente2 = Mesh.Panels(i)
 
                             End If
 
@@ -586,10 +428,10 @@ Namespace VisualModel.Models.Components
 
                             Case 1
 
-                                Ni1 = Me.Panel(i).N1
-                                Ni2 = Me.Panel(i).N2
+                                Ni1 = Mesh.Panels(i).N1
+                                Ni2 = Mesh.Panels(i).N2
 
-                                For j = 1 To Me.NumberOfPanels
+                                For j = 0 To NumberOfPanels - 1
 
                                     If j <> i Then
 
@@ -598,28 +440,32 @@ Namespace VisualModel.Models.Components
                                             Select Case n
 
                                                 Case 1
-                                                    Nj1 = Me.Panel(j).N1
-                                                    Nj2 = Me.Panel(j).N2
+                                                    Nj1 = Mesh.Panels(j).N1
+                                                    Nj2 = Mesh.Panels(j).N2
                                                 Case 2
-                                                    Nj1 = Me.Panel(j).N2
-                                                    Nj2 = Me.Panel(j).N3
+                                                    Nj1 = Mesh.Panels(j).N2
+                                                    Nj2 = Mesh.Panels(j).N3
                                                 Case 3
-                                                    Nj1 = Me.Panel(j).N3
-                                                    Nj2 = Me.Panel(j).N4
+                                                    Nj1 = Mesh.Panels(j).N3
+                                                    Nj2 = Mesh.Panels(j).N4
                                                 Case 4
-                                                    Nj1 = Me.Panel(j).N4
-                                                    Nj2 = Me.Panel(j).N1
+                                                    Nj1 = Mesh.Panels(j).N4
+                                                    Nj2 = Mesh.Panels(j).N1
 
                                             End Select
 
                                             If Nj1 = Ni1 And Nj2 = Ni2 Then
-                                                Me.Panel(i).ObtenerPanelAdyacente(AdjacentRing.Panel1) = Me.Panel(j)
-                                                Me.Panel(i).ObtenerSentido(AdjacentRing.Panel1) = Sence.Positive
+
+                                                Mesh.Panels(i).GetAdjacentPanel(AdjacentRing.Panel1) = Mesh.Panels(j)
+                                                Mesh.Panels(i).GetSence(AdjacentRing.Panel1) = Sence.Positive
+
                                             End If
 
                                             If Nj2 = Ni1 And Nj1 = Ni2 Then
-                                                Me.Panel(i).ObtenerPanelAdyacente(AdjacentRing.Panel1) = Me.Panel(j)
-                                                Me.Panel(i).ObtenerSentido(AdjacentRing.Panel1) = Sence.Negative
+
+                                                Mesh.Panels(i).GetAdjacentPanel(AdjacentRing.Panel1) = Mesh.Panels(j)
+                                                Mesh.Panels(i).GetSence(AdjacentRing.Panel1) = Sence.Negative
+
                                             End If
 
                                         Next
@@ -630,8 +476,8 @@ Namespace VisualModel.Models.Components
 
                             Case 2
 
-                                Ni1 = Me.Panel(i).N2
-                                Ni2 = Me.Panel(i).N3
+                                Ni1 = Mesh.Panels(i).N2
+                                Ni2 = Mesh.Panels(i).N3
 
                                 For j = 1 To Me.NumberOfPanels
 
@@ -642,28 +488,32 @@ Namespace VisualModel.Models.Components
                                             Select Case n
 
                                                 Case 1
-                                                    Nj1 = Me.Panel(j).N1
-                                                    Nj2 = Me.Panel(j).N2
+                                                    Nj1 = Mesh.Panels(j).N1
+                                                    Nj2 = Mesh.Panels(j).N2
                                                 Case 2
-                                                    Nj1 = Me.Panel(j).N2
-                                                    Nj2 = Me.Panel(j).N3
+                                                    Nj1 = Mesh.Panels(j).N2
+                                                    Nj2 = Mesh.Panels(j).N3
                                                 Case 3
-                                                    Nj1 = Me.Panel(j).N3
-                                                    Nj2 = Me.Panel(j).N4
+                                                    Nj1 = Mesh.Panels(j).N3
+                                                    Nj2 = Mesh.Panels(j).N4
                                                 Case 4
-                                                    Nj1 = Me.Panel(j).N4
-                                                    Nj2 = Me.Panel(j).N1
+                                                    Nj1 = Mesh.Panels(j).N4
+                                                    Nj2 = Mesh.Panels(j).N1
 
                                             End Select
 
                                             If Nj1 = Ni1 And Nj2 = Ni2 Then
-                                                Me.Panel(i).ObtenerPanelAdyacente(AdjacentRing.Panel2) = Me.Panel(j)
-                                                Me.Panel(i).ObtenerSentido(AdjacentRing.Panel2) = Sence.Positive
+
+                                                Mesh.Panels(i).GetAdjacentPanel(AdjacentRing.Panel2) = Mesh.Panels(j)
+                                                Mesh.Panels(i).GetSence(AdjacentRing.Panel2) = Sence.Positive
+
                                             End If
 
                                             If Nj2 = Ni1 And Nj1 = Ni2 Then
-                                                Me.Panel(i).ObtenerPanelAdyacente(AdjacentRing.Panel2) = Me.Panel(j)
-                                                Me.Panel(i).ObtenerSentido(AdjacentRing.Panel2) = Sence.Negative
+
+                                                Mesh.Panels(i).GetAdjacentPanel(AdjacentRing.Panel2) = Mesh.Panels(j)
+                                                Mesh.Panels(i).GetSence(AdjacentRing.Panel2) = Sence.Negative
+
                                             End If
 
                                         Next
@@ -674,8 +524,8 @@ Namespace VisualModel.Models.Components
 
                             Case 3
 
-                                Ni1 = Me.Panel(i).N3
-                                Ni2 = Me.Panel(i).N4
+                                Ni1 = Mesh.Panels(i).N3
+                                Ni2 = Mesh.Panels(i).N4
 
                                 For j = 1 To Me.NumberOfPanels
 
@@ -686,28 +536,28 @@ Namespace VisualModel.Models.Components
                                             Select Case n
 
                                                 Case 1
-                                                    Nj1 = Me.Panel(j).N1
-                                                    Nj2 = Me.Panel(j).N2
+                                                    Nj1 = Mesh.Panels(j).N1
+                                                    Nj2 = Mesh.Panels(j).N2
                                                 Case 2
-                                                    Nj1 = Me.Panel(j).N2
-                                                    Nj2 = Me.Panel(j).N3
+                                                    Nj1 = Mesh.Panels(j).N2
+                                                    Nj2 = Mesh.Panels(j).N3
                                                 Case 3
-                                                    Nj1 = Me.Panel(j).N3
-                                                    Nj2 = Me.Panel(j).N4
+                                                    Nj1 = Mesh.Panels(j).N3
+                                                    Nj2 = Mesh.Panels(j).N4
                                                 Case 4
-                                                    Nj1 = Me.Panel(j).N4
-                                                    Nj2 = Me.Panel(j).N1
+                                                    Nj1 = Mesh.Panels(j).N4
+                                                    Nj2 = Mesh.Panels(j).N1
 
                                             End Select
 
                                             If Nj1 = Ni1 And Nj2 = Ni2 Then
-                                                Me.Panel(i).ObtenerPanelAdyacente(AdjacentRing.Panel3) = Me.Panel(j)
-                                                Me.Panel(i).ObtenerSentido(AdjacentRing.Panel3) = Sence.Positive
+                                                Mesh.Panels(i).GetAdjacentPanel(AdjacentRing.Panel3) = Mesh.Panels(j)
+                                                Mesh.Panels(i).GetSence(AdjacentRing.Panel3) = Sence.Positive
                                             End If
 
                                             If Nj2 = Ni1 And Nj1 = Ni2 Then
-                                                Me.Panel(i).ObtenerPanelAdyacente(AdjacentRing.Panel3) = Me.Panel(j)
-                                                Me.Panel(i).ObtenerSentido(AdjacentRing.Panel3) = Sence.Negative
+                                                Mesh.Panels(i).GetAdjacentPanel(AdjacentRing.Panel3) = Mesh.Panels(j)
+                                                Mesh.Panels(i).GetSence(AdjacentRing.Panel3) = Sence.Negative
                                             End If
 
                                         Next
@@ -718,8 +568,8 @@ Namespace VisualModel.Models.Components
 
                             Case 4
 
-                                Ni1 = Me.Panel(i).N4
-                                Ni2 = Me.Panel(i).N1
+                                Ni1 = Mesh.Panels(i).N4
+                                Ni2 = Mesh.Panels(i).N1
 
                                 For j = 1 To Me.NumberOfPanels
 
@@ -730,28 +580,28 @@ Namespace VisualModel.Models.Components
                                             Select Case n
 
                                                 Case 1
-                                                    Nj1 = Me.Panel(j).N1
-                                                    Nj2 = Me.Panel(j).N2
+                                                    Nj1 = Mesh.Panels(j).N1
+                                                    Nj2 = Mesh.Panels(j).N2
                                                 Case 2
-                                                    Nj1 = Me.Panel(j).N2
-                                                    Nj2 = Me.Panel(j).N3
+                                                    Nj1 = Mesh.Panels(j).N2
+                                                    Nj2 = Mesh.Panels(j).N3
                                                 Case 3
-                                                    Nj1 = Me.Panel(j).N3
-                                                    Nj2 = Me.Panel(j).N4
+                                                    Nj1 = Mesh.Panels(j).N3
+                                                    Nj2 = Mesh.Panels(j).N4
                                                 Case 4
-                                                    Nj1 = Me.Panel(j).N4
-                                                    Nj2 = Me.Panel(j).N1
+                                                    Nj1 = Mesh.Panels(j).N4
+                                                    Nj2 = Mesh.Panels(j).N1
 
                                             End Select
 
                                             If Nj1 = Ni1 And Nj2 = Ni2 Then
-                                                Me.Panel(i).ObtenerPanelAdyacente(AdjacentRing.Panel4) = Me.Panel(j)
-                                                Me.Panel(i).ObtenerSentido(AdjacentRing.Panel4) = Sence.Positive
+                                                Mesh.Panels(i).GetAdjacentPanel(AdjacentRing.Panel4) = Mesh.Panels(j)
+                                                Mesh.Panels(i).GetSence(AdjacentRing.Panel4) = Sence.Positive
                                             End If
 
                                             If Nj2 = Ni1 And Nj1 = Ni2 Then
-                                                Me.Panel(i).ObtenerPanelAdyacente(AdjacentRing.Panel4) = Me.Panel(j)
-                                                Me.Panel(i).ObtenerSentido(AdjacentRing.Panel4) = Sence.Negative
+                                                Mesh.Panels(i).GetAdjacentPanel(AdjacentRing.Panel4) = Mesh.Panels(j)
+                                                Mesh.Panels(i).GetSence(AdjacentRing.Panel4) = Sence.Negative
                                             End If
 
                                         Next
@@ -768,11 +618,11 @@ Namespace VisualModel.Models.Components
 
             Catch ex As Exception
 
-                Me._GeometryLoaded = False
+                _GeometryLoaded = False
 
-                Me.Clear()
+                Clear()
 
-                MsgBox("Error en el formato del archivo. Imposible de generar el mallado.")
+                MsgBox("Error while searching adjacent panels.")
 
             End Try
 
@@ -784,6 +634,9 @@ Namespace VisualModel.Models.Components
 
         End Sub
 
+        ''' <summary>
+        ''' Generates control points and normal vectors for each panel.
+        ''' </summary>
         Public Sub GenerateControlPointsAndNormalVectors()
 
             Dim Nodo1 As EVector3
@@ -799,21 +652,21 @@ Namespace VisualModel.Models.Components
             Dim Diagonal1 As New EVector3
             Dim Diagonal2 As New EVector3
 
-            For i = 1 To Me.NumberOfPanels
+            For i = 0 To NumberOfPanels - 1
 
-                If Panel(i).IsTriangular Then
+                If Mesh.Panels(i).IsTriangular Then
 
-                    Nodo1 = Me.NodalPosition(Me.Panel(i).N1)
-                    Nodo2 = Me.NodalPosition(Me.Panel(i).N2)
-                    Nodo3 = Me.NodalPosition(Me.Panel(i).N3)
+                    Nodo1 = Mesh.Nodes(Mesh.Panels(i).N1).Position
+                    Nodo2 = Mesh.Nodes(Mesh.Panels(i).N2).Position
+                    Nodo3 = Mesh.Nodes(Mesh.Panels(i).N3).Position
 
                     Vector1 = Nodo1.GetVectorToPoint(Nodo2)
                     Vector2 = Nodo2.GetVectorToPoint(Nodo3)
                     Vector3 = Nodo3.GetVectorToPoint(Nodo1)
 
-                    Me.Panel(i).ControlPoint.X = (Nodo1.X + Nodo2.X + Nodo3.X) / 3
-                    Me.Panel(i).ControlPoint.Y = (Nodo1.Y + Nodo2.Y + Nodo3.Y) / 3
-                    Me.Panel(i).ControlPoint.Z = (Nodo1.Z + Nodo2.Z + Nodo3.Z) / 3
+                    Mesh.Panels(i).ControlPoint.X = (Nodo1.X + Nodo2.X + Nodo3.X) / 3
+                    Mesh.Panels(i).ControlPoint.Y = (Nodo1.Y + Nodo2.Y + Nodo3.Y) / 3
+                    Mesh.Panels(i).ControlPoint.Z = (Nodo1.Z + Nodo2.Z + Nodo3.Z) / 3
 
                     Diagonal1.X = Nodo2.X - Nodo1.X
                     Diagonal1.Y = Nodo2.Y - Nodo1.Y
@@ -823,24 +676,24 @@ Namespace VisualModel.Models.Components
                     Diagonal2.Y = Nodo3.Y - Nodo1.Y
                     Diagonal2.Z = Nodo3.Z - Nodo1.Z
 
-                    Me.Panel(i).NormalVector = Algebra.VectorProduct(Diagonal1, Diagonal2).NormalizedDirection
-                    Me.Panel(i).Area = 0.5 * Algebra.VectorProduct(Vector1, Vector2).EuclideanNorm
+                    Mesh.Panels(i).NormalVector = Algebra.VectorProduct(Diagonal1, Diagonal2).NormalizedDirection
+                    Mesh.Panels(i).Area = 0.5 * Algebra.VectorProduct(Vector1, Vector2).EuclideanNorm
 
                 Else
 
-                    Nodo1 = Me.NodalPosition(Me.Panel(i).N1)
-                    Nodo2 = Me.NodalPosition(Me.Panel(i).N2)
-                    Nodo3 = Me.NodalPosition(Me.Panel(i).N3)
-                    Nodo4 = Me.NodalPosition(Me.Panel(i).N4)
+                    Nodo1 = Mesh.Nodes(Mesh.Panels(i).N1).Position
+                    Nodo2 = Mesh.Nodes(Mesh.Panels(i).N2).Position
+                    Nodo3 = Mesh.Nodes(Mesh.Panels(i).N3).Position
+                    Nodo4 = Mesh.Nodes(Mesh.Panels(i).N4).Position
 
                     Vector1 = Nodo1.GetVectorToPoint(Nodo2)
                     Vector2 = Nodo2.GetVectorToPoint(Nodo3)
                     Vector3 = Nodo3.GetVectorToPoint(Nodo4)
                     Vector4 = Nodo4.GetVectorToPoint(Nodo1)
 
-                    Me.Panel(i).ControlPoint.X = 0.25 * (Nodo1.X + Nodo2.X + Nodo3.X + Nodo4.X)
-                    Me.Panel(i).ControlPoint.Y = 0.25 * (Nodo1.Y + Nodo2.Y + Nodo3.Y + Nodo4.Y)
-                    Me.Panel(i).ControlPoint.Z = 0.25 * (Nodo1.Z + Nodo2.Z + Nodo3.Z + Nodo4.Z)
+                    Mesh.Panels(i).ControlPoint.X = 0.25 * (Nodo1.X + Nodo2.X + Nodo3.X + Nodo4.X)
+                    Mesh.Panels(i).ControlPoint.Y = 0.25 * (Nodo1.Y + Nodo2.Y + Nodo3.Y + Nodo4.Y)
+                    Mesh.Panels(i).ControlPoint.Z = 0.25 * (Nodo1.Z + Nodo2.Z + Nodo3.Z + Nodo4.Z)
 
                     Diagonal1.X = Nodo2.X - Nodo4.X
                     Diagonal1.Y = Nodo2.Y - Nodo4.Y
@@ -850,13 +703,15 @@ Namespace VisualModel.Models.Components
                     Diagonal2.Y = Nodo3.Y - Nodo1.Y
                     Diagonal2.Z = Nodo3.Z - Nodo1.Z
 
-                    Me.Panel(i).NormalVector = Algebra.VectorProduct(Diagonal1, Diagonal2).NormalizedDirection
-                    Me.Panel(i).Area = 0.5 * Algebra.VectorProduct(Vector1, Vector2).EuclideanNorm + 0.5 * Algebra.VectorProduct(Vector3, Vector4).EuclideanNorm
+                    Mesh.Panels(i).NormalVector = Algebra.VectorProduct(Diagonal1, Diagonal2).NormalizedDirection
+                    Mesh.Panels(i).Area = 0.5 * Algebra.VectorProduct(Vector1, Vector2).EuclideanNorm + 0.5 * Algebra.VectorProduct(Vector3, Vector4).EuclideanNorm
 
                 End If
 
-                If Me.Panel(i).Reversed Then
-                    Me.Panel(i).NormalVector.Scale(-1.0#)
+                If Mesh.Panels(i).Reversed Then
+
+                    Mesh.Panels(i).NormalVector.Scale(-1.0#)
+
                 End If
 
             Next
@@ -867,20 +722,24 @@ Namespace VisualModel.Models.Components
 
 #Region " Posprocess UVLM "
 
+        ''' <summary>
+        ''' Finds the ragne of pressure over the surface.
+        ''' </summary>
+        ''' <param name="AbsoluteValue"></param>
         Public Sub FindPressureRange(Optional ByVal AbsoluteValue As Boolean = True)
 
-            If Me.NumberOfPanels >= 1 And AbsoluteValue Then
+            If Me.NumberOfPanels >= 0 And AbsoluteValue Then
 
-                PressureRange.Maximum = Panel(1).Cp
-                PressureRange.Minimum = Panel(1).Cp
+                PressureRange.Maximum = Mesh.Panels(0).Cp
+                PressureRange.Minimum = Mesh.Panels(0).Cp
 
                 Dim Cp As Double
 
-                For i = 1 To NumberOfPanels
+                For i = 0 To NumberOfPanels - 1
 
-                    Cp = Panel(i).Cp
+                    Cp = Mesh.Panels(i).Cp
 
-                    If Panel(i).IsSlender Then
+                    If Mesh.Panels(i).IsSlender Then
                         Cp = Math.Abs(Cp)
                     End If
 
@@ -893,27 +752,30 @@ Namespace VisualModel.Models.Components
 
         End Sub
 
+        ''' <summary>
+        ''' Assignes an interpolated value to the nodal pressures (just for the colormap).
+        ''' </summary>
         Public Sub DistributePressureOnNodes()
 
             ' Esta subrutina busca los paneles que rodea a un nodo y le asigna a ese nodo una presión promedio.
 
             Dim CpLocal As Double = 0.0#
-            Dim CantidadDePaneles As Integer
+            Dim nPanels As Integer
 
             If PressureRange.Maximum = 0 And PressureRange.Minimum = 0 Then FindPressureRange(True)
 
-            For i = 1 To NumberOfNodes
+            For i = 0 To NumberOfNodes - 1
 
                 CpLocal = 0.0#
-                CantidadDePaneles = 0
+                nPanels = 0
 
-                For j = 1 To NumberOfPanels
+                For j = 0 To NumberOfPanels - 1
 
-                    With Panel(j)
+                    With Mesh.Panels(j)
 
                         If .N1 = i Or .N2 = i Or .N3 = i Or .N4 = i Then
 
-                            CantidadDePaneles = CantidadDePaneles + 1
+                            nPanels = nPanels + 1
 
                             If .IsSlender Then
                                 CpLocal = CpLocal + Math.Abs(.Cp)
@@ -929,26 +791,63 @@ Namespace VisualModel.Models.Components
 
                 ' Saca un promedio:
 
-                If CantidadDePaneles > 0 Then Me.NodalPoint(i).Pressure = CpLocal / CantidadDePaneles
+                If nPanels > 0 Then Mesh.Nodes(i).Pressure = CpLocal / nPanels
 
                 ' Finalmente asigna un color:
 
-                Me.NodalPoint(i).Color = Colormap.ScalarToColor(Math.Abs(Me.NodalPoint(i).Pressure), Me.PressureRange.Maximum, Me.PressureRange.Minimum)
+                Mesh.Nodes(i).Color = Colormap.ScalarToColor(Math.Abs(Mesh.Nodes(i).Pressure), PressureRange.Maximum, PressureRange.Minimum)
 
             Next
 
         End Sub
 
+        ''' <summary>
+        ''' Updates the map with pressure.
+        ''' </summary>
         Public Sub UpdateColormapWithPressure()
 
-            For i = 1 To Me.NumberOfNodes
+            For i = 0 To NumberOfNodes - 1
 
-                Me.NodalPoint(i).Color = Colormap.ScalarToColor(Me.NodalPoint(i).Pressure, Me.PressureRange.Maximum, Me.PressureRange.Minimum)
+                Mesh.Nodes(i).Color = Colormap.ScalarToColor(Mesh.Nodes(i).Pressure, PressureRange.Maximum, PressureRange.Minimum)
 
             Next
 
         End Sub
 
+        Public Sub FindDisplacementsRange()
+
+            If NumberOfNodes >= 1 Then
+
+                DisplacementRange.Maximum = Mesh.Nodes(0).Displacement.EuclideanNorm
+                DisplacementRange.Minimum = DisplacementRange.Maximum
+
+                Dim d As Double
+
+                For i = 0 To NumberOfNodes - 1
+
+                    d = Mesh.Nodes(i).Displacement.EuclideanNorm
+                    If d > DisplacementRange.Maximum Then DisplacementRange.Maximum = d
+                    If d < DisplacementRange.Minimum Then DisplacementRange.Minimum = d
+
+                Next
+
+            End If
+
+        End Sub
+
+        Public Sub UpdateColormapWithDisplacements()
+
+            For i = 0 To NumberOfNodes - 1
+
+                Mesh.Nodes(i).Color = Colormap.ScalarToColor(Mesh.Nodes(i).Displacement.EuclideanNorm, DisplacementRange.Maximum, DisplacementRange.Minimum)
+
+            Next
+
+        End Sub
+
+        ''' <summary>
+        ''' Obsolete sub.
+        ''' </summary>
         Public Sub CalculateAerodynamiLoad(ByRef Force As EVector3, ByRef Moment As EVector3, ByRef Area As Double)
 
             Area = 0
@@ -980,35 +879,6 @@ Namespace VisualModel.Models.Components
 
         End Sub
 
-        Public Sub FindDisplacementsRange()
-
-            If Me.NumberOfNodes >= 1 Then
-
-                DisplacementRange.Maximum = Me.NodalPoint(1).Displacement.EuclideanNorm
-                DisplacementRange.Minimum = DisplacementRange.Maximum
-
-                Dim d As Double
-
-                For i = 1 To Me.NumberOfNodes
-                    d = Me.NodalPoint(i).Displacement.EuclideanNorm
-                    If d > PressureRange.Maximum Then DisplacementRange.Maximum = d
-                    If d < PressureRange.Minimum Then DisplacementRange.Minimum = d
-                Next
-
-            End If
-
-        End Sub
-
-        Public Sub UpdateColormapWithDisplacements()
-
-            For i = 1 To Me.NumberOfNodes
-
-                Me.NodalPoint(i).Color = Colormap.ScalarToColor(Math.Abs(Me.NodalPoint(i).Displacement.EuclideanNorm), Me.DisplacementRange.Maximum, Me.DisplacementRange.Minimum)
-
-            Next
-
-        End Sub
-
 #End Region
 
 #Region " IO "
@@ -1026,7 +896,7 @@ Namespace VisualModel.Models.Components
             Dim bw As BinaryWriter = New BinaryWriter(New FileStream(AccessPath, FileMode.Create))
 
             bw.Write(NumberOfNodes)
-            For Each Node In Me.Mesh.NodalPoints
+            For Each Node In Me.Mesh.Nodes
                 bw.Write(Node.Position.X)
                 bw.Write(Node.Position.Y)
                 bw.Write(Node.Position.Z)
@@ -1060,7 +930,9 @@ Namespace VisualModel.Models.Components
             Dim n As Integer = br.ReadInt32()
 
             For i = 1 To n
+
                 AddNodalPoint(br.ReadDouble, br.ReadDouble, br.ReadDouble)
+
             Next
 
             Mesh.Panels.Clear()
@@ -1113,20 +985,20 @@ Namespace VisualModel.Models.Components
 
                 Line = LineInput(25) ' Lee el espacio
 
-                Mesh.NodalPoints.Clear()
+                Mesh.Nodes.Clear()
                 Mesh.Panels.Clear()
 
                 For i = 1 To NumeroDeNodos ' Comienza a leer la matriz de coordenadas
 
                     Line = LineInput(25)
-                    Me.AddNodalPoint(CDbl(Left(Line, 13)), CDbl(Mid(Line, 14, 12)), CDbl(Right(Line, 13)))
+                    AddNodalPoint(CDbl(Left(Line, 13)), CDbl(Mid(Line, 14, 12)), CDbl(Right(Line, 13)))
 
                 Next
 
                 For i = 1 To NumeroDePaneles ' Comienza a leer la matriz de conectividad
 
                     Line = LineInput(25)
-                    Me.AddPanel(CInt(Microsoft.VisualBasic.Left(Line, 5)),
+                    AddPanel(CInt(Left(Line, 5)),
                                                                               CInt(Mid(Line, 6, 5)),
                                                                               CInt(Mid(Line, 11, 5)),
                                                                               CInt(Right(Line, 4)))
@@ -1136,7 +1008,7 @@ Namespace VisualModel.Models.Components
 
                 Me._GeometryLoaded = True
 
-                Dim ErrorDeTamaño As Boolean = Not ((NumeroDeNodos = Mesh.NodalPoints.Count) And (NumeroDePaneles = Mesh.Panels.Count) Or Mesh.NodalPoints.Count >= 0 Or Mesh.Panels.Count >= 0)
+                Dim ErrorDeTamaño As Boolean = Not ((NumeroDeNodos = Mesh.Nodes.Count) And (NumeroDePaneles = Mesh.Panels.Count) Or Mesh.Nodes.Count >= 0 Or Mesh.Panels.Count >= 0)
 
                 If ErrorDeTamaño Then
 
@@ -1167,6 +1039,12 @@ Namespace VisualModel.Models.Components
                 Return False
 
             End Try
+
+        End Function
+
+        Public Overrides Function Clone() As Surface
+
+            Return Nothing
 
         End Function
 

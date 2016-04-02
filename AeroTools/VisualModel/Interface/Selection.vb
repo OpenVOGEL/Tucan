@@ -21,7 +21,7 @@ Namespace VisualModel.Interface
 
         etNothing = 0
         etLiftingSurface = 1
-        etBody = 2
+        etFuselage = 2
         etCompleteModel = 3
         etWake = 4
         etJetEngine = 5

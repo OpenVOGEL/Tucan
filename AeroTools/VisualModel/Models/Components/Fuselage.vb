@@ -426,16 +426,19 @@ Namespace VisualModel.Models.Components
     ''' <remarks></remarks>
     Public Class Fuselage
 
-        Inherits GeneralSurface
+        Inherits Surface
 
         Public Sub New()
+
+            Mesh = New Mesh()
 
             ID = Guid.NewGuid
             Name = "Fuselage"
             CrossSections = New List(Of CrossSection)
-            VisualProps.ThicknessMesh = 1.0
-            VisualProps.ShowSurface = True
-            VisualProps.ShowMesh = True
+            VisualProperties = New VisualProperties(ComponentTypes.etFuselage)
+            VisualProperties.ThicknessMesh = 1.0
+            VisualProperties.ShowSurface = True
+            VisualProperties.ShowMesh = True
             IncludeInCalculation = True
             AnchorLines = New List(Of AnchorLine)
             CrossRefinement = 10
@@ -543,6 +546,10 @@ Namespace VisualModel.Models.Components
                     GenerateQuadrilateralMesh()
             End Select
 
+            ' Launch base sub to raise update event.
+
+            MyBase.GenerateMesh()
+
         End Sub
 
         ''' <summary>
@@ -562,7 +569,7 @@ Namespace VisualModel.Models.Components
         Public Sub GenerateQuadrilateralMesh()
 
             Mesh.Panels.Clear()
-            Mesh.NodalPoints.Clear()
+            Mesh.Nodes.Clear()
 
             Try
 
@@ -719,7 +726,7 @@ Namespace VisualModel.Models.Components
 
                             Dim s As Double = j / nps
 
-                            Mesh.NodalPoints.Add(New NodalPoint(GetPoint(z, s)))
+                            Mesh.Nodes.Add(New NodalPoint(GetPoint(z, s)))
 
                             If (i > 0) And (j > 0) Then
 
@@ -771,7 +778,7 @@ Namespace VisualModel.Models.Components
 
                                     Dim s As Double = j / nps + (Grids(0).Nodes(j).Y - j / nps) * k / nz
 
-                                    Mesh.NodalPoints.Add(New NodalPoint(GetPoint(z, s)))
+                                    Mesh.Nodes.Add(New NodalPoint(GetPoint(z, s)))
 
                                     If (p > 0) And (j > 0) Then
 
@@ -805,13 +812,13 @@ Namespace VisualModel.Models.Components
 
                             For j = 0 To nps
 
-                                Mesh.NodalPoints.Add(New NodalPoint(GetPoint(Grids(i).Nodes(q).X, Grids(i).Nodes(q).Y)))
+                                Mesh.Nodes.Add(New NodalPoint(GetPoint(Grids(i).Nodes(q).X, Grids(i).Nodes(q).Y)))
 
                                 ' Save the position p when j = e here!
 
                                 If j = Grids(i).e Then
 
-                                    Grids(i).AnchorIndices(k) = Mesh.NodalPoints.Count
+                                    Grids(i).AnchorIndices(k) = Mesh.Nodes.Count
 
                                 End If
 
@@ -855,7 +862,7 @@ Namespace VisualModel.Models.Components
                                     Dim z As Double = k / nz * lz + zo
                                     Dim s As Double = Grids(i).Nodes(j).Y + (Grids(i + 1).Nodes(j).Y - Grids(i).Nodes(j).Y) * j / nps
 
-                                    Mesh.NodalPoints.Add(New NodalPoint(GetPoint(z, s)))
+                                    Mesh.Nodes.Add(New NodalPoint(GetPoint(z, s)))
 
                                     If (p > 0) And (j > 0) Then
 
@@ -898,7 +905,7 @@ Namespace VisualModel.Models.Components
                                     Dim z As Double = k / nz * lz + zo
                                     Dim s As Double = Grids(i).Nodes(nn + j).Y + (j / nps - Grids(i).Nodes(nn + j).Y) * k / nz
 
-                                    Mesh.NodalPoints.Add(New NodalPoint(GetPoint(z, s)))
+                                    Mesh.Nodes.Add(New NodalPoint(GetPoint(z, s)))
 
                                     If (p > 0) And (j > 0) Then
 
@@ -934,12 +941,12 @@ Namespace VisualModel.Models.Components
 
                     For i = 0 To nps - 1
 
-                        Mesh.NodalPoints.RemoveAt(Mesh.NodalPoints.Count - 1)
+                        Mesh.Nodes.RemoveAt(Mesh.Nodes.Count - 1)
                         Mesh.Panels.RemoveAt(Mesh.Panels.Count - 1)
 
                     Next
 
-                    Dim m As Integer = Mesh.NodalPoints.Count
+                    Dim m As Integer = Mesh.Nodes.Count
 
                     For i = 1 To nps
 
@@ -960,14 +967,14 @@ Namespace VisualModel.Models.Components
 
                     For i = 0 To Grid.nnz - 1
 
-                        Mesh.NodalPoints.Add(New NodalPoint(Grid.ParentAnchor.Lines(i).Point.Clone))
+                        Mesh.Nodes.Add(New NodalPoint(Grid.ParentAnchor.Lines(i).Point.Clone))
 
                         If i > 0 Then
 
                             Dim N1 As Integer = Grid.AnchorIndices(i - 1)
                             Dim N2 As Integer = Grid.AnchorIndices(i)
-                            Dim N3 As Integer = Mesh.NodalPoints.Count
-                            Dim N4 As Integer = Mesh.NodalPoints.Count - 1
+                            Dim N3 As Integer = Mesh.Nodes.Count
+                            Dim N4 As Integer = Mesh.Nodes.Count - 1
 
                             Dim q4 As New Panel(N1, N2, N3, N4)
 
@@ -988,7 +995,7 @@ Namespace VisualModel.Models.Components
 
                     For i = 0 To nps - 1
 
-                        Mesh.NodalPoints.RemoveAt(0)
+                        Mesh.Nodes.RemoveAt(0)
                         Mesh.Panels.RemoveAt(0)
 
                     Next
@@ -1017,13 +1024,13 @@ Namespace VisualModel.Models.Components
 
                 ' add symmetric part: new panels are inserted so that symmetric panels are consecutive.
 
-                Dim n As Integer = Mesh.NodalPoints.Count - 1
+                Dim n As Integer = Mesh.Nodes.Count - 1
 
                 For i = 0 To n
 
-                    Dim point As New NodalPoint(-Mesh.NodalPoints(i).Position.X, Mesh.NodalPoints(i).Position.Y, Mesh.NodalPoints(i).Position.Z) '  vertex.X, vertex.Y, 0
+                    Dim point As New NodalPoint(-Mesh.Nodes(i).Position.X, Mesh.Nodes(i).Position.Y, Mesh.Nodes(i).Position.Z) '  vertex.X, vertex.Y, 0
 
-                    Mesh.NodalPoints.Add(point)
+                    Mesh.Nodes.Add(point)
 
                 Next
 
@@ -1074,9 +1081,20 @@ Namespace VisualModel.Models.Components
 
                 Next
 
+                ' Change indices to 0-based
+
                 For i = 0 To Mesh.Panels.Count - 1
 
-                    Mesh.Panels(i).GlobalIndex = i + 1
+                    Mesh.Panels(i).GlobalIndex = i
+
+                Next
+
+                For i = 0 To NumberOfPanels - 1
+
+                    Mesh.Panels(i).N1 -= 1
+                    Mesh.Panels(i).N2 -= 1
+                    Mesh.Panels(i).N3 -= 1
+                    Mesh.Panels(i).N4 -= 1
 
                 Next
 
@@ -1086,7 +1104,7 @@ Namespace VisualModel.Models.Components
 
                 ' Rotate to align with global XYZ
 
-                For Each p In Mesh.NodalPoints
+                For Each p In Mesh.Nodes
 
                     Dim x As Double = p.Position.X
                     Dim y As Double = p.Position.Y
@@ -1097,6 +1115,9 @@ Namespace VisualModel.Models.Components
                     p.Position.Z = y
 
                 Next
+
+                Mesh.Rotate(CenterOfRotation, Orientation.ToRadians)
+                Mesh.Translate(Position)
 
                 ' Generate cross sections to display:
 
@@ -1137,7 +1158,7 @@ Namespace VisualModel.Models.Components
             Catch
 
                 Mesh.Panels.Clear()
-                Mesh.NodalPoints.Clear()
+                Mesh.Nodes.Clear()
 
             End Try
 
@@ -1158,7 +1179,7 @@ Namespace VisualModel.Models.Components
 
             Dim Nodo As NodalPoint
 
-            If Me.VisualProps.ShowSurface Then
+            If VisualProperties.ShowSurface Then
 
                 ' load homogeneous color:
 
@@ -1166,10 +1187,10 @@ Namespace VisualModel.Models.Components
 
                 If Not Selected Then
 
-                    SColor.X = Me.VisualProps.ColorSurface.R / 255
-                    SColor.Y = Me.VisualProps.ColorSurface.G / 255
-                    SColor.Z = Me.VisualProps.ColorSurface.B / 255
-                    gl.Color(SColor.X, SColor.Y, SColor.Z, Me.VisualProps.Transparency)
+                    SColor.X = VisualProperties.ColorSurface.R / 255
+                    SColor.Y = VisualProperties.ColorSurface.G / 255
+                    SColor.Z = VisualProperties.ColorSurface.B / 255
+                    gl.Color(SColor.X, SColor.Y, SColor.Z, VisualProperties.Transparency)
 
                 Else
 
@@ -1183,7 +1204,7 @@ Namespace VisualModel.Models.Components
                 End If
 
                 gl.InitNames()
-                Dim Code As Integer = Selection.GetSelectionCode(ComponentTypes.etBody, ElementIndex, EntityTypes.etQuadPanel, 0)
+                Dim Code As Integer = Selection.GetSelectionCode(ComponentTypes.etFuselage, ElementIndex, EntityTypes.etQuadPanel, 0)
                 Dim Count As Integer = 0
 
                 For Each p In Mesh.Panels
@@ -1191,30 +1212,30 @@ Namespace VisualModel.Models.Components
                     gl.PushName(Code + Count)
                     gl.Begin(OpenGL.GL_TRIANGLES)
 
-                    Nodo = Mesh.NodalPoints(p.N1 - 1)
-                    If Me.VisualProps.ShowColormap Then gl.Color(Nodo.Color.R, Nodo.Color.G, Nodo.Color.B)
+                    Nodo = Mesh.Nodes(p.N1)
+                    If VisualProperties.ShowColormap Then gl.Color(Nodo.Color.R, Nodo.Color.G, Nodo.Color.B)
                     gl.Vertex(Nodo.Position.X, Nodo.Position.Y, Nodo.Position.Z)
 
-                    Nodo = Mesh.NodalPoints(p.N2 - 1)
-                    If Me.VisualProps.ShowColormap Then gl.Color(Nodo.Color.R, Nodo.Color.G, Nodo.Color.B)
+                    Nodo = Mesh.Nodes(p.N2)
+                    If VisualProperties.ShowColormap Then gl.Color(Nodo.Color.R, Nodo.Color.G, Nodo.Color.B)
                     gl.Vertex(Nodo.Position.X, Nodo.Position.Y, Nodo.Position.Z)
 
-                    Nodo = Mesh.NodalPoints(p.N3 - 1)
-                    If Me.VisualProps.ShowColormap Then gl.Color(Nodo.Color.R, Nodo.Color.G, Nodo.Color.B)
+                    Nodo = Mesh.Nodes(p.N3)
+                    If VisualProperties.ShowColormap Then gl.Color(Nodo.Color.R, Nodo.Color.G, Nodo.Color.B)
                     gl.Vertex(Nodo.Position.X, Nodo.Position.Y, Nodo.Position.Z)
 
                     If Not p.IsTriangular Then
 
-                        Nodo = Mesh.NodalPoints(p.N3 - 1)
-                        If Me.VisualProps.ShowColormap Then gl.Color(Nodo.Color.R, Nodo.Color.G, Nodo.Color.B)
+                        Nodo = Mesh.Nodes(p.N3)
+                        If VisualProperties.ShowColormap Then gl.Color(Nodo.Color.R, Nodo.Color.G, Nodo.Color.B)
                         gl.Vertex(Nodo.Position.X, Nodo.Position.Y, Nodo.Position.Z)
 
-                        Nodo = Mesh.NodalPoints(p.N4 - 1)
-                        If Me.VisualProps.ShowColormap Then gl.Color(Nodo.Color.R, Nodo.Color.G, Nodo.Color.B)
+                        Nodo = Mesh.Nodes(p.N4)
+                        If VisualProperties.ShowColormap Then gl.Color(Nodo.Color.R, Nodo.Color.G, Nodo.Color.B)
                         gl.Vertex(Nodo.Position.X, Nodo.Position.Y, Nodo.Position.Z)
 
-                        Nodo = Mesh.NodalPoints(p.N1 - 1)
-                        If Me.VisualProps.ShowColormap Then gl.Color(Nodo.Color.R, Nodo.Color.G, Nodo.Color.B)
+                        Nodo = Mesh.Nodes(p.N1)
+                        If VisualProperties.ShowColormap Then gl.Color(Nodo.Color.R, Nodo.Color.G, Nodo.Color.B)
                         gl.Vertex(Nodo.Position.X, Nodo.Position.Y, Nodo.Position.Z)
 
                     End If
@@ -1229,16 +1250,16 @@ Namespace VisualModel.Models.Components
             If SelectionMode = SelectionModes.smNodePicking Then
 
                 gl.InitNames()
-                Dim Code As Integer = Selection.GetSelectionCode(ComponentTypes.etBody, ElementIndex, EntityTypes.etNode, 0)
+                Dim Code As Integer = Selection.GetSelectionCode(ComponentTypes.etFuselage, ElementIndex, EntityTypes.etNode, 0)
 
-                gl.PointSize(VisualProps.SizeNodes)
-                gl.Color(Me.VisualProps.ColorNodes.R / 255, Me.VisualProps.ColorNodes.G / 255, Me.VisualProps.ColorNodes.B / 255)
+                gl.PointSize(VisualProperties.SizeNodes)
+                gl.Color(VisualProperties.ColorNodes.R / 255, VisualProperties.ColorNodes.G / 255, VisualProperties.ColorNodes.B / 255)
 
-                For i = 0 To Mesh.NodalPoints.Count - 1
+                For i = 0 To Mesh.Nodes.Count - 1
 
                     gl.PushName(Code + i)
                     gl.Begin(OpenGL.GL_POINTS)
-                    Nodo = Mesh.NodalPoints(i)
+                    Nodo = Mesh.Nodes(i)
                     gl.Vertex(Nodo.Position.X, Nodo.Position.Y, Nodo.Position.Z)
                     gl.End()
                     gl.PopName()
@@ -1247,11 +1268,11 @@ Namespace VisualModel.Models.Components
 
             End If
 
-            ' Genera el mallado:
+            ' Represent lattice:
 
-            If Me.VisualProps.ShowMesh Then
+            If VisualProperties.ShowMesh Then
 
-                gl.LineWidth(VisualProps.ThicknessMesh)
+                gl.LineWidth(VisualProperties.ThicknessMesh)
                 gl.Begin(OpenGL.GL_LINES)
 
                 Dim Nodo1 As EVector3
@@ -1259,14 +1280,14 @@ Namespace VisualModel.Models.Components
                 Dim Vector As EVector3
                 Dim Carga As New EVector3
 
-                gl.Color(Me.VisualProps.ColorMesh.R / 255, Me.VisualProps.ColorMesh.G / 255, Me.VisualProps.ColorMesh.B / 255)
+                gl.Color(VisualProperties.ColorMesh.R / 255, VisualProperties.ColorMesh.G / 255, VisualProperties.ColorMesh.B / 255)
 
-                If Mesh.NodalPoints.Count > 0 Then
+                If Mesh.Nodes.Count > 0 Then
 
                     For i = 0 To Mesh.Lattice.Count - 1
 
-                        Nodo1 = Mesh.NodalPoints(Mesh.Lattice(i).N1 - 1).Position
-                        Nodo2 = Mesh.NodalPoints(Mesh.Lattice(i).N2 - 1).Position
+                        Nodo1 = Mesh.Nodes(Mesh.Lattice(i).N1).Position
+                        Nodo2 = Mesh.Nodes(Mesh.Lattice(i).N2).Position
 
                         gl.Vertex(Nodo1.X, Nodo1.Y, Nodo1.Z)
                         gl.Vertex(Nodo2.X, Nodo2.Y, Nodo2.Z)
@@ -1287,9 +1308,9 @@ Namespace VisualModel.Models.Components
 
                 Next
 
-                gl.Color(Me.VisualProps.ColorVelocity.R / 255, Me.VisualProps.ColorVelocity.G / 255, Me.VisualProps.ColorVelocity.B / 255)
+                gl.Color(VisualProperties.ColorVelocity.R / 255, VisualProperties.ColorVelocity.G / 255, VisualProperties.ColorVelocity.B / 255)
 
-                If VisualProps.ShowVelocityVectors Then
+                If VisualProperties.ShowVelocityVectors Then
 
                     For i = 0 To Mesh.Panels.Count - 1
 
@@ -1297,21 +1318,21 @@ Namespace VisualModel.Models.Components
                         Vector = Mesh.Panels(i).LocalVelocity
 
                         gl.Vertex(Nodo1.X, Nodo1.Y, Nodo1.Z)
-                        gl.Vertex(Nodo1.X + VisualProps.ScaleVelocity * Vector.X, Nodo1.Y + VisualProps.ScaleVelocity * Vector.Y, Nodo1.Z + VisualProps.ScaleVelocity * Vector.Z)
+                        gl.Vertex(Nodo1.X + VisualProperties.ScaleVelocity * Vector.X, Nodo1.Y + VisualProperties.ScaleVelocity * Vector.Y, Nodo1.Z + VisualProperties.ScaleVelocity * Vector.Z)
 
                     Next
 
                 End If
 
-                gl.Color(Me.VisualProps.ColorLoads.R / 255, Me.VisualProps.ColorLoads.G / 255, Me.VisualProps.ColorLoads.B / 255)
+                gl.Color(VisualProperties.ColorLoads.R / 255, VisualProperties.ColorLoads.G / 255, VisualProperties.ColorLoads.B / 255)
 
-                If VisualProps.ShowLoadVectors Then
+                If VisualProperties.ShowLoadVectors Then
 
                     For i = 0 To Mesh.Panels.Count - 1
 
                         Nodo1 = Mesh.Panels(i).ControlPoint
                         Carga.Assign(Mesh.Panels(i).NormalVector)
-                        Carga.Scale(VisualProps.ScalePressure * Mesh.Panels(i).Cp)
+                        Carga.Scale(VisualProperties.ScalePressure * Mesh.Panels(i).Cp)
 
                         gl.Vertex(Nodo1.X, Nodo1.Y, Nodo1.Z)
                         gl.Vertex(Nodo1.X + Carga.X, Nodo1.Y + Carga.Y, Nodo1.Z + Carga.Z)
@@ -1374,6 +1395,12 @@ Namespace VisualModel.Models.Components
             'End If
 
         End Sub
+
+        Public Overrides Function Clone() As Surface
+
+            Return Nothing
+
+        End Function
 
 #Region " Anchors "
 
@@ -1586,7 +1613,7 @@ Namespace VisualModel.Models.Components
 
                     Case "VisualProperties"
 
-                        VisualProps.ReadFromXML(reader.ReadSubtree)
+                        VisualProperties.ReadFromXML(reader.ReadSubtree)
 
                     Case "Anchor"
 
@@ -1640,7 +1667,7 @@ Namespace VisualModel.Models.Components
             ' Visual properties:
 
             writer.WriteStartElement("VisualProperties")
-            VisualProps.WriteToXML(writer)
+            VisualProperties.WriteToXML(writer)
             writer.WriteEndElement()
 
         End Sub
@@ -1648,7 +1675,6 @@ Namespace VisualModel.Models.Components
 #End Region
 
 #Region " Examples "
-
 
         Public Sub GenerateExample()
 
@@ -1726,13 +1752,13 @@ Namespace VisualModel.Models.Components
 
         Public Sub GenerateModelForTesting_1()
 
-            Mesh.NodalPoints.Clear()
-            Mesh.NodalPoints.Add(New NodalPoint(2, 0, 0))
-            Mesh.NodalPoints.Add(New NodalPoint(0, 1, 1))
-            Mesh.NodalPoints.Add(New NodalPoint(0, -1, 1))
-            Mesh.NodalPoints.Add(New NodalPoint(0, -1, -1))
-            Mesh.NodalPoints.Add(New NodalPoint(0, 1, -1))
-            Mesh.NodalPoints.Add(New NodalPoint(-2, 0, 0))
+            Mesh.Nodes.Clear()
+            Mesh.Nodes.Add(New NodalPoint(2, 0, 0))
+            Mesh.Nodes.Add(New NodalPoint(0, 1, 1))
+            Mesh.Nodes.Add(New NodalPoint(0, -1, 1))
+            Mesh.Nodes.Add(New NodalPoint(0, -1, -1))
+            Mesh.Nodes.Add(New NodalPoint(0, 1, -1))
+            Mesh.Nodes.Add(New NodalPoint(-2, 0, 0))
 
             Mesh.Panels.Clear()
             Mesh.Panels.Add(New Panel(1, 2, 3))
@@ -1755,18 +1781,18 @@ Namespace VisualModel.Models.Components
 
         Public Sub GenerateModelForTesting_2()
 
-            Mesh.NodalPoints.Clear()
+            Mesh.Nodes.Clear()
 
             Dim n As Integer = 26
 
-            Mesh.NodalPoints.Add(New NodalPoint(2, 0, 0))
+            Mesh.Nodes.Add(New NodalPoint(2, 0, 0))
 
             For i = 0 To n - 1
                 Dim angle = 2 * i / (n - 1) * Math.PI
-                Mesh.NodalPoints.Add(New NodalPoint(0, Math.Cos(angle), Math.Sin(angle)))
+                Mesh.Nodes.Add(New NodalPoint(0, Math.Cos(angle), Math.Sin(angle)))
             Next
 
-            Mesh.NodalPoints.Add(New NodalPoint(-2, 0, 0))
+            Mesh.Nodes.Add(New NodalPoint(-2, 0, 0))
 
             Mesh.Panels.Clear()
 
@@ -1797,23 +1823,23 @@ Namespace VisualModel.Models.Components
 
         Public Sub GenerateModelForTesting_3()
 
-            Mesh.NodalPoints.Clear()
-            Mesh.NodalPoints.Add(New NodalPoint(0, 0, 0))
+            Mesh.Nodes.Clear()
+            Mesh.Nodes.Add(New NodalPoint(0, 0, 0))
 
             Dim n As Integer = 4
             Dim r As Double = 1
 
             For i = 0 To n - 1
                 Dim angle As Double = 2 * Math.PI * i / n
-                Mesh.NodalPoints.Add(New NodalPoint(2, r * Math.Cos(angle), r * Math.Sin(angle)))
+                Mesh.Nodes.Add(New NodalPoint(2, r * Math.Cos(angle), r * Math.Sin(angle)))
             Next
 
             For i = 0 To n - 1
                 Dim angle As Double = 2 * Math.PI * i / n
-                Mesh.NodalPoints.Add(New NodalPoint(4, r * Math.Cos(angle), r * Math.Sin(angle)))
+                Mesh.Nodes.Add(New NodalPoint(4, r * Math.Cos(angle), r * Math.Sin(angle)))
             Next
 
-            Mesh.NodalPoints.Add(New NodalPoint(6, 0, 0))
+            Mesh.Nodes.Add(New NodalPoint(6, 0, 0))
 
             Mesh.Panels.Clear()
 

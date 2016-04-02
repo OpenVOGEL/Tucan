@@ -17,12 +17,18 @@
 
 Imports MathTools.Algebra.EuclideanSpace
 Imports AeroTools.VisualModel.Models.Basics
+Imports AeroTools.VisualModel.Interface
+Imports SharpGL
+Imports System.Xml
 
 Namespace VisualModel.Models.Components
 
+    ''' <summary>
+    ''' (Under development)
+    ''' </summary>
     Public Class FullNacelle
 
-        Inherits GeneralSurface
+        Inherits Surface
 
         Private _ForwardSections As Integer = 3
         Private _RearSections As Integer = 3
@@ -85,8 +91,8 @@ Namespace VisualModel.Models.Components
             _ProfileChamber.FlapDeflection = -15 * Math.PI / 180
             _ProfileChamber.Flapped = True
 
-            Mesh.NodalPoints.Clear()
-            Mesh.NodalPoints.Add(New NodalPoint(0, 0, 0))
+            Mesh.Nodes.Clear()
+            Mesh.Nodes.Add(New NodalPoint(0, 0, 0))
 
             Dim x As Double
             Dim l As Double = _ForwardLength + _Chord + _RearLength
@@ -116,21 +122,21 @@ Namespace VisualModel.Models.Components
                 Dim P0 As New EVector3(SectionCenter)
                 P0.Y += vl.X * _LowerChamber.BasicLine(xl) * l
                 P0.Z += vl.Y * _LowerChamber.BasicLine(xl) * l
-                Mesh.NodalPoints.Add(New NodalPoint(P0.X, P0.Y, P0.Z))
+                Mesh.Nodes.Add(New NodalPoint(P0.X, P0.Y, P0.Z))
 
                 Dim P1 As New EVector3(SectionCenter)
                 P1.Y += _SideChamber.BasicLine(xl) * l
                 P1.Z = x / _ForwardLength * _LeadingEdgeElevation
-                Mesh.NodalPoints.Add(New NodalPoint(P1.X, P1.Y, P1.Z))
+                Mesh.Nodes.Add(New NodalPoint(P1.X, P1.Y, P1.Z))
 
                 Dim P2 As New EVector3(SectionCenter)
                 P2.Y += vu.X * _UpperChamber.BasicLine(xl) * l
                 P2.Z += vu.Y * _UpperChamber.BasicLine(xl) * l
-                Mesh.NodalPoints.Add(New NodalPoint(P2.X, P2.Y, P2.Z))
+                Mesh.Nodes.Add(New NodalPoint(P2.X, P2.Y, P2.Z))
 
-                Mesh.NodalPoints.Add(New NodalPoint(P2.X, -P2.Y, P2.Z))
-                Mesh.NodalPoints.Add(New NodalPoint(P1.X, -P1.Y, P1.Z))
-                Mesh.NodalPoints.Add(New NodalPoint(P0.X, -P0.Y, P0.Z))
+                Mesh.Nodes.Add(New NodalPoint(P2.X, -P2.Y, P2.Z))
+                Mesh.Nodes.Add(New NodalPoint(P1.X, -P1.Y, P1.Z))
+                Mesh.Nodes.Add(New NodalPoint(P0.X, -P0.Y, P0.Z))
 
                 nSections += 1
 
@@ -157,25 +163,25 @@ Namespace VisualModel.Models.Components
                 Dim P0 As New EVector3(SectionCenter)
                 P0.Y += vl.X * _LowerChamber.BasicLine(xl) * l
                 P0.Z += vl.Y * _LowerChamber.BasicLine(xl) * l
-                Mesh.NodalPoints.Add(New NodalPoint(P0.X, P0.Y, P0.Z))
+                Mesh.Nodes.Add(New NodalPoint(P0.X, P0.Y, P0.Z))
 
                 Dim P1 As New EVector3(SectionCenter)
                 P1.Y += _SideChamber.BasicLine(xl) * l
                 _ProfileChamber.EvaluatePoint(_chamberPoint, (x - _ForwardLength) / _Chord)
                 P1.X = _chamberPoint.X * _Chord + _ForwardLength
                 P1.Z = _chamberPoint.Y * _Chord + _LeadingEdgeElevation
-                RightChamberNodes(i) = Mesh.NodalPoints.Count
-                Mesh.NodalPoints.Add(New NodalPoint(P1.X, P1.Y, P1.Z))
+                RightChamberNodes(i) = Mesh.Nodes.Count
+                Mesh.Nodes.Add(New NodalPoint(P1.X, P1.Y, P1.Z))
 
                 Dim P2 As New EVector3(SectionCenter)
                 P2.Y += vu.X * _UpperChamber.BasicLine(xl) * l
                 P2.Z += vu.Y * _UpperChamber.BasicLine(xl) * l
-                Mesh.NodalPoints.Add(New NodalPoint(P2.X, P2.Y, P2.Z))
+                Mesh.Nodes.Add(New NodalPoint(P2.X, P2.Y, P2.Z))
 
-                Mesh.NodalPoints.Add(New NodalPoint(P2.X, -P2.Y, P2.Z))
-                LeftChamberNodes(i) = Mesh.NodalPoints.Count
-                Mesh.NodalPoints.Add(New NodalPoint(P1.X, -P1.Y, P1.Z))
-                Mesh.NodalPoints.Add(New NodalPoint(P0.X, -P0.Y, P0.Z))
+                Mesh.Nodes.Add(New NodalPoint(P2.X, -P2.Y, P2.Z))
+                LeftChamberNodes(i) = Mesh.Nodes.Count
+                Mesh.Nodes.Add(New NodalPoint(P1.X, -P1.Y, P1.Z))
+                Mesh.Nodes.Add(New NodalPoint(P0.X, -P0.Y, P0.Z))
 
                 nSections += 1
 
@@ -193,27 +199,27 @@ Namespace VisualModel.Models.Components
                 Dim P0 As New EVector3(SectionCenter)
                 P0.Y += vl.X * _LowerChamber.BasicLine(xl) * l
                 P0.Z += vl.Y * _LowerChamber.BasicLine(xl) * l
-                Mesh.NodalPoints.Add(New NodalPoint(P0.X, P0.Y, P0.Z))
+                Mesh.Nodes.Add(New NodalPoint(P0.X, P0.Y, P0.Z))
 
                 Dim P1 As New EVector3(SectionCenter)
                 P1.Y += _SideChamber.BasicLine(xl) * l
                 P1.Z = i / _RearSections * (_RearPointElevation - _LeadingEdgeElevation) + _LeadingEdgeElevation
-                Mesh.NodalPoints.Add(New NodalPoint(P1.X, P1.Y, P1.Z))
+                Mesh.Nodes.Add(New NodalPoint(P1.X, P1.Y, P1.Z))
 
                 Dim P2 As New EVector3(SectionCenter)
                 P2.Y += vu.X * _UpperChamber.BasicLine(xl) * l
                 P2.Z += vu.Y * _UpperChamber.BasicLine(xl) * l
-                Mesh.NodalPoints.Add(New NodalPoint(P2.X, P2.Y, P2.Z))
+                Mesh.Nodes.Add(New NodalPoint(P2.X, P2.Y, P2.Z))
 
-                Mesh.NodalPoints.Add(New NodalPoint(P2.X, -P2.Y, P2.Z))
-                Mesh.NodalPoints.Add(New NodalPoint(P1.X, -P1.Y, P1.Z))
-                Mesh.NodalPoints.Add(New NodalPoint(P0.X, -P0.Y, P0.Z))
+                Mesh.Nodes.Add(New NodalPoint(P2.X, -P2.Y, P2.Z))
+                Mesh.Nodes.Add(New NodalPoint(P1.X, -P1.Y, P1.Z))
+                Mesh.Nodes.Add(New NodalPoint(P0.X, -P0.Y, P0.Z))
 
                 nSections += 1
 
             Next
 
-            Mesh.NodalPoints.Add(New NodalPoint(l, 0, _RearPointElevation))
+            Mesh.Nodes.Add(New NodalPoint(l, 0, _RearPointElevation))
 
             ' add panels (1-based indices!):
 
@@ -262,11 +268,11 @@ Namespace VisualModel.Models.Components
             If _IncludeRightInterface Then
 
                 For i = 0 To _ChordSections
-                    Mesh.NodalPoints.Add(New NodalPoint(Mesh.NodalPoints(RightChamberNodes(i)).Position.X, _RightInterfaceWidth, Mesh.NodalPoints(RightChamberNodes(i)).Position.Z))
+                    Mesh.Nodes.Add(New NodalPoint(Mesh.Nodes(RightChamberNodes(i)).Position.X, _RightInterfaceWidth, Mesh.Nodes(RightChamberNodes(i)).Position.Z))
                 Next
 
                 For i = 0 To _ChordSections - 1
-                    Mesh.Panels.Add(New Panel(RightChamberNodes(i) + 1, Mesh.NodalPoints.Count - _ChordSections + i, Mesh.NodalPoints.Count - _ChordSections + i + 1, RightChamberNodes(i + 1) + 1))
+                    Mesh.Panels.Add(New Panel(RightChamberNodes(i) + 1, Mesh.Nodes.Count - _ChordSections + i, Mesh.Nodes.Count - _ChordSections + i + 1, RightChamberNodes(i + 1) + 1))
                     Mesh.Panels(Mesh.Panels.Count - 1).IsSlender = True
                 Next
 
@@ -277,11 +283,11 @@ Namespace VisualModel.Models.Components
             If _IncludeLeftInterface Then
 
                 For i = 0 To _ChordSections
-                    Mesh.NodalPoints.Add(New NodalPoint(Mesh.NodalPoints(LeftChamberNodes(i)).Position.X, -_LeftInterfaceWidth, Mesh.NodalPoints(LeftChamberNodes(i)).Position.Z))
+                    Mesh.Nodes.Add(New NodalPoint(Mesh.Nodes(LeftChamberNodes(i)).Position.X, -_LeftInterfaceWidth, Mesh.Nodes(LeftChamberNodes(i)).Position.Z))
                 Next
 
                 For i = 0 To _ChordSections - 1
-                    Mesh.Panels.Add(New Panel(LeftChamberNodes(i) + 1, Mesh.NodalPoints.Count - _ChordSections + i, Mesh.NodalPoints.Count - _ChordSections + i + 1, LeftChamberNodes(i + 1) + 1))
+                    Mesh.Panels.Add(New Panel(LeftChamberNodes(i) + 1, Mesh.Nodes.Count - _ChordSections + i, Mesh.Nodes.Count - _ChordSections + i + 1, LeftChamberNodes(i + 1) + 1))
                     Mesh.Panels(Mesh.Panels.Count - 1).IsSlender = True
                 Next
 
@@ -293,14 +299,12 @@ Namespace VisualModel.Models.Components
 
             GenerateLattice()
 
-            GenerateControlPointsAndNormalVectors()
-
         End Sub
 
         Public Sub GenerateLattice_8()
 
-            Mesh.NodalPoints.Clear()
-            Mesh.NodalPoints.Add(New NodalPoint(0, 0, 0))
+            Mesh.Nodes.Clear()
+            Mesh.Nodes.Add(New NodalPoint(0, 0, 0))
 
             Dim x As Double
             Dim l As Double = _ForwardLength + _Chord + _RearLength
@@ -326,30 +330,30 @@ Namespace VisualModel.Models.Components
 
                 Dim PL As New EVector3(SectionCenter)
                 PL.Z -= _LowerChamber.BasicLine(xl) * l
-                Mesh.NodalPoints.Add(New NodalPoint(PL.X, PL.Y, PL.Z))
+                Mesh.Nodes.Add(New NodalPoint(PL.X, PL.Y, PL.Z))
 
                 Dim P0 As New EVector3(SectionCenter)
                 P0.Y += vl.X * _LowerChamber.BasicLine(xl) * l
                 P0.Z += vl.Y * _LowerChamber.BasicLine(xl) * l
-                Mesh.NodalPoints.Add(New NodalPoint(P0.X, P0.Y, P0.Z))
+                Mesh.Nodes.Add(New NodalPoint(P0.X, P0.Y, P0.Z))
 
                 Dim P1 As New EVector3(SectionCenter)
                 P1.Y += _SideChamber.BasicLine(xl) * l
                 P1.Z = x / _ForwardLength * _LeadingEdgeElevation
-                Mesh.NodalPoints.Add(New NodalPoint(P1.X, P1.Y, P1.Z))
+                Mesh.Nodes.Add(New NodalPoint(P1.X, P1.Y, P1.Z))
 
                 Dim P2 As New EVector3(SectionCenter)
                 P2.Y += vu.X * _UpperChamber.BasicLine(xl) * l
                 P2.Z += vu.Y * _UpperChamber.BasicLine(xl) * l
-                Mesh.NodalPoints.Add(New NodalPoint(P2.X, P2.Y, P2.Z))
+                Mesh.Nodes.Add(New NodalPoint(P2.X, P2.Y, P2.Z))
 
                 Dim PU As New EVector3(SectionCenter)
                 PU.Z += _UpperChamber.BasicLine(xl) * l
-                Mesh.NodalPoints.Add(New NodalPoint(PU.X, PU.Y, PU.Z))
+                Mesh.Nodes.Add(New NodalPoint(PU.X, PU.Y, PU.Z))
 
-                Mesh.NodalPoints.Add(New NodalPoint(P2.X, -P2.Y, P2.Z))
-                Mesh.NodalPoints.Add(New NodalPoint(P1.X, -P1.Y, P1.Z))
-                Mesh.NodalPoints.Add(New NodalPoint(P0.X, -P0.Y, P0.Z))
+                Mesh.Nodes.Add(New NodalPoint(P2.X, -P2.Y, P2.Z))
+                Mesh.Nodes.Add(New NodalPoint(P1.X, -P1.Y, P1.Z))
+                Mesh.Nodes.Add(New NodalPoint(P0.X, -P0.Y, P0.Z))
 
                 nSections += 1
 
@@ -366,30 +370,30 @@ Namespace VisualModel.Models.Components
 
                 Dim PL As New EVector3(SectionCenter)
                 PL.Z -= _LowerChamber.BasicLine(xl) * l
-                Mesh.NodalPoints.Add(New NodalPoint(PL.X, PL.Y, PL.Z))
+                Mesh.Nodes.Add(New NodalPoint(PL.X, PL.Y, PL.Z))
 
                 Dim P0 As New EVector3(SectionCenter)
                 P0.Y += vl.X * _LowerChamber.BasicLine(xl) * l
                 P0.Z += vl.Y * _LowerChamber.BasicLine(xl) * l
-                Mesh.NodalPoints.Add(New NodalPoint(P0.X, P0.Y, P0.Z))
+                Mesh.Nodes.Add(New NodalPoint(P0.X, P0.Y, P0.Z))
 
                 Dim P1 As New EVector3(SectionCenter)
                 P1.Y += _SideChamber.BasicLine(xl) * l
                 P1.Z = _Chord * _ProfileChamber.BasicLine(i / _ChordSections) + _LeadingEdgeElevation
-                Mesh.NodalPoints.Add(New NodalPoint(P1.X, P1.Y, P1.Z))
+                Mesh.Nodes.Add(New NodalPoint(P1.X, P1.Y, P1.Z))
 
                 Dim P2 As New EVector3(SectionCenter)
                 P2.Y += vu.X * _UpperChamber.BasicLine(xl) * l
                 P2.Z += vu.Y * _UpperChamber.BasicLine(xl) * l
-                Mesh.NodalPoints.Add(New NodalPoint(P2.X, P2.Y, P2.Z))
+                Mesh.Nodes.Add(New NodalPoint(P2.X, P2.Y, P2.Z))
 
                 Dim PU As New EVector3(SectionCenter)
                 PU.Z += _UpperChamber.BasicLine(xl) * l
-                Mesh.NodalPoints.Add(New NodalPoint(PU.X, PU.Y, PU.Z))
+                Mesh.Nodes.Add(New NodalPoint(PU.X, PU.Y, PU.Z))
 
-                Mesh.NodalPoints.Add(New NodalPoint(P2.X, -P2.Y, P2.Z))
-                Mesh.NodalPoints.Add(New NodalPoint(P1.X, -P1.Y, P1.Z))
-                Mesh.NodalPoints.Add(New NodalPoint(P0.X, -P0.Y, P0.Z))
+                Mesh.Nodes.Add(New NodalPoint(P2.X, -P2.Y, P2.Z))
+                Mesh.Nodes.Add(New NodalPoint(P1.X, -P1.Y, P1.Z))
+                Mesh.Nodes.Add(New NodalPoint(P0.X, -P0.Y, P0.Z))
 
                 nSections += 1
 
@@ -406,36 +410,36 @@ Namespace VisualModel.Models.Components
 
                 Dim PL As New EVector3(SectionCenter)
                 PL.Z -= _LowerChamber.BasicLine(xl) * l
-                Mesh.NodalPoints.Add(New NodalPoint(PL.X, PL.Y, PL.Z))
+                Mesh.Nodes.Add(New NodalPoint(PL.X, PL.Y, PL.Z))
 
                 Dim P0 As New EVector3(SectionCenter)
                 P0.Y += vl.X * _LowerChamber.BasicLine(xl) * l
                 P0.Z += vl.Y * _LowerChamber.BasicLine(xl) * l
-                Mesh.NodalPoints.Add(New NodalPoint(P0.X, P0.Y, P0.Z))
+                Mesh.Nodes.Add(New NodalPoint(P0.X, P0.Y, P0.Z))
 
                 Dim P1 As New EVector3(SectionCenter)
                 P1.Y += _SideChamber.BasicLine(xl) * l
                 P1.Z = i / _RearSections * (_RearPointElevation - _LeadingEdgeElevation) + _LeadingEdgeElevation
-                Mesh.NodalPoints.Add(New NodalPoint(P1.X, P1.Y, P1.Z))
+                Mesh.Nodes.Add(New NodalPoint(P1.X, P1.Y, P1.Z))
 
                 Dim P2 As New EVector3(SectionCenter)
                 P2.Y += vu.X * _UpperChamber.BasicLine(xl) * l
                 P2.Z += vu.Y * _UpperChamber.BasicLine(xl) * l
-                Mesh.NodalPoints.Add(New NodalPoint(P2.X, P2.Y, P2.Z))
+                Mesh.Nodes.Add(New NodalPoint(P2.X, P2.Y, P2.Z))
 
                 Dim PU As New EVector3(SectionCenter)
                 PU.Z += _UpperChamber.BasicLine(xl) * l
-                Mesh.NodalPoints.Add(New NodalPoint(PU.X, PU.Y, PU.Z))
+                Mesh.Nodes.Add(New NodalPoint(PU.X, PU.Y, PU.Z))
 
-                Mesh.NodalPoints.Add(New NodalPoint(P2.X, -P2.Y, P2.Z))
-                Mesh.NodalPoints.Add(New NodalPoint(P1.X, -P1.Y, P1.Z))
-                Mesh.NodalPoints.Add(New NodalPoint(P0.X, -P0.Y, P0.Z))
+                Mesh.Nodes.Add(New NodalPoint(P2.X, -P2.Y, P2.Z))
+                Mesh.Nodes.Add(New NodalPoint(P1.X, -P1.Y, P1.Z))
+                Mesh.Nodes.Add(New NodalPoint(P0.X, -P0.Y, P0.Z))
 
                 nSections += 1
 
             Next
 
-            Mesh.NodalPoints.Add(New NodalPoint(l, 0, _RearPointElevation))
+            Mesh.Nodes.Add(New NodalPoint(l, 0, _RearPointElevation))
 
             ' add panels (1-based indices!):
 
@@ -480,10 +484,31 @@ Namespace VisualModel.Models.Components
 
             GenerateLattice()
 
-            GenerateControlPointsAndNormalVectors()
+            ' Launch base sub to raise update event.
+
+            MyBase.GenerateMesh()
 
         End Sub
 
+        Public Overrides Function Clone() As Surface
+            Return Nothing
+        End Function
+
+        Public Overrides Sub Refresh3DModel(ByRef gl As OpenGL, Optional SelectionMode As SelectionModes = SelectionModes.smNoSelection, Optional ElementIndex As Integer = 0)
+            Throw New NotImplementedException()
+        End Sub
+
+        Public Overrides Sub GenerateMesh()
+            Throw New NotImplementedException()
+        End Sub
+
+        Public Overrides Sub WriteToXML(ByRef writes As XmlWriter)
+            Throw New NotImplementedException()
+        End Sub
+
+        Public Overrides Sub ReadFromXML(ByRef reader As XmlReader)
+            Throw New NotImplementedException()
+        End Sub
     End Class
 
 End Namespace

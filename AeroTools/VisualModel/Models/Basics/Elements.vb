@@ -96,7 +96,7 @@ Namespace VisualModel.Models.Basics
 
         End Sub
 
-        Public Property ObtenerPanelAdyacente(ByVal Index As AdjacentRing) As Panel
+        Public Property GetAdjacentPanel(ByVal Index As AdjacentRing) As Panel
             Set(ByVal value As Panel)
                 _AdjacentPanels(Index) = value
             End Set
@@ -119,7 +119,7 @@ Namespace VisualModel.Models.Basics
             End Get
         End Property
 
-        Public Property ObtenerSentido(ByVal Index As AdjacentRing) As Sence
+        Public Property GetSence(ByVal Index As AdjacentRing) As Sence
             Get
                 Return _AdjacenPanelsSences(Index)
             End Get

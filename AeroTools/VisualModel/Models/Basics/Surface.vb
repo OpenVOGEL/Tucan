@@ -23,10 +23,11 @@ Imports System.Xml
 Namespace VisualModel.Models.Basics
 
     ''' <summary>
-    ''' Basic definition of a base surface able to be operated and selected.
+    ''' Basic definition of a model surface. 
+    ''' All model surfaces in the library must inherit from this class.
     ''' </summary>
     ''' <remarks></remarks>
-    Public MustInherit Class BaseSurface
+    Public MustInherit Class Surface
 
         Implements IOperational
 
@@ -51,10 +52,48 @@ Namespace VisualModel.Models.Basics
         Public Property Mesh As Mesh
 
         ''' <summary>
+        ''' Number of segments in the mesh.
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property NumberOfSegments As Integer
+            Get
+                Return Mesh.Lattice.Count
+            End Get
+        End Property
+
+        ''' <summary>
+        ''' Number of nodes in the mesh.
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property NumberOfNodes As Integer
+            Get
+                If Not IsNothing(Mesh.Nodes) Then
+                    Return Mesh.Nodes.Count
+                Else
+                    Return 0
+                End If
+            End Get
+        End Property
+
+        ''' <summary>
+        ''' Number of panels in the mesh.
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property NumberOfPanels As Integer
+            Get
+                If Not IsNothing(Mesh.Panels) Then
+                    Return Mesh.Panels.Count
+                Else
+                    Return 0
+                End If
+            End Get
+        End Property
+
+        ''' <summary>
         ''' Surface visual properties.
         ''' </summary>
         ''' <returns></returns>
-        Public Property VisualProps As VisualizationProperties
+        Public Property VisualProperties As VisualProperties
 
         ''' <summary>
         ''' Indicates if the surface participates in the calculation model.
@@ -94,24 +133,64 @@ Namespace VisualModel.Models.Basics
 
 #Region " Operations "
 
-        Public Overridable Sub Translate(ByVal Vector As EVector3) Implements IOperational.Translate
+        ''' <summary>
+        ''' Local directions.
+        ''' </summary>
+        ''' <remarks></remarks>
+        Public Property LocalDirections As New EBase3
 
-            Mesh.Translate(Vector)
+        ''' <summary>
+        ''' Moves the origin of the local coordinates to a given point.
+        ''' </summary>
+        ''' <param name="Vector"></param>
+        Public Overridable Sub MoveTo(ByVal Vector As EVector3) Implements IOperational.MoveTo
+
+            Position.X = Vector.X
+            Position.Y = Vector.Y
+            Position.Z = Vector.Z
+
+            GenerateMesh()
 
         End Sub
 
+        ''' <summary>
+        ''' Changes the orientation of the surface.
+        ''' </summary>
+        ''' <param name="Point"></param>
+        ''' <param name="Ori"></param>
         Public Overridable Sub Orientate(ByVal Point As EVector3, ByVal Ori As EulerAngles) Implements IOperational.Orientate
 
-            Mesh.Rotate(Point, Ori)
+            Orientation.Psi = Ori.Psi
+            Orientation.Tita = Ori.Tita
+            Orientation.Fi = Ori.Fi
+
+            CenterOfRotation.X = Point.X
+            CenterOfRotation.Y = Point.Y
+            CenterOfRotation.Z = Point.Z
+
+            GenerateMesh()
 
         End Sub
 
+        ''' <summary>
+        ''' Scales the coordinates.
+        ''' </summary>
+        ''' <param name="Scale"></param>
         Public Overridable Sub Scale(ByVal Scale As Double) Implements IOperational.Scale
 
-            Mesh.Scale(Scale)
+            SizeScale = Scale
+
+            GenerateMesh()
 
         End Sub
 
+        ''' <summary>
+        ''' Align the surface.
+        ''' </summary>
+        ''' <param name="P1"></param>
+        ''' <param name="P2"></param>
+        ''' <param name="P3"></param>
+        ''' <param name="P4"></param>
         Public Overridable Sub Align(ByVal P1 As EVector3, ByVal P2 As EVector3, ByVal P3 As EVector3, ByVal P4 As EVector3) Implements IOperational.Align
 
             Mesh.Align()
@@ -134,11 +213,13 @@ Namespace VisualModel.Models.Basics
         ''' <remarks></remarks>
         Public Sub UnselectAll() Implements ISelectable.UnselectAll
 
-            For Each node In Mesh.NodalPoints
+            For Each node In Mesh.Nodes
                 node.Active = False
             Next
 
         End Sub
+
+        Public MustOverride Function Clone() As Surface
 
 #Region " Meshing "
 
@@ -151,7 +232,16 @@ Namespace VisualModel.Models.Basics
         ''' <remarks></remarks>
         Public MustOverride Sub Refresh3DModel(ByRef gl As OpenGL, Optional ByVal SelectionMode As SelectionModes = SelectionModes.smNoSelection, Optional ByVal ElementIndex As Integer = 0)
 
-        Public MustOverride Sub GenerateMesh()
+        ''' <summary>
+        ''' Generates the mesh.
+        ''' </summary>
+        Public Overridable Sub GenerateMesh()
+
+            RaiseEvent MeshUpdated()
+
+        End Sub
+
+        Public Event MeshUpdated()
 
 #End Region
 

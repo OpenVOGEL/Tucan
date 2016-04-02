@@ -426,44 +426,50 @@ Public Class FormFuselageEditor
 
     Private Sub SelectVertex(ByVal s As Object, ByVal e As MouseEventArgs) Handles pbSections.MouseDown
 
-        If e.Button = Windows.Forms.MouseButtons.Left Then
+        If e.Button = MouseButtons.Left Then
 
-            _SelectedVertexIndex = -1
+            If CurrentSection IsNot Nothing Then
 
-            ObtainExtremeCoordinates(CurrentSection)
+                _SelectedVertexIndex = -1
 
-            For i = 0 To CurrentSection.Vertices.Count - 1
-                Dim p As PointF = GetPoint(CurrentSection.Vertices(i))
-                Dim dx As Single = p.X - e.X
-                Dim dy As Single = p.Y - e.Y
-                If dx * dx + dy * dy < 25 Then
-                    _SelectedVertexIndex = i
-                    movingVertex = True
-                    vertexDrawingAnkor.X = e.X
-                    vertexDrawingAnkor.Y = e.Y
-                    vertexModelAnkor.X = CurrentSection.Vertices(i).X
-                    vertexModelAnkor.Y = CurrentSection.Vertices(i).Y
+                ObtainExtremeCoordinates(CurrentSection)
 
-                    ' Enable controls:
+                For i = 0 To CurrentSection.Vertices.Count - 1
+                    Dim p As PointF = GetPoint(CurrentSection.Vertices(i))
+                    Dim dx As Single = p.X - e.X
+                    Dim dy As Single = p.Y - e.Y
+                    If dx * dx + dy * dy < 25 Then
+                        _SelectedVertexIndex = i
+                        movingVertex = True
+                        vertexDrawingAnkor.X = e.X
+                        vertexDrawingAnkor.Y = e.Y
+                        vertexModelAnkor.X = CurrentSection.Vertices(i).X
+                        vertexModelAnkor.Y = CurrentSection.Vertices(i).Y
 
-                    CoordinateControlsEnabled = True
+                        ' Enable controls:
 
-                    UpdateControlValues()
+                        CoordinateControlsEnabled = True
 
-                    Exit For
+                        UpdateControlValues()
+
+                        Exit For
+                    End If
+                Next
+
+                If _SelectedVertexIndex < 0 Then
+
+                    ' Disable controls:
+
+                    CoordinateControlsEnabled = False
+
                 End If
-            Next
 
-            If _SelectedVertexIndex < 0 Then
-
-                ' Disable controls:
-
-                CoordinateControlsEnabled = False
+                Refresh()
 
             End If
 
         End If
-        Refresh()
+
     End Sub
 
     Private movingVertex As Boolean = False
@@ -715,18 +721,18 @@ Public Class FormFuselageEditor
 
                 Dim AnchorLine As New AnchorLine
 
-                Dim n As Integer = _LiftingSurfaces(i).nChordPanels
+                Dim n As Integer = _LiftingSurfaces(i).NumberOfChordPanels
 
                 For j = 0 To n
 
                     Dim Line As New ELine3()
 
-                    Line.Point.Z = _LiftingSurfaces(i).Mesh.NodalPoints(j).Position.X
-                    Line.Point.Y = _LiftingSurfaces(i).Mesh.NodalPoints(j).Position.Z
-                    Line.Point.X = _LiftingSurfaces(i).Mesh.NodalPoints(j).Position.Y
+                    Line.Point.Z = _LiftingSurfaces(i).Mesh.Nodes(j).Position.X
+                    Line.Point.Y = _LiftingSurfaces(i).Mesh.Nodes(j).Position.Z
+                    Line.Point.X = _LiftingSurfaces(i).Mesh.Nodes(j).Position.Y
 
-                    Dim pa As EVector3 = _LiftingSurfaces(i).Mesh.NodalPoints(j).Position
-                    Dim pb As EVector3 = _LiftingSurfaces(i).Mesh.NodalPoints(j + n + 1).Position
+                    Dim pa As EVector3 = _LiftingSurfaces(i).Mesh.Nodes(j).Position
+                    Dim pb As EVector3 = _LiftingSurfaces(i).Mesh.Nodes(j + n + 1).Position
 
                     Line.Direction.X = pa.Y - pb.Y
                     Line.Direction.Y = pa.Z - pb.Z

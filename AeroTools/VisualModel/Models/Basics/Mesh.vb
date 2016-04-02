@@ -22,13 +22,13 @@ Namespace VisualModel.Models.Basics
 
     Public Class Mesh
 
-        Public NodalPoints As New List(Of NodalPoint) ' Es la que se utiliza para el resto del calculo. Es igual a la original por la matriz de orientacion, mas un vector de translacion
+        Public Nodes As New List(Of NodalPoint) ' Es la que se utiliza para el resto del calculo. Es igual a la original por la matriz de orientacion, mas un vector de translacion
         Public Panels As New List(Of Panel)
         Public Lattice As New List(Of LatticeSegment) ' Matriz de conexion de vórcies
 
         Public Sub Translate(ByVal Vector As EVector3)
 
-            For Each Point In NodalPoints
+            For Each Point In Nodes
 
                 Point.Position.Add(Vector)
 
@@ -41,7 +41,7 @@ Namespace VisualModel.Models.Basics
             Dim M As New RotationMatrix
             M.Generate(Ori)
 
-            For Each Point In NodalPoints
+            For Each Point In Nodes
 
                 Point.Position.Substract(ReferencePoint)
                 Point.Position.Rotate(M)
@@ -53,7 +53,7 @@ Namespace VisualModel.Models.Basics
 
         Public Sub Rotate(ByVal ReferencePoint As EVector3, ByVal M As RotationMatrix)
 
-            For Each Point In NodalPoints
+            For Each Point In Nodes
 
                 Point.Position.Substract(ReferencePoint)
                 Point.Position.Rotate(M)
@@ -65,7 +65,7 @@ Namespace VisualModel.Models.Basics
 
         Public Sub Scale(ByVal Scale As Double)
 
-            For Each Point In NodalPoints
+            For Each Point In Nodes
 
                 Point.Position.Scale(Scale)
 

@@ -24,12 +24,13 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <SupportUrl>https://sites.google.com/site/gahvogel/main/steady-aerodynamics</SupportUrl>
-    <ErrorReportUrl>https://sites.google.com/site/gahvogel/main/steady-aerodynamics</ErrorReportUrl>
-    <ProductName>VOGEL 2015</ProductName>
-    <PublisherName>Vogel project</PublisherName>
-    <ApplicationRevision>26</ApplicationRevision>
-    <ApplicationVersion>2015.0.0.%2a</ApplicationVersion>
+    <SupportUrl>https://www.openvogel.com</SupportUrl>
+    <ErrorReportUrl>https://github.com/GuillermoHazebrouck/OpenVOGEL/issues</ErrorReportUrl>
+    <ProductName>Open VOGEL 2016 - Beta 2</ProductName>
+    <PublisherName>Open VOGEL</PublisherName>
+    <SuiteName>Open VOGEL</SuiteName>
+    <ApplicationRevision>3</ApplicationRevision>
+    <ApplicationVersion>2016.2.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
@@ -115,28 +116,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationEvents.vb" />
-    <Compile Include="Dialogos\FormAddObject.Designer.vb">
-      <DependentUpon>FormAddObject.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Dialogos\FormAddObject.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="Dialogos\FormAbout.Designer.vb">
       <DependentUpon>FormAbout.vb</DependentUpon>
     </Compile>
     <Compile Include="Dialogos\FormAbout.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Dialogos\FormObjects.Designer.vb">
-      <DependentUpon>FormObjects.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Dialogos\FormObjects.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Dialogos\FormOptions.designer.vb">
-      <DependentUpon>FormOptions.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Dialogos\FormOptions.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Dialogos\StartupScreen.designer.vb">
@@ -174,17 +157,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Dialogos\FormAddObject.resx">
-      <DependentUpon>FormAddObject.vb</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Dialogos\FormAbout.resx">
       <DependentUpon>FormAbout.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Dialogos\FormObjects.resx">
-      <DependentUpon>FormObjects.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Dialogos\FormOptions.resx">
-      <DependentUpon>FormOptions.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogos\StartupScreen.ig.resx">
       <DependentUpon>StartupScreen.vb</DependentUpon>

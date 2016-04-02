@@ -262,6 +262,18 @@
     <Compile Include="VisualModel\GUI\User controls\Polars\QuadraticPolarControl.vb">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="VisualModel\GUI\User controls\Ribbon\FormSelectObject.Designer.vb">
+      <DependentUpon>FormSelectObject.vb</DependentUpon>
+    </Compile>
+    <Compile Include="VisualModel\GUI\User controls\Ribbon\FormSelectObject.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="VisualModel\GUI\User controls\Ribbon\MainRibbon.Designer.vb">
+      <DependentUpon>MainRibbon.vb</DependentUpon>
+    </Compile>
+    <Compile Include="VisualModel\GUI\User controls\Ribbon\MainRibbon.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="VisualModel\GUI\User controls\VelocityControl.Designer.vb">
       <DependentUpon>VelocityControl.vb</DependentUpon>
     </Compile>
@@ -280,7 +292,7 @@
     <Compile Include="VisualModel\Interface\Results\ResultModel.vb" />
     <Compile Include="VisualModel\Interface\Selection.vb" />
     <Compile Include="VisualModel\IO\IOXML.vb" />
-    <Compile Include="VisualModel\Models\Basics\BaseSurface.vb" />
+    <Compile Include="VisualModel\Models\Basics\Surface.vb" />
     <Compile Include="VisualModel\Models\Basics\ChamberdLine.vb" />
     <Compile Include="VisualModel\Models\Basics\Elements.vb" />
     <Compile Include="VisualModel\Models\Basics\Mesh.vb" />
@@ -288,7 +300,7 @@
     <Compile Include="VisualModel\Models\CalculationModel.vb" />
     <Compile Include="VisualModel\Models\Components\Empennage.vb" />
     <Compile Include="VisualModel\Models\Components\Fuselage.vb" />
-    <Compile Include="VisualModel\Models\Components\GeneralSurface.vb" />
+    <Compile Include="VisualModel\Models\Components\ResultContainer.vb" />
     <Compile Include="VisualModel\Models\Components\JetEngine.vb" />
     <Compile Include="VisualModel\Models\Components\LiftingSurface.vb" />
     <Compile Include="VisualModel\Models\Components\Nacelle.vb" />
@@ -348,6 +360,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="VisualModel\GUI\User controls\Polars\QuadraticPolarControl.resx">
       <DependentUpon>QuadraticPolarControl.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="VisualModel\GUI\User controls\Ribbon\FormSelectObject.resx">
+      <DependentUpon>FormSelectObject.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="VisualModel\GUI\User controls\Ribbon\MainRibbon.resx">
+      <DependentUpon>MainRibbon.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="VisualModel\GUI\User controls\VelocityControl.resx">
       <DependentUpon>VelocityControl.vb</DependentUpon>

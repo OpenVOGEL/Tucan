@@ -25,20 +25,20 @@ Namespace VisualModel.Environment.Properties
 
     Public Class VisualizationParameters
 
-        Public CameraOrientation As EulerAngles
-        Public CameraPosition As EVector3
-        Public Proximity As Double = 1
-        Public OrthoProjection As Boolean
-        Public ReferenceFrame As New ReferenceFrame
-        Public Axes As New CoordinateAxes
-        Public ScreenColor As Color = Color.White ' Drawing.Color.FromArgb(49, 49, 49)
-        Public AllowLineSmoothing As Boolean = True
-        Public AllowAlphaBlending As Boolean = True
-        Public MouseStartPosition As EVector2
-        Public Panning As Boolean = False
-        Public Rotating As Boolean = False
+        Public Property CameraOrientation As EulerAngles
+        Public Property CameraPosition As EVector3
+        Public Property Proximity As Double = 1
+        Public Property OrthoProjection As Boolean
+        Public Property ReferenceFrame As New ReferenceFrame
+        Public Property Axes As New CoordinateAxes
+        Public Property ScreenColor As Color = Color.White ' Drawing.Color.FromArgb(49, 49, 49)
+        Public Property AllowLineSmoothing As Boolean = True
+        Public Property AllowAlphaBlending As Boolean = True
+        Public Property MouseStartPosition As EVector2
+        Public Property Panning As Boolean = False
+        Public Property Rotating As Boolean = False
 
-        Public Sub IniciarParametros()
+        Public Sub Initialize()
 
             CameraOrientation = New EulerAngles
             CameraOrientation.Psi = 0.0
@@ -55,7 +55,7 @@ Namespace VisualModel.Environment.Properties
 
         End Sub
 
-        Public Sub AdquirirPosicionDeCámara(ByVal PosicionDelMouseX As Integer, ByVal PosicionDelMouseY As Integer, ByVal Escala As Double)
+        Public Sub AcquireCameraPosition(ByVal PosicionDelMouseX As Integer, ByVal PosicionDelMouseY As Integer, ByVal Escala As Double)
 
             CameraPosition.X = CameraPosition.X - (MouseStartPosition.X - PosicionDelMouseX) * Escala
             CameraPosition.Y = CameraPosition.Y + (MouseStartPosition.Y - PosicionDelMouseY) * Escala

@@ -19,6 +19,9 @@ Imports MathTools.Algebra.EuclideanSpace
 
 Namespace VisualModel.Models.Components
 
+    ''' <summary>
+    ''' (Under development)
+    ''' </summary>
     Public Class Empennage
 
         Private v_P0 As EVector3
