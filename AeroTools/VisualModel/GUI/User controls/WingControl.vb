@@ -161,7 +161,7 @@ Public Class WingControl
 
         SurfaceNameText.Text = Surface.Name
 
-        SectorActualNumericUpDown.Maximum = Surface.NumberOfWingRegions
+        SectorActualNumericUpDown.Maximum = Surface.WingRegions.Count
         SectorActualNumericUpDown.Minimum = 1
         SectorActualNumericUpDown.Value = Surface.CurrentRegionID
 
@@ -169,7 +169,7 @@ Public Class WingControl
         nudRootFlap.Value = Surface.RootFlap
         nudFlapPanels.Value = Surface.FlapPanels
         NPCuerda_Box.Value = Surface.NumberOfChordPanels
-        NSectores_box.Value = Surface.NumberOfWingRegions
+        NSectores_box.Value = Surface.WingRegions.Count
 
         SimetriaEnXZ.Checked = Surface.Symmetric
 
@@ -263,10 +263,10 @@ Public Class WingControl
         Surface.AddRegion()
 
         Ready = False
-        Me.SectorActualNumericUpDown.Maximum = Surface.NumberOfWingRegions
-        Me.SectorActualNumericUpDown.Minimum = 1
-        Me.SectorActualNumericUpDown.Value = Surface.CurrentRegionID
-        Me.NSectores_box.Value = Surface.NumberOfWingRegions
+        SectorActualNumericUpDown.Maximum = Surface.WingRegions.Count
+        SectorActualNumericUpDown.Minimum = 1
+        SectorActualNumericUpDown.Value = Surface.CurrentRegionID
+        NSectores_box.Value = Surface.WingRegions.Count
         Ready = True
 
         LoadRegionToForm()
@@ -286,7 +286,7 @@ Public Class WingControl
         Surface.InsertRegion()
 
         Ready = False
-        Me.SectorActualNumericUpDown.Maximum = Surface.NumberOfWingRegions
+        Me.SectorActualNumericUpDown.Maximum = Surface.WingRegions.Count
         Me.SectorActualNumericUpDown.Minimum = 1
         Me.SectorActualNumericUpDown.Value = Surface.CurrentRegionID
         Ready = True

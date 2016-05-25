@@ -1994,6 +1994,11 @@ AeroTools
  </summary>
  <remarks></remarks>
 </member>
+<member name="E:AeroTools.UVLM.Solver.UVLMSolver.CalculationAborted">
+ <summary>
+ Occurs when the calculation is automatically aborted.
+ </summary>
+</member>
 <member name="M:AeroTools.UVLM.Solver.UVLMSolver.FlightSim(AeroTools.FormProgress@,System.String)">
  <summary>
  Convect wakes and calculates loads at the last time step.
@@ -2064,31 +2069,31 @@ AeroTools
  Calculates the unsteady transit provided a velocity profile.
  </summary>
 </member>
-<member name="F:AeroTools.UVLM.Settings.SimulationSettings.StreamVelocity">
+<member name="P:AeroTools.UVLM.Settings.SimulationSettings.StreamVelocity">
  <summary>
  Free stream velocity amplitude vector (components are scaled by an amplitude factor in unsteady problems).
  </summary>
  <remarks></remarks>
 </member>
-<member name="F:AeroTools.UVLM.Settings.SimulationSettings.Omega">
+<member name="P:AeroTools.UVLM.Settings.SimulationSettings.Omega">
  <summary>
  Angular velocity of aircraft reference frame (not implemented yet).
  </summary>
  <remarks></remarks>
 </member>
-<member name="F:AeroTools.UVLM.Settings.SimulationSettings.Density">
+<member name="P:AeroTools.UVLM.Settings.SimulationSettings.Density">
  <summary>
  Free stream density in kg/m³
  </summary>
  <remarks></remarks>
 </member>
-<member name="F:AeroTools.UVLM.Settings.SimulationSettings.StaticPressure">
+<member name="P:AeroTools.UVLM.Settings.SimulationSettings.StaticPressure">
  <summary>
  Free stream static pressure in Pa.
  </summary>
  <remarks></remarks>
 </member>
-<member name="F:AeroTools.UVLM.Settings.SimulationSettings.Viscocity">
+<member name="P:AeroTools.UVLM.Settings.SimulationSettings.Viscocity">
  <summary>
  Free stream viscosity
  </summary>
@@ -2279,22 +2284,22 @@ AeroTools
  </summary>
  <remarks></remarks>
 </member>
-<member name="P:AeroTools.VisualModel.Interface.VisualizationProperties.ColorSurface">
+<member name="P:AeroTools.VisualModel.Interface.VisualProperties.ColorSurface">
  <summary>
  Color of the surface
  </summary>
 </member>
-<member name="P:AeroTools.VisualModel.Interface.VisualizationProperties.ColorMesh">
+<member name="P:AeroTools.VisualModel.Interface.VisualProperties.ColorMesh">
  <summary>
  Color of the mesh
  </summary>
 </member>
-<member name="P:AeroTools.VisualModel.Interface.VisualizationProperties.ThicknessMesh">
+<member name="P:AeroTools.VisualModel.Interface.VisualProperties.ThicknessMesh">
  <summary>
  Thickness of the mesh
  </summary>
 </member>
-<member name="P:AeroTools.VisualModel.Interface.VisualizationProperties.Transparency">
+<member name="P:AeroTools.VisualModel.Interface.VisualProperties.Transparency">
  <summary>
  Transparency of the model
  </summary>
@@ -2425,73 +2430,126 @@ AeroTools
  <returns></returns>
  <remarks></remarks>
 </member>
-<member name="T:AeroTools.VisualModel.Models.Basics.BaseSurface">
+<member name="T:AeroTools.VisualModel.Models.Basics.Surface">
  <summary>
- Basic definition of a base surface able to be operated and selected.
+ Basic definition of a model surface. 
+ All model surfaces in the library must inherit from this class.
  </summary>
  <remarks></remarks>
 </member>
-<member name="P:AeroTools.VisualModel.Models.Basics.BaseSurface.ID">
+<member name="P:AeroTools.VisualModel.Models.Basics.Surface.ID">
  <summary>
  Surface identifier.
  </summary>
  <returns></returns>
 </member>
-<member name="P:AeroTools.VisualModel.Models.Basics.BaseSurface.Name">
+<member name="P:AeroTools.VisualModel.Models.Basics.Surface.Name">
  <summary>
  Surface name.
  </summary>
  <returns></returns>
 </member>
-<member name="P:AeroTools.VisualModel.Models.Basics.BaseSurface.Mesh">
+<member name="P:AeroTools.VisualModel.Models.Basics.Surface.Mesh">
  <summary>
  Mesh.
  </summary>
  <returns></returns>
 </member>
-<member name="P:AeroTools.VisualModel.Models.Basics.BaseSurface.VisualProps">
+<member name="P:AeroTools.VisualModel.Models.Basics.Surface.NumberOfSegments">
+ <summary>
+ Number of segments in the mesh.
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:AeroTools.VisualModel.Models.Basics.Surface.NumberOfNodes">
+ <summary>
+ Number of nodes in the mesh.
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:AeroTools.VisualModel.Models.Basics.Surface.NumberOfPanels">
+ <summary>
+ Number of panels in the mesh.
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:AeroTools.VisualModel.Models.Basics.Surface.VisualProperties">
  <summary>
  Surface visual properties.
  </summary>
  <returns></returns>
 </member>
-<member name="P:AeroTools.VisualModel.Models.Basics.BaseSurface.IncludeInCalculation">
+<member name="P:AeroTools.VisualModel.Models.Basics.Surface.IncludeInCalculation">
  <summary>
  Indicates if the surface participates in the calculation model.
  </summary>
  <returns></returns>
 </member>
-<member name="P:AeroTools.VisualModel.Models.Basics.BaseSurface.LockContent">
+<member name="P:AeroTools.VisualModel.Models.Basics.Surface.LockContent">
  <summary>
  Indicate if the GUI has to block the content of this surface.
  </summary>
  <returns></returns>
 </member>
-<member name="P:AeroTools.VisualModel.Models.Basics.BaseSurface.Position">
+<member name="P:AeroTools.VisualModel.Models.Basics.Surface.Position">
  <summary>
  Position of the surface in the global coordinates system.
  </summary>
  <returns></returns>
 </member>
-<member name="P:AeroTools.VisualModel.Models.Basics.BaseSurface.CenterOfRotation">
+<member name="P:AeroTools.VisualModel.Models.Basics.Surface.CenterOfRotation">
  <summary>
  Center of rotation of the surface in the local coordinates system.
  </summary>
  <returns></returns>
 </member>
-<member name="P:AeroTools.VisualModel.Models.Basics.BaseSurface.Orientation">
+<member name="P:AeroTools.VisualModel.Models.Basics.Surface.Orientation">
  <summary>
  Orientation of the surface.
  </summary>
  <returns></returns>
 </member>
-<member name="P:AeroTools.VisualModel.Models.Basics.BaseSurface.SizeScale">
+<member name="P:AeroTools.VisualModel.Models.Basics.Surface.SizeScale">
  <summary>
  Scale of this surface.
  </summary>
  <returns></returns>
 </member>
-<member name="P:AeroTools.VisualModel.Models.Basics.BaseSurface.Selected">
+<member name="P:AeroTools.VisualModel.Models.Basics.Surface.LocalDirections">
+ <summary>
+ Local directions.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.VisualModel.Models.Basics.Surface.MoveTo(MathTools.Algebra.EuclideanSpace.EVector3)">
+ <summary>
+ Moves the origin of the local coordinates to a given point.
+ </summary>
+ <param name="Vector"></param>
+</member>
+<member name="M:AeroTools.VisualModel.Models.Basics.Surface.Orientate(MathTools.Algebra.EuclideanSpace.EVector3,MathTools.Algebra.EuclideanSpace.EulerAngles)">
+ <summary>
+ Changes the orientation of the surface.
+ </summary>
+ <param name="Point"></param>
+ <param name="Ori"></param>
+</member>
+<member name="M:AeroTools.VisualModel.Models.Basics.Surface.Scale(System.Double)">
+ <summary>
+ Scales the coordinates.
+ </summary>
+ <param name="Scale"></param>
+</member>
+<member name="M:AeroTools.VisualModel.Models.Basics.Surface.Align(MathTools.Algebra.EuclideanSpace.EVector3,MathTools.Algebra.EuclideanSpace.EVector3,MathTools.Algebra.EuclideanSpace.EVector3,MathTools.Algebra.EuclideanSpace.EVector3)">
+ <summary>
+ Align the surface.
+ </summary>
+ <param name="P1"></param>
+ <param name="P2"></param>
+ <param name="P3"></param>
+ <param name="P4"></param>
+</member>
+<member name="P:AeroTools.VisualModel.Models.Basics.Surface.Selected">
  <summary>
  Indicates if the surface is currently selected.
  </summary>
@@ -2499,13 +2557,13 @@ AeroTools
  <returns></returns>
  <remarks></remarks>
 </member>
-<member name="M:AeroTools.VisualModel.Models.Basics.BaseSurface.UnselectAll">
+<member name="M:AeroTools.VisualModel.Models.Basics.Surface.UnselectAll">
  <summary>
  Unselects all nodal points.
  </summary>
  <remarks></remarks>
 </member>
-<member name="M:AeroTools.VisualModel.Models.Basics.BaseSurface.Refresh3DModel(SharpGL.OpenGL@,AeroTools.VisualModel.Interface.SelectionModes,System.Int32)">
+<member name="M:AeroTools.VisualModel.Models.Basics.Surface.Refresh3DModel(SharpGL.OpenGL@,AeroTools.VisualModel.Interface.SelectionModes,System.Int32)">
  <summary>
  Refresh the 3D model on a OpenGL control.
  </summary>
@@ -2513,6 +2571,11 @@ AeroTools
  <param name="SelectionMode"></param>
  <param name="ElementIndex"></param>
  <remarks></remarks>
+</member>
+<member name="M:AeroTools.VisualModel.Models.Basics.Surface.GenerateMesh">
+ <summary>
+ Generates the mesh.
+ </summary>
 </member>
 <member name="M:AeroTools.VisualModel.Models.Basics.ChamberedLine.#ctor(AeroTools.VisualModel.Models.Basics.ChamberType)">
  <summary>
@@ -2636,6 +2699,11 @@ AeroTools
  Generates a copy of the current lifting surface with the option symmetric in true
  </summary>
  <remarks></remarks>
+</member>
+<member name="T:AeroTools.VisualModel.Models.Components.Empennage">
+ <summary>
+ (Under development)
+ </summary>
 </member>
 <member name="T:AeroTools.VisualModel.Models.Components.WingAnchorInfo">
  <summary>
@@ -2854,88 +2922,78 @@ AeroTools
  <param name="writer"></param>
  <remarks></remarks>
 </member>
-<member name="T:AeroTools.VisualModel.Models.Components.GeneralSurface">
+<member name="T:AeroTools.VisualModel.Models.Components.ResultContainer">
  <summary>
  Represents a multi-purpose surface for post-processing.
  </summary>
 </member>
-<member name="M:AeroTools.VisualModel.Models.Components.GeneralSurface.Clear">
+<member name="M:AeroTools.VisualModel.Models.Components.ResultContainer.Clear">
  <summary>
  Clears the mesh.
  </summary>
 </member>
-<member name="P:AeroTools.VisualModel.Models.Components.GeneralSurface.AccessPath">
+<member name="P:AeroTools.VisualModel.Models.Components.ResultContainer.AccessPath">
  <summary>
  Location of this lattice in the database.
  </summary>
  <returns></returns>
 </member>
-<member name="P:AeroTools.VisualModel.Models.Components.GeneralSurface.PressureRange">
+<member name="P:AeroTools.VisualModel.Models.Components.ResultContainer.PressureRange">
  <summary>
  Extreme values of the local pressure.
  </summary>
  <returns></returns>
 </member>
-<member name="P:AeroTools.VisualModel.Models.Components.GeneralSurface.DisplacementRange">
+<member name="P:AeroTools.VisualModel.Models.Components.ResultContainer.DisplacementRange">
  <summary>
  Maximum and minimum displacements.
  </summary>
  <returns></returns>
 </member>
-<member name="P:AeroTools.VisualModel.Models.Components.GeneralSurface.NodalPosition(System.Int32)">
- <summary>
- Position of a nodal point.
- </summary>
- <param name="Node"></param>
- <returns></returns>
-</member>
-<member name="P:AeroTools.VisualModel.Models.Components.GeneralSurface.NodalPoint(System.Int32)">
- <summary>
- Nodal point.
- </summary>
- <param name="Node"></param>
- <returns></returns>
-</member>
-<member name="P:AeroTools.VisualModel.Models.Components.GeneralSurface.ClonedPanel(System.Int32)">
- <summary>
- Returns a clone of a panel.
- </summary>
- <param name="Node"></param>
- <returns></returns>
-</member>
-<member name="P:AeroTools.VisualModel.Models.Components.GeneralSurface.Panel(System.Int32)">
- <summary>
- Mesh panel.
- </summary>
- <param name="Node"></param>
- <returns></returns>
-</member>
-<member name="P:AeroTools.VisualModel.Models.Components.GeneralSurface.Segment(System.Int32)">
- <summary>
- Lattice segment.
- </summary>
- <param name="SegmentNumber"></param>
- <returns></returns>
-</member>
-<member name="M:AeroTools.VisualModel.Models.Components.GeneralSurface.LoadFromLattice(AeroTools.UVLM.Models.Aero.Lattice)">
+<member name="M:AeroTools.VisualModel.Models.Components.ResultContainer.LoadFromLattice(AeroTools.UVLM.Models.Aero.Lattice)">
  <summary>
  Loads the geometry from a calculation model lattice.
  </summary>
  <param name="Lattice"></param>
 </member>
-<member name="M:AeroTools.VisualModel.Models.Components.GeneralSurface.UpdatePosition">
- <summary>
- Position the model in relation to the reference position of the nodes (it won't work if there is no reference position). 
- </summary>
- <remarks></remarks>
-</member>
-<member name="M:AeroTools.VisualModel.Models.Components.GeneralSurface.UpdateDisplacement(System.Double)">
+<member name="M:AeroTools.VisualModel.Models.Components.ResultContainer.UpdateDisplacement(System.Double)">
  <summary>
  Updates the position based on the reference nodal position and displacement.
  </summary>
  <remarks></remarks>
 </member>
-<member name="M:AeroTools.VisualModel.Models.Components.GeneralSurface.LoadFromTextFile">
+<member name="M:AeroTools.VisualModel.Models.Components.ResultContainer.SearchForAdjacentPanels">
+ <summary>
+ Obsolete sub.
+ </summary>
+</member>
+<member name="M:AeroTools.VisualModel.Models.Components.ResultContainer.GenerateControlPointsAndNormalVectors">
+ <summary>
+ Generates control points and normal vectors for each panel.
+ </summary>
+</member>
+<member name="M:AeroTools.VisualModel.Models.Components.ResultContainer.FindPressureRange(System.Boolean)">
+ <summary>
+ Finds the ragne of pressure over the surface.
+ </summary>
+ <param name="AbsoluteValue"></param>
+</member>
+<member name="M:AeroTools.VisualModel.Models.Components.ResultContainer.DistributePressureOnNodes">
+ <summary>
+ Assignes an interpolated value to the nodal pressures (just for the colormap).
+ </summary>
+</member>
+<member name="M:AeroTools.VisualModel.Models.Components.ResultContainer.UpdateColormapWithPressure">
+ <summary>
+ Updates the map with pressure.
+ </summary>
+</member>
+<member name="M:AeroTools.VisualModel.Models.Components.ResultContainer.CalculateAerodynamiLoad(MathTools.Algebra.EuclideanSpace.EVector3@,MathTools.Algebra.EuclideanSpace.EVector3@,System.Double@)">
+ <summary>
+ Obsolete sub.
+ </summary>
+</member>
+<member name="M:AeroTools.VisualModel.Models.Components.ResultContainer.LoadFromTextFile">
  <summary>
  Loads the data from a text file (using the access path).
  </summary>
@@ -3111,24 +3169,6 @@ AeroTools
  </summary>
  <remarks></remarks>
 </member>
-<member name="P:AeroTools.VisualModel.Models.Components.LiftingSurface.GlobalPosition">
- <summary>
- Position of the rotation point in local coordinates
- </summary>
- <remarks></remarks>
-</member>
-<member name="P:AeroTools.VisualModel.Models.Components.LiftingSurface.GlobalOrientation">
- <summary>
- Orientation given in Euler coordinates.
- </summary>
- <remarks></remarks>
-</member>
-<member name="P:AeroTools.VisualModel.Models.Components.LiftingSurface.LocalDirections">
- <summary>
- Local directions.
- </summary>
- <remarks></remarks>
-</member>
 <member name="P:AeroTools.VisualModel.Models.Components.LiftingSurface.LocalOrigin">
  <summary>
  Position of the local origin in global coordinates.
@@ -3167,23 +3207,7 @@ AeroTools
  <returns></returns>
  <remarks></remarks>
 </member>
-<member name="P:AeroTools.VisualModel.Models.Components.LiftingSurface.nNodes">
- <summary>
- Number of nodes.
- </summary>
- <value></value>
- <returns></returns>
- <remarks></remarks>
-</member>
-<member name="P:AeroTools.VisualModel.Models.Components.LiftingSurface.nPanels">
- <summary>
- Number of panels.
- </summary>
- <value></value>
- <returns></returns>
- <remarks></remarks>
-</member>
-<member name="P:AeroTools.VisualModel.Models.Components.LiftingSurface.nChordPanels">
+<member name="P:AeroTools.VisualModel.Models.Components.LiftingSurface.NumberOfChordPanels">
  <summary>
  Number of chordwise panels
  </summary>
@@ -3191,7 +3215,7 @@ AeroTools
  <returns></returns>
  <remarks></remarks>
 </member>
-<member name="P:AeroTools.VisualModel.Models.Components.LiftingSurface.nSpanPanels">
+<member name="P:AeroTools.VisualModel.Models.Components.LiftingSurface.NumberOfSpanPanels">
  <summary>
  Number of spanwise panels.
  </summary>
@@ -3199,15 +3223,7 @@ AeroTools
  <returns></returns>
  <remarks></remarks>
 </member>
-<member name="P:AeroTools.VisualModel.Models.Components.LiftingSurface.nVortices">
- <summary>
- Number of vortex segements.
- </summary>
- <value></value>
- <returns></returns>
- <remarks></remarks>
-</member>
-<member name="P:AeroTools.VisualModel.Models.Components.LiftingSurface.nWingRegions">
+<member name="P:AeroTools.VisualModel.Models.Components.LiftingSurface.NumberOfWingRegions">
  <summary>
  Number of wing regions.
  </summary>
@@ -3386,42 +3402,6 @@ AeroTools
  <returns></returns>
  <remarks></remarks>
 </member>
-<member name="P:AeroTools.VisualModel.Models.Components.LiftingSurface.GetNodalPoint(System.Int32)">
- <summary>
- Returns the instance of a specific nodal point.
- </summary>
- <param name="Index"></param>
- <value></value>
- <returns></returns>
- <remarks></remarks>
-</member>
-<member name="P:AeroTools.VisualModel.Models.Components.LiftingSurface.CloneNodalPoint(System.Int32)">
- <summary>
- Returns a copy of a given nodal point.
- </summary>
- <param name="Index"></param>
- <value></value>
- <returns></returns>
- <remarks></remarks>
-</member>
-<member name="P:AeroTools.VisualModel.Models.Components.LiftingSurface.GetQuadPanel(System.Int32)">
- <summary>
- Returns an instance of a given quad panel. If the panel is not found, the first one is returned.
- </summary>
- <param name="Index"></param>
- <value></value>
- <returns></returns>
- <remarks></remarks>
-</member>
-<member name="P:AeroTools.VisualModel.Models.Components.LiftingSurface.CloneQuadPanel(System.Int32)">
- <summary>
- Returns a copy of a given quad panel.
- </summary>
- <param name="Index"></param>
- <value></value>
- <returns></returns>
- <remarks></remarks>
-</member>
 <member name="P:AeroTools.VisualModel.Models.Components.LiftingSurface.IncludeStructure">
  <summary>
  Determines whether or not the structure will be included on the calculation.
@@ -3458,23 +3438,6 @@ AeroTools
  </summary>
  <remarks></remarks>
 </member>
-<member name="M:AeroTools.VisualModel.Models.Components.LiftingSurface.CalculateBiotSavartVector(System.Int32,MathTools.Algebra.EuclideanSpace.EVector3,System.Double)">
- <summary>
- Obsolete function.
- </summary>
- <param name="Panel"></param>
- <param name="PuntoDeControl"></param>
- <param name="Cutoff"></param>
- <returns></returns>
- <remarks></remarks>
-</member>
-<member name="M:AeroTools.VisualModel.Models.Components.LiftingSurface.GenerateGeneralSurface(AeroTools.VisualModel.Models.Components.GeneralSurface@)">
- <summary>
- Generates a general surface from this wing.
- </summary>
- <param name="Superficie"></param>
- <remarks></remarks>
-</member>
 <member name="M:AeroTools.VisualModel.Models.Components.LiftingSurface.Clone">
  <summary>
  Generates a copy of the instance.
@@ -3482,29 +3445,14 @@ AeroTools
  <returns></returns>
  <remarks></remarks>
 </member>
-<member name="M:AeroTools.VisualModel.Models.Components.LiftingSurface.Translate(MathTools.Algebra.EuclideanSpace.EVector3)">
- <summary>
- Translates the surface a given displacement.
- </summary>
- <param name="Vector"></param>
- <remarks></remarks>
-</member>
-<member name="M:AeroTools.VisualModel.Models.Components.LiftingSurface.Orientate(MathTools.Algebra.EuclideanSpace.EVector3,MathTools.Algebra.EuclideanSpace.EulerAngles)">
- <summary>
- Orientates the model by the given Euler angles around the specified point.
- </summary>
- <param name="Point"></param>
- <param name="Ori"></param>
- <remarks></remarks>
-</member>
 <member name="M:AeroTools.VisualModel.Models.Components.LiftingSurface.Align(MathTools.Algebra.EuclideanSpace.EVector3,MathTools.Algebra.EuclideanSpace.EVector3,MathTools.Algebra.EuclideanSpace.EVector3,MathTools.Algebra.EuclideanSpace.EVector3)">
  <summary>
  Aligns the surface by means of four reference points (it is not working well).
  </summary>
- <param name="Punto1"></param>
- <param name="Punto2"></param>
- <param name="Punto3"></param>
- <param name="Punto4"></param>
+ <param name="Point1"></param>
+ <param name="Point2"></param>
+ <param name="Point3"></param>
+ <param name="Point4"></param>
  <remarks></remarks>
 </member>
 <member name="M:AeroTools.VisualModel.Models.Components.LiftingSurface.ReadFromXML(System.Xml.XmlReader@)">
@@ -3527,6 +3475,11 @@ AeroTools
  </summary>
  <returns></returns>
  <remarks></remarks>
+</member>
+<member name="T:AeroTools.VisualModel.Models.Components.FullNacelle">
+ <summary>
+ (Under development)
+ </summary>
 </member>
 <member name="M:AeroTools.FormProgress.PushMessageWithProgress(System.String,System.Int32)">
  <summary>

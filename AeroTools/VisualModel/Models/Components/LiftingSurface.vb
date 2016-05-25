@@ -39,40 +39,37 @@ Namespace VisualModel.Models.Components
 
         Private _SpanPanels As Integer
         Private _SpanNodes As Integer
-        Private _TipChord As Double
-        Private _Length As Double
-        Private _Sweep As Double
-        Private _Dihedral As Double
-        Private _Twist As Double
-        Private _TwistAxis As Double
-        Private _FlapChord As Double = 0.3
-        Private _SpacingType As ESpacement
 
-        Private _PolarID As Guid = Guid.Empty
-        Private _Chamber As ChamberedLine = New ChamberedLine(ChamberType.NACA4)
+        Public Sub New()
+
+            FlapChord = 0.3
+            PolarID = Guid.Empty
+            Chamber = New ChamberedLine(ChamberType.NACA4)
+
+        End Sub
 
         ''' <summary>
         ''' Load all geometrical parameters.
         ''' </summary>
         ''' <param name="SpanPanels">Number of spanwise panels</param>
-        ''' <param name="CuerdaExterna">Tip chord</param>
-        ''' <param name="Longitud">Spanwise length</param>
-        ''' <param name="Flecha">Sweep angle</param>
-        ''' <param name="Diedro">Dihedral angle</param>
-        ''' <param name="Torsión">Twist</param>
-        ''' <param name="EjeDeTorsión">Position of the twisting axis</param>
+        ''' <param name="TipChord">Tip chord</param>
+        ''' <param name="Lenght">Spanwise length</param>
+        ''' <param name="SweepBack">Sweep angle</param>
+        ''' <param name="Dihedral">Dihedral angle</param>
+        ''' <param name="Torsion">Twist</param>
+        ''' <param name="TorsionalAxis">Position of the twisting axis</param>
         ''' <remarks></remarks>
-        Public Sub LoadGeometry(ByVal SpanPanels As Integer, ByVal CuerdaExterna As Double, ByVal Longitud As Double,
-                                ByVal Flecha As Double, ByVal Diedro As Double, ByVal Torsión As Double, ByVal EjeDeTorsión As Double,
+        Public Sub LoadGeometry(ByVal SpanPanels As Integer, ByVal TipChord As Double, ByVal Lenght As Double,
+                                ByVal SweepBack As Double, ByVal Dihedral As Double, ByVal Torsion As Double, ByVal TorsionalAxis As Double,
                                 ByVal MaxChamber As Double, ByVal PosMaxChamber As Double, ByVal SpacingType As Integer)
 
             If SpanPanels > 0 Then _SpanPanels = SpanPanels
-            If CuerdaExterna > 0 Then _TipChord = CuerdaExterna
-            _Sweep = Flecha
-            If Longitud > 0 Then _Length = Longitud
-            _Dihedral = Diedro
-            _Twist = Torsión
-            _TwistAxis = EjeDeTorsión
+            If TipChord > 0 Then _TipChord = TipChord
+            _Sweep = SweepBack
+            If Lenght > 0 Then _Length = Lenght
+            _Dihedral = Dihedral
+            _Twist = Torsion
+            _TwistAxis = TorsionalAxis
             _SpacingType = SpacingType
 
             _Chamber.Dimension(ChamberDim.MaxChamber) = MaxChamber
@@ -143,13 +140,6 @@ Namespace VisualModel.Models.Components
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Property TipChord As Double
-            Get
-                Return _TipChord
-            End Get
-            Set(ByVal value As Double)
-                _TipChord = value
-            End Set
-        End Property
 
         ''' <summary>
         ''' Spanwise length.
@@ -158,13 +148,6 @@ Namespace VisualModel.Models.Components
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Property Length As Double
-            Get
-                Return _Length
-            End Get
-            Set(ByVal value As Double)
-                _Length = value
-            End Set
-        End Property
 
         ''' <summary>
         ''' Sweep angle.
@@ -173,13 +156,6 @@ Namespace VisualModel.Models.Components
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Property Sweep As Double
-            Get
-                Return _Sweep
-            End Get
-            Set(ByVal value As Double)
-                _Sweep = value
-            End Set
-        End Property
 
         ''' <summary>
         ''' Dihedral angle.
@@ -188,13 +164,6 @@ Namespace VisualModel.Models.Components
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Property Dihedral As Double
-            Get
-                Return _Dihedral
-            End Get
-            Set(ByVal value As Double)
-                _Dihedral = value
-            End Set
-        End Property
 
         ''' <summary>
         ''' Twist angle along the span.
@@ -203,13 +172,6 @@ Namespace VisualModel.Models.Components
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Property Twist As Double
-            Get
-                Return _Twist
-            End Get
-            Set(ByVal value As Double)
-                _Twist = value
-            End Set
-        End Property
 
         ''' <summary>
         ''' Chordwise position of the twisting axis as fraction of the local chord.
@@ -218,13 +180,6 @@ Namespace VisualModel.Models.Components
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Property TwistAxis As Double
-            Get
-                Return _TwistAxis
-            End Get
-            Set(ByVal value As Double)
-                _TwistAxis = value
-            End Set
-        End Property
 
         ''' <summary>
         ''' Describes the form of the cord.
@@ -233,13 +188,12 @@ Namespace VisualModel.Models.Components
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Property Chamber As ChamberedLine
-            Set(ByVal value As ChamberedLine)
-                _Chamber = value
-            End Set
-            Get
-                Return _Chamber
-            End Get
-        End Property
+
+        ''' <summary>
+        ''' Lenght of the flap in chordwise direction.
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property FlapChord As Double
 
         ''' <summary>
         ''' Type of spanwise spacing between the stations.
@@ -248,13 +202,6 @@ Namespace VisualModel.Models.Components
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Property SpacingType As ESpacement
-            Get
-                Return _SpacingType
-            End Get
-            Set(ByVal value As ESpacement)
-                _SpacingType = value
-            End Set
-        End Property
 
         ''' <summary>
         ''' Index of polar curve to be loaded.
@@ -263,13 +210,6 @@ Namespace VisualModel.Models.Components
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Property PolarID As Guid
-            Get
-                Return _PolarID
-            End Get
-            Set(ByVal value As Guid)
-                _PolarID = value
-            End Set
-        End Property
 
 #End Region
 
@@ -460,8 +400,13 @@ Namespace VisualModel.Models.Components
         Private _nPrimitiveNodes As Integer
         Private _TrailingEdgeConvection As Boolean = True
 
+        ''' <summary>
+        ''' Contains the wing regions.
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property WingRegions As New List(Of WingRegion)
+
         Private Const _nMaximumWingRegions As Integer = 10
-        Private _WingRegions As New List(Of WingRegion)
         Private _CurrentWingRegion As Integer = 0
 
         Private _RootChord As Double
@@ -494,7 +439,7 @@ Namespace VisualModel.Models.Components
             LastPrimitiveSegment = 1
 
             FirstPrimitiveSegment = NumberOfChordPanels + 1
-            LastPrimitiveSegment = FirstPrimitiveSegment + _WingRegions(0).nSpanPanels - 1
+            LastPrimitiveSegment = FirstPrimitiveSegment + WingRegions(0).nSpanPanels - 1
 
             GenerateMesh()
 
@@ -528,18 +473,6 @@ Namespace VisualModel.Models.Components
         Public ReadOnly Property NumberOfSpanPanels As Integer
             Get
                 Return _nSpanPanels
-            End Get
-        End Property
-
-        ''' <summary>
-        ''' Number of wing regions.
-        ''' </summary>
-        ''' <value></value>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
-        Public ReadOnly Property NumberOfWingRegions As Integer
-            Get
-                Return _WingRegions.Count
             End Get
         End Property
 
@@ -603,7 +536,7 @@ Namespace VisualModel.Models.Components
                 Return _CurrentWingRegion + 1
             End Get
             Set(ByVal value As Integer)
-                If value >= 1 And value <= NumberOfWingRegions Then
+                If value >= 1 And value <= WingRegions.Count Then
                     _CurrentWingRegion = value - 1
                 Else
                     'FMacroPanelActual = 0
@@ -801,7 +734,7 @@ Namespace VisualModel.Models.Components
 
             Dim NewPanel As New WingRegion
             NewPanel.LoadGeometry(5, 1.0#, 1.0#, 0.0#, 0.0#, 0.0#, 0.5#, 0.0#, 0.25#, 1)
-            Me._WingRegions.Add(NewPanel)
+            WingRegions.Add(NewPanel)
 
         End Sub
 
@@ -813,7 +746,7 @@ Namespace VisualModel.Models.Components
 
             Dim NewMacroPanel As New WingRegion
             NewMacroPanel.LoadGeometry(4, 1.0#, 1.0#, 0.0#, 0.0#, 0.0#, 0.5#, 0.0#, 0.25#, 1)
-            _WingRegions.Add(NewMacroPanel)
+            WingRegions.Add(NewMacroPanel)
 
         End Sub
 
@@ -824,11 +757,11 @@ Namespace VisualModel.Models.Components
         ''' <remarks></remarks>
         Public Overloads Sub InsertRegion(ByVal Posicion As Integer)
 
-            If Posicion >= 1 And Posicion <= NumberOfWingRegions Then
+            If Posicion >= 1 And Posicion <= WingRegions.Count Then
 
                 Dim NewMacroPanel As New WingRegion
                 NewMacroPanel.LoadGeometry(4, 1.0#, 1.0#, 0.0#, 0.0#, 0.0#, 0.5#, 0.0#, 0.25#, 1)
-                _WingRegions.Insert(Posicion - 1, NewMacroPanel)
+                WingRegions.Insert(Posicion - 1, NewMacroPanel)
 
             End If
 
@@ -842,7 +775,7 @@ Namespace VisualModel.Models.Components
 
             Dim NewMacroPanel As New WingRegion
             NewMacroPanel.LoadGeometry(4, 1.0#, 1.0#, 0.0#, 0.0#, 0.0#, 0.5#, 0.0#, 0.25#, 1)
-            _WingRegions.Insert(_CurrentWingRegion, NewMacroPanel)
+            WingRegions.Insert(_CurrentWingRegion, NewMacroPanel)
 
         End Sub
 
@@ -852,9 +785,9 @@ Namespace VisualModel.Models.Components
         ''' <remarks></remarks>
         Public Sub RemoveCurrentRegion()
 
-            If NumberOfWingRegions > 1 Then
+            If WingRegions.Count > 1 Then
 
-                Me._WingRegions.RemoveAt(_CurrentWingRegion)
+                WingRegions.RemoveAt(_CurrentWingRegion)
                 _CurrentWingRegion = Math.Max(0, _CurrentWingRegion - 1)
 
             End If
@@ -869,7 +802,7 @@ Namespace VisualModel.Models.Components
         ''' <remarks></remarks>
         Public ReadOnly Property CurrentRegion As WingRegion
             Get
-                Return _WingRegions.Item(_CurrentWingRegion)
+                Return WingRegions.Item(_CurrentWingRegion)
             End Get
         End Property
 
@@ -914,10 +847,10 @@ Namespace VisualModel.Models.Components
             _nSpanNodes = 1
             _nSpanPanels = 0
 
-            For i = 0 To NumberOfWingRegions - 1
+            For i = 0 To WingRegions.Count - 1
 
-                _nSpanNodes = _WingRegions.Item(i).nChordNodes + _nSpanNodes
-                _nSpanPanels = _WingRegions.Item(i).nSpanPanels + _nSpanPanels
+                _nSpanNodes = WingRegions.Item(i).nChordNodes + _nSpanNodes
+                _nSpanPanels = WingRegions.Item(i).nSpanPanels + _nSpanPanels
 
             Next
 
@@ -1009,7 +942,7 @@ Namespace VisualModel.Models.Components
 
             For i = 1 To _nChordNodes
 
-                If _WingRegions(0).Chamber.Flapped Then
+                If WingRegions(0).Chamber.Flapped Then
 
                     If i <= _nChordNodes - FlapPanels Then
 
@@ -1029,15 +962,15 @@ Namespace VisualModel.Models.Components
 
                 Dim pLoc As New EVector2
 
-                Dim deflection As Single = _WingRegions(0).Chamber.FlapDeflection
+                Dim deflection As Single = WingRegions(0).Chamber.FlapDeflection
 
-                _WingRegions(0).Chamber.FlapDeflection = 0
-                _WingRegions(0).Chamber.EvaluatePoint(pLoc, X)
+                WingRegions(0).Chamber.FlapDeflection = 0
+                WingRegions(0).Chamber.EvaluatePoint(pLoc, X)
 
                 pLoc.X *= _RootChord
                 pLoc.Y *= _RootChord
 
-                _WingRegions(0).Chamber.FlapDeflection = deflection
+                WingRegions(0).Chamber.FlapDeflection = deflection
 
                 Dim Point As New NodalPoint(pLoc.X, 0, pLoc.Y)
 
@@ -1057,18 +990,17 @@ Namespace VisualModel.Models.Components
 
             Dim leadingEdge As New EVector3
 
-            For wrCount = 1 To NumberOfWingRegions
+            For mpIndex = 0 To WingRegions.Count - 1
 
                 'Inicia las variables comunes del panel:
 
-                Dim mpIndex As Integer = wrCount - 1
-                Dim delta As Double = _WingRegions(mpIndex).Sweep / 180.0 * Math.PI
-                Dim gamma As Double = _WingRegions(mpIndex).Dihedral / 180.0 * Math.PI
+                Dim delta As Double = WingRegions(mpIndex).Sweep / 180.0 * Math.PI
+                Dim gamma As Double = WingRegions(mpIndex).Dihedral / 180.0 * Math.PI
                 Dim twist As Double = 0.0#
 
                 'Inicia el origen de coordenadas local:
 
-                If wrCount = 1 Then
+                If mpIndex = 0 Then
 
                     leadingEdge.X = 0.0#
                     leadingEdge.Y = 0.0#
@@ -1080,22 +1012,22 @@ Namespace VisualModel.Models.Components
                     leadingEdge.X = XBp
                     leadingEdge.Y = YBp
                     leadingEdge.Z = ZBp
-                    twist = (twist + _WingRegions(mpIndex - 1).Twist / 180.0 * Math.PI) * Math.Cos(gamma)  ' Prueba!!!
+                    twist = (twist + WingRegions(mpIndex - 1).Twist / 180.0 * Math.PI) * Math.Cos(gamma)  ' Prueba!!!
 
                 End If
 
-                If wrCount = 1 Then
+                If mpIndex = 0 Then
                     Chordi = _RootChord
-                    Chordf = _WingRegions(mpIndex).TipChord
+                    Chordf = WingRegions(mpIndex).TipChord
                 Else
-                    Chordi = _WingRegions(mpIndex - 1).TipChord
-                    Chordf = _WingRegions(mpIndex).TipChord
+                    Chordi = WingRegions(mpIndex - 1).TipChord
+                    Chordf = WingRegions(mpIndex).TipChord
                 End If
 
-                Stramo = _WingRegions(mpIndex).Length
-                Sigma1 = 1 - 1 / _WingRegions.Item(mpIndex).nSpanPanels
+                Stramo = WingRegions(mpIndex).Length
+                Sigma1 = 1 - 1 / WingRegions.Item(mpIndex).nSpanPanels
                 Scolumn1 = Stramo - Chordf / _nChordPanels
-                Sigma2 = 1 / _WingRegions.Item(mpIndex).nSpanPanels
+                Sigma2 = 1 / WingRegions.Item(mpIndex).nSpanPanels
                 Scolumn2 = Chordi / _nChordPanels
 
                 C1 = (Scolumn1 - Stramo * Sigma1) / (Sigma1 ^ 2 - Sigma1)
@@ -1108,13 +1040,13 @@ Namespace VisualModel.Models.Components
 
                 ' Genera la geometria de cada segemento de cuerda:
 
-                For k = 1 To _WingRegions(mpIndex).nSpanPanels
+                For k = 1 To WingRegions(mpIndex).nSpanPanels
 
                     ' a) Calculates the distance to the column in spanwise direction
 
-                    Y = k / _WingRegions.Item(mpIndex).nSpanPanels
+                    Y = k / WingRegions.Item(mpIndex).nSpanPanels
 
-                    Select Case _WingRegions.Item(mpIndex).SpacingType
+                    Select Case WingRegions.Item(mpIndex).SpacingType
 
                         Case WingRegion.ESpacement.Constant
                             Y_stripe = Stramo * Y
@@ -1131,28 +1063,28 @@ Namespace VisualModel.Models.Components
 
                     If mpIndex = 0 Then
 
-                        Ttwist = _WingRegions(mpIndex).TwistAxis '* k / NPS(i, j)
+                        Ttwist = WingRegions(mpIndex).TwistAxis '* k / NPS(i, j)
 
                     Else
 
-                        Ttwist = _WingRegions(mpIndex - 1).TwistAxis + (_WingRegions.Item(mpIndex - 1).TwistAxis - _WingRegions.Item(mpIndex - 1).TwistAxis) * Y_stripe / Stramo
+                        Ttwist = WingRegions(mpIndex - 1).TwistAxis + (WingRegions.Item(mpIndex - 1).TwistAxis - WingRegions.Item(mpIndex - 1).TwistAxis) * Y_stripe / Stramo
 
                     End If
 
                     'Calculates the twisting angle
 
-                    Phi = _WingRegions(mpIndex).Twist * Y / 180.0 * Math.PI
+                    Phi = WingRegions(mpIndex).Twist * Y / 180.0 * Math.PI
 
                     Dim flap_chord_i As Single
-                    Dim flap_chord_f As Single = _WingRegions(mpIndex).Chamber.FlapChord
+                    Dim flap_chord_f As Single = WingRegions(mpIndex).Chamber.FlapChord
 
                     If mpIndex = 0 Then
                         flap_chord_i = RootFlap
                     Else
-                        flap_chord_i = _WingRegions(mpIndex - 1).Chamber.FlapChord
+                        flap_chord_i = WingRegions(mpIndex - 1).Chamber.FlapChord
                     End If
 
-                    Dim LocalChamber As New ChamberedLine(_WingRegions(mpIndex).Chamber)
+                    Dim LocalChamber As New ChamberedLine(WingRegions(mpIndex).Chamber)
 
                     For l = 1 To _nChordNodes ' For each nodal point in the current column...
 
@@ -1160,9 +1092,9 @@ Namespace VisualModel.Models.Components
 
                         flap = flap_chord_i + (flap_chord_f - flap_chord_i) * Y
 
-                        If _WingRegions(mpIndex).Chamber.Flapped Then
+                        If WingRegions(mpIndex).Chamber.Flapped Then
 
-                            _WingRegions(mpIndex).Chamber.FlapChord = flap
+                            WingRegions(mpIndex).Chamber.FlapChord = flap
 
                             If l <= _nChordNodes - FlapPanels Then
                                 X = (l - 1) / (_nChordNodes - FlapPanels - 1) * (1 - flap)
@@ -1179,7 +1111,7 @@ Namespace VisualModel.Models.Components
                         'Calculates the chamber
 
                         Dim pLoc As New EVector2
-                        _WingRegions(mpIndex).Chamber.EvaluatePoint(pLoc, X)
+                        WingRegions(mpIndex).Chamber.EvaluatePoint(pLoc, X)
                         pLoc.X *= Chord
                         pLoc.Y *= Chord
 
@@ -1197,7 +1129,7 @@ Namespace VisualModel.Models.Components
                         point.Position.Y = Pij.X * Math.Sin(gamma) * Math.Sin(twist) + Pij.Y * Math.Cos(gamma) - Pij.Z * Math.Sin(gamma) * Math.Cos(twist) + leadingEdge.Y
                         point.Position.Z = -Pij.X * Math.Cos(gamma) * Math.Sin(twist) + Pij.Y * Math.Sin(gamma) + Pij.Z * Math.Cos(gamma) * Math.Cos(twist) + leadingEdge.Z
 
-                        If k = _WingRegions(mpIndex).nSpanPanels And l = 1 Then
+                        If k = WingRegions(mpIndex).nSpanPanels And l = 1 Then
                             XBp = point.Position.X
                             YBp = point.Position.Y
                             ZBp = point.Position.Z
@@ -1216,7 +1148,7 @@ Namespace VisualModel.Models.Components
 
                     Next
 
-                    _WingRegions(mpIndex).Chamber.FlapChord = flap_chord_f
+                    WingRegions(mpIndex).Chamber.FlapChord = flap_chord_f
 
                 Next
 
@@ -1700,7 +1632,7 @@ Namespace VisualModel.Models.Components
 
             Dim i0 As Integer = 0
 
-            For Each Panel As WingRegion In _WingRegions
+            For Each Panel As WingRegion In WingRegions
 
                 ' Create the partitions:
 
@@ -1889,14 +1821,14 @@ Namespace VisualModel.Models.Components
 
             Dim p As Integer = 0
 
-            For Each Panel In _WingRegions
+            For Each Panel In WingRegions
 
                 If p > 0 Then
                     Surface.AddRegion()
                 End If
 
-                Surface._WingRegions(p).Assign(Panel)
-                Surface._WingRegions(p).TipSection.Assign(_WingRegions(p).TipSection)
+                Surface.WingRegions(p).Assign(Panel)
+                Surface.WingRegions(p).TipSection.Assign(WingRegions(p).TipSection)
 
                 p += 1
 
@@ -2099,18 +2031,18 @@ Namespace VisualModel.Models.Components
             writer.WriteAttributeString("Rootm", String.Format("{0}", RootSection.m))
 
             writer.WriteAttributeString("NumberChordRings", String.Format("{0}", NumberOfChordPanels))
-            writer.WriteAttributeString("NumberMacroPanels", String.Format("{0}", NumberOfWingRegions))
+            writer.WriteAttributeString("NumberMacroPanels", String.Format("{0}", WingRegions.Count))
 
             writer.WriteEndElement()
 
             ' Macro panels:
 
-            For i = 1 To NumberOfWingRegions
+            For i = 0 To WingRegions.Count - 1
 
                 CurrentRegionID = i
 
                 writer.WriteStartElement("MacroPanel")
-                CurrentRegion.WriteToXML(writer)
+                WingRegions(i).WriteToXML(writer)
                 writer.WriteEndElement()
 
             Next
@@ -2156,7 +2088,7 @@ Namespace VisualModel.Models.Components
             Dim TotalWingspan As Double
             Dim ProjectedWingspan As Double
 
-            For Each Panel In _WingRegions
+            For Each Panel In WingRegions
 
                 TotalWingspan += Panel.Length
                 ProjectedWingspan += Panel.Length * Math.Abs(Math.Cos(Math.PI * Panel.Dihedral / 180))

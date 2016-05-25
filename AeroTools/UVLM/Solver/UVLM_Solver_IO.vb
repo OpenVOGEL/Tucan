@@ -349,17 +349,17 @@ Namespace UVLM.Solver
 
             Dim count As Integer = 0
 
-            For j = 1 To Surface.NumberOfWingRegions
+            For j = 0 To Surface.WingRegions.Count - 1
 
-                Surface.CurrentRegionID = j
+                Dim Region As WingRegion = Surface.WingRegions(j)
 
                 'If (Not IsNothing(PolarDataBase)) And PolarDataBase.Polars.Count > 0 Then
 
-                For k = 1 To Surface.CurrentRegion.nSpanPanels
+                For k = 1 To Region.nSpanPanels
 
                     Dim Stripe As New ChorwiseStripe()
 
-                    Stripe.Polars = Surface.CurrentRegion.PolarFamiliy
+                    Stripe.Polars = Region.PolarFamiliy
 
                     For p = 1 To Surface.NumberOfChordPanels
                         Stripe.Rings.Add(Lattice.VortexRings(count))

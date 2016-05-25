@@ -3024,12 +3024,12 @@ AeroTools
  Load all geometrical parameters.
  </summary>
  <param name="SpanPanels">Number of spanwise panels</param>
- <param name="CuerdaExterna">Tip chord</param>
- <param name="Longitud">Spanwise length</param>
- <param name="Flecha">Sweep angle</param>
- <param name="Diedro">Dihedral angle</param>
- <param name="Torsión">Twist</param>
- <param name="EjeDeTorsión">Position of the twisting axis</param>
+ <param name="TipChord">Tip chord</param>
+ <param name="Lenght">Spanwise length</param>
+ <param name="SweepBack">Sweep angle</param>
+ <param name="Dihedral">Dihedral angle</param>
+ <param name="Torsion">Twist</param>
+ <param name="TorsionalAxis">Position of the twisting axis</param>
  <remarks></remarks>
 </member>
 <member name="M:AeroTools.VisualModel.Models.Components.WingRegion.Assign(AeroTools.VisualModel.Models.Components.WingRegion)">
@@ -3110,6 +3110,12 @@ AeroTools
  <value></value>
  <returns></returns>
  <remarks></remarks>
+</member>
+<member name="P:AeroTools.VisualModel.Models.Components.WingRegion.FlapChord">
+ <summary>
+ Lenght of the flap in chordwise direction.
+ </summary>
+ <returns></returns>
 </member>
 <member name="P:AeroTools.VisualModel.Models.Components.WingRegion.SpacingType">
  <summary>
@@ -3207,6 +3213,12 @@ AeroTools
  <returns></returns>
  <remarks></remarks>
 </member>
+<member name="P:AeroTools.VisualModel.Models.Components.LiftingSurface.WingRegions">
+ <summary>
+ Contains the wing regions.
+ </summary>
+ <returns></returns>
+</member>
 <member name="P:AeroTools.VisualModel.Models.Components.LiftingSurface.NumberOfChordPanels">
  <summary>
  Number of chordwise panels
@@ -3218,14 +3230,6 @@ AeroTools
 <member name="P:AeroTools.VisualModel.Models.Components.LiftingSurface.NumberOfSpanPanels">
  <summary>
  Number of spanwise panels.
- </summary>
- <value></value>
- <returns></returns>
- <remarks></remarks>
-</member>
-<member name="P:AeroTools.VisualModel.Models.Components.LiftingSurface.NumberOfWingRegions">
- <summary>
- Number of wing regions.
  </summary>
  <value></value>
  <returns></returns>
@@ -3392,14 +3396,6 @@ AeroTools
  <summary>
  Removes the current wing region.
  </summary>
- <remarks></remarks>
-</member>
-<member name="P:AeroTools.VisualModel.Models.Components.LiftingSurface.CurrentRegion">
- <summary>
- Currently active region
- </summary>
- <value></value>
- <returns></returns>
  <remarks></remarks>
 </member>
 <member name="P:AeroTools.VisualModel.Models.Components.LiftingSurface.IncludeStructure">

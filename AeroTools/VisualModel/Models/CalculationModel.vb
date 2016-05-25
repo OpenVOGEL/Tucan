@@ -186,12 +186,14 @@ Namespace VisualModel.Models
 
                                     LiftingSurface.ReadFromXML(SubReader.ReadSubtree)
 
-                                    For i = 1 To LiftingSurface.NumberOfWingRegions
+                                    For i = 0 To LiftingSurface.WingRegions.Count - 1
 
-                                        LiftingSurface.CurrentRegionID = i
+                                        Dim Region As WingRegion = LiftingSurface.WingRegions(i)
 
-                                        If Not LiftingSurface.CurrentRegion.PolarID.Equals(Guid.Empty) Then
-                                            LiftingSurface.CurrentRegion.PolarFamiliy = PolarDataBase.GetFamilyFromID(LiftingSurface.CurrentRegion.PolarID)
+                                        If Not Region.PolarID.Equals(Guid.Empty) Then
+
+                                            Region.PolarFamiliy = PolarDataBase.GetFamilyFromID(Region.PolarID)
+
                                         End If
 
                                     Next
