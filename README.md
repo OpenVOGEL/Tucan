@@ -4,6 +4,8 @@
 In this project we work together to bring out a simple but very useful tool to solve aerodynamic problems.
 If you have questions about the software, or if you want to share data and/or chat with other users, you can join the community (www.openvogel.com).
 
+![](https://sites.google.com/site/gahvogel/_/rsrc/1454581604797/config/pagetemplates/steady-aerodynamics/Jet_II.png?height=177&width=400)
+
 If you are willing to give us a hand with the development, you are at the right place.
 Open VOGEL is fully based in the .NET Framework, and it has been programmed in VB and C#. 
 For the GUI, VOGEL is based in WinForms and SharpGL.
