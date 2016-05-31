@@ -1233,60 +1233,6 @@ AeroTools
  <returns></returns>
  <remarks></remarks>
 </member>
-<member name="T:AeroTools.CalculationModel.Models.Structural.Library.Section">
- <summary>
- Gathers global section porperties.
- </summary>
- <remarks></remarks>
-</member>
-<member name="F:AeroTools.CalculationModel.Models.Structural.Library.Section.AE">
- <summary>
- Longitudinal stiffness [N/m]
- </summary>
- <remarks></remarks>
-</member>
-<member name="F:AeroTools.CalculationModel.Models.Structural.Library.Section.GJ">
- <summary>
- Torsional rigidity [Nm/rad]
- </summary>
- <remarks></remarks>
-</member>
-<member name="F:AeroTools.CalculationModel.Models.Structural.Library.Section.EIy">
- <summary>
- Flexional rigidity of inertia around local axis y [Nm/rad]
- </summary>
- <remarks></remarks>
-</member>
-<member name="F:AeroTools.CalculationModel.Models.Structural.Library.Section.EIz">
- <summary>
- Flexional rigidity of inertia around local axis z [Nm/rad]
- </summary>
- <remarks></remarks>
-</member>
-<member name="F:AeroTools.CalculationModel.Models.Structural.Library.Section.rIp">
- <summary>
- Torsional moment of inertia [kgm²]
- </summary>
- <remarks></remarks>
-</member>
-<member name="F:AeroTools.CalculationModel.Models.Structural.Library.Section.m">
- <summary>
- Mass per unit length [kg/m]
- </summary>
- <remarks></remarks>
-</member>
-<member name="F:AeroTools.CalculationModel.Models.Structural.Library.Section.CMy">
- <summary>
- Y coordinate of center of mass [m]
- </summary>
- <remarks></remarks>
-</member>
-<member name="F:AeroTools.CalculationModel.Models.Structural.Library.Section.CMz">
- <summary>
- Z coordinate of center of mass [m]
- </summary>
- <remarks></remarks>
-</member>
 <member name="T:AeroTools.CalculationModel.Models.Structural.Library.Material">
  <summary>
  Represents a material.
@@ -1317,53 +1263,97 @@ AeroTools
  </summary>
  <remarks></remarks>
 </member>
-<member name="T:AeroTools.CalculationModel.Models.Structural.Library.NodalDisplacement">
+<member name="T:AeroTools.CalculationModel.Models.Structural.Library.Elements.Section">
  <summary>
- Represents a nodal displacement.
+ Gathers global section porperties for a beam element.
  </summary>
  <remarks></remarks>
 </member>
-<member name="F:AeroTools.CalculationModel.Models.Structural.Library.NodalDisplacement.Values">
+<member name="F:AeroTools.CalculationModel.Models.Structural.Library.Elements.Section.AE">
  <summary>
- Contains the nodal displacements (Dx, Dy, Dz, Rx, Ry, Rz)
+ Longitudinal stiffness [N/m]
  </summary>
  <remarks></remarks>
 </member>
-<member name="M:AeroTools.CalculationModel.Models.Structural.Library.NodalDisplacement.VirtualWork(AeroTools.CalculationModel.Models.Structural.Library.NodalLoad)">
+<member name="F:AeroTools.CalculationModel.Models.Structural.Library.Elements.Section.GJ">
  <summary>
- Calculates the virtual work of this displacement with the given load
- </summary>
- <param name="Load">Nodal load</param>
- <returns></returns>
- <remarks></remarks>
-</member>
-<member name="T:AeroTools.CalculationModel.Models.Structural.Library.NodalLoad">
- <summary>
- Represents a load on a structural node.
+ Torsional rigidity [Nm/rad]
  </summary>
  <remarks></remarks>
 </member>
-<member name="F:AeroTools.CalculationModel.Models.Structural.Library.NodalLoad.Values">
+<member name="F:AeroTools.CalculationModel.Models.Structural.Library.Elements.Section.EIy">
  <summary>
- Contains the nodal loads (Px, Py, Pz, Tx, Ty, Tz)
+ Flexional rigidity of inertia around local axis y [Nm/rad]
  </summary>
  <remarks></remarks>
 </member>
-<member name="M:AeroTools.CalculationModel.Models.Structural.Library.NodalLoad.VirtualWork(AeroTools.CalculationModel.Models.Structural.Library.NodalDisplacement)">
+<member name="F:AeroTools.CalculationModel.Models.Structural.Library.Elements.Section.EIz">
  <summary>
- Calculates the virtual work of this load with the given displacement.
+ Flexional rigidity of inertia around local axis z [Nm/rad]
  </summary>
- <param name="Displacement">Nodal displacement</param>
- <returns></returns>
  <remarks></remarks>
 </member>
-<member name="T:AeroTools.CalculationModel.Models.Structural.Library.Constrains">
+<member name="F:AeroTools.CalculationModel.Models.Structural.Library.Elements.Section.rIp">
+ <summary>
+ Torsional moment of inertia [kgm²]
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:AeroTools.CalculationModel.Models.Structural.Library.Elements.Section.m">
+ <summary>
+ Mass per unit length [kg/m]
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:AeroTools.CalculationModel.Models.Structural.Library.Elements.Section.CMy">
+ <summary>
+ Y coordinate of center of mass [m]
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:AeroTools.CalculationModel.Models.Structural.Library.Elements.Section.CMz">
+ <summary>
+ Z coordinate of center of mass [m]
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="T:AeroTools.CalculationModel.Models.Structural.Library.Elements.BeamElement">
+ <summary>
+ Represents a beam element
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="T:AeroTools.CalculationModel.Models.Structural.Library.Elements.ConstantBeamElement">
+ <summary>
+ Models a structural beam element of constant section
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.CalculationModel.Models.Structural.Library.Elements.ConstantBeamElement.GenerateLocalMass">
+ <summary>
+ Generates the element mass matrix in local coordinates
+ </summary>
+ <remarks>Current version only supports non-excentrical section</remarks>
+</member>
+<member name="M:AeroTools.CalculationModel.Models.Structural.Library.Elements.ConstantBeamElement.GenerateLocalStiffness">
+ <summary>
+ Generates the element stiffness matrix in local coordinates
+ </summary>
+ <remarks>Current version only supports non-excentrical section</remarks>
+</member>
+<member name="M:AeroTools.CalculationModel.Models.Structural.Library.Elements.ConstantBeamElement.GenerateGlobalMatrices">
+ <summary>
+ Orientates local mass and stiffness matrices to global directions
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="T:AeroTools.CalculationModel.Models.Structural.Library.Nodes.Constrains">
  <summary>
  Nodal constrains
  </summary>
  <remarks></remarks>
 </member>
-<member name="P:AeroTools.CalculationModel.Models.Structural.Library.Constrains.KDx">
+<member name="P:AeroTools.CalculationModel.Models.Structural.Library.Nodes.Constrains.KDx">
  <summary>
  Stiffness in x direction
  </summary>
@@ -1371,7 +1361,7 @@ AeroTools
  <returns></returns>
  <remarks></remarks>
 </member>
-<member name="P:AeroTools.CalculationModel.Models.Structural.Library.Constrains.KDy">
+<member name="P:AeroTools.CalculationModel.Models.Structural.Library.Nodes.Constrains.KDy">
  <summary>
  Stiffness in y direction
  </summary>
@@ -1379,7 +1369,7 @@ AeroTools
  <returns></returns>
  <remarks></remarks>
 </member>
-<member name="P:AeroTools.CalculationModel.Models.Structural.Library.Constrains.KDz">
+<member name="P:AeroTools.CalculationModel.Models.Structural.Library.Nodes.Constrains.KDz">
  <summary>
  Stiffness in z direction
  </summary>
@@ -1387,7 +1377,7 @@ AeroTools
  <returns></returns>
  <remarks></remarks>
 </member>
-<member name="P:AeroTools.CalculationModel.Models.Structural.Library.Constrains.KRx">
+<member name="P:AeroTools.CalculationModel.Models.Structural.Library.Nodes.Constrains.KRx">
  <summary>
  Stiffness arround x direction
  </summary>
@@ -1395,7 +1385,7 @@ AeroTools
  <returns></returns>
  <remarks></remarks>
 </member>
-<member name="P:AeroTools.CalculationModel.Models.Structural.Library.Constrains.KRy">
+<member name="P:AeroTools.CalculationModel.Models.Structural.Library.Nodes.Constrains.KRy">
  <summary>
  Stiffness arround y direction
  </summary>
@@ -1403,7 +1393,7 @@ AeroTools
  <returns></returns>
  <remarks></remarks>
 </member>
-<member name="P:AeroTools.CalculationModel.Models.Structural.Library.Constrains.KRz">
+<member name="P:AeroTools.CalculationModel.Models.Structural.Library.Nodes.Constrains.KRz">
  <summary>
  Stiffness arround z direction
  </summary>
@@ -1411,19 +1401,59 @@ AeroTools
  <returns></returns>
  <remarks></remarks>
 </member>
-<member name="M:AeroTools.CalculationModel.Models.Structural.Library.Constrains.Clamped">
+<member name="M:AeroTools.CalculationModel.Models.Structural.Library.Nodes.Constrains.Clamped">
  <summary>
  Fixes all degrees of freedom to the base reference frame
  </summary>
  <remarks></remarks>
 </member>
-<member name="T:AeroTools.CalculationModel.Models.Structural.Library.StructuralNode">
+<member name="T:AeroTools.CalculationModel.Models.Structural.Library.Nodes.NodalDisplacement">
+ <summary>
+ Represents a nodal displacement.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:AeroTools.CalculationModel.Models.Structural.Library.Nodes.NodalDisplacement.Values">
+ <summary>
+ Contains the nodal displacements (Dx, Dy, Dz, Rx, Ry, Rz)
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.CalculationModel.Models.Structural.Library.Nodes.NodalDisplacement.VirtualWork(AeroTools.CalculationModel.Models.Structural.Library.Nodes.NodalLoad)">
+ <summary>
+ Calculates the virtual work of this displacement with the given load
+ </summary>
+ <param name="Load">Nodal load</param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="T:AeroTools.CalculationModel.Models.Structural.Library.Nodes.NodalLoad">
+ <summary>
+ Represents a load on a structural node.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:AeroTools.CalculationModel.Models.Structural.Library.Nodes.NodalLoad.Values">
+ <summary>
+ Contains the nodal loads (Px, Py, Pz, Tx, Ty, Tz)
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.CalculationModel.Models.Structural.Library.Nodes.NodalLoad.VirtualWork(AeroTools.CalculationModel.Models.Structural.Library.Nodes.NodalDisplacement)">
+ <summary>
+ Calculates the virtual work of this load with the given displacement.
+ </summary>
+ <param name="Displacement">Nodal displacement</param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="T:AeroTools.CalculationModel.Models.Structural.Library.Nodes.StructuralNode">
  <summary>
  Structural node
  </summary>
  <remarks></remarks>
 </member>
-<member name="P:AeroTools.CalculationModel.Models.Structural.Library.StructuralNode.Index">
+<member name="P:AeroTools.CalculationModel.Models.Structural.Library.Nodes.StructuralNode.Index">
  <summary>
  Node global index
  </summary>
@@ -1431,41 +1461,11 @@ AeroTools
  <returns></returns>
  <remarks></remarks>
 </member>
-<member name="M:AeroTools.CalculationModel.Models.Structural.Library.StructuralNode.#ctor(System.Int32)">
+<member name="M:AeroTools.CalculationModel.Models.Structural.Library.Nodes.StructuralNode.#ctor(System.Int32)">
  <summary>
  Creates a new structural node
  </summary>
  <param name="Index">Global index</param>
- <remarks></remarks>
-</member>
-<member name="T:AeroTools.CalculationModel.Models.Structural.Library.BeamElement">
- <summary>
- Defines a beam element
- </summary>
- <remarks></remarks>
-</member>
-<member name="T:AeroTools.CalculationModel.Models.Structural.Library.GeneralBeamElement">
- <summary>
- Models a structural beam element of constant section
- </summary>
- <remarks></remarks>
-</member>
-<member name="M:AeroTools.CalculationModel.Models.Structural.Library.GeneralBeamElement.GenerateLocalMass">
- <summary>
- Generates the element mass matrix in local coordinates
- </summary>
- <remarks>Current version only supports non-excentrical section</remarks>
-</member>
-<member name="M:AeroTools.CalculationModel.Models.Structural.Library.GeneralBeamElement.GenerateLocalStiffness">
- <summary>
- Generates the element stiffness matrix in local coordinates
- </summary>
- <remarks>Current version only supports non-excentrical section</remarks>
-</member>
-<member name="M:AeroTools.CalculationModel.Models.Structural.Library.GeneralBeamElement.GenerateGlobalMatrices">
- <summary>
- Orientates local mass and stiffness matrices to global directions
- </summary>
  <remarks></remarks>
 </member>
 <member name="P:AeroTools.CalculationModel.Models.Structural.Library.Mode.Index">
@@ -1550,7 +1550,7 @@ AeroTools
  </summary>
  <remarks></remarks>
 </member>
-<member name="M:AeroTools.CalculationModel.Models.Structural.KinematicLink.#ctor(AeroTools.CalculationModel.Models.Structural.Library.StructuralNode,System.Collections.Generic.List{AeroTools.CalculationModel.Models.Aero.Components.Node}@)">
+<member name="M:AeroTools.CalculationModel.Models.Structural.KinematicLink.#ctor(AeroTools.CalculationModel.Models.Structural.Library.Nodes.StructuralNode,System.Collections.Generic.List{AeroTools.CalculationModel.Models.Aero.Components.Node}@)">
  <summary>
  Creates a kinematic link
  </summary>
@@ -2305,56 +2305,56 @@ AeroTools
  </summary>
  <returns></returns>
 </member>
-<member name="P:AeroTools.VisualModel.Interface.AircraftProject.Name">
+<member name="P:AeroTools.VisualModel.Interface.ProjectRoot.Name">
  <summary>
  Project name
  </summary>
  <returns></returns>
 </member>
-<member name="T:AeroTools.VisualModel.Interface.AircraftProject.GLElement">
+<member name="T:AeroTools.VisualModel.Interface.ProjectRoot.GLElement">
  <summary>
  SharpGL control used to draw this project.
  </summary>
  <remarks></remarks>
 </member>
-<member name="M:AeroTools.VisualModel.Interface.AircraftProject.SetControlGL(SharpGL.OpenGL@)">
+<member name="M:AeroTools.VisualModel.Interface.ProjectRoot.SetControlGL(SharpGL.OpenGL@)">
  <summary>
  Stablishes a reference to an SharpGL control.
  </summary>
  <param name="Control"></param>
  <remarks></remarks>
 </member>
-<member name="M:AeroTools.VisualModel.Interface.AircraftProject.RepresentOnGL">
+<member name="M:AeroTools.VisualModel.Interface.ProjectRoot.RepresentOnGL">
  <summary>
  Represents the current lists on OpenGL.
  </summary>
  <remarks></remarks>
 </member>
-<member name="M:AeroTools.VisualModel.Interface.AircraftProject.RefreshOnGL">
+<member name="M:AeroTools.VisualModel.Interface.ProjectRoot.RefreshOnGL">
  <summary>
  Remakes OpenGL lists and redraws.
  </summary>
  <remarks></remarks>
 </member>
-<member name="M:AeroTools.VisualModel.Interface.AircraftProject.FastRefreshOnGL(System.Int32,System.Int32)">
+<member name="M:AeroTools.VisualModel.Interface.ProjectRoot.FastRefreshOnGL(System.Int32,System.Int32)">
  <summary>
  Redraws by using drawing subs 
  </summary>
  <remarks></remarks>
 </member>
-<member name="F:AeroTools.VisualModel.Interface.AircraftProject.ListOfSurfacesToDraw">
+<member name="F:AeroTools.VisualModel.Interface.ProjectRoot.ListOfSurfacesToDraw">
  <summary>
  OpenGL lists to be drawn.
  </summary>
  <remarks></remarks>
 </member>
-<member name="M:AeroTools.VisualModel.Interface.AircraftProject.MakeDrawingLists">
+<member name="M:AeroTools.VisualModel.Interface.ProjectRoot.MakeDrawingLists">
  <summary>
  Constructs OpenGL lists.
  </summary>
  <remarks></remarks>
 </member>
-<member name="E:AeroTools.VisualModel.Interface.AircraftProject.CalculationDone">
+<member name="E:AeroTools.VisualModel.Interface.ProjectRoot.CalculationDone">
  <summary>
  Occurs when the calculation finishes.
  </summary>

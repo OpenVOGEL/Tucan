@@ -130,8 +130,13 @@
     <Compile Include="CalculationModel\Models\Aero\Lattice.vb" />
     <Compile Include="CalculationModel\Models\Aero\TotalAirLoads.vb" />
     <Compile Include="CalculationModel\Models\Aero\Wake.vb" />
-    <Compile Include="CalculationModel\Models\Structural\Library\Components.vb" />
-    <Compile Include="CalculationModel\Models\Structural\Library\Elements.vb" />
+    <Compile Include="CalculationModel\Models\Structural\Library\Material.vb" />
+    <Compile Include="CalculationModel\Models\Structural\Library\Elements\BeamElements.vb" />
+    <Compile Include="CalculationModel\Models\Structural\Library\Elements\Elements.vb" />
+    <Compile Include="CalculationModel\Models\Structural\Library\Nodes\Constrains.vb" />
+    <Compile Include="CalculationModel\Models\Structural\Library\Nodes\NodalDisplacement.vb" />
+    <Compile Include="CalculationModel\Models\Structural\Library\Nodes\NodalLoad.vb" />
+    <Compile Include="CalculationModel\Models\Structural\Library\Nodes\StructuralNode.vb" />
     <Compile Include="CalculationModel\Models\Structural\Library\Modal.vb" />
     <Compile Include="CalculationModel\Models\Structural\Library\StructuralSettings.vb" />
     <Compile Include="CalculationModel\Models\Structural\Linker.vb" />

@@ -26,6 +26,8 @@ Imports AeroTools.CalculationModel.Models.Structural.Library
 Imports AeroTools.VisualModel.Models
 Imports AeroTools.VisualModel.Models.Components
 Imports AeroTools.VisualModel.IO
+Imports AeroTools.CalculationModel.Models.Structural.Library.Nodes
+Imports AeroTools.CalculationModel.Models.Structural.Library.Elements
 
 Namespace CalculationModel.Solver
 
@@ -258,7 +260,7 @@ Namespace CalculationModel.Solver
                 snCount = 0
                 seCount = -1
                 StructuralLink.StructuralCore.StructuralSettings = Settings.StructuralSettings
-                StructuralLink.StructuralCore.Nodes.Add(New Library.StructuralNode(snCount))
+                StructuralLink.StructuralCore.Nodes.Add(New StructuralNode(snCount))
                 StructuralLink.StructuralCore.Nodes(snCount).Position.Assign(Surface.StructuralPartition(0).p)
                 If (Symmetric) Then StructuralLink.StructuralCore.Nodes(snCount).Position.Y *= -1
                 StructuralLink.StructuralCore.Nodes(snCount).Contrains.Clamped()
@@ -282,14 +284,14 @@ Namespace CalculationModel.Solver
                     ' Add nodes:
 
                     snCount += 1
-                    StructuralLink.StructuralCore.Nodes.Add(New Library.StructuralNode(snCount))
+                    StructuralLink.StructuralCore.Nodes.Add(New StructuralNode(snCount))
                     StructuralLink.StructuralCore.Nodes(snCount).Position.Assign(Surface.StructuralPartition(pn).p)
                     If (Symmetric) Then StructuralLink.StructuralCore.Nodes(snCount).Position.Y *= -1
 
                     ' Add element:
 
                     seCount += 1
-                    Dim element As New Library.GeneralBeamElement(seCount)
+                    Dim element As New ConstantBeamElement(seCount)
                     element.NodeA = StructuralLink.StructuralCore.Nodes(snCount - 1)
                     element.NodeB = StructuralLink.StructuralCore.Nodes(snCount)
                     element.Section.Assign(Surface.StructuralPartition(seCount).LocalSection)

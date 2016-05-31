@@ -15,50 +15,53 @@
 'You should have received a copy Of the GNU General Public License
 'along with this program.  If Not, see < http:  //www.gnu.org/licenses/>.
 
-Imports AeroTools.CalculationModel.Models.Structural.Library.Elements
-Imports MathTools.Algebra.EuclideanSpace
-
-Namespace VisualModel.Models.Basics
+Namespace CalculationModel.Models.Structural.Library
 
     ''' <summary>
-    ''' Represents an structural partition
+    ''' Represents a material.
     ''' </summary>
     ''' <remarks></remarks>
-    Public Class StructuralPartition
+    Public Class Material
 
         ''' <summary>
-        ''' Position of this partition
+        ''' Young module [N/m²]
         ''' </summary>
         ''' <remarks></remarks>
-        Public p As EVector3
-
-        Public Basis As EBase3
+        Public E As Double ' 210GPa
 
         ''' <summary>
-        ''' Section associated to this partition
+        ''' Transverse module [N/m²]
         ''' </summary>
         ''' <remarks></remarks>
-        Public LocalSection As Section
+        Public G As Double ' 100GPa
 
-        Public LocalChord As Double
+        ''' <summary>
+        ''' Poisson coefficient
+        ''' </summary>
+        ''' <remarks></remarks>
+        Public v As Double = 0.3
 
-        Public Sub New(ByVal p As EVector3, ByVal section As Section)
-
-            Me.p = New EVector3(p.X, p.Y, p.Z)
-            LocalSection = New Section
-            LocalSection.Assign(section)
-
-        End Sub
+        ''' <summary>
+        ''' Material density [kg/m³]
+        ''' </summary>
+        ''' <remarks></remarks>
+        Public Density As Double = 7800
 
         Public Sub New()
+            E = 69000000000 ' Aluminium
+            v = 0.3
+            G = 0.5 * E / (1 + v)
+        End Sub
 
-            p = New EVector3()
-            LocalSection = New Section
-            Basis = New EBase3()
+        Public Sub Assign(ByVal Material As Material)
+
+            E = Material.E
+            G = Material.G
+            v = Material.v
+            Density = Material.Density
 
         End Sub
 
     End Class
 
 End Namespace
-

@@ -19,6 +19,8 @@ Imports System.IO
 Imports Meta.Numerics.Matrices
 Imports MathTools.MathLibrary.EigenValues
 Imports AeroTools.CalculationModel.Models.Structural.Library
+Imports AeroTools.CalculationModel.Models.Structural.Library.Elements
+Imports AeroTools.CalculationModel.Models.Structural.Library.Nodes
 
 Namespace CalculationModel.Models.Structural
 

@@ -24,6 +24,7 @@ Imports System.Xml
 Imports AeroTools.VisualModel.Models.Basics
 Imports AeroTools.VisualModel.IO
 Imports AeroTools.CalculationModel.Models.Structural.Library
+Imports AeroTools.CalculationModel.Models.Structural.Library.Elements
 
 Namespace VisualModel.Models.Components
 

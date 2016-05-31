@@ -20,6 +20,8 @@ Imports MathTools.Algebra.EuclideanSpace
 Imports AeroTools.CalculationModel.Models.Structural.Library
 Imports AeroTools.CalculationModel.Models.Aero.Components
 Imports MathTools.Integration
+Imports AeroTools.CalculationModel.Models.Structural.Library.Nodes
+Imports AeroTools.CalculationModel.Models.Structural.Library.Elements
 
 Namespace CalculationModel.Models.Structural
 
@@ -769,7 +771,7 @@ Namespace CalculationModel.Models.Structural
 
             For i = 0 To ne - 1
 
-                Dim element As New GeneralBeamElement(i)
+                Dim element As New ConstantBeamElement(i)
 
                 element.NodeA = StructuralCore.Nodes(r.ReadUInt32)
                 element.NodeB = StructuralCore.Nodes(r.ReadUInt32)

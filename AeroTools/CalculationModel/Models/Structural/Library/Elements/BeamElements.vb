@@ -15,239 +15,125 @@
 'You should have received a copy Of the GNU General Public License
 'along with this program.  If Not, see < http:  //www.gnu.org/licenses/>.
 
+Imports AeroTools.CalculationModel.Models.Structural.Library.Nodes
 Imports MathTools.Algebra.EuclideanSpace
 Imports Meta.Numerics.Matrices
 
-Namespace CalculationModel.Models.Structural.Library
+Namespace CalculationModel.Models.Structural.Library.Elements
 
     ''' <summary>
-    ''' Nodal constrains
+    ''' Gathers global section porperties for a beam element.
     ''' </summary>
     ''' <remarks></remarks>
-    Public Class Constrains
-
-        Public Fixed(5) As Boolean
-        Public K(5) As Double
-
-        Public Property FixedDx As Boolean
-            Set(ByVal value As Boolean)
-                Fixed(0) = value
-            End Set
-            Get
-                Return Fixed(0)
-            End Get
-        End Property
-
-        Public Property FixedDy As Boolean
-            Set(ByVal value As Boolean)
-                Fixed(1) = value
-            End Set
-            Get
-                Return Fixed(1)
-            End Get
-        End Property
-
-        Public Property FixedDz As Boolean
-            Set(ByVal value As Boolean)
-                Fixed(2) = value
-            End Set
-            Get
-                Return Fixed(2)
-            End Get
-        End Property
-
-        Public Property FixedRx As Boolean
-            Set(ByVal value As Boolean)
-                Fixed(3) = value
-            End Set
-            Get
-                Return Fixed(3)
-            End Get
-        End Property
-
-        Public Property FixedRy As Boolean
-            Set(ByVal value As Boolean)
-                Fixed(4) = value
-            End Set
-            Get
-                Return Fixed(4)
-            End Get
-        End Property
-
-        Public Property FixedRz As Boolean
-            Set(ByVal value As Boolean)
-                Fixed(5) = value
-            End Set
-            Get
-                Return Fixed(5)
-            End Get
-        End Property
+    Public Class Section
 
         ''' <summary>
-        ''' Stiffness in x direction
+        ''' Longitudinal stiffness [N/m]
         ''' </summary>
-        ''' <value></value>
-        ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Property KDx As Double
-            Set(ByVal value As Double)
-                K(0) = value
-            End Set
-            Get
-                Return K(0)
-            End Get
-        End Property
+        Public AE As Double = 1
 
         ''' <summary>
-        ''' Stiffness in y direction
+        ''' Torsional rigidity [Nm/rad]
         ''' </summary>
-        ''' <value></value>
-        ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Property KDy As Double
-            Set(ByVal value As Double)
-                K(1) = value
-            End Set
-            Get
-                Return K(1)
-            End Get
-        End Property
+        Public GJ As Double = 10
 
         ''' <summary>
-        ''' Stiffness in z direction
+        ''' Flexional rigidity of inertia around local axis y [Nm/rad]
         ''' </summary>
-        ''' <value></value>
-        ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Property KDz As Double
-            Set(ByVal value As Double)
-                K(2) = value
-            End Set
-            Get
-                Return K(2)
-            End Get
-        End Property
+        Public EIy As Double = 10
 
         ''' <summary>
-        ''' Stiffness arround x direction
+        ''' Flexional rigidity of inertia around local axis z [Nm/rad]
         ''' </summary>
-        ''' <value></value>
-        ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Property KRx As Double
-            Set(ByVal value As Double)
-                K(3) = value
-            End Set
-            Get
-                Return K(3)
-            End Get
-        End Property
+        Public EIz As Double = 10
 
         ''' <summary>
-        ''' Stiffness arround y direction
+        ''' Torsional moment of inertia [kgm²]
         ''' </summary>
-        ''' <value></value>
-        ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Property KRy As Double
-            Set(ByVal value As Double)
-                K(4) = value
-            End Set
-            Get
-                Return K(4)
-            End Get
-        End Property
+        Public rIp As Double = 1.0
 
         ''' <summary>
-        ''' Stiffness arround z direction
+        ''' Mass per unit length [kg/m]
         ''' </summary>
-        ''' <value></value>
-        ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Property KRz As Double
-            Set(ByVal value As Double)
-                K(5) = value
-            End Set
-            Get
-                Return K(5)
-            End Get
-        End Property
+        Public m As Double = 1.0
 
         ''' <summary>
-        ''' Fixes all degrees of freedom to the base reference frame
+        ''' Y coordinate of center of mass [m]
         ''' </summary>
         ''' <remarks></remarks>
-        Public Sub Clamped()
+        Public CMy As Double
 
-            For i = 0 To 5
-                Fixed(i) = True
-            Next
+        ''' <summary>
+        ''' Z coordinate of center of mass [m]
+        ''' </summary>
+        ''' <remarks></remarks>
+        Public CMz As Double
+
+        Public Sub Assign(ByVal Section As Section)
+
+            AE = Section.AE
+            CMy = Section.CMy
+            CMz = Section.CMz
+            GJ = Section.GJ
+            EIy = Section.EIy
+            EIz = Section.EIz
+            rIp = Section.rIp
+            m = Section.m
 
         End Sub
 
     End Class
 
     ''' <summary>
-    ''' Structural node
-    ''' </summary>
-    ''' <remarks></remarks>
-    Public Class StructuralNode
-
-        Public Position As EVector3
-
-        Public Contrains As Constrains
-        Public Load As NodalLoad
-        Public Displacement As NodalDisplacement
-        Public Velocity As NodalDisplacement
-
-        Private _Index As Integer
-
-        ''' <summary>
-        ''' Node global index
-        ''' </summary>
-        ''' <value></value>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
-        Public ReadOnly Property Index As Integer
-            Get
-                Return _Index
-            End Get
-        End Property
-
-        ''' <summary>
-        ''' Creates a new structural node
-        ''' </summary>
-        ''' <param name="Index">Global index</param>
-        ''' <remarks></remarks>
-        Public Sub New(ByVal Index As Integer)
-            _Index = Index
-            Position = New EVector3
-            Displacement = New NodalDisplacement
-            Velocity = New NodalDisplacement
-            Contrains = New Constrains
-            Load = New NodalLoad
-        End Sub
-
-    End Class
-
-    ''' <summary>
-    ''' Defines a beam element
+    ''' Represents a beam element
     ''' </summary>
     ''' <remarks></remarks>
     Public MustInherit Class BeamElement
 
+        Implements IFiniteElement
+
+        Public Property Nodes As StructuralNode() Implements IFiniteElement.Nodes
+
         Public Property NodeA As StructuralNode
+            Set(value As StructuralNode)
+                Nodes(0) = value
+            End Set
+            Get
+                Return Nodes(0)
+            End Get
+        End Property
+
         Public Property NodeB As StructuralNode
+            Set(value As StructuralNode)
+                Nodes(1) = value
+            End Set
+            Get
+                Return Nodes(1)
+            End Get
+        End Property
+
         Public Property Section As Section
         Public Property Basis As EBase3
         Public Property Index As Integer
 
-        Public Property M As SquareMatrix
-        Public Property K As SquareMatrix
+        Public Property M As SquareMatrix Implements IFiniteElement.M
+        Public Property K As SquareMatrix Implements IFiniteElement.K
 
-        Public MustOverride Sub GenerateLocalMass()
-        Public MustOverride Sub GenerateLocalStiffness()
-        Public MustOverride Sub GenerateGlobalMatrices()
+        Public MustOverride Sub GenerateLocalMass() Implements IFiniteElement.GenerateLocalMass
+        Public MustOverride Sub GenerateLocalStiffness() Implements IFiniteElement.GenerateLocalStiffness
+        Public MustOverride Sub GenerateGlobalMatrices() Implements IFiniteElement.GenerateGlobalMatrices
+
+        Public Sub New()
+
+            ReDim Nodes(1)
+
+        End Sub
 
     End Class
 
@@ -255,7 +141,7 @@ Namespace CalculationModel.Models.Structural.Library
     ''' Models a structural beam element of constant section
     ''' </summary>
     ''' <remarks></remarks>
-    Public Class GeneralBeamElement
+    Public Class ConstantBeamElement
 
         Inherits BeamElement
 
