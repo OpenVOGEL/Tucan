@@ -16,7 +16,7 @@
 'along with this program.  If Not, see < http:  //www.gnu.org/licenses/>.
 
 Imports System.Drawing
-Imports AeroTools.UVLM.Models.Aero.Components
+Imports AeroTools.CalculationModel.Models.Aero.Components
 Imports AeroTools.VisualModel.Models.Components
 Imports MathTools.Algebra.EuclideanSpace
 

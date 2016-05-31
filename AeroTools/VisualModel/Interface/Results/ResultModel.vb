@@ -18,7 +18,7 @@
 Imports MathTools.Algebra.EuclideanSpace
 Imports System.IO
 Imports System.Xml
-Imports AeroTools.UVLM.Settings
+Imports AeroTools.CalculationModel.Settings
 Imports AeroTools.VisualModel.Models.Components
 Imports AeroTools.VisualModel.IO
 

@@ -15,18 +15,18 @@
 'You should have received a copy Of the GNU General Public License
 'along with this program.  If Not, see < http:  //www.gnu.org/licenses/>.
 
-Imports AeroTools.UVLM.Models.Aero.Components
+Imports AeroTools.CalculationModel.Models.Aero.Components
 Imports System.Windows.Forms
-Imports AeroTools.UVLM.Models.Structural
+Imports AeroTools.CalculationModel.Models.Structural
 
 Public Class FormReport
 
     'Private Result As String
 
-    Private _CalculationCore As UVLM.Solver.UVLMSolver
+    Private _CalculationCore As CalculationModel.Solver.UVLMSolver
     Private _ForcesPanel As ForcesPanel
 
-    Public Sub ReportResults(ByRef CalculationCore As UVLM.Solver.UVLMSolver)
+    Public Sub ReportResults(ByRef CalculationCore As CalculationModel.Solver.UVLMSolver)
 
         _CalculationCore = CalculationCore
 

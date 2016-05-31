@@ -18,11 +18,11 @@
 Imports SharpGL
 Imports AeroTools.VisualModel.Interface
 Imports AeroTools.VisualModel.Models.Basics
-Imports AeroTools.UVLM.Models.Aero
+Imports AeroTools.CalculationModel.Models.Aero
 Imports MathTools.Algebra.EuclideanSpace
 Imports MathTools.Algebra.CustomMatrices
 Imports System.IO
-Imports AeroTools.UVLM.Settings
+Imports AeroTools.CalculationModel.Settings
 Imports System.Xml
 Imports AeroTools.VisualModel.Environment.Colormaping
 Imports MathTools

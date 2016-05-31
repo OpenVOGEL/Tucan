@@ -37,14 +37,14 @@ Namespace VisualModel.Models.Basics
         ''' Section associated to this partition
         ''' </summary>
         ''' <remarks></remarks>
-        Public LocalSection As UVLM.Models.Structural.Library.Section
+        Public LocalSection As AeroTools.CalculationModel.Models.Structural.Library.Section
 
         Public LocalChord As Double
 
-        Public Sub New(ByVal p As EVector3, ByVal section As UVLM.Models.Structural.Library.Section)
+        Public Sub New(ByVal p As EVector3, ByVal section As AeroTools.CalculationModel.Models.Structural.Library.Section)
 
             Me.p = New EVector3(p.X, p.Y, p.Z)
-            LocalSection = New UVLM.Models.Structural.Library.Section
+            LocalSection = New AeroTools.CalculationModel.Models.Structural.Library.Section
             LocalSection.Assign(section)
 
         End Sub
@@ -52,7 +52,7 @@ Namespace VisualModel.Models.Basics
         Public Sub New()
 
             p = New EVector3()
-            LocalSection = New UVLM.Models.Structural.Library.Section
+            LocalSection = New AeroTools.CalculationModel.Models.Structural.Library.Section
             Basis = New EBase3()
 
         End Sub

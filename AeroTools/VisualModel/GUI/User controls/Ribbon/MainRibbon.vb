@@ -1,15 +1,15 @@
 ﻿
 Imports System.Windows.Forms
-Imports AeroTools.UVLM.Settings
+Imports AeroTools.CalculationModel.Settings
 Imports AeroTools.VisualModel.Interface
 Imports AeroTools.VisualModel.Models.Basics
 
 Public Class MainRibbon
 
-    Private _Project As AircraftProject
+    Private _Project As ProjectRoot
 
-    Public Property Project As AircraftProject
-        Set(value As AircraftProject)
+    Public Property Project As ProjectRoot
+        Set(value As ProjectRoot)
             _Project = value
             RefreshListOfObjects()
             LoadVisualization()

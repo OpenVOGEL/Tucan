@@ -16,7 +16,7 @@
 'along with this program.  If Not, see < http:  //www.gnu.org/licenses/>.
 
 Imports MathTools.Algebra.EuclideanSpace
-Imports AeroTools.UVLM.Settings
+Imports AeroTools.CalculationModel.Settings
 Imports AeroTools.VisualModel.Environment.Colormaping
 
 Namespace VisualModel.Models.Basics

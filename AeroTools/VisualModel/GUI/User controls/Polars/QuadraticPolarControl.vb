@@ -15,7 +15,7 @@
 'You should have received a copy Of the GNU General Public License
 'along with this program.  If Not, see < http:  //www.gnu.org/licenses/>.
 
-Imports AeroTools.UVLM.Models.Aero.Components
+Imports AeroTools.CalculationModel.Models.Aero.Components
 
 Public Class QuadraticPolarControl
 

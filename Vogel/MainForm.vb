@@ -19,14 +19,14 @@ Imports MathTools.Algebra.EuclideanSpace
 Imports AeroTools
 Imports AeroTools.VisualModel.Interface
 Imports AeroTools.VisualModel.Models.Components
-Imports AeroTools.UVLM.Settings
+Imports AeroTools.CalculationModel.Settings
 Imports AeroTools.VisualModel.Models.Basics
 
 Public Class MainForm
 
 #Region " Initialize program "
 
-    Public Project As New AircraftProject
+    Public Project As New ProjectRoot
     Public FormCargado As Boolean = False
     Public PostProcesoCargado As Boolean = False
 

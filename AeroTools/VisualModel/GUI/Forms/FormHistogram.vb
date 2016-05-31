@@ -15,8 +15,8 @@
 'You should have received a copy Of the GNU General Public License
 'along with this program.  If Not, see < http:  //www.gnu.org/licenses/>.
 
-Imports AeroTools.UVLM.Settings
-Imports AeroTools.UVLM.SimulationTools
+Imports AeroTools.CalculationModel.Settings
+Imports AeroTools.CalculationModel.SimulationTools
 
 Public Class FormHistogram
 

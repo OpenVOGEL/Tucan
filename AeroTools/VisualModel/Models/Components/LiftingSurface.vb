@@ -17,12 +17,13 @@
 
 Imports SharpGL
 Imports AeroTools.VisualModel.Interface
-Imports AeroTools.UVLM.Models.Aero.Components
+Imports AeroTools.CalculationModel.Models.Aero.Components
 Imports MathTools.Algebra.EuclideanSpace
 Imports MathTools.Algebra.CustomMatrices
 Imports System.Xml
 Imports AeroTools.VisualModel.Models.Basics
 Imports AeroTools.VisualModel.IO
+Imports AeroTools.CalculationModel.Models.Structural.Library
 
 Namespace VisualModel.Models.Components
 
@@ -219,7 +220,7 @@ Namespace VisualModel.Models.Components
         ''' Represents the section at the tip of the panel
         ''' </summary>
         ''' <remarks></remarks>
-        Public Property TipSection As UVLM.Models.Structural.Library.Section = New UVLM.Models.Structural.Library.Section
+        Public Property TipSection As Section = New Section
 
         Private _CenterOfShear As Double = 0.25
 
@@ -1594,7 +1595,7 @@ Namespace VisualModel.Models.Components
         ''' Wing root section.
         ''' </summary>
         ''' <remarks></remarks>
-        Public Property RootSection As UVLM.Models.Structural.Library.Section = New UVLM.Models.Structural.Library.Section
+        Public Property RootSection As Section = New Section
 
         ''' <summary>
         ''' Contains all nodes and segments representing the structure.
@@ -1625,7 +1626,7 @@ Namespace VisualModel.Models.Components
 
             Dim sp As Integer = 0 ' Starting position
 
-            Dim RootSection As UVLM.Models.Structural.Library.Section = Me.RootSection
+            Dim RootSection As Section = Me.RootSection
             Dim RootChord As Double = _RootChord
 
             ' Build partition

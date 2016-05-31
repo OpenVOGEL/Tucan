@@ -17,7 +17,7 @@
 
 Imports System.Drawing
 Imports System.Windows.Forms
-Imports AeroTools.UVLM.Models.Aero.Components
+Imports AeroTools.CalculationModel.Models.Aero.Components
 Imports MathTools.Magnitudes
 
 Public Class ForcesPanel
@@ -158,7 +158,7 @@ Public Class ForcesPanel
 
     ' Results object:
 
-    Private _CalculationCore As UVLM.Solver.UVLMSolver
+    Private _CalculationCore As CalculationModel.Solver.UVLMSolver
 
     Private Sub LoadResultsData()
 
@@ -218,7 +218,7 @@ Public Class ForcesPanel
 
     End Sub
 
-    Public Sub New(CalculationCore As UVLM.Solver.UVLMSolver)
+    Public Sub New(CalculationCore As CalculationModel.Solver.UVLMSolver)
 
         InitializeComponent()
 

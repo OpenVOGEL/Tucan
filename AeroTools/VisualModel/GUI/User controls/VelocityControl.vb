@@ -18,7 +18,7 @@
 Imports System.Threading.Tasks
 Imports MathTools.Algebra.EuclideanSpace
 Imports AeroTools.VisualModel.Interface
-Imports AeroTools.UVLM.SimulationTools
+Imports AeroTools.CalculationModel.SimulationTools
 
 Public Class VelocityControl
 
@@ -27,9 +27,9 @@ Public Class VelocityControl
     Private Ready As Boolean = False
     Private ModyfingData As Boolean = True
     Private PlanoDeVelocidad As VelocityPlane
-    Private Proyecto As AircraftProject
+    Private Proyecto As ProjectRoot
 
-    Public Sub IniciarControl(ByRef Proyecto As AircraftProject)
+    Public Sub IniciarControl(ByRef Proyecto As ProjectRoot)
 
         Me.Ready = False
         Me.PlanoDeVelocidad = Proyecto.VelocityPlane

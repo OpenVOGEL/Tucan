@@ -19,11 +19,11 @@ Imports AeroTools.VisualModel.Interface
 Imports AeroTools.VisualModel.Models.Components
 Imports System.Xml
 Imports AeroTools.VisualModel.Models.Basics
-Imports AeroTools.UVLM.Models.Aero.Components
+Imports AeroTools.CalculationModel.Models.Aero.Components
 
 Namespace VisualModel.Models
 
-    Public Class CalculationModel
+    Public Class GeometricModel
 
         ''' <summary>
         ''' Project name.
