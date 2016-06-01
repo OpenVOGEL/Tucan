@@ -3,19 +3,19 @@ Note: this module is now mainly being developed at the UNC, and therefore some p
 ##Sobre la conexión aeroelástica de Open VOGEL (ES)
 
 El modelo estructural está basado en el metodo de elementos finitos, implementado a travez de "nodos" y "elementos".
-Estas dos entidades básicas están definidas en la biblioteca "OpenVOGEL.AeroTools.CalculationModel.Models.Structural.Library".
+Estas dos entidades básicas están definidas en la biblioteca OpenVOGEL.AeroTools.CalculationModel.Models.Structural.Library.
 
 ###Nodos
 OpenVOGEL.AeroTools.CalculationModel.Models.Structural.Library.Nodes.StructuralNode
 
-Los nodos representan puntos de conexión donde una o más barras confluyen. Cada nodo cuenta con una serie de propiedades que definen el estado local:
+Los nodos representan puntos de conexión donde una o más elementos confluyen. Cada nodo cuenta con una serie de propiedades que definen el estado local:
 - Position: en coordenadas ortogonales globales (x, y, z).
 - Constrains: para cada grado de libertad, puede ser una restricción total o una toma de rigidez.
 - Load: la carga nodal en coordenadas globales para cada grado de libertad (Fx, Fy, Fz, Mx, My, Mz).
 - Displacement: El desplazamiento nodal en coordenadas ortoglobales (ux, uy, uz, rx, ry, rz).
 - Index: sirve para localizar el nodo en el stack de nodos.
 
-Los nodos tienen 6 grados de libertad y reciben la carga sobre la estructura.
+Los nodos tienen 6 grados de libertad y reciben la carga aplicada sobre la estructura.
 
 ###Elementos
 OpenVOGEL.AeroTools.CalculationModel.Models.Structural.Library.Elements
