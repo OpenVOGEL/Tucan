@@ -56,8 +56,10 @@ Luego se llama al método de cada MechanicLink para que reúna esas cargas y las
 
 Con las cargas en la estructura, el StructuralLink está en condiciones de integrar las ecuaciones de movimiento. En el desarrollo actual se integran las ecuaciones modales desacopladas para evitar tener que resolver un sistema de ODE acopladas. 
 Esto obviamente tiene las limitaciones de todo análisis lineal.
+
 Lo que se hace entonces es calcular la carga modal (el trabajo virtual del estado de cargas sobre los desplazamientos virtuales de cada modo), y con eso los desplazamientos generalizados de cada modo.
 Para integrar las ecuaciones se puede usar cualquier método. Por el momento solo se ha implementado Newmark por-que es el más estable.
+
 Los desplazamientos generalizados se emplean mas tarde para recomponer el movimiento mediante una combinación lineal de las formas modales. 
 Una vez que se conoce el movimiento de cada nodo estructural, se llama a al método de cada KinematicLink para que transfiera ese movimiento a los nodos asociados del modelo estructural.
 
