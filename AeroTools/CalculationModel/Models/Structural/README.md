@@ -36,7 +36,7 @@ _OpenVOGEL.AeroTools.CalculationModel.Models.Structural.StructuralCore_
 
 La clase `StructuralCore` es una definición que contiene todos los nodos y elementos de la estructura.
 Este objeto se encarga de solicitar a los elementos de la estructura el ensamblaje de sus matrices locales, y con ellas de ensamblar el sistema global. También se encarga de generar la descomposición modal: ejecuta la descomposición (haciendo uso de la biblioteca de álgebra localizada en _MathTools_) y almacena los modos dinámicos con sus propiedades modales.
-Actualmente, en esta clase hay que implementar la interface `IFiniteElement` para evitar el elemento BeamElement y asi genrar una definicion general.
+>Actualmente, en esta clase se debe implementar la interface `IFiniteElement` para evitar usar solo el elemento `BeamElement` y poder incluir nuevos elementos en el futuro.
 
 ###Linker
 _OpenVOGEL.AeroTools.CalculationModel.Models.Structural_
@@ -50,7 +50,7 @@ En el desarrollo actual, la conexión tiene dos componentes básicos:
 - `KinematicLink`: contiene un nodo estructural y una serie de nodos aerodinamicos.
 - `MechanicLink`: contiene un elemento estructural y una serie de paneles delgados del modelo aerodinami-co.
 
-La clase principal `StructuralLink` contiene dos colecciones, una de `KinematicLinks` y otra de `MechanicLinks`. 
+La clase principal `StructuralLink` contiene al `StructuralCore` y a dos importantes colecciones, una de `KinematicLinks` y otra de `MechanicLinks`. 
 Cuando se ejecuta el cálculo, se evalúa en cada paso las cargas en los paneles aerodinámicos. 
 Luego se llama al método de cada `MechanicLink` para que reúna esas cargas y las concentre en los nodos estructurales del elemento estructural asociado.
 
@@ -71,4 +71,8 @@ Una vez que se conoce el movimiento de cada nodo estructural, se llama a al mét
 >- La forma de retomar el movimiento de la estructura a al modelo aerodinámico.
 >
 >Sería recomendable usar la estructura actual como una plantilla para las próximas implementaciones.
+
+### Administracion del cálculo aeroelastico
+El calculo aeroelástico se administra en el método _AeroelasticUnsteadyTransit_ de la clase _UVLMSolver_.
+En ese método se generan los sistemas de ecuaciones de cada `StructuralLink` definidos en el modelo, y se ejecuta la integracion numerica en el tiempo.
 
