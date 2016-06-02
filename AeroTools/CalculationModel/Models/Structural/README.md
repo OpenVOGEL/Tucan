@@ -1,4 +1,5 @@
 Note: this module is now mainly being developed at the UNC, and therefore some part of the documentation comes in Spanish. We will strive to translate these documents into English as soon as we can.
+A similar text in english can be found [here](https://sites.google.com/site/gahvogel/main/aeroelasticity).
 
 ##Sobre la conexión aeroelástica de Open VOGEL (ES)
 
