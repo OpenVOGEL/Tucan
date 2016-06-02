@@ -29,8 +29,8 @@ Las propiedades más importantes del `BeamElement` son:
 - _NodoB_ (implementa el nodo 1 de `IFiniteElement`)
 - _Section_: contiene las propiedades de la sección, tanto de rigidez como inercia.
 - _Basis_: las direcciones locales en vectores ortonormales (u, v, w).
-- _M_: Matriz de masa (12x12) (implementa M de IFiniteElement)
-- _K_: Matriz de rigidez (12x12) (implementa K de IFiniteElement)
+- _M_: Matriz de masa (12x12) (implementa M de `IFiniteElement`)
+- _K_: Matriz de rigidez (12x12) (implementa K de `IFiniteElement`)
 
 ###Estructura
 _OpenVOGEL.AeroTools.CalculationModel.Models.Structural.StructuralCore_
