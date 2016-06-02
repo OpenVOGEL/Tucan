@@ -9,8 +9,9 @@ If you have questions about the software, or if you want to share data and/or ch
 If you are willing to give us a hand with the development, you are at the right place.
 Open VOGEL is fully based in the .NET Framework, and it has been programmed in VB and C#. 
 For the GUI, VOGEL is based in WinForms and SharpGL.
-If you are familiar with at least one of these programming languages and API's, and you have a good knowledge of aerodynamics, you can 
-help us with the development. If you are new to this, follow the next steps:
+If you are familiar with at least one of these programming languages and API's, and you have a good knowledge of aerodynamics, algebra or finite element methods, you can help us with the development. A strong spirit of cooperation is cernainly also required.
+
+If you are new to this, follow the next steps:
 
 - Install Visual Studio 2015 Community in your computer
 - Add the GitHub plugin to VS and sign up.
