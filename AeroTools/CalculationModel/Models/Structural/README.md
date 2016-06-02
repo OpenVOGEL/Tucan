@@ -58,7 +58,7 @@ Con las cargas en la estructura, el `StructuralLink` está en condiciones de int
 Usar el método de descomposición modal tiene obviamente todas las limitaciones de un análisis lineal.
 
 Lo que se hace entonces es calcular la carga modal (el trabajo virtual del estado de cargas sobre los desplazamientos virtuales representados por cada forma modal), y con eso los desplazamientos generalizados de cada modo.
-Para integrar las ecuaciones se puede usar cualquier método. Por el momento solo se ha implementado Newmark porque es el más estabilidad numérica ha demostrado (el método de la diferencia central es, de suguro, mas que deficiente en ese sentido, por lo que ha sido eliminado).
+Para integrar las ecuaciones se puede usar cualquier método. Por el momento solo se ha implementado _Newmark_ porque es el que mas estabilidad numérica ha demostrado (el método de la diferencia central es, de suguro, mas que deficiente en ese sentido, por lo que ha sido eliminado).
 
 Los desplazamientos generalizados se emplean mas tarde para recomponer el movimiento mediante una combinación lineal de las formas modales.
 Una vez que se conoce el movimiento de cada nodo estructural, se llama a al método de cada `KinematicLink` para que transfiera ese movimiento a los nodos asociados del modelo estructural.
