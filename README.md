@@ -1,7 +1,7 @@
 ![](https://sites.google.com/site/gahvogel/_/rsrc/1459943467902/config/customLogo.gif?revision=14)
 
 ###Welcome!
-In this project we work together to bring out a simple but very useful tool to solve aerodynamic problems.
+In this project we work together to bring out a simple but very useful tool to solve aerodynamic problems. And we love aerodynamics so much, that we dare bringing it out for free.
 If you have questions about the software, or if you want to share data and/or chat with other users, you can join the community (www.openvogel.com).
 
 ![](https://sites.google.com/site/gahvogel/_/rsrc/1454581604797/config/pagetemplates/steady-aerodynamics/Jet_II.png?height=177&width=400)
