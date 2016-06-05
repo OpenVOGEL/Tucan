@@ -17,7 +17,7 @@
 
 Imports MathTools.Algebra.EuclideanSpace
 Imports AeroTools.CalculationModel.Settings
-Imports AeroTools.VisualModel.Environment.Colormaping
+Imports AeroTools.VisualModel.Tools.Colormaping
 
 Namespace VisualModel.Models.Basics
 

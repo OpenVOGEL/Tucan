@@ -32,11 +32,13 @@ Namespace VisualModel.Models.Components
 
 #Region " Geometry "
 
-        Public Enum ESpacement As Integer
+        Public Enum Spacements As Integer
+
             Constant = 1
             Cuadratic = 2
             Qubic = 3
             Sinus = 4
+
         End Enum
 
         Private _SpanPanels As Integer
@@ -46,40 +48,6 @@ Namespace VisualModel.Models.Components
 
             FlapChord = 0.3
             PolarID = Guid.Empty
-            Chamber = New ChamberedLine(ChamberType.NACA4)
-
-        End Sub
-
-        ''' <summary>
-        ''' Load all geometrical parameters.
-        ''' </summary>
-        ''' <param name="SpanPanels">Number of spanwise panels</param>
-        ''' <param name="TipChord">Tip chord</param>
-        ''' <param name="Lenght">Spanwise length</param>
-        ''' <param name="SweepBack">Sweep angle</param>
-        ''' <param name="Dihedral">Dihedral angle</param>
-        ''' <param name="Torsion">Twist</param>
-        ''' <param name="TorsionalAxis">Position of the twisting axis</param>
-        ''' <remarks></remarks>
-        Public Sub LoadGeometry(ByVal SpanPanels As Integer, ByVal TipChord As Double, ByVal Lenght As Double,
-                                ByVal SweepBack As Double, ByVal Dihedral As Double, ByVal Torsion As Double, ByVal TorsionalAxis As Double,
-                                ByVal MaxChamber As Double, ByVal PosMaxChamber As Double, ByVal SpacingType As Integer)
-
-            If SpanPanels > 0 Then _SpanPanels = SpanPanels
-            If TipChord > 0 Then _TipChord = TipChord
-            _Sweep = SweepBack
-            If Lenght > 0 Then _Length = Lenght
-            _Dihedral = Dihedral
-            _Twist = Torsion
-            _TwistAxis = TorsionalAxis
-            _SpacingType = SpacingType
-
-            _Chamber.Dimension(ChamberDim.MaxChamber) = MaxChamber
-            _Chamber.Dimension(ChamberDim.PosMaxChamber) = PosMaxChamber
-
-            If SpacingType = ESpacement.Cuadratic Then
-                _SpanPanels = Math.Max(_SpanPanels, 2)
-            End If
 
         End Sub
 
@@ -92,15 +60,12 @@ Namespace VisualModel.Models.Components
 
             _SpanPanels = PanelExt.nSpanPanels
             _TipChord = PanelExt.TipChord
-            _Sweep = PanelExt.Sweep
+            _Sweepback = PanelExt.Sweepback
             _Length = PanelExt.Length
             _Dihedral = PanelExt.Dihedral
             _Twist = PanelExt.Twist
             _TwistAxis = PanelExt.TwistAxis
             _FlapChord = PanelExt._FlapChord
-
-            _Chamber.Assign(PanelExt._Chamber)
-
             _CenterOfShear = PanelExt.CenterOfShear
 
         End Sub
@@ -157,7 +122,7 @@ Namespace VisualModel.Models.Components
         ''' <value></value>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Property Sweep As Double
+        Public Property Sweepback As Double
 
         ''' <summary>
         ''' Dihedral angle.
@@ -189,7 +154,13 @@ Namespace VisualModel.Models.Components
         ''' <value></value>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Property Chamber As ChamberedLine
+        Public Property CamberLineID As Guid
+
+        ''' <summary>
+        ''' Indicates if this region is flapped.
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property Flapped As Boolean
 
         ''' <summary>
         ''' Lenght of the flap in chordwise direction.
@@ -198,12 +169,18 @@ Namespace VisualModel.Models.Components
         Public Property FlapChord As Double
 
         ''' <summary>
+        ''' Deflection of the flap (in rad).
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property FlapDeflection As Double
+
+        ''' <summary>
         ''' Type of spanwise spacing between the stations.
         ''' </summary>
         ''' <value></value>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Property SpacingType As ESpacement
+        Public Property SpacementType As Spacements
 
         ''' <summary>
         ''' Index of polar curve to be loaded.
@@ -266,17 +243,15 @@ Namespace VisualModel.Models.Components
             writer.WriteAttributeString("SpanVortexRings", String.Format("{0}", nSpanPanels))
             writer.WriteAttributeString("ExternalChord", String.Format("{0}", TipChord))
             writer.WriteAttributeString("Length", String.Format("{0}", Length))
-            writer.WriteAttributeString("SweepBack", String.Format("{0}", Sweep))
+            writer.WriteAttributeString("SweepBack", String.Format("{0}", Sweepback))
             writer.WriteAttributeString("Diedral", String.Format("{0}", Dihedral))
             writer.WriteAttributeString("Torsion", String.Format("{0}", Twist))
             writer.WriteAttributeString("TorsionAxis", String.Format("{0}", TwistAxis))
-            writer.WriteAttributeString("MaxChamber", String.Format("{0}", Chamber.Dimension(ChamberDim.MaxChamber)))
-            writer.WriteAttributeString("MaxChamberPosition", String.Format("{0}", Chamber.Dimension(ChamberDim.PosMaxChamber)))
-            writer.WriteAttributeString("_Flapped", String.Format("{0}", Chamber.Flapped))
-            writer.WriteAttributeString("_TipFlap", String.Format("{0}", Chamber.FlapChord))
-            writer.WriteAttributeString("_FlapDeflection", String.Format("{0}", Chamber.FlapDeflection))
+            writer.WriteAttributeString("SpacingType", String.Format("{0}", SpacementType))
 
-            writer.WriteAttributeString("SpacingType", String.Format("{0}", SpacingType))
+            writer.WriteAttributeString("Flapped", Flapped)
+            writer.WriteAttributeString("FlapChord", FlapChord)
+            writer.WriteAttributeString("FlapDeflection", FlapDeflection)
 
             writer.WriteAttributeString("Area", String.Format("{0}", TipSection.AE))
             writer.WriteAttributeString("Iu", String.Format("{0}", TipSection.GJ))
@@ -287,8 +262,9 @@ Namespace VisualModel.Models.Components
             writer.WriteAttributeString("J", String.Format("{0}", TipSection.rIp))
             writer.WriteAttributeString("m", String.Format("{0}", TipSection.m))
 
-            writer.WriteAttributeString("SChord", String.Format("{0}", CenterOfShear))
-            writer.WriteAttributeString("PolarID", String.Format("{0}", _PolarID))
+            writer.WriteAttributeString("CenterOfShear", String.Format("{0}", CenterOfShear))
+            writer.WriteAttributeString("PolarID", String.Format("{0}", PolarID))
+            writer.WriteAttributeString("CamberLineID", String.Format("{0}", CamberLineID))
 
         End Sub
 
@@ -302,17 +278,15 @@ Namespace VisualModel.Models.Components
             nSpanPanels = IOXML.ReadInteger(reader, "SpanVortexRings", 4)
             TipChord = IOXML.ReadDouble(reader, "ExternalChord", 1.0)
             Length = IOXML.ReadDouble(reader, "Length", 1.0)
-            Sweep = IOXML.ReadDouble(reader, "SweepBack", 0.0)
+            Sweepback = IOXML.ReadDouble(reader, "SweepBack", 0.0)
             Dihedral = IOXML.ReadDouble(reader, "Diedral", 0.0)
             Twist = IOXML.ReadDouble(reader, "Torsion", 0.0)
             TwistAxis = IOXML.ReadDouble(reader, "TorsionAxis", 0.0)
-            Chamber.Dimension(ChamberDim.MaxChamber) = IOXML.ReadDouble(reader, "MaxChamber", 0.0)
-            Chamber.Dimension(ChamberDim.PosMaxChamber) = IOXML.ReadDouble(reader, "MaxChamberPosition", 0.0)
-            SpacingType = IOXML.ReadInteger(reader, "SpacingType", 1)
+            SpacementType = IOXML.ReadInteger(reader, "SpacingType", 1)
 
-            Me.Chamber.Flapped = IOXML.ReadBoolean(reader, "_Flapped", False)
-            Me.Chamber.FlapChord = IOXML.ReadDouble(reader, "_TipFlap", 0.2)
-            Me.Chamber.FlapDeflection = IOXML.ReadDouble(reader, "_FlapDeflection", 0.0#)
+            Flapped = IOXML.ReadBoolean(reader, "Flapped", False)
+            FlapChord = IOXML.ReadDouble(reader, "FlapChord", 0.2)
+            FlapDeflection = IOXML.ReadDouble(reader, "FlapDeflection", 0.0#)
 
             TipSection.AE = IOXML.ReadDouble(reader, "Area", 1000)
             TipSection.GJ = IOXML.ReadDouble(reader, "Iu", 1000)
@@ -323,8 +297,9 @@ Namespace VisualModel.Models.Components
             TipSection.CMz = IOXML.ReadDouble(reader, "Sw", 1000)
             TipSection.m = IOXML.ReadDouble(reader, "m", 10)
 
-            CenterOfShear = IOXML.ReadDouble(reader, "SChord", 0.0)
-            _PolarID = New Guid(IOXML.ReadString(reader, "PolarID", Guid.Empty.ToString))
+            CenterOfShear = IOXML.ReadDouble(reader, "CenterOfShear", 0.0)
+            PolarID = New Guid(IOXML.ReadString(reader, "PolarID", Guid.Empty.ToString))
+            CamberLineID = New Guid(IOXML.ReadString(reader, "CamberLineID", Guid.Empty.ToString))
 
         End Sub
 
@@ -734,9 +709,12 @@ Namespace VisualModel.Models.Components
         ''' <remarks></remarks>
         Public Sub InitializeRegions()
 
-            Dim NewPanel As New WingRegion
-            NewPanel.LoadGeometry(5, 1.0#, 1.0#, 0.0#, 0.0#, 0.0#, 0.5#, 0.0#, 0.25#, 1)
-            WingRegions.Add(NewPanel)
+            Dim NewRegion As New WingRegion
+            NewRegion.nSpanPanels = 5
+            NewRegion.TipChord = 1.0#
+            NewRegion.Length = 1.0#
+            NewRegion.TwistAxis = 0.5#
+            WingRegions.Add(NewRegion)
 
         End Sub
 
@@ -746,24 +724,30 @@ Namespace VisualModel.Models.Components
         ''' <remarks></remarks>
         Public Sub AddRegion()
 
-            Dim NewMacroPanel As New WingRegion
-            NewMacroPanel.LoadGeometry(4, 1.0#, 1.0#, 0.0#, 0.0#, 0.0#, 0.5#, 0.0#, 0.25#, 1)
-            WingRegions.Add(NewMacroPanel)
+            Dim NewRegion As New WingRegion
+            NewRegion.nSpanPanels = 5
+            NewRegion.TipChord = 1.0#
+            NewRegion.Length = 1.0#
+            NewRegion.TwistAxis = 0.5#
+            WingRegions.Add(NewRegion)
 
         End Sub
 
         ''' <summary>
         ''' Insets a new wing region at a given position.
         ''' </summary>
-        ''' <param name="Posicion"></param>
+        ''' <param name="Position"></param>
         ''' <remarks></remarks>
-        Public Overloads Sub InsertRegion(ByVal Posicion As Integer)
+        Public Overloads Sub InsertRegion(ByVal Position As Integer)
 
-            If Posicion >= 1 And Posicion <= WingRegions.Count Then
+            If Position >= 1 And Position <= WingRegions.Count Then
 
-                Dim NewMacroPanel As New WingRegion
-                NewMacroPanel.LoadGeometry(4, 1.0#, 1.0#, 0.0#, 0.0#, 0.0#, 0.5#, 0.0#, 0.25#, 1)
-                WingRegions.Insert(Posicion - 1, NewMacroPanel)
+                Dim NewRegion As New WingRegion
+                NewRegion.nSpanPanels = 5
+                NewRegion.TipChord = 1.0#
+                NewRegion.Length = 1.0#
+                NewRegion.TwistAxis = 0.5#
+                WingRegions.Insert(Position - 1, NewRegion)
 
             End If
 
@@ -775,9 +759,12 @@ Namespace VisualModel.Models.Components
         ''' <remarks></remarks>
         Public Overloads Sub InsertRegion()
 
-            Dim NewMacroPanel As New WingRegion
-            NewMacroPanel.LoadGeometry(4, 1.0#, 1.0#, 0.0#, 0.0#, 0.0#, 0.5#, 0.0#, 0.25#, 1)
-            WingRegions.Insert(_CurrentWingRegion, NewMacroPanel)
+            Dim NewRegion As New WingRegion
+            NewRegion.nSpanPanels = 5
+            NewRegion.TipChord = 1.0#
+            NewRegion.Length = 1.0#
+            NewRegion.TwistAxis = 0.5#
+            WingRegions.Insert(_CurrentWingRegion, NewRegion)
 
         End Sub
 
@@ -813,7 +800,9 @@ Namespace VisualModel.Models.Components
 #Region " 3D model and vortices generation "
 
         Public Function GetVortex(ByVal VortexNumber As Integer) As LatticeSegment
+
             Return Mesh.Lattice.Item(VortexNumber)
+
         End Function
 
         Public Overrides Sub GenerateMesh()
@@ -941,10 +930,11 @@ Namespace VisualModel.Models.Components
             Dim nodeCounter As Integer = 1
 
             Dim flap As Double = RootFlap
+            Dim RootChamber As CamberLine = GetCamberLineFromID(WingRegions(0).CamberLineID)
 
             For i = 1 To _nChordNodes
 
-                If WingRegions(0).Chamber.Flapped Then
+                If WingRegions(0).Flapped Then
 
                     If i <= _nChordNodes - FlapPanels Then
 
@@ -964,15 +954,16 @@ Namespace VisualModel.Models.Components
 
                 Dim pLoc As New EVector2
 
-                Dim deflection As Single = WingRegions(0).Chamber.FlapDeflection
+                Dim deflection As Single = WingRegions(0).FlapDeflection
 
-                WingRegions(0).Chamber.FlapDeflection = 0
-                WingRegions(0).Chamber.EvaluatePoint(pLoc, X)
+                WingRegions(0).FlapDeflection = 0
+
+                RootChamber.EvaluatePoint(pLoc, X)
 
                 pLoc.X *= _RootChord
                 pLoc.Y *= _RootChord
 
-                WingRegions(0).Chamber.FlapDeflection = deflection
+                WingRegions(0).FlapDeflection = deflection
 
                 Dim Point As New NodalPoint(pLoc.X, 0, pLoc.Y)
 
@@ -996,7 +987,7 @@ Namespace VisualModel.Models.Components
 
                 'Inicia las variables comunes del panel:
 
-                Dim delta As Double = WingRegions(mpIndex).Sweep / 180.0 * Math.PI
+                Dim delta As Double = WingRegions(mpIndex).Sweepback / 180.0 * Math.PI
                 Dim gamma As Double = WingRegions(mpIndex).Dihedral / 180.0 * Math.PI
                 Dim twist As Double = 0.0#
 
@@ -1048,13 +1039,13 @@ Namespace VisualModel.Models.Components
 
                     Y = k / WingRegions.Item(mpIndex).nSpanPanels
 
-                    Select Case WingRegions.Item(mpIndex).SpacingType
+                    Select Case WingRegions.Item(mpIndex).SpacementType
 
-                        Case WingRegion.ESpacement.Constant
+                        Case WingRegion.Spacements.Constant
                             Y_stripe = Stramo * Y
-                        Case WingRegion.ESpacement.Cuadratic
+                        Case WingRegion.Spacements.Cuadratic
                             Y_stripe = B1 * Y + C1 * Y ^ 2
-                        Case WingRegion.ESpacement.Qubic
+                        Case WingRegion.Spacements.Qubic
                             Y_stripe = B2 * Y + C2 * Y ^ 2 + D2 * Y ^ 3
 
                     End Select
@@ -1078,15 +1069,15 @@ Namespace VisualModel.Models.Components
                     Phi = WingRegions(mpIndex).Twist * Y / 180.0 * Math.PI
 
                     Dim flap_chord_i As Single
-                    Dim flap_chord_f As Single = WingRegions(mpIndex).Chamber.FlapChord
+                    Dim flap_chord_f As Single = WingRegions(mpIndex).FlapChord
 
                     If mpIndex = 0 Then
                         flap_chord_i = RootFlap
                     Else
-                        flap_chord_i = WingRegions(mpIndex - 1).Chamber.FlapChord
+                        flap_chord_i = WingRegions(mpIndex - 1).FlapChord
                     End If
 
-                    Dim LocalChamber As New ChamberedLine(WingRegions(mpIndex).Chamber)
+                    Dim LocalChamber As CamberLine = GetCamberLineFromID(WingRegions(mpIndex).CamberLineID)
 
                     For l = 1 To _nChordNodes ' For each nodal point in the current column...
 
@@ -1094,9 +1085,9 @@ Namespace VisualModel.Models.Components
 
                         flap = flap_chord_i + (flap_chord_f - flap_chord_i) * Y
 
-                        If WingRegions(mpIndex).Chamber.Flapped Then
+                        If WingRegions(mpIndex).Flapped Then
 
-                            WingRegions(mpIndex).Chamber.FlapChord = flap
+                            WingRegions(mpIndex).FlapChord = flap
 
                             If l <= _nChordNodes - FlapPanels Then
                                 X = (l - 1) / (_nChordNodes - FlapPanels - 1) * (1 - flap)
@@ -1113,7 +1104,7 @@ Namespace VisualModel.Models.Components
                         'Calculates the chamber
 
                         Dim pLoc As New EVector2
-                        WingRegions(mpIndex).Chamber.EvaluatePoint(pLoc, X)
+                        LocalChamber.EvaluatePoint(pLoc, X)
                         pLoc.X *= Chord
                         pLoc.Y *= Chord
 
@@ -1150,7 +1141,7 @@ Namespace VisualModel.Models.Components
 
                     Next
 
-                    WingRegions(mpIndex).Chamber.FlapChord = flap_chord_f
+                    WingRegions(mpIndex).FlapChord = flap_chord_f
 
                 Next
 
@@ -1642,7 +1633,7 @@ Namespace VisualModel.Models.Components
 
                     lePoint = Mesh.Nodes(sp * _nChordNodes).Position
 
-                    If Panel.Chamber.Flapped Then
+                    If Panel.Flapped Then
                         tePoint = Mesh.Nodes((sp + 1) * _nChordNodes - 1 - FlapPanels).Position
                     Else
                         tePoint = Mesh.Nodes((sp + 1) * _nChordNodes - 1).Position

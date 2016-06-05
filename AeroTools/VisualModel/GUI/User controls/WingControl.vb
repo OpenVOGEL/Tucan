@@ -18,7 +18,6 @@
 Imports System.Drawing
 Imports AeroTools.CalculationModel.Models.Aero.Components
 Imports AeroTools.VisualModel.Models.Components
-Imports MathTools.Algebra.EuclideanSpace
 
 Public Class WingControl
 
@@ -91,26 +90,27 @@ Public Class WingControl
 
         PointToCurrentRegion()
 
-        Dim TipoEspaciamiento As Integer
+        Surface.CurrentRegion.nSpanPanels = nudSpanwiseRings.Value
+        Surface.CurrentRegion.TipChord = nudTipChord.Value
+        Surface.CurrentRegion.Length = nudLength.Value
+        Surface.CurrentRegion.Sweepback = nudSweepback.Value
+        Surface.CurrentRegion.Dihedral = nudDihedral.Value
+        Surface.CurrentRegion.Twist = nudTwist.Value
+        Surface.CurrentRegion.TwistAxis = nudTwistingAxis.Value
 
-        If EspaciamientoConstante.Checked = True Then
-            TipoEspaciamiento = 1
-        ElseIf EspaciamientoNormalizado.Checked = True Then
-            TipoEspaciamiento = 2
+        If rbConstantSpacement.Checked Then
+            Surface.CurrentRegion.SpacementType = WingRegion.Spacements.Constant
+        ElseIf rbCuadraticSpacement.Checked Then
+            Surface.CurrentRegion.SpacementType = WingRegion.Spacements.Cuadratic
         Else
-            TipoEspaciamiento = 3
+            Surface.CurrentRegion.SpacementType = WingRegion.Spacements.Constant
         End If
 
-        Surface.CurrentRegion.LoadGeometry(NPTramo_Box.Value, Cuerda_box.Value,
-                                                                                                         Longitud_box.Value, Sweepback_box.Value,
-                                                                                                         Dihedro_box.Value, Torsion_box.Value,
-                                                                                                         EjeTorsion_box.Value, CMax_box.Value,
-                                                                                                         PCMax_box.Value, TipoEspaciamiento)
         Surface.RootFlap = nudRootFlap.Value
         Surface.FlapPanels = nudFlapPanels.Value
-        Surface.CurrentRegion.Chamber.FlapChord = nudFlapChord.Value
-        Surface.CurrentRegion.Chamber.FlapDeflection = nudFlapDeflection.Value * Math.PI / 180
-        Surface.CurrentRegion.Chamber.Flapped = cbFlapped.Checked
+        Surface.CurrentRegion.FlapChord = nudFlapChord.Value
+        Surface.CurrentRegion.FlapDeflection = nudFlapDeflection.Value * Math.PI / 180
+        Surface.CurrentRegion.Flapped = cbFlapped.Checked
 
         Surface.CurrentRegion.TipSection.AE = nudArea.Value * 1000 ' kNm to Nm
         Surface.CurrentRegion.TipSection.GJ = nudIu.Value
@@ -206,29 +206,26 @@ Public Class WingControl
 
         Ready = False
 
-        NPTramo_Box.Value = Surface.CurrentRegion.nSpanPanels
-        Cuerda_box.Value = Surface.CurrentRegion.TipChord
-        Longitud_box.Value = Surface.CurrentRegion.Length
-        Sweepback_box.Value = Surface.CurrentRegion.Sweep
-        Dihedro_box.Value = Surface.CurrentRegion.Dihedral
-        Torsion_box.Value = Surface.CurrentRegion.Twist
-        EjeTorsion_box.Value = Surface.CurrentRegion.TwistAxis
+        nudSpanwiseRings.Value = Surface.CurrentRegion.nSpanPanels
+        nudTipChord.Value = Surface.CurrentRegion.TipChord
+        nudLength.Value = Surface.CurrentRegion.Length
+        nudSweepback.Value = Surface.CurrentRegion.Sweepback
+        nudDihedral.Value = Surface.CurrentRegion.Dihedral
+        nudTwist.Value = Surface.CurrentRegion.Twist
+        nudTwistingAxis.Value = Surface.CurrentRegion.TwistAxis
 
-        CMax_box.Value = Surface.CurrentRegion.Chamber.Dimension(VisualModel.Models.Basics.ChamberDim.MaxChamber)
-        PCMax_box.Value = Surface.CurrentRegion.Chamber.Dimension(VisualModel.Models.Basics.ChamberDim.PosMaxChamber)
-
-        Select Case Surface.CurrentRegion.SpacingType
+        Select Case Surface.CurrentRegion.SpacementType
             Case 1
-                EspaciamientoConstante.Checked = True
+                rbConstantSpacement.Checked = True
             Case 2
-                EspaciamientoNormalizado.Checked = True
+                rbCuadraticSpacement.Checked = True
             Case 3
-                EspaciamientoCubico.Checked = True
+                rbCubicSpacement.Checked = True
         End Select
 
-        cbFlapped.Checked = Surface.CurrentRegion.Chamber.Flapped
-        nudFlapChord.Value = Surface.CurrentRegion.Chamber.FlapChord
-        nudFlapDeflection.Value = Math.Max(-90, Math.Min(Surface.CurrentRegion.Chamber.FlapDeflection / Math.PI * 180, 90))
+        cbFlapped.Checked = Surface.CurrentRegion.Flapped
+        nudFlapChord.Value = Surface.CurrentRegion.FlapChord
+        nudFlapDeflection.Value = Math.Max(-90, Math.Min(Surface.CurrentRegion.FlapDeflection / Math.PI * 180, 90))
 
         nudArea.Value = Surface.CurrentRegion.TipSection.AE / 1000 ' Nm to kNm
         nudIu.Value = Surface.CurrentRegion.TipSection.GJ
@@ -493,31 +490,31 @@ Public Class WingControl
         Me.GetGeometry()
     End Sub
 
-    Private Sub CambiarPanelesEnLaEnvergadura(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles NPTramo_Box.ValueChanged
+    Private Sub CambiarPanelesEnLaEnvergadura(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles nudSpanwiseRings.ValueChanged
         Me.GetGeometry()
     End Sub
 
-    Private Sub CambiarCuerdaExterna(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Cuerda_box.ValueChanged
+    Private Sub CambiarCuerdaExterna(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles nudTipChord.ValueChanged
         Me.GetGeometry()
     End Sub
 
-    Private Sub CambiarLongitud(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Longitud_box.ValueChanged
+    Private Sub CambiarLongitud(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles nudLength.ValueChanged
         Me.GetGeometry()
     End Sub
 
-    Private Sub CambiarSweepBack(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Sweepback_box.ValueChanged
+    Private Sub CambiarSweepBack(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles nudSweepback.ValueChanged
         Me.GetGeometry()
     End Sub
 
-    Private Sub CambiarDihedro(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Dihedro_box.ValueChanged
+    Private Sub CambiarDihedro(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles nudDihedral.ValueChanged
         Me.GetGeometry()
     End Sub
 
-    Private Sub CambiarTorsionTotal(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Torsion_box.ValueChanged
+    Private Sub CambiarTorsionTotal(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles nudTwist.ValueChanged
         Me.GetGeometry()
     End Sub
 
-    Private Sub CambiarEjeDeTorsion(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles EjeTorsion_box.ValueChanged
+    Private Sub CambiarEjeDeTorsion(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles nudTwistingAxis.ValueChanged
         Me.GetGeometry()
     End Sub
 
@@ -525,20 +522,20 @@ Public Class WingControl
         Me.GetGeometry()
     End Sub
 
-    Private Sub CambiarEspaciamientoConstante(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles EspaciamientoConstante.CheckedChanged
+    Private Sub CambiarEspaciamientoConstante(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles rbConstantSpacement.CheckedChanged
         Me.GetGeometry()
     End Sub
 
-    Private Sub CambiarEspaciamientoCuadratico(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles EspaciamientoNormalizado.CheckedChanged
+    Private Sub CambiarEspaciamientoCuadratico(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles rbCuadraticSpacement.CheckedChanged
         Me.GetGeometry()
     End Sub
 
-    Private Sub CambiarCombaduraMaxima(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CMax_box.ValueChanged
+    Private Sub CambiarCombaduraMaxima(ByVal sender As System.Object, ByVal e As System.EventArgs)
         Me.GetGeometry()
         Me.MostrarPerfil()
     End Sub
 
-    Private Sub CambiarPosicionDeCombaduraMaxima(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles PCMax_box.ValueChanged
+    Private Sub CambiarPosicionDeCombaduraMaxima(ByVal sender As System.Object, ByVal e As System.EventArgs)
         Me.GetGeometry()
         Me.MostrarPerfil()
     End Sub

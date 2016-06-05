@@ -382,7 +382,7 @@ Namespace CalculationModel.Models.Structural
         End Sub
 
         ''' <summary>
-        ''' Advances one time step in the solution of the structural motion zith the explicit time integration scheme.
+        ''' Advances one time step in the solution of the structural motion with the explicit time integration scheme.
         ''' </summary>
         ''' <param name="Velocity">Reference velocity used to calculate aerodinamic loads</param>
         ''' <remarks>This method integrates the uncoupled ecuations of motion</remarks>

@@ -168,9 +168,9 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="VisualModel\Environment\Colormaping.vb" />
-    <Compile Include="VisualModel\Environment\Frames.vb" />
-    <Compile Include="VisualModel\Environment\Properties.vb" />
+    <Compile Include="VisualModel\Tools\Colormaping.vb" />
+    <Compile Include="VisualModel\Tools\Frames.vb" />
+    <Compile Include="VisualModel\Tools\Properties.vb" />
     <Compile Include="VisualModel\GUI\Forms\FormAnchors.Designer.vb">
       <DependentUpon>FormAnchors.vb</DependentUpon>
     </Compile>
@@ -292,23 +292,21 @@
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="VisualModel\Interface\Operations.vb" />
-    <Compile Include="VisualModel\Interface\Properties.vb" />
+    <Compile Include="VisualModel\Interface\VisualProperties.vb" />
     <Compile Include="VisualModel\Interface\ProjectRoot.vb" />
-    <Compile Include="VisualModel\Interface\Results\ResultModel.vb" />
+    <Compile Include="VisualModel\Models\ResultModel.vb" />
     <Compile Include="VisualModel\Interface\Selection.vb" />
     <Compile Include="VisualModel\IO\IOXML.vb" />
     <Compile Include="VisualModel\Models\Basics\Surface.vb" />
-    <Compile Include="VisualModel\Models\Basics\ChamberdLine.vb" />
+    <Compile Include="VisualModel\Models\Basics\CamberLine.vb" />
     <Compile Include="VisualModel\Models\Basics\Elements.vb" />
     <Compile Include="VisualModel\Models\Basics\Mesh.vb" />
     <Compile Include="VisualModel\Models\Basics\StructuralPartition.vb" />
-    <Compile Include="VisualModel\Models\CalculationModel.vb" />
-    <Compile Include="VisualModel\Models\Components\Empennage.vb" />
+    <Compile Include="VisualModel\Models\DesignModel.vb" />
     <Compile Include="VisualModel\Models\Components\Fuselage.vb" />
     <Compile Include="VisualModel\Models\Components\ResultContainer.vb" />
     <Compile Include="VisualModel\Models\Components\JetEngine.vb" />
     <Compile Include="VisualModel\Models\Components\LiftingSurface.vb" />
-    <Compile Include="VisualModel\Models\Components\Nacelle.vb" />
     <Compile Include="VisualModel\Models\Components\Wake.vb" />
   </ItemGroup>
   <ItemGroup>

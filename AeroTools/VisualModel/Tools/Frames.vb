@@ -18,7 +18,7 @@
 Imports SharpGL
 Imports MathTools.Algebra.EuclideanSpace
 
-Namespace VisualModel.Environment.Frames
+Namespace VisualModel.Tools.Frames
 
     Public Class ReferenceFrame
 

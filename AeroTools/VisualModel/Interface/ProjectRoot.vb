@@ -21,11 +21,10 @@ Imports AeroTools.VisualModel.Models
 Imports AeroTools.CalculationModel.Solver
 Imports AeroTools.CalculationModel.Settings
 Imports AeroTools.CalculationModel.SimulationTools
-Imports AeroTools.VisualModel.Interface.Results
 Imports System.ComponentModel
 Imports System.Windows.Forms
 Imports System.Xml
-Imports AeroTools.VisualModel.Environment.Properties
+Imports AeroTools.VisualModel.Tools.Properties
 
 Namespace VisualModel.Interface
 

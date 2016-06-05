@@ -24,7 +24,7 @@ Imports MathTools.Algebra.CustomMatrices
 Imports System.IO
 Imports AeroTools.CalculationModel.Settings
 Imports System.Xml
-Imports AeroTools.VisualModel.Environment.Colormaping
+Imports AeroTools.VisualModel.Tools.Colormaping
 Imports MathTools
 
 Namespace VisualModel.Models.Components

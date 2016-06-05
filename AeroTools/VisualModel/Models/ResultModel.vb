@@ -22,7 +22,7 @@ Imports AeroTools.CalculationModel.Settings
 Imports AeroTools.VisualModel.Models.Components
 Imports AeroTools.VisualModel.IO
 
-Namespace VisualModel.Interface.Results
+Namespace VisualModel.Models
 
     ''' <summary>
     ''' Stores results for a given time step.

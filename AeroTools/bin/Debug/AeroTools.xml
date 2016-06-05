@@ -1676,7 +1676,7 @@ AeroTools
 </member>
 <member name="M:AeroTools.CalculationModel.Models.Structural.StructuralLink.Integrate(MathTools.Algebra.EuclideanSpace.EVector3,System.Double)">
  <summary>
- Advances one time step in the solution of the structural motion zith the explicit time integration scheme.
+ Advances one time step in the solution of the structural motion with the explicit time integration scheme.
  </summary>
  <param name="Velocity">Reference velocity used to calculate aerodinamic loads</param>
  <remarks>This method integrates the uncoupled ecuations of motion</remarks>
@@ -2145,7 +2145,7 @@ AeroTools
  Assign surrounding rings by searching on all lattices
  </summary>
 </member>
-<member name="M:AeroTools.CalculationModel.Solver.UVLMSolver.SetCompleteModelOnResults(AeroTools.VisualModel.Interface.Results.ResultModel@)">
+<member name="M:AeroTools.CalculationModel.Solver.UVLMSolver.SetCompleteModelOnResults(AeroTools.VisualModel.Models.ResultModel@)">
  <summary>
  Sets the lattices on the result object
  </summary>
@@ -2209,19 +2209,19 @@ AeroTools
   Busca una cadena traducida similar a Building matrix.
 </summary>
 </member>
-<member name="T:AeroTools.VisualModel.Environment.Colormaping.ColorSharpGL">
+<member name="T:AeroTools.VisualModel.Tools.Colormaping.ColorSharpGL">
  <summary>
  Represents a color to be used on SharpGL
  </summary>
  <remarks></remarks>
 </member>
-<member name="T:AeroTools.VisualModel.Environment.Colormaping.Colormap">
+<member name="T:AeroTools.VisualModel.Tools.Colormaping.Colormap">
  <summary>
  Provides methods to draw scalar in colors
  </summary>
  <remarks></remarks>
 </member>
-<member name="M:AeroTools.VisualModel.Environment.Colormaping.Colormap.ScalarToColor(System.Double,System.Double,System.Double)">
+<member name="M:AeroTools.VisualModel.Tools.Colormaping.Colormap.ScalarToColor(System.Double,System.Double,System.Double)">
  <summary>
  Converts a scalar into a color provided the red and blue extremes
  </summary>
@@ -2360,12 +2360,18 @@ AeroTools
  </summary>
  <remarks></remarks>
 </member>
-<member name="T:AeroTools.VisualModel.Interface.Results.ResultModel">
+<member name="P:AeroTools.VisualModel.Interface.SelectionRecord.ID">
+ <summary>
+ Reads back the code and sets identity credentials.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="T:AeroTools.VisualModel.Models.ResultModel">
  <summary>
  Stores results for a given time step.
  </summary>
 </member>
-<member name="P:AeroTools.VisualModel.Interface.Results.ResultModel.TransitLattices">
+<member name="P:AeroTools.VisualModel.Models.ResultModel.TransitLattices">
  <summary>
  Gathers all transit lattices.
  </summary>
@@ -2373,61 +2379,15 @@ AeroTools
  <returns></returns>
  <remarks></remarks>
 </member>
-<member name="P:AeroTools.VisualModel.Interface.Results.ResultModel.TransitStages">
+<member name="P:AeroTools.VisualModel.Models.ResultModel.TransitStages">
  <summary>
  Indicates the number of loaded stages
  </summary>
 </member>
-<member name="P:AeroTools.VisualModel.Interface.Results.ResultModel.TransitLoaded">
+<member name="P:AeroTools.VisualModel.Models.ResultModel.TransitLoaded">
  <summary>
  Indicates if the simulation frames have been loaded
  </summary>
- <remarks></remarks>
-</member>
-<member name="P:AeroTools.VisualModel.Interface.SelectionRecord.ID">
- <summary>
- Reads back the code and sets identity credentials.
- </summary>
- <remarks></remarks>
-</member>
-<member name="M:AeroTools.VisualModel.IO.IOXML.ReadInteger(System.Xml.XmlReader@,System.String,System.Int32)">
- <summary>
- Reads an attribute and converts it into integer.
- </summary>
- <param name="r"></param>
- <param name="Name"></param>
- <param name="DefValue"></param>
- <returns></returns>
- <remarks></remarks>
-</member>
-<member name="M:AeroTools.VisualModel.IO.IOXML.ReadDouble(System.Xml.XmlReader@,System.String,System.Double)">
- <summary>
- Reads an attribute and converts it into double taking into account the local decimal separator.
- </summary>
- <param name="r"></param>
- <param name="Name"></param>
- <param name="DefValue"></param>
- <returns></returns>
- <remarks></remarks>
-</member>
-<member name="M:AeroTools.VisualModel.IO.IOXML.ReadString(System.Xml.XmlReader@,System.String,System.String)">
- <summary>
- Reads an attribute.
- </summary>
- <param name="r"></param>
- <param name="Name"></param>
- <param name="DefValue"></param>
- <returns></returns>
- <remarks></remarks>
-</member>
-<member name="M:AeroTools.VisualModel.IO.IOXML.ReadBoolean(System.Xml.XmlReader@,System.String,System.Boolean)">
- <summary>
- Reads an attribute and converts it into boolean.
- </summary>
- <param name="r"></param>
- <param name="Name"></param>
- <param name="DefValue"></param>
- <returns></returns>
  <remarks></remarks>
 </member>
 <member name="T:AeroTools.VisualModel.Models.Basics.Surface">
@@ -2577,25 +2537,29 @@ AeroTools
  Generates the mesh.
  </summary>
 </member>
-<member name="M:AeroTools.VisualModel.Models.Basics.ChamberedLine.#ctor(AeroTools.VisualModel.Models.Basics.ChamberType)">
+<member name="P:AeroTools.VisualModel.Models.Basics.CamberLine.ID">
+ <summary>
+ The 
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:AeroTools.VisualModel.Models.Basics.CamberLine.Nodes">
+ <summary>
+ The nodes if this camber line.
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:AeroTools.VisualModel.Models.Basics.CamberLine.#ctor">
  <summary>
  Returns a NACA chamber point provided the position as fraction of the chord.
  </summary>
  <remarks></remarks>
 </member>
-<member name="M:AeroTools.VisualModel.Models.Basics.ChamberedLine.BasicLine(System.Double)">
+<member name="M:AeroTools.VisualModel.Models.Basics.CamberLine.Y(System.Single)">
  <summary>
- Returns the Y coordinate of the basic chamber function given a chordwise coordinate.
+ Returns the Y coordinate of the basic camber function given a chordwise coordinate.
  </summary>
- <param name="p">Chordwise coordinate</param>
-</member>
-<member name="P:AeroTools.VisualModel.Models.Basics.ChamberedLine.ChamberType">
- <summary>
- Sets or gets the type of chamber.
- </summary>
- <value></value>
- <returns></returns>
- <remarks></remarks>
+ <param name="X">Chordwise coordinate</param>
 </member>
 <member name="T:AeroTools.VisualModel.Models.Basics.Panel">
  <summary>
@@ -2676,12 +2640,6 @@ AeroTools
  </summary>
  <remarks></remarks>
 </member>
-<member name="M:AeroTools.VisualModel.Models.GeometricModel.AddNacelle">
- <summary>
- Adds a nacelle and sets it as current.
- </summary>
- <remarks></remarks>
-</member>
 <member name="M:AeroTools.VisualModel.Models.GeometricModel.AddExtrudedBody">
  <summary>
  Adds an extruded body
@@ -2699,11 +2657,6 @@ AeroTools
  Generates a copy of the current lifting surface with the option symmetric in true
  </summary>
  <remarks></remarks>
-</member>
-<member name="T:AeroTools.VisualModel.Models.Components.Empennage">
- <summary>
- (Under development)
- </summary>
 </member>
 <member name="T:AeroTools.VisualModel.Models.Components.WingAnchorInfo">
  <summary>
@@ -3019,19 +2972,6 @@ AeroTools
  <param name="writer"></param>
  <remarks></remarks>
 </member>
-<member name="M:AeroTools.VisualModel.Models.Components.WingRegion.LoadGeometry(System.Int32,System.Double,System.Double,System.Double,System.Double,System.Double,System.Double,System.Double,System.Double,System.Int32)">
- <summary>
- Load all geometrical parameters.
- </summary>
- <param name="SpanPanels">Number of spanwise panels</param>
- <param name="TipChord">Tip chord</param>
- <param name="Lenght">Spanwise length</param>
- <param name="SweepBack">Sweep angle</param>
- <param name="Dihedral">Dihedral angle</param>
- <param name="Torsion">Twist</param>
- <param name="TorsionalAxis">Position of the twisting axis</param>
- <remarks></remarks>
-</member>
 <member name="M:AeroTools.VisualModel.Models.Components.WingRegion.Assign(AeroTools.VisualModel.Models.Components.WingRegion)">
  <summary>
  Gets all the constent from an existing wing region.
@@ -3071,7 +3011,7 @@ AeroTools
  <returns></returns>
  <remarks></remarks>
 </member>
-<member name="P:AeroTools.VisualModel.Models.Components.WingRegion.Sweep">
+<member name="P:AeroTools.VisualModel.Models.Components.WingRegion.Sweepback">
  <summary>
  Sweep angle.
  </summary>
@@ -3103,7 +3043,7 @@ AeroTools
  <returns></returns>
  <remarks></remarks>
 </member>
-<member name="P:AeroTools.VisualModel.Models.Components.WingRegion.Chamber">
+<member name="P:AeroTools.VisualModel.Models.Components.WingRegion.CamberLineID">
  <summary>
  Describes the form of the cord.
  </summary>
@@ -3111,13 +3051,25 @@ AeroTools
  <returns></returns>
  <remarks></remarks>
 </member>
+<member name="P:AeroTools.VisualModel.Models.Components.WingRegion.Flapped">
+ <summary>
+ Indicates if this region is flapped.
+ </summary>
+ <returns></returns>
+</member>
 <member name="P:AeroTools.VisualModel.Models.Components.WingRegion.FlapChord">
  <summary>
  Lenght of the flap in chordwise direction.
  </summary>
  <returns></returns>
 </member>
-<member name="P:AeroTools.VisualModel.Models.Components.WingRegion.SpacingType">
+<member name="P:AeroTools.VisualModel.Models.Components.WingRegion.FlapDeflection">
+ <summary>
+ Deflection of the flap (in rad).
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:AeroTools.VisualModel.Models.Components.WingRegion.SpacementType">
  <summary>
  Type of spanwise spacing between the stations.
  </summary>
@@ -3383,7 +3335,7 @@ AeroTools
  <summary>
  Insets a new wing region at a given position.
  </summary>
- <param name="Posicion"></param>
+ <param name="Position"></param>
  <remarks></remarks>
 </member>
 <member name="M:AeroTools.VisualModel.Models.Components.LiftingSurface.InsertRegion">
@@ -3480,10 +3432,45 @@ AeroTools
  <returns></returns>
  <remarks></remarks>
 </member>
-<member name="T:AeroTools.VisualModel.Models.Components.FullNacelle">
+<member name="M:AeroTools.VisualModel.IO.IOXML.ReadInteger(System.Xml.XmlReader@,System.String,System.Int32)">
  <summary>
- (Under development)
+ Reads an attribute and converts it into integer.
  </summary>
+ <param name="r"></param>
+ <param name="Name"></param>
+ <param name="DefValue"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.VisualModel.IO.IOXML.ReadDouble(System.Xml.XmlReader@,System.String,System.Double)">
+ <summary>
+ Reads an attribute and converts it into double taking into account the local decimal separator.
+ </summary>
+ <param name="r"></param>
+ <param name="Name"></param>
+ <param name="DefValue"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.VisualModel.IO.IOXML.ReadString(System.Xml.XmlReader@,System.String,System.String)">
+ <summary>
+ Reads an attribute.
+ </summary>
+ <param name="r"></param>
+ <param name="Name"></param>
+ <param name="DefValue"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.VisualModel.IO.IOXML.ReadBoolean(System.Xml.XmlReader@,System.String,System.Boolean)">
+ <summary>
+ Reads an attribute and converts it into boolean.
+ </summary>
+ <param name="r"></param>
+ <param name="Name"></param>
+ <param name="DefValue"></param>
+ <returns></returns>
+ <remarks></remarks>
 </member>
 <member name="M:AeroTools.FormProgress.PushMessageWithProgress(System.String,System.Int32)">
  <summary>

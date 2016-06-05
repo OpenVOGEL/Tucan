@@ -39,6 +39,10 @@ Public Class MainForm
         ControlOpenGL.Dock = DockStyle.Fill
         Project.SetControlGL(ControlOpenGL.OpenGL)
 
+        ' Initialize the camber line database:
+
+        InitializeCamberLinesDatabase()
+
         ' Force design mode:
 
         SwitchToDesignMode()

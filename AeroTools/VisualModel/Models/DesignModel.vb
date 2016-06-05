@@ -70,28 +70,6 @@ Namespace VisualModel.Models
         End Sub
 
         ''' <summary>
-        ''' Adds a nacelle and sets it as current.
-        ''' </summary>
-        ''' <remarks></remarks>
-        Public Sub AddNacelle()
-
-            Dim NewNacelle As New FullNacelle ' GeneralSurface
-            NewNacelle.Name = "Nacelle"
-            NewNacelle.GenerateLattice()
-            NewNacelle.IncludeInCalculation = True
-            NewNacelle.VisualProperties.ShowColormap = False
-            NewNacelle.VisualProperties.ShowLoadVectors = False
-            NewNacelle.VisualProperties.ShowNodes = False
-            NewNacelle.VisualProperties.ShowVelocityVectors = False
-            NewNacelle.VisualProperties.ShowPrimitives = False
-            NewNacelle.VisualProperties.ShowSurface = True
-            NewNacelle.VisualProperties.ShowMesh = True
-
-            Objects.Add(NewNacelle)
-
-        End Sub
-
-        ''' <summary>
         ''' Adds an extruded body
         ''' </summary>
         ''' <remarks></remarks>

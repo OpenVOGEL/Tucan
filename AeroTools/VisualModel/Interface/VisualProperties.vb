@@ -24,7 +24,7 @@ Namespace VisualModel.Interface
 
     Public Enum VisualizationMode As Integer
 
-        Phisic
+        Physic
         Lattice
         Airfoils
         Structural

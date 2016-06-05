@@ -18,10 +18,10 @@
 Imports MathTools.Algebra.EuclideanSpace
 Imports System.Drawing
 Imports System.Xml
-Imports AeroTools.VisualModel.Environment.Frames
+Imports AeroTools.VisualModel.Tools.Frames
 Imports AeroTools.VisualModel.IO
 
-Namespace VisualModel.Environment.Properties
+Namespace VisualModel.Tools.Properties
 
     Public Class VisualizationParameters
 

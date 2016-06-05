@@ -72,19 +72,19 @@ Partial Class WingControl
         Me.SimetriaEnXZ = New System.Windows.Forms.CheckBox()
         Me.PanelEspaciamiento = New System.Windows.Forms.Panel()
         Me.EcultarPE = New System.Windows.Forms.Button()
-        Me.EspaciamientoCubico = New System.Windows.Forms.RadioButton()
-        Me.EspaciamientoConstante = New System.Windows.Forms.RadioButton()
-        Me.EspaciamientoNormalizado = New System.Windows.Forms.RadioButton()
-        Me.NPTramo_Box = New System.Windows.Forms.NumericUpDown()
+        Me.rbCubicSpacement = New System.Windows.Forms.RadioButton()
+        Me.rbConstantSpacement = New System.Windows.Forms.RadioButton()
+        Me.rbCuadraticSpacement = New System.Windows.Forms.RadioButton()
+        Me.nudSpanwiseRings = New System.Windows.Forms.NumericUpDown()
         Me.Label40 = New System.Windows.Forms.Label()
         Me.Label39 = New System.Windows.Forms.Label()
         Me.btnSpacement = New System.Windows.Forms.Button()
-        Me.EjeTorsion_box = New System.Windows.Forms.NumericUpDown()
-        Me.Torsion_box = New System.Windows.Forms.NumericUpDown()
-        Me.Dihedro_box = New System.Windows.Forms.NumericUpDown()
-        Me.Sweepback_box = New System.Windows.Forms.NumericUpDown()
-        Me.Longitud_box = New System.Windows.Forms.NumericUpDown()
-        Me.Cuerda_box = New System.Windows.Forms.NumericUpDown()
+        Me.nudTwistingAxis = New System.Windows.Forms.NumericUpDown()
+        Me.nudTwist = New System.Windows.Forms.NumericUpDown()
+        Me.nudDihedral = New System.Windows.Forms.NumericUpDown()
+        Me.nudSweepback = New System.Windows.Forms.NumericUpDown()
+        Me.nudLength = New System.Windows.Forms.NumericUpDown()
+        Me.nudTipChord = New System.Windows.Forms.NumericUpDown()
         Me.Label5 = New System.Windows.Forms.Label()
         Me.Label27 = New System.Windows.Forms.Label()
         Me.Label7 = New System.Windows.Forms.Label()
@@ -99,12 +99,7 @@ Partial Class WingControl
         Me.TabPage7 = New System.Windows.Forms.TabPage()
         Me.btnPolarCurves = New System.Windows.Forms.Button()
         Me.Label72 = New System.Windows.Forms.Label()
-        Me.PCMax_box = New System.Windows.Forms.NumericUpDown()
-        Me.CMax_box = New System.Windows.Forms.NumericUpDown()
-        Me.Label14 = New System.Windows.Forms.Label()
-        Me.Label28 = New System.Windows.Forms.Label()
         Me.Cuadro_de_Perfil = New System.Windows.Forms.PictureBox()
-        Me.Label13 = New System.Windows.Forms.Label()
         Me.TabPage8 = New System.Windows.Forms.TabPage()
         Me.cbTrailingEdge = New System.Windows.Forms.CheckBox()
         Me.Label18 = New System.Windows.Forms.Label()
@@ -164,6 +159,8 @@ Partial Class WingControl
         Me.btSurfaceData = New System.Windows.Forms.Button()
         Me.SurfaceNameText = New System.Windows.Forms.TextBox()
         Me.btnOk = New System.Windows.Forms.Button()
+        Me.btnCamberLines = New System.Windows.Forms.Button()
+        Me.Label23 = New System.Windows.Forms.Label()
         Me.PanelDeEdicion.SuspendLayout()
         Me.tbDesign.SuspendLayout()
         Me.tcRootProperties.SuspendLayout()
@@ -185,16 +182,14 @@ Partial Class WingControl
         Me.tcMacroPanelProperties.SuspendLayout()
         Me.TabPage6.SuspendLayout()
         Me.PanelEspaciamiento.SuspendLayout()
-        CType(Me.NPTramo_Box, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.EjeTorsion_box, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.Torsion_box, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.Dihedro_box, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.Sweepback_box, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.Longitud_box, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.Cuerda_box, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.nudSpanwiseRings, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.nudTwistingAxis, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.nudTwist, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.nudDihedral, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.nudSweepback, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.nudLength, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.nudTipChord, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabPage7.SuspendLayout()
-        CType(Me.PCMax_box, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.CMax_box, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Cuadro_de_Perfil, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabPage8.SuspendLayout()
         CType(Me.nudCuttingStep, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -817,16 +812,16 @@ Partial Class WingControl
         Me.TabPage6.BackColor = System.Drawing.Color.White
         Me.TabPage6.Controls.Add(Me.SimetriaEnXZ)
         Me.TabPage6.Controls.Add(Me.PanelEspaciamiento)
-        Me.TabPage6.Controls.Add(Me.NPTramo_Box)
+        Me.TabPage6.Controls.Add(Me.nudSpanwiseRings)
         Me.TabPage6.Controls.Add(Me.Label40)
         Me.TabPage6.Controls.Add(Me.Label39)
         Me.TabPage6.Controls.Add(Me.btnSpacement)
-        Me.TabPage6.Controls.Add(Me.EjeTorsion_box)
-        Me.TabPage6.Controls.Add(Me.Torsion_box)
-        Me.TabPage6.Controls.Add(Me.Dihedro_box)
-        Me.TabPage6.Controls.Add(Me.Sweepback_box)
-        Me.TabPage6.Controls.Add(Me.Longitud_box)
-        Me.TabPage6.Controls.Add(Me.Cuerda_box)
+        Me.TabPage6.Controls.Add(Me.nudTwistingAxis)
+        Me.TabPage6.Controls.Add(Me.nudTwist)
+        Me.TabPage6.Controls.Add(Me.nudDihedral)
+        Me.TabPage6.Controls.Add(Me.nudSweepback)
+        Me.TabPage6.Controls.Add(Me.nudLength)
+        Me.TabPage6.Controls.Add(Me.nudTipChord)
         Me.TabPage6.Controls.Add(Me.Label5)
         Me.TabPage6.Controls.Add(Me.Label27)
         Me.TabPage6.Controls.Add(Me.Label7)
@@ -862,9 +857,9 @@ Partial Class WingControl
         '
         Me.PanelEspaciamiento.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.PanelEspaciamiento.Controls.Add(Me.EcultarPE)
-        Me.PanelEspaciamiento.Controls.Add(Me.EspaciamientoCubico)
-        Me.PanelEspaciamiento.Controls.Add(Me.EspaciamientoConstante)
-        Me.PanelEspaciamiento.Controls.Add(Me.EspaciamientoNormalizado)
+        Me.PanelEspaciamiento.Controls.Add(Me.rbCubicSpacement)
+        Me.PanelEspaciamiento.Controls.Add(Me.rbConstantSpacement)
+        Me.PanelEspaciamiento.Controls.Add(Me.rbCuadraticSpacement)
         Me.PanelEspaciamiento.Location = New System.Drawing.Point(16, 192)
         Me.PanelEspaciamiento.Name = "PanelEspaciamiento"
         Me.PanelEspaciamiento.Size = New System.Drawing.Size(184, 65)
@@ -882,49 +877,49 @@ Partial Class WingControl
         Me.EcultarPE.Text = "p"
         Me.EcultarPE.UseVisualStyleBackColor = True
         '
-        'EspaciamientoCubico
+        'rbCubicSpacement
         '
-        Me.EspaciamientoCubico.AutoSize = True
-        Me.EspaciamientoCubico.Enabled = False
-        Me.EspaciamientoCubico.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.EspaciamientoCubico.Location = New System.Drawing.Point(5, 40)
-        Me.EspaciamientoCubico.Name = "EspaciamientoCubico"
-        Me.EspaciamientoCubico.Size = New System.Drawing.Size(112, 17)
-        Me.EspaciamientoCubico.TabIndex = 54
-        Me.EspaciamientoCubico.Text = "Cubic spacement"
-        Me.EspaciamientoCubico.UseVisualStyleBackColor = True
+        Me.rbCubicSpacement.AutoSize = True
+        Me.rbCubicSpacement.Enabled = False
+        Me.rbCubicSpacement.ImeMode = System.Windows.Forms.ImeMode.NoControl
+        Me.rbCubicSpacement.Location = New System.Drawing.Point(5, 40)
+        Me.rbCubicSpacement.Name = "rbCubicSpacement"
+        Me.rbCubicSpacement.Size = New System.Drawing.Size(112, 17)
+        Me.rbCubicSpacement.TabIndex = 54
+        Me.rbCubicSpacement.Text = "Cubic spacement"
+        Me.rbCubicSpacement.UseVisualStyleBackColor = True
         '
-        'EspaciamientoConstante
+        'rbConstantSpacement
         '
-        Me.EspaciamientoConstante.AutoSize = True
-        Me.EspaciamientoConstante.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.EspaciamientoConstante.Location = New System.Drawing.Point(5, 3)
-        Me.EspaciamientoConstante.Name = "EspaciamientoConstante"
-        Me.EspaciamientoConstante.Size = New System.Drawing.Size(130, 17)
-        Me.EspaciamientoConstante.TabIndex = 52
-        Me.EspaciamientoConstante.Text = "Constant spacement"
-        Me.EspaciamientoConstante.UseVisualStyleBackColor = True
+        Me.rbConstantSpacement.AutoSize = True
+        Me.rbConstantSpacement.ImeMode = System.Windows.Forms.ImeMode.NoControl
+        Me.rbConstantSpacement.Location = New System.Drawing.Point(5, 3)
+        Me.rbConstantSpacement.Name = "rbConstantSpacement"
+        Me.rbConstantSpacement.Size = New System.Drawing.Size(130, 17)
+        Me.rbConstantSpacement.TabIndex = 52
+        Me.rbConstantSpacement.Text = "Constant spacement"
+        Me.rbConstantSpacement.UseVisualStyleBackColor = True
         '
-        'EspaciamientoNormalizado
+        'rbCuadraticSpacement
         '
-        Me.EspaciamientoNormalizado.AutoSize = True
-        Me.EspaciamientoNormalizado.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.EspaciamientoNormalizado.Location = New System.Drawing.Point(5, 21)
-        Me.EspaciamientoNormalizado.Name = "EspaciamientoNormalizado"
-        Me.EspaciamientoNormalizado.Size = New System.Drawing.Size(132, 17)
-        Me.EspaciamientoNormalizado.TabIndex = 53
-        Me.EspaciamientoNormalizado.Text = "Cuadratic spacement"
-        Me.EspaciamientoNormalizado.UseVisualStyleBackColor = True
+        Me.rbCuadraticSpacement.AutoSize = True
+        Me.rbCuadraticSpacement.ImeMode = System.Windows.Forms.ImeMode.NoControl
+        Me.rbCuadraticSpacement.Location = New System.Drawing.Point(5, 21)
+        Me.rbCuadraticSpacement.Name = "rbCuadraticSpacement"
+        Me.rbCuadraticSpacement.Size = New System.Drawing.Size(132, 17)
+        Me.rbCuadraticSpacement.TabIndex = 53
+        Me.rbCuadraticSpacement.Text = "Cuadratic spacement"
+        Me.rbCuadraticSpacement.UseVisualStyleBackColor = True
         '
-        'NPTramo_Box
+        'nudSpanwiseRings
         '
-        Me.NPTramo_Box.Location = New System.Drawing.Point(105, 8)
-        Me.NPTramo_Box.Minimum = New Decimal(New Integer() {1, 0, 0, 0})
-        Me.NPTramo_Box.Name = "NPTramo_Box"
-        Me.NPTramo_Box.Size = New System.Drawing.Size(82, 22)
-        Me.NPTramo_Box.TabIndex = 58
-        Me.NPTramo_Box.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        Me.NPTramo_Box.Value = New Decimal(New Integer() {5, 0, 0, 0})
+        Me.nudSpanwiseRings.Location = New System.Drawing.Point(105, 8)
+        Me.nudSpanwiseRings.Minimum = New Decimal(New Integer() {1, 0, 0, 0})
+        Me.nudSpanwiseRings.Name = "nudSpanwiseRings"
+        Me.nudSpanwiseRings.Size = New System.Drawing.Size(82, 22)
+        Me.nudSpanwiseRings.TabIndex = 58
+        Me.nudSpanwiseRings.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.nudSpanwiseRings.Value = New Decimal(New Integer() {5, 0, 0, 0})
         '
         'Label40
         '
@@ -963,85 +958,85 @@ Partial Class WingControl
         Me.btnSpacement.Text = "Spacement"
         Me.btnSpacement.UseVisualStyleBackColor = False
         '
-        'EjeTorsion_box
+        'nudTwistingAxis
         '
-        Me.EjeTorsion_box.DecimalPlaces = 4
-        Me.EjeTorsion_box.Increment = New Decimal(New Integer() {1, 0, 0, 131072})
-        Me.EjeTorsion_box.Location = New System.Drawing.Point(105, 134)
-        Me.EjeTorsion_box.Maximum = New Decimal(New Integer() {1, 0, 0, 0})
-        Me.EjeTorsion_box.Name = "EjeTorsion_box"
-        Me.EjeTorsion_box.Size = New System.Drawing.Size(82, 22)
-        Me.EjeTorsion_box.TabIndex = 51
-        Me.EjeTorsion_box.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        Me.EjeTorsion_box.Value = New Decimal(New Integer() {5, 0, 0, 65536})
+        Me.nudTwistingAxis.DecimalPlaces = 4
+        Me.nudTwistingAxis.Increment = New Decimal(New Integer() {1, 0, 0, 131072})
+        Me.nudTwistingAxis.Location = New System.Drawing.Point(105, 134)
+        Me.nudTwistingAxis.Maximum = New Decimal(New Integer() {1, 0, 0, 0})
+        Me.nudTwistingAxis.Name = "nudTwistingAxis"
+        Me.nudTwistingAxis.Size = New System.Drawing.Size(82, 22)
+        Me.nudTwistingAxis.TabIndex = 51
+        Me.nudTwistingAxis.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.nudTwistingAxis.Value = New Decimal(New Integer() {5, 0, 0, 65536})
         '
-        'Torsion_box
+        'nudTwist
         '
-        Me.Torsion_box.DecimalPlaces = 4
-        Me.Torsion_box.Increment = New Decimal(New Integer() {1, 0, 0, 131072})
-        Me.Torsion_box.Location = New System.Drawing.Point(105, 113)
-        Me.Torsion_box.Maximum = New Decimal(New Integer() {90, 0, 0, 0})
-        Me.Torsion_box.Minimum = New Decimal(New Integer() {90, 0, 0, -2147483648})
-        Me.Torsion_box.Name = "Torsion_box"
-        Me.Torsion_box.Size = New System.Drawing.Size(82, 22)
-        Me.Torsion_box.TabIndex = 50
-        Me.Torsion_box.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.nudTwist.DecimalPlaces = 4
+        Me.nudTwist.Increment = New Decimal(New Integer() {1, 0, 0, 131072})
+        Me.nudTwist.Location = New System.Drawing.Point(105, 113)
+        Me.nudTwist.Maximum = New Decimal(New Integer() {90, 0, 0, 0})
+        Me.nudTwist.Minimum = New Decimal(New Integer() {90, 0, 0, -2147483648})
+        Me.nudTwist.Name = "nudTwist"
+        Me.nudTwist.Size = New System.Drawing.Size(82, 22)
+        Me.nudTwist.TabIndex = 50
+        Me.nudTwist.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
-        'Dihedro_box
+        'nudDihedral
         '
-        Me.Dihedro_box.DecimalPlaces = 4
-        Me.Dihedro_box.Increment = New Decimal(New Integer() {5, 0, 0, 65536})
-        Me.Dihedro_box.Location = New System.Drawing.Point(105, 92)
-        Me.Dihedro_box.Maximum = New Decimal(New Integer() {360, 0, 0, 0})
-        Me.Dihedro_box.Minimum = New Decimal(New Integer() {90, 0, 0, -2147483648})
-        Me.Dihedro_box.Name = "Dihedro_box"
-        Me.Dihedro_box.Size = New System.Drawing.Size(82, 22)
-        Me.Dihedro_box.TabIndex = 49
-        Me.Dihedro_box.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.nudDihedral.DecimalPlaces = 4
+        Me.nudDihedral.Increment = New Decimal(New Integer() {5, 0, 0, 65536})
+        Me.nudDihedral.Location = New System.Drawing.Point(105, 92)
+        Me.nudDihedral.Maximum = New Decimal(New Integer() {360, 0, 0, 0})
+        Me.nudDihedral.Minimum = New Decimal(New Integer() {90, 0, 0, -2147483648})
+        Me.nudDihedral.Name = "nudDihedral"
+        Me.nudDihedral.Size = New System.Drawing.Size(82, 22)
+        Me.nudDihedral.TabIndex = 49
+        Me.nudDihedral.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
-        'Sweepback_box
+        'nudSweepback
         '
-        Me.Sweepback_box.DecimalPlaces = 4
-        Me.Sweepback_box.Location = New System.Drawing.Point(105, 71)
-        Me.Sweepback_box.Maximum = New Decimal(New Integer() {90, 0, 0, 0})
-        Me.Sweepback_box.Minimum = New Decimal(New Integer() {90, 0, 0, -2147483648})
-        Me.Sweepback_box.Name = "Sweepback_box"
-        Me.Sweepback_box.Size = New System.Drawing.Size(82, 22)
-        Me.Sweepback_box.TabIndex = 48
-        Me.Sweepback_box.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.nudSweepback.DecimalPlaces = 4
+        Me.nudSweepback.Location = New System.Drawing.Point(105, 71)
+        Me.nudSweepback.Maximum = New Decimal(New Integer() {90, 0, 0, 0})
+        Me.nudSweepback.Minimum = New Decimal(New Integer() {90, 0, 0, -2147483648})
+        Me.nudSweepback.Name = "nudSweepback"
+        Me.nudSweepback.Size = New System.Drawing.Size(82, 22)
+        Me.nudSweepback.TabIndex = 48
+        Me.nudSweepback.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
-        'Longitud_box
+        'nudLength
         '
-        Me.Longitud_box.DecimalPlaces = 4
-        Me.Longitud_box.Increment = New Decimal(New Integer() {5, 0, 0, 131072})
-        Me.Longitud_box.Location = New System.Drawing.Point(105, 50)
-        Me.Longitud_box.Maximum = New Decimal(New Integer() {200, 0, 0, 0})
-        Me.Longitud_box.Name = "Longitud_box"
-        Me.Longitud_box.Size = New System.Drawing.Size(82, 22)
-        Me.Longitud_box.TabIndex = 47
-        Me.Longitud_box.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        Me.Longitud_box.Value = New Decimal(New Integer() {1, 0, 0, 0})
+        Me.nudLength.DecimalPlaces = 4
+        Me.nudLength.Increment = New Decimal(New Integer() {5, 0, 0, 131072})
+        Me.nudLength.Location = New System.Drawing.Point(105, 50)
+        Me.nudLength.Maximum = New Decimal(New Integer() {200, 0, 0, 0})
+        Me.nudLength.Name = "nudLength"
+        Me.nudLength.Size = New System.Drawing.Size(82, 22)
+        Me.nudLength.TabIndex = 47
+        Me.nudLength.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.nudLength.Value = New Decimal(New Integer() {1, 0, 0, 0})
         '
-        'Cuerda_box
+        'nudTipChord
         '
-        Me.Cuerda_box.DecimalPlaces = 4
-        Me.Cuerda_box.Increment = New Decimal(New Integer() {5, 0, 0, 131072})
-        Me.Cuerda_box.Location = New System.Drawing.Point(105, 29)
-        Me.Cuerda_box.Name = "Cuerda_box"
-        Me.Cuerda_box.Size = New System.Drawing.Size(82, 22)
-        Me.Cuerda_box.TabIndex = 46
-        Me.Cuerda_box.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        Me.Cuerda_box.Value = New Decimal(New Integer() {1, 0, 0, 0})
+        Me.nudTipChord.DecimalPlaces = 4
+        Me.nudTipChord.Increment = New Decimal(New Integer() {5, 0, 0, 131072})
+        Me.nudTipChord.Location = New System.Drawing.Point(105, 29)
+        Me.nudTipChord.Name = "nudTipChord"
+        Me.nudTipChord.Size = New System.Drawing.Size(82, 22)
+        Me.nudTipChord.TabIndex = 46
+        Me.nudTipChord.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.nudTipChord.Value = New Decimal(New Integer() {1, 0, 0, 0})
         '
         'Label5
         '
         Me.Label5.AutoSize = True
         Me.Label5.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.Label5.Location = New System.Drawing.Point(2, 12)
+        Me.Label5.Location = New System.Drawing.Point(11, 12)
         Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(97, 13)
+        Me.Label5.Size = New System.Drawing.Size(88, 13)
         Me.Label5.TabIndex = 6
-        Me.Label5.Text = "# spanwise rings:"
+        Me.Label5.Text = "Spanwise rings:"
         Me.Label5.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         '
         'Label27
@@ -1069,11 +1064,11 @@ Partial Class WingControl
         '
         Me.Label8.AutoSize = True
         Me.Label8.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.Label8.Location = New System.Drawing.Point(36, 52)
+        Me.Label8.Location = New System.Drawing.Point(53, 52)
         Me.Label8.Name = "Label8"
-        Me.Label8.Size = New System.Drawing.Size(63, 13)
+        Me.Label8.Size = New System.Drawing.Size(46, 13)
         Me.Label8.TabIndex = 16
-        Me.Label8.Text = "Longitude:"
+        Me.Label8.Text = "Length:"
         Me.Label8.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         '
         'Label9
@@ -1122,11 +1117,11 @@ Partial Class WingControl
         '
         Me.Label11.AutoSize = True
         Me.Label11.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.Label11.Location = New System.Drawing.Point(24, 115)
+        Me.Label11.Location = New System.Drawing.Point(25, 115)
         Me.Label11.Name = "Label11"
-        Me.Label11.Size = New System.Drawing.Size(75, 13)
+        Me.Label11.Size = New System.Drawing.Size(74, 13)
         Me.Label11.TabIndex = 22
-        Me.Label11.Text = "Total torsion:"
+        Me.Label11.Text = "Overall twist:"
         Me.Label11.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         '
         'Label17
@@ -1143,24 +1138,21 @@ Partial Class WingControl
         '
         Me.Label12.AutoSize = True
         Me.Label12.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.Label12.Location = New System.Drawing.Point(20, 136)
+        Me.Label12.Location = New System.Drawing.Point(24, 136)
         Me.Label12.Name = "Label12"
-        Me.Label12.Size = New System.Drawing.Size(79, 13)
+        Me.Label12.Size = New System.Drawing.Size(75, 13)
         Me.Label12.TabIndex = 24
-        Me.Label12.Text = "Torsional axis:"
+        Me.Label12.Text = "Twisting axis:"
         Me.Label12.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         '
         'TabPage7
         '
         Me.TabPage7.BackColor = System.Drawing.Color.White
+        Me.TabPage7.Controls.Add(Me.btnCamberLines)
+        Me.TabPage7.Controls.Add(Me.Label23)
         Me.TabPage7.Controls.Add(Me.btnPolarCurves)
         Me.TabPage7.Controls.Add(Me.Label72)
-        Me.TabPage7.Controls.Add(Me.PCMax_box)
-        Me.TabPage7.Controls.Add(Me.CMax_box)
-        Me.TabPage7.Controls.Add(Me.Label14)
-        Me.TabPage7.Controls.Add(Me.Label28)
         Me.TabPage7.Controls.Add(Me.Cuadro_de_Perfil)
-        Me.TabPage7.Controls.Add(Me.Label13)
         Me.TabPage7.Location = New System.Drawing.Point(4, 22)
         Me.TabPage7.Name = "TabPage7"
         Me.TabPage7.Padding = New System.Windows.Forms.Padding(3)
@@ -1175,7 +1167,7 @@ Partial Class WingControl
         Me.btnPolarCurves.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DeepSkyBlue
         Me.btnPolarCurves.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.btnPolarCurves.Font = New System.Drawing.Font("Segoe UI", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnPolarCurves.Location = New System.Drawing.Point(145, 183)
+        Me.btnPolarCurves.Location = New System.Drawing.Point(196, 142)
         Me.btnPolarCurves.Margin = New System.Windows.Forms.Padding(0)
         Me.btnPolarCurves.Name = "btnPolarCurves"
         Me.btnPolarCurves.Size = New System.Drawing.Size(72, 22)
@@ -1188,78 +1180,22 @@ Partial Class WingControl
         Me.Label72.AutoSize = True
         Me.Label72.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label72.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.Label72.Location = New System.Drawing.Point(7, 187)
+        Me.Label72.Location = New System.Drawing.Point(7, 146)
         Me.Label72.Name = "Label72"
-        Me.Label72.Size = New System.Drawing.Size(135, 13)
+        Me.Label72.Size = New System.Drawing.Size(68, 13)
         Me.Label72.TabIndex = 40
-        Me.Label72.Text = "Aerodynamic properties:"
-        '
-        'PCMax_box
-        '
-        Me.PCMax_box.DecimalPlaces = 4
-        Me.PCMax_box.Increment = New Decimal(New Integer() {1, 0, 0, 131072})
-        Me.PCMax_box.Location = New System.Drawing.Point(48, 52)
-        Me.PCMax_box.Maximum = New Decimal(New Integer() {95, 0, 0, 131072})
-        Me.PCMax_box.Minimum = New Decimal(New Integer() {5, 0, 0, 131072})
-        Me.PCMax_box.Name = "PCMax_box"
-        Me.PCMax_box.Size = New System.Drawing.Size(74, 22)
-        Me.PCMax_box.TabIndex = 38
-        Me.PCMax_box.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        Me.PCMax_box.Value = New Decimal(New Integer() {40, 0, 0, 131072})
-        '
-        'CMax_box
-        '
-        Me.CMax_box.DecimalPlaces = 4
-        Me.CMax_box.Increment = New Decimal(New Integer() {1, 0, 0, 131072})
-        Me.CMax_box.Location = New System.Drawing.Point(48, 31)
-        Me.CMax_box.Maximum = New Decimal(New Integer() {1, 0, 0, 0})
-        Me.CMax_box.Minimum = New Decimal(New Integer() {1, 0, 0, -2147483648})
-        Me.CMax_box.Name = "CMax_box"
-        Me.CMax_box.Size = New System.Drawing.Size(74, 22)
-        Me.CMax_box.TabIndex = 37
-        Me.CMax_box.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        '
-        'Label14
-        '
-        Me.Label14.AutoSize = True
-        Me.Label14.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.Label14.Location = New System.Drawing.Point(17, 33)
-        Me.Label14.Name = "Label14"
-        Me.Label14.Size = New System.Drawing.Size(27, 13)
-        Me.Label14.TabIndex = 33
-        Me.Label14.Text = "CM:"
-        '
-        'Label28
-        '
-        Me.Label28.AutoSize = True
-        Me.Label28.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.Label28.Location = New System.Drawing.Point(10, 54)
-        Me.Label28.Name = "Label28"
-        Me.Label28.Size = New System.Drawing.Size(33, 13)
-        Me.Label28.TabIndex = 34
-        Me.Label28.Text = "PCM:"
+        Me.Label72.Text = "Polar curve:"
         '
         'Cuadro_de_Perfil
         '
         Me.Cuadro_de_Perfil.BackColor = System.Drawing.Color.White
         Me.Cuadro_de_Perfil.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.Cuadro_de_Perfil.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.Cuadro_de_Perfil.Location = New System.Drawing.Point(6, 78)
+        Me.Cuadro_de_Perfil.Location = New System.Drawing.Point(6, 37)
         Me.Cuadro_de_Perfil.Name = "Cuadro_de_Perfil"
         Me.Cuadro_de_Perfil.Size = New System.Drawing.Size(262, 99)
         Me.Cuadro_de_Perfil.TabIndex = 29
         Me.Cuadro_de_Perfil.TabStop = False
-        '
-        'Label13
-        '
-        Me.Label13.AutoSize = True
-        Me.Label13.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label13.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.Label13.Location = New System.Drawing.Point(7, 9)
-        Me.Label13.Name = "Label13"
-        Me.Label13.Size = New System.Drawing.Size(61, 13)
-        Me.Label13.TabIndex = 28
-        Me.Label13.Text = "Geometry:"
         '
         'TabPage8
         '
@@ -1980,6 +1916,32 @@ Partial Class WingControl
         Me.btnOk.Text = "Close"
         Me.btnOk.UseVisualStyleBackColor = False
         '
+        'btnCamberLines
+        '
+        Me.btnCamberLines.FlatAppearance.BorderColor = System.Drawing.Color.Silver
+        Me.btnCamberLines.FlatAppearance.MouseDownBackColor = System.Drawing.Color.PaleGreen
+        Me.btnCamberLines.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DeepSkyBlue
+        Me.btnCamberLines.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnCamberLines.Font = New System.Drawing.Font("Segoe UI", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnCamberLines.Location = New System.Drawing.Point(196, 8)
+        Me.btnCamberLines.Margin = New System.Windows.Forms.Padding(0)
+        Me.btnCamberLines.Name = "btnCamberLines"
+        Me.btnCamberLines.Size = New System.Drawing.Size(72, 22)
+        Me.btnCamberLines.TabIndex = 43
+        Me.btnCamberLines.Text = "Camber lines"
+        Me.btnCamberLines.UseVisualStyleBackColor = True
+        '
+        'Label23
+        '
+        Me.Label23.AutoSize = True
+        Me.Label23.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label23.ImeMode = System.Windows.Forms.ImeMode.NoControl
+        Me.Label23.Location = New System.Drawing.Point(7, 12)
+        Me.Label23.Name = "Label23"
+        Me.Label23.Size = New System.Drawing.Size(72, 13)
+        Me.Label23.TabIndex = 42
+        Me.Label23.Text = "Camber line:"
+        '
         'WingControl
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -2018,17 +1980,15 @@ Partial Class WingControl
         Me.TabPage6.PerformLayout()
         Me.PanelEspaciamiento.ResumeLayout(False)
         Me.PanelEspaciamiento.PerformLayout()
-        CType(Me.NPTramo_Box, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.EjeTorsion_box, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.Torsion_box, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.Dihedro_box, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.Sweepback_box, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.Longitud_box, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.Cuerda_box, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.nudSpanwiseRings, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.nudTwistingAxis, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.nudTwist, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.nudDihedral, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.nudSweepback, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.nudLength, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.nudTipChord, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TabPage7.ResumeLayout(False)
         Me.TabPage7.PerformLayout()
-        CType(Me.PCMax_box, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.CMax_box, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.Cuadro_de_Perfil, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TabPage8.ResumeLayout(False)
         Me.TabPage8.PerformLayout()
@@ -2072,19 +2032,19 @@ Partial Class WingControl
     Friend WithEvents SimetriaEnXZ As System.Windows.Forms.CheckBox
     Friend WithEvents PanelEspaciamiento As System.Windows.Forms.Panel
     Friend WithEvents EcultarPE As System.Windows.Forms.Button
-    Friend WithEvents EspaciamientoCubico As System.Windows.Forms.RadioButton
-    Friend WithEvents EspaciamientoConstante As System.Windows.Forms.RadioButton
-    Friend WithEvents EspaciamientoNormalizado As System.Windows.Forms.RadioButton
-    Friend WithEvents NPTramo_Box As System.Windows.Forms.NumericUpDown
+    Friend WithEvents rbCubicSpacement As System.Windows.Forms.RadioButton
+    Friend WithEvents rbConstantSpacement As System.Windows.Forms.RadioButton
+    Friend WithEvents rbCuadraticSpacement As System.Windows.Forms.RadioButton
+    Friend WithEvents nudSpanwiseRings As System.Windows.Forms.NumericUpDown
     Friend WithEvents Label40 As System.Windows.Forms.Label
     Friend WithEvents Label39 As System.Windows.Forms.Label
     Friend WithEvents btnSpacement As System.Windows.Forms.Button
-    Friend WithEvents EjeTorsion_box As System.Windows.Forms.NumericUpDown
-    Friend WithEvents Torsion_box As System.Windows.Forms.NumericUpDown
-    Friend WithEvents Dihedro_box As System.Windows.Forms.NumericUpDown
-    Friend WithEvents Sweepback_box As System.Windows.Forms.NumericUpDown
-    Friend WithEvents Longitud_box As System.Windows.Forms.NumericUpDown
-    Friend WithEvents Cuerda_box As System.Windows.Forms.NumericUpDown
+    Friend WithEvents nudTwistingAxis As System.Windows.Forms.NumericUpDown
+    Friend WithEvents nudTwist As System.Windows.Forms.NumericUpDown
+    Friend WithEvents nudDihedral As System.Windows.Forms.NumericUpDown
+    Friend WithEvents nudSweepback As System.Windows.Forms.NumericUpDown
+    Friend WithEvents nudLength As System.Windows.Forms.NumericUpDown
+    Friend WithEvents nudTipChord As System.Windows.Forms.NumericUpDown
     Friend WithEvents Label5 As System.Windows.Forms.Label
     Friend WithEvents Label27 As System.Windows.Forms.Label
     Friend WithEvents Label7 As System.Windows.Forms.Label
@@ -2097,12 +2057,7 @@ Partial Class WingControl
     Friend WithEvents Label17 As System.Windows.Forms.Label
     Friend WithEvents Label12 As System.Windows.Forms.Label
     Friend WithEvents TabPage7 As System.Windows.Forms.TabPage
-    Friend WithEvents PCMax_box As System.Windows.Forms.NumericUpDown
-    Friend WithEvents CMax_box As System.Windows.Forms.NumericUpDown
-    Friend WithEvents Label14 As System.Windows.Forms.Label
-    Friend WithEvents Label28 As System.Windows.Forms.Label
     Friend WithEvents Cuadro_de_Perfil As System.Windows.Forms.PictureBox
-    Friend WithEvents Label13 As System.Windows.Forms.Label
     Friend WithEvents TabPage8 As System.Windows.Forms.TabPage
     Friend WithEvents ConvectarEstela As System.Windows.Forms.CheckBox
     Friend WithEvents Label29 As System.Windows.Forms.Label
@@ -2200,4 +2155,6 @@ Partial Class WingControl
     Friend WithEvents cbTrailingEdge As System.Windows.Forms.CheckBox
     Friend WithEvents Label79 As System.Windows.Forms.Label
     Friend WithEvents tpIntertia As System.Windows.Forms.TabPage
+    Friend WithEvents btnCamberLines As Windows.Forms.Button
+    Friend WithEvents Label23 As Windows.Forms.Label
 End Class
