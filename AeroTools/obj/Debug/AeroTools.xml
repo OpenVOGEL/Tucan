@@ -2539,7 +2539,7 @@ AeroTools
 </member>
 <member name="P:AeroTools.VisualModel.Models.Basics.CamberLine.ID">
  <summary>
- The 
+ The identification number of this camber line.
  </summary>
  <returns></returns>
 </member>

@@ -43,4 +43,3 @@ C:\Users\Guillermo\Documents\Software\OpenVogel\2016.Beta\DotNumerics\Source\Dot
 \\GUILLERMO\Users\Guillermo\Source\Repos\OpenVOGEL\Dependencies\DotNumerics\Source\DotNumerics\obj\Debug\DotNumerics.csproj.GenerateResource.Cache
 \\GUILLERMO\Users\Guillermo\Source\Repos\OpenVOGEL\Dependencies\DotNumerics\Source\DotNumerics\obj\Debug\DotNumerics.dll
 \\GUILLERMO\Users\Guillermo\Source\Repos\OpenVOGEL\Dependencies\DotNumerics\Source\DotNumerics\obj\Debug\DotNumerics.pdb
-\\GUILLERMO\Users\Guillermo\Source\Repos\OpenVOGEL\Dependencies\DotNumerics\Source\DotNumerics\obj\Debug\DotNumerics.csprojResolveAssemblyReference.cache

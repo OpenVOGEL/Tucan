@@ -97,9 +97,11 @@ Partial Class WingControl
         Me.Label17 = New System.Windows.Forms.Label()
         Me.Label12 = New System.Windows.Forms.Label()
         Me.TabPage7 = New System.Windows.Forms.TabPage()
+        Me.btnCamberLines = New System.Windows.Forms.Button()
+        Me.Label23 = New System.Windows.Forms.Label()
         Me.btnPolarCurves = New System.Windows.Forms.Button()
         Me.Label72 = New System.Windows.Forms.Label()
-        Me.Cuadro_de_Perfil = New System.Windows.Forms.PictureBox()
+        Me.pbProfileSketch = New System.Windows.Forms.PictureBox()
         Me.TabPage8 = New System.Windows.Forms.TabPage()
         Me.cbTrailingEdge = New System.Windows.Forms.CheckBox()
         Me.Label18 = New System.Windows.Forms.Label()
@@ -159,8 +161,6 @@ Partial Class WingControl
         Me.btSurfaceData = New System.Windows.Forms.Button()
         Me.SurfaceNameText = New System.Windows.Forms.TextBox()
         Me.btnOk = New System.Windows.Forms.Button()
-        Me.btnCamberLines = New System.Windows.Forms.Button()
-        Me.Label23 = New System.Windows.Forms.Label()
         Me.PanelDeEdicion.SuspendLayout()
         Me.tbDesign.SuspendLayout()
         Me.tcRootProperties.SuspendLayout()
@@ -190,7 +190,7 @@ Partial Class WingControl
         CType(Me.nudLength, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.nudTipChord, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabPage7.SuspendLayout()
-        CType(Me.Cuadro_de_Perfil, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.pbProfileSketch, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabPage8.SuspendLayout()
         CType(Me.nudCuttingStep, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.SegmentoPrimitivo2, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -1140,7 +1140,7 @@ Partial Class WingControl
         Me.Label12.ImeMode = System.Windows.Forms.ImeMode.NoControl
         Me.Label12.Location = New System.Drawing.Point(24, 136)
         Me.Label12.Name = "Label12"
-        Me.Label12.Size = New System.Drawing.Size(75, 13)
+        Me.Label12.Size = New System.Drawing.Size(74, 13)
         Me.Label12.TabIndex = 24
         Me.Label12.Text = "Twisting axis:"
         Me.Label12.TextAlign = System.Drawing.ContentAlignment.MiddleRight
@@ -1152,13 +1152,39 @@ Partial Class WingControl
         Me.TabPage7.Controls.Add(Me.Label23)
         Me.TabPage7.Controls.Add(Me.btnPolarCurves)
         Me.TabPage7.Controls.Add(Me.Label72)
-        Me.TabPage7.Controls.Add(Me.Cuadro_de_Perfil)
+        Me.TabPage7.Controls.Add(Me.pbProfileSketch)
         Me.TabPage7.Location = New System.Drawing.Point(4, 22)
         Me.TabPage7.Name = "TabPage7"
         Me.TabPage7.Padding = New System.Windows.Forms.Padding(3)
         Me.TabPage7.Size = New System.Drawing.Size(285, 281)
         Me.TabPage7.TabIndex = 1
         Me.TabPage7.Text = "Profile"
+        '
+        'btnCamberLines
+        '
+        Me.btnCamberLines.FlatAppearance.BorderColor = System.Drawing.Color.Silver
+        Me.btnCamberLines.FlatAppearance.MouseDownBackColor = System.Drawing.Color.PaleGreen
+        Me.btnCamberLines.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DeepSkyBlue
+        Me.btnCamberLines.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnCamberLines.Font = New System.Drawing.Font("Segoe UI", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnCamberLines.Location = New System.Drawing.Point(196, 8)
+        Me.btnCamberLines.Margin = New System.Windows.Forms.Padding(0)
+        Me.btnCamberLines.Name = "btnCamberLines"
+        Me.btnCamberLines.Size = New System.Drawing.Size(72, 22)
+        Me.btnCamberLines.TabIndex = 43
+        Me.btnCamberLines.Text = "Camber lines"
+        Me.btnCamberLines.UseVisualStyleBackColor = True
+        '
+        'Label23
+        '
+        Me.Label23.AutoSize = True
+        Me.Label23.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label23.ImeMode = System.Windows.Forms.ImeMode.NoControl
+        Me.Label23.Location = New System.Drawing.Point(7, 12)
+        Me.Label23.Name = "Label23"
+        Me.Label23.Size = New System.Drawing.Size(72, 13)
+        Me.Label23.TabIndex = 42
+        Me.Label23.Text = "Camber line:"
         '
         'btnPolarCurves
         '
@@ -1186,16 +1212,16 @@ Partial Class WingControl
         Me.Label72.TabIndex = 40
         Me.Label72.Text = "Polar curve:"
         '
-        'Cuadro_de_Perfil
+        'pbProfileSketch
         '
-        Me.Cuadro_de_Perfil.BackColor = System.Drawing.Color.White
-        Me.Cuadro_de_Perfil.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.Cuadro_de_Perfil.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.Cuadro_de_Perfil.Location = New System.Drawing.Point(6, 37)
-        Me.Cuadro_de_Perfil.Name = "Cuadro_de_Perfil"
-        Me.Cuadro_de_Perfil.Size = New System.Drawing.Size(262, 99)
-        Me.Cuadro_de_Perfil.TabIndex = 29
-        Me.Cuadro_de_Perfil.TabStop = False
+        Me.pbProfileSketch.BackColor = System.Drawing.Color.White
+        Me.pbProfileSketch.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.pbProfileSketch.ImeMode = System.Windows.Forms.ImeMode.NoControl
+        Me.pbProfileSketch.Location = New System.Drawing.Point(6, 37)
+        Me.pbProfileSketch.Name = "pbProfileSketch"
+        Me.pbProfileSketch.Size = New System.Drawing.Size(262, 99)
+        Me.pbProfileSketch.TabIndex = 29
+        Me.pbProfileSketch.TabStop = False
         '
         'TabPage8
         '
@@ -1916,32 +1942,6 @@ Partial Class WingControl
         Me.btnOk.Text = "Close"
         Me.btnOk.UseVisualStyleBackColor = False
         '
-        'btnCamberLines
-        '
-        Me.btnCamberLines.FlatAppearance.BorderColor = System.Drawing.Color.Silver
-        Me.btnCamberLines.FlatAppearance.MouseDownBackColor = System.Drawing.Color.PaleGreen
-        Me.btnCamberLines.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DeepSkyBlue
-        Me.btnCamberLines.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btnCamberLines.Font = New System.Drawing.Font("Segoe UI", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnCamberLines.Location = New System.Drawing.Point(196, 8)
-        Me.btnCamberLines.Margin = New System.Windows.Forms.Padding(0)
-        Me.btnCamberLines.Name = "btnCamberLines"
-        Me.btnCamberLines.Size = New System.Drawing.Size(72, 22)
-        Me.btnCamberLines.TabIndex = 43
-        Me.btnCamberLines.Text = "Camber lines"
-        Me.btnCamberLines.UseVisualStyleBackColor = True
-        '
-        'Label23
-        '
-        Me.Label23.AutoSize = True
-        Me.Label23.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label23.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.Label23.Location = New System.Drawing.Point(7, 12)
-        Me.Label23.Name = "Label23"
-        Me.Label23.Size = New System.Drawing.Size(72, 13)
-        Me.Label23.TabIndex = 42
-        Me.Label23.Text = "Camber line:"
-        '
         'WingControl
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -1989,7 +1989,7 @@ Partial Class WingControl
         CType(Me.nudTipChord, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TabPage7.ResumeLayout(False)
         Me.TabPage7.PerformLayout()
-        CType(Me.Cuadro_de_Perfil, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.pbProfileSketch, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TabPage8.ResumeLayout(False)
         Me.TabPage8.PerformLayout()
         CType(Me.nudCuttingStep, System.ComponentModel.ISupportInitialize).EndInit()
@@ -2057,7 +2057,7 @@ Partial Class WingControl
     Friend WithEvents Label17 As System.Windows.Forms.Label
     Friend WithEvents Label12 As System.Windows.Forms.Label
     Friend WithEvents TabPage7 As System.Windows.Forms.TabPage
-    Friend WithEvents Cuadro_de_Perfil As System.Windows.Forms.PictureBox
+    Friend WithEvents pbProfileSketch As System.Windows.Forms.PictureBox
     Friend WithEvents TabPage8 As System.Windows.Forms.TabPage
     Friend WithEvents ConvectarEstela As System.Windows.Forms.CheckBox
     Friend WithEvents Label29 As System.Windows.Forms.Label

@@ -22,8 +22,10 @@ Namespace VisualModel.Models.Basics
 
     Public Class CamberLine
 
+        Public Property Name As String = "Camber line"
+
         ''' <summary>
-        ''' The 
+        ''' The identification number of this camber line.
         ''' </summary>
         ''' <returns></returns>
         Public Property ID As Guid
@@ -50,7 +52,7 @@ Namespace VisualModel.Models.Basics
 
             For i = 1 To Nodes.Count - 1
 
-                If Nodes(i - 1).X >= X AndAlso Nodes(i).X < X Then
+                If Nodes(i - 1).X <= X AndAlso Nodes(i).X > X Then
 
                     Dim dy As Single = Nodes(i).Y - Nodes(i - 1).Y
                     Dim dx As Single = Nodes(i).X - Nodes(i - 1).X
@@ -100,7 +102,7 @@ Namespace VisualModel.Models.Basics
 
         End Function
 
-        Private Sub GenerateNaca(MaxCamber As Single, MaxCamberX As Single, Optional n As Integer = 20)
+        Public Sub GenerateNaca(MaxCamber As Single, MaxCamberX As Single, Optional n As Integer = 20)
 
             Nodes.Clear()
 
@@ -145,7 +147,9 @@ Namespace VisualModel.Models.Basics
 
         Public Sub InitializeCamberLinesDatabase()
             CamberLines.Clear()
-            CamberLines.Add(New CamberLine())
+            Dim symmetric As New CamberLine
+            symmetric.Name = "Symmetric"
+            CamberLines.Add(symmetric)
             CamberLines(0).ID = Guid.Empty
         End Sub
 
@@ -159,7 +163,11 @@ Namespace VisualModel.Models.Basics
 
             Next
 
-            Return Nothing
+            If CamberLines.Count > 0 Then
+                Return CamberLines(0)
+            Else
+                Return Nothing
+            End If
 
         End Function
 

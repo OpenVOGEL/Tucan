@@ -168,6 +168,12 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="VisualModel\GUI\Forms\FormCamberLine.Designer.vb">
+      <DependentUpon>FormCamberLine.vb</DependentUpon>
+    </Compile>
+    <Compile Include="VisualModel\GUI\Forms\FormCamberLine.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="VisualModel\Tools\Colormaping.vb" />
     <Compile Include="VisualModel\Tools\Frames.vb" />
     <Compile Include="VisualModel\Tools\Properties.vb" />
@@ -231,64 +237,64 @@
     <Compile Include="VisualModel\GUI\Forms\FormProgress.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="VisualModel\GUI\User controls\ForcesPanel.Designer.vb">
+    <Compile Include="VisualModel\GUI\UserControls\ForcesPanel.Designer.vb">
       <DependentUpon>ForcesPanel.vb</DependentUpon>
     </Compile>
-    <Compile Include="VisualModel\GUI\User controls\ForcesPanel.vb">
+    <Compile Include="VisualModel\GUI\UserControls\ForcesPanel.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="VisualModel\GUI\User controls\Histograms\FlutterTestControl.Designer.vb">
+    <Compile Include="VisualModel\GUI\UserControls\Histograms\FlutterTestControl.Designer.vb">
       <DependentUpon>FlutterTestControl.vb</DependentUpon>
     </Compile>
-    <Compile Include="VisualModel\GUI\User controls\Histograms\FlutterTestControl.vb">
+    <Compile Include="VisualModel\GUI\UserControls\Histograms\FlutterTestControl.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="VisualModel\GUI\User controls\MiniComponents\ResultBox.Designer.vb">
+    <Compile Include="VisualModel\GUI\UserControls\MiniComponents\ResultBox.Designer.vb">
       <DependentUpon>ResultBox.vb</DependentUpon>
     </Compile>
-    <Compile Include="VisualModel\GUI\User controls\MiniComponents\ResultBox.vb">
+    <Compile Include="VisualModel\GUI\UserControls\MiniComponents\ResultBox.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="VisualModel\GUI\User controls\Polars\CustomPolarControl.Designer.vb">
+    <Compile Include="VisualModel\GUI\UserControls\Polars\CustomPolarControl.Designer.vb">
       <DependentUpon>CustomPolarControl.vb</DependentUpon>
     </Compile>
-    <Compile Include="VisualModel\GUI\User controls\Polars\CustomPolarControl.vb">
+    <Compile Include="VisualModel\GUI\UserControls\Polars\CustomPolarControl.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="VisualModel\GUI\User controls\Polars\PolarPlotter.Designer.vb">
+    <Compile Include="VisualModel\GUI\UserControls\Polars\PolarPlotter.Designer.vb">
       <DependentUpon>PolarPlotter.vb</DependentUpon>
     </Compile>
-    <Compile Include="VisualModel\GUI\User controls\Polars\PolarPlotter.vb">
+    <Compile Include="VisualModel\GUI\UserControls\Polars\PolarPlotter.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="VisualModel\GUI\User controls\Polars\QuadraticPolarControl.Designer.vb">
+    <Compile Include="VisualModel\GUI\UserControls\Polars\QuadraticPolarControl.Designer.vb">
       <DependentUpon>QuadraticPolarControl.vb</DependentUpon>
     </Compile>
-    <Compile Include="VisualModel\GUI\User controls\Polars\QuadraticPolarControl.vb">
+    <Compile Include="VisualModel\GUI\UserControls\Polars\QuadraticPolarControl.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="VisualModel\GUI\User controls\Ribbon\FormSelectObject.Designer.vb">
+    <Compile Include="VisualModel\GUI\UserControls\Ribbon\FormSelectObject.Designer.vb">
       <DependentUpon>FormSelectObject.vb</DependentUpon>
     </Compile>
-    <Compile Include="VisualModel\GUI\User controls\Ribbon\FormSelectObject.vb">
+    <Compile Include="VisualModel\GUI\UserControls\Ribbon\FormSelectObject.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="VisualModel\GUI\User controls\Ribbon\MainRibbon.Designer.vb">
+    <Compile Include="VisualModel\GUI\UserControls\Ribbon\MainRibbon.Designer.vb">
       <DependentUpon>MainRibbon.vb</DependentUpon>
     </Compile>
-    <Compile Include="VisualModel\GUI\User controls\Ribbon\MainRibbon.vb">
+    <Compile Include="VisualModel\GUI\UserControls\Ribbon\MainRibbon.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="VisualModel\GUI\User controls\VelocityControl.Designer.vb">
+    <Compile Include="VisualModel\GUI\UserControls\VelocityControl.Designer.vb">
       <DependentUpon>VelocityControl.vb</DependentUpon>
     </Compile>
-    <Compile Include="VisualModel\GUI\User controls\VelocityControl.vb">
+    <Compile Include="VisualModel\GUI\UserControls\VelocityControl.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="VisualModel\GUI\User controls\WingControl.Designer.vb">
+    <Compile Include="VisualModel\GUI\UserControls\WingControl.Designer.vb">
       <DependentUpon>WingControl.vb</DependentUpon>
     </Compile>
-    <Compile Include="VisualModel\GUI\User controls\WingControl.vb">
+    <Compile Include="VisualModel\GUI\UserControls\WingControl.vb">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="VisualModel\Interface\Operations.vb" />
@@ -319,6 +325,9 @@
     <EmbeddedResource Include="VisualModel\GUI\Forms\FormAnchors.resx">
       <DependentUpon>FormAnchors.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="VisualModel\GUI\Forms\FormCamberLine.resx">
+      <DependentUpon>FormCamberLine.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="VisualModel\GUI\Forms\FormFuselageEditor.resx">
       <DependentUpon>FormFuselageEditor.vb</DependentUpon>
     </EmbeddedResource>
@@ -346,34 +355,34 @@
     <EmbeddedResource Include="VisualModel\GUI\Forms\FormProgress.resx">
       <DependentUpon>FormProgress.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="VisualModel\GUI\User controls\ForcesPanel.resx">
+    <EmbeddedResource Include="VisualModel\GUI\UserControls\ForcesPanel.resx">
       <DependentUpon>ForcesPanel.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="VisualModel\GUI\User controls\Histograms\FlutterTestControl.resx">
+    <EmbeddedResource Include="VisualModel\GUI\UserControls\Histograms\FlutterTestControl.resx">
       <DependentUpon>FlutterTestControl.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="VisualModel\GUI\User controls\MiniComponents\ResultBox.resx">
+    <EmbeddedResource Include="VisualModel\GUI\UserControls\MiniComponents\ResultBox.resx">
       <DependentUpon>ResultBox.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="VisualModel\GUI\User controls\Polars\CustomPolarControl.resx">
+    <EmbeddedResource Include="VisualModel\GUI\UserControls\Polars\CustomPolarControl.resx">
       <DependentUpon>CustomPolarControl.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="VisualModel\GUI\User controls\Polars\PolarPlotter.resx">
+    <EmbeddedResource Include="VisualModel\GUI\UserControls\Polars\PolarPlotter.resx">
       <DependentUpon>PolarPlotter.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="VisualModel\GUI\User controls\Polars\QuadraticPolarControl.resx">
+    <EmbeddedResource Include="VisualModel\GUI\UserControls\Polars\QuadraticPolarControl.resx">
       <DependentUpon>QuadraticPolarControl.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="VisualModel\GUI\User controls\Ribbon\FormSelectObject.resx">
+    <EmbeddedResource Include="VisualModel\GUI\UserControls\Ribbon\FormSelectObject.resx">
       <DependentUpon>FormSelectObject.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="VisualModel\GUI\User controls\Ribbon\MainRibbon.resx">
+    <EmbeddedResource Include="VisualModel\GUI\UserControls\Ribbon\MainRibbon.resx">
       <DependentUpon>MainRibbon.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="VisualModel\GUI\User controls\VelocityControl.resx">
+    <EmbeddedResource Include="VisualModel\GUI\UserControls\VelocityControl.resx">
       <DependentUpon>VelocityControl.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="VisualModel\GUI\User controls\WingControl.resx">
+    <EmbeddedResource Include="VisualModel\GUI\UserControls\WingControl.resx">
       <DependentUpon>WingControl.vb</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>

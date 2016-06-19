@@ -16,7 +16,9 @@
 'along with this program.  If Not, see < http:  //www.gnu.org/licenses/>.
 
 Imports System.Drawing
+Imports System.Windows.Forms
 Imports AeroTools.CalculationModel.Models.Aero.Components
+Imports AeroTools.VisualModel.Models.Basics
 Imports AeroTools.VisualModel.Models.Components
 
 Public Class WingControl
@@ -237,7 +239,7 @@ Public Class WingControl
         nudCMy.Value = Surface.CurrentRegion.TipSection.CMy
         nudCMz.Value = Surface.CurrentRegion.TipSection.CMz
 
-        MostrarPerfil()
+        pbProfileSketch.Refresh()
 
         Ready = True
 
@@ -327,69 +329,56 @@ Public Class WingControl
 
 #End Region
 
-#Region " Dibujar perfil "
+#Region " Draw profile "
 
-    Private Sub MostrarPerfil()
-
-        Cuadro_de_Perfil.Refresh()
-
-    End Sub
-
-    Public Sub Dibujar_Perfil(ByVal Cmax As Double, ByVal PCmax As Double, ByVal n As Integer,
+    Public Sub DrawCamberLine(Line As CamberLine, ByVal n As Integer,
                              ByVal wid As Double, ByVal hgt As Double, ByRef g As Graphics)
-
-        ' SUBRUTINA QUE DIBUJA LA LINEA MEDIA DEL PERFIL CON LOS DATOS DE REFERENCIA
 
         Dim Node1 As PointF
         Dim Node2 As PointF
         Dim k As Integer
 
-        Dim Lapiz As New Pen(Brushes.Black)
+        Dim myPen As New Pen(Brushes.Black)
 
-        Lapiz.SetLineCap(Drawing2D.LineCap.RoundAnchor, Drawing2D.LineCap.RoundAnchor, Drawing2D.DashCap.Round)
-        Lapiz.DashPattern = New Single() {4.0F, 2.0F, 1.0F, 3.0F}
-        Lapiz.Width = 1.0F
+        myPen.SetLineCap(Drawing2D.LineCap.RoundAnchor, Drawing2D.LineCap.RoundAnchor, Drawing2D.DashCap.Round)
+        myPen.DashPattern = New Single() {4.0F, 2.0F, 1.0F, 3.0F}
+        myPen.Width = 1.0F
         g.SmoothingMode = Drawing2D.SmoothingMode.HighQuality
         g.Clear(Color.White)
 
-        ' Cuerda
+        ' Cord
 
         Node1.X = 10.0
         Node1.Y = hgt / 2
         Node2.X = wid - 10.0
         Node2.Y = hgt / 2
 
-        g.DrawLine(Lapiz, Node1, Node2)
+        g.DrawLine(myPen, Node1, Node2)
 
-        ' Ejes de coordenadas
-        Call Dibujar_Coordenadas("x", 1, "z", 1, Node1, g)
+        ' Axes
 
-        Lapiz.DashPattern = New Single() {200.0F}
-        Lapiz.SetLineCap(Drawing2D.LineCap.RoundAnchor, Drawing2D.LineCap.RoundAnchor, Drawing2D.DashCap.Round)
-        Lapiz.Brush = Brushes.Black
-        Lapiz.Width = 2.0F
+        DrawCoordinates("x", 1, "z", 1, Node1, g)
+
+        myPen.DashPattern = New Single() {200.0F}
+        myPen.SetLineCap(Drawing2D.LineCap.RoundAnchor, Drawing2D.LineCap.RoundAnchor, Drawing2D.DashCap.Round)
+        myPen.Brush = Brushes.Black
+        myPen.Width = 2.0F
 
         ' Linea media y nodos
 
         For k = 1 To n
 
             Node2.X = k / n
-
-            If (Node2.X <= PCmax) And (Node2.X >= 0.0) Then
-
-                Node2.Y = Cmax / Math.Pow(PCmax, 2) * Node2.X * (2 * PCmax - Node2.X)
-
-            End If
-
-            If (Node2.X > PCmax) And (Node2.X <= 1.0) Then
-
-                Node2.Y = Cmax / Math.Pow((1 - PCmax), 2) * (1 - Node2.X) * (1 + Node2.X - 2 * PCmax)
-
+            If Line IsNot Nothing Then
+                Node2.Y = Line.Y(Node2.X)
+            Else
+                Node2.Y = 0
             End If
 
             Node2.X = (wid - 20.0) * Node2.X + 10.0
             Node2.Y = hgt / 2 - (wid - 20.0) * Node2.Y
-            g.DrawLine(Lapiz, Node1, Node2)
+
+            g.DrawLine(myPen, Node1, Node2)
 
             Node1 = Node2
 
@@ -397,9 +386,7 @@ Public Class WingControl
 
     End Sub
 
-    Public Sub Dibujar_Coordenadas(ByVal x As String, ByVal dirX As Integer, ByVal y As String, ByVal dirY As Integer, ByVal Origin As PointF, ByVal Graph As Graphics)
-
-        ' SUBRUTINA QUE DIBUJA EL SISTEMA DE COORDENADAS A PEDIDO DEL USUARIO
+    Public Sub DrawCoordinates(ByVal x As String, ByVal dirX As Integer, ByVal y As String, ByVal dirY As Integer, ByVal Origin As PointF, ByVal Graph As Graphics)
 
         Dim Letra As New Font("Microsoft Sans Serif", 9)
         Dim Lapiz As New Pen(Brushes.Black)
@@ -523,25 +510,25 @@ Public Class WingControl
     End Sub
 
     Private Sub CambiarEspaciamientoConstante(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles rbConstantSpacement.CheckedChanged
-        Me.GetGeometry()
+        GetGeometry()
     End Sub
 
     Private Sub CambiarEspaciamientoCuadratico(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles rbCuadraticSpacement.CheckedChanged
-        Me.GetGeometry()
+        GetGeometry()
     End Sub
 
     Private Sub CambiarCombaduraMaxima(ByVal sender As System.Object, ByVal e As System.EventArgs)
-        Me.GetGeometry()
-        Me.MostrarPerfil()
+        GetGeometry()
+        pbProfileSketch.Refresh()
     End Sub
 
     Private Sub CambiarPosicionDeCombaduraMaxima(ByVal sender As System.Object, ByVal e As System.EventArgs)
-        Me.GetGeometry()
-        Me.MostrarPerfil()
+        GetGeometry()
+        pbProfileSketch.Refresh()
     End Sub
 
     Private Sub nudCuttingStep_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles nudCuttingStep.ValueChanged
-        Me.GetGeometry()
+        GetGeometry()
     End Sub
 
     Private Sub CambiarSegmentoPrimitivo1(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles SegmentoPrimitivo1.ValueChanged
@@ -777,11 +764,11 @@ Public Class WingControl
 
     End Sub
 
-    Private Sub Cuadro_de_Perfil_Paint(ByVal sender As System.Object, ByVal e As System.Windows.Forms.PaintEventArgs) Handles Cuadro_de_Perfil.Paint
+    Private Sub pbProfileSketch_Paint(ByVal sender As System.Object, ByVal e As System.Windows.Forms.PaintEventArgs) Handles pbProfileSketch.Paint
 
         Dim g As Graphics = e.Graphics
 
-        Dibujar_Perfil(CMax_box.Value, PCMax_box.Value, NPCuerda_Box.Value, Cuadro_de_Perfil.Width, Cuadro_de_Perfil.Height, g)
+        DrawCamberLine(GetCamberLineFromID(Surface.CurrentRegion.CamberLineID), NPCuerda_Box.Value, pbProfileSketch.Width, pbProfileSketch.Height, g)
 
     End Sub
 
@@ -828,6 +815,23 @@ Public Class WingControl
         GetGeometry()
         SegmentoPrimitivo1.Enabled = Not cbTrailingEdge.Checked
         SegmentoPrimitivo2.Enabled = Not cbTrailingEdge.Checked
+    End Sub
+
+    Private Sub btnCamberLines_Click(sender As Object, e As EventArgs) Handles btnCamberLines.Click
+
+        If (Surface.CurrentRegion IsNot Nothing) Then
+
+            Dim form As New FormCamberLine(Surface.CurrentRegion.CamberLineID)
+
+            Select Case form.ShowDialog()
+                Case DialogResult.OK
+                    Surface.CurrentRegion.CamberLineID = form.SelectedCamberID
+                    Surface.GenerateMesh()
+                    RaiseEvent RefreshGL()
+            End Select
+
+        End If
+
     End Sub
 
 End Class
