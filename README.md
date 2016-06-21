@@ -13,16 +13,20 @@ If you are familiar with at least one of these programming languages and API's, 
 
 If you are new to this, follow the next steps:
 
-- Install Visual Studio 2015 Community in your computer
+- Download and install Visual Studio 2015 Community in your computer
 - Add the GitHub plugin to VS and sign up.
 - Fork this project to a local repository.
 - Commit to an issue from the list (or submit a new issue).
-- Start coding (solve the issue).
-- Submit a pull request.
+- Start working on the code.
+- When you think the job is done, create a new pull request (https://help.github.com/articles/using-pull-requests/).
+- Discuss with the group members about possible issues or corrections (code styling, comments, etc.).
+- Solve possible issues.
+- Waint until a member with push access merges your changes.
 
 ####Some rules
 Comments in the code should be written in simple English. For practical reasons, we will not accept code written in other languages.
 When publishing documentation about a certain module, try to write it in English as well, or try to produce a translated version. There are many people from all over the world interested in this project, so we have to keep a uniform format in order to understand eachother. Writing in other languages outside the code is, however, not forbidden.
+
 
 Thanks for your cooperation!
 
