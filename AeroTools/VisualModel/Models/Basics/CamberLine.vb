@@ -104,30 +104,34 @@ Namespace VisualModel.Models.Basics
 
         Public Sub GenerateNaca(MaxCamber As Single, MaxCamberX As Single, Optional n As Integer = 20)
 
-            Nodes.Clear()
+            If (MaxCamberX > 0) AndAlso (MaxCamberX < 1) Then
 
-            For i = 0 To n
+                Nodes.Clear()
 
-                Dim _x As Single = i / n
-                Dim _y As Single = 0
+                For i = 0 To n
 
-                If _x <= MaxCamberX Then
+                    Dim _x As Single = i / n
+                    Dim _y As Single = 0
 
-                    _y = MaxCamber * _x / MaxCamberX ^ 2 * (2 * MaxCamberX - _x)
+                    If _x <= MaxCamberX Then
 
-                ElseIf _x > MaxCamberX Then
+                        _y = MaxCamber * _x / MaxCamberX ^ 2 * (2 * MaxCamberX - _x)
 
-                    _y = MaxCamber * (1.0 - _x) / (1.0 - MaxCamberX) ^ 2 * (1 + _x - 2 * MaxCamberX)
+                    ElseIf _x > MaxCamberX Then
 
-                Else
+                        _y = MaxCamber * (1.0 - _x) / (1.0 - MaxCamberX) ^ 2 * (1 + _x - 2 * MaxCamberX)
 
-                    _y = 0
+                    Else
 
-                End If
+                        _y = 0
 
-                Nodes.Add(New EVector2(_x, _y))
+                    End If
 
-            Next
+                    Nodes.Add(New EVector2(_x, _y))
+
+                Next
+
+            End If
 
         End Sub
 

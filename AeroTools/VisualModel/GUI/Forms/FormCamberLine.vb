@@ -1,6 +1,7 @@
 ﻿
 Imports System.Drawing
 Imports AeroTools.VisualModel.Models.Basics
+Imports MathTools.Algebra.EuclideanSpace
 
 Public Class FormCamberLine
 
@@ -62,6 +63,10 @@ Public Class FormCamberLine
 
             tbxCamberName.Text = CamberLineDatabase.CamberLines(lbLines.SelectedIndex).Name
 
+            SelectedPointIndex = -1
+
+            pbPlot.Refresh()
+
         End If
 
     End Sub
@@ -97,7 +102,7 @@ Public Class FormCamberLine
     Private mX As Integer = 10
     Private mY As Integer = 10
 
-    Private SelectedPointIndex As Integer
+    Private FocusedPointIndex As Integer
     Private DragPoint As Boolean = False
 
     Private Sub DrawCurve(sender As Object, e As Windows.Forms.PaintEventArgs) Handles pbPlot.Paint
@@ -176,10 +181,18 @@ Public Class FormCamberLine
 
                     ' update position of selected point:
 
-                    If DragPoint AndAlso SelectedPointIndex >= 0 AndAlso SelectedPointIndex < selectedCamber.Nodes.Count Then
+                    If DragPoint AndAlso FocusedPointIndex >= 0 AndAlso FocusedPointIndex < selectedCamber.Nodes.Count Then
 
-                        selectedCamber.Nodes(SelectedPointIndex).X = Math.Max(0, Math.Min(1, (MousePoint.X - mX) / scale + xmin))
-                        selectedCamber.Nodes(SelectedPointIndex).Y = ((mY + gH) - MousePoint.Y) / scale + ymin
+                        selectedCamber.Nodes(FocusedPointIndex).X = Math.Max(0, Math.Min(1, (MousePoint.X - mX) / scale + xmin))
+                        selectedCamber.Nodes(FocusedPointIndex).Y = ((mY + gH) - MousePoint.Y) / scale + ymin
+
+                        LockEvents = True
+
+                        nudX.Value = selectedCamber.Nodes(FocusedPointIndex).X
+
+                        nudY.Value = selectedCamber.Nodes(FocusedPointIndex).Y
+
+                        LockEvents = False
 
                     End If
 
@@ -220,7 +233,7 @@ Public Class FormCamberLine
 
                     ' draw points:
 
-                    SelectedPointIndex = -1
+                    FocusedPointIndex = -1
                     Dim pnt As Point
 
                     For i = 0 To selectedCamber.Nodes.Count - 1
@@ -234,7 +247,7 @@ Public Class FormCamberLine
 
                         If dmx * dmx + dmy * dmy < 9 Then
 
-                            SelectedPointIndex = i
+                            FocusedPointIndex = i
 
                             g.FillEllipse(Brushes.Orange, pnt.X - 3, pnt.Y - 3, 6, 6)
                             g.DrawEllipse(MarkerPen, pnt.X - 3, pnt.Y - 3, 6, 6)
@@ -310,6 +323,8 @@ Public Class FormCamberLine
 
     Private MousePoint As New PointF(Single.MinValue, Single.MinValue)
 
+    Private SelectedPointIndex As Integer = -1
+
     Private Sub PolarPlotter_MouseDown(sender As Object, e As Windows.Forms.MouseEventArgs) Handles pbPlot.MouseDown
 
         DragPoint = True
@@ -318,6 +333,8 @@ Public Class FormCamberLine
         MousePoint.Y = e.Y
 
         pbPlot.Refresh()
+
+        SelectedPointIndex = FocusedPointIndex
 
     End Sub
 
@@ -333,6 +350,143 @@ Public Class FormCamberLine
     Private Sub PolarPlotter_MouseUp(sender As Object, e As Windows.Forms.MouseEventArgs) Handles pbPlot.MouseUp
 
         DragPoint = False
+
+        pbPlot.Refresh()
+
+    End Sub
+
+    Private Sub btnAddNode_Click(sender As Object, e As EventArgs) Handles btnAddNode.Click
+
+        Dim selectedCamber As CamberLine = Nothing
+
+        For Each camber In CamberLineDatabase.CamberLines
+
+            If (camber.ID.Equals(_SelectedCamberID)) Then
+                selectedCamber = camber
+                Exit For
+            End If
+
+        Next
+
+        If (selectedCamber IsNot Nothing) Then
+
+            If SelectedPointIndex > 0 AndAlso SelectedPointIndex < selectedCamber.Nodes.Count - 1 Then
+
+                Dim x As Double = 0.5 * (selectedCamber.Nodes(SelectedPointIndex).X + selectedCamber.Nodes(SelectedPointIndex + 1).X)
+                Dim y As Double = 0.5 * (selectedCamber.Nodes(SelectedPointIndex).Y + selectedCamber.Nodes(SelectedPointIndex + 1).Y)
+
+                Dim newNode As New EVector2(x, y)
+
+                selectedCamber.Nodes.Insert(SelectedPointIndex, newNode)
+
+                SelectedPointIndex = -1
+
+                pbPlot.Refresh()
+
+            End If
+
+        End If
+
+    End Sub
+
+    Private Sub btnDelNode_Click(sender As Object, e As EventArgs) Handles btnDelNode.Click
+
+        Dim selectedCamber As CamberLine = Nothing
+
+        For Each camber In CamberLineDatabase.CamberLines
+
+            If (camber.ID.Equals(_SelectedCamberID)) Then
+                selectedCamber = camber
+                Exit For
+            End If
+
+        Next
+
+        If (selectedCamber IsNot Nothing) Then
+
+            If SelectedPointIndex > 0 AndAlso SelectedPointIndex < selectedCamber.Nodes.Count - 1 Then
+
+                selectedCamber.Nodes.RemoveAt(SelectedPointIndex)
+
+                SelectedPointIndex = -1
+
+                pbPlot.Refresh()
+
+            End If
+
+        End If
+
+    End Sub
+
+    Private Sub btnGenerateNaca_Click(sender As Object, e As EventArgs) Handles btnGenerateNaca.Click
+
+        SelectedPointIndex = -1
+
+        Dim selectedCamber As CamberLine = Nothing
+
+        For Each camber In CamberLineDatabase.CamberLines
+
+            If (camber.ID.Equals(_SelectedCamberID)) Then
+                selectedCamber = camber
+                Exit For
+            End If
+
+        Next
+
+        If (selectedCamber IsNot Nothing) Then
+
+            selectedCamber.GenerateNaca(nudMaxCamber.Value, nudXmax.Value)
+
+            pbPlot.Refresh()
+
+        End If
+
+    End Sub
+
+    Private LockEvents As Boolean = True
+
+    Private Sub nudX_ValueChanged(sender As Object, e As EventArgs) Handles nudX.ValueChanged
+
+        UpdateCoordinates()
+
+    End Sub
+
+    Private Sub nudY_ValueChanged(sender As Object, e As EventArgs) Handles nudY.ValueChanged
+
+        UpdateCoordinates()
+
+    End Sub
+
+    Private Sub UpdateCoordinates()
+
+        If Not LockEvents Then
+
+            Dim selectedCamber As CamberLine = Nothing
+
+            For Each camber In CamberLineDatabase.CamberLines
+
+                If (camber.ID.Equals(_SelectedCamberID)) Then
+                    selectedCamber = camber
+                    Exit For
+                End If
+
+            Next
+
+            If (selectedCamber IsNot Nothing) Then
+
+                If SelectedPointIndex > 0 AndAlso SelectedPointIndex < selectedCamber.Nodes.Count - 1 Then
+
+                    selectedCamber.Nodes(SelectedPointIndex).X = nudX.Value
+
+                    selectedCamber.Nodes(SelectedPointIndex).Y = nudY.Value
+
+                    pbPlot.Refresh()
+
+                End If
+
+            End If
+
+        End If
 
     End Sub
 

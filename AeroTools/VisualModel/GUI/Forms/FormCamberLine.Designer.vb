@@ -28,10 +28,28 @@ Partial Class FormCamberLine
         Me.btnRemove = New System.Windows.Forms.Button()
         Me.btnOK = New System.Windows.Forms.Button()
         Me.tbxCamberName = New System.Windows.Forms.TextBox()
-        Me.Button1 = New System.Windows.Forms.Button()
-        Me.Button2 = New System.Windows.Forms.Button()
+        Me.btnAddNode = New System.Windows.Forms.Button()
+        Me.btnDelNode = New System.Windows.Forms.Button()
         Me.pbPlot = New System.Windows.Forms.PictureBox()
+        Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.btnGenerateNaca = New System.Windows.Forms.Button()
+        Me.nudXmax = New System.Windows.Forms.NumericUpDown()
+        Me.nudMaxCamber = New System.Windows.Forms.NumericUpDown()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.GroupBox2 = New System.Windows.Forms.GroupBox()
+        Me.Label3 = New System.Windows.Forms.Label()
+        Me.Label4 = New System.Windows.Forms.Label()
+        Me.nudX = New System.Windows.Forms.NumericUpDown()
+        Me.nudY = New System.Windows.Forms.NumericUpDown()
+        Me.btnImportTable = New System.Windows.Forms.Button()
         CType(Me.pbPlot, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.GroupBox1.SuspendLayout()
+        CType(Me.nudXmax, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.nudMaxCamber, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.GroupBox2.SuspendLayout()
+        CType(Me.nudX, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.nudY, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'lbLines
@@ -39,21 +57,21 @@ Partial Class FormCamberLine
         Me.lbLines.FormattingEnabled = True
         Me.lbLines.Location = New System.Drawing.Point(12, 24)
         Me.lbLines.Name = "lbLines"
-        Me.lbLines.Size = New System.Drawing.Size(199, 108)
+        Me.lbLines.Size = New System.Drawing.Size(280, 108)
         Me.lbLines.TabIndex = 0
         '
         'lblCamberLines
         '
         Me.lblCamberLines.AutoSize = True
-        Me.lblCamberLines.Location = New System.Drawing.Point(9, 8)
+        Me.lblCamberLines.Location = New System.Drawing.Point(9, 6)
         Me.lblCamberLines.Name = "lblCamberLines"
-        Me.lblCamberLines.Size = New System.Drawing.Size(76, 13)
+        Me.lblCamberLines.Size = New System.Drawing.Size(164, 13)
         Me.lblCamberLines.TabIndex = 1
-        Me.lblCamberLines.Text = "Camber lines:"
+        Me.lblCamberLines.Text = "List of generated camber lines:"
         '
         'btnAdd
         '
-        Me.btnAdd.Location = New System.Drawing.Point(217, 24)
+        Me.btnAdd.Location = New System.Drawing.Point(298, 24)
         Me.btnAdd.Name = "btnAdd"
         Me.btnAdd.Size = New System.Drawing.Size(75, 23)
         Me.btnAdd.TabIndex = 2
@@ -62,7 +80,7 @@ Partial Class FormCamberLine
         '
         'btnRemove
         '
-        Me.btnRemove.Location = New System.Drawing.Point(217, 47)
+        Me.btnRemove.Location = New System.Drawing.Point(298, 47)
         Me.btnRemove.Name = "btnRemove"
         Me.btnRemove.Size = New System.Drawing.Size(75, 23)
         Me.btnRemove.TabIndex = 3
@@ -72,7 +90,7 @@ Partial Class FormCamberLine
         'btnOK
         '
         Me.btnOK.DialogResult = System.Windows.Forms.DialogResult.OK
-        Me.btnOK.Location = New System.Drawing.Point(304, 333)
+        Me.btnOK.Location = New System.Drawing.Point(292, 394)
         Me.btnOK.Name = "btnOK"
         Me.btnOK.Size = New System.Drawing.Size(75, 23)
         Me.btnOK.TabIndex = 5
@@ -86,40 +104,173 @@ Partial Class FormCamberLine
         Me.tbxCamberName.Size = New System.Drawing.Size(199, 22)
         Me.tbxCamberName.TabIndex = 8
         '
-        'Button1
+        'btnAddNode
         '
-        Me.Button1.Location = New System.Drawing.Point(217, 136)
-        Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(75, 23)
-        Me.Button1.TabIndex = 9
-        Me.Button1.Text = "Add node"
-        Me.Button1.UseVisualStyleBackColor = True
+        Me.btnAddNode.Location = New System.Drawing.Point(217, 136)
+        Me.btnAddNode.Name = "btnAddNode"
+        Me.btnAddNode.Size = New System.Drawing.Size(75, 23)
+        Me.btnAddNode.TabIndex = 9
+        Me.btnAddNode.Text = "Add node"
+        Me.btnAddNode.UseVisualStyleBackColor = True
         '
-        'Button2
+        'btnDelNode
         '
-        Me.Button2.Location = New System.Drawing.Point(298, 136)
-        Me.Button2.Name = "Button2"
-        Me.Button2.Size = New System.Drawing.Size(75, 23)
-        Me.Button2.TabIndex = 10
-        Me.Button2.Text = "Del. node"
-        Me.Button2.UseVisualStyleBackColor = True
+        Me.btnDelNode.Location = New System.Drawing.Point(298, 136)
+        Me.btnDelNode.Name = "btnDelNode"
+        Me.btnDelNode.Size = New System.Drawing.Size(75, 23)
+        Me.btnDelNode.TabIndex = 10
+        Me.btnDelNode.Text = "Del. node"
+        Me.btnDelNode.UseVisualStyleBackColor = True
         '
         'pbPlot
         '
         Me.pbPlot.Location = New System.Drawing.Point(12, 164)
         Me.pbPlot.Name = "pbPlot"
-        Me.pbPlot.Size = New System.Drawing.Size(361, 163)
+        Me.pbPlot.Size = New System.Drawing.Size(361, 99)
         Me.pbPlot.TabIndex = 11
         Me.pbPlot.TabStop = False
+        '
+        'GroupBox1
+        '
+        Me.GroupBox1.Controls.Add(Me.Label2)
+        Me.GroupBox1.Controls.Add(Me.Label1)
+        Me.GroupBox1.Controls.Add(Me.nudMaxCamber)
+        Me.GroupBox1.Controls.Add(Me.nudXmax)
+        Me.GroupBox1.Controls.Add(Me.btnGenerateNaca)
+        Me.GroupBox1.Location = New System.Drawing.Point(12, 333)
+        Me.GroupBox1.Name = "GroupBox1"
+        Me.GroupBox1.Size = New System.Drawing.Size(361, 55)
+        Me.GroupBox1.TabIndex = 12
+        Me.GroupBox1.TabStop = False
+        Me.GroupBox1.Text = "NACA camber line generator"
+        '
+        'btnGenerateNaca
+        '
+        Me.btnGenerateNaca.Location = New System.Drawing.Point(280, 24)
+        Me.btnGenerateNaca.Name = "btnGenerateNaca"
+        Me.btnGenerateNaca.Size = New System.Drawing.Size(75, 23)
+        Me.btnGenerateNaca.TabIndex = 6
+        Me.btnGenerateNaca.Text = "Generate"
+        Me.btnGenerateNaca.UseVisualStyleBackColor = True
+        '
+        'nudXmax
+        '
+        Me.nudXmax.DecimalPlaces = 3
+        Me.nudXmax.Increment = New Decimal(New Integer() {1, 0, 0, 131072})
+        Me.nudXmax.Location = New System.Drawing.Point(159, 24)
+        Me.nudXmax.Maximum = New Decimal(New Integer() {1, 0, 0, 0})
+        Me.nudXmax.Minimum = New Decimal(New Integer() {1, 0, 0, -2147483648})
+        Me.nudXmax.Name = "nudXmax"
+        Me.nudXmax.Size = New System.Drawing.Size(71, 22)
+        Me.nudXmax.TabIndex = 13
+        Me.nudXmax.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        '
+        'nudMaxCamber
+        '
+        Me.nudMaxCamber.DecimalPlaces = 3
+        Me.nudMaxCamber.Increment = New Decimal(New Integer() {1, 0, 0, 131072})
+        Me.nudMaxCamber.Location = New System.Drawing.Point(40, 24)
+        Me.nudMaxCamber.Maximum = New Decimal(New Integer() {1, 0, 0, 0})
+        Me.nudMaxCamber.Minimum = New Decimal(New Integer() {1, 0, 0, -2147483648})
+        Me.nudMaxCamber.Name = "nudMaxCamber"
+        Me.nudMaxCamber.Size = New System.Drawing.Size(71, 22)
+        Me.nudMaxCamber.TabIndex = 14
+        Me.nudMaxCamber.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        '
+        'Label1
+        '
+        Me.Label1.AutoSize = True
+        Me.Label1.Location = New System.Drawing.Point(8, 28)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(27, 13)
+        Me.Label1.TabIndex = 13
+        Me.Label1.Text = "e/C:"
+        '
+        'Label2
+        '
+        Me.Label2.AutoSize = True
+        Me.Label2.Location = New System.Drawing.Point(129, 28)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(26, 13)
+        Me.Label2.TabIndex = 15
+        Me.Label2.Text = "x/C:"
+        '
+        'GroupBox2
+        '
+        Me.GroupBox2.Controls.Add(Me.Label3)
+        Me.GroupBox2.Controls.Add(Me.Label4)
+        Me.GroupBox2.Controls.Add(Me.nudX)
+        Me.GroupBox2.Controls.Add(Me.nudY)
+        Me.GroupBox2.Controls.Add(Me.btnImportTable)
+        Me.GroupBox2.Location = New System.Drawing.Point(12, 269)
+        Me.GroupBox2.Name = "GroupBox2"
+        Me.GroupBox2.Size = New System.Drawing.Size(361, 55)
+        Me.GroupBox2.TabIndex = 13
+        Me.GroupBox2.TabStop = False
+        Me.GroupBox2.Text = "Node"
+        '
+        'Label3
+        '
+        Me.Label3.AutoSize = True
+        Me.Label3.Location = New System.Drawing.Point(129, 28)
+        Me.Label3.Name = "Label3"
+        Me.Label3.Size = New System.Drawing.Size(26, 13)
+        Me.Label3.TabIndex = 15
+        Me.Label3.Text = "y/C:"
+        '
+        'Label4
+        '
+        Me.Label4.AutoSize = True
+        Me.Label4.Location = New System.Drawing.Point(8, 28)
+        Me.Label4.Name = "Label4"
+        Me.Label4.Size = New System.Drawing.Size(26, 13)
+        Me.Label4.TabIndex = 13
+        Me.Label4.Text = "x/C:"
+        '
+        'nudX
+        '
+        Me.nudX.DecimalPlaces = 3
+        Me.nudX.Increment = New Decimal(New Integer() {1, 0, 0, 131072})
+        Me.nudX.Location = New System.Drawing.Point(40, 24)
+        Me.nudX.Maximum = New Decimal(New Integer() {1, 0, 0, 0})
+        Me.nudX.Minimum = New Decimal(New Integer() {1, 0, 0, -2147483648})
+        Me.nudX.Name = "nudX"
+        Me.nudX.Size = New System.Drawing.Size(71, 22)
+        Me.nudX.TabIndex = 14
+        Me.nudX.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        '
+        'nudY
+        '
+        Me.nudY.DecimalPlaces = 3
+        Me.nudY.Increment = New Decimal(New Integer() {1, 0, 0, 131072})
+        Me.nudY.Location = New System.Drawing.Point(159, 24)
+        Me.nudY.Maximum = New Decimal(New Integer() {1, 0, 0, 0})
+        Me.nudY.Minimum = New Decimal(New Integer() {1, 0, 0, -2147483648})
+        Me.nudY.Name = "nudY"
+        Me.nudY.Size = New System.Drawing.Size(71, 22)
+        Me.nudY.TabIndex = 13
+        Me.nudY.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        '
+        'btnImportTable
+        '
+        Me.btnImportTable.Enabled = False
+        Me.btnImportTable.Location = New System.Drawing.Point(280, 23)
+        Me.btnImportTable.Name = "btnImportTable"
+        Me.btnImportTable.Size = New System.Drawing.Size(75, 23)
+        Me.btnImportTable.TabIndex = 6
+        Me.btnImportTable.Text = "Import tbl"
+        Me.btnImportTable.UseVisualStyleBackColor = True
         '
         'FormCamberLine
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(391, 365)
+        Me.ClientSize = New System.Drawing.Size(380, 426)
+        Me.Controls.Add(Me.GroupBox2)
+        Me.Controls.Add(Me.GroupBox1)
         Me.Controls.Add(Me.pbPlot)
-        Me.Controls.Add(Me.Button2)
-        Me.Controls.Add(Me.Button1)
+        Me.Controls.Add(Me.btnDelNode)
+        Me.Controls.Add(Me.btnAddNode)
         Me.Controls.Add(Me.tbxCamberName)
         Me.Controls.Add(Me.btnOK)
         Me.Controls.Add(Me.btnRemove)
@@ -132,8 +283,16 @@ Partial Class FormCamberLine
         Me.Name = "FormCamberLine"
         Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
-        Me.Text = "Camber lines DB"
+        Me.Text = "Camber lines data base"
         CType(Me.pbPlot, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.GroupBox1.ResumeLayout(False)
+        Me.GroupBox1.PerformLayout()
+        CType(Me.nudXmax, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.nudMaxCamber, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.GroupBox2.ResumeLayout(False)
+        Me.GroupBox2.PerformLayout()
+        CType(Me.nudX, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.nudY, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -145,7 +304,19 @@ Partial Class FormCamberLine
     Friend WithEvents btnRemove As Windows.Forms.Button
     Friend WithEvents btnOK As Windows.Forms.Button
     Friend WithEvents tbxCamberName As Windows.Forms.TextBox
-    Friend WithEvents Button1 As Windows.Forms.Button
-    Friend WithEvents Button2 As Windows.Forms.Button
+    Friend WithEvents btnAddNode As Windows.Forms.Button
+    Friend WithEvents btnDelNode As Windows.Forms.Button
     Friend WithEvents pbPlot As Windows.Forms.PictureBox
+    Friend WithEvents GroupBox1 As Windows.Forms.GroupBox
+    Friend WithEvents Label2 As Windows.Forms.Label
+    Friend WithEvents Label1 As Windows.Forms.Label
+    Friend WithEvents nudMaxCamber As Windows.Forms.NumericUpDown
+    Friend WithEvents nudXmax As Windows.Forms.NumericUpDown
+    Friend WithEvents btnGenerateNaca As Windows.Forms.Button
+    Friend WithEvents GroupBox2 As Windows.Forms.GroupBox
+    Friend WithEvents Label3 As Windows.Forms.Label
+    Friend WithEvents Label4 As Windows.Forms.Label
+    Friend WithEvents nudX As Windows.Forms.NumericUpDown
+    Friend WithEvents nudY As Windows.Forms.NumericUpDown
+    Friend WithEvents btnImportTable As Windows.Forms.Button
 End Class
