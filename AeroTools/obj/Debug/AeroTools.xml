@@ -2123,7 +2123,7 @@ AeroTools
  Convect wakes and calculates loads at the last time step.
  </summary>
 </member>
-<member name="M:AeroTools.CalculationModel.Solver.UVLMSolver.GenerateFromExistingModel(AeroTools.VisualModel.Models.GeometricModel,System.Boolean)">
+<member name="M:AeroTools.CalculationModel.Solver.UVLMSolver.GenerateFromExistingModel(AeroTools.VisualModel.Models.DesignModel,System.Boolean)">
  <summary>
  Transfers a geometric model to the calculation cell
  </summary>
@@ -2604,55 +2604,55 @@ AeroTools
  </summary>
  <remarks></remarks>
 </member>
-<member name="P:AeroTools.VisualModel.Models.GeometricModel.Name">
+<member name="P:AeroTools.VisualModel.Models.DesignModel.Name">
  <summary>
  Project name.
  </summary>
  <returns></returns>
 </member>
-<member name="P:AeroTools.VisualModel.Models.GeometricModel.Objects">
+<member name="P:AeroTools.VisualModel.Models.DesignModel.Objects">
  <summary>
  List of model objects.
  </summary>
  <returns></returns>
 </member>
-<member name="P:AeroTools.VisualModel.Models.GeometricModel.Selection">
+<member name="P:AeroTools.VisualModel.Models.DesignModel.Selection">
  <summary>
  Selection tool.
  </summary>
  <returns></returns>
 </member>
-<member name="P:AeroTools.VisualModel.Models.GeometricModel.OperationsTool">
+<member name="P:AeroTools.VisualModel.Models.DesignModel.OperationsTool">
  <summary>
  Tool that provides back up info while operating (moving or aligning objects).
  </summary>
  <returns></returns>
 </member>
-<member name="P:AeroTools.VisualModel.Models.GeometricModel.PolarDataBase">
+<member name="P:AeroTools.VisualModel.Models.DesignModel.PolarDataBase">
  <summary>
  Polars.
  </summary>
  <returns></returns>
 </member>
-<member name="M:AeroTools.VisualModel.Models.GeometricModel.AddLiftingSurface">
+<member name="M:AeroTools.VisualModel.Models.DesignModel.AddLiftingSurface">
  <summary>
  Adds a lifting surface and sets it as current.
  </summary>
  <remarks></remarks>
 </member>
-<member name="M:AeroTools.VisualModel.Models.GeometricModel.AddExtrudedBody">
+<member name="M:AeroTools.VisualModel.Models.DesignModel.AddExtrudedBody">
  <summary>
  Adds an extruded body
  </summary>
  <remarks></remarks>
 </member>
-<member name="M:AeroTools.VisualModel.Models.GeometricModel.AddJetEngine">
+<member name="M:AeroTools.VisualModel.Models.DesignModel.AddJetEngine">
  <summary>
  Adds a jet engine
  </summary>
  <remarks></remarks>
 </member>
-<member name="M:AeroTools.VisualModel.Models.GeometricModel.CloneObject(System.Int32)">
+<member name="M:AeroTools.VisualModel.Models.DesignModel.CloneObject(System.Int32)">
  <summary>
  Generates a copy of the current lifting surface with the option symmetric in true
  </summary>

@@ -36,12 +36,13 @@ Partial Class FormPolarCurve
         Me.btnAddQuadratic = New System.Windows.Forms.Button()
         Me.lblPolars = New System.Windows.Forms.Label()
         Me.btnAddCustom = New System.Windows.Forms.Button()
+        Me.tbxFamilyName = New System.Windows.Forms.TextBox()
         Me.SuspendLayout()
         '
         'btnAddFamily
         '
         Me.btnAddFamily.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.btnAddFamily.Location = New System.Drawing.Point(4, 212)
+        Me.btnAddFamily.Location = New System.Drawing.Point(4, 237)
         Me.btnAddFamily.Name = "btnAddFamily"
         Me.btnAddFamily.Size = New System.Drawing.Size(78, 24)
         Me.btnAddFamily.TabIndex = 4
@@ -57,7 +58,7 @@ Partial Class FormPolarCurve
         Me.btnOK.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DeepSkyBlue
         Me.btnOK.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.btnOK.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.btnOK.Location = New System.Drawing.Point(4, 331)
+        Me.btnOK.Location = New System.Drawing.Point(738, 328)
         Me.btnOK.Name = "btnOK"
         Me.btnOK.Size = New System.Drawing.Size(78, 23)
         Me.btnOK.TabIndex = 8
@@ -67,7 +68,7 @@ Partial Class FormPolarCurve
         'btnRemoveFamily
         '
         Me.btnRemoveFamily.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.btnRemoveFamily.Location = New System.Drawing.Point(4, 237)
+        Me.btnRemoveFamily.Location = New System.Drawing.Point(4, 262)
         Me.btnRemoveFamily.Name = "btnRemoveFamily"
         Me.btnRemoveFamily.Size = New System.Drawing.Size(78, 24)
         Me.btnRemoveFamily.TabIndex = 9
@@ -84,7 +85,7 @@ Partial Class FormPolarCurve
         '
         'btnSavePolarDB
         '
-        Me.btnSavePolarDB.Location = New System.Drawing.Point(88, 212)
+        Me.btnSavePolarDB.Location = New System.Drawing.Point(88, 237)
         Me.btnSavePolarDB.Name = "btnSavePolarDB"
         Me.btnSavePolarDB.Size = New System.Drawing.Size(78, 24)
         Me.btnSavePolarDB.TabIndex = 11
@@ -97,7 +98,7 @@ Partial Class FormPolarCurve
         '
         'bnLoadPolarDB
         '
-        Me.bnLoadPolarDB.Location = New System.Drawing.Point(88, 237)
+        Me.bnLoadPolarDB.Location = New System.Drawing.Point(88, 262)
         Me.bnLoadPolarDB.Name = "bnLoadPolarDB"
         Me.bnLoadPolarDB.Size = New System.Drawing.Size(78, 24)
         Me.bnLoadPolarDB.TabIndex = 12
@@ -128,7 +129,7 @@ Partial Class FormPolarCurve
         'btnRemovePolar
         '
         Me.btnRemovePolar.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.btnRemovePolar.Location = New System.Drawing.Point(172, 267)
+        Me.btnRemovePolar.Location = New System.Drawing.Point(172, 262)
         Me.btnRemovePolar.Name = "btnRemovePolar"
         Me.btnRemovePolar.Size = New System.Drawing.Size(78, 24)
         Me.btnRemovePolar.TabIndex = 16
@@ -166,12 +167,20 @@ Partial Class FormPolarCurve
         Me.btnAddCustom.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.btnAddCustom.UseVisualStyleBackColor = True
         '
+        'tbxFamilyName
+        '
+        Me.tbxFamilyName.Location = New System.Drawing.Point(4, 212)
+        Me.tbxFamilyName.Name = "tbxFamilyName"
+        Me.tbxFamilyName.Size = New System.Drawing.Size(162, 22)
+        Me.tbxFamilyName.TabIndex = 19
+        '
         'FormPolarCurve
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.White
         Me.ClientSize = New System.Drawing.Size(828, 357)
+        Me.Controls.Add(Me.tbxFamilyName)
         Me.Controls.Add(Me.btnAddCustom)
         Me.Controls.Add(Me.lblPolars)
         Me.Controls.Add(Me.btnRemovePolar)
@@ -210,4 +219,5 @@ Partial Class FormPolarCurve
     Friend WithEvents btnAddQuadratic As System.Windows.Forms.Button
     Friend WithEvents lblPolars As System.Windows.Forms.Label
     Friend WithEvents btnAddCustom As System.Windows.Forms.Button
+    Friend WithEvents tbxFamilyName As Windows.Forms.TextBox
 End Class

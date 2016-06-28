@@ -43,7 +43,7 @@ Namespace VisualModel.Interface
 
         Public Property FilePath As String = ""
         Public Property SimulationSettings As New SimulationSettings
-        Public Property Model As GeometricModel
+        Public Property Model As DesignModel
         Public Property Results As New ResultModel
         Public Property VelocityPlane As New VelocityPlane
         Public Property CalculationCore As UVLMSolver
@@ -52,7 +52,7 @@ Namespace VisualModel.Interface
 
             ControlGL = New OpenGL
 
-            Model = New VisualModel.Models.GeometricModel
+            Model = New VisualModel.Models.DesignModel
 
             SimulationSettings.InitializaParameters()
 

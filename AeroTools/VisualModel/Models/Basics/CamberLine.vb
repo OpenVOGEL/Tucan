@@ -16,6 +16,7 @@
 'along with this program.  If Not, see < http:  //www.gnu.org/licenses/>.
 
 Imports System.Xml
+Imports AeroTools.VisualModel.IO
 Imports MathTools.Algebra.EuclideanSpace
 
 Namespace VisualModel.Models.Basics
@@ -137,24 +138,66 @@ Namespace VisualModel.Models.Basics
 
         Public Sub WriteToXML(writer As XmlWriter)
 
+            writer.WriteStartElement("Identity")
+            writer.WriteAttributeString("Name", Name)
+            writer.WriteAttributeString("ID", ID.ToString)
+            writer.WriteEndElement()
+
+            For Each node In Nodes
+
+                writer.WriteStartElement("Node")
+
+                writer.WriteAttributeString("X", node.X)
+                writer.WriteAttributeString("Y", node.Y)
+
+                writer.WriteEndElement()
+
+            Next
+
         End Sub
 
         Public Sub ReadFromXML(reader As XmlReader)
+
+            Nodes.Clear()
+
+            While reader.Read
+
+                If Not reader.NodeType = XmlNodeType.Element Then Continue While
+
+                Select Case reader.Name
+
+                    Case "Identity"
+
+                        Name = reader.GetAttribute("Name")
+                        ID = New Guid(IOXML.ReadString(reader, "ID", Guid.NewGuid.ToString))
+
+                    Case "Node"
+
+                        Dim x As Double = IOXML.ReadDouble(reader, "X", 0.0)
+                        Dim y As Double = IOXML.ReadDouble(reader, "Y", 0.0)
+
+                        Nodes.Add(New EVector2(x, y))
+
+                End Select
+
+            End While
 
         End Sub
 
     End Class
 
-    Public Module CamberLineDatabase
+    Public Module CamberLinesDatabase
 
         Public CamberLines As New List(Of CamberLine)
 
         Public Sub InitializeCamberLinesDatabase()
+
             CamberLines.Clear()
             Dim symmetric As New CamberLine
             symmetric.Name = "Symmetric"
             CamberLines.Add(symmetric)
             CamberLines(0).ID = Guid.Empty
+
         End Sub
 
         Public Function GetCamberLineFromID(ID As Guid) As CamberLine
@@ -174,6 +217,44 @@ Namespace VisualModel.Models.Basics
             End If
 
         End Function
+
+        Public Sub WriteToXML(writer As XmlWriter)
+
+            For Each line In CamberLines
+
+                writer.WriteStartElement("CamberLine")
+
+                line.WriteToXML(writer)
+
+                writer.WriteEndElement()
+
+            Next
+
+        End Sub
+
+        Public Sub ReadFromXML(reader As XmlReader)
+
+            CamberLines.Clear()
+
+            While reader.Read
+
+                If Not reader.NodeType = XmlNodeType.Element Then Continue While
+
+                Select Case reader.Name
+
+                    Case "CamberLine"
+
+                        Dim line As New CamberLine()
+
+                        line.ReadFromXML(reader.ReadSubtree())
+
+                        CamberLines.Add(line)
+
+                End Select
+
+            End While
+
+        End Sub
 
     End Module
 

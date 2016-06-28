@@ -31,7 +31,7 @@ Namespace CalculationModel.Solver
             Settings = New SimulationSettings
         End Sub
 
-        Public Sub New(ByVal Model As VisualModel.Models.GeometricModel, ByVal Simulation As SimulationSettings, Optional ByVal GenerateStructure As Boolean = False)
+        Public Sub New(ByVal Model As VisualModel.Models.DesignModel, ByVal Simulation As SimulationSettings, Optional ByVal GenerateStructure As Boolean = False)
             Lattices = New List(Of BoundedLattice)
             Settings = New SimulationSettings
             Settings.Assign(Simulation)

@@ -66,7 +66,7 @@ Partial Class WingControl
         Me.btnAddPanel = New System.Windows.Forms.Button()
         Me.btnDeletePanel = New System.Windows.Forms.Button()
         Me.btnInsertPanel = New System.Windows.Forms.Button()
-        Me.SectorActualNumericUpDown = New System.Windows.Forms.NumericUpDown()
+        Me.nudSelectRegion = New System.Windows.Forms.NumericUpDown()
         Me.tcMacroPanelProperties = New System.Windows.Forms.TabControl()
         Me.TabPage6 = New System.Windows.Forms.TabPage()
         Me.SimetriaEnXZ = New System.Windows.Forms.CheckBox()
@@ -97,6 +97,8 @@ Partial Class WingControl
         Me.Label17 = New System.Windows.Forms.Label()
         Me.Label12 = New System.Windows.Forms.Label()
         Me.TabPage7 = New System.Windows.Forms.TabPage()
+        Me.lblPolarName = New System.Windows.Forms.Label()
+        Me.lblCamberLineName = New System.Windows.Forms.Label()
         Me.btnCamberLines = New System.Windows.Forms.Button()
         Me.Label23 = New System.Windows.Forms.Label()
         Me.btnPolarCurves = New System.Windows.Forms.Button()
@@ -178,7 +180,7 @@ Partial Class WingControl
         CType(Me.nud_Root_J, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.nud_Root_m, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.nudCMyRoot, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.SectorActualNumericUpDown, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.nudSelectRegion, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.tcMacroPanelProperties.SuspendLayout()
         Me.TabPage6.SuspendLayout()
         Me.PanelEspaciamiento.SuspendLayout()
@@ -266,7 +268,7 @@ Partial Class WingControl
         Me.tbDesign.Controls.Add(Me.btnAddPanel)
         Me.tbDesign.Controls.Add(Me.btnDeletePanel)
         Me.tbDesign.Controls.Add(Me.btnInsertPanel)
-        Me.tbDesign.Controls.Add(Me.SectorActualNumericUpDown)
+        Me.tbDesign.Controls.Add(Me.nudSelectRegion)
         Me.tbDesign.Controls.Add(Me.tcMacroPanelProperties)
         Me.tbDesign.Controls.Add(Me.Label4)
         Me.tbDesign.Location = New System.Drawing.Point(4, 22)
@@ -779,18 +781,18 @@ Partial Class WingControl
         Me.btnInsertPanel.Text = "Insert"
         Me.btnInsertPanel.UseVisualStyleBackColor = False
         '
-        'SectorActualNumericUpDown
+        'nudSelectRegion
         '
-        Me.SectorActualNumericUpDown.Font = New System.Drawing.Font("Segoe UI", 8.25!)
-        Me.SectorActualNumericUpDown.ForeColor = System.Drawing.Color.Black
-        Me.SectorActualNumericUpDown.Location = New System.Drawing.Point(57, 166)
-        Me.SectorActualNumericUpDown.Maximum = New Decimal(New Integer() {10, 0, 0, 0})
-        Me.SectorActualNumericUpDown.Minimum = New Decimal(New Integer() {1, 0, 0, 0})
-        Me.SectorActualNumericUpDown.Name = "SectorActualNumericUpDown"
-        Me.SectorActualNumericUpDown.Size = New System.Drawing.Size(65, 22)
-        Me.SectorActualNumericUpDown.TabIndex = 51
-        Me.SectorActualNumericUpDown.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        Me.SectorActualNumericUpDown.Value = New Decimal(New Integer() {1, 0, 0, 0})
+        Me.nudSelectRegion.Font = New System.Drawing.Font("Segoe UI", 8.25!)
+        Me.nudSelectRegion.ForeColor = System.Drawing.Color.Black
+        Me.nudSelectRegion.Location = New System.Drawing.Point(57, 166)
+        Me.nudSelectRegion.Maximum = New Decimal(New Integer() {10, 0, 0, 0})
+        Me.nudSelectRegion.Minimum = New Decimal(New Integer() {1, 0, 0, 0})
+        Me.nudSelectRegion.Name = "nudSelectRegion"
+        Me.nudSelectRegion.Size = New System.Drawing.Size(65, 22)
+        Me.nudSelectRegion.TabIndex = 51
+        Me.nudSelectRegion.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.nudSelectRegion.Value = New Decimal(New Integer() {1, 0, 0, 0})
         '
         'tcMacroPanelProperties
         '
@@ -1148,6 +1150,8 @@ Partial Class WingControl
         'TabPage7
         '
         Me.TabPage7.BackColor = System.Drawing.Color.White
+        Me.TabPage7.Controls.Add(Me.lblPolarName)
+        Me.TabPage7.Controls.Add(Me.lblCamberLineName)
         Me.TabPage7.Controls.Add(Me.btnCamberLines)
         Me.TabPage7.Controls.Add(Me.Label23)
         Me.TabPage7.Controls.Add(Me.btnPolarCurves)
@@ -1160,6 +1164,28 @@ Partial Class WingControl
         Me.TabPage7.TabIndex = 1
         Me.TabPage7.Text = "Profile"
         '
+        'lblPolarName
+        '
+        Me.lblPolarName.AutoEllipsis = True
+        Me.lblPolarName.Font = New System.Drawing.Font("Segoe UI", 8.25!)
+        Me.lblPolarName.ImeMode = System.Windows.Forms.ImeMode.NoControl
+        Me.lblPolarName.Location = New System.Drawing.Point(85, 13)
+        Me.lblPolarName.Name = "lblPolarName"
+        Me.lblPolarName.Size = New System.Drawing.Size(183, 13)
+        Me.lblPolarName.TabIndex = 45
+        Me.lblPolarName.Text = "MyPolarCurve"
+        '
+        'lblCamberLineName
+        '
+        Me.lblCamberLineName.AutoEllipsis = True
+        Me.lblCamberLineName.Font = New System.Drawing.Font("Segoe UI", 8.25!)
+        Me.lblCamberLineName.ImeMode = System.Windows.Forms.ImeMode.NoControl
+        Me.lblCamberLineName.Location = New System.Drawing.Point(85, 69)
+        Me.lblCamberLineName.Name = "lblCamberLineName"
+        Me.lblCamberLineName.Size = New System.Drawing.Size(183, 13)
+        Me.lblCamberLineName.TabIndex = 44
+        Me.lblCamberLineName.Text = "MyCamberLine"
+        '
         'btnCamberLines
         '
         Me.btnCamberLines.FlatAppearance.BorderColor = System.Drawing.Color.Silver
@@ -1167,7 +1193,7 @@ Partial Class WingControl
         Me.btnCamberLines.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DeepSkyBlue
         Me.btnCamberLines.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.btnCamberLines.Font = New System.Drawing.Font("Segoe UI", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnCamberLines.Location = New System.Drawing.Point(196, 8)
+        Me.btnCamberLines.Location = New System.Drawing.Point(10, 89)
         Me.btnCamberLines.Margin = New System.Windows.Forms.Padding(0)
         Me.btnCamberLines.Name = "btnCamberLines"
         Me.btnCamberLines.Size = New System.Drawing.Size(72, 22)
@@ -1180,7 +1206,7 @@ Partial Class WingControl
         Me.Label23.AutoSize = True
         Me.Label23.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label23.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.Label23.Location = New System.Drawing.Point(7, 12)
+        Me.Label23.Location = New System.Drawing.Point(7, 69)
         Me.Label23.Name = "Label23"
         Me.Label23.Size = New System.Drawing.Size(72, 13)
         Me.Label23.TabIndex = 42
@@ -1193,7 +1219,7 @@ Partial Class WingControl
         Me.btnPolarCurves.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DeepSkyBlue
         Me.btnPolarCurves.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.btnPolarCurves.Font = New System.Drawing.Font("Segoe UI", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnPolarCurves.Location = New System.Drawing.Point(196, 142)
+        Me.btnPolarCurves.Location = New System.Drawing.Point(10, 36)
         Me.btnPolarCurves.Margin = New System.Windows.Forms.Padding(0)
         Me.btnPolarCurves.Name = "btnPolarCurves"
         Me.btnPolarCurves.Size = New System.Drawing.Size(72, 22)
@@ -1206,20 +1232,20 @@ Partial Class WingControl
         Me.Label72.AutoSize = True
         Me.Label72.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label72.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.Label72.Location = New System.Drawing.Point(7, 146)
+        Me.Label72.Location = New System.Drawing.Point(7, 13)
         Me.Label72.Name = "Label72"
-        Me.Label72.Size = New System.Drawing.Size(68, 13)
+        Me.Label72.Size = New System.Drawing.Size(72, 13)
         Me.Label72.TabIndex = 40
-        Me.Label72.Text = "Polar curve:"
+        Me.Label72.Text = "Polar family:"
         '
         'pbProfileSketch
         '
         Me.pbProfileSketch.BackColor = System.Drawing.Color.White
         Me.pbProfileSketch.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.pbProfileSketch.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.pbProfileSketch.Location = New System.Drawing.Point(6, 37)
+        Me.pbProfileSketch.Location = New System.Drawing.Point(10, 119)
         Me.pbProfileSketch.Name = "pbProfileSketch"
-        Me.pbProfileSketch.Size = New System.Drawing.Size(262, 99)
+        Me.pbProfileSketch.Size = New System.Drawing.Size(262, 77)
         Me.pbProfileSketch.TabIndex = 29
         Me.pbProfileSketch.TabStop = False
         '
@@ -1937,7 +1963,7 @@ Partial Class WingControl
         Me.btnOk.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnOk.Location = New System.Drawing.Point(229, 575)
         Me.btnOk.Name = "btnOk"
-        Me.btnOk.Size = New System.Drawing.Size(72, 22)
+        Me.btnOk.Size = New System.Drawing.Size(72, 23)
         Me.btnOk.TabIndex = 70
         Me.btnOk.Text = "Close"
         Me.btnOk.UseVisualStyleBackColor = False
@@ -1974,7 +2000,7 @@ Partial Class WingControl
         CType(Me.nud_Root_J, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.nud_Root_m, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.nudCMyRoot, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.SectorActualNumericUpDown, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.nudSelectRegion, System.ComponentModel.ISupportInitialize).EndInit()
         Me.tcMacroPanelProperties.ResumeLayout(False)
         Me.TabPage6.ResumeLayout(False)
         Me.TabPage6.PerformLayout()
@@ -2026,7 +2052,7 @@ Partial Class WingControl
     Friend WithEvents NPCuerda_Box As System.Windows.Forms.NumericUpDown
     Friend WithEvents btnDeletePanel As System.Windows.Forms.Button
     Friend WithEvents btnInsertPanel As System.Windows.Forms.Button
-    Friend WithEvents SectorActualNumericUpDown As System.Windows.Forms.NumericUpDown
+    Friend WithEvents nudSelectRegion As System.Windows.Forms.NumericUpDown
     Friend WithEvents tcMacroPanelProperties As System.Windows.Forms.TabControl
     Friend WithEvents TabPage6 As System.Windows.Forms.TabPage
     Friend WithEvents SimetriaEnXZ As System.Windows.Forms.CheckBox
@@ -2157,4 +2183,6 @@ Partial Class WingControl
     Friend WithEvents tpIntertia As System.Windows.Forms.TabPage
     Friend WithEvents btnCamberLines As Windows.Forms.Button
     Friend WithEvents Label23 As Windows.Forms.Label
+    Friend WithEvents lblPolarName As Windows.Forms.Label
+    Friend WithEvents lblCamberLineName As Windows.Forms.Label
 End Class

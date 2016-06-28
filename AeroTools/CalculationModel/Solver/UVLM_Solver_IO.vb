@@ -39,7 +39,7 @@ Namespace CalculationModel.Solver
         ''' <param name="Model">Model to be transferred</param>
         ''' <param name="GenerateStructure">Indicates if a structural link should be created</param>
         ''' <remarks></remarks>
-        Public Sub GenerateFromExistingModel(ByVal Model As VisualModel.Models.GeometricModel, Optional ByVal GenerateStructure As Boolean = False)
+        Public Sub GenerateFromExistingModel(ByVal Model As VisualModel.Models.DesignModel, Optional ByVal GenerateStructure As Boolean = False)
 
             ' Import polar database:
 

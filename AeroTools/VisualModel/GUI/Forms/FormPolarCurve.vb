@@ -116,6 +116,8 @@ Public Class FormPolarCurve
         QuadraticFrame.Hide()
         CustomFrame.Hide()
 
+        tbxFamilyName.Text = CurrentFamily.Name
+
         LockEvents = False
 
     End Sub
@@ -164,7 +166,7 @@ Public Class FormPolarCurve
                         CustomFrame.Polar = CurrentPolar
                         CustomFrame.Left = Width - CustomFrame.Width - 20
                         CustomFrame.Top = lbPolars.Top
-                        CustomFrame.Height = btnOK.Bottom - CustomFrame.Top
+                        CustomFrame.Height = btnOK.Top - CustomFrame.Top - 5
                         CustomFrame.Show()
 
                         PolarPlotter.Left = lbPolars.Right + 5
@@ -252,6 +254,17 @@ Public Class FormPolarCurve
         If Not IsNothing(CurrentFamily) Then
             CurrentFamily.Polars.Add(New CustomPolar())
             RefreshPolarsList()
+        End If
+
+    End Sub
+
+    Private Sub tbxFamilyName_TextChanged(sender As Object, e As EventArgs) Handles tbxFamilyName.TextChanged
+
+        If Not LockEvents AndAlso CurrentFamily IsNot Nothing Then
+
+            CurrentFamily.Name = tbxFamilyName.Text
+            RefreshFamilyList()
+
         End If
 
     End Sub

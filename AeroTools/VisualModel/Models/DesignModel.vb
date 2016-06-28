@@ -23,7 +23,7 @@ Imports AeroTools.CalculationModel.Models.Aero.Components
 
 Namespace VisualModel.Models
 
-    Public Class GeometricModel
+    Public Class DesignModel
 
         ''' <summary>
         ''' Project name.
@@ -148,6 +148,10 @@ Namespace VisualModel.Models
 
                         PolarDataBase.ReadFromXML(reader.ReadSubtree())
 
+                    Case "CamberLinesDatabase"
+
+                        CamberLinesDatabase.ReadFromXML(reader.ReadSubtree())
+
                     Case "ModelProperties"
 
                         Dim SubReader As XmlReader = reader.ReadSubtree()
@@ -217,6 +221,10 @@ Namespace VisualModel.Models
 
             writer.WriteStartElement("PolarDataBase")
             PolarDataBase.WriteToXML(writer)
+            writer.WriteEndElement()
+
+            writer.WriteStartElement("CamberLinesDatabase")
+            CamberLinesDatabase.WriteToXML(writer)
             writer.WriteEndElement()
 
             writer.WriteStartElement("ModelProperties")

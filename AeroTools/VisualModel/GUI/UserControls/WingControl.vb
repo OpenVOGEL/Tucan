@@ -80,7 +80,7 @@ Public Class WingControl
 
     Private Sub PointToCurrentRegion()
 
-        Surface.CurrentRegionID = Me.SectorActualNumericUpDown.Value
+        Surface.CurrentRegionID = Me.nudSelectRegion.Value
 
     End Sub
 
@@ -163,9 +163,9 @@ Public Class WingControl
 
         SurfaceNameText.Text = Surface.Name
 
-        SectorActualNumericUpDown.Maximum = Surface.WingRegions.Count
-        SectorActualNumericUpDown.Minimum = 1
-        SectorActualNumericUpDown.Value = Surface.CurrentRegionID
+        nudSelectRegion.Maximum = Surface.WingRegions.Count
+        nudSelectRegion.Minimum = 1
+        nudSelectRegion.Value = Surface.CurrentRegionID
 
         CuerdaRaiz_box.Value = Surface.RootChord
         nudRootFlap.Value = Surface.RootFlap
@@ -239,6 +239,18 @@ Public Class WingControl
         nudCMy.Value = Surface.CurrentRegion.TipSection.CMy
         nudCMz.Value = Surface.CurrentRegion.TipSection.CMz
 
+        Dim camber As CamberLine = CamberLinesDatabase.GetCamberLineFromID(Surface.CurrentRegion.CamberLineID)
+
+        If camber IsNot Nothing Then
+            lblCamberLineName.Text = camber.Name
+        End If
+
+        Dim polar As PolarFamily = PolarDataBase.GetFamilyFromID(Surface.CurrentRegion.PolarID)
+
+        If polar IsNot Nothing Then
+            lblPolarName.Text = polar.Name
+        End If
+
         pbProfileSketch.Refresh()
 
         Ready = True
@@ -247,10 +259,14 @@ Public Class WingControl
 
 #Region " Macro paneles "
 
-    Private Sub ChangeRegion(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles SectorActualNumericUpDown.ValueChanged
+    Private Sub nudSelectRegion_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles nudSelectRegion.ValueChanged
+
         If Not Ready Then Exit Sub
+
         PointToCurrentRegion()
+
         LoadRegionToForm()
+
     End Sub
 
     Private Sub AgregarMacroPanel_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnAddPanel.Click
@@ -262,9 +278,9 @@ Public Class WingControl
         Surface.AddRegion()
 
         Ready = False
-        SectorActualNumericUpDown.Maximum = Surface.WingRegions.Count
-        SectorActualNumericUpDown.Minimum = 1
-        SectorActualNumericUpDown.Value = Surface.CurrentRegionID
+        nudSelectRegion.Maximum = Surface.WingRegions.Count
+        nudSelectRegion.Minimum = 1
+        nudSelectRegion.Value = Surface.CurrentRegionID
         NSectores_box.Value = Surface.WingRegions.Count
         Ready = True
 
@@ -285,9 +301,9 @@ Public Class WingControl
         Surface.InsertRegion()
 
         Ready = False
-        Me.SectorActualNumericUpDown.Maximum = Surface.WingRegions.Count
-        Me.SectorActualNumericUpDown.Minimum = 1
-        Me.SectorActualNumericUpDown.Value = Surface.CurrentRegionID
+        Me.nudSelectRegion.Maximum = Surface.WingRegions.Count
+        Me.nudSelectRegion.Minimum = 1
+        Me.nudSelectRegion.Value = Surface.CurrentRegionID
         Ready = True
 
         LoadRegionToForm()
@@ -788,6 +804,7 @@ Public Class WingControl
                     Surface.CurrentRegion.PolarID = form.SelectedFamilyID
                 End If
             End If
+            LoadRegionToForm()
         End If
 
     End Sub
@@ -829,6 +846,8 @@ Public Class WingControl
                     Surface.GenerateMesh()
                     RaiseEvent RefreshGL()
             End Select
+
+            LoadRegionToForm()
 
         End If
 

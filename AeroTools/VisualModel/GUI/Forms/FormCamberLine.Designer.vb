@@ -26,28 +26,28 @@ Partial Class FormCamberLine
         Me.lblCamberLines = New System.Windows.Forms.Label()
         Me.btnAdd = New System.Windows.Forms.Button()
         Me.btnRemove = New System.Windows.Forms.Button()
-        Me.btnOK = New System.Windows.Forms.Button()
         Me.tbxCamberName = New System.Windows.Forms.TextBox()
         Me.btnAddNode = New System.Windows.Forms.Button()
         Me.btnDelNode = New System.Windows.Forms.Button()
         Me.pbPlot = New System.Windows.Forms.PictureBox()
-        Me.GroupBox1 = New System.Windows.Forms.GroupBox()
-        Me.btnGenerateNaca = New System.Windows.Forms.Button()
-        Me.nudXmax = New System.Windows.Forms.NumericUpDown()
-        Me.nudMaxCamber = New System.Windows.Forms.NumericUpDown()
-        Me.Label1 = New System.Windows.Forms.Label()
+        Me.gbxNacaGenerate = New System.Windows.Forms.GroupBox()
         Me.Label2 = New System.Windows.Forms.Label()
-        Me.GroupBox2 = New System.Windows.Forms.GroupBox()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.nudMaxCamber = New System.Windows.Forms.NumericUpDown()
+        Me.nudXmax = New System.Windows.Forms.NumericUpDown()
+        Me.btnGenerateNaca = New System.Windows.Forms.Button()
+        Me.gbxNode = New System.Windows.Forms.GroupBox()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.Label4 = New System.Windows.Forms.Label()
         Me.nudX = New System.Windows.Forms.NumericUpDown()
         Me.nudY = New System.Windows.Forms.NumericUpDown()
         Me.btnImportTable = New System.Windows.Forms.Button()
+        Me.btnOK = New System.Windows.Forms.Button()
         CType(Me.pbPlot, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.GroupBox1.SuspendLayout()
-        CType(Me.nudXmax, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.gbxNacaGenerate.SuspendLayout()
         CType(Me.nudMaxCamber, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.GroupBox2.SuspendLayout()
+        CType(Me.nudXmax, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.gbxNode.SuspendLayout()
         CType(Me.nudX, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.nudY, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -87,16 +87,6 @@ Partial Class FormCamberLine
         Me.btnRemove.Text = "Remove"
         Me.btnRemove.UseVisualStyleBackColor = True
         '
-        'btnOK
-        '
-        Me.btnOK.DialogResult = System.Windows.Forms.DialogResult.OK
-        Me.btnOK.Location = New System.Drawing.Point(292, 394)
-        Me.btnOK.Name = "btnOK"
-        Me.btnOK.Size = New System.Drawing.Size(75, 23)
-        Me.btnOK.TabIndex = 5
-        Me.btnOK.Text = "OK"
-        Me.btnOK.UseVisualStyleBackColor = True
-        '
         'tbxCamberName
         '
         Me.tbxCamberName.Location = New System.Drawing.Point(12, 136)
@@ -130,40 +120,37 @@ Partial Class FormCamberLine
         Me.pbPlot.TabIndex = 11
         Me.pbPlot.TabStop = False
         '
-        'GroupBox1
+        'gbxNacaGenerate
         '
-        Me.GroupBox1.Controls.Add(Me.Label2)
-        Me.GroupBox1.Controls.Add(Me.Label1)
-        Me.GroupBox1.Controls.Add(Me.nudMaxCamber)
-        Me.GroupBox1.Controls.Add(Me.nudXmax)
-        Me.GroupBox1.Controls.Add(Me.btnGenerateNaca)
-        Me.GroupBox1.Location = New System.Drawing.Point(12, 333)
-        Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Size = New System.Drawing.Size(361, 55)
-        Me.GroupBox1.TabIndex = 12
-        Me.GroupBox1.TabStop = False
-        Me.GroupBox1.Text = "NACA camber line generator"
+        Me.gbxNacaGenerate.Controls.Add(Me.Label2)
+        Me.gbxNacaGenerate.Controls.Add(Me.Label1)
+        Me.gbxNacaGenerate.Controls.Add(Me.nudMaxCamber)
+        Me.gbxNacaGenerate.Controls.Add(Me.nudXmax)
+        Me.gbxNacaGenerate.Controls.Add(Me.btnGenerateNaca)
+        Me.gbxNacaGenerate.Location = New System.Drawing.Point(12, 333)
+        Me.gbxNacaGenerate.Name = "gbxNacaGenerate"
+        Me.gbxNacaGenerate.Size = New System.Drawing.Size(361, 55)
+        Me.gbxNacaGenerate.TabIndex = 12
+        Me.gbxNacaGenerate.TabStop = False
+        Me.gbxNacaGenerate.Text = "NACA camber line generator"
         '
-        'btnGenerateNaca
+        'Label2
         '
-        Me.btnGenerateNaca.Location = New System.Drawing.Point(280, 24)
-        Me.btnGenerateNaca.Name = "btnGenerateNaca"
-        Me.btnGenerateNaca.Size = New System.Drawing.Size(75, 23)
-        Me.btnGenerateNaca.TabIndex = 6
-        Me.btnGenerateNaca.Text = "Generate"
-        Me.btnGenerateNaca.UseVisualStyleBackColor = True
+        Me.Label2.AutoSize = True
+        Me.Label2.Location = New System.Drawing.Point(129, 28)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(26, 13)
+        Me.Label2.TabIndex = 15
+        Me.Label2.Text = "x/C:"
         '
-        'nudXmax
+        'Label1
         '
-        Me.nudXmax.DecimalPlaces = 3
-        Me.nudXmax.Increment = New Decimal(New Integer() {1, 0, 0, 131072})
-        Me.nudXmax.Location = New System.Drawing.Point(159, 24)
-        Me.nudXmax.Maximum = New Decimal(New Integer() {1, 0, 0, 0})
-        Me.nudXmax.Minimum = New Decimal(New Integer() {1, 0, 0, -2147483648})
-        Me.nudXmax.Name = "nudXmax"
-        Me.nudXmax.Size = New System.Drawing.Size(71, 22)
-        Me.nudXmax.TabIndex = 13
-        Me.nudXmax.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.Label1.AutoSize = True
+        Me.Label1.Location = New System.Drawing.Point(8, 28)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(27, 13)
+        Me.Label1.TabIndex = 13
+        Me.Label1.Text = "e/C:"
         '
         'nudMaxCamber
         '
@@ -177,37 +164,40 @@ Partial Class FormCamberLine
         Me.nudMaxCamber.TabIndex = 14
         Me.nudMaxCamber.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
-        'Label1
+        'nudXmax
         '
-        Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(8, 28)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(27, 13)
-        Me.Label1.TabIndex = 13
-        Me.Label1.Text = "e/C:"
+        Me.nudXmax.DecimalPlaces = 3
+        Me.nudXmax.Increment = New Decimal(New Integer() {1, 0, 0, 131072})
+        Me.nudXmax.Location = New System.Drawing.Point(159, 24)
+        Me.nudXmax.Maximum = New Decimal(New Integer() {1, 0, 0, 0})
+        Me.nudXmax.Minimum = New Decimal(New Integer() {1, 0, 0, -2147483648})
+        Me.nudXmax.Name = "nudXmax"
+        Me.nudXmax.Size = New System.Drawing.Size(71, 22)
+        Me.nudXmax.TabIndex = 13
+        Me.nudXmax.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
-        'Label2
+        'btnGenerateNaca
         '
-        Me.Label2.AutoSize = True
-        Me.Label2.Location = New System.Drawing.Point(129, 28)
-        Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(26, 13)
-        Me.Label2.TabIndex = 15
-        Me.Label2.Text = "x/C:"
+        Me.btnGenerateNaca.Location = New System.Drawing.Point(280, 24)
+        Me.btnGenerateNaca.Name = "btnGenerateNaca"
+        Me.btnGenerateNaca.Size = New System.Drawing.Size(75, 23)
+        Me.btnGenerateNaca.TabIndex = 6
+        Me.btnGenerateNaca.Text = "Generate"
+        Me.btnGenerateNaca.UseVisualStyleBackColor = True
         '
-        'GroupBox2
+        'gbxNode
         '
-        Me.GroupBox2.Controls.Add(Me.Label3)
-        Me.GroupBox2.Controls.Add(Me.Label4)
-        Me.GroupBox2.Controls.Add(Me.nudX)
-        Me.GroupBox2.Controls.Add(Me.nudY)
-        Me.GroupBox2.Controls.Add(Me.btnImportTable)
-        Me.GroupBox2.Location = New System.Drawing.Point(12, 269)
-        Me.GroupBox2.Name = "GroupBox2"
-        Me.GroupBox2.Size = New System.Drawing.Size(361, 55)
-        Me.GroupBox2.TabIndex = 13
-        Me.GroupBox2.TabStop = False
-        Me.GroupBox2.Text = "Node"
+        Me.gbxNode.Controls.Add(Me.Label3)
+        Me.gbxNode.Controls.Add(Me.Label4)
+        Me.gbxNode.Controls.Add(Me.nudX)
+        Me.gbxNode.Controls.Add(Me.nudY)
+        Me.gbxNode.Controls.Add(Me.btnImportTable)
+        Me.gbxNode.Location = New System.Drawing.Point(12, 269)
+        Me.gbxNode.Name = "gbxNode"
+        Me.gbxNode.Size = New System.Drawing.Size(361, 55)
+        Me.gbxNode.TabIndex = 13
+        Me.gbxNode.TabStop = False
+        Me.gbxNode.Text = "Node"
         '
         'Label3
         '
@@ -261,18 +251,35 @@ Partial Class FormCamberLine
         Me.btnImportTable.Text = "Import tbl"
         Me.btnImportTable.UseVisualStyleBackColor = True
         '
+        'btnOK
+        '
+        Me.btnOK.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.btnOK.DialogResult = System.Windows.Forms.DialogResult.OK
+        Me.btnOK.FlatAppearance.BorderColor = System.Drawing.Color.Gray
+        Me.btnOK.FlatAppearance.MouseDownBackColor = System.Drawing.Color.PaleGreen
+        Me.btnOK.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DeepSkyBlue
+        Me.btnOK.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnOK.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.btnOK.Location = New System.Drawing.Point(295, 394)
+        Me.btnOK.Name = "btnOK"
+        Me.btnOK.Size = New System.Drawing.Size(78, 23)
+        Me.btnOK.TabIndex = 14
+        Me.btnOK.Text = "OK"
+        Me.btnOK.UseVisualStyleBackColor = True
+        '
         'FormCamberLine
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.BackColor = System.Drawing.SystemColors.Control
         Me.ClientSize = New System.Drawing.Size(380, 426)
-        Me.Controls.Add(Me.GroupBox2)
-        Me.Controls.Add(Me.GroupBox1)
+        Me.Controls.Add(Me.btnOK)
+        Me.Controls.Add(Me.gbxNode)
+        Me.Controls.Add(Me.gbxNacaGenerate)
         Me.Controls.Add(Me.pbPlot)
         Me.Controls.Add(Me.btnDelNode)
         Me.Controls.Add(Me.btnAddNode)
         Me.Controls.Add(Me.tbxCamberName)
-        Me.Controls.Add(Me.btnOK)
         Me.Controls.Add(Me.btnRemove)
         Me.Controls.Add(Me.btnAdd)
         Me.Controls.Add(Me.lblCamberLines)
@@ -285,12 +292,12 @@ Partial Class FormCamberLine
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
         Me.Text = "Camber lines data base"
         CType(Me.pbPlot, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.GroupBox1.ResumeLayout(False)
-        Me.GroupBox1.PerformLayout()
-        CType(Me.nudXmax, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.gbxNacaGenerate.ResumeLayout(False)
+        Me.gbxNacaGenerate.PerformLayout()
         CType(Me.nudMaxCamber, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.GroupBox2.ResumeLayout(False)
-        Me.GroupBox2.PerformLayout()
+        CType(Me.nudXmax, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.gbxNode.ResumeLayout(False)
+        Me.gbxNode.PerformLayout()
         CType(Me.nudX, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.nudY, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
@@ -302,21 +309,21 @@ Partial Class FormCamberLine
     Friend WithEvents lblCamberLines As Windows.Forms.Label
     Friend WithEvents btnAdd As Windows.Forms.Button
     Friend WithEvents btnRemove As Windows.Forms.Button
-    Friend WithEvents btnOK As Windows.Forms.Button
     Friend WithEvents tbxCamberName As Windows.Forms.TextBox
     Friend WithEvents btnAddNode As Windows.Forms.Button
     Friend WithEvents btnDelNode As Windows.Forms.Button
     Friend WithEvents pbPlot As Windows.Forms.PictureBox
-    Friend WithEvents GroupBox1 As Windows.Forms.GroupBox
+    Friend WithEvents gbxNacaGenerate As Windows.Forms.GroupBox
     Friend WithEvents Label2 As Windows.Forms.Label
     Friend WithEvents Label1 As Windows.Forms.Label
     Friend WithEvents nudMaxCamber As Windows.Forms.NumericUpDown
     Friend WithEvents nudXmax As Windows.Forms.NumericUpDown
     Friend WithEvents btnGenerateNaca As Windows.Forms.Button
-    Friend WithEvents GroupBox2 As Windows.Forms.GroupBox
+    Friend WithEvents gbxNode As Windows.Forms.GroupBox
     Friend WithEvents Label3 As Windows.Forms.Label
     Friend WithEvents Label4 As Windows.Forms.Label
     Friend WithEvents nudX As Windows.Forms.NumericUpDown
     Friend WithEvents nudY As Windows.Forms.NumericUpDown
     Friend WithEvents btnImportTable As Windows.Forms.Button
+    Friend WithEvents btnOK As Windows.Forms.Button
 End Class

@@ -31,10 +31,10 @@ Public Class FormCamberLine
 
         Dim selectedIndex As Integer = -1
 
-        For i = 0 To CamberLineDatabase.CamberLines.Count - 1
+        For i = 0 To CamberLinesDatabase.CamberLines.Count - 1
 
-            lbLines.Items.Add(CamberLineDatabase.CamberLines(i).Name)
-            If (CamberLineDatabase.CamberLines(i).ID.Equals(_SelectedCamberID)) Then selectedIndex = i
+            lbLines.Items.Add(CamberLinesDatabase.CamberLines(i).Name)
+            If (CamberLinesDatabase.CamberLines(i).ID.Equals(_SelectedCamberID)) Then selectedIndex = i
 
         Next
 
@@ -49,7 +49,7 @@ Public Class FormCamberLine
         newLine.Name = "NACA 2400"
         newLine.ID = Guid.NewGuid()
 
-        CamberLineDatabase.CamberLines.Add(newLine)
+        CamberLinesDatabase.CamberLines.Add(newLine)
 
         RefreshList()
 
@@ -57,15 +57,24 @@ Public Class FormCamberLine
 
     Private Sub lbLines_SelectedIndexChanged(sender As Object, e As EventArgs) Handles lbLines.SelectedIndexChanged
 
-        If lbLines.SelectedIndex > 0 AndAlso lbLines.SelectedIndex < CamberLineDatabase.CamberLines.Count Then
+        If lbLines.SelectedIndex >= 0 AndAlso lbLines.SelectedIndex < CamberLinesDatabase.CamberLines.Count Then
 
-            _SelectedCamberID = CamberLineDatabase.CamberLines(lbLines.SelectedIndex).ID
+            _SelectedCamberID = CamberLinesDatabase.CamberLines(lbLines.SelectedIndex).ID
 
-            tbxCamberName.Text = CamberLineDatabase.CamberLines(lbLines.SelectedIndex).Name
+            tbxCamberName.Text = CamberLinesDatabase.CamberLines(lbLines.SelectedIndex).Name
 
             SelectedPointIndex = -1
 
             pbPlot.Refresh()
+
+            Dim allowEdit As Boolean = Not CamberLinesDatabase.CamberLines(lbLines.SelectedIndex).ID.Equals(Guid.Empty)
+
+            btnRemove.Enabled = allowEdit
+            tbxCamberName.Enabled = allowEdit
+            btnAddNode.Enabled = allowEdit
+            btnDelNode.Enabled = allowEdit
+            gbxNacaGenerate.Enabled = allowEdit
+            gbxNode.Enabled = allowEdit
 
         End If
 
@@ -75,7 +84,7 @@ Public Class FormCamberLine
 
         Dim selectedCamber As CamberLine = Nothing
 
-        For Each camber In CamberLineDatabase.CamberLines
+        For Each camber In CamberLinesDatabase.CamberLines
 
             If (camber.ID.Equals(_SelectedCamberID)) Then
                 selectedCamber = camber
@@ -87,6 +96,12 @@ Public Class FormCamberLine
         If (selectedCamber IsNot Nothing) Then
 
             selectedCamber.Name = tbxCamberName.Text
+
+        End If
+
+        If lbLines.SelectedIndex > 0 AndAlso lbLines.SelectedIndex < CamberLinesDatabase.CamberLines.Count Then
+
+            lbLines.Items(lbLines.SelectedIndex) = CamberLinesDatabase.CamberLines(lbLines.SelectedIndex).Name
 
         End If
 
@@ -109,7 +124,7 @@ Public Class FormCamberLine
 
         Dim selectedCamber As CamberLine = Nothing
 
-        For Each camber In CamberLineDatabase.CamberLines
+        For Each camber In CamberLinesDatabase.CamberLines
 
             If (camber.ID.Equals(_SelectedCamberID)) Then
                 selectedCamber = camber
@@ -359,7 +374,7 @@ Public Class FormCamberLine
 
         Dim selectedCamber As CamberLine = Nothing
 
-        For Each camber In CamberLineDatabase.CamberLines
+        For Each camber In CamberLinesDatabase.CamberLines
 
             If (camber.ID.Equals(_SelectedCamberID)) Then
                 selectedCamber = camber
@@ -393,7 +408,7 @@ Public Class FormCamberLine
 
         Dim selectedCamber As CamberLine = Nothing
 
-        For Each camber In CamberLineDatabase.CamberLines
+        For Each camber In CamberLinesDatabase.CamberLines
 
             If (camber.ID.Equals(_SelectedCamberID)) Then
                 selectedCamber = camber
@@ -424,7 +439,7 @@ Public Class FormCamberLine
 
         Dim selectedCamber As CamberLine = Nothing
 
-        For Each camber In CamberLineDatabase.CamberLines
+        For Each camber In CamberLinesDatabase.CamberLines
 
             If (camber.ID.Equals(_SelectedCamberID)) Then
                 selectedCamber = camber
@@ -463,7 +478,7 @@ Public Class FormCamberLine
 
             Dim selectedCamber As CamberLine = Nothing
 
-            For Each camber In CamberLineDatabase.CamberLines
+            For Each camber In CamberLinesDatabase.CamberLines
 
                 If (camber.ID.Equals(_SelectedCamberID)) Then
                     selectedCamber = camber
