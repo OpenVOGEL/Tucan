@@ -20,13 +20,14 @@ Namespace Magnitudes
     Public Enum Magnitudes As Short
 
         Time
-        Mass
+        'Mass
         Length
         Area
         Velocity
-        Acceleration
-        Force
         Density
+        'Acceleration
+        Force
+        Moment
         Angular
         Dimensionless
 
@@ -61,6 +62,8 @@ Namespace Magnitudes
                     Return New DensityMagnitude()
                 Case Magnitudes.Force
                     Return New ForceMagnitude()
+                Case Magnitudes.Moment
+                    Return New MomentMagnitude()
                 Case Magnitudes.Velocity
                     Return New VelocityMagnitude()
                 Case Magnitudes.Angular
@@ -346,7 +349,7 @@ Namespace Magnitudes
 
         Public ReadOnly Property Magnitude As Magnitudes Implements IPhysicalMagnitude.Magnitude
             Get
-                Return Magnitudes.Time
+                Return Magnitudes.Length
             End Get
         End Property
 
@@ -511,7 +514,7 @@ Namespace Magnitudes
 
         Public ReadOnly Property Magnitude As Magnitudes Implements IPhysicalMagnitude.Magnitude
             Get
-                Return Magnitudes.Time
+                Return Magnitudes.Area
             End Get
         End Property
 
@@ -656,7 +659,7 @@ Namespace Magnitudes
 
         Public ReadOnly Property Magnitude As Magnitudes Implements IPhysicalMagnitude.Magnitude
             Get
-                Return Magnitudes.Time
+                Return Magnitudes.Velocity
             End Get
         End Property
 
@@ -783,7 +786,7 @@ Namespace Magnitudes
 
         Public ReadOnly Property Magnitude As Magnitudes Implements IPhysicalMagnitude.Magnitude
             Get
-                Return Magnitudes.Time
+                Return Magnitudes.Density
             End Get
         End Property
 
@@ -911,7 +914,7 @@ Namespace Magnitudes
 
         Public ReadOnly Property Magnitude As Magnitudes Implements IPhysicalMagnitude.Magnitude
             Get
-                Return Magnitudes.Time
+                Return Magnitudes.Force
             End Get
         End Property
 
@@ -924,6 +927,129 @@ Namespace Magnitudes
                         Return "kgf"
                     Case Units.Tonf
                         Return "Tonf"
+                    Case Else
+                        Return ""
+                End Select
+            End Get
+        End Property
+
+    End Class
+
+    ''' <summary>
+    ''' Represents a force magnitude.
+    ''' </summary>
+    Public Class MomentMagnitude
+
+        Implements IPhysicalMagnitude
+
+        ''' <summary>
+        ''' Time units.
+        ''' </summary>
+        Public Enum Units As Short
+
+            Nm
+            kgfm
+
+        End Enum
+
+        ''' <summary>
+        ''' Unit used as reference.
+        ''' </summary>
+        Public Const DefaultUnit As Units = Units.Nm
+
+        Private _DefaultUnitValue As Double
+        Private _Value As Double
+        Private _Unit As Units
+
+        Public Sub Assign(Magnitude As IPhysicalMagnitude) Implements IPhysicalMagnitude.Assign
+
+            If Magnitude.Magnitude = Magnitudes.Length Then
+                Dim Mag As MomentMagnitude = Magnitude
+                _DefaultUnitValue = Mag._DefaultUnitValue
+                _Value = Mag._Value
+                _Unit = Mag._Unit
+            End If
+
+        End Sub
+
+        Private Sub SetValueFromDafaultUnitValue(value As Double)
+
+            Select Case Unit
+                Case Units.Nm
+                    _Value = _DefaultUnitValue
+                Case Units.kgfm
+                    _Value = _DefaultUnitValue / 9.8
+                Case Else
+                    _Value = _DefaultUnitValue
+            End Select
+
+        End Sub
+
+        Private Sub SetDafaultUnitValueFromValue(value As Double)
+
+            Select Case Unit
+                Case Units.Nm
+                    _DefaultUnitValue = value
+                Case Units.kgfm
+                    _DefaultUnitValue = value * 9.8
+                Case Else
+                    _DefaultUnitValue = value
+            End Select
+
+        End Sub
+
+        Public Property DefaultUnitValue As Double Implements IPhysicalMagnitude.DefaultUnitValue
+            Set(value As Double)
+
+                _DefaultUnitValue = value
+
+                SetValueFromDafaultUnitValue(value)
+
+            End Set
+            Get
+                Return _DefaultUnitValue
+            End Get
+        End Property
+
+        Public Property Unit As Units
+            Set(value As Units)
+
+                _Unit = value
+
+                SetValueFromDafaultUnitValue(value)
+
+            End Set
+            Get
+                Return _Unit
+            End Get
+        End Property
+
+        Public Property Value As Double Implements IPhysicalMagnitude.Value
+            Set(value As Double)
+
+                _Value = value
+
+                SetDafaultUnitValueFromValue(value)
+
+            End Set
+            Get
+                Return _Value
+            End Get
+        End Property
+
+        Public ReadOnly Property Magnitude As Magnitudes Implements IPhysicalMagnitude.Magnitude
+            Get
+                Return Magnitudes.Moment
+            End Get
+        End Property
+
+        Public ReadOnly Property Label As String Implements IPhysicalMagnitude.Label
+            Get
+                Select Case Unit
+                    Case Units.Nm
+                        Return "Nm"
+                    Case Units.kgfm
+                        Return "kgfm"
                     Case Else
                         Return ""
                 End Select
@@ -1036,7 +1162,7 @@ Namespace Magnitudes
 
         Public ReadOnly Property Magnitude As Magnitudes Implements IPhysicalMagnitude.Magnitude
             Get
-                Return Magnitudes.Time
+                Return Magnitudes.Angular
             End Get
         End Property
 
@@ -1154,7 +1280,7 @@ Namespace Magnitudes
 
         Public ReadOnly Property Magnitude As Magnitudes Implements IPhysicalMagnitude.Magnitude
             Get
-                Return Magnitudes.Time
+                Return Magnitudes.Dimensionless
             End Get
         End Property
 
@@ -1162,9 +1288,9 @@ Namespace Magnitudes
             Get
                 Select Case Unit
                     Case Units.None
-                        Return ""
+                        Return "-"
                     Case Else
-                        Return ""
+                        Return "-"
                 End Select
             End Get
         End Property

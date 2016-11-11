@@ -19,8 +19,8 @@ Imports AeroTools.CalculationModel.Settings
 Imports AeroTools.CalculationModel.Models.Structural
 Imports MathTools.Algebra.EuclideanSpace
 Imports AeroTools.CalculationModel.Models.Aero
-Imports AeroTools.CalculationModel.Models.Aero.Components
 Imports DotNumerics.LinearAlgebra
+Imports AeroTools.DataStacks
 
 Namespace CalculationModel.Solver
 
@@ -58,7 +58,7 @@ Namespace CalculationModel.Solver
         Public Property StructuralLinks As List(Of StructuralLink)
 
         ''' <summary>
-        ''' Gathers all polar curves
+        ''' Gathers all polar curves necessary for the calculation.
         ''' </summary>
         ''' <remarks></remarks>
         Public Property PolarDataBase As PolarDatabase

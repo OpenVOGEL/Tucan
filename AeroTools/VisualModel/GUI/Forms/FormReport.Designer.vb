@@ -109,7 +109,7 @@ Partial Class FormReport
         '
         'tbLoads
         '
-        Me.tbLoads.BackColor = System.Drawing.Color.SteelBlue
+        Me.tbLoads.BackColor = System.Drawing.Color.White
         Me.tbLoads.ForeColor = System.Drawing.Color.Black
         Me.tbLoads.Location = New System.Drawing.Point(4, 22)
         Me.tbLoads.Name = "tbLoads"

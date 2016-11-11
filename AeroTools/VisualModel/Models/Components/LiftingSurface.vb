@@ -25,6 +25,7 @@ Imports AeroTools.VisualModel.Models.Basics
 Imports AeroTools.VisualModel.IO
 Imports AeroTools.CalculationModel.Models.Structural.Library
 Imports AeroTools.CalculationModel.Models.Structural.Library.Elements
+Imports AeroTools.DataStacks
 
 Namespace VisualModel.Models.Components
 
@@ -1077,7 +1078,7 @@ Namespace VisualModel.Models.Components
                         flap_chord_i = WingRegions(mpIndex - 1).FlapChord
                     End If
 
-                    Dim LocalChamber As CamberLine = GetCamberLineFromID(WingRegions(mpIndex).CamberLineID)
+                    Dim LocalChamber As CamberLine = CamberLinesDatabase.GetCamberLineFromID(WingRegions(mpIndex).CamberLineID)
 
                     For l = 1 To _nChordNodes ' For each nodal point in the current column...
 

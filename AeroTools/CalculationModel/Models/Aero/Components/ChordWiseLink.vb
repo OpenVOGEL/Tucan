@@ -16,6 +16,7 @@
 'along with this program.  If Not, see < http:  //www.gnu.org/licenses/>.
 
 Imports System.IO
+Imports AeroTools.DataStacks
 Imports MathTools.Algebra.EuclideanSpace
 
 Namespace CalculationModel.Models.Aero.Components

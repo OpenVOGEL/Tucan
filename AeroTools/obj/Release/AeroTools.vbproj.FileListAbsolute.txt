@@ -218,3 +218,4 @@ C:\Users\Guillermo\Documents\Software\GeneralTools\2015.R0\AeroTools\obj\Release
 \\GUILLERMO\Users\Guillermo\Source\Repos\OpenVOGEL\AeroTools\obj\Release\AeroTools.dll
 \\GUILLERMO\Users\Guillermo\Source\Repos\OpenVOGEL\AeroTools\obj\Release\AeroTools.xml
 \\GUILLERMO\Users\Guillermo\Source\Repos\OpenVOGEL\AeroTools\obj\Release\AeroTools.pdb
+\\GUILLERMO\Users\Guillermo\Source\Repos\OpenVOGEL\AeroTools\obj\Release\AeroTools.FormCamberLine.resources

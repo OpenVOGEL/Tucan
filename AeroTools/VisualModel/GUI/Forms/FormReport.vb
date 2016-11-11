@@ -33,6 +33,7 @@ Public Class FormReport
         _ForcesPanel = New ForcesPanel(CalculationCore)
         _ForcesPanel.Parent = tbLoads
         _ForcesPanel.Dock = DockStyle.Fill
+        _ForcesPanel.BorderStyle = BorderStyle.Fixed3D
 
         Dim Result As New System.Text.StringBuilder
 

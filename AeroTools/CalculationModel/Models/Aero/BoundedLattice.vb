@@ -18,6 +18,7 @@
 Imports MathTools.Algebra.EuclideanSpace
 Imports AeroTools.CalculationModel.Models.Aero.Components
 Imports System.IO
+Imports AeroTools.DataStacks
 
 Namespace CalculationModel.Models.Aero
 

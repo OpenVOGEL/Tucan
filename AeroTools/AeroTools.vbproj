@@ -153,6 +153,8 @@
     <Compile Include="CalculationModel\Solver\UVLM_Solver_IO.vb" />
     <Compile Include="CalculationModel\Solver\UVLM_Solver_Steady.vb" />
     <Compile Include="CalculationModel\Solver\UVLM_Solver_Transit.vb" />
+    <Compile Include="DataStacks\GlobalMagnitudes.vb" />
+    <Compile Include="DataStacks\PolarDatabase.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -168,6 +170,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="DataStacks\CamberLinesDatabase.vb" />
     <Compile Include="VisualModel\GUI\Forms\FormCamberLine.Designer.vb">
       <DependentUpon>FormCamberLine.vb</DependentUpon>
     </Compile>

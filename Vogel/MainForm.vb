@@ -21,6 +21,7 @@ Imports AeroTools.VisualModel.Interface
 Imports AeroTools.VisualModel.Models.Components
 Imports AeroTools.CalculationModel.Settings
 Imports AeroTools.VisualModel.Models.Basics
+Imports AeroTools.DataStacks
 
 Public Class MainForm
 
@@ -41,7 +42,11 @@ Public Class MainForm
 
         ' Initialize the camber line database:
 
-        InitializeCamberLinesDatabase()
+        CamberLinesDatabase.Initialize()
+
+        ' Initialize declaration of global magitudes:
+
+        GlobalMagnitudes.Initialize()
 
         ' Force design mode:
 

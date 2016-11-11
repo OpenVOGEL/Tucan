@@ -254,7 +254,7 @@ Partial Class WingControl
         Me.PanelDeEdicion.Controls.Add(Me.tbDesign)
         Me.PanelDeEdicion.Controls.Add(Me.tbInquire)
         Me.PanelDeEdicion.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.PanelDeEdicion.Location = New System.Drawing.Point(5, 36)
+        Me.PanelDeEdicion.Location = New System.Drawing.Point(5, 34)
         Me.PanelDeEdicion.Margin = New System.Windows.Forms.Padding(8)
         Me.PanelDeEdicion.Name = "PanelDeEdicion"
         Me.PanelDeEdicion.SelectedIndex = 0
@@ -263,7 +263,7 @@ Partial Class WingControl
         '
         'tbDesign
         '
-        Me.tbDesign.BackColor = System.Drawing.SystemColors.Control
+        Me.tbDesign.BackColor = System.Drawing.Color.White
         Me.tbDesign.Controls.Add(Me.tcRootProperties)
         Me.tbDesign.Controls.Add(Me.btnAddPanel)
         Me.tbDesign.Controls.Add(Me.btnDeletePanel)
@@ -284,7 +284,7 @@ Partial Class WingControl
         Me.tcRootProperties.Controls.Add(Me.TabPage5)
         Me.tcRootProperties.Controls.Add(Me.tpIntertia)
         Me.tcRootProperties.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.tcRootProperties.Location = New System.Drawing.Point(4, 7)
+        Me.tcRootProperties.Location = New System.Drawing.Point(4, 6)
         Me.tcRootProperties.Name = "tcRootProperties"
         Me.tcRootProperties.SelectedIndex = 0
         Me.tcRootProperties.Size = New System.Drawing.Size(292, 153)
@@ -335,10 +335,10 @@ Partial Class WingControl
         '
         Me.NPCuerda_Box.Font = New System.Drawing.Font("Segoe UI", 8.25!)
         Me.NPCuerda_Box.ForeColor = System.Drawing.Color.Black
-        Me.NPCuerda_Box.Location = New System.Drawing.Point(118, 32)
+        Me.NPCuerda_Box.Location = New System.Drawing.Point(104, 32)
         Me.NPCuerda_Box.Minimum = New Decimal(New Integer() {1, 0, 0, 0})
         Me.NPCuerda_Box.Name = "NPCuerda_Box"
-        Me.NPCuerda_Box.Size = New System.Drawing.Size(64, 22)
+        Me.NPCuerda_Box.Size = New System.Drawing.Size(78, 22)
         Me.NPCuerda_Box.TabIndex = 58
         Me.NPCuerda_Box.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         Me.NPCuerda_Box.Value = New Decimal(New Integer() {5, 0, 0, 0})
@@ -360,11 +360,11 @@ Partial Class WingControl
         Me.NSectores_box.Enabled = False
         Me.NSectores_box.Font = New System.Drawing.Font("Segoe UI", 8.25!)
         Me.NSectores_box.ForeColor = System.Drawing.Color.Black
-        Me.NSectores_box.Location = New System.Drawing.Point(118, 11)
+        Me.NSectores_box.Location = New System.Drawing.Point(104, 11)
         Me.NSectores_box.Maximum = New Decimal(New Integer() {10, 0, 0, 0})
         Me.NSectores_box.Minimum = New Decimal(New Integer() {1, 0, 0, 0})
         Me.NSectores_box.Name = "NSectores_box"
-        Me.NSectores_box.Size = New System.Drawing.Size(64, 22)
+        Me.NSectores_box.Size = New System.Drawing.Size(78, 22)
         Me.NSectores_box.TabIndex = 39
         Me.NSectores_box.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         Me.NSectores_box.Value = New Decimal(New Integer() {1, 0, 0, 0})
@@ -375,10 +375,10 @@ Partial Class WingControl
         Me.CuerdaRaiz_box.Font = New System.Drawing.Font("Segoe UI", 8.25!)
         Me.CuerdaRaiz_box.ForeColor = System.Drawing.Color.Black
         Me.CuerdaRaiz_box.Increment = New Decimal(New Integer() {5, 0, 0, 131072})
-        Me.CuerdaRaiz_box.Location = New System.Drawing.Point(118, 53)
+        Me.CuerdaRaiz_box.Location = New System.Drawing.Point(104, 53)
         Me.CuerdaRaiz_box.Maximum = New Decimal(New Integer() {99, 0, 0, 0})
         Me.CuerdaRaiz_box.Name = "CuerdaRaiz_box"
-        Me.CuerdaRaiz_box.Size = New System.Drawing.Size(64, 22)
+        Me.CuerdaRaiz_box.Size = New System.Drawing.Size(78, 22)
         Me.CuerdaRaiz_box.TabIndex = 44
         Me.CuerdaRaiz_box.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         Me.CuerdaRaiz_box.Value = New Decimal(New Integer() {1, 0, 0, 0})
@@ -489,7 +489,7 @@ Partial Class WingControl
         Me.Label48.AutoSize = True
         Me.Label48.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label48.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.Label48.Location = New System.Drawing.Point(14, 90)
+        Me.Label48.Location = New System.Drawing.Point(13, 90)
         Me.Label48.Name = "Label48"
         Me.Label48.Size = New System.Drawing.Size(24, 13)
         Me.Label48.TabIndex = 57
@@ -511,7 +511,7 @@ Partial Class WingControl
         Me.Label49.AutoSize = True
         Me.Label49.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label49.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.Label49.Location = New System.Drawing.Point(14, 69)
+        Me.Label49.Location = New System.Drawing.Point(13, 69)
         Me.Label49.Name = "Label49"
         Me.Label49.Size = New System.Drawing.Size(24, 13)
         Me.Label49.TabIndex = 55
@@ -589,7 +589,7 @@ Partial Class WingControl
         Me.Label74.AutoSize = True
         Me.Label74.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label74.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.Label74.Location = New System.Drawing.Point(4, 4)
+        Me.Label74.Location = New System.Drawing.Point(3, 3)
         Me.Label74.Name = "Label74"
         Me.Label74.Size = New System.Drawing.Size(99, 13)
         Me.Label74.TabIndex = 69
@@ -600,7 +600,7 @@ Partial Class WingControl
         Me.Label42.AutoSize = True
         Me.Label42.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label42.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.Label42.Location = New System.Drawing.Point(196, 96)
+        Me.Label42.Location = New System.Drawing.Point(191, 90)
         Me.Label42.Name = "Label42"
         Me.Label42.Size = New System.Drawing.Size(16, 13)
         Me.Label42.TabIndex = 88
@@ -611,7 +611,7 @@ Partial Class WingControl
         Me.Label59.AutoSize = True
         Me.Label59.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label59.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.Label59.Location = New System.Drawing.Point(19, 28)
+        Me.Label59.Location = New System.Drawing.Point(18, 27)
         Me.Label59.Name = "Label59"
         Me.Label59.Size = New System.Drawing.Size(19, 13)
         Me.Label59.TabIndex = 66
@@ -623,7 +623,7 @@ Partial Class WingControl
         Me.Label56.AutoSize = True
         Me.Label56.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label56.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.Label56.Location = New System.Drawing.Point(192, 49)
+        Me.Label56.Location = New System.Drawing.Point(191, 48)
         Me.Label56.Name = "Label56"
         Me.Label56.Size = New System.Drawing.Size(33, 13)
         Me.Label56.TabIndex = 65
@@ -632,7 +632,7 @@ Partial Class WingControl
         'nudCMzRoot
         '
         Me.nudCMzRoot.DecimalPlaces = 5
-        Me.nudCMzRoot.Location = New System.Drawing.Point(40, 94)
+        Me.nudCMzRoot.Location = New System.Drawing.Point(39, 88)
         Me.nudCMzRoot.Maximum = New Decimal(New Integer() {100000, 0, 0, 0})
         Me.nudCMzRoot.Minimum = New Decimal(New Integer() {100000, 0, 0, -2147483648})
         Me.nudCMzRoot.Name = "nudCMzRoot"
@@ -644,7 +644,7 @@ Partial Class WingControl
         '
         Me.nud_Root_J.DecimalPlaces = 2
         Me.nud_Root_J.Increment = New Decimal(New Integer() {10000, 0, 0, 0})
-        Me.nud_Root_J.Location = New System.Drawing.Point(40, 47)
+        Me.nud_Root_J.Location = New System.Drawing.Point(39, 46)
         Me.nud_Root_J.Maximum = New Decimal(New Integer() {-559939584, 902409669, 54, 0})
         Me.nud_Root_J.Name = "nud_Root_J"
         Me.nud_Root_J.Size = New System.Drawing.Size(146, 22)
@@ -656,7 +656,7 @@ Partial Class WingControl
         Me.Label58.AutoSize = True
         Me.Label58.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label58.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.Label58.Location = New System.Drawing.Point(192, 28)
+        Me.Label58.Location = New System.Drawing.Point(191, 27)
         Me.Label58.Name = "Label58"
         Me.Label58.Size = New System.Drawing.Size(33, 13)
         Me.Label58.TabIndex = 68
@@ -667,7 +667,7 @@ Partial Class WingControl
         Me.Label43.AutoSize = True
         Me.Label43.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label43.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.Label43.Location = New System.Drawing.Point(5, 96)
+        Me.Label43.Location = New System.Drawing.Point(5, 90)
         Me.Label43.Name = "Label43"
         Me.Label43.Size = New System.Drawing.Size(32, 13)
         Me.Label43.TabIndex = 86
@@ -679,7 +679,7 @@ Partial Class WingControl
         Me.Label57.AutoSize = True
         Me.Label57.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label57.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.Label57.Location = New System.Drawing.Point(11, 49)
+        Me.Label57.Location = New System.Drawing.Point(10, 48)
         Me.Label57.Name = "Label57"
         Me.Label57.Size = New System.Drawing.Size(27, 13)
         Me.Label57.TabIndex = 63
@@ -688,7 +688,7 @@ Partial Class WingControl
         'nud_Root_m
         '
         Me.nud_Root_m.DecimalPlaces = 2
-        Me.nud_Root_m.Location = New System.Drawing.Point(40, 26)
+        Me.nud_Root_m.Location = New System.Drawing.Point(39, 25)
         Me.nud_Root_m.Maximum = New Decimal(New Integer() {100000, 0, 0, 0})
         Me.nud_Root_m.Name = "nud_Root_m"
         Me.nud_Root_m.Size = New System.Drawing.Size(146, 22)
@@ -700,7 +700,7 @@ Partial Class WingControl
         Me.Label77.AutoSize = True
         Me.Label77.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label77.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.Label77.Location = New System.Drawing.Point(196, 75)
+        Me.Label77.Location = New System.Drawing.Point(191, 69)
         Me.Label77.Name = "Label77"
         Me.Label77.Size = New System.Drawing.Size(16, 13)
         Me.Label77.TabIndex = 85
@@ -711,7 +711,7 @@ Partial Class WingControl
         Me.Label78.AutoSize = True
         Me.Label78.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label78.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.Label78.Location = New System.Drawing.Point(5, 75)
+        Me.Label78.Location = New System.Drawing.Point(5, 69)
         Me.Label78.Name = "Label78"
         Me.Label78.Size = New System.Drawing.Size(32, 13)
         Me.Label78.TabIndex = 83
@@ -721,7 +721,7 @@ Partial Class WingControl
         'nudCMyRoot
         '
         Me.nudCMyRoot.DecimalPlaces = 5
-        Me.nudCMyRoot.Location = New System.Drawing.Point(40, 73)
+        Me.nudCMyRoot.Location = New System.Drawing.Point(39, 67)
         Me.nudCMyRoot.Maximum = New Decimal(New Integer() {100000, 0, 0, 0})
         Me.nudCMyRoot.Minimum = New Decimal(New Integer() {100000, 0, 0, -2147483648})
         Me.nudCMyRoot.Name = "nudCMyRoot"
@@ -739,7 +739,7 @@ Partial Class WingControl
         Me.btnAddPanel.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.btnAddPanel.Font = New System.Drawing.Font("Segoe UI", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnAddPanel.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.btnAddPanel.Location = New System.Drawing.Point(137, 166)
+        Me.btnAddPanel.Location = New System.Drawing.Point(162, 164)
         Me.btnAddPanel.Name = "btnAddPanel"
         Me.btnAddPanel.Size = New System.Drawing.Size(42, 22)
         Me.btnAddPanel.TabIndex = 59
@@ -757,7 +757,7 @@ Partial Class WingControl
         Me.btnDeletePanel.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.btnDeletePanel.Font = New System.Drawing.Font("Segoe UI", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnDeletePanel.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.btnDeletePanel.Location = New System.Drawing.Point(225, 166)
+        Me.btnDeletePanel.Location = New System.Drawing.Point(250, 164)
         Me.btnDeletePanel.Name = "btnDeletePanel"
         Me.btnDeletePanel.Size = New System.Drawing.Size(42, 22)
         Me.btnDeletePanel.TabIndex = 57
@@ -774,7 +774,7 @@ Partial Class WingControl
         Me.btnInsertPanel.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.btnInsertPanel.Font = New System.Drawing.Font("Segoe UI", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnInsertPanel.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.btnInsertPanel.Location = New System.Drawing.Point(181, 166)
+        Me.btnInsertPanel.Location = New System.Drawing.Point(206, 164)
         Me.btnInsertPanel.Name = "btnInsertPanel"
         Me.btnInsertPanel.Size = New System.Drawing.Size(42, 22)
         Me.btnInsertPanel.TabIndex = 56
@@ -785,7 +785,7 @@ Partial Class WingControl
         '
         Me.nudSelectRegion.Font = New System.Drawing.Font("Segoe UI", 8.25!)
         Me.nudSelectRegion.ForeColor = System.Drawing.Color.Black
-        Me.nudSelectRegion.Location = New System.Drawing.Point(57, 166)
+        Me.nudSelectRegion.Location = New System.Drawing.Point(57, 164)
         Me.nudSelectRegion.Maximum = New Decimal(New Integer() {10, 0, 0, 0})
         Me.nudSelectRegion.Minimum = New Decimal(New Integer() {1, 0, 0, 0})
         Me.nudSelectRegion.Name = "nudSelectRegion"
@@ -803,10 +803,10 @@ Partial Class WingControl
         Me.tcMacroPanelProperties.Controls.Add(Me.TabPage3)
         Me.tcMacroPanelProperties.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.tcMacroPanelProperties.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.tcMacroPanelProperties.Location = New System.Drawing.Point(3, 200)
+        Me.tcMacroPanelProperties.Location = New System.Drawing.Point(3, 192)
         Me.tcMacroPanelProperties.Name = "tcMacroPanelProperties"
         Me.tcMacroPanelProperties.SelectedIndex = 0
-        Me.tcMacroPanelProperties.Size = New System.Drawing.Size(293, 307)
+        Me.tcMacroPanelProperties.Size = New System.Drawing.Size(293, 315)
         Me.tcMacroPanelProperties.TabIndex = 48
         '
         'TabPage6
@@ -840,7 +840,7 @@ Partial Class WingControl
         Me.TabPage6.Margin = New System.Windows.Forms.Padding(0)
         Me.TabPage6.Name = "TabPage6"
         Me.TabPage6.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage6.Size = New System.Drawing.Size(285, 281)
+        Me.TabPage6.Size = New System.Drawing.Size(285, 289)
         Me.TabPage6.TabIndex = 0
         Me.TabPage6.Text = "Geometry"
         '
@@ -929,9 +929,9 @@ Partial Class WingControl
         Me.Label40.ImeMode = System.Windows.Forms.ImeMode.NoControl
         Me.Label40.Location = New System.Drawing.Point(190, 31)
         Me.Label40.Name = "Label40"
-        Me.Label40.Size = New System.Drawing.Size(22, 13)
+        Me.Label40.Size = New System.Drawing.Size(16, 13)
         Me.Label40.TabIndex = 57
-        Me.Label40.Text = "[m]"
+        Me.Label40.Text = "m"
         '
         'Label39
         '
@@ -939,9 +939,9 @@ Partial Class WingControl
         Me.Label39.ImeMode = System.Windows.Forms.ImeMode.NoControl
         Me.Label39.Location = New System.Drawing.Point(190, 52)
         Me.Label39.Name = "Label39"
-        Me.Label39.Size = New System.Drawing.Size(22, 13)
+        Me.Label39.Size = New System.Drawing.Size(16, 13)
         Me.Label39.TabIndex = 56
-        Me.Label39.Text = "[m]"
+        Me.Label39.Text = "m"
         '
         'btnSpacement
         '
@@ -1047,9 +1047,9 @@ Partial Class WingControl
         Me.Label27.ImeMode = System.Windows.Forms.ImeMode.NoControl
         Me.Label27.Location = New System.Drawing.Point(190, 73)
         Me.Label27.Name = "Label27"
-        Me.Label27.Size = New System.Drawing.Size(33, 13)
+        Me.Label27.Size = New System.Drawing.Size(27, 13)
         Me.Label27.TabIndex = 45
-        Me.Label27.Text = "[deg]"
+        Me.Label27.Text = "deg"
         '
         'Label7
         '
@@ -1111,9 +1111,9 @@ Partial Class WingControl
         Me.Label16.ImeMode = System.Windows.Forms.ImeMode.NoControl
         Me.Label16.Location = New System.Drawing.Point(190, 115)
         Me.Label16.Name = "Label16"
-        Me.Label16.Size = New System.Drawing.Size(33, 13)
+        Me.Label16.Size = New System.Drawing.Size(27, 13)
         Me.Label16.TabIndex = 39
-        Me.Label16.Text = "[deg]"
+        Me.Label16.Text = "deg"
         '
         'Label11
         '
@@ -1132,9 +1132,9 @@ Partial Class WingControl
         Me.Label17.ImeMode = System.Windows.Forms.ImeMode.NoControl
         Me.Label17.Location = New System.Drawing.Point(190, 94)
         Me.Label17.Name = "Label17"
-        Me.Label17.Size = New System.Drawing.Size(33, 13)
+        Me.Label17.Size = New System.Drawing.Size(27, 13)
         Me.Label17.TabIndex = 38
-        Me.Label17.Text = "[deg]"
+        Me.Label17.Text = "deg"
         '
         'Label12
         '
@@ -1160,7 +1160,7 @@ Partial Class WingControl
         Me.TabPage7.Location = New System.Drawing.Point(4, 22)
         Me.TabPage7.Name = "TabPage7"
         Me.TabPage7.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage7.Size = New System.Drawing.Size(285, 281)
+        Me.TabPage7.Size = New System.Drawing.Size(285, 289)
         Me.TabPage7.TabIndex = 1
         Me.TabPage7.Text = "Profile"
         '
@@ -1264,7 +1264,7 @@ Partial Class WingControl
         Me.TabPage8.Controls.Add(Me.SegmentoPrimitivo1)
         Me.TabPage8.Location = New System.Drawing.Point(4, 22)
         Me.TabPage8.Name = "TabPage8"
-        Me.TabPage8.Size = New System.Drawing.Size(285, 281)
+        Me.TabPage8.Size = New System.Drawing.Size(285, 289)
         Me.TabPage8.TabIndex = 2
         Me.TabPage8.Text = "Primitives"
         Me.TabPage8.ToolTipText = "Primitive panels"
@@ -1407,7 +1407,7 @@ Partial Class WingControl
         Me.TabPage10.Location = New System.Drawing.Point(4, 22)
         Me.TabPage10.Name = "TabPage10"
         Me.TabPage10.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage10.Size = New System.Drawing.Size(285, 281)
+        Me.TabPage10.Size = New System.Drawing.Size(285, 289)
         Me.TabPage10.TabIndex = 4
         Me.TabPage10.Text = "Flaps"
         '
@@ -1472,9 +1472,9 @@ Partial Class WingControl
         Me.Label66.ImeMode = System.Windows.Forms.ImeMode.NoControl
         Me.Label66.Location = New System.Drawing.Point(185, 60)
         Me.Label66.Name = "Label66"
-        Me.Label66.Size = New System.Drawing.Size(33, 13)
+        Me.Label66.Size = New System.Drawing.Size(27, 13)
         Me.Label66.TabIndex = 55
-        Me.Label66.Text = "[deg]"
+        Me.Label66.Text = "deg"
         '
         'Label65
         '
@@ -1574,7 +1574,7 @@ Partial Class WingControl
         Me.TabPage3.Controls.Add(Me.Label19)
         Me.TabPage3.Location = New System.Drawing.Point(4, 22)
         Me.TabPage3.Name = "TabPage3"
-        Me.TabPage3.Size = New System.Drawing.Size(285, 281)
+        Me.TabPage3.Size = New System.Drawing.Size(285, 289)
         Me.TabPage3.TabIndex = 3
         Me.TabPage3.Text = "Structure"
         '
@@ -1899,7 +1899,7 @@ Partial Class WingControl
         Me.Label4.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label4.ForeColor = System.Drawing.Color.Black
         Me.Label4.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.Label4.Location = New System.Drawing.Point(2, 168)
+        Me.Label4.Location = New System.Drawing.Point(2, 166)
         Me.Label4.Name = "Label4"
         Me.Label4.Size = New System.Drawing.Size(47, 13)
         Me.Label4.TabIndex = 11

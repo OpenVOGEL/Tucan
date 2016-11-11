@@ -18,6 +18,7 @@
 Imports System.Drawing
 Imports System.Windows.Forms
 Imports AeroTools.CalculationModel.Models.Aero.Components
+Imports AeroTools.DataStacks
 Imports AeroTools.VisualModel.Models.Basics
 Imports AeroTools.VisualModel.Models.Components
 

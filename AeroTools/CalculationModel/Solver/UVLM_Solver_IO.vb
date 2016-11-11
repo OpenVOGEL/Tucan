@@ -28,6 +28,7 @@ Imports AeroTools.VisualModel.Models.Components
 Imports AeroTools.VisualModel.IO
 Imports AeroTools.CalculationModel.Models.Structural.Library.Nodes
 Imports AeroTools.CalculationModel.Models.Structural.Library.Elements
+Imports AeroTools.DataStacks
 
 Namespace CalculationModel.Solver
 

@@ -16,8 +16,13 @@
 'along with this program.  If Not, see < http:  //www.gnu.org/licenses/>.
 
 Imports AeroTools.CalculationModel.Models.Aero.Components
+Imports AeroTools.DataStacks
 
 Public Class FormPolarCurve
+
+    Private DataBase As PolarDatabase
+    Private CurrentFamily As PolarFamily
+    Private CurrentPolar As IPolarCurve
 
     Public Sub New(PolarDataBase As PolarDatabase, SelectedFamiyID As Guid)
 
@@ -38,8 +43,8 @@ Public Class FormPolarCurve
         AddHandler PolarPlotter.PointChanged, AddressOf CustomFrame.RefreshTable
 
         If lbFamilies.Items.Count > 0 Then
-            For i = 0 To PolarDataBase.Families.Count - 1
-                If PolarDataBase.Families(i).ID.Equals(SelectedFamiyID) Then
+            For i = 0 To PolarDatabase.Families.Count - 1
+                If PolarDatabase.Families(i).ID.Equals(SelectedFamiyID) Then
                     lbFamilies.SelectedIndex = i
                     Exit For
                 End If
@@ -51,10 +56,6 @@ Public Class FormPolarCurve
 
     End Sub
 
-    Public DataBase As PolarDatabase
-
-    Private CurrentFamily As PolarFamily
-    Private CurrentPolar As IPolarCurve
 
     Public ReadOnly Property SelectedFamilyID As Guid
         Get

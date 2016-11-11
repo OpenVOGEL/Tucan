@@ -298,6 +298,21 @@ MathTools
  Unit used as reference.
  </summary>
 </member>
+<member name="T:MathTools.Magnitudes.MomentMagnitude">
+ <summary>
+ Represents a force magnitude.
+ </summary>
+</member>
+<member name="T:MathTools.Magnitudes.MomentMagnitude.Units">
+ <summary>
+ Time units.
+ </summary>
+</member>
+<member name="F:MathTools.Magnitudes.MomentMagnitude.DefaultUnit">
+ <summary>
+ Unit used as reference.
+ </summary>
+</member>
 <member name="T:MathTools.Magnitudes.AngularMagnitude">
  <summary>
  Represents an angular magnitude.

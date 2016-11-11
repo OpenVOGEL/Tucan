@@ -2064,7 +2064,7 @@ AeroTools
 </member>
 <member name="P:AeroTools.CalculationModel.Solver.UVLMSolver.PolarDataBase">
  <summary>
- Gathers all polar curves
+ Gathers all polar curves necessary for the calculation.
  </summary>
  <remarks></remarks>
 </member>

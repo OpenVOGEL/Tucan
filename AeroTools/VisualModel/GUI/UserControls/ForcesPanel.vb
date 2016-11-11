@@ -18,32 +18,48 @@
 Imports System.Drawing
 Imports System.Windows.Forms
 Imports AeroTools.CalculationModel.Models.Aero.Components
+Imports AeroTools.DataStacks
 Imports MathTools.Magnitudes
 
 Public Class ForcesPanel
 
     ' Components:
 
-    Private rbVelocity As New ResultBox(Magnitudes.Velocity)
-    Private rbDensity As New ResultBox(Magnitudes.Density)
+    Private rbVelocity As New ResultBox(UserMagnitudes(Magnitudes.Velocity))
+    Private rbDensity As New ResultBox(UserMagnitudes(Magnitudes.Density))
 
-    Private rbAlpha As New ResultBox(Magnitudes.Angular)
-    Private rbBeta As New ResultBox(Magnitudes.Angular)
+    Private rbAlpha As New ResultBox(UserMagnitudes(Magnitudes.Angular))
+    Private rbBeta As New ResultBox(UserMagnitudes(Magnitudes.Angular))
 
-    Private rbArea As New ResultBox(Magnitudes.Area)
+    Private rbArea As New ResultBox(UserMagnitudes(Magnitudes.Area))
 
-    Private rbCL As New ResultBox(Magnitudes.Dimensionless)
-    Private rbCD As New ResultBox(Magnitudes.Dimensionless)
-    Private rbCDi As New ResultBox(Magnitudes.Dimensionless)
-    Private rbCDp As New ResultBox(Magnitudes.Dimensionless)
+    Private rbCL As New ResultBox(UserMagnitudes(Magnitudes.Dimensionless))
+    Private rbCD As New ResultBox(UserMagnitudes(Magnitudes.Dimensionless))
+    Private rbCDi As New ResultBox(UserMagnitudes(Magnitudes.Dimensionless))
+    Private rbCDp As New ResultBox(UserMagnitudes(Magnitudes.Dimensionless))
 
-    Private rbCFx As New ResultBox(Magnitudes.Dimensionless)
-    Private rbCFy As New ResultBox(Magnitudes.Dimensionless)
-    Private rbCFz As New ResultBox(Magnitudes.Dimensionless)
+    Private rbCFx As New ResultBox(UserMagnitudes(Magnitudes.Dimensionless))
+    Private rbCFy As New ResultBox(UserMagnitudes(Magnitudes.Dimensionless))
+    Private rbCFz As New ResultBox(UserMagnitudes(Magnitudes.Dimensionless))
 
-    Private rbCMx As New ResultBox(Magnitudes.Dimensionless)
-    Private rbCMy As New ResultBox(Magnitudes.Dimensionless)
-    Private rbCMz As New ResultBox(Magnitudes.Dimensionless)
+    Private rbCMx As New ResultBox(UserMagnitudes(Magnitudes.Dimensionless))
+    Private rbCMy As New ResultBox(UserMagnitudes(Magnitudes.Dimensionless))
+    Private rbCMz As New ResultBox(UserMagnitudes(Magnitudes.Dimensionless))
+
+    Private rbL As New ResultBox(UserMagnitudes(Magnitudes.Force))
+    Private rbD As New ResultBox(UserMagnitudes(Magnitudes.Force))
+    Private rbDi As New ResultBox(UserMagnitudes(Magnitudes.Force))
+    Private rbDp As New ResultBox(UserMagnitudes(Magnitudes.Force))
+
+    Private rbFx As New ResultBox(UserMagnitudes(Magnitudes.Force))
+    Private rbFy As New ResultBox(UserMagnitudes(Magnitudes.Force))
+    Private rbFz As New ResultBox(UserMagnitudes(Magnitudes.Force))
+
+    Private rbMx As New ResultBox(UserMagnitudes(Magnitudes.Moment))
+    Private rbMy As New ResultBox(UserMagnitudes(Magnitudes.Moment))
+    Private rbMz As New ResultBox(UserMagnitudes(Magnitudes.Moment))
+
+    Private rbDimensionless As New CheckBox()
 
     Private pbLoadingGraph As New PictureBox
 
@@ -57,6 +73,7 @@ Public Class ForcesPanel
         rbVelocity.Top = 10
         rbVelocity.Left = 10
         rbVelocity.Parent = Me
+        rbVelocity.Decimals = GlobalDecimals(Magnitudes.Velocity)
 
         rbDensity.Name = "r"
         rbDensity.GreekLetter = True
@@ -87,6 +104,8 @@ Public Class ForcesPanel
         rbArea.Top = cbLattices.Bottom + 10
         rbArea.Left = cbLattices.Left
         rbArea.Parent = Me
+
+        ' Coefficients:
 
         rbCL.Name = "CL"
         rbCL.Top = rbArea.Bottom + 10
@@ -133,6 +152,62 @@ Public Class ForcesPanel
         rbCMz.Left = rbCMy.Left
         rbCMz.Parent = Me
 
+        ' Net forces:
+
+        rbL.Name = "L"
+        rbL.Top = rbArea.Bottom + 10
+        rbL.Left = rbArea.Left
+        rbL.Parent = Me
+        rbL.Decimals = GlobalDecimals(Magnitudes.Force)
+
+        rbDi.Name = "Di"
+        rbDi.Top = rbCL.Bottom + 10
+        rbDi.Left = rbCL.Left
+        rbDi.Parent = Me
+        rbDi.Decimals = GlobalDecimals(Magnitudes.Force)
+
+        rbDp.Name = "Dp"
+        rbDp.Top = rbCDi.Bottom + 10
+        rbDp.Left = rbCDi.Left
+        rbDp.Parent = Me
+        rbDp.Decimals = GlobalDecimals(Magnitudes.Force)
+
+        rbFx.Name = "Fx"
+        rbFx.Top = rbCL.Top
+        rbFx.Left = rbCL.Right + 10
+        rbFx.Parent = Me
+        rbFx.Decimals = GlobalDecimals(Magnitudes.Force)
+
+        rbFy.Name = "Fy"
+        rbFy.Top = rbCFx.Bottom + 10
+        rbFy.Left = rbCFx.Left
+        rbFy.Parent = Me
+        rbFy.Decimals = GlobalDecimals(Magnitudes.Force)
+
+        rbFz.Name = "Fz"
+        rbFz.Top = rbCFy.Bottom + 10
+        rbFz.Left = rbCFy.Left
+        rbFz.Parent = Me
+        rbFz.Decimals = GlobalDecimals(Magnitudes.Force)
+
+        rbMx.Name = "Mx"
+        rbMx.Top = rbCFx.Top
+        rbMx.Left = rbCFx.Right + 10
+        rbMx.Parent = Me
+        rbMx.Decimals = GlobalDecimals(Magnitudes.Moment)
+
+        rbMy.Name = "My"
+        rbMy.Top = rbCMx.Bottom + 10
+        rbMy.Left = rbCMx.Left
+        rbMy.Parent = Me
+        rbMy.Decimals = GlobalDecimals(Magnitudes.Moment)
+
+        rbMz.Name = "Mz"
+        rbMz.Top = rbCMy.Bottom + 10
+        rbMz.Left = rbCMy.Left
+        rbMz.Parent = Me
+        rbMz.Decimals = GlobalDecimals(Magnitudes.Moment)
+
         cbResultType.Items.Clear()
         cbResultType.Items.Add(strCL)
         cbResultType.Items.Add(strCDp)
@@ -153,6 +228,41 @@ Public Class ForcesPanel
         AddHandler cbResultType.SelectedIndexChanged, AddressOf pbLoadingGraph.Refresh
 
         AddHandler cbLattices.SelectedIndexChanged, AddressOf LoadLattice
+
+        rbDimensionless.Text = "Dimensionless"
+        rbDimensionless.Top = rbAlpha.Top
+        rbDimensionless.Left = rbAlpha.Right + 10
+        rbDimensionless.Parent = Me
+        AddHandler rbDimensionless.CheckedChanged, AddressOf SwitchDimensionless
+        rbDimensionless.Checked = True
+
+    End Sub
+
+    Private Sub SwitchDimensionless()
+
+        rbCL.Visible = rbDimensionless.Checked
+        rbCDp.Visible = rbDimensionless.Checked
+        rbCDi.Visible = rbDimensionless.Checked
+
+        rbCFx.Visible = rbDimensionless.Checked
+        rbCFy.Visible = rbDimensionless.Checked
+        rbCFz.Visible = rbDimensionless.Checked
+
+        rbCMx.Visible = rbDimensionless.Checked
+        rbCMy.Visible = rbDimensionless.Checked
+        rbCMz.Visible = rbDimensionless.Checked
+
+        rbL.Visible = Not rbDimensionless.Checked
+        rbDp.Visible = Not rbDimensionless.Checked
+        rbDi.Visible = Not rbDimensionless.Checked
+
+        rbFx.Visible = Not rbDimensionless.Checked
+        rbFy.Visible = Not rbDimensionless.Checked
+        rbFz.Visible = Not rbDimensionless.Checked
+
+        rbMx.Visible = Not rbDimensionless.Checked
+        rbMy.Visible = Not rbDimensionless.Checked
+        rbMz.Visible = Not rbDimensionless.Checked
 
     End Sub
 
@@ -190,7 +300,8 @@ Public Class ForcesPanel
 
         If Index >= 0 And Index < _CalculationCore.Lattices.Count Then
 
-            rbArea.Value = _CalculationCore.Lattices(Index).AirLoads.Area
+            Dim s As Double = _CalculationCore.Lattices(Index).AirLoads.Area
+            rbArea.Value = s
 
             rbCL.Value = _CalculationCore.Lattices(Index).AirLoads.CL
             rbCDp.Value = _CalculationCore.Lattices(Index).AirLoads.CDp
@@ -203,6 +314,22 @@ Public Class ForcesPanel
             rbCMx.Value = _CalculationCore.Lattices(Index).AirLoads.Moment.X
             rbCMy.Value = _CalculationCore.Lattices(Index).AirLoads.Moment.Y
             rbCMz.Value = _CalculationCore.Lattices(Index).AirLoads.Moment.Z
+
+            ' Net forces:
+
+            Dim q As Double = 0.5 * _CalculationCore.StreamVelocity.SquareEuclideanNorm * _CalculationCore.StreamDensity
+
+            rbL.Value = _CalculationCore.Lattices(Index).AirLoads.CL * q * s
+            rbDp.Value = _CalculationCore.Lattices(Index).AirLoads.CDp * q * s
+            rbDi.Value = _CalculationCore.Lattices(Index).AirLoads.CDi * q * s
+
+            rbFx.Value = _CalculationCore.Lattices(Index).AirLoads.Force.X * q * s
+            rbFy.Value = _CalculationCore.Lattices(Index).AirLoads.Force.Y * q * s
+            rbFz.Value = _CalculationCore.Lattices(Index).AirLoads.Force.Z * q * s
+
+            rbMx.Value = _CalculationCore.Lattices(Index).AirLoads.Moment.X * q * s
+            rbMy.Value = _CalculationCore.Lattices(Index).AirLoads.Moment.Y * q * s
+            rbMz.Value = _CalculationCore.Lattices(Index).AirLoads.Moment.Z * q * s
 
             pbLoadingGraph.Refresh()
 

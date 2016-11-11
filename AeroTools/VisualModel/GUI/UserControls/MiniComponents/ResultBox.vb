@@ -37,9 +37,11 @@ Public Class ResultBox
 
         InitializeComponent()
 
+        Me.Magnitude = Units.GetInstanceOf(Magnitude.Magnitude)
+
         Me.Magnitude.Assign(Magnitude)
 
-        lblUnit.Text = String.Format("[{0}]", Me.Magnitude.Label)
+        lblUnit.Text = String.Format("{0}", Me.Magnitude.Label)
 
         SetUp()
 
@@ -47,16 +49,36 @@ Public Class ResultBox
 
     Private Sub SetUp()
 
+        Decimals = 3
         lblName.Font = New Drawing.Font("Segoe UI", 8.25F)
         lblUnit.Font = lblName.Font
 
         BackColor = Drawing.Color.LightGray
+        tbValue.BackColor = Drawing.Color.LightGray
 
         IsReadOnly = True
 
     End Sub
 
-    Public Property FormatString As String = "{0:F3}"
+    Private _Decimals As Integer
+
+    Public Property Decimals As Integer
+        Set(value As Integer)
+            _Decimals = value
+            _FormatString = "{0:F" + _Decimals.ToString + "}"
+        End Set
+        Get
+            Return _Decimals
+        End Get
+    End Property
+
+    Private _FormatString As String = "{0:F3}"
+
+    Public ReadOnly Property FormatString As String
+        Get
+            Return _FormatString
+        End Get
+    End Property
 
     ''' <summary>
     ''' Indicates if the value is read only.
