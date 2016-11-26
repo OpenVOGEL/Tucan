@@ -8,7 +8,7 @@ If you have questions about the software, or if you want to share data and/or ch
 
 If you are willing to give us a hand with the development, stay here, you are at the right place. You are never too late to join this project, as there is an infinite number of things that can be done. The greatest value of any open source project is that everyone can learn something from it, and we all can benefit from the resulting product.
 
-Open VOGEL has been programmed in VB.NET and C#, which are integral part of the open sourced .NET framework. This is a very mature and advanced development platform that makes programming easier than ever, while still providing a very good level of calculation performance (less efficient than C++, but much easier to work with and certainly a lot faster than any implementation in an interpreted language like Python or Matlab).
+Open VOGEL has been programmed in VB.NET and C#, which are integral part of the open sourced .NET framework. This is a very mature and advanced development platform that makes programming easier than ever, while still providing a very good level of calculation performance (less powerful than C++, but much easier to work with and certainly a lot faster than any implementation in an interpreted language like Python or Matlab).
 
 For the GUI, VOGEL is based in WinForms and SharpGL. If you are familiar with at least one of these programming languages and API's, and you have a good knowledge of aerodynamics, algebra or finite element methods, you can help us with the development. A strong spirit of cooperation is cernainly also required.
 
