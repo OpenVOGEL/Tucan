@@ -34,5 +34,10 @@ Vogel
   resource lookups using this strongly typed resource class.
 </summary>
 </member>
+<member name="P:Vogel.My.Resources.Resources.SplashScreen">
+<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member>
 </members>
 </doc>

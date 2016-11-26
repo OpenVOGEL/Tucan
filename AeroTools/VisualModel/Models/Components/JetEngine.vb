@@ -411,6 +411,7 @@ Namespace VisualModel.Models.Components
 
         Public Sub CopyFrom(Engine As JetEngine)
 
+            Name = Engine.Name + " - Copy"
             Length = Engine.Length
             FrontDiameter = Engine.FrontDiameter
             BackDiameter = Engine.BackDiameter

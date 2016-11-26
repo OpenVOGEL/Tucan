@@ -24,6 +24,9 @@ Partial Class MainRibbon
     Private Sub InitializeComponent()
         Me.tcRibbon = New System.Windows.Forms.TabControl()
         Me.tpModel = New System.Windows.Forms.TabPage()
+        Me.tpCalculation = New System.Windows.Forms.TabPage()
+        Me.tpResults = New System.Windows.Forms.TabPage()
+        Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
         Me.GroupBox3 = New System.Windows.Forms.GroupBox()
         Me.btnFrontView = New System.Windows.Forms.Button()
         Me.btnTopView = New System.Windows.Forms.Button()
@@ -80,16 +83,10 @@ Partial Class MainRibbon
         Me.btnOpen = New System.Windows.Forms.Button()
         Me.btnSaveAs = New System.Windows.Forms.Button()
         Me.btnSave = New System.Windows.Forms.Button()
-        Me.tpCalculation = New System.Windows.Forms.TabPage()
-        Me.GroupBox12 = New System.Windows.Forms.GroupBox()
-        Me.Label28 = New System.Windows.Forms.Label()
-        Me.nudIncrement = New System.Windows.Forms.NumericUpDown()
-        Me.Label33 = New System.Windows.Forms.Label()
-        Me.Label34 = New System.Windows.Forms.Label()
-        Me.Label35 = New System.Windows.Forms.Label()
-        Me.nudCutoff = New System.Windows.Forms.NumericUpDown()
-        Me.nudCuttingStep = New System.Windows.Forms.NumericUpDown()
-        Me.nudSteps = New System.Windows.Forms.NumericUpDown()
+        Me.TableLayoutPanel2 = New System.Windows.Forms.TableLayoutPanel()
+        Me.gbxCalculationType = New System.Windows.Forms.GroupBox()
+        Me.btnStartCalculation = New System.Windows.Forms.Button()
+        Me.cbxSimulationMode = New System.Windows.Forms.ComboBox()
         Me.GroupBox11 = New System.Windows.Forms.GroupBox()
         Me.btnHistogram = New System.Windows.Forms.Button()
         Me.Label27 = New System.Windows.Forms.Label()
@@ -108,32 +105,24 @@ Partial Class MainRibbon
         Me.nudVz = New System.Windows.Forms.NumericUpDown()
         Me.nudVy = New System.Windows.Forms.NumericUpDown()
         Me.nudVx = New System.Windows.Forms.NumericUpDown()
-        Me.gbxCalculationType = New System.Windows.Forms.GroupBox()
-        Me.btnStartCalculation = New System.Windows.Forms.Button()
-        Me.cbxSimulationMode = New System.Windows.Forms.ComboBox()
-        Me.tpResults = New System.Windows.Forms.TabPage()
-        Me.gbxAeroelastic = New System.Windows.Forms.GroupBox()
-        Me.btnPlayStop = New System.Windows.Forms.Button()
-        Me.Label19 = New System.Windows.Forms.Label()
-        Me.nudModeScale = New System.Windows.Forms.NumericUpDown()
-        Me.cbxModes = New System.Windows.Forms.ComboBox()
-        Me.GroupBox5 = New System.Windows.Forms.GroupBox()
-        Me.btnEditVelocityPlane = New System.Windows.Forms.Button()
-        Me.cbxShowVelocityPlane = New System.Windows.Forms.CheckBox()
-        Me.GroupBox10 = New System.Windows.Forms.GroupBox()
-        Me.nudScaleForce = New System.Windows.Forms.NumericUpDown()
-        Me.cbxShowVelocity = New System.Windows.Forms.CheckBox()
-        Me.nudScaleVelocity = New System.Windows.Forms.NumericUpDown()
-        Me.pnlVelocityColor = New System.Windows.Forms.Panel()
-        Me.cbxShowForce = New System.Windows.Forms.CheckBox()
-        Me.pnlForceColor = New System.Windows.Forms.Panel()
-        Me.GroupBox9 = New System.Windows.Forms.GroupBox()
-        Me.cbxShowColormap = New System.Windows.Forms.CheckBox()
-        Me.Label18 = New System.Windows.Forms.Label()
-        Me.btnResetColormap = New System.Windows.Forms.Button()
-        Me.nudCpmin = New System.Windows.Forms.NumericUpDown()
-        Me.Label17 = New System.Windows.Forms.Label()
-        Me.nudCpmax = New System.Windows.Forms.NumericUpDown()
+        Me.GroupBox12 = New System.Windows.Forms.GroupBox()
+        Me.Label28 = New System.Windows.Forms.Label()
+        Me.nudIncrement = New System.Windows.Forms.NumericUpDown()
+        Me.Label33 = New System.Windows.Forms.Label()
+        Me.Label34 = New System.Windows.Forms.Label()
+        Me.Label35 = New System.Windows.Forms.Label()
+        Me.nudCutoff = New System.Windows.Forms.NumericUpDown()
+        Me.nudCuttingStep = New System.Windows.Forms.NumericUpDown()
+        Me.nudSteps = New System.Windows.Forms.NumericUpDown()
+        Me.TableLayoutPanel3 = New System.Windows.Forms.TableLayoutPanel()
+        Me.GroupBox6 = New System.Windows.Forms.GroupBox()
+        Me.btnReport = New System.Windows.Forms.Button()
+        Me.btnLoadResults = New System.Windows.Forms.Button()
+        Me.GroupBox4 = New System.Windows.Forms.GroupBox()
+        Me.cbxShowResMesh = New System.Windows.Forms.CheckBox()
+        Me.cbxShowResSurface = New System.Windows.Forms.CheckBox()
+        Me.pnlResultMeshColor = New System.Windows.Forms.Panel()
+        Me.pnlResultSurfaceColor = New System.Windows.Forms.Panel()
         Me.GroupBox8 = New System.Windows.Forms.GroupBox()
         Me.cbxShowWakeNodes = New System.Windows.Forms.CheckBox()
         Me.pnlWakeNodeColor = New System.Windows.Forms.Panel()
@@ -141,16 +130,33 @@ Partial Class MainRibbon
         Me.cbxShowWakeSurface = New System.Windows.Forms.CheckBox()
         Me.pnlWakeMeshColor = New System.Windows.Forms.Panel()
         Me.pnlWakeSurfaceColor = New System.Windows.Forms.Panel()
-        Me.GroupBox4 = New System.Windows.Forms.GroupBox()
-        Me.cbxShowResMesh = New System.Windows.Forms.CheckBox()
-        Me.cbxShowResSurface = New System.Windows.Forms.CheckBox()
-        Me.pnlResultMeshColor = New System.Windows.Forms.Panel()
-        Me.pnlResultSurfaceColor = New System.Windows.Forms.Panel()
-        Me.GroupBox6 = New System.Windows.Forms.GroupBox()
-        Me.btnReport = New System.Windows.Forms.Button()
-        Me.btnLoadResults = New System.Windows.Forms.Button()
+        Me.GroupBox9 = New System.Windows.Forms.GroupBox()
+        Me.cbxShowColormap = New System.Windows.Forms.CheckBox()
+        Me.Label18 = New System.Windows.Forms.Label()
+        Me.btnResetColormap = New System.Windows.Forms.Button()
+        Me.nudCpmin = New System.Windows.Forms.NumericUpDown()
+        Me.Label17 = New System.Windows.Forms.Label()
+        Me.nudCpmax = New System.Windows.Forms.NumericUpDown()
+        Me.GroupBox10 = New System.Windows.Forms.GroupBox()
+        Me.nudScaleForce = New System.Windows.Forms.NumericUpDown()
+        Me.cbxShowVelocity = New System.Windows.Forms.CheckBox()
+        Me.nudScaleVelocity = New System.Windows.Forms.NumericUpDown()
+        Me.pnlVelocityColor = New System.Windows.Forms.Panel()
+        Me.cbxShowForce = New System.Windows.Forms.CheckBox()
+        Me.pnlForceColor = New System.Windows.Forms.Panel()
+        Me.GroupBox5 = New System.Windows.Forms.GroupBox()
+        Me.btnEditVelocityPlane = New System.Windows.Forms.Button()
+        Me.cbxShowVelocityPlane = New System.Windows.Forms.CheckBox()
+        Me.gbxAeroelastic = New System.Windows.Forms.GroupBox()
+        Me.btnPlayStop = New System.Windows.Forms.Button()
+        Me.Label19 = New System.Windows.Forms.Label()
+        Me.nudModeScale = New System.Windows.Forms.NumericUpDown()
+        Me.cbxModes = New System.Windows.Forms.ComboBox()
         Me.tcRibbon.SuspendLayout()
         Me.tpModel.SuspendLayout()
+        Me.tpCalculation.SuspendLayout()
+        Me.tpResults.SuspendLayout()
+        Me.TableLayoutPanel1.SuspendLayout()
         Me.GroupBox3.SuspendLayout()
         CType(Me.nudYmin, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.nudYmax, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -168,12 +174,8 @@ Partial Class MainRibbon
         CType(Me.nudPx, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupBox1.SuspendLayout()
         Me.pnlIO.SuspendLayout()
-        Me.tpCalculation.SuspendLayout()
-        Me.GroupBox12.SuspendLayout()
-        CType(Me.nudIncrement, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.nudCutoff, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.nudCuttingStep, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.nudSteps, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.TableLayoutPanel2.SuspendLayout()
+        Me.gbxCalculationType.SuspendLayout()
         Me.GroupBox11.SuspendLayout()
         CType(Me.nudViscosity, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.nudDensity, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -183,20 +185,24 @@ Partial Class MainRibbon
         CType(Me.nudVz, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.nudVy, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.nudVx, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.gbxCalculationType.SuspendLayout()
-        Me.tpResults.SuspendLayout()
-        Me.gbxAeroelastic.SuspendLayout()
-        CType(Me.nudModeScale, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.GroupBox5.SuspendLayout()
-        Me.GroupBox10.SuspendLayout()
-        CType(Me.nudScaleForce, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.nudScaleVelocity, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.GroupBox12.SuspendLayout()
+        CType(Me.nudIncrement, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.nudCutoff, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.nudCuttingStep, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.nudSteps, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.TableLayoutPanel3.SuspendLayout()
+        Me.GroupBox6.SuspendLayout()
+        Me.GroupBox4.SuspendLayout()
+        Me.GroupBox8.SuspendLayout()
         Me.GroupBox9.SuspendLayout()
         CType(Me.nudCpmin, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.nudCpmax, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.GroupBox8.SuspendLayout()
-        Me.GroupBox4.SuspendLayout()
-        Me.GroupBox6.SuspendLayout()
+        Me.GroupBox10.SuspendLayout()
+        CType(Me.nudScaleForce, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.nudScaleVelocity, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.GroupBox5.SuspendLayout()
+        Me.gbxAeroelastic.SuspendLayout()
+        CType(Me.nudModeScale, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'tcRibbon
@@ -207,23 +213,60 @@ Partial Class MainRibbon
         Me.tcRibbon.Dock = System.Windows.Forms.DockStyle.Fill
         Me.tcRibbon.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.tcRibbon.Location = New System.Drawing.Point(2, 2)
+        Me.tcRibbon.MinimumSize = New System.Drawing.Size(0, 130)
         Me.tcRibbon.Name = "tcRibbon"
         Me.tcRibbon.SelectedIndex = 0
-        Me.tcRibbon.Size = New System.Drawing.Size(1097, 124)
+        Me.tcRibbon.Size = New System.Drawing.Size(1204, 130)
         Me.tcRibbon.TabIndex = 0
         '
         'tpModel
         '
-        Me.tpModel.Controls.Add(Me.GroupBox3)
-        Me.tpModel.Controls.Add(Me.GroupBox2)
-        Me.tpModel.Controls.Add(Me.GroupBox1)
-        Me.tpModel.Controls.Add(Me.pnlIO)
+        Me.tpModel.Controls.Add(Me.TableLayoutPanel1)
         Me.tpModel.Location = New System.Drawing.Point(4, 22)
         Me.tpModel.Name = "tpModel"
-        Me.tpModel.Size = New System.Drawing.Size(1089, 98)
+        Me.tpModel.Size = New System.Drawing.Size(1196, 104)
         Me.tpModel.TabIndex = 1
         Me.tpModel.Text = "Model"
         Me.tpModel.UseVisualStyleBackColor = True
+        '
+        'tpCalculation
+        '
+        Me.tpCalculation.Controls.Add(Me.TableLayoutPanel2)
+        Me.tpCalculation.Location = New System.Drawing.Point(4, 22)
+        Me.tpCalculation.Name = "tpCalculation"
+        Me.tpCalculation.Size = New System.Drawing.Size(1196, 104)
+        Me.tpCalculation.TabIndex = 2
+        Me.tpCalculation.Text = "Simulation"
+        Me.tpCalculation.UseVisualStyleBackColor = True
+        '
+        'tpResults
+        '
+        Me.tpResults.BackColor = System.Drawing.Color.White
+        Me.tpResults.Controls.Add(Me.TableLayoutPanel3)
+        Me.tpResults.Location = New System.Drawing.Point(4, 22)
+        Me.tpResults.Name = "tpResults"
+        Me.tpResults.Size = New System.Drawing.Size(1196, 104)
+        Me.tpResults.TabIndex = 3
+        Me.tpResults.Text = "Results"
+        '
+        'TableLayoutPanel1
+        '
+        Me.TableLayoutPanel1.ColumnCount = 4
+        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle())
+        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle())
+        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle())
+        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle())
+        Me.TableLayoutPanel1.Controls.Add(Me.GroupBox3, 3, 0)
+        Me.TableLayoutPanel1.Controls.Add(Me.GroupBox2, 2, 0)
+        Me.TableLayoutPanel1.Controls.Add(Me.GroupBox1, 1, 0)
+        Me.TableLayoutPanel1.Controls.Add(Me.pnlIO, 0, 0)
+        Me.TableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TableLayoutPanel1.Location = New System.Drawing.Point(0, 0)
+        Me.TableLayoutPanel1.Name = "TableLayoutPanel1"
+        Me.TableLayoutPanel1.RowCount = 1
+        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel1.Size = New System.Drawing.Size(1196, 104)
+        Me.TableLayoutPanel1.TabIndex = 2
         '
         'GroupBox3
         '
@@ -241,12 +284,12 @@ Partial Class MainRibbon
         Me.GroupBox3.Controls.Add(Me.Label4)
         Me.GroupBox3.Controls.Add(Me.cbxShowRulers)
         Me.GroupBox3.Controls.Add(Me.pnlScreenColor)
-        Me.GroupBox3.Dock = System.Windows.Forms.DockStyle.Left
+        Me.GroupBox3.Dock = System.Windows.Forms.DockStyle.Fill
         Me.GroupBox3.Font = New System.Drawing.Font("Segoe UI", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.GroupBox3.Location = New System.Drawing.Point(803, 0)
+        Me.GroupBox3.Location = New System.Drawing.Point(816, 3)
         Me.GroupBox3.Name = "GroupBox3"
-        Me.GroupBox3.Size = New System.Drawing.Size(244, 98)
-        Me.GroupBox3.TabIndex = 506
+        Me.GroupBox3.Size = New System.Drawing.Size(377, 98)
+        Me.GroupBox3.TabIndex = 507
         Me.GroupBox3.TabStop = False
         Me.GroupBox3.Text = "Screen view"
         '
@@ -307,7 +350,7 @@ Partial Class MainRibbon
         Me.Label7.ForeColor = System.Drawing.SystemColors.ControlDarkDark
         Me.Label7.Location = New System.Drawing.Point(99, 68)
         Me.Label7.Name = "Label7"
-        Me.Label7.Size = New System.Drawing.Size(25, 12)
+        Me.Label7.Size = New System.Drawing.Size(24, 12)
         Me.Label7.TabIndex = 84
         Me.Label7.Text = "Ymin"
         Me.Label7.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -318,7 +361,7 @@ Partial Class MainRibbon
         Me.Label8.ForeColor = System.Drawing.SystemColors.ControlDarkDark
         Me.Label8.Location = New System.Drawing.Point(99, 50)
         Me.Label8.Name = "Label8"
-        Me.Label8.Size = New System.Drawing.Size(27, 12)
+        Me.Label8.Size = New System.Drawing.Size(26, 12)
         Me.Label8.TabIndex = 83
         Me.Label8.Text = "Ymax"
         Me.Label8.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -442,12 +485,12 @@ Partial Class MainRibbon
         Me.GroupBox2.Controls.Add(Me.nudPx)
         Me.GroupBox2.Controls.Add(Me.bntAlign)
         Me.GroupBox2.Controls.Add(Me.btnMove)
-        Me.GroupBox2.Dock = System.Windows.Forms.DockStyle.Left
+        Me.GroupBox2.Dock = System.Windows.Forms.DockStyle.Fill
         Me.GroupBox2.Font = New System.Drawing.Font("Segoe UI", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.GroupBox2.Location = New System.Drawing.Point(489, 0)
+        Me.GroupBox2.Location = New System.Drawing.Point(504, 3)
         Me.GroupBox2.Name = "GroupBox2"
-        Me.GroupBox2.Size = New System.Drawing.Size(314, 98)
-        Me.GroupBox2.TabIndex = 505
+        Me.GroupBox2.Size = New System.Drawing.Size(306, 98)
+        Me.GroupBox2.TabIndex = 506
         Me.GroupBox2.TabStop = False
         Me.GroupBox2.Text = "Position"
         '
@@ -558,7 +601,7 @@ Partial Class MainRibbon
         Me.Label12.ForeColor = System.Drawing.SystemColors.ControlDarkDark
         Me.Label12.Location = New System.Drawing.Point(86, 37)
         Me.Label12.Name = "Label12"
-        Me.Label12.Size = New System.Drawing.Size(13, 12)
+        Me.Label12.Size = New System.Drawing.Size(12, 12)
         Me.Label12.TabIndex = 94
         Me.Label12.Text = "Yr"
         Me.Label12.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -727,12 +770,12 @@ Partial Class MainRibbon
         Me.GroupBox1.Controls.Add(Me.cbxShowSurface)
         Me.GroupBox1.Controls.Add(Me.pnlMeshColor)
         Me.GroupBox1.Controls.Add(Me.pnlSurfaceColor)
-        Me.GroupBox1.Dock = System.Windows.Forms.DockStyle.Left
+        Me.GroupBox1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.GroupBox1.Font = New System.Drawing.Font("Segoe UI", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.GroupBox1.Location = New System.Drawing.Point(134, 0)
+        Me.GroupBox1.Location = New System.Drawing.Point(143, 3)
         Me.GroupBox1.Name = "GroupBox1"
         Me.GroupBox1.Size = New System.Drawing.Size(355, 98)
-        Me.GroupBox1.TabIndex = 504
+        Me.GroupBox1.TabIndex = 505
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "Components"
         '
@@ -890,12 +933,12 @@ Partial Class MainRibbon
         Me.pnlIO.Controls.Add(Me.btnOpen)
         Me.pnlIO.Controls.Add(Me.btnSaveAs)
         Me.pnlIO.Controls.Add(Me.btnSave)
-        Me.pnlIO.Dock = System.Windows.Forms.DockStyle.Left
+        Me.pnlIO.Dock = System.Windows.Forms.DockStyle.Fill
         Me.pnlIO.Font = New System.Drawing.Font("Segoe UI", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.pnlIO.Location = New System.Drawing.Point(0, 0)
+        Me.pnlIO.Location = New System.Drawing.Point(3, 3)
         Me.pnlIO.Name = "pnlIO"
         Me.pnlIO.Size = New System.Drawing.Size(134, 98)
-        Me.pnlIO.TabIndex = 503
+        Me.pnlIO.TabIndex = 504
         Me.pnlIO.TabStop = False
         Me.pnlIO.Text = "IO"
         '
@@ -971,120 +1014,62 @@ Partial Class MainRibbon
         Me.btnSave.Text = "Save"
         Me.btnSave.UseVisualStyleBackColor = False
         '
-        'tpCalculation
+        'TableLayoutPanel2
         '
-        Me.tpCalculation.Controls.Add(Me.GroupBox12)
-        Me.tpCalculation.Controls.Add(Me.GroupBox11)
-        Me.tpCalculation.Controls.Add(Me.gbxCalculationType)
-        Me.tpCalculation.Location = New System.Drawing.Point(4, 22)
-        Me.tpCalculation.Name = "tpCalculation"
-        Me.tpCalculation.Size = New System.Drawing.Size(1089, 98)
-        Me.tpCalculation.TabIndex = 2
-        Me.tpCalculation.Text = "Simulation"
-        Me.tpCalculation.UseVisualStyleBackColor = True
+        Me.TableLayoutPanel2.ColumnCount = 3
+        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle())
+        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle())
+        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle())
+        Me.TableLayoutPanel2.Controls.Add(Me.GroupBox12, 3, 0)
+        Me.TableLayoutPanel2.Controls.Add(Me.GroupBox11, 1, 0)
+        Me.TableLayoutPanel2.Controls.Add(Me.gbxCalculationType, 0, 0)
+        Me.TableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TableLayoutPanel2.Location = New System.Drawing.Point(0, 0)
+        Me.TableLayoutPanel2.Name = "TableLayoutPanel2"
+        Me.TableLayoutPanel2.RowCount = 1
+        Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel2.Size = New System.Drawing.Size(1196, 104)
+        Me.TableLayoutPanel2.TabIndex = 522
         '
-        'GroupBox12
+        'gbxCalculationType
         '
-        Me.GroupBox12.Controls.Add(Me.Label28)
-        Me.GroupBox12.Controls.Add(Me.nudIncrement)
-        Me.GroupBox12.Controls.Add(Me.Label33)
-        Me.GroupBox12.Controls.Add(Me.Label34)
-        Me.GroupBox12.Controls.Add(Me.Label35)
-        Me.GroupBox12.Controls.Add(Me.nudCutoff)
-        Me.GroupBox12.Controls.Add(Me.nudCuttingStep)
-        Me.GroupBox12.Controls.Add(Me.nudSteps)
-        Me.GroupBox12.Dock = System.Windows.Forms.DockStyle.Left
-        Me.GroupBox12.Font = New System.Drawing.Font("Segoe UI", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.GroupBox12.Location = New System.Drawing.Point(376, 0)
-        Me.GroupBox12.Name = "GroupBox12"
-        Me.GroupBox12.Size = New System.Drawing.Size(149, 98)
-        Me.GroupBox12.TabIndex = 521
-        Me.GroupBox12.TabStop = False
-        Me.GroupBox12.Text = "Simulation"
+        Me.gbxCalculationType.Controls.Add(Me.btnStartCalculation)
+        Me.gbxCalculationType.Controls.Add(Me.cbxSimulationMode)
+        Me.gbxCalculationType.Dock = System.Windows.Forms.DockStyle.Left
+        Me.gbxCalculationType.Font = New System.Drawing.Font("Segoe UI", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.gbxCalculationType.Location = New System.Drawing.Point(3, 3)
+        Me.gbxCalculationType.Name = "gbxCalculationType"
+        Me.gbxCalculationType.Size = New System.Drawing.Size(128, 98)
+        Me.gbxCalculationType.TabIndex = 520
+        Me.gbxCalculationType.TabStop = False
+        Me.gbxCalculationType.Text = "Mode"
         '
-        'Label28
+        'btnStartCalculation
         '
-        Me.Label28.AutoSize = True
-        Me.Label28.ForeColor = System.Drawing.SystemColors.ControlDarkDark
-        Me.Label28.Location = New System.Drawing.Point(7, 36)
-        Me.Label28.Name = "Label28"
-        Me.Label28.Size = New System.Drawing.Size(42, 12)
-        Me.Label28.TabIndex = 97
-        Me.Label28.Text = "Incement"
-        Me.Label28.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.btnStartCalculation.BackColor = System.Drawing.Color.White
+        Me.btnStartCalculation.FlatAppearance.BorderColor = System.Drawing.Color.Gray
+        Me.btnStartCalculation.FlatAppearance.CheckedBackColor = System.Drawing.SystemColors.ButtonFace
+        Me.btnStartCalculation.FlatAppearance.MouseDownBackColor = System.Drawing.Color.PaleGreen
+        Me.btnStartCalculation.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DeepSkyBlue
+        Me.btnStartCalculation.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnStartCalculation.Font = New System.Drawing.Font("Segoe UI", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnStartCalculation.ImeMode = System.Windows.Forms.ImeMode.NoControl
+        Me.btnStartCalculation.Location = New System.Drawing.Point(6, 45)
+        Me.btnStartCalculation.Name = "btnStartCalculation"
+        Me.btnStartCalculation.Size = New System.Drawing.Size(60, 22)
+        Me.btnStartCalculation.TabIndex = 107
+        Me.btnStartCalculation.Text = "Start"
+        Me.btnStartCalculation.UseVisualStyleBackColor = False
         '
-        'nudIncrement
+        'cbxSimulationMode
         '
-        Me.nudIncrement.DecimalPlaces = 5
-        Me.nudIncrement.Increment = New Decimal(New Integer() {1, 0, 0, 196608})
-        Me.nudIncrement.Location = New System.Drawing.Point(66, 34)
-        Me.nudIncrement.Maximum = New Decimal(New Integer() {1000, 0, 0, 0})
-        Me.nudIncrement.Name = "nudIncrement"
-        Me.nudIncrement.Size = New System.Drawing.Size(64, 19)
-        Me.nudIncrement.TabIndex = 96
-        Me.nudIncrement.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        '
-        'Label33
-        '
-        Me.Label33.AutoSize = True
-        Me.Label33.ForeColor = System.Drawing.SystemColors.ControlDarkDark
-        Me.Label33.Location = New System.Drawing.Point(7, 71)
-        Me.Label33.Name = "Label33"
-        Me.Label33.Size = New System.Drawing.Size(30, 12)
-        Me.Label33.TabIndex = 95
-        Me.Label33.Text = "Cutoff"
-        Me.Label33.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        '
-        'Label34
-        '
-        Me.Label34.AutoSize = True
-        Me.Label34.ForeColor = System.Drawing.SystemColors.ControlDarkDark
-        Me.Label34.Location = New System.Drawing.Point(7, 54)
-        Me.Label34.Name = "Label34"
-        Me.Label34.Size = New System.Drawing.Size(53, 12)
-        Me.Label34.TabIndex = 94
-        Me.Label34.Text = "Cutting step"
-        Me.Label34.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        '
-        'Label35
-        '
-        Me.Label35.AutoSize = True
-        Me.Label35.ForeColor = System.Drawing.SystemColors.ControlDarkDark
-        Me.Label35.Location = New System.Drawing.Point(7, 18)
-        Me.Label35.Name = "Label35"
-        Me.Label35.Size = New System.Drawing.Size(27, 12)
-        Me.Label35.TabIndex = 93
-        Me.Label35.Text = "Steps"
-        Me.Label35.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        '
-        'nudCutoff
-        '
-        Me.nudCutoff.DecimalPlaces = 5
-        Me.nudCutoff.Increment = New Decimal(New Integer() {1, 0, 0, 262144})
-        Me.nudCutoff.Location = New System.Drawing.Point(66, 68)
-        Me.nudCutoff.Maximum = New Decimal(New Integer() {10000, 0, 0, 0})
-        Me.nudCutoff.Name = "nudCutoff"
-        Me.nudCutoff.Size = New System.Drawing.Size(64, 19)
-        Me.nudCutoff.TabIndex = 92
-        Me.nudCutoff.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        '
-        'nudCuttingStep
-        '
-        Me.nudCuttingStep.Location = New System.Drawing.Point(66, 52)
-        Me.nudCuttingStep.Maximum = New Decimal(New Integer() {10000, 0, 0, 0})
-        Me.nudCuttingStep.Name = "nudCuttingStep"
-        Me.nudCuttingStep.Size = New System.Drawing.Size(64, 19)
-        Me.nudCuttingStep.TabIndex = 91
-        Me.nudCuttingStep.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        '
-        'nudSteps
-        '
-        Me.nudSteps.Location = New System.Drawing.Point(66, 16)
-        Me.nudSteps.Maximum = New Decimal(New Integer() {10000, 0, 0, 0})
-        Me.nudSteps.Name = "nudSteps"
-        Me.nudSteps.Size = New System.Drawing.Size(64, 19)
-        Me.nudSteps.TabIndex = 90
-        Me.nudSteps.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.cbxSimulationMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cbxSimulationMode.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cbxSimulationMode.FormattingEnabled = True
+        Me.cbxSimulationMode.Location = New System.Drawing.Point(6, 18)
+        Me.cbxSimulationMode.Name = "cbxSimulationMode"
+        Me.cbxSimulationMode.Size = New System.Drawing.Size(116, 21)
+        Me.cbxSimulationMode.TabIndex = 63
         '
         'GroupBox11
         '
@@ -1107,10 +1092,10 @@ Partial Class MainRibbon
         Me.GroupBox11.Controls.Add(Me.nudVx)
         Me.GroupBox11.Dock = System.Windows.Forms.DockStyle.Left
         Me.GroupBox11.Font = New System.Drawing.Font("Segoe UI", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.GroupBox11.Location = New System.Drawing.Point(128, 0)
+        Me.GroupBox11.Location = New System.Drawing.Point(137, 3)
         Me.GroupBox11.Name = "GroupBox11"
         Me.GroupBox11.Size = New System.Drawing.Size(248, 98)
-        Me.GroupBox11.TabIndex = 520
+        Me.GroupBox11.TabIndex = 521
         Me.GroupBox11.TabStop = False
         Me.GroupBox11.Text = "Stream"
         '
@@ -1307,246 +1292,316 @@ Partial Class MainRibbon
         Me.nudVx.TabIndex = 90
         Me.nudVx.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
-        'gbxCalculationType
+        'GroupBox12
         '
-        Me.gbxCalculationType.Controls.Add(Me.btnStartCalculation)
-        Me.gbxCalculationType.Controls.Add(Me.cbxSimulationMode)
-        Me.gbxCalculationType.Dock = System.Windows.Forms.DockStyle.Left
-        Me.gbxCalculationType.Font = New System.Drawing.Font("Segoe UI", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.gbxCalculationType.Location = New System.Drawing.Point(0, 0)
-        Me.gbxCalculationType.Name = "gbxCalculationType"
-        Me.gbxCalculationType.Size = New System.Drawing.Size(128, 98)
-        Me.gbxCalculationType.TabIndex = 519
-        Me.gbxCalculationType.TabStop = False
-        Me.gbxCalculationType.Text = "Mode"
+        Me.GroupBox12.Controls.Add(Me.Label28)
+        Me.GroupBox12.Controls.Add(Me.nudIncrement)
+        Me.GroupBox12.Controls.Add(Me.Label33)
+        Me.GroupBox12.Controls.Add(Me.Label34)
+        Me.GroupBox12.Controls.Add(Me.Label35)
+        Me.GroupBox12.Controls.Add(Me.nudCutoff)
+        Me.GroupBox12.Controls.Add(Me.nudCuttingStep)
+        Me.GroupBox12.Controls.Add(Me.nudSteps)
+        Me.GroupBox12.Dock = System.Windows.Forms.DockStyle.Left
+        Me.GroupBox12.Font = New System.Drawing.Font("Segoe UI", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.GroupBox12.Location = New System.Drawing.Point(391, 3)
+        Me.GroupBox12.Name = "GroupBox12"
+        Me.GroupBox12.Size = New System.Drawing.Size(178, 98)
+        Me.GroupBox12.TabIndex = 522
+        Me.GroupBox12.TabStop = False
+        Me.GroupBox12.Text = "Simulation"
         '
-        'btnStartCalculation
+        'Label28
         '
-        Me.btnStartCalculation.BackColor = System.Drawing.Color.White
-        Me.btnStartCalculation.FlatAppearance.BorderColor = System.Drawing.Color.Gray
-        Me.btnStartCalculation.FlatAppearance.CheckedBackColor = System.Drawing.SystemColors.ButtonFace
-        Me.btnStartCalculation.FlatAppearance.MouseDownBackColor = System.Drawing.Color.PaleGreen
-        Me.btnStartCalculation.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DeepSkyBlue
-        Me.btnStartCalculation.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btnStartCalculation.Font = New System.Drawing.Font("Segoe UI", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnStartCalculation.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.btnStartCalculation.Location = New System.Drawing.Point(6, 45)
-        Me.btnStartCalculation.Name = "btnStartCalculation"
-        Me.btnStartCalculation.Size = New System.Drawing.Size(60, 22)
-        Me.btnStartCalculation.TabIndex = 107
-        Me.btnStartCalculation.Text = "Start"
-        Me.btnStartCalculation.UseVisualStyleBackColor = False
+        Me.Label28.AutoSize = True
+        Me.Label28.ForeColor = System.Drawing.SystemColors.ControlDarkDark
+        Me.Label28.Location = New System.Drawing.Point(7, 36)
+        Me.Label28.Name = "Label28"
+        Me.Label28.Size = New System.Drawing.Size(42, 12)
+        Me.Label28.TabIndex = 97
+        Me.Label28.Text = "Incement"
+        Me.Label28.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
-        'cbxSimulationMode
+        'nudIncrement
         '
-        Me.cbxSimulationMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.cbxSimulationMode.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.cbxSimulationMode.FormattingEnabled = True
-        Me.cbxSimulationMode.Location = New System.Drawing.Point(6, 18)
-        Me.cbxSimulationMode.Name = "cbxSimulationMode"
-        Me.cbxSimulationMode.Size = New System.Drawing.Size(116, 21)
-        Me.cbxSimulationMode.TabIndex = 63
+        Me.nudIncrement.DecimalPlaces = 5
+        Me.nudIncrement.Increment = New Decimal(New Integer() {1, 0, 0, 196608})
+        Me.nudIncrement.Location = New System.Drawing.Point(66, 34)
+        Me.nudIncrement.Maximum = New Decimal(New Integer() {1000, 0, 0, 0})
+        Me.nudIncrement.Name = "nudIncrement"
+        Me.nudIncrement.Size = New System.Drawing.Size(64, 19)
+        Me.nudIncrement.TabIndex = 96
+        Me.nudIncrement.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
-        'tpResults
+        'Label33
         '
-        Me.tpResults.BackColor = System.Drawing.Color.White
-        Me.tpResults.Controls.Add(Me.gbxAeroelastic)
-        Me.tpResults.Controls.Add(Me.GroupBox5)
-        Me.tpResults.Controls.Add(Me.GroupBox10)
-        Me.tpResults.Controls.Add(Me.GroupBox9)
-        Me.tpResults.Controls.Add(Me.GroupBox8)
-        Me.tpResults.Controls.Add(Me.GroupBox4)
-        Me.tpResults.Controls.Add(Me.GroupBox6)
-        Me.tpResults.Location = New System.Drawing.Point(4, 22)
-        Me.tpResults.Name = "tpResults"
-        Me.tpResults.Size = New System.Drawing.Size(1089, 98)
-        Me.tpResults.TabIndex = 3
-        Me.tpResults.Text = "Results"
+        Me.Label33.AutoSize = True
+        Me.Label33.ForeColor = System.Drawing.SystemColors.ControlDarkDark
+        Me.Label33.Location = New System.Drawing.Point(7, 71)
+        Me.Label33.Name = "Label33"
+        Me.Label33.Size = New System.Drawing.Size(30, 12)
+        Me.Label33.TabIndex = 95
+        Me.Label33.Text = "Cutoff"
+        Me.Label33.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
-        'gbxAeroelastic
+        'Label34
         '
-        Me.gbxAeroelastic.Controls.Add(Me.btnPlayStop)
-        Me.gbxAeroelastic.Controls.Add(Me.Label19)
-        Me.gbxAeroelastic.Controls.Add(Me.nudModeScale)
-        Me.gbxAeroelastic.Controls.Add(Me.cbxModes)
-        Me.gbxAeroelastic.Dock = System.Windows.Forms.DockStyle.Left
-        Me.gbxAeroelastic.Font = New System.Drawing.Font("Segoe UI", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.gbxAeroelastic.Location = New System.Drawing.Point(708, 0)
-        Me.gbxAeroelastic.Name = "gbxAeroelastic"
-        Me.gbxAeroelastic.Size = New System.Drawing.Size(128, 98)
-        Me.gbxAeroelastic.TabIndex = 518
-        Me.gbxAeroelastic.TabStop = False
-        Me.gbxAeroelastic.Text = "Aeroelastic"
+        Me.Label34.AutoSize = True
+        Me.Label34.ForeColor = System.Drawing.SystemColors.ControlDarkDark
+        Me.Label34.Location = New System.Drawing.Point(7, 54)
+        Me.Label34.Name = "Label34"
+        Me.Label34.Size = New System.Drawing.Size(53, 12)
+        Me.Label34.TabIndex = 94
+        Me.Label34.Text = "Cutting step"
+        Me.Label34.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
-        'btnPlayStop
+        'Label35
         '
-        Me.btnPlayStop.BackColor = System.Drawing.Color.White
-        Me.btnPlayStop.FlatAppearance.BorderColor = System.Drawing.Color.Gray
-        Me.btnPlayStop.FlatAppearance.CheckedBackColor = System.Drawing.SystemColors.ButtonFace
-        Me.btnPlayStop.FlatAppearance.MouseDownBackColor = System.Drawing.Color.PaleGreen
-        Me.btnPlayStop.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DeepSkyBlue
-        Me.btnPlayStop.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btnPlayStop.Font = New System.Drawing.Font("Segoe UI", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnPlayStop.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.btnPlayStop.Location = New System.Drawing.Point(62, 68)
-        Me.btnPlayStop.Name = "btnPlayStop"
-        Me.btnPlayStop.Size = New System.Drawing.Size(60, 22)
-        Me.btnPlayStop.TabIndex = 107
-        Me.btnPlayStop.Text = "Play"
-        Me.btnPlayStop.UseVisualStyleBackColor = False
+        Me.Label35.AutoSize = True
+        Me.Label35.ForeColor = System.Drawing.SystemColors.ControlDarkDark
+        Me.Label35.Location = New System.Drawing.Point(7, 18)
+        Me.Label35.Name = "Label35"
+        Me.Label35.Size = New System.Drawing.Size(27, 12)
+        Me.Label35.TabIndex = 93
+        Me.Label35.Text = "Steps"
+        Me.Label35.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
-        'Label19
+        'nudCutoff
         '
-        Me.Label19.AutoSize = True
-        Me.Label19.ForeColor = System.Drawing.SystemColors.ControlDarkDark
-        Me.Label19.Location = New System.Drawing.Point(40, 46)
-        Me.Label19.Name = "Label19"
-        Me.Label19.Size = New System.Drawing.Size(26, 12)
-        Me.Label19.TabIndex = 104
-        Me.Label19.Text = "Scale"
-        Me.Label19.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.nudCutoff.DecimalPlaces = 5
+        Me.nudCutoff.Increment = New Decimal(New Integer() {1, 0, 0, 262144})
+        Me.nudCutoff.Location = New System.Drawing.Point(66, 68)
+        Me.nudCutoff.Maximum = New Decimal(New Integer() {10000, 0, 0, 0})
+        Me.nudCutoff.Name = "nudCutoff"
+        Me.nudCutoff.Size = New System.Drawing.Size(64, 19)
+        Me.nudCutoff.TabIndex = 92
+        Me.nudCutoff.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
-        'nudModeScale
+        'nudCuttingStep
         '
-        Me.nudModeScale.DecimalPlaces = 1
-        Me.nudModeScale.Location = New System.Drawing.Point(72, 44)
-        Me.nudModeScale.Maximum = New Decimal(New Integer() {1000, 0, 0, 0})
-        Me.nudModeScale.Name = "nudModeScale"
-        Me.nudModeScale.Size = New System.Drawing.Size(50, 19)
-        Me.nudModeScale.TabIndex = 98
-        Me.nudModeScale.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        Me.nudModeScale.Value = New Decimal(New Integer() {1, 0, 0, 0})
+        Me.nudCuttingStep.Location = New System.Drawing.Point(66, 52)
+        Me.nudCuttingStep.Maximum = New Decimal(New Integer() {10000, 0, 0, 0})
+        Me.nudCuttingStep.Name = "nudCuttingStep"
+        Me.nudCuttingStep.Size = New System.Drawing.Size(64, 19)
+        Me.nudCuttingStep.TabIndex = 91
+        Me.nudCuttingStep.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
-        'cbxModes
+        'nudSteps
         '
-        Me.cbxModes.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.cbxModes.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.cbxModes.FormattingEnabled = True
-        Me.cbxModes.Location = New System.Drawing.Point(6, 18)
-        Me.cbxModes.Name = "cbxModes"
-        Me.cbxModes.Size = New System.Drawing.Size(116, 21)
-        Me.cbxModes.TabIndex = 63
+        Me.nudSteps.Location = New System.Drawing.Point(66, 16)
+        Me.nudSteps.Maximum = New Decimal(New Integer() {10000, 0, 0, 0})
+        Me.nudSteps.Name = "nudSteps"
+        Me.nudSteps.Size = New System.Drawing.Size(64, 19)
+        Me.nudSteps.TabIndex = 90
+        Me.nudSteps.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
-        'GroupBox5
+        'TableLayoutPanel3
         '
-        Me.GroupBox5.Controls.Add(Me.btnEditVelocityPlane)
-        Me.GroupBox5.Controls.Add(Me.cbxShowVelocityPlane)
-        Me.GroupBox5.Dock = System.Windows.Forms.DockStyle.Left
-        Me.GroupBox5.Font = New System.Drawing.Font("Segoe UI", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.GroupBox5.Location = New System.Drawing.Point(633, 0)
-        Me.GroupBox5.Name = "GroupBox5"
-        Me.GroupBox5.Size = New System.Drawing.Size(75, 98)
-        Me.GroupBox5.TabIndex = 517
-        Me.GroupBox5.TabStop = False
-        Me.GroupBox5.Text = "Velocity plane"
+        Me.TableLayoutPanel3.ColumnCount = 7
+        Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle())
+        Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle())
+        Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle())
+        Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle())
+        Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle())
+        Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle())
+        Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle())
+        Me.TableLayoutPanel3.Controls.Add(Me.gbxAeroelastic, 6, 0)
+        Me.TableLayoutPanel3.Controls.Add(Me.GroupBox5, 5, 0)
+        Me.TableLayoutPanel3.Controls.Add(Me.GroupBox10, 4, 0)
+        Me.TableLayoutPanel3.Controls.Add(Me.GroupBox9, 3, 0)
+        Me.TableLayoutPanel3.Controls.Add(Me.GroupBox8, 2, 0)
+        Me.TableLayoutPanel3.Controls.Add(Me.GroupBox4, 1, 0)
+        Me.TableLayoutPanel3.Controls.Add(Me.GroupBox6, 0, 0)
+        Me.TableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TableLayoutPanel3.Location = New System.Drawing.Point(0, 0)
+        Me.TableLayoutPanel3.Name = "TableLayoutPanel3"
+        Me.TableLayoutPanel3.RowCount = 1
+        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
+        Me.TableLayoutPanel3.Size = New System.Drawing.Size(1196, 104)
+        Me.TableLayoutPanel3.TabIndex = 519
         '
-        'btnEditVelocityPlane
+        'GroupBox6
         '
-        Me.btnEditVelocityPlane.BackColor = System.Drawing.Color.White
-        Me.btnEditVelocityPlane.FlatAppearance.BorderColor = System.Drawing.Color.Gray
-        Me.btnEditVelocityPlane.FlatAppearance.CheckedBackColor = System.Drawing.SystemColors.ButtonFace
-        Me.btnEditVelocityPlane.FlatAppearance.MouseDownBackColor = System.Drawing.Color.PaleGreen
-        Me.btnEditVelocityPlane.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DeepSkyBlue
-        Me.btnEditVelocityPlane.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btnEditVelocityPlane.Font = New System.Drawing.Font("Segoe UI", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnEditVelocityPlane.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.btnEditVelocityPlane.Location = New System.Drawing.Point(6, 17)
-        Me.btnEditVelocityPlane.Name = "btnEditVelocityPlane"
-        Me.btnEditVelocityPlane.Size = New System.Drawing.Size(60, 22)
-        Me.btnEditVelocityPlane.TabIndex = 66
-        Me.btnEditVelocityPlane.Text = "Edit"
-        Me.btnEditVelocityPlane.UseVisualStyleBackColor = False
+        Me.GroupBox6.BackColor = System.Drawing.Color.Transparent
+        Me.GroupBox6.Controls.Add(Me.btnReport)
+        Me.GroupBox6.Controls.Add(Me.btnLoadResults)
+        Me.GroupBox6.Dock = System.Windows.Forms.DockStyle.Left
+        Me.GroupBox6.Font = New System.Drawing.Font("Segoe UI", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.GroupBox6.Location = New System.Drawing.Point(3, 3)
+        Me.GroupBox6.Name = "GroupBox6"
+        Me.GroupBox6.Size = New System.Drawing.Size(73, 98)
+        Me.GroupBox6.TabIndex = 511
+        Me.GroupBox6.TabStop = False
+        Me.GroupBox6.Text = "IO"
         '
-        'cbxShowVelocityPlane
+        'btnReport
         '
-        Me.cbxShowVelocityPlane.AutoSize = True
-        Me.cbxShowVelocityPlane.Checked = True
-        Me.cbxShowVelocityPlane.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.cbxShowVelocityPlane.Location = New System.Drawing.Point(6, 45)
-        Me.cbxShowVelocityPlane.Name = "cbxShowVelocityPlane"
-        Me.cbxShowVelocityPlane.Size = New System.Drawing.Size(46, 16)
-        Me.cbxShowVelocityPlane.TabIndex = 69
-        Me.cbxShowVelocityPlane.Text = "Show"
-        Me.cbxShowVelocityPlane.UseVisualStyleBackColor = True
+        Me.btnReport.BackColor = System.Drawing.Color.Gainsboro
+        Me.btnReport.FlatAppearance.BorderColor = System.Drawing.Color.Gray
+        Me.btnReport.FlatAppearance.CheckedBackColor = System.Drawing.SystemColors.ButtonFace
+        Me.btnReport.FlatAppearance.MouseDownBackColor = System.Drawing.Color.PaleGreen
+        Me.btnReport.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DeepSkyBlue
+        Me.btnReport.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnReport.Font = New System.Drawing.Font("Segoe UI", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnReport.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.btnReport.ImeMode = System.Windows.Forms.ImeMode.NoControl
+        Me.btnReport.Location = New System.Drawing.Point(6, 41)
+        Me.btnReport.Name = "btnReport"
+        Me.btnReport.Size = New System.Drawing.Size(60, 22)
+        Me.btnReport.TabIndex = 61
+        Me.btnReport.Text = "Report"
+        Me.btnReport.UseVisualStyleBackColor = False
         '
-        'GroupBox10
+        'btnLoadResults
         '
-        Me.GroupBox10.Controls.Add(Me.nudScaleForce)
-        Me.GroupBox10.Controls.Add(Me.cbxShowVelocity)
-        Me.GroupBox10.Controls.Add(Me.nudScaleVelocity)
-        Me.GroupBox10.Controls.Add(Me.pnlVelocityColor)
-        Me.GroupBox10.Controls.Add(Me.cbxShowForce)
-        Me.GroupBox10.Controls.Add(Me.pnlForceColor)
-        Me.GroupBox10.Dock = System.Windows.Forms.DockStyle.Left
-        Me.GroupBox10.Font = New System.Drawing.Font("Segoe UI", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.GroupBox10.Location = New System.Drawing.Point(465, 0)
-        Me.GroupBox10.Name = "GroupBox10"
-        Me.GroupBox10.Size = New System.Drawing.Size(168, 98)
-        Me.GroupBox10.TabIndex = 516
-        Me.GroupBox10.TabStop = False
-        Me.GroupBox10.Text = "Vectors"
+        Me.btnLoadResults.BackColor = System.Drawing.Color.Gainsboro
+        Me.btnLoadResults.FlatAppearance.BorderColor = System.Drawing.Color.Gray
+        Me.btnLoadResults.FlatAppearance.CheckedBackColor = System.Drawing.SystemColors.ButtonFace
+        Me.btnLoadResults.FlatAppearance.MouseDownBackColor = System.Drawing.Color.PaleGreen
+        Me.btnLoadResults.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DeepSkyBlue
+        Me.btnLoadResults.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnLoadResults.Font = New System.Drawing.Font("Segoe UI", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnLoadResults.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.btnLoadResults.ImeMode = System.Windows.Forms.ImeMode.NoControl
+        Me.btnLoadResults.Location = New System.Drawing.Point(6, 17)
+        Me.btnLoadResults.Name = "btnLoadResults"
+        Me.btnLoadResults.Size = New System.Drawing.Size(60, 22)
+        Me.btnLoadResults.TabIndex = 60
+        Me.btnLoadResults.Text = "Load"
+        Me.btnLoadResults.UseVisualStyleBackColor = False
         '
-        'nudScaleForce
+        'GroupBox4
         '
-        Me.nudScaleForce.DecimalPlaces = 1
-        Me.nudScaleForce.Increment = New Decimal(New Integer() {1, 0, 0, 65536})
-        Me.nudScaleForce.Location = New System.Drawing.Point(110, 39)
-        Me.nudScaleForce.Maximum = New Decimal(New Integer() {1000, 0, 0, 0})
-        Me.nudScaleForce.Name = "nudScaleForce"
-        Me.nudScaleForce.Size = New System.Drawing.Size(50, 19)
-        Me.nudScaleForce.TabIndex = 98
-        Me.nudScaleForce.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.GroupBox4.Controls.Add(Me.cbxShowResMesh)
+        Me.GroupBox4.Controls.Add(Me.cbxShowResSurface)
+        Me.GroupBox4.Controls.Add(Me.pnlResultMeshColor)
+        Me.GroupBox4.Controls.Add(Me.pnlResultSurfaceColor)
+        Me.GroupBox4.Dock = System.Windows.Forms.DockStyle.Left
+        Me.GroupBox4.Font = New System.Drawing.Font("Segoe UI", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.GroupBox4.Location = New System.Drawing.Point(82, 3)
+        Me.GroupBox4.Name = "GroupBox4"
+        Me.GroupBox4.Size = New System.Drawing.Size(109, 98)
+        Me.GroupBox4.TabIndex = 512
+        Me.GroupBox4.TabStop = False
+        Me.GroupBox4.Text = "Bounded lattices"
         '
-        'cbxShowVelocity
+        'cbxShowResMesh
         '
-        Me.cbxShowVelocity.AutoSize = True
-        Me.cbxShowVelocity.Checked = True
-        Me.cbxShowVelocity.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.cbxShowVelocity.Location = New System.Drawing.Point(6, 18)
-        Me.cbxShowVelocity.Name = "cbxShowVelocity"
-        Me.cbxShowVelocity.Size = New System.Drawing.Size(77, 16)
-        Me.cbxShowVelocity.TabIndex = 73
-        Me.cbxShowVelocity.Text = "Show velocity"
-        Me.cbxShowVelocity.UseVisualStyleBackColor = True
+        Me.cbxShowResMesh.AutoSize = True
+        Me.cbxShowResMesh.Checked = True
+        Me.cbxShowResMesh.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.cbxShowResMesh.Location = New System.Drawing.Point(6, 40)
+        Me.cbxShowResMesh.Name = "cbxShowResMesh"
+        Me.cbxShowResMesh.Size = New System.Drawing.Size(70, 16)
+        Me.cbxShowResMesh.TabIndex = 71
+        Me.cbxShowResMesh.Text = "Show mesh"
+        Me.cbxShowResMesh.UseVisualStyleBackColor = True
         '
-        'nudScaleVelocity
+        'cbxShowResSurface
         '
-        Me.nudScaleVelocity.DecimalPlaces = 2
-        Me.nudScaleVelocity.Increment = New Decimal(New Integer() {1, 0, 0, 131072})
-        Me.nudScaleVelocity.Location = New System.Drawing.Point(110, 17)
-        Me.nudScaleVelocity.Maximum = New Decimal(New Integer() {1000, 0, 0, 0})
-        Me.nudScaleVelocity.Name = "nudScaleVelocity"
-        Me.nudScaleVelocity.Size = New System.Drawing.Size(50, 19)
-        Me.nudScaleVelocity.TabIndex = 97
-        Me.nudScaleVelocity.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.cbxShowResSurface.AutoSize = True
+        Me.cbxShowResSurface.Checked = True
+        Me.cbxShowResSurface.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.cbxShowResSurface.Location = New System.Drawing.Point(6, 18)
+        Me.cbxShowResSurface.Name = "cbxShowResSurface"
+        Me.cbxShowResSurface.Size = New System.Drawing.Size(77, 16)
+        Me.cbxShowResSurface.TabIndex = 69
+        Me.cbxShowResSurface.Text = "Show surface"
+        Me.cbxShowResSurface.UseVisualStyleBackColor = True
         '
-        'pnlVelocityColor
+        'pnlResultMeshColor
         '
-        Me.pnlVelocityColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.pnlVelocityColor.Location = New System.Drawing.Point(84, 16)
-        Me.pnlVelocityColor.Name = "pnlVelocityColor"
-        Me.pnlVelocityColor.Size = New System.Drawing.Size(20, 20)
-        Me.pnlVelocityColor.TabIndex = 72
+        Me.pnlResultMeshColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.pnlResultMeshColor.Location = New System.Drawing.Point(84, 38)
+        Me.pnlResultMeshColor.Name = "pnlResultMeshColor"
+        Me.pnlResultMeshColor.Size = New System.Drawing.Size(20, 20)
+        Me.pnlResultMeshColor.TabIndex = 70
         '
-        'cbxShowForce
+        'pnlResultSurfaceColor
         '
-        Me.cbxShowForce.AutoSize = True
-        Me.cbxShowForce.Checked = True
-        Me.cbxShowForce.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.cbxShowForce.Location = New System.Drawing.Point(6, 40)
-        Me.cbxShowForce.Name = "cbxShowForce"
-        Me.cbxShowForce.Size = New System.Drawing.Size(68, 16)
-        Me.cbxShowForce.TabIndex = 75
-        Me.cbxShowForce.Text = "Show force"
-        Me.cbxShowForce.UseVisualStyleBackColor = True
+        Me.pnlResultSurfaceColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.pnlResultSurfaceColor.Location = New System.Drawing.Point(84, 16)
+        Me.pnlResultSurfaceColor.Name = "pnlResultSurfaceColor"
+        Me.pnlResultSurfaceColor.Size = New System.Drawing.Size(20, 20)
+        Me.pnlResultSurfaceColor.TabIndex = 67
         '
-        'pnlForceColor
+        'GroupBox8
         '
-        Me.pnlForceColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.pnlForceColor.Location = New System.Drawing.Point(84, 38)
-        Me.pnlForceColor.Name = "pnlForceColor"
-        Me.pnlForceColor.Size = New System.Drawing.Size(20, 20)
-        Me.pnlForceColor.TabIndex = 74
+        Me.GroupBox8.Controls.Add(Me.cbxShowWakeNodes)
+        Me.GroupBox8.Controls.Add(Me.pnlWakeNodeColor)
+        Me.GroupBox8.Controls.Add(Me.cbxShowWakeMesh)
+        Me.GroupBox8.Controls.Add(Me.cbxShowWakeSurface)
+        Me.GroupBox8.Controls.Add(Me.pnlWakeMeshColor)
+        Me.GroupBox8.Controls.Add(Me.pnlWakeSurfaceColor)
+        Me.GroupBox8.Dock = System.Windows.Forms.DockStyle.Left
+        Me.GroupBox8.Font = New System.Drawing.Font("Segoe UI", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.GroupBox8.Location = New System.Drawing.Point(197, 3)
+        Me.GroupBox8.Name = "GroupBox8"
+        Me.GroupBox8.Size = New System.Drawing.Size(109, 98)
+        Me.GroupBox8.TabIndex = 513
+        Me.GroupBox8.TabStop = False
+        Me.GroupBox8.Text = "Wakes"
+        '
+        'cbxShowWakeNodes
+        '
+        Me.cbxShowWakeNodes.AutoSize = True
+        Me.cbxShowWakeNodes.Checked = True
+        Me.cbxShowWakeNodes.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.cbxShowWakeNodes.Location = New System.Drawing.Point(6, 62)
+        Me.cbxShowWakeNodes.Name = "cbxShowWakeNodes"
+        Me.cbxShowWakeNodes.Size = New System.Drawing.Size(72, 16)
+        Me.cbxShowWakeNodes.TabIndex = 73
+        Me.cbxShowWakeNodes.Text = "Show nodes"
+        Me.cbxShowWakeNodes.UseVisualStyleBackColor = True
+        '
+        'pnlWakeNodeColor
+        '
+        Me.pnlWakeNodeColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.pnlWakeNodeColor.Location = New System.Drawing.Point(84, 60)
+        Me.pnlWakeNodeColor.Name = "pnlWakeNodeColor"
+        Me.pnlWakeNodeColor.Size = New System.Drawing.Size(20, 20)
+        Me.pnlWakeNodeColor.TabIndex = 72
+        '
+        'cbxShowWakeMesh
+        '
+        Me.cbxShowWakeMesh.AutoSize = True
+        Me.cbxShowWakeMesh.Checked = True
+        Me.cbxShowWakeMesh.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.cbxShowWakeMesh.Location = New System.Drawing.Point(6, 40)
+        Me.cbxShowWakeMesh.Name = "cbxShowWakeMesh"
+        Me.cbxShowWakeMesh.Size = New System.Drawing.Size(70, 16)
+        Me.cbxShowWakeMesh.TabIndex = 71
+        Me.cbxShowWakeMesh.Text = "Show mesh"
+        Me.cbxShowWakeMesh.UseVisualStyleBackColor = True
+        '
+        'cbxShowWakeSurface
+        '
+        Me.cbxShowWakeSurface.AutoSize = True
+        Me.cbxShowWakeSurface.Checked = True
+        Me.cbxShowWakeSurface.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.cbxShowWakeSurface.Location = New System.Drawing.Point(6, 18)
+        Me.cbxShowWakeSurface.Name = "cbxShowWakeSurface"
+        Me.cbxShowWakeSurface.Size = New System.Drawing.Size(77, 16)
+        Me.cbxShowWakeSurface.TabIndex = 69
+        Me.cbxShowWakeSurface.Text = "Show surface"
+        Me.cbxShowWakeSurface.UseVisualStyleBackColor = True
+        '
+        'pnlWakeMeshColor
+        '
+        Me.pnlWakeMeshColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.pnlWakeMeshColor.Location = New System.Drawing.Point(84, 38)
+        Me.pnlWakeMeshColor.Name = "pnlWakeMeshColor"
+        Me.pnlWakeMeshColor.Size = New System.Drawing.Size(20, 20)
+        Me.pnlWakeMeshColor.TabIndex = 70
+        '
+        'pnlWakeSurfaceColor
+        '
+        Me.pnlWakeSurfaceColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.pnlWakeSurfaceColor.Location = New System.Drawing.Point(84, 16)
+        Me.pnlWakeSurfaceColor.Name = "pnlWakeSurfaceColor"
+        Me.pnlWakeSurfaceColor.Size = New System.Drawing.Size(20, 20)
+        Me.pnlWakeSurfaceColor.TabIndex = 67
         '
         'GroupBox9
         '
@@ -1558,10 +1613,10 @@ Partial Class MainRibbon
         Me.GroupBox9.Controls.Add(Me.nudCpmax)
         Me.GroupBox9.Dock = System.Windows.Forms.DockStyle.Left
         Me.GroupBox9.Font = New System.Drawing.Font("Segoe UI", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.GroupBox9.Location = New System.Drawing.Point(291, 0)
+        Me.GroupBox9.Location = New System.Drawing.Point(312, 3)
         Me.GroupBox9.Name = "GroupBox9"
         Me.GroupBox9.Size = New System.Drawing.Size(174, 98)
-        Me.GroupBox9.TabIndex = 515
+        Me.GroupBox9.TabIndex = 516
         Me.GroupBox9.TabStop = False
         Me.GroupBox9.Text = "Colormap"
         '
@@ -1640,187 +1695,190 @@ Partial Class MainRibbon
         Me.nudCpmax.TabIndex = 100
         Me.nudCpmax.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
-        'GroupBox8
+        'GroupBox10
         '
-        Me.GroupBox8.Controls.Add(Me.cbxShowWakeNodes)
-        Me.GroupBox8.Controls.Add(Me.pnlWakeNodeColor)
-        Me.GroupBox8.Controls.Add(Me.cbxShowWakeMesh)
-        Me.GroupBox8.Controls.Add(Me.cbxShowWakeSurface)
-        Me.GroupBox8.Controls.Add(Me.pnlWakeMeshColor)
-        Me.GroupBox8.Controls.Add(Me.pnlWakeSurfaceColor)
-        Me.GroupBox8.Dock = System.Windows.Forms.DockStyle.Left
-        Me.GroupBox8.Font = New System.Drawing.Font("Segoe UI", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.GroupBox8.Location = New System.Drawing.Point(182, 0)
-        Me.GroupBox8.Name = "GroupBox8"
-        Me.GroupBox8.Size = New System.Drawing.Size(109, 98)
-        Me.GroupBox8.TabIndex = 512
-        Me.GroupBox8.TabStop = False
-        Me.GroupBox8.Text = "Wakes"
+        Me.GroupBox10.Controls.Add(Me.nudScaleForce)
+        Me.GroupBox10.Controls.Add(Me.cbxShowVelocity)
+        Me.GroupBox10.Controls.Add(Me.nudScaleVelocity)
+        Me.GroupBox10.Controls.Add(Me.pnlVelocityColor)
+        Me.GroupBox10.Controls.Add(Me.cbxShowForce)
+        Me.GroupBox10.Controls.Add(Me.pnlForceColor)
+        Me.GroupBox10.Dock = System.Windows.Forms.DockStyle.Left
+        Me.GroupBox10.Font = New System.Drawing.Font("Segoe UI", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.GroupBox10.Location = New System.Drawing.Point(492, 3)
+        Me.GroupBox10.Name = "GroupBox10"
+        Me.GroupBox10.Size = New System.Drawing.Size(168, 98)
+        Me.GroupBox10.TabIndex = 517
+        Me.GroupBox10.TabStop = False
+        Me.GroupBox10.Text = "Vectors"
         '
-        'cbxShowWakeNodes
+        'nudScaleForce
         '
-        Me.cbxShowWakeNodes.AutoSize = True
-        Me.cbxShowWakeNodes.Checked = True
-        Me.cbxShowWakeNodes.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.cbxShowWakeNodes.Location = New System.Drawing.Point(6, 62)
-        Me.cbxShowWakeNodes.Name = "cbxShowWakeNodes"
-        Me.cbxShowWakeNodes.Size = New System.Drawing.Size(72, 16)
-        Me.cbxShowWakeNodes.TabIndex = 73
-        Me.cbxShowWakeNodes.Text = "Show nodes"
-        Me.cbxShowWakeNodes.UseVisualStyleBackColor = True
+        Me.nudScaleForce.DecimalPlaces = 1
+        Me.nudScaleForce.Increment = New Decimal(New Integer() {1, 0, 0, 65536})
+        Me.nudScaleForce.Location = New System.Drawing.Point(110, 39)
+        Me.nudScaleForce.Maximum = New Decimal(New Integer() {1000, 0, 0, 0})
+        Me.nudScaleForce.Name = "nudScaleForce"
+        Me.nudScaleForce.Size = New System.Drawing.Size(50, 19)
+        Me.nudScaleForce.TabIndex = 98
+        Me.nudScaleForce.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
-        'pnlWakeNodeColor
+        'cbxShowVelocity
         '
-        Me.pnlWakeNodeColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.pnlWakeNodeColor.Location = New System.Drawing.Point(84, 60)
-        Me.pnlWakeNodeColor.Name = "pnlWakeNodeColor"
-        Me.pnlWakeNodeColor.Size = New System.Drawing.Size(20, 20)
-        Me.pnlWakeNodeColor.TabIndex = 72
+        Me.cbxShowVelocity.AutoSize = True
+        Me.cbxShowVelocity.Checked = True
+        Me.cbxShowVelocity.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.cbxShowVelocity.Location = New System.Drawing.Point(6, 18)
+        Me.cbxShowVelocity.Name = "cbxShowVelocity"
+        Me.cbxShowVelocity.Size = New System.Drawing.Size(77, 16)
+        Me.cbxShowVelocity.TabIndex = 73
+        Me.cbxShowVelocity.Text = "Show velocity"
+        Me.cbxShowVelocity.UseVisualStyleBackColor = True
         '
-        'cbxShowWakeMesh
+        'nudScaleVelocity
         '
-        Me.cbxShowWakeMesh.AutoSize = True
-        Me.cbxShowWakeMesh.Checked = True
-        Me.cbxShowWakeMesh.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.cbxShowWakeMesh.Location = New System.Drawing.Point(6, 40)
-        Me.cbxShowWakeMesh.Name = "cbxShowWakeMesh"
-        Me.cbxShowWakeMesh.Size = New System.Drawing.Size(70, 16)
-        Me.cbxShowWakeMesh.TabIndex = 71
-        Me.cbxShowWakeMesh.Text = "Show mesh"
-        Me.cbxShowWakeMesh.UseVisualStyleBackColor = True
+        Me.nudScaleVelocity.DecimalPlaces = 2
+        Me.nudScaleVelocity.Increment = New Decimal(New Integer() {1, 0, 0, 131072})
+        Me.nudScaleVelocity.Location = New System.Drawing.Point(110, 17)
+        Me.nudScaleVelocity.Maximum = New Decimal(New Integer() {1000, 0, 0, 0})
+        Me.nudScaleVelocity.Name = "nudScaleVelocity"
+        Me.nudScaleVelocity.Size = New System.Drawing.Size(50, 19)
+        Me.nudScaleVelocity.TabIndex = 97
+        Me.nudScaleVelocity.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
-        'cbxShowWakeSurface
+        'pnlVelocityColor
         '
-        Me.cbxShowWakeSurface.AutoSize = True
-        Me.cbxShowWakeSurface.Checked = True
-        Me.cbxShowWakeSurface.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.cbxShowWakeSurface.Location = New System.Drawing.Point(6, 18)
-        Me.cbxShowWakeSurface.Name = "cbxShowWakeSurface"
-        Me.cbxShowWakeSurface.Size = New System.Drawing.Size(77, 16)
-        Me.cbxShowWakeSurface.TabIndex = 69
-        Me.cbxShowWakeSurface.Text = "Show surface"
-        Me.cbxShowWakeSurface.UseVisualStyleBackColor = True
+        Me.pnlVelocityColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.pnlVelocityColor.Location = New System.Drawing.Point(84, 16)
+        Me.pnlVelocityColor.Name = "pnlVelocityColor"
+        Me.pnlVelocityColor.Size = New System.Drawing.Size(20, 20)
+        Me.pnlVelocityColor.TabIndex = 72
         '
-        'pnlWakeMeshColor
+        'cbxShowForce
         '
-        Me.pnlWakeMeshColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.pnlWakeMeshColor.Location = New System.Drawing.Point(84, 38)
-        Me.pnlWakeMeshColor.Name = "pnlWakeMeshColor"
-        Me.pnlWakeMeshColor.Size = New System.Drawing.Size(20, 20)
-        Me.pnlWakeMeshColor.TabIndex = 70
+        Me.cbxShowForce.AutoSize = True
+        Me.cbxShowForce.Checked = True
+        Me.cbxShowForce.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.cbxShowForce.Location = New System.Drawing.Point(6, 40)
+        Me.cbxShowForce.Name = "cbxShowForce"
+        Me.cbxShowForce.Size = New System.Drawing.Size(68, 16)
+        Me.cbxShowForce.TabIndex = 75
+        Me.cbxShowForce.Text = "Show force"
+        Me.cbxShowForce.UseVisualStyleBackColor = True
         '
-        'pnlWakeSurfaceColor
+        'pnlForceColor
         '
-        Me.pnlWakeSurfaceColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.pnlWakeSurfaceColor.Location = New System.Drawing.Point(84, 16)
-        Me.pnlWakeSurfaceColor.Name = "pnlWakeSurfaceColor"
-        Me.pnlWakeSurfaceColor.Size = New System.Drawing.Size(20, 20)
-        Me.pnlWakeSurfaceColor.TabIndex = 67
+        Me.pnlForceColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.pnlForceColor.Location = New System.Drawing.Point(84, 38)
+        Me.pnlForceColor.Name = "pnlForceColor"
+        Me.pnlForceColor.Size = New System.Drawing.Size(20, 20)
+        Me.pnlForceColor.TabIndex = 74
         '
-        'GroupBox4
+        'GroupBox5
         '
-        Me.GroupBox4.Controls.Add(Me.cbxShowResMesh)
-        Me.GroupBox4.Controls.Add(Me.cbxShowResSurface)
-        Me.GroupBox4.Controls.Add(Me.pnlResultMeshColor)
-        Me.GroupBox4.Controls.Add(Me.pnlResultSurfaceColor)
-        Me.GroupBox4.Dock = System.Windows.Forms.DockStyle.Left
-        Me.GroupBox4.Font = New System.Drawing.Font("Segoe UI", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.GroupBox4.Location = New System.Drawing.Point(73, 0)
-        Me.GroupBox4.Name = "GroupBox4"
-        Me.GroupBox4.Size = New System.Drawing.Size(109, 98)
-        Me.GroupBox4.TabIndex = 511
-        Me.GroupBox4.TabStop = False
-        Me.GroupBox4.Text = "Bounded lattices"
+        Me.GroupBox5.Controls.Add(Me.btnEditVelocityPlane)
+        Me.GroupBox5.Controls.Add(Me.cbxShowVelocityPlane)
+        Me.GroupBox5.Dock = System.Windows.Forms.DockStyle.Left
+        Me.GroupBox5.Font = New System.Drawing.Font("Segoe UI", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.GroupBox5.Location = New System.Drawing.Point(666, 3)
+        Me.GroupBox5.Name = "GroupBox5"
+        Me.GroupBox5.Size = New System.Drawing.Size(75, 98)
+        Me.GroupBox5.TabIndex = 518
+        Me.GroupBox5.TabStop = False
+        Me.GroupBox5.Text = "Velocity plane"
         '
-        'cbxShowResMesh
+        'btnEditVelocityPlane
         '
-        Me.cbxShowResMesh.AutoSize = True
-        Me.cbxShowResMesh.Checked = True
-        Me.cbxShowResMesh.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.cbxShowResMesh.Location = New System.Drawing.Point(6, 40)
-        Me.cbxShowResMesh.Name = "cbxShowResMesh"
-        Me.cbxShowResMesh.Size = New System.Drawing.Size(70, 16)
-        Me.cbxShowResMesh.TabIndex = 71
-        Me.cbxShowResMesh.Text = "Show mesh"
-        Me.cbxShowResMesh.UseVisualStyleBackColor = True
+        Me.btnEditVelocityPlane.BackColor = System.Drawing.Color.White
+        Me.btnEditVelocityPlane.FlatAppearance.BorderColor = System.Drawing.Color.Gray
+        Me.btnEditVelocityPlane.FlatAppearance.CheckedBackColor = System.Drawing.SystemColors.ButtonFace
+        Me.btnEditVelocityPlane.FlatAppearance.MouseDownBackColor = System.Drawing.Color.PaleGreen
+        Me.btnEditVelocityPlane.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DeepSkyBlue
+        Me.btnEditVelocityPlane.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnEditVelocityPlane.Font = New System.Drawing.Font("Segoe UI", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnEditVelocityPlane.ImeMode = System.Windows.Forms.ImeMode.NoControl
+        Me.btnEditVelocityPlane.Location = New System.Drawing.Point(6, 17)
+        Me.btnEditVelocityPlane.Name = "btnEditVelocityPlane"
+        Me.btnEditVelocityPlane.Size = New System.Drawing.Size(60, 22)
+        Me.btnEditVelocityPlane.TabIndex = 66
+        Me.btnEditVelocityPlane.Text = "Edit"
+        Me.btnEditVelocityPlane.UseVisualStyleBackColor = False
         '
-        'cbxShowResSurface
+        'cbxShowVelocityPlane
         '
-        Me.cbxShowResSurface.AutoSize = True
-        Me.cbxShowResSurface.Checked = True
-        Me.cbxShowResSurface.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.cbxShowResSurface.Location = New System.Drawing.Point(6, 18)
-        Me.cbxShowResSurface.Name = "cbxShowResSurface"
-        Me.cbxShowResSurface.Size = New System.Drawing.Size(77, 16)
-        Me.cbxShowResSurface.TabIndex = 69
-        Me.cbxShowResSurface.Text = "Show surface"
-        Me.cbxShowResSurface.UseVisualStyleBackColor = True
+        Me.cbxShowVelocityPlane.AutoSize = True
+        Me.cbxShowVelocityPlane.Checked = True
+        Me.cbxShowVelocityPlane.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.cbxShowVelocityPlane.Location = New System.Drawing.Point(6, 45)
+        Me.cbxShowVelocityPlane.Name = "cbxShowVelocityPlane"
+        Me.cbxShowVelocityPlane.Size = New System.Drawing.Size(46, 16)
+        Me.cbxShowVelocityPlane.TabIndex = 69
+        Me.cbxShowVelocityPlane.Text = "Show"
+        Me.cbxShowVelocityPlane.UseVisualStyleBackColor = True
         '
-        'pnlResultMeshColor
+        'gbxAeroelastic
         '
-        Me.pnlResultMeshColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.pnlResultMeshColor.Location = New System.Drawing.Point(84, 38)
-        Me.pnlResultMeshColor.Name = "pnlResultMeshColor"
-        Me.pnlResultMeshColor.Size = New System.Drawing.Size(20, 20)
-        Me.pnlResultMeshColor.TabIndex = 70
+        Me.gbxAeroelastic.Controls.Add(Me.btnPlayStop)
+        Me.gbxAeroelastic.Controls.Add(Me.Label19)
+        Me.gbxAeroelastic.Controls.Add(Me.nudModeScale)
+        Me.gbxAeroelastic.Controls.Add(Me.cbxModes)
+        Me.gbxAeroelastic.Dock = System.Windows.Forms.DockStyle.Left
+        Me.gbxAeroelastic.Font = New System.Drawing.Font("Segoe UI", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.gbxAeroelastic.Location = New System.Drawing.Point(747, 3)
+        Me.gbxAeroelastic.Name = "gbxAeroelastic"
+        Me.gbxAeroelastic.Size = New System.Drawing.Size(128, 98)
+        Me.gbxAeroelastic.TabIndex = 519
+        Me.gbxAeroelastic.TabStop = False
+        Me.gbxAeroelastic.Text = "Aeroelastic"
         '
-        'pnlResultSurfaceColor
+        'btnPlayStop
         '
-        Me.pnlResultSurfaceColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.pnlResultSurfaceColor.Location = New System.Drawing.Point(84, 16)
-        Me.pnlResultSurfaceColor.Name = "pnlResultSurfaceColor"
-        Me.pnlResultSurfaceColor.Size = New System.Drawing.Size(20, 20)
-        Me.pnlResultSurfaceColor.TabIndex = 67
+        Me.btnPlayStop.BackColor = System.Drawing.Color.White
+        Me.btnPlayStop.FlatAppearance.BorderColor = System.Drawing.Color.Gray
+        Me.btnPlayStop.FlatAppearance.CheckedBackColor = System.Drawing.SystemColors.ButtonFace
+        Me.btnPlayStop.FlatAppearance.MouseDownBackColor = System.Drawing.Color.PaleGreen
+        Me.btnPlayStop.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DeepSkyBlue
+        Me.btnPlayStop.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnPlayStop.Font = New System.Drawing.Font("Segoe UI", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnPlayStop.ImeMode = System.Windows.Forms.ImeMode.NoControl
+        Me.btnPlayStop.Location = New System.Drawing.Point(62, 68)
+        Me.btnPlayStop.Name = "btnPlayStop"
+        Me.btnPlayStop.Size = New System.Drawing.Size(60, 22)
+        Me.btnPlayStop.TabIndex = 107
+        Me.btnPlayStop.Text = "Play"
+        Me.btnPlayStop.UseVisualStyleBackColor = False
         '
-        'GroupBox6
+        'Label19
         '
-        Me.GroupBox6.BackColor = System.Drawing.Color.Transparent
-        Me.GroupBox6.Controls.Add(Me.btnReport)
-        Me.GroupBox6.Controls.Add(Me.btnLoadResults)
-        Me.GroupBox6.Dock = System.Windows.Forms.DockStyle.Left
-        Me.GroupBox6.Font = New System.Drawing.Font("Segoe UI", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.GroupBox6.Location = New System.Drawing.Point(0, 0)
-        Me.GroupBox6.Name = "GroupBox6"
-        Me.GroupBox6.Size = New System.Drawing.Size(73, 98)
-        Me.GroupBox6.TabIndex = 510
-        Me.GroupBox6.TabStop = False
-        Me.GroupBox6.Text = "IO"
+        Me.Label19.AutoSize = True
+        Me.Label19.ForeColor = System.Drawing.SystemColors.ControlDarkDark
+        Me.Label19.Location = New System.Drawing.Point(40, 46)
+        Me.Label19.Name = "Label19"
+        Me.Label19.Size = New System.Drawing.Size(26, 12)
+        Me.Label19.TabIndex = 104
+        Me.Label19.Text = "Scale"
+        Me.Label19.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
-        'btnReport
+        'nudModeScale
         '
-        Me.btnReport.BackColor = System.Drawing.Color.Gainsboro
-        Me.btnReport.FlatAppearance.BorderColor = System.Drawing.Color.Gray
-        Me.btnReport.FlatAppearance.CheckedBackColor = System.Drawing.SystemColors.ButtonFace
-        Me.btnReport.FlatAppearance.MouseDownBackColor = System.Drawing.Color.PaleGreen
-        Me.btnReport.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DeepSkyBlue
-        Me.btnReport.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btnReport.Font = New System.Drawing.Font("Segoe UI", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnReport.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        Me.btnReport.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.btnReport.Location = New System.Drawing.Point(6, 41)
-        Me.btnReport.Name = "btnReport"
-        Me.btnReport.Size = New System.Drawing.Size(60, 22)
-        Me.btnReport.TabIndex = 61
-        Me.btnReport.Text = "Report"
-        Me.btnReport.UseVisualStyleBackColor = False
+        Me.nudModeScale.DecimalPlaces = 1
+        Me.nudModeScale.Location = New System.Drawing.Point(72, 44)
+        Me.nudModeScale.Maximum = New Decimal(New Integer() {1000, 0, 0, 0})
+        Me.nudModeScale.Name = "nudModeScale"
+        Me.nudModeScale.Size = New System.Drawing.Size(50, 19)
+        Me.nudModeScale.TabIndex = 98
+        Me.nudModeScale.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.nudModeScale.Value = New Decimal(New Integer() {1, 0, 0, 0})
         '
-        'btnLoadResults
+        'cbxModes
         '
-        Me.btnLoadResults.BackColor = System.Drawing.Color.Gainsboro
-        Me.btnLoadResults.FlatAppearance.BorderColor = System.Drawing.Color.Gray
-        Me.btnLoadResults.FlatAppearance.CheckedBackColor = System.Drawing.SystemColors.ButtonFace
-        Me.btnLoadResults.FlatAppearance.MouseDownBackColor = System.Drawing.Color.PaleGreen
-        Me.btnLoadResults.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DeepSkyBlue
-        Me.btnLoadResults.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btnLoadResults.Font = New System.Drawing.Font("Segoe UI", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnLoadResults.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        Me.btnLoadResults.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.btnLoadResults.Location = New System.Drawing.Point(6, 17)
-        Me.btnLoadResults.Name = "btnLoadResults"
-        Me.btnLoadResults.Size = New System.Drawing.Size(60, 22)
-        Me.btnLoadResults.TabIndex = 60
-        Me.btnLoadResults.Text = "Load"
-        Me.btnLoadResults.UseVisualStyleBackColor = False
+        Me.cbxModes.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cbxModes.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cbxModes.FormattingEnabled = True
+        Me.cbxModes.Location = New System.Drawing.Point(6, 18)
+        Me.cbxModes.Name = "cbxModes"
+        Me.cbxModes.Size = New System.Drawing.Size(116, 21)
+        Me.cbxModes.TabIndex = 63
         '
         'MainRibbon
         '
@@ -1829,9 +1887,12 @@ Partial Class MainRibbon
         Me.Controls.Add(Me.tcRibbon)
         Me.Name = "MainRibbon"
         Me.Padding = New System.Windows.Forms.Padding(2)
-        Me.Size = New System.Drawing.Size(1101, 128)
+        Me.Size = New System.Drawing.Size(1208, 134)
         Me.tcRibbon.ResumeLayout(False)
         Me.tpModel.ResumeLayout(False)
+        Me.tpCalculation.ResumeLayout(False)
+        Me.tpResults.ResumeLayout(False)
+        Me.TableLayoutPanel1.ResumeLayout(False)
         Me.GroupBox3.ResumeLayout(False)
         Me.GroupBox3.PerformLayout()
         CType(Me.nudYmin, System.ComponentModel.ISupportInitialize).EndInit()
@@ -1852,13 +1913,8 @@ Partial Class MainRibbon
         Me.GroupBox1.ResumeLayout(False)
         Me.GroupBox1.PerformLayout()
         Me.pnlIO.ResumeLayout(False)
-        Me.tpCalculation.ResumeLayout(False)
-        Me.GroupBox12.ResumeLayout(False)
-        Me.GroupBox12.PerformLayout()
-        CType(Me.nudIncrement, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.nudCutoff, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.nudCuttingStep, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.nudSteps, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.TableLayoutPanel2.ResumeLayout(False)
+        Me.gbxCalculationType.ResumeLayout(False)
         Me.GroupBox11.ResumeLayout(False)
         Me.GroupBox11.PerformLayout()
         CType(Me.nudViscosity, System.ComponentModel.ISupportInitialize).EndInit()
@@ -1869,26 +1925,31 @@ Partial Class MainRibbon
         CType(Me.nudVz, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.nudVy, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.nudVx, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.gbxCalculationType.ResumeLayout(False)
-        Me.tpResults.ResumeLayout(False)
-        Me.gbxAeroelastic.ResumeLayout(False)
-        Me.gbxAeroelastic.PerformLayout()
-        CType(Me.nudModeScale, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.GroupBox5.ResumeLayout(False)
-        Me.GroupBox5.PerformLayout()
-        Me.GroupBox10.ResumeLayout(False)
-        Me.GroupBox10.PerformLayout()
-        CType(Me.nudScaleForce, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.nudScaleVelocity, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.GroupBox12.ResumeLayout(False)
+        Me.GroupBox12.PerformLayout()
+        CType(Me.nudIncrement, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.nudCutoff, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.nudCuttingStep, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.nudSteps, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.TableLayoutPanel3.ResumeLayout(False)
+        Me.GroupBox6.ResumeLayout(False)
+        Me.GroupBox4.ResumeLayout(False)
+        Me.GroupBox4.PerformLayout()
+        Me.GroupBox8.ResumeLayout(False)
+        Me.GroupBox8.PerformLayout()
         Me.GroupBox9.ResumeLayout(False)
         Me.GroupBox9.PerformLayout()
         CType(Me.nudCpmin, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.nudCpmax, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.GroupBox8.ResumeLayout(False)
-        Me.GroupBox8.PerformLayout()
-        Me.GroupBox4.ResumeLayout(False)
-        Me.GroupBox4.PerformLayout()
-        Me.GroupBox6.ResumeLayout(False)
+        Me.GroupBox10.ResumeLayout(False)
+        Me.GroupBox10.PerformLayout()
+        CType(Me.nudScaleForce, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.nudScaleVelocity, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.GroupBox5.ResumeLayout(False)
+        Me.GroupBox5.PerformLayout()
+        Me.gbxAeroelastic.ResumeLayout(False)
+        Me.gbxAeroelastic.PerformLayout()
+        CType(Me.nudModeScale, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -1897,31 +1958,11 @@ Partial Class MainRibbon
     Friend WithEvents tpModel As Windows.Forms.TabPage
     Friend WithEvents tpCalculation As Windows.Forms.TabPage
     Friend WithEvents tpResults As Windows.Forms.TabPage
+    Friend WithEvents TableLayoutPanel1 As Windows.Forms.TableLayoutPanel
     Friend WithEvents GroupBox3 As Windows.Forms.GroupBox
-    Friend WithEvents GroupBox2 As Windows.Forms.GroupBox
-    Friend WithEvents bntAlign As Windows.Forms.Button
-    Friend WithEvents btnMove As Windows.Forms.Button
-    Friend WithEvents lblMeshInfo As Windows.Forms.Label
-    Friend WithEvents cbxShowMesh As Windows.Forms.CheckBox
-    Friend WithEvents pnlMeshColor As Windows.Forms.Panel
-    Friend WithEvents cbxShowSurface As Windows.Forms.CheckBox
-    Friend WithEvents pnlSurfaceColor As Windows.Forms.Panel
-    Friend WithEvents btnEdit As Windows.Forms.Button
-    Friend WithEvents tbxName As Windows.Forms.TextBox
-    Friend WithEvents Label1 As Windows.Forms.Label
-    Friend WithEvents GroupBox1 As Windows.Forms.GroupBox
-    Friend WithEvents btnClone As Windows.Forms.Button
-    Friend WithEvents btnAddObject As Windows.Forms.Button
-    Friend WithEvents btnRemove As Windows.Forms.Button
-    Friend WithEvents cbxSurfaces As Windows.Forms.ComboBox
-    Friend WithEvents pnlIO As Windows.Forms.GroupBox
-    Friend WithEvents btnOpen As Windows.Forms.Button
-    Friend WithEvents btnSaveAs As Windows.Forms.Button
-    Friend WithEvents btnSave As Windows.Forms.Button
-    Friend WithEvents Label4 As Windows.Forms.Label
-    Friend WithEvents cbxShowRulers As Windows.Forms.CheckBox
-    Friend WithEvents pnlScreenColor As Windows.Forms.Panel
-    Friend WithEvents nudXmax As Windows.Forms.NumericUpDown
+    Friend WithEvents btnFrontView As Windows.Forms.Button
+    Friend WithEvents btnTopView As Windows.Forms.Button
+    Friend WithEvents btnSideView As Windows.Forms.Button
     Friend WithEvents Label7 As Windows.Forms.Label
     Friend WithEvents Label8 As Windows.Forms.Label
     Friend WithEvents Label6 As Windows.Forms.Label
@@ -1929,12 +1970,13 @@ Partial Class MainRibbon
     Friend WithEvents nudYmin As Windows.Forms.NumericUpDown
     Friend WithEvents nudYmax As Windows.Forms.NumericUpDown
     Friend WithEvents nudXmin As Windows.Forms.NumericUpDown
-    Friend WithEvents Label9 As Windows.Forms.Label
-    Friend WithEvents Label10 As Windows.Forms.Label
-    Friend WithEvents Label11 As Windows.Forms.Label
-    Friend WithEvents nudPz As Windows.Forms.NumericUpDown
-    Friend WithEvents nudPy As Windows.Forms.NumericUpDown
-    Friend WithEvents nudPx As Windows.Forms.NumericUpDown
+    Friend WithEvents nudXmax As Windows.Forms.NumericUpDown
+    Friend WithEvents Label4 As Windows.Forms.Label
+    Friend WithEvents cbxShowRulers As Windows.Forms.CheckBox
+    Friend WithEvents pnlScreenColor As Windows.Forms.Panel
+    Friend WithEvents GroupBox2 As Windows.Forms.GroupBox
+    Friend WithEvents Label2 As Windows.Forms.Label
+    Friend WithEvents cbSecuence As Windows.Forms.ComboBox
     Friend WithEvents Label14 As Windows.Forms.Label
     Friend WithEvents Label15 As Windows.Forms.Label
     Friend WithEvents Label16 As Windows.Forms.Label
@@ -1947,47 +1989,44 @@ Partial Class MainRibbon
     Friend WithEvents nudCRz As Windows.Forms.NumericUpDown
     Friend WithEvents nudCRy As Windows.Forms.NumericUpDown
     Friend WithEvents nudCRx As Windows.Forms.NumericUpDown
-    Friend WithEvents GroupBox8 As Windows.Forms.GroupBox
-    Friend WithEvents cbxShowWakeNodes As Windows.Forms.CheckBox
-    Friend WithEvents pnlWakeNodeColor As Windows.Forms.Panel
-    Friend WithEvents cbxShowWakeMesh As Windows.Forms.CheckBox
-    Friend WithEvents cbxShowWakeSurface As Windows.Forms.CheckBox
-    Friend WithEvents pnlWakeMeshColor As Windows.Forms.Panel
-    Friend WithEvents pnlWakeSurfaceColor As Windows.Forms.Panel
-    Friend WithEvents GroupBox4 As Windows.Forms.GroupBox
-    Friend WithEvents Label18 As Windows.Forms.Label
-    Friend WithEvents Label17 As Windows.Forms.Label
-    Friend WithEvents nudCpmin As Windows.Forms.NumericUpDown
-    Friend WithEvents nudCpmax As Windows.Forms.NumericUpDown
-    Friend WithEvents cbxShowColormap As Windows.Forms.CheckBox
-    Friend WithEvents nudScaleForce As Windows.Forms.NumericUpDown
-    Friend WithEvents nudScaleVelocity As Windows.Forms.NumericUpDown
-    Friend WithEvents cbxShowForce As Windows.Forms.CheckBox
-    Friend WithEvents cbxShowVelocity As Windows.Forms.CheckBox
-    Friend WithEvents pnlForceColor As Windows.Forms.Panel
-    Friend WithEvents pnlVelocityColor As Windows.Forms.Panel
-    Friend WithEvents cbxShowResMesh As Windows.Forms.CheckBox
-    Friend WithEvents cbxShowResSurface As Windows.Forms.CheckBox
-    Friend WithEvents pnlResultMeshColor As Windows.Forms.Panel
-    Friend WithEvents pnlResultSurfaceColor As Windows.Forms.Panel
-    Friend WithEvents GroupBox6 As Windows.Forms.GroupBox
-    Friend WithEvents btnLoadResults As Windows.Forms.Button
-    Friend WithEvents btnReport As Windows.Forms.Button
-    Friend WithEvents gbxAeroelastic As Windows.Forms.GroupBox
-    Friend WithEvents Label19 As Windows.Forms.Label
-    Friend WithEvents nudModeScale As Windows.Forms.NumericUpDown
-    Friend WithEvents cbxModes As Windows.Forms.ComboBox
-    Friend WithEvents GroupBox5 As Windows.Forms.GroupBox
-    Friend WithEvents btnEditVelocityPlane As Windows.Forms.Button
-    Friend WithEvents cbxShowVelocityPlane As Windows.Forms.CheckBox
-    Friend WithEvents GroupBox10 As Windows.Forms.GroupBox
-    Friend WithEvents GroupBox9 As Windows.Forms.GroupBox
-    Friend WithEvents btnResetColormap As Windows.Forms.Button
-    Friend WithEvents btnPlayStop As Windows.Forms.Button
-    Friend WithEvents gbxCalculationType As Windows.Forms.GroupBox
-    Friend WithEvents btnStartCalculation As Windows.Forms.Button
-    Friend WithEvents cbxSimulationMode As Windows.Forms.ComboBox
+    Friend WithEvents Label9 As Windows.Forms.Label
+    Friend WithEvents Label10 As Windows.Forms.Label
+    Friend WithEvents Label11 As Windows.Forms.Label
+    Friend WithEvents nudPz As Windows.Forms.NumericUpDown
+    Friend WithEvents nudPy As Windows.Forms.NumericUpDown
+    Friend WithEvents nudPx As Windows.Forms.NumericUpDown
+    Friend WithEvents bntAlign As Windows.Forms.Button
+    Friend WithEvents btnMove As Windows.Forms.Button
+    Friend WithEvents GroupBox1 As Windows.Forms.GroupBox
+    Friend WithEvents btnClone As Windows.Forms.Button
+    Friend WithEvents btnAddObject As Windows.Forms.Button
+    Friend WithEvents btnRemove As Windows.Forms.Button
+    Friend WithEvents cbxSurfaces As Windows.Forms.ComboBox
+    Friend WithEvents tbxName As Windows.Forms.TextBox
+    Friend WithEvents Label1 As Windows.Forms.Label
+    Friend WithEvents btnEdit As Windows.Forms.Button
+    Friend WithEvents lblMeshInfo As Windows.Forms.Label
+    Friend WithEvents cbxShowMesh As Windows.Forms.CheckBox
+    Friend WithEvents cbxShowSurface As Windows.Forms.CheckBox
+    Friend WithEvents pnlMeshColor As Windows.Forms.Panel
+    Friend WithEvents pnlSurfaceColor As Windows.Forms.Panel
+    Friend WithEvents pnlIO As Windows.Forms.GroupBox
+    Friend WithEvents btnNew As Windows.Forms.Button
+    Friend WithEvents btnOpen As Windows.Forms.Button
+    Friend WithEvents btnSaveAs As Windows.Forms.Button
+    Friend WithEvents btnSave As Windows.Forms.Button
+    Friend WithEvents TableLayoutPanel2 As Windows.Forms.TableLayoutPanel
+    Friend WithEvents GroupBox12 As Windows.Forms.GroupBox
+    Friend WithEvents Label28 As Windows.Forms.Label
+    Friend WithEvents nudIncrement As Windows.Forms.NumericUpDown
+    Friend WithEvents Label33 As Windows.Forms.Label
+    Friend WithEvents Label34 As Windows.Forms.Label
+    Friend WithEvents Label35 As Windows.Forms.Label
+    Friend WithEvents nudCutoff As Windows.Forms.NumericUpDown
+    Friend WithEvents nudCuttingStep As Windows.Forms.NumericUpDown
+    Friend WithEvents nudSteps As Windows.Forms.NumericUpDown
     Friend WithEvents GroupBox11 As Windows.Forms.GroupBox
+    Friend WithEvents btnHistogram As Windows.Forms.Button
     Friend WithEvents Label27 As Windows.Forms.Label
     Friend WithEvents nudViscosity As Windows.Forms.NumericUpDown
     Friend WithEvents Label26 As Windows.Forms.Label
@@ -2004,20 +2043,45 @@ Partial Class MainRibbon
     Friend WithEvents nudVz As Windows.Forms.NumericUpDown
     Friend WithEvents nudVy As Windows.Forms.NumericUpDown
     Friend WithEvents nudVx As Windows.Forms.NumericUpDown
-    Friend WithEvents btnHistogram As Windows.Forms.Button
-    Friend WithEvents GroupBox12 As Windows.Forms.GroupBox
-    Friend WithEvents Label33 As Windows.Forms.Label
-    Friend WithEvents Label34 As Windows.Forms.Label
-    Friend WithEvents Label35 As Windows.Forms.Label
-    Friend WithEvents nudCutoff As Windows.Forms.NumericUpDown
-    Friend WithEvents nudCuttingStep As Windows.Forms.NumericUpDown
-    Friend WithEvents nudSteps As Windows.Forms.NumericUpDown
-    Friend WithEvents Label28 As Windows.Forms.Label
-    Friend WithEvents nudIncrement As Windows.Forms.NumericUpDown
-    Friend WithEvents btnFrontView As Windows.Forms.Button
-    Friend WithEvents btnTopView As Windows.Forms.Button
-    Friend WithEvents btnSideView As Windows.Forms.Button
-    Friend WithEvents cbSecuence As Windows.Forms.ComboBox
-    Friend WithEvents Label2 As Windows.Forms.Label
-    Friend WithEvents btnNew As Windows.Forms.Button
+    Friend WithEvents gbxCalculationType As Windows.Forms.GroupBox
+    Friend WithEvents btnStartCalculation As Windows.Forms.Button
+    Friend WithEvents cbxSimulationMode As Windows.Forms.ComboBox
+    Friend WithEvents TableLayoutPanel3 As Windows.Forms.TableLayoutPanel
+    Friend WithEvents gbxAeroelastic As Windows.Forms.GroupBox
+    Friend WithEvents btnPlayStop As Windows.Forms.Button
+    Friend WithEvents Label19 As Windows.Forms.Label
+    Friend WithEvents nudModeScale As Windows.Forms.NumericUpDown
+    Friend WithEvents cbxModes As Windows.Forms.ComboBox
+    Friend WithEvents GroupBox5 As Windows.Forms.GroupBox
+    Friend WithEvents btnEditVelocityPlane As Windows.Forms.Button
+    Friend WithEvents cbxShowVelocityPlane As Windows.Forms.CheckBox
+    Friend WithEvents GroupBox10 As Windows.Forms.GroupBox
+    Friend WithEvents nudScaleForce As Windows.Forms.NumericUpDown
+    Friend WithEvents cbxShowVelocity As Windows.Forms.CheckBox
+    Friend WithEvents nudScaleVelocity As Windows.Forms.NumericUpDown
+    Friend WithEvents pnlVelocityColor As Windows.Forms.Panel
+    Friend WithEvents cbxShowForce As Windows.Forms.CheckBox
+    Friend WithEvents pnlForceColor As Windows.Forms.Panel
+    Friend WithEvents GroupBox9 As Windows.Forms.GroupBox
+    Friend WithEvents cbxShowColormap As Windows.Forms.CheckBox
+    Friend WithEvents Label18 As Windows.Forms.Label
+    Friend WithEvents btnResetColormap As Windows.Forms.Button
+    Friend WithEvents nudCpmin As Windows.Forms.NumericUpDown
+    Friend WithEvents Label17 As Windows.Forms.Label
+    Friend WithEvents nudCpmax As Windows.Forms.NumericUpDown
+    Friend WithEvents GroupBox8 As Windows.Forms.GroupBox
+    Friend WithEvents cbxShowWakeNodes As Windows.Forms.CheckBox
+    Friend WithEvents pnlWakeNodeColor As Windows.Forms.Panel
+    Friend WithEvents cbxShowWakeMesh As Windows.Forms.CheckBox
+    Friend WithEvents cbxShowWakeSurface As Windows.Forms.CheckBox
+    Friend WithEvents pnlWakeMeshColor As Windows.Forms.Panel
+    Friend WithEvents pnlWakeSurfaceColor As Windows.Forms.Panel
+    Friend WithEvents GroupBox4 As Windows.Forms.GroupBox
+    Friend WithEvents cbxShowResMesh As Windows.Forms.CheckBox
+    Friend WithEvents cbxShowResSurface As Windows.Forms.CheckBox
+    Friend WithEvents pnlResultMeshColor As Windows.Forms.Panel
+    Friend WithEvents pnlResultSurfaceColor As Windows.Forms.Panel
+    Friend WithEvents GroupBox6 As Windows.Forms.GroupBox
+    Friend WithEvents btnReport As Windows.Forms.Button
+    Friend WithEvents btnLoadResults As Windows.Forms.Button
 End Class

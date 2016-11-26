@@ -4,10 +4,10 @@
     <ProjectView>ShowAllFiles</ProjectView>
     <PublishUrlHistory>publish\</PublishUrlHistory>
     <InstallUrlHistory />
-    <SupportUrlHistory>https://sites.google.com/site/gahvogel/main/steady-aerodynamics</SupportUrlHistory>
+    <SupportUrlHistory>https://www.openvogel.com|https://sites.google.com/site/gahvogel/main/steady-aerodynamics</SupportUrlHistory>
     <UpdateUrlHistory />
     <BootstrapperUrlHistory />
-    <ErrorReportUrlHistory>https://sites.google.com/site/gahvogel/main/steady-aerodynamics</ErrorReportUrlHistory>
+    <ErrorReportUrlHistory>https://github.com/GuillermoHazebrouck/OpenVOGEL/issues|https://sites.google.com/site/gahvogel/main/steady-aerodynamics</ErrorReportUrlHistory>
     <FallbackCulture>en-US</FallbackCulture>
     <VerifyUploadedFiles>false</VerifyUploadedFiles>
   </PropertyGroup>
