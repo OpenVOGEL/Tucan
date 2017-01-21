@@ -48,6 +48,52 @@ Namespace CalculationModel.Models.Aero
         Public Property BodyForce As New EVector3
         Public Property BodyMoment As New EVector3
 
+        Public Sub Add(Airloads As TotalAirLoads)
+
+            Force.Add(Airloads.Area * Airloads.Force)
+            Moment.Add(Airloads.Area * Airloads.Moment)
+
+            CL += Airloads.Area * Airloads.CL
+            CDi += Airloads.Area * Airloads.CDi
+            CDp += Airloads.Area * Airloads.CDp
+
+            SlenderForce.Add(Airloads.Area * Airloads.SlenderForce)
+            SlenderMoment.Add(Airloads.Area * Airloads.SlenderMoment)
+
+            InducedDrag.Add(Airloads.Area * Airloads.InducedDrag)
+            InducedMoment.Add(Airloads.Area * Airloads.InducedMoment)
+
+            SkinDrag.Add(Airloads.Area * Airloads.SkinDrag)
+            SkinMoment.Add(Airloads.Area * Airloads.SkinMoment)
+
+            BodyForce.Add(Airloads.Area * Airloads.BodyForce)
+            BodyMoment.Add(Airloads.Area * Airloads.BodyMoment)
+
+        End Sub
+
+        Public Sub Clear()
+
+            Force.SetToCero()
+            Moment.SetToCero()
+
+            CL = 0.0
+            CDi = 0.0
+            CDp = 0.0
+
+            SlenderForce.SetToCero()
+            SlenderMoment.SetToCero()
+
+            InducedDrag.SetToCero()
+            InducedMoment.SetToCero()
+
+            SkinDrag.SetToCero()
+            SkinMoment.SetToCero()
+
+            BodyForce.SetToCero()
+            BodyMoment.SetToCero()
+
+        End Sub
+
     End Class
 
 End Namespace

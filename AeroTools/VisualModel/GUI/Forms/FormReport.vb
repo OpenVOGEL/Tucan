@@ -25,6 +25,7 @@ Public Class FormReport
 
     Private _CalculationCore As CalculationModel.Solver.UVLMSolver
     Private _ForcesPanel As ForcesPanel
+    Private _TotalForcePanel As TotalForcePanel
 
     Public Sub ReportResults(ByRef CalculationCore As CalculationModel.Solver.UVLMSolver)
 
@@ -34,6 +35,11 @@ Public Class FormReport
         _ForcesPanel.Parent = tbLoads
         _ForcesPanel.Dock = DockStyle.Fill
         _ForcesPanel.BorderStyle = BorderStyle.Fixed3D
+
+        _TotalForcePanel = New TotalForcePanel(CalculationCore)
+        _TotalForcePanel.Parent = tbTotalLoads
+        _TotalForcePanel.Dock = DockStyle.Fill
+        _TotalForcePanel.BorderStyle = BorderStyle.Fixed3D
 
         Dim Result As New System.Text.StringBuilder
 

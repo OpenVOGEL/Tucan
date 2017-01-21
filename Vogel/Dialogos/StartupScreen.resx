@@ -129,13 +129,13 @@
     <value>3, 198</value>
   </data>
   <data name="Label1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>251, 36</value>
+    <value>249, 36</value>
   </data>
   <data name="Label1.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
   </data>
   <data name="Label1.Text" xml:space="preserve">
-    <value>Open VOGEL 2016©</value>
+    <value>Open VOGEL 2017©</value>
   </data>
   <data name="&gt;&gt;Label1.Name" xml:space="preserve">
     <value>Label1</value>
@@ -228,13 +228,13 @@ Original author: Guillermo Hazebrouck</value>
     <value>6, 255</value>
   </data>
   <data name="LabelLicencia.Size" type="System.Drawing.Size, System.Drawing">
-    <value>118, 15</value>
+    <value>144, 15</value>
   </data>
   <data name="LabelLicencia.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>
   </data>
   <data name="LabelLicencia.Text" xml:space="preserve">
-    <value>Compilation 2016.R2</value>
+    <value>Compilation 2017 / Beta 5</value>
   </data>
   <data name="LabelLicencia.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
     <value>MiddleRight</value>

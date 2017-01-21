@@ -177,6 +177,12 @@
     <Compile Include="VisualModel\GUI\Forms\FormCamberLine.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="VisualModel\GUI\UserControls\TotalForcePanel.Designer.vb">
+      <DependentUpon>TotalForcePanel.vb</DependentUpon>
+    </Compile>
+    <Compile Include="VisualModel\GUI\UserControls\TotalForcePanel.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="VisualModel\Tools\Colormaping.vb" />
     <Compile Include="VisualModel\Tools\Frames.vb" />
     <Compile Include="VisualModel\Tools\Properties.vb" />
@@ -381,6 +387,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="VisualModel\GUI\UserControls\Ribbon\MainRibbon.resx">
       <DependentUpon>MainRibbon.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="VisualModel\GUI\UserControls\TotalForcePanel.resx">
+      <DependentUpon>TotalForcePanel.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="VisualModel\GUI\UserControls\VelocityControl.resx">
       <DependentUpon>VelocityControl.vb</DependentUpon>

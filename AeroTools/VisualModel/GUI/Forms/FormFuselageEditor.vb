@@ -589,7 +589,7 @@ Public Class FormFuselageEditor
         If (Not IsNothing(SectionA)) And (Not IsNothing(SectionB)) Then
             Section.Z = 0.5 * (SectionA.Z + SectionB.Z)
         ElseIf Not IsNothing(SectionA) Then
-            Section.Z = SectionA.Z - 1
+            Section.Z = SectionA.Z + 1
         ElseIf Not IsNothing(SectionB) Then
             Section.Z = SectionB.Z + 1
         End If
@@ -816,7 +816,7 @@ Public Class FormFuselageEditor
 
         g.SmoothingMode = Drawing2D.SmoothingMode.HighQuality
 
-        ' maring:
+        ' margin:
 
         Dim mx As Single = 15
         Dim my As Single = 15

@@ -33,13 +33,14 @@ Partial Class FormReport
         Me.cbModes = New System.Windows.Forms.ComboBox()
         Me.tcResults = New System.Windows.Forms.TabControl()
         Me.tbLoads = New System.Windows.Forms.TabPage()
-        Me.TabPage3 = New System.Windows.Forms.TabPage()
+        Me.tbTotalLoads = New System.Windows.Forms.TabPage()
+        Me.tbRaw = New System.Windows.Forms.TabPage()
         Me.tbRawData = New System.Windows.Forms.RichTextBox()
         Me.tbModalResponse = New System.Windows.Forms.TabPage()
         CType(Me.cModalResponse, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.pPlot.SuspendLayout()
         Me.tcResults.SuspendLayout()
-        Me.TabPage3.SuspendLayout()
+        Me.tbRaw.SuspendLayout()
         Me.tbModalResponse.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -96,8 +97,9 @@ Partial Class FormReport
         '
         'tcResults
         '
+        Me.tcResults.Controls.Add(Me.tbTotalLoads)
         Me.tcResults.Controls.Add(Me.tbLoads)
-        Me.tcResults.Controls.Add(Me.TabPage3)
+        Me.tcResults.Controls.Add(Me.tbRaw)
         Me.tcResults.Controls.Add(Me.tbModalResponse)
         Me.tcResults.Dock = System.Windows.Forms.DockStyle.Fill
         Me.tcResults.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -116,18 +118,27 @@ Partial Class FormReport
         Me.tbLoads.Padding = New System.Windows.Forms.Padding(3)
         Me.tbLoads.Size = New System.Drawing.Size(795, 434)
         Me.tbLoads.TabIndex = 0
-        Me.tbLoads.Text = "Static loads"
+        Me.tbLoads.Text = "Components"
         '
-        'TabPage3
+        'tbTotalLoads
         '
-        Me.TabPage3.Controls.Add(Me.tbRawData)
-        Me.TabPage3.Location = New System.Drawing.Point(4, 22)
-        Me.TabPage3.Name = "TabPage3"
-        Me.TabPage3.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage3.Size = New System.Drawing.Size(795, 434)
-        Me.TabPage3.TabIndex = 2
-        Me.TabPage3.Text = "Raw data"
-        Me.TabPage3.UseVisualStyleBackColor = True
+        Me.tbTotalLoads.Location = New System.Drawing.Point(4, 22)
+        Me.tbTotalLoads.Name = "tbTotalLoads"
+        Me.tbTotalLoads.Size = New System.Drawing.Size(795, 434)
+        Me.tbTotalLoads.TabIndex = 3
+        Me.tbTotalLoads.Text = "Total loads"
+        Me.tbTotalLoads.UseVisualStyleBackColor = True
+        '
+        'tbRaw
+        '
+        Me.tbRaw.Controls.Add(Me.tbRawData)
+        Me.tbRaw.Location = New System.Drawing.Point(4, 22)
+        Me.tbRaw.Name = "tbRaw"
+        Me.tbRaw.Padding = New System.Windows.Forms.Padding(3)
+        Me.tbRaw.Size = New System.Drawing.Size(795, 434)
+        Me.tbRaw.TabIndex = 2
+        Me.tbRaw.Text = "Raw data"
+        Me.tbRaw.UseVisualStyleBackColor = True
         '
         'tbRawData
         '
@@ -170,7 +181,7 @@ Partial Class FormReport
         CType(Me.cModalResponse, System.ComponentModel.ISupportInitialize).EndInit()
         Me.pPlot.ResumeLayout(False)
         Me.tcResults.ResumeLayout(False)
-        Me.TabPage3.ResumeLayout(False)
+        Me.tbRaw.ResumeLayout(False)
         Me.tbModalResponse.ResumeLayout(False)
         Me.ResumeLayout(False)
 
@@ -184,6 +195,7 @@ Partial Class FormReport
     Friend WithEvents tbModalResponse As System.Windows.Forms.TabPage
     Friend WithEvents cbModes As System.Windows.Forms.ComboBox
     Friend WithEvents cbLink As System.Windows.Forms.ComboBox
-    Friend WithEvents TabPage3 As Windows.Forms.TabPage
+    Friend WithEvents tbRaw As Windows.Forms.TabPage
     Friend WithEvents tbRawData As Windows.Forms.RichTextBox
+    Friend WithEvents tbTotalLoads As Windows.Forms.TabPage
 End Class

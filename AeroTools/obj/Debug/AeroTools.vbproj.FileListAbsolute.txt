@@ -318,3 +318,4 @@ C:\Users\Guillermo\Documents\Software\OpenVogel\2016.Beta\AeroTools\obj\Debug\Ae
 \\GUILLERMO\Users\Guillermo\Source\Repos\OpenVOGEL\AeroTools\obj\Debug\AeroTools.dll
 \\GUILLERMO\Users\Guillermo\Source\Repos\OpenVOGEL\AeroTools\obj\Debug\AeroTools.pdb
 \\GUILLERMO\Users\Guillermo\Source\Repos\OpenVOGEL\AeroTools\obj\Debug\AeroTools.FormCamberLine.resources
+\\GUILLERMO\Users\Guillermo\Source\Repos\OpenVOGEL\AeroTools\obj\Debug\AeroTools.TotalForcePanel.resources

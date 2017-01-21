@@ -314,7 +314,7 @@ Partial Class FormFuselageEditor
         Me.rbTriangles.AutoSize = True
         Me.rbTriangles.Location = New System.Drawing.Point(77, 333)
         Me.rbTriangles.Name = "rbTriangles"
-        Me.rbTriangles.Size = New System.Drawing.Size(71, 17)
+        Me.rbTriangles.Size = New System.Drawing.Size(70, 17)
         Me.rbTriangles.TabIndex = 134
         Me.rbTriangles.TabStop = True
         Me.rbTriangles.Text = "Triangles"
