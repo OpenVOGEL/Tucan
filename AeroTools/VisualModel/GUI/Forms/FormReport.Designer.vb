@@ -32,8 +32,8 @@ Partial Class FormReport
         Me.cbLink = New System.Windows.Forms.ComboBox()
         Me.cbModes = New System.Windows.Forms.ComboBox()
         Me.tcResults = New System.Windows.Forms.TabControl()
-        Me.tbLoads = New System.Windows.Forms.TabPage()
         Me.tbTotalLoads = New System.Windows.Forms.TabPage()
+        Me.tbLoads = New System.Windows.Forms.TabPage()
         Me.tbRaw = New System.Windows.Forms.TabPage()
         Me.tbRawData = New System.Windows.Forms.RichTextBox()
         Me.tbModalResponse = New System.Windows.Forms.TabPage()
@@ -109,6 +109,15 @@ Partial Class FormReport
         Me.tcResults.Size = New System.Drawing.Size(803, 460)
         Me.tcResults.TabIndex = 8
         '
+        'tbTotalLoads
+        '
+        Me.tbTotalLoads.Location = New System.Drawing.Point(4, 22)
+        Me.tbTotalLoads.Name = "tbTotalLoads"
+        Me.tbTotalLoads.Size = New System.Drawing.Size(795, 434)
+        Me.tbTotalLoads.TabIndex = 3
+        Me.tbTotalLoads.Text = "Total aerodynamic loads"
+        Me.tbTotalLoads.UseVisualStyleBackColor = True
+        '
         'tbLoads
         '
         Me.tbLoads.BackColor = System.Drawing.Color.White
@@ -118,16 +127,7 @@ Partial Class FormReport
         Me.tbLoads.Padding = New System.Windows.Forms.Padding(3)
         Me.tbLoads.Size = New System.Drawing.Size(795, 434)
         Me.tbLoads.TabIndex = 0
-        Me.tbLoads.Text = "Components"
-        '
-        'tbTotalLoads
-        '
-        Me.tbTotalLoads.Location = New System.Drawing.Point(4, 22)
-        Me.tbTotalLoads.Name = "tbTotalLoads"
-        Me.tbTotalLoads.Size = New System.Drawing.Size(795, 434)
-        Me.tbTotalLoads.TabIndex = 3
-        Me.tbTotalLoads.Text = "Total loads"
-        Me.tbTotalLoads.UseVisualStyleBackColor = True
+        Me.tbLoads.Text = "By component"
         '
         'tbRaw
         '

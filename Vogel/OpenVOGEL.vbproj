@@ -29,7 +29,7 @@
     <ProductName>Open VOGEL 2016 - Beta 2</ProductName>
     <PublisherName>Open VOGEL</PublisherName>
     <SuiteName>Open VOGEL</SuiteName>
-    <ApplicationRevision>8</ApplicationRevision>
+    <ApplicationRevision>10</ApplicationRevision>
     <ApplicationVersion>2016.2.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>

@@ -28,6 +28,7 @@ Public Class TotalForcePanel
 
     Private rbVelocity As New ResultBox(UserMagnitudes(Magnitudes.Velocity))
     Private rbDensity As New ResultBox(UserMagnitudes(Magnitudes.Density))
+    Private rbq As New ResultBox(UserMagnitudes(Magnitudes.Pressure))
 
     Private rbAlpha As New ResultBox(UserMagnitudes(Magnitudes.Angular))
     Private rbBeta As New ResultBox(UserMagnitudes(Magnitudes.Angular))
@@ -39,6 +40,22 @@ Public Class TotalForcePanel
     Private rbMx As New ResultBox(UserMagnitudes(Magnitudes.Moment))
     Private rbMy As New ResultBox(UserMagnitudes(Magnitudes.Moment))
     Private rbMz As New ResultBox(UserMagnitudes(Magnitudes.Moment))
+
+    Private rbCFx As New ResultBox(UserMagnitudes(Magnitudes.Dimensionless))
+    Private rbCFy As New ResultBox(UserMagnitudes(Magnitudes.Dimensionless))
+    Private rbCFz As New ResultBox(UserMagnitudes(Magnitudes.Dimensionless))
+
+    Private rbCMx As New ResultBox(UserMagnitudes(Magnitudes.Dimensionless))
+    Private rbCMy As New ResultBox(UserMagnitudes(Magnitudes.Dimensionless))
+    Private rbCMz As New ResultBox(UserMagnitudes(Magnitudes.Dimensionless))
+
+    Private rbL As New ResultBox(UserMagnitudes(Magnitudes.Force))
+    Private rbD As New ResultBox(UserMagnitudes(Magnitudes.Force))
+    Private rbY As New ResultBox(UserMagnitudes(Magnitudes.Force))
+
+    Private rbCL As New ResultBox(UserMagnitudes(Magnitudes.Dimensionless))
+    Private rbCD As New ResultBox(UserMagnitudes(Magnitudes.Dimensionless))
+    Private rbCY As New ResultBox(UserMagnitudes(Magnitudes.Dimensionless))
 
     Private TotalAirloads As New TotalAirLoads
     Private TotalForce As New EVector3
@@ -52,8 +69,6 @@ Public Class TotalForcePanel
 
         _CalculationCore = CalculationCore
 
-        _CalculationCore.CalculateAirloads()
-
         LoadResultsData()
 
     End Sub
@@ -65,6 +80,12 @@ Public Class TotalForcePanel
         rbVelocity.Left = 10
         rbVelocity.Parent = Me
         rbVelocity.Decimals = GlobalDecimals(Magnitudes.Velocity)
+
+        rbq.Name = "q"
+        rbq.Top = rbVelocity.Bottom + 10
+        rbq.Left = 10
+        rbq.Parent = Me
+        rbq.Decimals = GlobalDecimals(Magnitudes.Pressure)
 
         rbDensity.Name = "r"
         rbDensity.GreekLetter = True
@@ -87,6 +108,8 @@ Public Class TotalForcePanel
         rbBeta.Parent = Me
         Dim mb As AngularMagnitude = rbBeta.Magnitude
         mb.Unit = AngularMagnitude.Units.Degrees
+
+        ' Forces and moments
 
         rbFx.Name = "Fx"
         rbFx.Top = rbBeta.Bottom + 10
@@ -118,6 +141,86 @@ Public Class TotalForcePanel
         rbMz.Left = rbMx.Left
         rbMz.Parent = Me
 
+        ' Dimensionless forces and moments
+
+        rbCFx.Name = "CFx"
+        rbCFx.Top = rbBeta.Bottom + 10
+        rbCFx.Left = rbVelocity.Left
+        rbCFx.Parent = Me
+
+        rbCFy.Name = "CFy"
+        rbCFy.Top = rbFx.Bottom + 10
+        rbCFy.Left = rbVelocity.Left
+        rbCFy.Parent = Me
+
+        rbCFz.Name = "CFz"
+        rbCFz.Top = rbFy.Bottom + 10
+        rbCFz.Left = rbVelocity.Left
+        rbCFz.Parent = Me
+
+        rbCMx.Name = "CMx"
+        rbCMx.Top = rbBeta.Bottom + 10
+        rbCMx.Left = rbFx.Right + 10
+        rbCMx.Parent = Me
+
+        rbCMy.Name = "CMy"
+        rbCMy.Top = rbMx.Bottom + 10
+        rbCMy.Left = rbMx.Left
+        rbCMy.Parent = Me
+
+        rbCMz.Name = "CMz"
+        rbCMz.Top = rbMy.Bottom + 10
+        rbCMz.Left = rbMx.Left
+        rbCMz.Parent = Me
+
+        ' Aerodynamic coordinates
+
+        rbL.Name = "L"
+        rbL.Top = rbBeta.Bottom + 10
+        rbL.Left = rbVelocity.Left
+        rbL.Parent = Me
+
+        rbD.Name = "D"
+        rbD.Top = rbFx.Bottom + 10
+        rbD.Left = rbVelocity.Left
+        rbD.Parent = Me
+
+        rbY.Name = "Y"
+        rbY.Top = rbFy.Bottom + 10
+        rbY.Left = rbVelocity.Left
+        rbY.Parent = Me
+
+
+        rbCL.Name = "CL"
+        rbCL.Top = rbBeta.Bottom + 10
+        rbCL.Left = rbVelocity.Left
+        rbCL.Parent = Me
+
+        rbCD.Name = "CD"
+        rbCD.Top = rbFx.Bottom + 10
+        rbCD.Left = rbVelocity.Left
+        rbCD.Parent = Me
+
+        rbCY.Name = "CY"
+        rbCY.Top = rbFy.Bottom + 10
+        rbCY.Left = rbVelocity.Left
+        rbCY.Parent = Me
+
+
+        ' Labels
+
+        lblSurfaceUnit.Text = GlobalMagnitudes.UserMagnitudes(Magnitudes.Area).Label
+
+        lblLengthUnit.Text = GlobalMagnitudes.UserMagnitudes(Magnitudes.Length).Label
+
+        lblRxUnit.Text = GlobalMagnitudes.UserMagnitudes(Magnitudes.Length).Label
+
+        lblRyUnit.Text = GlobalMagnitudes.UserMagnitudes(Magnitudes.Length).Label
+
+        lblRzUnit.Text = GlobalMagnitudes.UserMagnitudes(Magnitudes.Length).Label
+
+        UpdateLayout()
+
     End Sub
 
     Private Sub LoadResultsData()
@@ -145,34 +248,124 @@ Public Class TotalForcePanel
 
     Private Sub RecalculateLoads()
 
-        TotalForce.SetToCero()
-        TotalForce.Add(TotalAirloads.SlenderForce)
-        TotalForce.Add(TotalAirloads.InducedDrag)
-        TotalForce.Add(TotalAirloads.SkinDrag)
-        TotalForce.Add(TotalAirloads.BodyForce)
-        TotalForce.Scale(_CalculationCore.StreamDynamicPressure)
+        If _CalculationCore IsNot Nothing Then
 
-        TotalMoment.SetToCero()
-        TotalMoment.Add(TotalAirloads.SlenderMoment)
-        TotalMoment.Add(TotalAirloads.InducedMoment)
-        TotalMoment.Add(TotalAirloads.SkinMoment)
-        TotalMoment.Add(TotalAirloads.BodyMoment)
-        TotalMoment.Scale(_CalculationCore.StreamDynamicPressure)
+            Dim q As Double = _CalculationCore.StreamDynamicPressure
 
-        Dim R As New EVector3
-        R.X = nudRx.Value
-        R.Y = nudRy.Value
-        R.Z = nudRz.Value
+            rbq.Value = q
 
-        TotalMoment.AddCrossProduct(TotalForce, R)
+            TotalForce.SetToCero()
 
-        rbFx.Value = TotalForce.X
-        rbFy.Value = TotalForce.Y
-        rbFz.Value = TotalForce.Z
+            If cbSlenderForces.Checked Then TotalForce.Add(TotalAirloads.SlenderForce)
+            If cbInducedForces.Checked Then TotalForce.Add(TotalAirloads.InducedDrag)
+            If cbSkinDrag.Checked Then TotalForce.Add(TotalAirloads.SkinDrag)
+            If cbBodyForces.Checked Then TotalForce.Add(TotalAirloads.BodyForce)
+            TotalForce.Scale(q)
 
-        rbMx.Value = TotalMoment.X
-        rbMy.Value = TotalMoment.Y
-        rbMz.Value = TotalMoment.Z
+            TotalMoment.SetToCero()
+            If cbSlenderForces.Checked Then TotalMoment.Add(TotalAirloads.SlenderMoment)
+            If cbInducedForces.Checked Then TotalMoment.Add(TotalAirloads.InducedMoment)
+            If cbSkinDrag.Checked Then TotalMoment.Add(TotalAirloads.SkinMoment)
+            If cbBodyForces.Checked Then TotalMoment.Add(TotalAirloads.BodyMoment)
+            TotalMoment.Scale(q)
+
+            Dim R As New EVector3
+            R.X = nudRx.Value
+            R.Y = nudRy.Value
+            R.Z = nudRz.Value
+
+            TotalMoment.AddCrossProduct(TotalForce, R)
+
+            rbFx.Value = TotalForce.X
+            rbFy.Value = TotalForce.Y
+            rbFz.Value = TotalForce.Z
+
+            rbMx.Value = TotalMoment.X
+            rbMy.Value = TotalMoment.Y
+            rbMz.Value = TotalMoment.Z
+
+            ' Dimensionless
+
+            Dim S As Double = Math.Max(0.001, nudSurface.Value)
+
+            Dim c As Double = Math.Max(0.001, nudLength.Value)
+
+            Dim qS As Double = q * S
+
+            Dim qSc As Double = q * S * c
+
+            rbCFx.Value = TotalForce.X / qS
+            rbCFy.Value = TotalForce.Y / qS
+            rbCFz.Value = TotalForce.Z / qS
+
+            rbCMx.Value = TotalMoment.X / qSc
+            rbCMy.Value = TotalMoment.Y / qSc
+            rbCMz.Value = TotalMoment.Z / qSc
+
+            ' Components in aerodynamic coordinates
+
+            Dim Basis As New EBase3
+
+            Basis.U.X = _CalculationCore.StreamVelocity.X
+            Basis.U.Y = _CalculationCore.StreamVelocity.Y
+            Basis.U.Z = _CalculationCore.StreamVelocity.Z
+            Basis.U.Normalize()
+
+            Basis.W.X = Basis.U.X
+            Basis.W.Z = Basis.U.Z
+            Dim Ux As Double = Basis.W.X
+            Dim Uz As Double = Basis.W.Z
+            Basis.W.Z = Ux
+            Basis.W.X = -Uz
+            Basis.W.Normalize()
+
+            Basis.V.FromVectorProduct(Basis.W, Basis.U)
+
+            Dim L As Double = TotalForce.InnerProduct(Basis.W)
+            Dim D As Double = TotalForce.InnerProduct(Basis.U)
+            Dim Y As Double = TotalForce.InnerProduct(Basis.V)
+
+            rbL.Value = L
+            rbD.Value = D
+            rbY.Value = Y
+
+            rbCL.Value = L / qS
+            rbCD.Value = D / qS
+            rbCY.Value = Y / qS
+
+        End If
+
+    End Sub
+
+    Private Sub UpdateLayout()
+
+        nudSurface.Enabled = cbDimensionless.Checked
+
+        nudLength.Enabled = cbDimensionless.Checked
+
+        rbFx.Visible = Not cbDimensionless.Checked And rbBodyCoordinates.Checked
+        rbFy.Visible = Not cbDimensionless.Checked And rbBodyCoordinates.Checked
+        rbFz.Visible = Not cbDimensionless.Checked And rbBodyCoordinates.Checked
+
+        rbCFx.Visible = cbDimensionless.Checked And rbBodyCoordinates.Checked
+        rbCFy.Visible = cbDimensionless.Checked And rbBodyCoordinates.Checked
+        rbCFz.Visible = cbDimensionless.Checked And rbBodyCoordinates.Checked
+
+        rbL.Visible = Not cbDimensionless.Checked And rbAeroCoordinates.Checked
+        rbD.Visible = Not cbDimensionless.Checked And rbAeroCoordinates.Checked
+        rbY.Visible = Not cbDimensionless.Checked And rbAeroCoordinates.Checked
+
+        rbCL.Visible = cbDimensionless.Checked And rbAeroCoordinates.Checked
+        rbCD.Visible = cbDimensionless.Checked And rbAeroCoordinates.Checked
+        rbCY.Visible = cbDimensionless.Checked And rbAeroCoordinates.Checked
+
+        rbMx.Visible = Not cbDimensionless.Checked
+        rbMy.Visible = Not cbDimensionless.Checked
+        rbMz.Visible = Not cbDimensionless.Checked
+
+        rbCMx.Visible = cbDimensionless.Checked
+        rbCMy.Visible = cbDimensionless.Checked
+        rbCMz.Visible = cbDimensionless.Checked
 
     End Sub
 
@@ -191,6 +384,60 @@ Public Class TotalForcePanel
     Private Sub nudRz_ValueChanged(sender As Object, e As EventArgs) Handles nudRz.ValueChanged
 
         RecalculateLoads()
+
+    End Sub
+
+    Private Sub cbDimensionless_CheckedChanged(sender As Object, e As EventArgs) Handles cbDimensionless.CheckedChanged
+
+        UpdateLayout()
+
+    End Sub
+
+    Private Sub cbSlenderForces_CheckedChanged(sender As Object, e As EventArgs) Handles cbSlenderForces.CheckedChanged
+
+        RecalculateLoads()
+
+    End Sub
+
+    Private Sub cbInducedForces_CheckedChanged(sender As Object, e As EventArgs) Handles cbInducedForces.CheckedChanged
+
+        RecalculateLoads()
+
+    End Sub
+
+    Private Sub cbSkinDrag_CheckedChanged(sender As Object, e As EventArgs) Handles cbSkinDrag.CheckedChanged
+
+        RecalculateLoads()
+
+    End Sub
+
+    Private Sub cbBodyForces_CheckedChanged(sender As Object, e As EventArgs) Handles cbBodyForces.CheckedChanged
+
+        RecalculateLoads()
+
+    End Sub
+
+    Private Sub nudSurface_ValueChanged(sender As Object, e As EventArgs) Handles nudSurface.ValueChanged
+
+        RecalculateLoads()
+
+    End Sub
+
+    Private Sub nudLengthUnit_ValueChanged(sender As Object, e As EventArgs) Handles nudLength.ValueChanged
+
+        RecalculateLoads()
+
+    End Sub
+
+    Private Sub rbBodyCoordinates_CheckedChanged(sender As Object, e As EventArgs) Handles rbBodyCoordinates.CheckedChanged
+
+        UpdateLayout()
+
+    End Sub
+
+    Private Sub rbAeroCoordinates_CheckedChanged(sender As Object, e As EventArgs) Handles rbAeroCoordinates.CheckedChanged
+
+        UpdateLayout()
 
     End Sub
 

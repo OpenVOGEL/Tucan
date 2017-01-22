@@ -279,8 +279,6 @@ Public Class ForcesPanel
             rbAlpha.Value = Math.Asin(_CalculationCore.StreamVelocity.Z / _CalculationCore.StreamVelocity.EuclideanNorm)
             rbBeta.Value = Math.Asin(_CalculationCore.StreamVelocity.Y / _CalculationCore.StreamVelocity.EuclideanNorm)
 
-            _CalculationCore.CalculateAirloads()
-
             For i = 0 To _CalculationCore.Lattices.Count - 1
 
                 cbLattices.Items.Add(String.Format("Lattice {0}", i))

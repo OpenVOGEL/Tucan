@@ -1196,6 +1196,12 @@ AeroTools
  </summary>
  <remarks></remarks>
 </member>
+<member name="M:AeroTools.CalculationModel.Models.Aero.TotalAirLoads.Add(AeroTools.CalculationModel.Models.Aero.TotalAirLoads)">
+ <summary>
+ Adds the given total load scaled by the surface.
+ </summary>
+ <param name="Airloads"></param>
+</member>
 <member name="T:AeroTools.CalculationModel.Models.Aero.Wake">
  <summary>
  Represents a free lattice.

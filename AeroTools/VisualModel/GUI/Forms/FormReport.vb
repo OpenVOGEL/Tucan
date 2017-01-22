@@ -47,8 +47,6 @@ Public Class FormReport
 
         If Not IsNothing(CalculationCore) Then
 
-            CalculationCore.CalculateAirloads()
-
             Result.AppendLine("RESULS OF THE AERODYNAMIC ANALYSIS:")
             Result.AppendLine("")
 

@@ -856,7 +856,9 @@ Namespace CalculationModel.Solver
                 _StreamOmega.Y = IOXML.ReadDouble(reader, "OY", 0.0)
                 _StreamOmega.Z = IOXML.ReadDouble(reader, "OZ", 0.0)
                 _StreamDensity = IOXML.ReadDouble(reader, "Rho", 1.225)
+
                 If _StreamDensity = 0 Then _StreamDensity = 1.225
+
                 _StreamDynamicPressure = 0.5 * _StreamVelocity.SquareEuclideanNorm * _StreamDensity
 
                 Try
@@ -916,6 +918,8 @@ Namespace CalculationModel.Solver
             reader.Close()
 
             Settings.GenerateVelocityProfile()
+
+            CalculateAirloads()
 
         End Sub
 

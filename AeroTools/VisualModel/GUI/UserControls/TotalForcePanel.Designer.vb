@@ -24,36 +24,44 @@ Partial Class TotalForcePanel
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Me.gbReferencePoint = New System.Windows.Forms.GroupBox()
-        Me.Label6 = New System.Windows.Forms.Label()
-        Me.Label5 = New System.Windows.Forms.Label()
-        Me.Label4 = New System.Windows.Forms.Label()
+        Me.lblRzUnit = New System.Windows.Forms.Label()
+        Me.lblRyUnit = New System.Windows.Forms.Label()
+        Me.lblRxUnit = New System.Windows.Forms.Label()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.nudRz = New System.Windows.Forms.NumericUpDown()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.nudRy = New System.Windows.Forms.NumericUpDown()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.nudRx = New System.Windows.Forms.NumericUpDown()
-        Me.Label7 = New System.Windows.Forms.Label()
+        Me.lblSurfaceUnit = New System.Windows.Forms.Label()
         Me.Label8 = New System.Windows.Forms.Label()
         Me.nudSurface = New System.Windows.Forms.NumericUpDown()
-        Me.Label9 = New System.Windows.Forms.Label()
+        Me.lblLengthUnit = New System.Windows.Forms.Label()
         Me.Label10 = New System.Windows.Forms.Label()
         Me.nudLength = New System.Windows.Forms.NumericUpDown()
         Me.cbDimensionless = New System.Windows.Forms.CheckBox()
         Me.ToolTip = New System.Windows.Forms.ToolTip(Me.components)
+        Me.cbSlenderForces = New System.Windows.Forms.CheckBox()
+        Me.cbInducedForces = New System.Windows.Forms.CheckBox()
+        Me.cbSkinDrag = New System.Windows.Forms.CheckBox()
+        Me.cbBodyForces = New System.Windows.Forms.CheckBox()
+        Me.rbBodyCoordinates = New System.Windows.Forms.RadioButton()
+        Me.rbAeroCoordinates = New System.Windows.Forms.RadioButton()
+        Me.GroupBox1 = New System.Windows.Forms.GroupBox()
         Me.gbReferencePoint.SuspendLayout()
         CType(Me.nudRz, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.nudRy, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.nudRx, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.nudSurface, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.nudLength, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.GroupBox1.SuspendLayout()
         Me.SuspendLayout()
         '
         'gbReferencePoint
         '
-        Me.gbReferencePoint.Controls.Add(Me.Label6)
-        Me.gbReferencePoint.Controls.Add(Me.Label5)
-        Me.gbReferencePoint.Controls.Add(Me.Label4)
+        Me.gbReferencePoint.Controls.Add(Me.lblRzUnit)
+        Me.gbReferencePoint.Controls.Add(Me.lblRyUnit)
+        Me.gbReferencePoint.Controls.Add(Me.lblRxUnit)
         Me.gbReferencePoint.Controls.Add(Me.Label3)
         Me.gbReferencePoint.Controls.Add(Me.nudRz)
         Me.gbReferencePoint.Controls.Add(Me.Label2)
@@ -69,32 +77,32 @@ Partial Class TotalForcePanel
         Me.ToolTip.SetToolTip(Me.gbReferencePoint, "This point is used as reference to compute the moments." & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "When this point is locat" &
         "ed at the CG, mass forces" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "don't need to be included in the analysis.")
         '
-        'Label6
+        'lblRzUnit
         '
-        Me.Label6.AutoSize = True
-        Me.Label6.Location = New System.Drawing.Point(106, 69)
-        Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(34, 13)
-        Me.Label6.TabIndex = 12
-        Me.Label6.Text = "[unit]"
+        Me.lblRzUnit.AutoSize = True
+        Me.lblRzUnit.Location = New System.Drawing.Point(106, 69)
+        Me.lblRzUnit.Name = "lblRzUnit"
+        Me.lblRzUnit.Size = New System.Drawing.Size(34, 13)
+        Me.lblRzUnit.TabIndex = 12
+        Me.lblRzUnit.Text = "[unit]"
         '
-        'Label5
+        'lblRyUnit
         '
-        Me.Label5.AutoSize = True
-        Me.Label5.Location = New System.Drawing.Point(106, 46)
-        Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(34, 13)
-        Me.Label5.TabIndex = 11
-        Me.Label5.Text = "[unit]"
+        Me.lblRyUnit.AutoSize = True
+        Me.lblRyUnit.Location = New System.Drawing.Point(106, 46)
+        Me.lblRyUnit.Name = "lblRyUnit"
+        Me.lblRyUnit.Size = New System.Drawing.Size(34, 13)
+        Me.lblRyUnit.TabIndex = 11
+        Me.lblRyUnit.Text = "[unit]"
         '
-        'Label4
+        'lblRxUnit
         '
-        Me.Label4.AutoSize = True
-        Me.Label4.Location = New System.Drawing.Point(106, 23)
-        Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(34, 13)
-        Me.Label4.TabIndex = 10
-        Me.Label4.Text = "[unit]"
+        Me.lblRxUnit.AutoSize = True
+        Me.lblRxUnit.Location = New System.Drawing.Point(106, 23)
+        Me.lblRxUnit.Name = "lblRxUnit"
+        Me.lblRxUnit.Size = New System.Drawing.Size(34, 13)
+        Me.lblRxUnit.TabIndex = 10
+        Me.lblRxUnit.Text = "[unit]"
         '
         'Label3
         '
@@ -156,19 +164,19 @@ Partial Class TotalForcePanel
         Me.nudRx.TabIndex = 1
         Me.nudRx.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
-        'Label7
+        'lblSurfaceUnit
         '
-        Me.Label7.AutoSize = True
-        Me.Label7.Location = New System.Drawing.Point(253, 49)
-        Me.Label7.Name = "Label7"
-        Me.Label7.Size = New System.Drawing.Size(34, 13)
-        Me.Label7.TabIndex = 9
-        Me.Label7.Text = "[unit]"
+        Me.lblSurfaceUnit.AutoSize = True
+        Me.lblSurfaceUnit.Location = New System.Drawing.Point(253, 34)
+        Me.lblSurfaceUnit.Name = "lblSurfaceUnit"
+        Me.lblSurfaceUnit.Size = New System.Drawing.Size(34, 13)
+        Me.lblSurfaceUnit.TabIndex = 9
+        Me.lblSurfaceUnit.Text = "[unit]"
         '
         'Label8
         '
         Me.Label8.AutoSize = True
-        Me.Label8.Location = New System.Drawing.Point(150, 49)
+        Me.Label8.Location = New System.Drawing.Point(150, 34)
         Me.Label8.Name = "Label8"
         Me.Label8.Size = New System.Drawing.Size(13, 13)
         Me.Label8.TabIndex = 7
@@ -178,26 +186,27 @@ Partial Class TotalForcePanel
         '
         Me.nudSurface.DecimalPlaces = 4
         Me.nudSurface.Increment = New Decimal(New Integer() {1, 0, 0, 65536})
-        Me.nudSurface.Location = New System.Drawing.Point(169, 47)
+        Me.nudSurface.Location = New System.Drawing.Point(169, 32)
         Me.nudSurface.Name = "nudSurface"
         Me.nudSurface.Size = New System.Drawing.Size(75, 22)
         Me.nudSurface.TabIndex = 8
         Me.nudSurface.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        Me.ToolTip.SetToolTip(Me.nudSurface, "Select the value of the reference area")
+        Me.ToolTip.SetToolTip(Me.nudSurface, "Select the value of the characteristic area")
+        Me.nudSurface.Value = New Decimal(New Integer() {1, 0, 0, 0})
         '
-        'Label9
+        'lblLengthUnit
         '
-        Me.Label9.AutoSize = True
-        Me.Label9.Location = New System.Drawing.Point(253, 72)
-        Me.Label9.Name = "Label9"
-        Me.Label9.Size = New System.Drawing.Size(34, 13)
-        Me.Label9.TabIndex = 12
-        Me.Label9.Text = "[unit]"
+        Me.lblLengthUnit.AutoSize = True
+        Me.lblLengthUnit.Location = New System.Drawing.Point(253, 57)
+        Me.lblLengthUnit.Name = "lblLengthUnit"
+        Me.lblLengthUnit.Size = New System.Drawing.Size(34, 13)
+        Me.lblLengthUnit.TabIndex = 12
+        Me.lblLengthUnit.Text = "[unit]"
         '
         'Label10
         '
         Me.Label10.AutoSize = True
-        Me.Label10.Location = New System.Drawing.Point(150, 72)
+        Me.Label10.Location = New System.Drawing.Point(150, 57)
         Me.Label10.Name = "Label10"
         Me.Label10.Size = New System.Drawing.Size(12, 13)
         Me.Label10.TabIndex = 10
@@ -207,17 +216,18 @@ Partial Class TotalForcePanel
         '
         Me.nudLength.DecimalPlaces = 4
         Me.nudLength.Increment = New Decimal(New Integer() {1, 0, 0, 65536})
-        Me.nudLength.Location = New System.Drawing.Point(169, 70)
+        Me.nudLength.Location = New System.Drawing.Point(169, 55)
         Me.nudLength.Name = "nudLength"
         Me.nudLength.Size = New System.Drawing.Size(75, 22)
         Me.nudLength.TabIndex = 11
         Me.nudLength.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        Me.ToolTip.SetToolTip(Me.nudLength, "Select the value of the reference length")
+        Me.ToolTip.SetToolTip(Me.nudLength, "Select the value of the characteristic length")
+        Me.nudLength.Value = New Decimal(New Integer() {1, 0, 0, 0})
         '
         'cbDimensionless
         '
         Me.cbDimensionless.AutoSize = True
-        Me.cbDimensionless.Location = New System.Drawing.Point(153, 24)
+        Me.cbDimensionless.Location = New System.Drawing.Point(153, 9)
         Me.cbDimensionless.Name = "cbDimensionless"
         Me.cbDimensionless.Size = New System.Drawing.Size(100, 17)
         Me.cbDimensionless.TabIndex = 13
@@ -225,16 +235,108 @@ Partial Class TotalForcePanel
         Me.ToolTip.SetToolTip(Me.cbDimensionless, "Represent the data in magnitudes or " & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "in dimensionless coefficients")
         Me.cbDimensionless.UseVisualStyleBackColor = True
         '
+        'cbSlenderForces
+        '
+        Me.cbSlenderForces.AutoSize = True
+        Me.cbSlenderForces.Checked = True
+        Me.cbSlenderForces.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.cbSlenderForces.Location = New System.Drawing.Point(293, 9)
+        Me.cbSlenderForces.Name = "cbSlenderForces"
+        Me.cbSlenderForces.Size = New System.Drawing.Size(99, 17)
+        Me.cbSlenderForces.TabIndex = 14
+        Me.cbSlenderForces.Text = "Slender forces"
+        Me.ToolTip.SetToolTip(Me.cbSlenderForces, "Indicate if the primary lift forces " & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "on slender surfaces have to be included")
+        Me.cbSlenderForces.UseVisualStyleBackColor = True
+        '
+        'cbInducedForces
+        '
+        Me.cbInducedForces.AutoSize = True
+        Me.cbInducedForces.Checked = True
+        Me.cbInducedForces.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.cbInducedForces.Location = New System.Drawing.Point(293, 30)
+        Me.cbInducedForces.Name = "cbInducedForces"
+        Me.cbInducedForces.Size = New System.Drawing.Size(102, 17)
+        Me.cbInducedForces.TabIndex = 15
+        Me.cbInducedForces.Text = "Induced forces"
+        Me.ToolTip.SetToolTip(Me.cbInducedForces, "Indicate if the induced drag on slender surfaces" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "have to be included")
+        Me.cbInducedForces.UseVisualStyleBackColor = True
+        '
+        'cbSkinDrag
+        '
+        Me.cbSkinDrag.AutoSize = True
+        Me.cbSkinDrag.Checked = True
+        Me.cbSkinDrag.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.cbSkinDrag.Location = New System.Drawing.Point(293, 50)
+        Me.cbSkinDrag.Name = "cbSkinDrag"
+        Me.cbSkinDrag.Size = New System.Drawing.Size(109, 17)
+        Me.cbSkinDrag.TabIndex = 16
+        Me.cbSkinDrag.Text = "Skin drag forces"
+        Me.ToolTip.SetToolTip(Me.cbSkinDrag, "Indicate if the friction drag on slender surfaces" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "have to be included")
+        Me.cbSkinDrag.UseVisualStyleBackColor = True
+        '
+        'cbBodyForces
+        '
+        Me.cbBodyForces.AutoSize = True
+        Me.cbBodyForces.Checked = True
+        Me.cbBodyForces.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.cbBodyForces.Location = New System.Drawing.Point(293, 70)
+        Me.cbBodyForces.Name = "cbBodyForces"
+        Me.cbBodyForces.Size = New System.Drawing.Size(86, 17)
+        Me.cbBodyForces.TabIndex = 17
+        Me.cbBodyForces.Text = "Body forces"
+        Me.ToolTip.SetToolTip(Me.cbBodyForces, "Indicate if the resultant of the pressure over fuselages" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "have to be included")
+        Me.cbBodyForces.UseVisualStyleBackColor = True
+        '
+        'rbBodyCoordinates
+        '
+        Me.rbBodyCoordinates.AutoSize = True
+        Me.rbBodyCoordinates.Location = New System.Drawing.Point(9, 42)
+        Me.rbBodyCoordinates.Name = "rbBodyCoordinates"
+        Me.rbBodyCoordinates.Size = New System.Drawing.Size(77, 17)
+        Me.rbBodyCoordinates.TabIndex = 19
+        Me.rbBodyCoordinates.Text = "Body (XYZ)"
+        Me.rbBodyCoordinates.UseVisualStyleBackColor = True
+        '
+        'rbAeroCoordinates
+        '
+        Me.rbAeroCoordinates.AutoSize = True
+        Me.rbAeroCoordinates.Checked = True
+        Me.rbAeroCoordinates.Location = New System.Drawing.Point(9, 21)
+        Me.rbAeroCoordinates.Name = "rbAeroCoordinates"
+        Me.rbAeroCoordinates.Size = New System.Drawing.Size(91, 17)
+        Me.rbAeroCoordinates.TabIndex = 20
+        Me.rbAeroCoordinates.TabStop = True
+        Me.rbAeroCoordinates.Text = "Aerodynamic"
+        Me.rbAeroCoordinates.UseVisualStyleBackColor = True
+        '
+        'GroupBox1
+        '
+        Me.GroupBox1.Controls.Add(Me.rbAeroCoordinates)
+        Me.GroupBox1.Controls.Add(Me.rbBodyCoordinates)
+        Me.GroupBox1.Location = New System.Drawing.Point(408, 3)
+        Me.GroupBox1.Name = "GroupBox1"
+        Me.GroupBox1.Size = New System.Drawing.Size(130, 100)
+        Me.GroupBox1.TabIndex = 21
+        Me.GroupBox1.TabStop = False
+        Me.GroupBox1.Text = "Coordinates system"
+        Me.ToolTip.SetToolTip(Me.GroupBox1, "Select a coordinate system to project the components" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "of the total aerodynamic fo" &
+        "rce")
+        '
         'TotalForcePanel
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.White
+        Me.Controls.Add(Me.GroupBox1)
+        Me.Controls.Add(Me.cbBodyForces)
+        Me.Controls.Add(Me.cbSkinDrag)
+        Me.Controls.Add(Me.cbInducedForces)
+        Me.Controls.Add(Me.cbSlenderForces)
         Me.Controls.Add(Me.cbDimensionless)
-        Me.Controls.Add(Me.Label9)
+        Me.Controls.Add(Me.lblLengthUnit)
         Me.Controls.Add(Me.Label10)
         Me.Controls.Add(Me.nudLength)
-        Me.Controls.Add(Me.Label7)
+        Me.Controls.Add(Me.lblSurfaceUnit)
         Me.Controls.Add(Me.Label8)
         Me.Controls.Add(Me.nudSurface)
         Me.Controls.Add(Me.gbReferencePoint)
@@ -248,6 +350,8 @@ Partial Class TotalForcePanel
         CType(Me.nudRx, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.nudSurface, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.nudLength, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.GroupBox1.ResumeLayout(False)
+        Me.GroupBox1.PerformLayout()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -260,15 +364,22 @@ Partial Class TotalForcePanel
     Friend WithEvents nudRy As Windows.Forms.NumericUpDown
     Friend WithEvents Label1 As Windows.Forms.Label
     Friend WithEvents nudRx As Windows.Forms.NumericUpDown
-    Friend WithEvents Label7 As Windows.Forms.Label
+    Friend WithEvents lblSurfaceUnit As Windows.Forms.Label
     Friend WithEvents Label8 As Windows.Forms.Label
     Friend WithEvents nudSurface As Windows.Forms.NumericUpDown
-    Friend WithEvents Label9 As Windows.Forms.Label
+    Friend WithEvents lblLengthUnit As Windows.Forms.Label
     Friend WithEvents Label10 As Windows.Forms.Label
     Friend WithEvents nudLength As Windows.Forms.NumericUpDown
     Friend WithEvents cbDimensionless As Windows.Forms.CheckBox
-    Friend WithEvents Label6 As Windows.Forms.Label
-    Friend WithEvents Label5 As Windows.Forms.Label
-    Friend WithEvents Label4 As Windows.Forms.Label
+    Friend WithEvents lblRzUnit As Windows.Forms.Label
+    Friend WithEvents lblRyUnit As Windows.Forms.Label
+    Friend WithEvents lblRxUnit As Windows.Forms.Label
     Friend WithEvents ToolTip As Windows.Forms.ToolTip
+    Friend WithEvents cbSlenderForces As Windows.Forms.CheckBox
+    Friend WithEvents cbInducedForces As Windows.Forms.CheckBox
+    Friend WithEvents cbSkinDrag As Windows.Forms.CheckBox
+    Friend WithEvents cbBodyForces As Windows.Forms.CheckBox
+    Friend WithEvents rbBodyCoordinates As Windows.Forms.RadioButton
+    Friend WithEvents rbAeroCoordinates As Windows.Forms.RadioButton
+    Friend WithEvents GroupBox1 As Windows.Forms.GroupBox
 End Class

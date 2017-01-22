@@ -48,6 +48,10 @@ Namespace CalculationModel.Models.Aero
         Public Property BodyForce As New EVector3
         Public Property BodyMoment As New EVector3
 
+        ''' <summary>
+        ''' Adds the given total load scaled by the surface.
+        ''' </summary>
+        ''' <param name="Airloads"></param>
         Public Sub Add(Airloads As TotalAirLoads)
 
             Force.Add(Airloads.Area * Airloads.Force)
