@@ -118,17 +118,19 @@ Public Class VelocityControl
 
         If Not Ready Then Exit Sub
 
-        Me.AdquirirDatosDelForm()
-        Me.PlanoDeVelocidad.GenerarMallado()
+        AdquirirDatosDelForm()
+        PlanoDeVelocidad.GenerarMallado()
         Dim CantidadDeNodos As Integer = PlanoDeVelocidad.NumberOfNodes
         Dim RefVelocity As New EVector3
 
         If Proyecto.CalculationCore Is Nothing Then Exit Sub
 
+        Dim WithStreamOmega As Boolean = Proyecto.CalculationCore.Settings.Omega.EuclideanNorm > 0.0
+
         Dim Total As Boolean = Not PlanoDeVelocidad.InducedVelocity
 
         Parallel.For(1, CantidadDeNodos + 1, Sub(i As Integer)
-                                                 PlanoDeVelocidad.ObtenerVelocidadInducida(i).Assign(Proyecto.CalculationCore.CalculateVelocityAtPoint(PlanoDeVelocidad.ObtenerNodo(i), Total))
+                                                 PlanoDeVelocidad.ObtenerVelocidadInducida(i).Assign(Proyecto.CalculationCore.CalculateVelocityAtPoint(PlanoDeVelocidad.ObtenerNodo(i), Total, WithStreamOmega))
                                                  PlanoDeVelocidad.ObtenerVelocidadInducida(i).ProjectOnPlane(PlanoDeVelocidad.VectorNormal)
                                              End Sub)
         Proyecto.RepresentOnGL()

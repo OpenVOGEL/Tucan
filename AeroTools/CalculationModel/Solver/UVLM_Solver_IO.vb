@@ -21,7 +21,6 @@ Imports AeroTools.CalculationModel.Models.Aero
 Imports AeroTools.CalculationModel.Models.Aero.Components
 Imports AeroTools.CalculationModel.Models.Structural
 Imports System.Xml
-Imports AeroTools.VisualModel.Interface.Results
 Imports AeroTools.CalculationModel.Models.Structural.Library
 Imports AeroTools.VisualModel.Models
 Imports AeroTools.VisualModel.Models.Components

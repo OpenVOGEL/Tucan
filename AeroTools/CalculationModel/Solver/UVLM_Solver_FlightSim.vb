@@ -42,7 +42,7 @@ Namespace CalculationModel.Solver
             f.PushMessageWithProgress("Building matrix", 0)
 
             BuildMatrixForDoublets()
-            BuildRHS_I()
+            BuildRHS_I(WithStreamOmega)
             InitializeWakes()
 
             Dim LE As New LinearEquations
@@ -71,13 +71,13 @@ Namespace CalculationModel.Solver
 
                 CalculateVelocityInducedByTheWakesOnBoundedLattices(WithStreamOmega)
 
-                BuildRHS_II()
+                BuildRHS_II(WithStreamOmega)
 
                 'Next time step
 
                 f.PushMessageWithProgress("Calculating airloads", 0)
 
-                CalculateTotalVelocityOnBoundedLattices()
+                CalculateTotalVelocityOnBoundedLattices(WithStreamOmega)
 
                 ' Calculate vortex rings Cp or DCp:
 

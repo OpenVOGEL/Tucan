@@ -1982,7 +1982,7 @@ AeroTools
  Constructs the matrix of source influence.
  </summary>
 </member>
-<member name="M:AeroTools.CalculationModel.Solver.UVLMSolver.BuildRHS_I">
+<member name="M:AeroTools.CalculationModel.Solver.UVLMSolver.BuildRHS_I(System.Boolean)">
  <summary>
  Calculates the right hand side without influence of the wake and without surface motion.
  </summary>
@@ -2002,7 +2002,7 @@ AeroTools
  Gives to each vortex ring its corresponding circulation.
  </summary>
 </member>
-<member name="M:AeroTools.CalculationModel.Solver.UVLMSolver.AssignSources">
+<member name="M:AeroTools.CalculationModel.Solver.UVLMSolver.AssignSources(System.Boolean)">
  <summary>
  Gives to each non-slender vortex ring its corresponding source intensity based on the current stream velocity.
  </summary>

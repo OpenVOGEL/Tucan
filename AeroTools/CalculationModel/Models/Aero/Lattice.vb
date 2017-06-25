@@ -123,7 +123,7 @@ Namespace CalculationModel.Models.Aero
         ''' </summary>
         ''' <param name="Point"></param>
         ''' <remarks></remarks>
-        Public Sub AddInducedVelocity(ByRef Velocity As EVector3, ByVal Point As EVector3, Optional ByVal CutOff As Double = 0.0001)
+        Public Sub AddInducedVelocity(ByRef Velocity As EVector3, ByVal Point As EVector3, ByVal CutOff As Double)
 
             ' Add velocity associated to doublets
 

@@ -50,7 +50,7 @@ Namespace CalculationModel.Solver
 
             _StreamDynamicPressure = 0.5 * _StreamDensity * SquareVelocity
 
-            Dim WithStreamOmega As Boolean = _StreamOmega.EuclideanNorm > 0.00001
+            Dim WithStreamOmega As Boolean = _StreamOmega.EuclideanNorm > 0
 
             RaiseEvent PushMessage("Building doublets matrix")
             BuildMatrixForDoublets()
@@ -61,12 +61,12 @@ Namespace CalculationModel.Solver
                 BuildMatrixForSources()
 
                 RaiseEvent PushMessage("Assigning sources")
-                AssignSources()
+                AssignSources(WithStreamOmega)
 
             End If
 
             RaiseEvent PushMessage("Building RHS")
-            BuildRHS_I()
+            BuildRHS_I(WithStreamOmega)
 
             RaiseEvent PushMessage("Initializing wakes")
             InitializeWakes()

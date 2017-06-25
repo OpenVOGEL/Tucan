@@ -71,8 +71,8 @@ Namespace CalculationModel.Solver
             If Indexate Then
 
                 Dimension = IndexateLattices()
-                MatrixDoublets = New Matrix(Dimension) 'SquareMatrix(Dimension)
-                RHS = New Vector(Dimension) 'ColumnVector(Dimension)
+                MatrixDoublets = New Matrix(Dimension)
+                RHS = New Vector(Dimension)
 
             End If
 
@@ -225,9 +225,7 @@ Namespace CalculationModel.Solver
         ''' <summary>
         ''' Calculates the right hand side without influence of the wake and without surface motion.
         ''' </summary>
-        Private Sub BuildRHS_I()
-
-            Dim Velocity As EVector3 = Settings.StreamVelocity
+        Private Sub BuildRHS_I(ByVal WithStreamOmega As Boolean)
 
             For Each Lattice As Lattice In Lattices
 
@@ -237,7 +235,17 @@ Namespace CalculationModel.Solver
 
                         ' For Neumann boundary conditions:
 
-                        RHS(VortexRing.IndexG) = -Velocity.X * VortexRing.Normal.X - Velocity.Y * VortexRing.Normal.Y - Velocity.Z * VortexRing.Normal.Z
+                        Dim Vx As Double = _StreamVelocity.X
+                        Dim Vy As Double = _StreamVelocity.Y
+                        Dim Vz As Double = _StreamVelocity.Z
+
+                        If WithStreamOmega Then
+                            Vx += _StreamOmega.Y * VortexRing.ControlPoint.Z - _StreamOmega.Z * VortexRing.ControlPoint.Y
+                            Vy += _StreamOmega.Z * VortexRing.ControlPoint.X - _StreamOmega.X * VortexRing.ControlPoint.Z
+                            Vz += _StreamOmega.X * VortexRing.ControlPoint.Y - _StreamOmega.Y * VortexRing.ControlPoint.X
+                        End If
+
+                        RHS(VortexRing.IndexG) = -Vx * VortexRing.Normal.X - Vy * VortexRing.Normal.Y - Vz * VortexRing.Normal.Z
 
                     Else
 
@@ -262,7 +270,7 @@ Namespace CalculationModel.Solver
         ''' <summary>
         ''' Calculates the right hand side considering the influence of the wake and the surface motion.
         ''' </summary> 
-        Private Sub BuildRHS_II(Optional ByVal WithStreamOmega As Boolean = False)
+        Private Sub BuildRHS_II(ByVal WithStreamOmega As Boolean)
 
             For Each Lattice As Lattice In Lattices
 
@@ -289,6 +297,7 @@ Namespace CalculationModel.Solver
                                                           Else
 
                                                               ' Dirichlet boundary conditions:
+                                                              ' (Stream omega already takein into account in vector S)
 
                                                               RHS(VortexRing.IndexG) = -VortexRing.PotentialW
 
@@ -405,7 +414,7 @@ Namespace CalculationModel.Solver
         ''' <summary>
         ''' Gives to each non-slender vortex ring its corresponding source intensity based on the current stream velocity.
         ''' </summary>
-        Private Sub AssignSources()
+        Private Sub AssignSources(WithStreamOmega As Boolean)
 
             Dim i As Integer = -1
 
@@ -419,7 +428,17 @@ Namespace CalculationModel.Solver
 
                         ' Remember that the normal points to the outside of the body, therefore the minus sign.
 
-                        VortexRing.S = -VortexRing.Normal.X * _StreamVelocity.X - VortexRing.Normal.Y * _StreamVelocity.Y - VortexRing.Normal.Z * _StreamVelocity.Z
+                        Dim Vx As Double = _StreamVelocity.X
+                        Dim Vy As Double = _StreamVelocity.Y
+                        Dim Vz As Double = _StreamVelocity.Z
+
+                        If WithStreamOmega Then
+                            Vx += _StreamOmega.Y * VortexRing.ControlPoint.Z - _StreamOmega.Z * VortexRing.ControlPoint.Y
+                            Vy += _StreamOmega.Z * VortexRing.ControlPoint.X - _StreamOmega.X * VortexRing.ControlPoint.Z
+                            Vz += _StreamOmega.X * VortexRing.ControlPoint.Y - _StreamOmega.Y * VortexRing.ControlPoint.X
+                        End If
+
+                        VortexRing.S = -VortexRing.Normal.X * Vx - VortexRing.Normal.Y * Vy - VortexRing.Normal.Z * Vz
 
                         S(i) = VortexRing.S
 
@@ -552,7 +571,7 @@ Namespace CalculationModel.Solver
         ''' <summary>
         ''' Calculates rings VelocityT (total local velocity) by adding the StreamVelocity, VelocityW and the velocity induced by the bounded lattices.
         ''' </summary>
-        Private Sub CalculateTotalVelocityOnBoundedLattices(Optional ByVal WithStreamOmega As Boolean = False)
+        Private Sub CalculateTotalVelocityOnBoundedLattices(ByVal WithStreamOmega As Boolean)
 
             Dim CutOff As Double = Settings.Cutoff
 
@@ -642,14 +661,12 @@ Namespace CalculationModel.Solver
 
             Next
 
-
-
         End Sub
 
         ''' <summary>
         ''' Calculates the total local velocity at each wake nodal point.
         ''' </summary>
-        Private Sub CalculateVelocityOnWakes(Optional ByVal WithStreamOmega As Boolean = False)
+        Private Sub CalculateVelocityOnWakes(ByVal WithStreamOmega As Boolean)
 
             Dim CutOff As Double = Settings.Cutoff
 
@@ -661,7 +678,11 @@ Namespace CalculationModel.Solver
 
                                                      NodalPoint.Velocity.Assign(_StreamVelocity)
 
-                                                     If WithStreamOmega Then NodalPoint.Velocity.AddCrossProduct(_StreamOmega, NodalPoint.Position)
+                                                     If WithStreamOmega Then
+
+                                                         NodalPoint.Velocity.AddCrossProduct(_StreamOmega, NodalPoint.Position)
+
+                                                     End If
 
                                                      For Each OtherLattice As BoundedLattice In Lattices
 
@@ -686,7 +707,7 @@ Namespace CalculationModel.Solver
         ''' <summary>
         ''' Returns the total induced velocity at the given point (serial computation).
         ''' </summary>
-        Public Function CalculateVelocityAtPoint(ByVal Point As EVector3, ByVal Total As Boolean, Optional ByVal WithStreamOmega As Boolean = False) As EVector3
+        Public Function CalculateVelocityAtPoint(ByVal Point As EVector3, ByVal Total As Boolean, ByVal WithStreamOmega As Boolean) As EVector3
 
             Dim CutOff As Double = Settings.Cutoff
             Dim Velocity As New EVector3
@@ -694,7 +715,12 @@ Namespace CalculationModel.Solver
             If Total Then
 
                 Velocity.Assign(_StreamVelocity)
-                If WithStreamOmega Then Velocity.AddCrossProduct(_StreamOmega, Point)
+
+                If WithStreamOmega Then
+
+                    Velocity.AddCrossProduct(_StreamOmega, Point)
+
+                End If
 
             End If
 

@@ -298,6 +298,21 @@ MathTools
  Unit used as reference.
  </summary>
 </member>
+<member name="T:MathTools.Magnitudes.PressureMagnitude">
+ <summary>
+ Represents a pressure magnitude.
+ </summary>
+</member>
+<member name="T:MathTools.Magnitudes.PressureMagnitude.Units">
+ <summary>
+ Time units.
+ </summary>
+</member>
+<member name="F:MathTools.Magnitudes.PressureMagnitude.DefaultUnit">
+ <summary>
+ Unit used as reference.
+ </summary>
+</member>
 <member name="T:MathTools.Magnitudes.MomentMagnitude">
  <summary>
  Represents a force magnitude.

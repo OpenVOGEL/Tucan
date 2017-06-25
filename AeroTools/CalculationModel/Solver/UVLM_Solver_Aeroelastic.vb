@@ -62,8 +62,10 @@ Namespace CalculationModel.Solver
 
             ' Build starting matrix and RHS:
 
+            Dim WithStreamOmega As Boolean = _StreamOmega.EuclideanNorm > 0.00001
+
             BuildMatrixForDoublets(True)
-            BuildRHS_I()
+            BuildRHS_I(WithStreamOmega)
             InitializeWakes()
 
             ' Initialize structural link:
@@ -178,7 +180,7 @@ Namespace CalculationModel.Solver
 
                 ' Calculate induced velocity on wake NP:
 
-                CalculateVelocityOnWakes()
+                CalculateVelocityOnWakes(WithStreamOmega)
 
                 ' Convect wake:
 
@@ -196,7 +198,7 @@ Namespace CalculationModel.Solver
 
                 ' Calculate velocityII (total velocity) at rings NPs (for airloads):
 
-                CalculateTotalVelocityOnBoundedLattices()
+                CalculateTotalVelocityOnBoundedLattices(WithStreamOmega)
 
                 For Each Lattice In Lattices
 
@@ -231,7 +233,7 @@ Namespace CalculationModel.Solver
 
                 End If
 
-                BuildRHS_II()
+                BuildRHS_II(WithStreamOmega)
 
             Next
 
@@ -284,8 +286,10 @@ Namespace CalculationModel.Solver
 
             ' Build starting matrix and RHS:
 
+            Dim WithStreamOmega As Boolean = _StreamOmega.EuclideanNorm > 0.00001
+
             BuildMatrixForDoublets(True)
-            BuildRHS_I()
+            BuildRHS_I(WithStreamOmega)
             InitializeWakes()
 
             ' Initialize structural link:
@@ -402,7 +406,7 @@ Namespace CalculationModel.Solver
 
                     ' Rebuild RHS:
 
-                    BuildRHS_II()
+                    BuildRHS_II(WithStreamOmega)
 
                     ' Rebuild matrix (from 2nd time step on)
 
@@ -420,7 +424,7 @@ Namespace CalculationModel.Solver
 
                         ' Calculate velocityII (total velocity) at rings NPs (for airloads):
 
-                        CalculateTotalVelocityOnBoundedLattices()
+                        CalculateTotalVelocityOnBoundedLattices(WithStreamOmega)
 
                         For Each Lattice In Lattices
 
@@ -470,7 +474,7 @@ Namespace CalculationModel.Solver
 
                     ' Calculate induced velocity on wake NP:
 
-                    CalculateVelocityOnWakes()
+                    CalculateVelocityOnWakes(WithStreamOmega)
 
                     ' Convect wake:
 

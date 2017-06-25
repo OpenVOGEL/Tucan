@@ -836,17 +836,21 @@ Namespace VisualModel.Models.Components
             ' Determine the number of elements:
 
             _nChordNodes = _nChordPanels + 1
+
             _nSpanNodes = 1
+
             _nSpanPanels = 0
 
             For i = 0 To WingRegions.Count - 1
 
                 _nSpanNodes = WingRegions.Item(i).nChordNodes + _nSpanNodes
+
                 _nSpanPanels = WingRegions.Item(i).nSpanPanels + _nSpanPanels
 
             Next
 
             _nBoundaryNodes = 2 * _nChordNodes + 2 * _nSpanNodes ' Numero de nodos en el contorno
+
             _nBoundarySegments = 2 * _nChordPanels + 2 * _nSpanPanels ' Numero de paneles en el contorno
 
             SetPrimitives()
@@ -854,6 +858,7 @@ Namespace VisualModel.Models.Components
             ' Clear the mesh:
 
             Mesh.Nodes.Clear()
+
             Mesh.Panels.Clear()
 
             ' Load quad panels (base on indices only):
@@ -878,59 +883,93 @@ Namespace VisualModel.Models.Components
             ' Build the boundary index matrix
 
             ReDim _BoundaryNodes(_nBoundaryNodes)
+
             ReDim _BoundaryPanels(_nBoundarySegments)
 
             Dim s As Integer
 
             s = 1
+
             For q = 1 To _nChordPanels + 1
+
                 _BoundaryNodes(s) = q
+
                 s = s + 1
+
             Next
+
             For p = 1 To _nSpanPanels - 1
+
                 _BoundaryNodes(s) = (p + 1) * (_nChordPanels + 1)
+
                 s = s + 1
+
             Next
+
             For q = 1 To _nChordPanels + 1
+
                 _BoundaryNodes(s) = (_nChordPanels + 1) * (_nSpanPanels + 1) - (q - 1)
+
                 s = s + 1
+
             Next
+
             For p = 1 To _nSpanPanels - 1
+
                 _BoundaryNodes(s) = (_nSpanPanels + 1 - p) * (_nChordPanels + 1) - _nChordPanels
+
                 s = s + 1
+
             Next
 
             _BoundaryNodes(_nBoundaryNodes) = 1
 
             s = 1
+
             For p = 1 To _nChordPanels
+
                 _BoundaryPanels(s) = p
+
                 s = s + 1
+
             Next
+
             For p = 1 To _nSpanPanels
+
                 _BoundaryPanels(s) = _nChordPanels * p
+
                 s = s + 1
+
             Next
+
             For p = 1 To _nChordPanels
+
                 _BoundaryPanels(s) = _nChordPanels * _nSpanPanels - (p - 1)
+
                 s = s + 1
+
             Next
+
             For p = 1 To _nSpanPanels
+
                 _BoundaryPanels(s) = _nChordPanels * _nSpanPanels - p * _nChordPanels + 1
+
                 s = s + 1
+
             Next
 
             ' Build rotation matrix:
 
-            Dim rotationMatrix As New RotationMatrix
+            Dim LocalRotationMatrix As New RotationMatrix
 
-            rotationMatrix.Generate(Orientation.ToRadians)
+            LocalRotationMatrix.Generate(Orientation.ToRadians)
 
             ' Locate root chord nodes:
 
             Dim nodeCounter As Integer = 1
 
             Dim flap As Double = RootFlap
+
             Dim RootChamber As CamberLine = GetCamberLineFromID(WingRegions(0).CamberLineID)
 
             For i = 1 To _nChordNodes
@@ -962,6 +1001,7 @@ Namespace VisualModel.Models.Components
                 RootChamber.EvaluatePoint(pLoc, X)
 
                 pLoc.X *= _RootChord
+
                 pLoc.Y *= _RootChord
 
                 WingRegions(0).FlapDeflection = deflection
@@ -969,9 +1009,13 @@ Namespace VisualModel.Models.Components
                 Dim Point As New NodalPoint(pLoc.X, 0, pLoc.Y)
 
                 If Symmetric Then Point.Position.Y = -Point.Position.Y
+
                 Point.Position.Substract(CenterOfRotation)
-                Point.Position.Rotate(rotationMatrix)
+
+                Point.Position.Rotate(LocalRotationMatrix)
+
                 Point.Position.Add(CenterOfRotation)
+
                 Point.Position.Add(Position)
 
                 Mesh.Nodes.Add(Point)
@@ -980,80 +1024,109 @@ Namespace VisualModel.Models.Components
 
             Next
 
-            ' Comienza a asignar la geometria a cada macro panel:
+            ' Start building the geometry of each wing region
 
             Dim leadingEdge As New EVector3
 
             For mpIndex = 0 To WingRegions.Count - 1
 
-                'Inicia las variables comunes del panel:
+                ' Initialize the common variables for this region
 
                 Dim delta As Double = WingRegions(mpIndex).Sweepback / 180.0 * Math.PI
+
                 Dim gamma As Double = WingRegions(mpIndex).Dihedral / 180.0 * Math.PI
+
                 Dim twist As Double = 0.0#
 
-                'Inicia el origen de coordenadas local:
+                ' Initialize the origin of this region
 
                 If mpIndex = 0 Then
 
                     leadingEdge.X = 0.0#
+
                     leadingEdge.Y = 0.0#
+
                     leadingEdge.Z = 0.0#
+
                     twist = 0.0#
 
                 Else
 
                     leadingEdge.X = XBp
+
                     leadingEdge.Y = YBp
+
                     leadingEdge.Z = ZBp
-                    twist = (twist + WingRegions(mpIndex - 1).Twist / 180.0 * Math.PI) * Math.Cos(gamma)  ' Prueba!!!
+
+                    twist = (twist + WingRegions(mpIndex - 1).Twist / 180.0 * Math.PI) * Math.Cos(gamma)
 
                 End If
 
                 If mpIndex = 0 Then
+
                     Chordi = _RootChord
+
                     Chordf = WingRegions(mpIndex).TipChord
+
                 Else
+
                     Chordi = WingRegions(mpIndex - 1).TipChord
+
                     Chordf = WingRegions(mpIndex).TipChord
+
                 End If
 
                 Stramo = WingRegions(mpIndex).Length
+
                 Sigma1 = 1 - 1 / WingRegions.Item(mpIndex).nSpanPanels
+
                 Scolumn1 = Stramo - Chordf / _nChordPanels
+
                 Sigma2 = 1 / WingRegions.Item(mpIndex).nSpanPanels
+
                 Scolumn2 = Chordi / _nChordPanels
 
                 C1 = (Scolumn1 - Stramo * Sigma1) / (Sigma1 ^ 2 - Sigma1)
+
                 B1 = Stramo - C1
 
                 E = ((Scolumn1 - Stramo * Sigma1) - (Sigma1 ^ 3 - Sigma1)) / (Sigma1 ^ 2 - Sigma1)
+
                 D2 = (Scolumn2 - Stramo * Sigma2) / (Sigma2 ^ 3 + E * Sigma2 ^ 2 - Sigma2 * (E + 1))
+
                 C2 = E * D2
+
                 B2 = Stramo - C2 - D2
 
-                ' Genera la geometria de cada segemento de cuerda:
+                ' Generate the geometry of each chordwise strip
 
                 For k = 1 To WingRegions(mpIndex).nSpanPanels
 
-                    ' a) Calculates the distance to the column in spanwise direction
+                    ' a) Calculate the distance to the column in spanwise direction
 
                     Y = k / WingRegions.Item(mpIndex).nSpanPanels
 
                     Select Case WingRegions.Item(mpIndex).SpacementType
 
                         Case WingRegion.Spacements.Constant
+
                             Y_stripe = Stramo * Y
+
                         Case WingRegion.Spacements.Cuadratic
+
                             Y_stripe = B1 * Y + C1 * Y ^ 2
+
                         Case WingRegion.Spacements.Qubic
+
                             Y_stripe = B2 * Y + C2 * Y ^ 2 + D2 * Y ^ 3
 
                     End Select
 
-                    'Calculates the local chord and the position of Scolumn
+                    ' b) Calculate the local chord
 
                     Chord = Chordi + (Chordf - Chordi) * Y_stripe / Stramo
+
+                    ' c) Calculate the position of the twisting axis
 
                     If mpIndex = 0 Then
 
@@ -1065,24 +1138,33 @@ Namespace VisualModel.Models.Components
 
                     End If
 
-                    'Calculates the twisting angle
+                    ' d) Calculate the twisting angle
 
                     Phi = WingRegions(mpIndex).Twist * Y / 180.0 * Math.PI
 
+                    ' d) Calculate the properties of the flap
+
                     Dim flap_chord_i As Single
+
                     Dim flap_chord_f As Single = WingRegions(mpIndex).FlapChord
 
                     If mpIndex = 0 Then
+
                         flap_chord_i = RootFlap
+
                     Else
+
                         flap_chord_i = WingRegions(mpIndex - 1).FlapChord
+
                     End If
 
-                    Dim LocalChamber As CamberLine = CamberLinesDatabase.GetCamberLineFromID(WingRegions(mpIndex).CamberLineID)
+                    Dim LocalCamber As CamberLine = CamberLinesDatabase.GetCamberLineFromID(WingRegions(mpIndex).CamberLineID)
 
-                    For l = 1 To _nChordNodes ' For each nodal point in the current column...
+                    ' Locate each chordwise node in the strip
 
-                        'Calculates the distance from the nodal point to the leading edge
+                    For l = 1 To _nChordNodes
+
+                        ' Calculate the distance from the nodal point to the leading edge
 
                         flap = flap_chord_i + (flap_chord_f - flap_chord_i) * Y
 
@@ -1091,9 +1173,13 @@ Namespace VisualModel.Models.Components
                             WingRegions(mpIndex).FlapChord = flap
 
                             If l <= _nChordNodes - FlapPanels Then
+
                                 X = (l - 1) / (_nChordNodes - FlapPanels - 1) * (1 - flap)
+
                             Else
+
                                 X = (1 - flap) + (l - _nChordNodes + FlapPanels) / FlapPanels * flap
+
                             End If
 
                         Else
@@ -1102,38 +1188,52 @@ Namespace VisualModel.Models.Components
 
                         End If
 
-                        'Calculates the chamber
+                        ' Evaluate the point in the camber line
 
                         Dim pLoc As New EVector2
-                        LocalChamber.EvaluatePoint(pLoc, X)
+
+                        LocalCamber.EvaluatePoint(pLoc, X, WingRegions(mpIndex).Flapped, WingRegions(mpIndex).FlapChord, WingRegions(mpIndex).FlapDeflection)
+
                         pLoc.X *= Chord
+
                         pLoc.Y *= Chord
 
-                        'Twisting
+                        ' Apply local twist
 
                         Pij.X = Math.Cos(Phi) * (pLoc.X - Ttwist * Chord) + Math.Sin(Phi) * pLoc.Y + Y_stripe * Math.Tan(delta) + Ttwist * Chord
+
                         Pij.Y = Y_stripe
+
                         Pij.Z = -Math.Sin(Phi) * (pLoc.X - Ttwist * Chord) + Math.Cos(Phi) * pLoc.Y
 
-                        'Overal twisting
+                        ' Apply overal twist
 
                         Dim point As New NodalPoint
 
                         point.Position.X = Pij.X * Math.Cos(twist) + Pij.Z * Math.Sin(twist) + leadingEdge.X
+
                         point.Position.Y = Pij.X * Math.Sin(gamma) * Math.Sin(twist) + Pij.Y * Math.Cos(gamma) - Pij.Z * Math.Sin(gamma) * Math.Cos(twist) + leadingEdge.Y
+
                         point.Position.Z = -Pij.X * Math.Cos(gamma) * Math.Sin(twist) + Pij.Y * Math.Sin(gamma) + Pij.Z * Math.Cos(gamma) * Math.Cos(twist) + leadingEdge.Z
 
                         If k = WingRegions(mpIndex).nSpanPanels And l = 1 Then
+
                             XBp = point.Position.X
+
                             YBp = point.Position.Y
+
                             ZBp = point.Position.Z
+
                         End If
 
-                        'Posicionamiento, simetria y orientacion:
+                        ' Global positioning:
 
                         point.Position.Substract(CenterOfRotation)
-                        point.Position.Rotate(rotationMatrix)
+
+                        point.Position.Rotate(LocalRotationMatrix)
+
                         point.Position.Add(CenterOfRotation)
+
                         point.Position.Add(Position)
 
                         Mesh.Nodes.Add(point)
@@ -1161,17 +1261,17 @@ Namespace VisualModel.Models.Components
             LocalDirections.U.X = 0.5
             LocalDirections.U.Y = 0.0
             LocalDirections.U.Z = 0.0
-            LocalDirections.U.Rotate(rotationMatrix)
+            LocalDirections.U.Rotate(LocalRotationMatrix)
 
             LocalDirections.V.X = 0.0
             LocalDirections.V.Y = 0.5
             LocalDirections.V.Z = 0.0
-            LocalDirections.V.Rotate(rotationMatrix)
+            LocalDirections.V.Rotate(LocalRotationMatrix)
 
             LocalDirections.W.X = 0.0
             LocalDirections.W.Y = 0.0
             LocalDirections.W.Z = 0.5
-            LocalDirections.W.Rotate(rotationMatrix)
+            LocalDirections.W.Rotate(LocalRotationMatrix)
 
             ' Direction points:
 
@@ -1179,7 +1279,7 @@ Namespace VisualModel.Models.Components
             _DirectionPoints.U.Y = 0.0
             _DirectionPoints.U.Z = 0.0
             _DirectionPoints.U.Substract(CenterOfRotation)
-            _DirectionPoints.U.Rotate(rotationMatrix)
+            _DirectionPoints.U.Rotate(LocalRotationMatrix)
             _DirectionPoints.U.Add(CenterOfRotation)
             _DirectionPoints.U.Add(Position)
 
@@ -1187,7 +1287,7 @@ Namespace VisualModel.Models.Components
             _DirectionPoints.V.Y = 0.5
             _DirectionPoints.V.Z = 0.0
             _DirectionPoints.V.Substract(CenterOfRotation)
-            _DirectionPoints.V.Rotate(rotationMatrix)
+            _DirectionPoints.V.Rotate(LocalRotationMatrix)
             _DirectionPoints.V.Add(CenterOfRotation)
             _DirectionPoints.V.Add(Position)
 
@@ -1195,7 +1295,7 @@ Namespace VisualModel.Models.Components
             _DirectionPoints.W.Y = 0.0
             _DirectionPoints.W.Z = 0.5
             _DirectionPoints.W.Substract(CenterOfRotation)
-            _DirectionPoints.W.Rotate(rotationMatrix)
+            _DirectionPoints.W.Rotate(LocalRotationMatrix)
             _DirectionPoints.W.Add(CenterOfRotation)
             _DirectionPoints.W.Add(Position)
 
@@ -1203,7 +1303,7 @@ Namespace VisualModel.Models.Components
 
             LocalOrigin.SetToCero()
             LocalOrigin.Substract(CenterOfRotation)
-            LocalOrigin.Rotate(rotationMatrix)
+            LocalOrigin.Rotate(LocalRotationMatrix)
             LocalOrigin.Add(CenterOfRotation)
             LocalOrigin.Add(Position)
 

@@ -115,7 +115,7 @@ Namespace VisualModel.Interface
                 _InterfaceMode = InterfaceModes.Postprocess
                 RefreshOnGL()
             Else
-                MsgBox("Unable to load post process. No results available.", MsgBoxStyle.Exclamation)
+                'MsgBox("Unable to load post process. No results available.", MsgBoxStyle.Exclamation)
             End If
 
         End Sub

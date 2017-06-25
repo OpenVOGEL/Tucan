@@ -44,8 +44,10 @@ Namespace CalculationModel.Solver
 
             RaiseEvent PushProgress("Building matrix", 0)
 
+            Dim WithStreamOmega As Boolean = _StreamOmega.EuclideanNorm > 0.00001
+
             BuildMatrixForDoublets()
-            BuildRHS_I()
+            BuildRHS_I(WithStreamOmega)
             InitializeWakes()
 
             Dim LE As New LinearEquations
@@ -74,7 +76,7 @@ Namespace CalculationModel.Solver
 
                 ' Calculate induced velocity on wake NP:
 
-                CalculateVelocityOnWakes()
+                CalculateVelocityOnWakes(WithStreamOmega)
 
                 ' Convect wake:
 
@@ -88,7 +90,7 @@ Namespace CalculationModel.Solver
 
                 RaiseEvent PushMessage(" > Calculating airloads")
 
-                CalculateTotalVelocityOnBoundedLattices()
+                CalculateTotalVelocityOnBoundedLattices(WithStreamOmega)
 
                 For Each Lattice In Lattices
 
@@ -102,7 +104,7 @@ Namespace CalculationModel.Solver
 
                 Me.WriteToXML(String.Format("{0}\Unsteady.T{1}.res", Transit_Path, TimeStep))
 
-                BuildRHS_II()
+                BuildRHS_II(WithStreamOmega)
 
                 'Next time step
 
