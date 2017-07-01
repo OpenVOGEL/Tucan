@@ -33,7 +33,7 @@ Public Class MainForm
 
     Private Sub Main_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
 
-        Text = "Open VOGEL 2016 - Beta 2"
+        Text = "Open VOGEL 2017 - Beta 7"
 
         ' Initialize OpenGL control:
 

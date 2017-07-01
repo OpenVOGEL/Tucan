@@ -40,7 +40,7 @@ Public Class PolarPlotter
     Private mX As Integer = 10
     Private mY As Integer = 10
 
-    Private SelectedPointIndex As Integer
+    Private HighlightedPointIndex As Integer
     Private DragPoint As Boolean = False
 
     Private Sub DrawCurve(sender As Object, e As Windows.Forms.PaintEventArgs) Handles MyBase.Paint
@@ -98,14 +98,14 @@ Public Class PolarPlotter
 
                     Dim dx As Double = xmax - xmin
 
-                    If dx > 0 Then
+                    If dx > 0 And ymax > 0 Then
 
                         ' update position of selected point:
 
-                        If DragPoint AndAlso SelectedPointIndex >= 0 AndAlso SelectedPointIndex < cPolar.Nodes.Count Then
+                        If DragPoint AndAlso HighlightedPointIndex >= 0 AndAlso HighlightedPointIndex < cPolar.Nodes.Count Then
 
-                            cPolar.Nodes(SelectedPointIndex).X = (MousePoint.X - mX) / gW * dx + xmin
-                            cPolar.Nodes(SelectedPointIndex).Y = (1 - (MousePoint.Y - mY) / gH) * ymax
+                            cPolar.Nodes(HighlightedPointIndex).X = (MousePoint.X - mX) / gW * dx + xmin
+                            cPolar.Nodes(HighlightedPointIndex).Y = (1 - (MousePoint.Y - mY) / gH) * ymax
 
                         End If
 
@@ -146,7 +146,7 @@ Public Class PolarPlotter
 
                         ' draw points:
 
-                        SelectedPointIndex = -1
+                        HighlightedPointIndex = -1
                         Dim pnt As Point
 
                         For i = 0 To cPolar.Nodes.Count - 1
@@ -160,7 +160,7 @@ Public Class PolarPlotter
 
                             If dmx * dmx + dmy * dmy < 9 Then
 
-                                SelectedPointIndex = i
+                                HighlightedPointIndex = i
 
                                 g.FillEllipse(Brushes.Orange, pnt.X - 3, pnt.Y - 3, 6, 6)
                                 g.DrawEllipse(MarkerPen, pnt.X - 3, pnt.Y - 3, 6, 6)
@@ -176,11 +176,11 @@ Public Class PolarPlotter
 
                         ' draw label on selected point:
 
-                        If SelectedPointIndex >= 0 Then
+                        If HighlightedPointIndex >= 0 Then
 
-                            pnt = pnts(SelectedPointIndex)
+                            pnt = pnts(HighlightedPointIndex)
 
-                            Dim lblPoint As String = String.Format("CL = {0:F3} / CD = {1:F4}", cPolar.Nodes(SelectedPointIndex).X, cPolar.Nodes(SelectedPointIndex).Y)
+                            Dim lblPoint As String = String.Format("CL = {0:F3} / CD = {1:F4}", cPolar.Nodes(HighlightedPointIndex).X, cPolar.Nodes(HighlightedPointIndex).Y)
 
                             DrawLabel(g, lblPoint, pnt, FontLabel)
 
@@ -231,7 +231,7 @@ Public Class PolarPlotter
 
                 ' draw points:
 
-                SelectedPointIndex = -1
+                HighlightedPointIndex = -1
                 Dim pnt As Point
 
                 For i = 0 To np
@@ -245,7 +245,7 @@ Public Class PolarPlotter
 
                     If dmx * dmx + dmy * dmy < 9 Then
 
-                        SelectedPointIndex = i
+                        HighlightedPointIndex = i
 
                         g.FillEllipse(Brushes.Orange, pnt.X - 3, pnt.Y - 3, 6, 6)
                         g.DrawEllipse(MarkerPen, pnt.X - 3, pnt.Y - 3, 6, 6)
@@ -261,11 +261,11 @@ Public Class PolarPlotter
 
                 ' draw label on selected point:
 
-                If SelectedPointIndex >= 0 Then
+                If HighlightedPointIndex >= 0 Then
 
-                    pnt = pnts(SelectedPointIndex)
+                    pnt = pnts(HighlightedPointIndex)
 
-                    Dim lblPoint As String = String.Format("CL = {0:F3} / CD = {1:F4}", vals(SelectedPointIndex).X, vals(SelectedPointIndex).Y)
+                    Dim lblPoint As String = String.Format("CL = {0:F3} / CD = {1:F4}", vals(HighlightedPointIndex).X, vals(HighlightedPointIndex).Y)
 
                     DrawLabel(g, lblPoint, pnt, FontLabel)
 
@@ -348,5 +348,9 @@ Public Class PolarPlotter
     End Sub
 
     Public Event PointChanged()
+
+    Private Sub PolarPlotter_MouseClick(sender As Object, e As Windows.Forms.MouseEventArgs) Handles MyBase.MouseClick
+
+    End Sub
 
 End Class

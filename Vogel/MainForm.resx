@@ -144,16 +144,16 @@
     <value>452, 23</value>
   </metadata>
   <data name="lblWebSite.Size" type="System.Drawing.Size, System.Drawing">
-    <value>120, 17</value>
+    <value>219, 17</value>
   </data>
   <data name="lblWebSite.Text" xml:space="preserve">
-    <value>www.openvogel.com</value>
+    <value>https://sites.google.com/site/gahvogel/</value>
   </data>
   <data name="ToolStripStatusLabel2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>202, 17</value>
+    <value>238, 17</value>
   </data>
   <data name="ToolStripStatusLabel2.Text" xml:space="preserve">
-    <value>(C) 2016 - Guillermo A. Hazebrouck ||</value>
+    <value>&lt;(C) 2009/2017 - Guillermo A. Hazebrouck&gt;</value>
   </data>
   <data name="lblStatus.Size" type="System.Drawing.Size, System.Drawing">
     <value>39, 17</value>
@@ -2327,6 +2327,12 @@
   <data name="&gt;&gt;lblWebSite.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripStatusLabel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="&gt;&gt;ToolStripStatusLabel2.Name" xml:space="preserve">
+    <value>ToolStripStatusLabel2</value>
+  </data>
+  <data name="&gt;&gt;ToolStripStatusLabel2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripStatusLabel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="&gt;&gt;lblStatus.Name" xml:space="preserve">
     <value>lblStatus</value>
   </data>
@@ -2362,12 +2368,6 @@
   </data>
   <data name="&gt;&gt;ttSelectedEntity.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolTip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;ToolStripStatusLabel2.Name" xml:space="preserve">
-    <value>ToolStripStatusLabel2</value>
-  </data>
-  <data name="&gt;&gt;ToolStripStatusLabel2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripStatusLabel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>MainForm</value>

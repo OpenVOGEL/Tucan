@@ -35,6 +35,7 @@ Public Class FormCamberLine
         For i = 0 To CamberLinesDatabase.CamberLines.Count - 1
 
             lbLines.Items.Add(CamberLinesDatabase.CamberLines(i).Name)
+
             If (CamberLinesDatabase.CamberLines(i).ID.Equals(_SelectedCamberID)) Then selectedIndex = i
 
         Next
@@ -46,8 +47,11 @@ Public Class FormCamberLine
     Private Sub btnAdd_Click(sender As Object, e As EventArgs) Handles btnAdd.Click
 
         Dim newLine As New CamberLine()
+
         newLine.GenerateNaca(0.02, 0.4, 10)
+
         newLine.Name = "NACA 2400"
+
         newLine.ID = Guid.NewGuid()
 
         CamberLinesDatabase.CamberLines.Add(newLine)
@@ -71,10 +75,15 @@ Public Class FormCamberLine
             Dim allowEdit As Boolean = Not CamberLinesDatabase.CamberLines(lbLines.SelectedIndex).ID.Equals(Guid.Empty)
 
             btnRemove.Enabled = allowEdit
+
             tbxCamberName.Enabled = allowEdit
+
             btnAddNode.Enabled = allowEdit
+
             btnDelNode.Enabled = allowEdit
+
             gbxNacaGenerate.Enabled = allowEdit
+
             gbxNode.Enabled = allowEdit
 
         End If
@@ -88,8 +97,11 @@ Public Class FormCamberLine
         For Each camber In CamberLinesDatabase.CamberLines
 
             If (camber.ID.Equals(_SelectedCamberID)) Then
+
                 selectedCamber = camber
+
                 Exit For
+
             End If
 
         Next
@@ -111,14 +123,21 @@ Public Class FormCamberLine
 #Region " Graphic part "
 
     Private AxisPen As New Pen(Color.DarkGray, 2)
+
     Private GridPen As New Pen(Color.Gainsboro, 1)
+
     Private CurvePen As New Pen(Color.Blue, 2)
+
     Private MarkerPen As New Pen(Color.Black, 1)
+
     Private FontLabel As New Font("Segoe UI", 6.5)
+
     Private mX As Integer = 10
+
     Private mY As Integer = 10
 
     Private FocusedPointIndex As Integer
+
     Private DragPoint As Boolean = False
 
     Private Sub DrawCurve(sender As Object, e As Windows.Forms.PaintEventArgs) Handles pbPlot.Paint
@@ -128,8 +147,11 @@ Public Class FormCamberLine
         For Each camber In CamberLinesDatabase.CamberLines
 
             If (camber.ID.Equals(_SelectedCamberID)) Then
+
                 selectedCamber = camber
+
                 Exit For
+
             End If
 
         Next
@@ -143,6 +165,7 @@ Public Class FormCamberLine
             g.SmoothingMode = Drawing2D.SmoothingMode.AntiAlias
 
             Dim gW As Integer = pbPlot.Width - 2 * mX
+
             Dim gH As Integer = pbPlot.Height - 2 * mY
 
             ' Gridlines:
@@ -152,39 +175,53 @@ Public Class FormCamberLine
             For i = 1 To ny - 1
 
                 Dim y As Single = mY + i * gH / ny
+
                 g.DrawLine(GridPen, mX, y, mX + gW, y)
 
             Next
 
             g.DrawLine(AxisPen, mX, mY + gH, mX + gW, mY + gH)
+
             g.DrawLine(AxisPen, mX, mY, mX, mY + gH)
+
             g.DrawLine(AxisPen, mX + gW, mY, mX + gW, mY + gH)
 
             ' Function:
 
             Dim np As Integer = 30
+
             Dim ymax As Double = 1
+
             Dim ymin As Double = 0
+
             Dim xmin As Double = -1
+
             Dim xmax As Double = 1
 
             If selectedCamber.Nodes.Count > 0 Then
 
                 ymax = selectedCamber.Nodes(0).Y
+
                 ymin = selectedCamber.Nodes(0).Y
+
                 xmin = selectedCamber.Nodes(0).X
+
                 xmax = selectedCamber.Nodes(0).X
 
                 For i = 0 To selectedCamber.Nodes.Count - 1
 
                     ymin = Math.Min(ymin, selectedCamber.Nodes(i).Y)
+
                     ymax = Math.Max(ymax, selectedCamber.Nodes(i).Y)
+
                     xmin = Math.Min(xmin, selectedCamber.Nodes(i).X)
+
                     xmax = Math.Max(xmax, selectedCamber.Nodes(i).X)
 
                 Next
 
                 Dim dx As Double = xmax - xmin
+
                 Dim dy As Double = ymax - ymin
 
                 If dx > 0 Then
@@ -192,7 +229,9 @@ Public Class FormCamberLine
                     Dim scale As Single = gW / dx
 
                     If dy > 0 Then
+
                         scale = Math.Min(gW / dx, gH / dy)
+
                     End If
 
                     ' update position of selected point:
@@ -503,6 +542,14 @@ Public Class FormCamberLine
             End If
 
         End If
+
+    End Sub
+
+    Private Sub btnRemove_Click(sender As Object, e As EventArgs) Handles btnRemove.Click
+
+        CamberLinesDatabase.RemoveCamberLine(_SelectedCamberID)
+
+        RefreshList()
 
     End Sub
 

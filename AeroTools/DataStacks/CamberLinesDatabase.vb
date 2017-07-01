@@ -52,6 +52,26 @@ Namespace DataStacks
 
         End Function
 
+        Public Sub RemoveCamberLine(ID As Guid)
+
+            If ID <> Guid.Empty Then
+
+                For i = 0 To CamberLines.Count - 1
+
+                    If CamberLines(i).ID.Equals(ID) Then
+
+                        CamberLines.RemoveAt(i)
+
+                        Exit For
+
+                    End If
+
+                Next
+
+            End If
+
+        End Sub
+
         Public Sub WriteToXML(writer As XmlWriter)
 
             For Each line In CamberLines

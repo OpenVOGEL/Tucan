@@ -24,13 +24,13 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <SupportUrl>https://www.openvogel.com</SupportUrl>
+    <SupportUrl>https://sites.google.com/site/gahvogel/</SupportUrl>
     <ErrorReportUrl>https://github.com/GuillermoHazebrouck/OpenVOGEL/issues</ErrorReportUrl>
-    <ProductName>Open VOGEL 2017 - Beta 6</ProductName>
+    <ProductName>Open VOGEL 2017 - Beta 7</ProductName>
     <PublisherName>Open VOGEL</PublisherName>
     <SuiteName>Open VOGEL</SuiteName>
-    <ApplicationRevision>12</ApplicationRevision>
-    <ApplicationVersion>2016.2.0.%2a</ApplicationVersion>
+    <ApplicationRevision>15</ApplicationRevision>
+    <ApplicationVersion>2017.3.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>

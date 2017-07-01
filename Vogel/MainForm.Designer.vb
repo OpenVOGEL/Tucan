@@ -27,6 +27,7 @@ Partial Class MainForm
         Me.ControlOpenGL = New SharpGL.OpenGLControl()
         Me.ssStatus = New System.Windows.Forms.StatusStrip()
         Me.lblWebSite = New System.Windows.Forms.ToolStripStatusLabel()
+        Me.ToolStripStatusLabel2 = New System.Windows.Forms.ToolStripStatusLabel()
         Me.lblStatus = New System.Windows.Forms.ToolStripStatusLabel()
         Me.dlgSaveFile = New System.Windows.Forms.SaveFileDialog()
         Me.dlgOpenFile = New System.Windows.Forms.OpenFileDialog()
@@ -43,7 +44,6 @@ Partial Class MainForm
         Me.sbVertical = New System.Windows.Forms.VScrollBar()
         Me.scMain = New System.Windows.Forms.SplitContainer()
         Me.mrRibbon = New AeroTools.MainRibbon()
-        Me.ToolStripStatusLabel2 = New System.Windows.Forms.ToolStripStatusLabel()
         CType(Me.ControlOpenGL, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.ssStatus.SuspendLayout()
         CType(Me.scMain, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -74,6 +74,12 @@ Partial Class MainForm
         Me.lblWebSite.IsLink = True
         Me.lblWebSite.Name = "lblWebSite"
         resources.ApplyResources(Me.lblWebSite, "lblWebSite")
+        '
+        'ToolStripStatusLabel2
+        '
+        Me.ToolStripStatusLabel2.BackColor = System.Drawing.Color.Transparent
+        Me.ToolStripStatusLabel2.Name = "ToolStripStatusLabel2"
+        resources.ApplyResources(Me.ToolStripStatusLabel2, "ToolStripStatusLabel2")
         '
         'lblStatus
         '
@@ -172,12 +178,6 @@ Partial Class MainForm
         resources.ApplyResources(Me.mrRibbon, "mrRibbon")
         Me.mrRibbon.Name = "mrRibbon"
         Me.mrRibbon.Project = Nothing
-        '
-        'ToolStripStatusLabel2
-        '
-        Me.ToolStripStatusLabel2.BackColor = System.Drawing.Color.Transparent
-        Me.ToolStripStatusLabel2.Name = "ToolStripStatusLabel2"
-        resources.ApplyResources(Me.ToolStripStatusLabel2, "ToolStripStatusLabel2")
         '
         'MainForm
         '

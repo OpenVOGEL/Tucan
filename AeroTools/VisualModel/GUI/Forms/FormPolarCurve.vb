@@ -89,11 +89,16 @@ Public Class FormPolarCurve
 
         lbFamilies.Items.Clear()
 
-        If Not IsNothing(DataBase) Then
+        If DataBase IsNot Nothing Then
+
             For Each Family In DataBase.Families
+
                 Family.SortPolars()
+
                 lbFamilies.Items.Add(Family.Name)
+
             Next
+
         End If
 
         LockEvents = False
@@ -109,15 +114,26 @@ Public Class FormPolarCurve
         If Not IsNothing(CurrentFamily) Then
 
             For Each Polar In CurrentFamily.Polars
+
                 lbPolars.Items.Add(String.Format("{0} - (Re = {1:E3})", Polar.Name, Polar.Reynolds))
+
             Next
 
         End If
 
         QuadraticFrame.Hide()
+
         CustomFrame.Hide()
 
-        tbxFamilyName.Text = CurrentFamily.Name
+        If CurrentFamily IsNot Nothing Then
+
+            tbxFamilyName.Text = CurrentFamily.Name
+
+        Else
+
+            tbxFamilyName.Text = ""
+
+        End If
 
         LockEvents = False
 
@@ -128,9 +144,13 @@ Public Class FormPolarCurve
         If Not LockEvents Then
 
             If lbFamilies.SelectedIndex >= 0 And lbFamilies.SelectedIndex < DataBase.Families.Count Then
+
                 CurrentFamily = DataBase.Families(lbFamilies.SelectedIndex)
+
                 CurrentPolar = Nothing
+
                 RefreshPolarsList()
+
             End If
 
         End If
@@ -217,28 +237,57 @@ Public Class FormPolarCurve
     End Sub
 
     Private Sub RemoveSelectedFamily(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnRemoveFamily.Click
+
         If (lbFamilies.SelectedIndex >= 0) And (lbFamilies.SelectedIndex < DataBase.Families.Count) Then
+
             DataBase.Families.RemoveAt(lbFamilies.SelectedIndex)
+
+            CurrentFamily = Nothing
+
+            CurrentPolar = Nothing
+
+            PolarPlotter.Polar = Nothing
+
             RefreshFamilyList()
+
             RefreshPolarsList()
+
         End If
+
     End Sub
 
     Private Sub RemoveSelectedPolar(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnRemovePolar.Click
+
         If Not IsNothing(CurrentFamily) Then
+
             If (lbFamilies.SelectedIndex >= 0 And lbPolars.SelectedIndex < CurrentFamily.Polars.Count) Then
+
                 CurrentFamily.Polars.RemoveAt(lbPolars.SelectedIndex)
+
+                PolarPlotter.Polar = Nothing
+
                 RefreshPolarsList()
+
             End If
+
         End If
+
     End Sub
 
     Private Sub AddFamily() Handles btnAddFamily.Click
+
         Dim Family As New PolarFamily()
-        Family.Name = "Polar family"
+
+        Family.Name = "Polar family " & DataBase.Families.Count
+
         DataBase.Families.Add(Family)
+
+        CurrentFamily = Family
+
         RefreshFamilyList()
+
         RefreshPolarsList()
+
     End Sub
 
     Private Sub AddQuadraticPolar() Handles btnAddQuadratic.Click
@@ -264,6 +313,7 @@ Public Class FormPolarCurve
         If Not LockEvents AndAlso CurrentFamily IsNot Nothing Then
 
             CurrentFamily.Name = tbxFamilyName.Text
+
             RefreshFamilyList()
 
         End If
