@@ -17,7 +17,7 @@
 
 Imports SharpGL
 Imports AeroTools.VisualModel.Interface
-Imports AeroTools.VisualModel.Models.Basics
+Imports AeroTools.VisualModel.Models.Components.Basics
 Imports AeroTools.CalculationModel.Models.Aero
 Imports MathTools.Algebra.EuclideanSpace
 Imports MathTools.Algebra.CustomMatrices

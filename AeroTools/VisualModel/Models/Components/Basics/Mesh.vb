@@ -18,7 +18,7 @@
 Imports MathTools.Algebra.EuclideanSpace
 Imports MathTools.Algebra.CustomMatrices
 
-Namespace VisualModel.Models.Basics
+Namespace VisualModel.Models.Components.Basics
 
     Public Class Mesh
 

@@ -31,7 +31,7 @@ Imports AeroTools.DataStore
 
 Namespace CalculationModel.Solver
 
-    Partial Public Class UVLMSolver
+    Partial Public Class Solver
 
         ''' <summary>
         ''' Transfers a geometric model to the calculation cell
@@ -1021,16 +1021,16 @@ Namespace CalculationModel.Solver
 
                 Select Case DataBaseSection
 
-                    Case UVLMSolver.DataBaseSection.Aeroelastic
+                    Case Solver.DataBaseSection.Aeroelastic
                         System.IO.Directory.CreateDirectory(Aeroelastic_Path)
 
-                    Case UVLMSolver.DataBaseSection.Steady
+                    Case Solver.DataBaseSection.Steady
                         System.IO.Directory.CreateDirectory(Steady_Path)
 
-                    Case UVLMSolver.DataBaseSection.Structural
+                    Case Solver.DataBaseSection.Structural
                         System.IO.Directory.CreateDirectory(Structure_Path)
 
-                    Case UVLMSolver.DataBaseSection.Unsteady
+                    Case Solver.DataBaseSection.Unsteady
                         System.IO.Directory.CreateDirectory(Transit_Path)
 
                 End Select
@@ -1054,16 +1054,16 @@ Namespace CalculationModel.Solver
 
             Select Case DataBaseSection
 
-                Case UVLMSolver.DataBaseSection.Aeroelastic
+                Case Solver.DataBaseSection.Aeroelastic
                     path = Aeroelastic_Path
 
-                Case UVLMSolver.DataBaseSection.Steady
+                Case Solver.DataBaseSection.Steady
                     path = Steady_Path
 
-                Case UVLMSolver.DataBaseSection.Structural
+                Case Solver.DataBaseSection.Structural
                     path = Structure_Path
 
-                Case UVLMSolver.DataBaseSection.Unsteady
+                Case Solver.DataBaseSection.Unsteady
                     path = Transit_Path
 
             End Select

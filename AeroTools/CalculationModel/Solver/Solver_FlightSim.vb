@@ -19,7 +19,7 @@ Imports DotNumerics.LinearAlgebra
 
 Namespace CalculationModel.Solver
 
-    Partial Public Class UVLMSolver
+    Partial Public Class Solver
 
         ' Resolution algorithms:
 

@@ -61,7 +61,7 @@ Namespace CalculationModel.SimulationTools
         Public Visible As Boolean = True
         Public InducedVelocity As Boolean = False ' Defines whether the total or induced velocity is represented.
 
-        Public TreftSegments As New List(Of CalculationModel.Solver.UVLMSolver.TrefftzSegment)
+        Public TreftSegments As New List(Of CalculationModel.Solver.Solver.TrefftzSegment)
 
         Public Property Psi As Double
             Set(ByVal value As Double)

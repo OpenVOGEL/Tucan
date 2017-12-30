@@ -17,7 +17,7 @@
 
 Imports MathTools.Algebra.EuclideanSpace
 Imports System.Xml
-Imports AeroTools.VisualModel.Models.Basics
+Imports AeroTools.VisualModel.Models.Components.Basics
 Imports SharpGL
 Imports AeroTools.VisualModel.Interface
 Imports AeroTools.VisualModel.IO

@@ -22,7 +22,7 @@ Imports MathTools.Algebra.EuclideanSpace
 
 Public Class TotalForcePanel
 
-    Private _CalculationCore As CalculationModel.Solver.UVLMSolver
+    Private _CalculationCore As CalculationModel.Solver.Solver
 
     ' Components:
 
@@ -61,7 +61,7 @@ Public Class TotalForcePanel
     Private TotalForce As New EVector3
     Private TotalMoment As New EVector3
 
-    Public Sub New(CalculationCore As CalculationModel.Solver.UVLMSolver)
+    Public Sub New(CalculationCore As CalculationModel.Solver.Solver)
 
         InitializeComponent()
 

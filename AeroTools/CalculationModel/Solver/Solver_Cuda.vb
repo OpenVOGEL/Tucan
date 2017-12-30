@@ -23,7 +23,7 @@ Imports Cudafy.Host
 
 Namespace CalculationModel.Solver
 
-    Partial Public Class UVLMSolver
+    Partial Public Class Solver
 
         Public Const FourPi As Double = 4 * Math.PI
 

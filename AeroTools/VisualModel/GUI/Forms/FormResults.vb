@@ -130,7 +130,7 @@ Public Class FormResults
 
     ' Results object:
 
-    Private _CalculationCore As CalculationModel.Solver.UVLMSolver
+    Private _CalculationCore As CalculationModel.Solver.Solver
 
     Private Sub LoadResultsData()
 
@@ -187,7 +187,7 @@ Public Class FormResults
 
     End Sub
 
-    Public Sub New(CalculationCore As CalculationModel.Solver.UVLMSolver)
+    Public Sub New(CalculationCore As CalculationModel.Solver.Solver)
 
         InitializeComponent()
 

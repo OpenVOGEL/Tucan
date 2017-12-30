@@ -20,7 +20,7 @@ Imports AeroTools.VisualModel.Interface
 Imports SharpGL
 Imports System.Xml
 
-Namespace VisualModel.Models.Basics
+Namespace VisualModel.Models.Components.Basics
 
     ''' <summary>
     ''' Basic definition of a model surface. 

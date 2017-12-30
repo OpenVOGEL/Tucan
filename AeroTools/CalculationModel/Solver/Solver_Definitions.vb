@@ -24,7 +24,7 @@ Imports AeroTools.DataStore
 
 Namespace CalculationModel.Solver
 
-    Partial Public Class UVLMSolver
+    Partial Public Class Solver
 
         Public Sub New()
             Lattices = New List(Of BoundedLattice)

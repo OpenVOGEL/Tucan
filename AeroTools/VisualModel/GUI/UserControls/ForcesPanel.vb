@@ -268,7 +268,7 @@ Public Class ForcesPanel
 
     ' Results object:
 
-    Private _CalculationCore As CalculationModel.Solver.UVLMSolver
+    Private _CalculationCore As CalculationModel.Solver.Solver
 
     Private Sub LoadResultsData()
 
@@ -343,7 +343,7 @@ Public Class ForcesPanel
 
     End Sub
 
-    Public Sub New(CalculationCore As CalculationModel.Solver.UVLMSolver)
+    Public Sub New(CalculationCore As CalculationModel.Solver.Solver)
 
         InitializeComponent()
 

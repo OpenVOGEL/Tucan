@@ -20,7 +20,7 @@ Imports AeroTools
 Imports AeroTools.VisualModel.Interface
 Imports AeroTools.VisualModel.Models.Components
 Imports AeroTools.CalculationModel.Settings
-Imports AeroTools.VisualModel.Models.Basics
+Imports AeroTools.VisualModel.Models.Components.Basics
 Imports AeroTools.DataStore
 
 Public Class MainForm

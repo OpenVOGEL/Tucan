@@ -21,7 +21,7 @@ Imports AeroTools.CalculationModel.Models.Aero.Components
 Imports MathTools.Algebra.EuclideanSpace
 Imports MathTools.Algebra.CustomMatrices
 Imports System.Xml
-Imports AeroTools.VisualModel.Models.Basics
+Imports AeroTools.VisualModel.Models.Components.Basics
 Imports AeroTools.VisualModel.IO
 Imports AeroTools.CalculationModel.Models.Structural.Library
 Imports AeroTools.CalculationModel.Models.Structural.Library.Elements

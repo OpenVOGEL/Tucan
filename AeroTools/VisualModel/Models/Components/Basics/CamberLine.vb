@@ -19,7 +19,7 @@ Imports System.Xml
 Imports AeroTools.VisualModel.IO
 Imports MathTools.Algebra.EuclideanSpace
 
-Namespace VisualModel.Models.Basics
+Namespace VisualModel.Models.Components.Basics
 
     Public Class CamberLine
 

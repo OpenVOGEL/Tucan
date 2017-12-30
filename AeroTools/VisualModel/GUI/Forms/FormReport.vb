@@ -23,11 +23,11 @@ Public Class FormReport
 
     'Private Result As String
 
-    Private _CalculationCore As CalculationModel.Solver.UVLMSolver
+    Private _CalculationCore As CalculationModel.Solver.Solver
     Private _ForcesPanel As ForcesPanel
     Private _TotalForcePanel As TotalForcePanel
 
-    Public Sub ReportResults(ByRef CalculationCore As CalculationModel.Solver.UVLMSolver)
+    Public Sub ReportResults(ByRef CalculationCore As CalculationModel.Solver.Solver)
 
         _CalculationCore = CalculationCore
 

@@ -47,7 +47,7 @@ Namespace DataStore
         Public Property Model As DesignModel
         Public Property Results As New ResultModel
         Public Property VelocityPlane As New VelocityPlane
-        Public Property CalculationCore As UVLMSolver
+        Public Property CalculationCore As Solver
 
         Private _Initialized As Boolean = False
 
@@ -753,7 +753,7 @@ Namespace DataStore
 
             Try
 
-                CalculationCore = New UVLMSolver(Model, SimulationSettings, Type = CalculationType.ctAeroelastic)
+                CalculationCore = New Solver(Model, SimulationSettings, Type = CalculationType.ctAeroelastic)
 
                 AddHandler CalculationCore.PushProgress, AddressOf CalculationForm.PushMessageWithProgress
                 AddHandler CalculationCore.PushMessage, AddressOf CalculationForm.PushMessage
@@ -896,7 +896,7 @@ Namespace DataStore
 
         Public Sub ReadResults(ByVal FilePath As String)
 
-            CalculationCore = New UVLMSolver()
+            CalculationCore = New Solver()
             CalculationCore.ReadFromXML(FilePath)
             CalculationCore.SetCompleteModelOnResults(Results)
 

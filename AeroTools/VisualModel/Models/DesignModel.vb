@@ -18,7 +18,7 @@
 Imports AeroTools.VisualModel.Interface
 Imports AeroTools.VisualModel.Models.Components
 Imports System.Xml
-Imports AeroTools.VisualModel.Models.Basics
+Imports AeroTools.VisualModel.Models.Components.Basics
 Imports AeroTools.CalculationModel.Models.Aero.Components
 Imports AeroTools.DataStore
 

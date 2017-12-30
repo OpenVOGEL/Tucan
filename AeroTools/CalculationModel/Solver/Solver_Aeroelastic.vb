@@ -21,7 +21,7 @@ Imports AeroTools.CalculationModel.Models.Structural.Library
 
 Namespace CalculationModel.Solver
 
-    Partial Public Class UVLMSolver
+    Partial Public Class Solver
 
         ''' <summary>
         ''' Calculates the unsteady aeroelastic transit provided a velocity profile and a structural model.

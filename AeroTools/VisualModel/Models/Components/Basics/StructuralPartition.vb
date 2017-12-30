@@ -18,7 +18,7 @@
 Imports AeroTools.CalculationModel.Models.Structural.Library.Elements
 Imports MathTools.Algebra.EuclideanSpace
 
-Namespace VisualModel.Models.Basics
+Namespace VisualModel.Models.Components.Basics
 
     ''' <summary>
     ''' Represents an structural partition

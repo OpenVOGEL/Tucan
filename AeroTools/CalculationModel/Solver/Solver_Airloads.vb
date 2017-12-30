@@ -19,7 +19,7 @@ Imports MathTools.Algebra.EuclideanSpace
 
 Namespace CalculationModel.Solver
 
-    Partial Public Class UVLMSolver
+    Partial Public Class Solver
 
         'This part constains several methods used to calculate the total airloads
 

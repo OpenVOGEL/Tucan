@@ -1919,26 +1919,26 @@ AeroTools
  <returns></returns>
  <remarks></remarks>
 </member>
-<member name="T:AeroTools.CalculationModel.Solver.UVLMSolver">
+<member name="T:AeroTools.CalculationModel.Solver.Solver">
  <summary>
  Provides methods to solve aerodynamic problems through the Unsteady Vortex Lattice Method.
  Programmed by Guillermo A. Hazebrouck
  guillermo.hazebrouck@outlook.be
  </summary> 
 </member>
-<member name="M:AeroTools.CalculationModel.Solver.UVLMSolver.AeroelasticUnsteadyTransit_(System.String)">
+<member name="M:AeroTools.CalculationModel.Solver.Solver.AeroelasticUnsteadyTransit_(System.String)">
  <summary>
  Calculates the unsteady aeroelastic transit provided a velocity profile and a structural model.
  The explicit Newmark algorithm is used.
  </summary>
 </member>
-<member name="M:AeroTools.CalculationModel.Solver.UVLMSolver.AeroelasticUnsteadyTransit(System.String)">
+<member name="M:AeroTools.CalculationModel.Solver.Solver.AeroelasticUnsteadyTransit(System.String)">
  <summary>
  Calculates the unsteady aeroelastic transit provided a velocity profile and a structural model.
  The implicit Nemark algorithm is used.
  </summary>
 </member>
-<member name="M:AeroTools.CalculationModel.Solver.UVLMSolver.ComputeTrefftzIntegral(MathTools.Algebra.EuclideanSpace.EVector3,MathTools.Algebra.EuclideanSpace.EVector3,System.Collections.Generic.List{AeroTools.CalculationModel.Solver.UVLMSolver.TrefftzSegment}@,System.Double)">
+<member name="M:AeroTools.CalculationModel.Solver.Solver.ComputeTrefftzIntegral(MathTools.Algebra.EuclideanSpace.EVector3,MathTools.Algebra.EuclideanSpace.EVector3,System.Collections.Generic.List{AeroTools.CalculationModel.Solver.Solver.TrefftzSegment}@,System.Double)">
  <summary>
  Computes treftz line integral provided a plane cutting the wake
  </summary>
@@ -1946,101 +1946,101 @@ AeroTools
  <param name="RPoint"></param>
  <remarks></remarks>
 </member>
-<member name="M:AeroTools.CalculationModel.Solver.UVLMSolver.CalculateAirloads">
+<member name="M:AeroTools.CalculationModel.Solver.Solver.CalculateAirloads">
  <summary>
  Computes the total aerodynamic loads on each bounded lattice
  </summary>
  <remarks></remarks>
 </member>
-<member name="M:AeroTools.CalculationModel.Solver.UVLMSolver.ComputeInducedDrag">
+<member name="M:AeroTools.CalculationModel.Solver.Solver.ComputeInducedDrag">
  <summary>
  Computes the induced drag on vortex rings through surface integral (only for slender panels)
  </summary>
  <remarks></remarks>
 </member>
-<member name="M:AeroTools.CalculationModel.Solver.UVLMSolver.ComputeForcesAndMoments">
+<member name="M:AeroTools.CalculationModel.Solver.Solver.ComputeForcesAndMoments">
  <summary>
  Computes all forces and moments. If chordwise stripes are defined, parasitic drag is calculated
  based on the local lift and polar curve.
  </summary>
  <remarks></remarks>
 </member>
-<member name="M:AeroTools.CalculationModel.Solver.UVLMSolver.IndexateLattices">
+<member name="M:AeroTools.CalculationModel.Solver.Solver.IndexateLattices">
  <summary>
  Gives to each vortex its corresponding global index on vectors and matrices and returns the number of bounded vortex rings.
  </summary>
 </member>
-<member name="M:AeroTools.CalculationModel.Solver.UVLMSolver.BuildMatrixForDoublets(System.Boolean)">
+<member name="M:AeroTools.CalculationModel.Solver.Solver.BuildMatrixForDoublets(System.Boolean)">
  <summary>
  Constructs the matrix of mutual influence coeficients.
  </summary>
  <param name="Indexate">Indicates if nodes should be globaly indexated (this is only required once).
  In that case indexation will occur and matrix and RHS vector will be created.</param>
 </member>
-<member name="M:AeroTools.CalculationModel.Solver.UVLMSolver.BuildMatrixForSources">
+<member name="M:AeroTools.CalculationModel.Solver.Solver.BuildMatrixForSources">
  <summary>
  Constructs the matrix of source influence.
  </summary>
 </member>
-<member name="M:AeroTools.CalculationModel.Solver.UVLMSolver.BuildRHS_I(System.Boolean)">
+<member name="M:AeroTools.CalculationModel.Solver.Solver.BuildRHS_I(System.Boolean)">
  <summary>
  Calculates the right hand side without influence of the wake and without surface motion.
  </summary>
 </member>
-<member name="M:AeroTools.CalculationModel.Solver.UVLMSolver.BuildRHS_II(System.Boolean)">
+<member name="M:AeroTools.CalculationModel.Solver.Solver.BuildRHS_II(System.Boolean)">
  <summary>
  Calculates the right hand side considering the influence of the wake and the surface motion.
  </summary> 
 </member>
-<member name="M:AeroTools.CalculationModel.Solver.UVLMSolver.InitializeWakes">
+<member name="M:AeroTools.CalculationModel.Solver.Solver.InitializeWakes">
  <summary>
  Sets starting nodes at each wake.
  </summary>
 </member>
-<member name="M:AeroTools.CalculationModel.Solver.UVLMSolver.AssignDoublets">
+<member name="M:AeroTools.CalculationModel.Solver.Solver.AssignDoublets">
  <summary>
  Gives to each vortex ring its corresponding circulation.
  </summary>
 </member>
-<member name="M:AeroTools.CalculationModel.Solver.UVLMSolver.AssignSources(System.Boolean)">
+<member name="M:AeroTools.CalculationModel.Solver.Solver.AssignSources(System.Boolean)">
  <summary>
  Gives to each non-slender vortex ring its corresponding source intensity based on the current stream velocity.
  </summary>
 </member>
-<member name="M:AeroTools.CalculationModel.Solver.UVLMSolver.CheckIfThereAreSources">
+<member name="M:AeroTools.CalculationModel.Solver.Solver.CheckIfThereAreSources">
  <summary>
  Checks if there are bounded vortex rings defined as non-slender.
  </summary>
  <returns></returns>
  <remarks></remarks>
 </member>
-<member name="M:AeroTools.CalculationModel.Solver.UVLMSolver.CalculateVelocityInducedByTheWakesOnBoundedLattices(System.Boolean)">
+<member name="M:AeroTools.CalculationModel.Solver.Solver.CalculateVelocityInducedByTheWakesOnBoundedLattices(System.Boolean)">
  <summary>
  Calculates rings VelocityW by adding to the local stream velocity the velocity induced by the wakes.
  </summary>
 </member>
-<member name="M:AeroTools.CalculationModel.Solver.UVLMSolver.CalculatePotentialInducedByTheWakeOnThickBoundedLattices">
+<member name="M:AeroTools.CalculationModel.Solver.Solver.CalculatePotentialInducedByTheWakeOnThickBoundedLattices">
  <summary>
  Calculates rings PotentialW by adding the influence of the wakes doublets. Only non-slender rings are accepted.
  </summary>
  <remarks></remarks>
 </member>
-<member name="M:AeroTools.CalculationModel.Solver.UVLMSolver.CalculateTotalVelocityOnBoundedLattices(System.Boolean)">
+<member name="M:AeroTools.CalculationModel.Solver.Solver.CalculateTotalVelocityOnBoundedLattices(System.Boolean)">
  <summary>
  Calculates rings VelocityT (total local velocity) by adding the StreamVelocity, VelocityW and the velocity induced by the bounded lattices.
  </summary>
 </member>
-<member name="M:AeroTools.CalculationModel.Solver.UVLMSolver.CalculateVelocityOnWakes(System.Boolean)">
+<member name="M:AeroTools.CalculationModel.Solver.Solver.CalculateVelocityOnWakes(System.Boolean)">
  <summary>
  Calculates the total local velocity at each wake nodal point.
  </summary>
 </member>
-<member name="M:AeroTools.CalculationModel.Solver.UVLMSolver.CalculateVelocityAtPoint(MathTools.Algebra.EuclideanSpace.EVector3,System.Boolean,System.Boolean)">
+<member name="M:AeroTools.CalculationModel.Solver.Solver.CalculateVelocityAtPoint(MathTools.Algebra.EuclideanSpace.EVector3,System.Boolean,System.Boolean)">
  <summary>
  Returns the total induced velocity at the given point (serial computation).
  </summary>
 </member>
-<member name="M:AeroTools.CalculationModel.Solver.UVLMSolver.AddVelocities(Cudafy.GThread,System.Double[0:,0:],System.Double[0:,0:],System.Double[0:,0:],System.Double[])">
+<member name="M:AeroTools.CalculationModel.Solver.Solver.AddVelocities(Cudafy.GThread,System.Double[0:,0:],System.Double[0:,0:],System.Double[0:,0:],System.Double[])">
  <summary>
  General Kernel to calculate the velocities on the given points.
  </summary>
@@ -2051,30 +2051,30 @@ AeroTools
  <param name="CutOff"></param>
  <remarks>VELOCITY_INFO should be of the same lenght as LOCATION_INFO</remarks>
 </member>
-<member name="P:AeroTools.CalculationModel.Solver.UVLMSolver.Settings">
+<member name="P:AeroTools.CalculationModel.Solver.Solver.Settings">
  <summary>
  Contains all parameters required to run a complete simulation
  </summary>
 </member>
-<member name="P:AeroTools.CalculationModel.Solver.UVLMSolver.Lattices">
+<member name="P:AeroTools.CalculationModel.Solver.Solver.Lattices">
  <summary>
  Contains all bounded lattices
  </summary>
  <remarks></remarks>
 </member>
-<member name="P:AeroTools.CalculationModel.Solver.UVLMSolver.StructuralLinks">
+<member name="P:AeroTools.CalculationModel.Solver.Solver.StructuralLinks">
  <summary>
  Stores links between the structure and the aerodynamic lattices
  </summary>
  <remarks></remarks>
 </member>
-<member name="P:AeroTools.CalculationModel.Solver.UVLMSolver.PolarDataBase">
+<member name="P:AeroTools.CalculationModel.Solver.Solver.PolarDataBase">
  <summary>
  Gathers all polar curves necessary for the calculation.
  </summary>
  <remarks></remarks>
 </member>
-<member name="P:AeroTools.CalculationModel.Solver.UVLMSolver.StreamVelocity">
+<member name="P:AeroTools.CalculationModel.Solver.Solver.StreamVelocity">
  <summary>
  Base stream velocity in m/s
  </summary>
@@ -2082,7 +2082,7 @@ AeroTools
  <returns></returns>
  <remarks></remarks>
 </member>
-<member name="P:AeroTools.CalculationModel.Solver.UVLMSolver.StreamDensity">
+<member name="P:AeroTools.CalculationModel.Solver.Solver.StreamDensity">
  <summary>
  Stream density in kg/m³
  </summary>
@@ -2090,7 +2090,7 @@ AeroTools
  <returns></returns>
  <remarks></remarks>
 </member>
-<member name="P:AeroTools.CalculationModel.Solver.UVLMSolver.StreamDynamicPressure">
+<member name="P:AeroTools.CalculationModel.Solver.Solver.StreamDynamicPressure">
  <summary>
  Stream density in Pa
  </summary>
@@ -2098,7 +2098,7 @@ AeroTools
  <returns></returns>
  <remarks></remarks>
 </member>
-<member name="E:AeroTools.CalculationModel.Solver.UVLMSolver.PushProgress">
+<member name="E:AeroTools.CalculationModel.Solver.Solver.PushProgress">
  <summary>
  Occurs when a progress is made.
  </summary>
@@ -2106,30 +2106,30 @@ AeroTools
  <param name="Value"></param>
  <remarks></remarks>
 </member>
-<member name="E:AeroTools.CalculationModel.Solver.UVLMSolver.PushMessage">
+<member name="E:AeroTools.CalculationModel.Solver.Solver.PushMessage">
  <summary>
  Occurs when a progress is made.
  </summary>
  <param name="Title"></param>
  <remarks></remarks>
 </member>
-<member name="E:AeroTools.CalculationModel.Solver.UVLMSolver.CalculationDone">
+<member name="E:AeroTools.CalculationModel.Solver.Solver.CalculationDone">
  <summary>
  Occurs when the calculation finishes.
  </summary>
  <remarks></remarks>
 </member>
-<member name="E:AeroTools.CalculationModel.Solver.UVLMSolver.CalculationAborted">
+<member name="E:AeroTools.CalculationModel.Solver.Solver.CalculationAborted">
  <summary>
  Occurs when the calculation is automatically aborted.
  </summary>
 </member>
-<member name="M:AeroTools.CalculationModel.Solver.UVLMSolver.FlightSim(AeroTools.FormProgress@,System.String)">
+<member name="M:AeroTools.CalculationModel.Solver.Solver.FlightSim(AeroTools.FormProgress@,System.String)">
  <summary>
  Convect wakes and calculates loads at the last time step.
  </summary>
 </member>
-<member name="M:AeroTools.CalculationModel.Solver.UVLMSolver.GenerateFromExistingModel(AeroTools.VisualModel.Models.DesignModel,System.Boolean)">
+<member name="M:AeroTools.CalculationModel.Solver.Solver.GenerateFromExistingModel(AeroTools.VisualModel.Models.DesignModel,System.Boolean)">
  <summary>
  Transfers a geometric model to the calculation cell
  </summary>
@@ -2137,7 +2137,7 @@ AeroTools
  <param name="GenerateStructure">Indicates if a structural link should be created</param>
  <remarks></remarks>
 </member>
-<member name="M:AeroTools.CalculationModel.Solver.UVLMSolver.AddLiftingSurface(AeroTools.VisualModel.Models.Components.LiftingSurface@,System.Boolean,System.Boolean)">
+<member name="M:AeroTools.CalculationModel.Solver.Solver.AddLiftingSurface(AeroTools.VisualModel.Models.Components.LiftingSurface@,System.Boolean,System.Boolean)">
  <summary>
  Adds a bounded lattice with wakes from a lifting surface.
  </summary>
@@ -2146,50 +2146,50 @@ AeroTools
  <param name="GenerateStructure"></param>
  <remarks></remarks>
 </member>
-<member name="M:AeroTools.CalculationModel.Solver.UVLMSolver.FindSurroundingRingsGlobally">
+<member name="M:AeroTools.CalculationModel.Solver.Solver.FindSurroundingRingsGlobally">
  <summary>
  Assign surrounding rings by searching on all lattices
  </summary>
 </member>
-<member name="M:AeroTools.CalculationModel.Solver.UVLMSolver.SetCompleteModelOnResults(AeroTools.VisualModel.Models.ResultModel@)">
+<member name="M:AeroTools.CalculationModel.Solver.Solver.SetCompleteModelOnResults(AeroTools.VisualModel.Models.ResultModel@)">
  <summary>
  Sets the lattices on the result object
  </summary>
  <param name="Results"></param>
  <remarks></remarks>
 </member>
-<member name="M:AeroTools.CalculationModel.Solver.UVLMSolver.ReadFromXML(System.String)">
+<member name="M:AeroTools.CalculationModel.Solver.Solver.ReadFromXML(System.String)">
  <summary>
  Read a written step
  </summary>
  <param name="FilePath"></param>
  <remarks></remarks>
 </member>
-<member name="M:AeroTools.CalculationModel.Solver.UVLMSolver.WriteToXML(System.String,System.Boolean)">
+<member name="M:AeroTools.CalculationModel.Solver.Solver.WriteToXML(System.String,System.Boolean)">
  <summary>
  Writes the current step
  </summary>
  <param name="FilePath"></param>
  <remarks></remarks>
 </member>
-<member name="M:AeroTools.CalculationModel.Solver.UVLMSolver.CreateSubFoldersNames(System.String)">
+<member name="M:AeroTools.CalculationModel.Solver.Solver.CreateSubFoldersNames(System.String)">
  <summary>
  Creates the subfolders where results are stored
  </summary>
  <remarks></remarks>
 </member>
-<member name="M:AeroTools.CalculationModel.Solver.UVLMSolver.CleanDirectory(AeroTools.CalculationModel.Solver.UVLMSolver.DataBaseSection)">
+<member name="M:AeroTools.CalculationModel.Solver.Solver.CleanDirectory(AeroTools.CalculationModel.Solver.Solver.DataBaseSection)">
  <summary>
  Removes all calculation files from the selected path
  </summary>
  <remarks></remarks>
 </member>
-<member name="M:AeroTools.CalculationModel.Solver.UVLMSolver.SteadyState(System.String)">
+<member name="M:AeroTools.CalculationModel.Solver.Solver.SteadyState(System.String)">
  <summary>
  Convect wakes and calculates loads at the last time step.
  </summary>
 </member>
-<member name="M:AeroTools.CalculationModel.Solver.UVLMSolver.UnsteadyTransit(System.String)">
+<member name="M:AeroTools.CalculationModel.Solver.Solver.UnsteadyTransit(System.String)">
  <summary>
  Calculates the unsteady transit provided a velocity profile.
  </summary>
@@ -2396,117 +2396,117 @@ AeroTools
  </summary>
  <remarks></remarks>
 </member>
-<member name="T:AeroTools.VisualModel.Models.Basics.Surface">
+<member name="T:AeroTools.VisualModel.Models.Components.Basics.Surface">
  <summary>
  Basic definition of a model surface. 
  All model surfaces in the library must inherit from this class.
  </summary>
  <remarks></remarks>
 </member>
-<member name="P:AeroTools.VisualModel.Models.Basics.Surface.ID">
+<member name="P:AeroTools.VisualModel.Models.Components.Basics.Surface.ID">
  <summary>
  Surface identifier.
  </summary>
  <returns></returns>
 </member>
-<member name="P:AeroTools.VisualModel.Models.Basics.Surface.Name">
+<member name="P:AeroTools.VisualModel.Models.Components.Basics.Surface.Name">
  <summary>
  Surface name.
  </summary>
  <returns></returns>
 </member>
-<member name="P:AeroTools.VisualModel.Models.Basics.Surface.Mesh">
+<member name="P:AeroTools.VisualModel.Models.Components.Basics.Surface.Mesh">
  <summary>
  Mesh.
  </summary>
  <returns></returns>
 </member>
-<member name="P:AeroTools.VisualModel.Models.Basics.Surface.NumberOfSegments">
+<member name="P:AeroTools.VisualModel.Models.Components.Basics.Surface.NumberOfSegments">
  <summary>
  Number of segments in the mesh.
  </summary>
  <returns></returns>
 </member>
-<member name="P:AeroTools.VisualModel.Models.Basics.Surface.NumberOfNodes">
+<member name="P:AeroTools.VisualModel.Models.Components.Basics.Surface.NumberOfNodes">
  <summary>
  Number of nodes in the mesh.
  </summary>
  <returns></returns>
 </member>
-<member name="P:AeroTools.VisualModel.Models.Basics.Surface.NumberOfPanels">
+<member name="P:AeroTools.VisualModel.Models.Components.Basics.Surface.NumberOfPanels">
  <summary>
  Number of panels in the mesh.
  </summary>
  <returns></returns>
 </member>
-<member name="P:AeroTools.VisualModel.Models.Basics.Surface.VisualProperties">
+<member name="P:AeroTools.VisualModel.Models.Components.Basics.Surface.VisualProperties">
  <summary>
  Surface visual properties.
  </summary>
  <returns></returns>
 </member>
-<member name="P:AeroTools.VisualModel.Models.Basics.Surface.IncludeInCalculation">
+<member name="P:AeroTools.VisualModel.Models.Components.Basics.Surface.IncludeInCalculation">
  <summary>
  Indicates if the surface participates in the calculation model.
  </summary>
  <returns></returns>
 </member>
-<member name="P:AeroTools.VisualModel.Models.Basics.Surface.LockContent">
+<member name="P:AeroTools.VisualModel.Models.Components.Basics.Surface.LockContent">
  <summary>
  Indicate if the GUI has to block the content of this surface.
  </summary>
  <returns></returns>
 </member>
-<member name="P:AeroTools.VisualModel.Models.Basics.Surface.Position">
+<member name="P:AeroTools.VisualModel.Models.Components.Basics.Surface.Position">
  <summary>
  Position of the surface in the global coordinates system.
  </summary>
  <returns></returns>
 </member>
-<member name="P:AeroTools.VisualModel.Models.Basics.Surface.CenterOfRotation">
+<member name="P:AeroTools.VisualModel.Models.Components.Basics.Surface.CenterOfRotation">
  <summary>
  Center of rotation of the surface in the local coordinates system.
  </summary>
  <returns></returns>
 </member>
-<member name="P:AeroTools.VisualModel.Models.Basics.Surface.Orientation">
+<member name="P:AeroTools.VisualModel.Models.Components.Basics.Surface.Orientation">
  <summary>
  Orientation of the surface.
  </summary>
  <returns></returns>
 </member>
-<member name="P:AeroTools.VisualModel.Models.Basics.Surface.SizeScale">
+<member name="P:AeroTools.VisualModel.Models.Components.Basics.Surface.SizeScale">
  <summary>
  Scale of this surface.
  </summary>
  <returns></returns>
 </member>
-<member name="P:AeroTools.VisualModel.Models.Basics.Surface.LocalDirections">
+<member name="P:AeroTools.VisualModel.Models.Components.Basics.Surface.LocalDirections">
  <summary>
  Local directions.
  </summary>
  <remarks></remarks>
 </member>
-<member name="M:AeroTools.VisualModel.Models.Basics.Surface.MoveTo(MathTools.Algebra.EuclideanSpace.EVector3)">
+<member name="M:AeroTools.VisualModel.Models.Components.Basics.Surface.MoveTo(MathTools.Algebra.EuclideanSpace.EVector3)">
  <summary>
  Moves the origin of the local coordinates to a given point.
  </summary>
  <param name="Vector"></param>
 </member>
-<member name="M:AeroTools.VisualModel.Models.Basics.Surface.Orientate(MathTools.Algebra.EuclideanSpace.EVector3,MathTools.Algebra.EuclideanSpace.EulerAngles)">
+<member name="M:AeroTools.VisualModel.Models.Components.Basics.Surface.Orientate(MathTools.Algebra.EuclideanSpace.EVector3,MathTools.Algebra.EuclideanSpace.EulerAngles)">
  <summary>
  Changes the orientation of the surface.
  </summary>
  <param name="Point"></param>
  <param name="Ori"></param>
 </member>
-<member name="M:AeroTools.VisualModel.Models.Basics.Surface.Scale(System.Double)">
+<member name="M:AeroTools.VisualModel.Models.Components.Basics.Surface.Scale(System.Double)">
  <summary>
  Scales the coordinates.
  </summary>
  <param name="Scale"></param>
 </member>
-<member name="M:AeroTools.VisualModel.Models.Basics.Surface.Align(MathTools.Algebra.EuclideanSpace.EVector3,MathTools.Algebra.EuclideanSpace.EVector3,MathTools.Algebra.EuclideanSpace.EVector3,MathTools.Algebra.EuclideanSpace.EVector3)">
+<member name="M:AeroTools.VisualModel.Models.Components.Basics.Surface.Align(MathTools.Algebra.EuclideanSpace.EVector3,MathTools.Algebra.EuclideanSpace.EVector3,MathTools.Algebra.EuclideanSpace.EVector3,MathTools.Algebra.EuclideanSpace.EVector3)">
  <summary>
  Align the surface.
  </summary>
@@ -2515,7 +2515,7 @@ AeroTools
  <param name="P3"></param>
  <param name="P4"></param>
 </member>
-<member name="P:AeroTools.VisualModel.Models.Basics.Surface.Selected">
+<member name="P:AeroTools.VisualModel.Models.Components.Basics.Surface.Selected">
  <summary>
  Indicates if the surface is currently selected.
  </summary>
@@ -2523,13 +2523,13 @@ AeroTools
  <returns></returns>
  <remarks></remarks>
 </member>
-<member name="M:AeroTools.VisualModel.Models.Basics.Surface.UnselectAll">
+<member name="M:AeroTools.VisualModel.Models.Components.Basics.Surface.UnselectAll">
  <summary>
  Unselects all nodal points.
  </summary>
  <remarks></remarks>
 </member>
-<member name="M:AeroTools.VisualModel.Models.Basics.Surface.Refresh3DModel(SharpGL.OpenGL@,AeroTools.VisualModel.Interface.SelectionModes,System.Int32)">
+<member name="M:AeroTools.VisualModel.Models.Components.Basics.Surface.Refresh3DModel(SharpGL.OpenGL@,AeroTools.VisualModel.Interface.SelectionModes,System.Int32)">
  <summary>
  Refresh the 3D model on a OpenGL control.
  </summary>
@@ -2538,42 +2538,42 @@ AeroTools
  <param name="ElementIndex"></param>
  <remarks></remarks>
 </member>
-<member name="M:AeroTools.VisualModel.Models.Basics.Surface.GenerateMesh">
+<member name="M:AeroTools.VisualModel.Models.Components.Basics.Surface.GenerateMesh">
  <summary>
  Generates the mesh.
  </summary>
 </member>
-<member name="P:AeroTools.VisualModel.Models.Basics.CamberLine.ID">
+<member name="P:AeroTools.VisualModel.Models.Components.Basics.CamberLine.ID">
  <summary>
  The identification number of this camber line.
  </summary>
  <returns></returns>
 </member>
-<member name="P:AeroTools.VisualModel.Models.Basics.CamberLine.Nodes">
+<member name="P:AeroTools.VisualModel.Models.Components.Basics.CamberLine.Nodes">
  <summary>
  The nodes if this camber line.
  </summary>
  <returns></returns>
 </member>
-<member name="M:AeroTools.VisualModel.Models.Basics.CamberLine.#ctor">
+<member name="M:AeroTools.VisualModel.Models.Components.Basics.CamberLine.#ctor">
  <summary>
  Returns a NACA chamber point provided the position as fraction of the chord.
  </summary>
  <remarks></remarks>
 </member>
-<member name="M:AeroTools.VisualModel.Models.Basics.CamberLine.Y(System.Single)">
+<member name="M:AeroTools.VisualModel.Models.Components.Basics.CamberLine.Y(System.Single)">
  <summary>
  Returns the Y coordinate of the basic camber function given a chordwise coordinate.
  </summary>
  <param name="X">Chordwise coordinate</param>
 </member>
-<member name="T:AeroTools.VisualModel.Models.Basics.Panel">
+<member name="T:AeroTools.VisualModel.Models.Components.Basics.Panel">
  <summary>
  Represents a panel on the model.
  </summary>
  <remarks></remarks>
 </member>
-<member name="M:AeroTools.VisualModel.Models.Basics.Panel.#ctor(System.Int32,System.Int32,System.Int32,System.Int32)">
+<member name="M:AeroTools.VisualModel.Models.Components.Basics.Panel.#ctor(System.Int32,System.Int32,System.Int32,System.Int32)">
  <summary>
  Generates a quadrilateral element
  </summary>
@@ -2583,7 +2583,7 @@ AeroTools
  <param name="N4"></param>
  <remarks></remarks>
 </member>
-<member name="M:AeroTools.VisualModel.Models.Basics.Panel.#ctor(System.Int32,System.Int32,System.Int32)">
+<member name="M:AeroTools.VisualModel.Models.Components.Basics.Panel.#ctor(System.Int32,System.Int32,System.Int32)">
  <summary>
  Generates a triangular element
  </summary>
@@ -2592,75 +2592,21 @@ AeroTools
  <param name="N3"></param>
  <remarks></remarks>
 </member>
-<member name="T:AeroTools.VisualModel.Models.Basics.StructuralPartition">
+<member name="T:AeroTools.VisualModel.Models.Components.Basics.StructuralPartition">
  <summary>
  Represents an structural partition
  </summary>
  <remarks></remarks>
 </member>
-<member name="F:AeroTools.VisualModel.Models.Basics.StructuralPartition.p">
+<member name="F:AeroTools.VisualModel.Models.Components.Basics.StructuralPartition.p">
  <summary>
  Position of this partition
  </summary>
  <remarks></remarks>
 </member>
-<member name="F:AeroTools.VisualModel.Models.Basics.StructuralPartition.LocalSection">
+<member name="F:AeroTools.VisualModel.Models.Components.Basics.StructuralPartition.LocalSection">
  <summary>
  Section associated to this partition
- </summary>
- <remarks></remarks>
-</member>
-<member name="P:AeroTools.VisualModel.Models.DesignModel.Name">
- <summary>
- Project name.
- </summary>
- <returns></returns>
-</member>
-<member name="P:AeroTools.VisualModel.Models.DesignModel.Objects">
- <summary>
- List of model objects.
- </summary>
- <returns></returns>
-</member>
-<member name="P:AeroTools.VisualModel.Models.DesignModel.Selection">
- <summary>
- Selection tool.
- </summary>
- <returns></returns>
-</member>
-<member name="P:AeroTools.VisualModel.Models.DesignModel.OperationsTool">
- <summary>
- Tool that provides back up info while operating (moving or aligning objects).
- </summary>
- <returns></returns>
-</member>
-<member name="P:AeroTools.VisualModel.Models.DesignModel.PolarDataBase">
- <summary>
- Polars.
- </summary>
- <returns></returns>
-</member>
-<member name="M:AeroTools.VisualModel.Models.DesignModel.AddLiftingSurface">
- <summary>
- Adds a lifting surface and sets it as current.
- </summary>
- <remarks></remarks>
-</member>
-<member name="M:AeroTools.VisualModel.Models.DesignModel.AddExtrudedBody">
- <summary>
- Adds an extruded body
- </summary>
- <remarks></remarks>
-</member>
-<member name="M:AeroTools.VisualModel.Models.DesignModel.AddJetEngine">
- <summary>
- Adds a jet engine
- </summary>
- <remarks></remarks>
-</member>
-<member name="M:AeroTools.VisualModel.Models.DesignModel.CloneObject(System.Int32)">
- <summary>
- Generates a copy of the current lifting surface with the option symmetric in true
  </summary>
  <remarks></remarks>
 </member>
@@ -3436,6 +3382,60 @@ AeroTools
  Returns a string with information about this wing.
  </summary>
  <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.VisualModel.Models.DesignModel.Name">
+ <summary>
+ Project name.
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:AeroTools.VisualModel.Models.DesignModel.Objects">
+ <summary>
+ List of model objects.
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:AeroTools.VisualModel.Models.DesignModel.Selection">
+ <summary>
+ Selection tool.
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:AeroTools.VisualModel.Models.DesignModel.OperationsTool">
+ <summary>
+ Tool that provides back up info while operating (moving or aligning objects).
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:AeroTools.VisualModel.Models.DesignModel.PolarDataBase">
+ <summary>
+ Polars.
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:AeroTools.VisualModel.Models.DesignModel.AddLiftingSurface">
+ <summary>
+ Adds a lifting surface and sets it as current.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.VisualModel.Models.DesignModel.AddExtrudedBody">
+ <summary>
+ Adds an extruded body
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.VisualModel.Models.DesignModel.AddJetEngine">
+ <summary>
+ Adds a jet engine
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.VisualModel.Models.DesignModel.CloneObject(System.Int32)">
+ <summary>
+ Generates a copy of the current lifting surface with the option symmetric in true
+ </summary>
  <remarks></remarks>
 </member>
 <member name="M:AeroTools.VisualModel.IO.IOXML.ReadInteger(System.Xml.XmlReader@,System.String,System.Int32)">

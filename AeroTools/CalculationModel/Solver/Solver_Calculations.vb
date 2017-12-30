@@ -32,7 +32,7 @@ Namespace CalculationModel.Solver
     ''' Programmed by Guillermo A. Hazebrouck
     ''' guillermo.hazebrouck@outlook.be
     ''' </summary> 
-    Partial Public Class UVLMSolver
+    Partial Public Class Solver
 
         ' This is the main part containing the UVLM method algorithm.
 

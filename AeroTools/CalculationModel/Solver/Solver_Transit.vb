@@ -19,7 +19,7 @@ Imports DotNumerics.LinearAlgebra
 
 Namespace CalculationModel.Solver
 
-    Partial Public Class UVLMSolver
+    Partial Public Class Solver
 
         ''' <summary>
         ''' Calculates the unsteady transit provided a velocity profile.

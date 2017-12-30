@@ -1,7 +1,7 @@
 ﻿
 Imports System.Drawing
 Imports AeroTools.DataStore
-Imports AeroTools.VisualModel.Models.Basics
+Imports AeroTools.VisualModel.Models.Components.Basics
 Imports MathTools.Algebra.EuclideanSpace
 
 Public Class FormCamberLine
