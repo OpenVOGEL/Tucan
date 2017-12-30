@@ -144,16 +144,16 @@
     <value>452, 23</value>
   </metadata>
   <data name="lblWebSite.Size" type="System.Drawing.Size, System.Drawing">
-    <value>219, 17</value>
+    <value>93, 17</value>
   </data>
   <data name="lblWebSite.Text" xml:space="preserve">
-    <value>https://sites.google.com/site/gahvogel/</value>
+    <value>Visit our website</value>
   </data>
   <data name="ToolStripStatusLabel2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>238, 17</value>
+    <value>163, 17</value>
   </data>
   <data name="ToolStripStatusLabel2.Text" xml:space="preserve">
-    <value>&lt;(C) 2009/2017 - Guillermo A. Hazebrouck&gt;</value>
+    <value>&lt;OpenVOGEL (C) 2009/2017&gt;</value>
   </data>
   <data name="lblStatus.Size" type="System.Drawing.Size, System.Drawing">
     <value>39, 17</value>

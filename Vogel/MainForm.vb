@@ -21,24 +21,28 @@ Imports AeroTools.VisualModel.Interface
 Imports AeroTools.VisualModel.Models.Components
 Imports AeroTools.CalculationModel.Settings
 Imports AeroTools.VisualModel.Models.Basics
-Imports AeroTools.DataStacks
+Imports AeroTools.DataStore
 
 Public Class MainForm
 
 #Region " Initialize program "
 
-    Public Project As New ProjectRoot
     Public FormCargado As Boolean = False
     Public PostProcesoCargado As Boolean = False
 
     Private Sub Main_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+
+        ' Initialize project root module
+
+        ProjectRoot.Initialize()
 
         Text = "Open VOGEL 2017 - Beta 7"
 
         ' Initialize OpenGL control:
 
         ControlOpenGL.Dock = DockStyle.Fill
-        Project.SetControlGL(ControlOpenGL.OpenGL)
+
+        ProjectRoot.SetControlGL(ControlOpenGL.OpenGL)
 
         ' Initialize the camber line database:
 
@@ -54,7 +58,6 @@ Public Class MainForm
 
         FormCargado = True
 
-        mrRibbon.Project = Project
         AddHandler mrRibbon.PushMessage, AddressOf PushMessage
         AddHandler mrRibbon.EditSurface, AddressOf ShowEditor
         AddHandler mrRibbon.EditVelocityPlane, AddressOf ShowVelocityPlaneFrame
@@ -106,7 +109,7 @@ Public Class MainForm
 
         Dim FormSettings = New FormSettings()
 
-        FormSettings.Settings = Project.SimulationSettings
+        FormSettings.Settings = ProjectRoot.SimulationSettings
         If (FormSettings.ShowDialog()) = Windows.Forms.DialogResult.OK Then
             FormSettings.GetSettings()
 
@@ -131,9 +134,9 @@ Public Class MainForm
 
             End Select
 
-            AddHandler Project.CalculationDone, AddressOf PostCalculationActions
+            AddHandler ProjectRoot.CalculationDone, AddressOf PostCalculationActions
 
-            Project.StartCalculation(CalculationType, Me)
+            ProjectRoot.StartCalculation(CalculationType, Me)
 
         End If
 
@@ -174,7 +177,7 @@ Public Class MainForm
 
         ' Represent:
 
-        Project.RepresentOnGL()
+        ProjectRoot.RepresentOnGL()
 
     End Sub
 
@@ -199,7 +202,7 @@ Public Class MainForm
         Catch ex As Exception
 
             MsgBox("Unable to switch to post-processing mode! Results data might be corrupted.", MsgBoxStyle.Critical, "Error")
-            Project.Results.Clear()
+            ProjectRoot.Results.Clear()
             SwitchToDesignMode()
 
         End Try
@@ -218,7 +221,7 @@ Public Class MainForm
 
         If IsNothing(WingControlPanel) Then
             WingControlPanel = New WingControl
-            AddHandler WingControlPanel.RefreshGL, AddressOf Project.RefreshOnGL
+            AddHandler WingControlPanel.RefreshGL, AddressOf ProjectRoot.RefreshOnGL
             AddHandler WingControlPanel.OnClose, AddressOf ContractLeftPanel
         End If
 
@@ -228,7 +231,7 @@ Public Class MainForm
 
         If IsNothing(VelocityControlPanel) Then
             VelocityControlPanel = New VelocityControl
-            AddHandler VelocityControlPanel.RefreshGL, AddressOf Project.RefreshOnGL
+            AddHandler VelocityControlPanel.RefreshGL, AddressOf ProjectRoot.RefreshOnGL
             AddHandler VelocityControlPanel.OnClose, AddressOf ContractLeftPanel
         End If
 
@@ -237,7 +240,7 @@ Public Class MainForm
     Public Sub ShowVelocityPlaneFrame()
 
         SetUpVelocityPlaneFrame()
-        VelocityControlPanel.IniciarControl(Project)
+        VelocityControlPanel.Initialize()
         VelocityControlPanel.Parent = scMain.Panel1
         scMain.Panel1Collapsed = False
         scMain.SplitterDistance = VelocityControlPanel.Width
@@ -249,7 +252,7 @@ Public Class MainForm
     Public Sub ShowLiftingSurfaceEditor(Surface As LiftingSurface)
 
         SetUpLiftingSurfaceEditor()
-        WingControlPanel.InitializeControl(Surface, Project.Model.PolarDataBase)
+        WingControlPanel.InitializeControl(Surface, ProjectRoot.Model.PolarDataBase)
         WingControlPanel.Parent = scMain.Panel1
         scMain.Panel1Collapsed = False
         scMain.SplitterDistance = WingControlPanel.Width
@@ -262,7 +265,7 @@ Public Class MainForm
 
         Dim Wings As New List(Of LiftingSurface)
 
-        For Each otherSurface In Project.Model.Objects
+        For Each otherSurface In ProjectRoot.Model.Objects
             If TypeOf otherSurface Is LiftingSurface Then
                 Wings.Add(otherSurface)
             End If
@@ -277,7 +280,7 @@ Public Class MainForm
     Public Sub ShowJetEngineEditor(JetEngine As JetEngine)
 
         Dim JetEngineForm As New FormJetEngine(JetEngine)
-        AddHandler JetEngineForm.UpdateModel, AddressOf Project.RepresentOnGL
+        AddHandler JetEngineForm.UpdateModel, AddressOf ProjectRoot.RepresentOnGL
         JetEngineForm.ShowDialog()
         JetEngine.GenerateMesh()
 
@@ -308,7 +311,7 @@ Public Class MainForm
     Private Sub ContractLeftPanel()
 
         scMain.Panel1Collapsed = True
-        Project.RefreshOnGL()
+        ProjectRoot.RefreshOnGL()
         Refresh()
 
     End Sub
@@ -323,15 +326,15 @@ Public Class MainForm
 
     Private Sub ControlOpenGL_MouseMove(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles ControlOpenGL.MouseMove
 
-        If Project.Visualization.Panning Then
-            Project.Visualization.CameraPosition.X = CameraStartPosition.X + (e.Location.X - MouseDownPosition.X)
-            Project.Visualization.CameraPosition.Y = CameraStartPosition.Y + (MouseDownPosition.Y - e.Location.Y)
+        If ProjectRoot.Visualization.Panning Then
+            ProjectRoot.Visualization.CameraPosition.X = CameraStartPosition.X + (e.Location.X - MouseDownPosition.X)
+            ProjectRoot.Visualization.CameraPosition.Y = CameraStartPosition.Y + (MouseDownPosition.Y - e.Location.Y)
             'Proyecto.RepresentOnGL()
         End If
 
-        If Project.Visualization.Rotating Then
-            Project.Visualization.CameraOrientation.Psi = CameraOrientation.Psi + 0.25 * (e.Location.X - MouseDownPosition.X)
-            Project.Visualization.CameraOrientation.Fi = CameraOrientation.Fi + 0.25 * (e.Location.Y - MouseDownPosition.Y)
+        If ProjectRoot.Visualization.Rotating Then
+            ProjectRoot.Visualization.CameraOrientation.Psi = CameraOrientation.Psi + 0.25 * (e.Location.X - MouseDownPosition.X)
+            ProjectRoot.Visualization.CameraOrientation.Fi = CameraOrientation.Fi + 0.25 * (e.Location.Y - MouseDownPosition.Y)
             'Proyecto.RepresentOnGL()
         End If
 
@@ -340,16 +343,16 @@ Public Class MainForm
     Private Sub ControlOpenGL_MouseDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles ControlOpenGL.MouseDown
 
         If e.Button = MouseButtons.Middle Then
-            Project.Visualization.Panning = True
+            ProjectRoot.Visualization.Panning = True
             MouseDownPosition = e.Location
-            CameraStartPosition.Assign(Project.Visualization.CameraPosition)
+            CameraStartPosition.Assign(ProjectRoot.Visualization.CameraPosition)
         End If
 
         If e.Button = MouseButtons.Right Then
-            Project.Visualization.Rotating = True
+            ProjectRoot.Visualization.Rotating = True
             MouseDownPosition = e.Location
-            CameraOrientation.Psi = Project.Visualization.CameraOrientation.Psi
-            CameraOrientation.Fi = Project.Visualization.CameraOrientation.Fi
+            CameraOrientation.Psi = ProjectRoot.Visualization.CameraOrientation.Psi
+            CameraOrientation.Fi = ProjectRoot.Visualization.CameraOrientation.Fi
         End If
 
         If e.Button = MouseButtons.Left Then
@@ -359,23 +362,23 @@ Public Class MainForm
         End If
 
         If e.Button = MouseButtons.Right Then
-            Project.Model.OperationsTool.CancelOperation()
+            ProjectRoot.Model.OperationsTool.CancelOperation()
         End If
 
-        Project.RefreshOnGL()
+        ProjectRoot.RefreshOnGL()
 
     End Sub
 
     Private Sub SelectAndProcessItems(ByVal X As Integer, ByVal Y As Integer)
 
-        With Project.Model
+        With ProjectRoot.Model
 
-            Select Case Project.InterfaceMode
+            Select Case ProjectRoot.InterfaceMode
 
                 Case InterfaceModes.Design
 
                     .Selection.SelectionMode = SelectionModes.smNodePicking
-                    Project.SelectOnGL(X, Y, ControlOpenGL.Width, ControlOpenGL.Height)
+                    ProjectRoot.SelectOnGL(X, Y, ControlOpenGL.Width, ControlOpenGL.Height)
 
                     ' there is a priority list to show the item info: structural elements, nodes and lattice rings
 
@@ -391,7 +394,7 @@ Public Class MainForm
 
                                 Dim wing As LiftingSurface = .Objects(sr.ComponentIndex)
 
-                                Project.Model.OperationsTool.SetDestinationObject(wing)
+                                ProjectRoot.Model.OperationsTool.SetDestinationObject(wing)
 
                                 mrRibbon.ChangeSurfaceIndex(sr.ComponentIndex)
 
@@ -429,7 +432,7 @@ Public Class MainForm
 
                                     Dim wing As LiftingSurface = .Objects(sr.ComponentIndex)
 
-                                    Project.Model.OperationsTool.SetDestinationObject(wing)
+                                    ProjectRoot.Model.OperationsTool.SetDestinationObject(wing)
 
                                     mrRibbon.ChangeSurfaceIndex(sr.ComponentIndex)
 
@@ -444,7 +447,7 @@ Public Class MainForm
                                                                                   wing.Mesh.Nodes(sr.EntityIndex).Position.Y,
                                                                                   wing.Mesh.Nodes(sr.EntityIndex).Position.Z)
 
-                                    Project.Model.OperationsTool.SetEntityToQueue(wing.Mesh.Nodes(sr.EntityIndex))
+                                    ProjectRoot.Model.OperationsTool.SetEntityToQueue(wing.Mesh.Nodes(sr.EntityIndex))
 
                                     KeepSearching = False
 
@@ -456,7 +459,7 @@ Public Class MainForm
 
                                     Dim body As Fuselage = .Objects(sr.ComponentIndex)
 
-                                    Project.Model.OperationsTool.SetDestinationObject(body)
+                                    ProjectRoot.Model.OperationsTool.SetDestinationObject(body)
 
                                     mrRibbon.ChangeSurfaceIndex(sr.ComponentIndex)
 
@@ -470,7 +473,7 @@ Public Class MainForm
                                                                                   body.Mesh.Nodes(sr.EntityIndex).Position.X,
                                                                                   body.Mesh.Nodes(sr.EntityIndex).Position.Y,
                                                                                   body.Mesh.Nodes(sr.EntityIndex).Position.Z)
-                                    Project.Model.OperationsTool.SetEntityToQueue(body.Mesh.Nodes(sr.EntityIndex).Position)
+                                    ProjectRoot.Model.OperationsTool.SetEntityToQueue(body.Mesh.Nodes(sr.EntityIndex).Position)
 
                                     KeepSearching = False
 
@@ -499,7 +502,7 @@ Public Class MainForm
 
                                         Dim wing As LiftingSurface = .Objects(sr.ComponentIndex)
 
-                                        Project.Model.OperationsTool.SetDestinationObject(wing)
+                                        ProjectRoot.Model.OperationsTool.SetDestinationObject(wing)
 
                                         mrRibbon.ChangeSurfaceIndex(sr.ComponentIndex)
 
@@ -521,7 +524,7 @@ Public Class MainForm
 
                                         Dim body As Fuselage = .Objects(sr.ComponentIndex)
 
-                                        Project.Model.OperationsTool.SetDestinationObject(body)
+                                        ProjectRoot.Model.OperationsTool.SetDestinationObject(body)
 
                                         mrRibbon.ChangeSurfaceIndex(sr.ComponentIndex)
 
@@ -543,7 +546,7 @@ Public Class MainForm
 
                                         Dim nacelle As JetEngine = .Objects(sr.ComponentIndex)
 
-                                        Project.Model.OperationsTool.SetDestinationObject(nacelle)
+                                        ProjectRoot.Model.OperationsTool.SetDestinationObject(nacelle)
 
                                         mrRibbon.ChangeSurfaceIndex(sr.ComponentIndex)
 
@@ -584,18 +587,18 @@ Public Class MainForm
     End Sub
 
     Private Sub ControlOpenGL_MouseUp(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles ControlOpenGL.MouseUp
-        Project.Visualization.Panning = False
-        Project.Visualization.Rotating = False
-        Project.RepresentOnGL()
+        ProjectRoot.Visualization.Panning = False
+        ProjectRoot.Visualization.Rotating = False
+        ProjectRoot.RepresentOnGL()
     End Sub
 
     Private Sub ControlOpenGL_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs)
         If e.KeyCode = Keys.M Then
-            If Project.Model.Selection.MultipleSelection = False Then
-                Project.Model.Selection.MultipleSelection = True
+            If ProjectRoot.Model.Selection.MultipleSelection = False Then
+                ProjectRoot.Model.Selection.MultipleSelection = True
                 PushMessage("Selección múltiple activada")
             Else
-                Project.Model.Selection.MultipleSelection = False
+                ProjectRoot.Model.Selection.MultipleSelection = False
                 PushMessage("Selección múltiple desactivada")
             End If
         End If
@@ -603,7 +606,7 @@ Public Class MainForm
 
     Private Sub ControlOpenGL_OpenGLDraw(ByVal sender As System.Object, ByVal e As System.Windows.Forms.PaintEventArgs) Handles ControlOpenGL.OpenGLDraw
 
-        If FormCargado Then Project.RepresentOnGL()
+        If FormCargado Then ProjectRoot.RepresentOnGL()
 
     End Sub
 
@@ -615,9 +618,9 @@ Public Class MainForm
 
     Private Sub ControlOpenGL_Resized(sender As Object, e As EventArgs) Handles ControlOpenGL.Resized
 
-        If Project IsNot Nothing Then
-            Project.ControlGLWidth = ControlOpenGL.Width
-            Project.ControlGLHeight = ControlOpenGL.Height
+        If ProjectRoot.Initialized Then
+            ProjectRoot.ControlGLWidth = ControlOpenGL.Width
+            ProjectRoot.ControlGLHeight = ControlOpenGL.Height
         End If
 
     End Sub
@@ -631,33 +634,33 @@ Public Class MainForm
         Select Case Vista
 
             Case "XY"
-                Project.Visualization.CameraOrientation.Psi = 0
-                Project.Visualization.CameraOrientation.Fi = 0
+                ProjectRoot.Visualization.CameraOrientation.Psi = 0
+                ProjectRoot.Visualization.CameraOrientation.Fi = 0
                 lblStatus.Text = "XY view"
 
             Case "ZY"
-                Project.Visualization.CameraOrientation.Psi = 90
-                Project.Visualization.CameraOrientation.Fi = -90
+                ProjectRoot.Visualization.CameraOrientation.Psi = 90
+                ProjectRoot.Visualization.CameraOrientation.Fi = -90
                 lblStatus.Text = "ZY view"
 
             Case "ZX"
-                Project.Visualization.CameraOrientation.Psi = 0
-                Project.Visualization.CameraOrientation.Fi = -90
+                ProjectRoot.Visualization.CameraOrientation.Psi = 0
+                ProjectRoot.Visualization.CameraOrientation.Fi = -90
                 lblStatus.Text = "ZX view"
 
             Case "Isometrica"
-                Project.Visualization.CameraOrientation.Psi = 30
-                Project.Visualization.CameraOrientation.Fi = -60
+                ProjectRoot.Visualization.CameraOrientation.Psi = 30
+                ProjectRoot.Visualization.CameraOrientation.Fi = -60
                 lblStatus.Text = "Free view"
 
             Case "Center"
-                Project.Visualization.CameraPosition.X = 0
-                Project.Visualization.CameraPosition.Y = 0
-                Project.Visualization.CameraPosition.Z = 0
+                ProjectRoot.Visualization.CameraPosition.X = 0
+                ProjectRoot.Visualization.CameraPosition.Y = 0
+                ProjectRoot.Visualization.CameraPosition.Z = 0
 
         End Select
 
-        Project.RepresentOnGL()
+        ProjectRoot.RepresentOnGL()
 
     End Sub
 
@@ -666,47 +669,47 @@ Public Class MainForm
 #Region " Other event handlers "
 
     Private Sub sbHorizontal_Scroll(ByVal sender As System.Object, ByVal e As System.Windows.Forms.ScrollEventArgs) Handles sbHorizontal.Scroll
-        Project.Visualization.CameraOrientation.Psi = Me.sbHorizontal.Value
-        Project.RepresentOnGL()
+        ProjectRoot.Visualization.CameraOrientation.Psi = Me.sbHorizontal.Value
+        ProjectRoot.RepresentOnGL()
     End Sub
 
     Private Sub sbVertical_Scroll(ByVal sender As System.Object, ByVal e As System.Windows.Forms.ScrollEventArgs) Handles sbVertical.Scroll
-        Project.Visualization.CameraOrientation.Fi = Me.sbVertical.Value
-        Project.RepresentOnGL()
+        ProjectRoot.Visualization.CameraOrientation.Fi = Me.sbVertical.Value
+        ProjectRoot.RepresentOnGL()
     End Sub
 
     Private Sub MainForm_MouseWheel(ByVal sender As Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles MyBase.MouseWheel
-        Project.Visualization.Proximity = Project.Visualization.Proximity + 0.05 * Project.SimulationSettings.CharacteristicLenght * e.Delta
-        Project.RepresentOnGL()
+        ProjectRoot.Visualization.Proximity = ProjectRoot.Visualization.Proximity + 0.05 * ProjectRoot.SimulationSettings.CharacteristicLenght * e.Delta
+        ProjectRoot.RepresentOnGL()
     End Sub
 
     Private Sub MainForm_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown
         If e.KeyData = Keys.Escape Then
-            Project.Model.OperationsTool.CancelOperation()
-            MsgBox(Project.Model.OperationsTool.StatusFlag)
+            ProjectRoot.Model.OperationsTool.CancelOperation()
+            MsgBox(ProjectRoot.Model.OperationsTool.StatusFlag)
         End If
     End Sub
 
     Private Sub btnUnsteadyHistogram_Click(sender As Object, e As EventArgs)
 
-        Select Case Project.InterfaceMode
+        Select Case ProjectRoot.InterfaceMode
             Case InterfaceModes.Design
                 Dim Dialog As New FormUnsteadyVelocity
-                Dialog.ShowProfile(Project.SimulationSettings, True)
+                Dialog.ShowProfile(ProjectRoot.SimulationSettings, True)
             Case InterfaceModes.Postprocess
                 Dim Dialog As New FormUnsteadyVelocity
-                Dialog.ShowProfile(Project.Results.SimulationSettings, False)
+                Dialog.ShowProfile(ProjectRoot.Results.SimulationSettings, False)
         End Select
 
     End Sub
 
     Private Sub btnAeroelasticHistogram_Click(sender As Object, e As EventArgs)
 
-        Select Case Project.InterfaceMode
+        Select Case ProjectRoot.InterfaceMode
 
             Case InterfaceModes.Design
 
-                Dim Dialog As New FormHistogram(Project.SimulationSettings)
+                Dim Dialog As New FormHistogram(ProjectRoot.SimulationSettings)
 
                 Dialog.StartPosition = FormStartPosition.CenterParent
 
@@ -720,7 +723,7 @@ Public Class MainForm
 
     Private Sub lblWebSite_Click(sender As Object, e As EventArgs) Handles lblWebSite.Click
 
-        Process.Start("http://www.openvogel.com")
+        Process.Start("https://sites.google.com/site/gahvogel/main")
 
     End Sub
 

@@ -151,25 +151,41 @@ Namespace MathLibrary.EigenValues
 
         End Sub
 
-        Public Sub SubspaceIteration(ByVal nDOF As Integer, ByVal nModes As Integer, ByVal nSubSpace As Integer, ByVal DataBasePath As String)
+        Public Sub SubspaceIteration(ByVal DataBasePath As String,
+                                     ByVal PathK As String,
+                                     ByVal PathM As String,
+                                     ByVal nDOF As Integer,
+                                     ByVal nModes As Integer,
+                                     ByVal nSubSpace As Integer)
 
-            ReadMatrixM(DataBasePath + "\M.bin", nDOF)
-            ReadMatrixK(DataBasePath + "\K.bin", nDOF)
+            ReadMatrixM(PathM, nDOF)
+            ReadMatrixK(PathK, nDOF)
 
-            Dim er_eval As Double = EValError ' < eigen values convergence threshold
+            ' Set eigen values convergence threshold
 
-            ' check subspace dimension:
+            Dim er_eval As Double = EValError
+
+            '---------------------------------------------
+            ' Check subspace dimension
+            '---------------------------------------------
 
             If (nSubSpace > nDOF) Then nSubSpace = nDOF
 
-            Dim projected_K As New SymmetricMatrix(nSubSpace)
-            Dim projected_M As New SymmetricMatrix(nSubSpace)
             Dim Q As New SymmetricMatrix(nSubSpace)
             Dim D As New ColumnVector(nSubSpace)
+
+            Jacobi(Stiffness, Mass, Q, D)
+
+            Return
+
+            Dim projected_K As New SymmetricMatrix(nSubSpace)
+            Dim projected_M As New SymmetricMatrix(nSubSpace)
             Dim L As New ColumnVector(nSubSpace)
             Dim V = New RectangularMatrix(nDOF, nSubSpace)
 
-            ' ## set starting vectors ##
+            '---------------------------------------------
+            ' Set starting vectors
+            '---------------------------------------------
 
             Dim randGenerator As Random = New Random()
 
@@ -194,7 +210,9 @@ Namespace MathLibrary.EigenValues
                 End If
             Next
 
-            ' ## beggin sub space iteration loop ##
+            '---------------------------------------------
+            ' Begin sub space iteration loop
+            '---------------------------------------------
 
             Dim converged As Boolean = False
             Dim time_step As Integer = 0
@@ -206,7 +224,9 @@ Namespace MathLibrary.EigenValues
 
             While (time_step < 15 And Not converged)
 
-                ' compute new vector X:
+                '---------------------------------------------
+                ' Compute new vector X
+                '---------------------------------------------
 
                 If (time_step = 0) Then
                     MV = V.Copy
@@ -221,11 +241,15 @@ Namespace MathLibrary.EigenValues
                     Next
                 Next
 
-                ' get X transposed:
+                '---------------------------------------------
+                ' Get X transposed
+                '---------------------------------------------
 
                 Dim XT As RectangularMatrix = X.Transpose
 
-                ' find stiffness projection matrix: (note that MV = KX)
+                '---------------------------------------------
+                ' Find stiffness projection matrix: (note that MV = KX)
+                '---------------------------------------------
 
                 Dim projected_K_0 As RectangularMatrix = XT * MV
 
@@ -235,7 +259,9 @@ Namespace MathLibrary.EigenValues
                     Next
                 Next
 
-                ' find mass projection matrix:             
+                '---------------------------------------------
+                ' Find mass projection matrix
+                '---------------------------------------------
 
                 MX = Mass * X
 
@@ -247,21 +273,29 @@ Namespace MathLibrary.EigenValues
                     Next
                 Next
 
-                ' save current values to check convergence:
+                '---------------------------------------------
+                ' Save current values to check convergence
+                '---------------------------------------------
 
                 For i = 0 To nSubSpace - 1
                     L(i) = D(i)
                 Next
 
-                ' solve reduced eigensystem:
+                '---------------------------------------------
+                ' Solve reduced eigensystem using Jacobi method
+                '---------------------------------------------
 
                 Jacobi(projected_K, projected_M, Q, D)
 
-                ' apply Ritz transformation (V should tend to the truncated modal basis):
+                '---------------------------------------------
+                ' Apply Ritz transformation (V should tend to the truncated modal basis)
+                '---------------------------------------------
 
                 V = X * Q
 
-                ' check convergence
+                '---------------------------------------------
+                ' Check convergence
+                '---------------------------------------------
 
                 converged = True
 
@@ -334,7 +368,7 @@ Namespace MathLibrary.EigenValues
 
                         Dim check As Double = 0.25 * kdash * kdash + kii * kjj
 
-                        Dim den As Double = 0.5 * kdash + System.Math.Sign(kdash) * System.Math.Sqrt(check)
+                        Dim den As Double = 0.5 * kdash + Math.Sign(kdash) * Math.Sqrt(check)
 
                         Dim g As Double = 0.0
                         Dim a As Double = 0.0
@@ -417,9 +451,9 @@ Namespace MathLibrary.EigenValues
                 For i = 0 To n - 1
 
                     If (K(i, i) > 0 And M(i, i) > 0) Then
-                        Dim ll As Double = K(i, i) / M(i, i)
-                        converged = converged And System.Math.Abs((ll - L(i)) / L(i)) < er_eval
-                        L(i) = ll
+                        Dim w As Double = K(i, i) / M(i, i)
+                        converged = converged And System.Math.Abs((w - L(i)) / L(i)) < er_eval
+                        L(i) = w
                     Else
                         Throw New Exception("Error on Jacobi solver: matrices are not positive definite.")
                     End If

@@ -244,9 +244,9 @@ Namespace CalculationModel.Models.Structural
 
             Dim ESolver As EigenValuesSolver = New EigenValuesSolver
 
-            ESolver.InverseIteration(Path, PathK, PathM, DOF, 100, StructuralSettings.NumberOfModes)
+            ESolver.InverseIteration(Path, PathK, PathM, DOF, 800, StructuralSettings.NumberOfModes)
 
-            'ESolver.SubspaceIteration(DOF, Quantity, Math.Max(4 * Quantity, 25), Path)
+            'ESolver.SubspaceIteration(Path, PathK, PathM, DOF, StructuralSettings.NumberOfModes, Math.Max(4 * StructuralSettings.NumberOfModes, 25))
 
             ReadModes(Path)
 

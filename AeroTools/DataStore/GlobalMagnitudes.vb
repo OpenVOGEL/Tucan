@@ -1,7 +1,7 @@
 ﻿
 Imports MathTools.Magnitudes
 
-Namespace DataStacks
+Namespace DataStore
 
     Public Module GlobalMagnitudes
 

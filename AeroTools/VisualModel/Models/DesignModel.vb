@@ -20,7 +20,7 @@ Imports AeroTools.VisualModel.Models.Components
 Imports System.Xml
 Imports AeroTools.VisualModel.Models.Basics
 Imports AeroTools.CalculationModel.Models.Aero.Components
-Imports AeroTools.DataStacks
+Imports AeroTools.DataStore
 
 Namespace VisualModel.Models
 

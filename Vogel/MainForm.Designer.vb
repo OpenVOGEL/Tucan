@@ -177,7 +177,6 @@ Partial Class MainForm
         '
         resources.ApplyResources(Me.mrRibbon, "mrRibbon")
         Me.mrRibbon.Name = "mrRibbon"
-        Me.mrRibbon.Project = Nothing
         '
         'MainForm
         '

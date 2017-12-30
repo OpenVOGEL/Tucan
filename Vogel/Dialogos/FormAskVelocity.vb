@@ -17,6 +17,7 @@
 
 Imports AeroTools.VisualModel.Models.Basics
 Imports MathTools.Algebra.EuclideanSpace
+Imports AeroTools.DataStore
 
 Public Class FormAskVelocity
 
@@ -24,7 +25,7 @@ Public Class FormAskVelocity
 
     Private Sub PreguntarVelocidad_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         PuntoDeControl.Minimum = 1
-        PuntoDeControl.Maximum = MainForm.Project.Results.Model.NumberOfPanels
+        PuntoDeControl.Maximum = ProjectRoot.Results.Model.NumberOfPanels
     End Sub
 
     Private Sub Calcular_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Calcular.Click
@@ -43,7 +44,7 @@ Public Class FormAskVelocity
 
             Dim PuntoSeleccionado As Integer = PuntoDeControl.Value
 
-            Dim Panel As Panel = MainForm.Project.Results.Model.Mesh.Panels(PuntoSeleccionado)
+            Dim Panel As Panel = ProjectRoot.Results.Model.Mesh.Panels(PuntoSeleccionado)
 
             Punto.Assign(Panel.ControlPoint)
 
@@ -78,8 +79,8 @@ Public Class FormAskVelocity
     End Sub
 
     Private Sub PuntoDeControl_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles PuntoDeControl.ValueChanged
-        MainForm.Project.Results.Model.SelectControlPoint(PuntoDeControl.Value)
-        MainForm.Project.RepresentOnGL()
+        ProjectRoot.Results.Model.SelectControlPoint(PuntoDeControl.Value)
+        ProjectRoot.RepresentOnGL()
     End Sub
 
 End Class

@@ -25,15 +25,16 @@ Imports System.ComponentModel
 Imports System.Windows.Forms
 Imports System.Xml
 Imports AeroTools.VisualModel.Tools.Properties
+Imports AeroTools.VisualModel.Interface
 
-Namespace VisualModel.Interface
+Namespace DataStore
 
     Public Enum InterfaceModes As Integer
         Design = 1
         Postprocess = 2
     End Enum
 
-    Public Class ProjectRoot
+    Public Module ProjectRoot
 
         ''' <summary>
         ''' Project name
@@ -48,7 +49,15 @@ Namespace VisualModel.Interface
         Public Property VelocityPlane As New VelocityPlane
         Public Property CalculationCore As UVLMSolver
 
-        Public Sub New()
+        Private _Initialized As Boolean = False
+
+        ReadOnly Property Initialized As Boolean
+            Get
+                Return _Initialized
+            End Get
+        End Property
+
+        Public Sub Initialize()
 
             ControlGL = New OpenGL
 
@@ -67,6 +76,8 @@ Namespace VisualModel.Interface
             RefreshOnGL()
 
             AddHandler Model.OperationsTool.OnTaskReady, AddressOf RefreshOnGL
+
+            _Initialized = True
 
         End Sub
 
@@ -130,7 +141,7 @@ Namespace VisualModel.Interface
 
         Public ReadOnly Property ExistsOnDatabase As Boolean
             Get
-                Return System.IO.File.Exists(Me.FilePath)
+                Return System.IO.File.Exists(FilePath)
             End Get
         End Property
 
@@ -849,7 +860,7 @@ Namespace VisualModel.Interface
 
             reader.Close()
 
-            Me.RepresentOnGL()
+            RepresentOnGL()
 
         End Sub
 
@@ -893,7 +904,7 @@ Namespace VisualModel.Interface
 
 #End Region
 
-    End Class
+    End Module
 
 End Namespace
 

@@ -2194,6 +2194,61 @@ AeroTools
  Calculates the unsteady transit provided a velocity profile.
  </summary>
 </member>
+<member name="P:AeroTools.DataStore.ProjectRoot.Name">
+ <summary>
+ Project name
+ </summary>
+ <returns></returns>
+</member>
+<member name="T:AeroTools.DataStore.ProjectRoot.GLElement">
+ <summary>
+ SharpGL control used to draw this project.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.DataStore.ProjectRoot.SetControlGL(SharpGL.OpenGL@)">
+ <summary>
+ Stablishes a reference to an SharpGL control.
+ </summary>
+ <param name="Control"></param>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.DataStore.ProjectRoot.RepresentOnGL">
+ <summary>
+ Represents the current lists on OpenGL.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.DataStore.ProjectRoot.RefreshOnGL">
+ <summary>
+ Remakes OpenGL lists and redraws.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.DataStore.ProjectRoot.FastRefreshOnGL(System.Int32,System.Int32)">
+ <summary>
+ Redraws by using drawing subs 
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:AeroTools.DataStore.ProjectRoot.ListOfSurfacesToDraw">
+ <summary>
+ OpenGL lists to be drawn.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:AeroTools.DataStore.ProjectRoot.MakeDrawingLists">
+ <summary>
+ Constructs OpenGL lists.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="E:AeroTools.DataStore.ProjectRoot.CalculationDone">
+ <summary>
+ Occurs when the calculation finishes.
+ </summary>
+ <remarks></remarks>
+</member>
 <member name="T:AeroTools.My.Resources.Resources">
 <summary>
   Clase de recurso con establecimiento inflexible de tipos, para buscar cadenas traducidas, etc.
@@ -2310,61 +2365,6 @@ AeroTools
  Transparency of the model
  </summary>
  <returns></returns>
-</member>
-<member name="P:AeroTools.VisualModel.Interface.ProjectRoot.Name">
- <summary>
- Project name
- </summary>
- <returns></returns>
-</member>
-<member name="T:AeroTools.VisualModel.Interface.ProjectRoot.GLElement">
- <summary>
- SharpGL control used to draw this project.
- </summary>
- <remarks></remarks>
-</member>
-<member name="M:AeroTools.VisualModel.Interface.ProjectRoot.SetControlGL(SharpGL.OpenGL@)">
- <summary>
- Stablishes a reference to an SharpGL control.
- </summary>
- <param name="Control"></param>
- <remarks></remarks>
-</member>
-<member name="M:AeroTools.VisualModel.Interface.ProjectRoot.RepresentOnGL">
- <summary>
- Represents the current lists on OpenGL.
- </summary>
- <remarks></remarks>
-</member>
-<member name="M:AeroTools.VisualModel.Interface.ProjectRoot.RefreshOnGL">
- <summary>
- Remakes OpenGL lists and redraws.
- </summary>
- <remarks></remarks>
-</member>
-<member name="M:AeroTools.VisualModel.Interface.ProjectRoot.FastRefreshOnGL(System.Int32,System.Int32)">
- <summary>
- Redraws by using drawing subs 
- </summary>
- <remarks></remarks>
-</member>
-<member name="F:AeroTools.VisualModel.Interface.ProjectRoot.ListOfSurfacesToDraw">
- <summary>
- OpenGL lists to be drawn.
- </summary>
- <remarks></remarks>
-</member>
-<member name="M:AeroTools.VisualModel.Interface.ProjectRoot.MakeDrawingLists">
- <summary>
- Constructs OpenGL lists.
- </summary>
- <remarks></remarks>
-</member>
-<member name="E:AeroTools.VisualModel.Interface.ProjectRoot.CalculationDone">
- <summary>
- Occurs when the calculation finishes.
- </summary>
- <remarks></remarks>
 </member>
 <member name="P:AeroTools.VisualModel.Interface.SelectionRecord.ID">
  <summary>

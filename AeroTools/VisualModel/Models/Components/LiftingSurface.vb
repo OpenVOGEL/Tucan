@@ -25,7 +25,7 @@ Imports AeroTools.VisualModel.Models.Basics
 Imports AeroTools.VisualModel.IO
 Imports AeroTools.CalculationModel.Models.Structural.Library
 Imports AeroTools.CalculationModel.Models.Structural.Library.Elements
-Imports AeroTools.DataStacks
+Imports AeroTools.DataStore
 
 Namespace VisualModel.Models.Components
 

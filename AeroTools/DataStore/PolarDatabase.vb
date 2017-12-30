@@ -3,7 +3,7 @@ Imports System.IO
 Imports System.Xml
 Imports AeroTools.CalculationModel.Models.Aero.Components
 
-Namespace DataStacks
+Namespace DataStore
 
     Public Class PolarDatabase
 

@@ -16,7 +16,7 @@
 'along with this program.  If Not, see < http:  //www.gnu.org/licenses/>.
 
 Imports AeroTools.CalculationModel.Models.Aero.Components
-Imports AeroTools.DataStacks
+Imports AeroTools.DataStore
 
 Public Class FormPolarCurve
 

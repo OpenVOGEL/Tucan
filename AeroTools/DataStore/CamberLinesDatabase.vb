@@ -18,7 +18,7 @@
 Imports System.Xml
 Imports AeroTools.VisualModel.Models.Basics
 
-Namespace DataStacks
+Namespace DataStore
 
     Public Module CamberLinesDatabase
 

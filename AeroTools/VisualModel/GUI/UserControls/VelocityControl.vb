@@ -17,8 +17,8 @@
 
 Imports System.Threading.Tasks
 Imports MathTools.Algebra.EuclideanSpace
-Imports AeroTools.VisualModel.Interface
 Imports AeroTools.CalculationModel.SimulationTools
+Imports AeroTools.DataStore
 
 Public Class VelocityControl
 
@@ -27,14 +27,12 @@ Public Class VelocityControl
     Private Ready As Boolean = False
     Private ModyfingData As Boolean = True
     Private PlanoDeVelocidad As VelocityPlane
-    Private Proyecto As ProjectRoot
 
-    Public Sub IniciarControl(ByRef Proyecto As ProjectRoot)
+    Public Sub Initialize()
 
         Me.Ready = False
-        Me.PlanoDeVelocidad = Proyecto.VelocityPlane
-        Me.Proyecto = Proyecto
-        Me.Ready = True And (Not PlanoDeVelocidad Is Nothing) And (Not Proyecto Is Nothing)
+        Me.PlanoDeVelocidad = ProjectRoot.VelocityPlane
+        Me.Ready = True And (Not PlanoDeVelocidad Is Nothing) And (ProjectRoot.Initialized)
 
         If Ready Then Me.AcomodarDatosAlForm()
 
@@ -98,7 +96,7 @@ Public Class VelocityControl
         PlanoDeVelocidad.InducedVelocity = Me.rdInducedVelocity.Checked
 
         Me.PlanoDeVelocidad.GenerarMallado()
-        Me.Proyecto.RepresentOnGL()
+        ProjectRoot.RepresentOnGL()
 
         RaiseEvent RefreshGL()
 
@@ -123,23 +121,23 @@ Public Class VelocityControl
         Dim CantidadDeNodos As Integer = PlanoDeVelocidad.NumberOfNodes
         Dim RefVelocity As New EVector3
 
-        If Proyecto.CalculationCore Is Nothing Then Exit Sub
+        If ProjectRoot.CalculationCore Is Nothing Then Exit Sub
 
-        Dim WithStreamOmega As Boolean = Proyecto.CalculationCore.Settings.Omega.EuclideanNorm > 0.0
+        Dim WithStreamOmega As Boolean = ProjectRoot.CalculationCore.Settings.Omega.EuclideanNorm > 0.0
 
         Dim Total As Boolean = Not PlanoDeVelocidad.InducedVelocity
 
         Parallel.For(1, CantidadDeNodos + 1, Sub(i As Integer)
-                                                 PlanoDeVelocidad.ObtenerVelocidadInducida(i).Assign(Proyecto.CalculationCore.CalculateVelocityAtPoint(PlanoDeVelocidad.ObtenerNodo(i), Total, WithStreamOmega))
+                                                 PlanoDeVelocidad.ObtenerVelocidadInducida(i).Assign(ProjectRoot.CalculationCore.CalculateVelocityAtPoint(PlanoDeVelocidad.ObtenerNodo(i), Total, WithStreamOmega))
                                                  PlanoDeVelocidad.ObtenerVelocidadInducida(i).ProjectOnPlane(PlanoDeVelocidad.VectorNormal)
                                              End Sub)
-        Proyecto.RepresentOnGL()
+        ProjectRoot.RepresentOnGL()
 
     End Sub
 
     Private Sub CalculateTreftzIntegral()
 
-        Proyecto.CalculationCore.ComputeTrefftzIntegral(PlanoDeVelocidad.VectorNormal, PlanoDeVelocidad.Origin, PlanoDeVelocidad.TreftSegments)
+        ProjectRoot.CalculationCore.ComputeTrefftzIntegral(PlanoDeVelocidad.VectorNormal, PlanoDeVelocidad.Origin, PlanoDeVelocidad.TreftSegments)
 
     End Sub
 
@@ -184,7 +182,7 @@ Public Class VelocityControl
     Private Sub EscalaBox_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles EscalaBox.ValueChanged
         If Not Ready Then Exit Sub
         PlanoDeVelocidad.Scale = Me.EscalaBox.Value
-        Proyecto.RepresentOnGL()
+        ProjectRoot.RepresentOnGL()
     End Sub
 
     Private Sub ControlDePlano_VisibleChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.VisibleChanged

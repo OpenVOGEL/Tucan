@@ -20,7 +20,7 @@ Imports AeroTools.CalculationModel.Models.Structural
 Imports MathTools.Algebra.EuclideanSpace
 Imports AeroTools.CalculationModel.Models.Aero
 Imports DotNumerics.LinearAlgebra
-Imports AeroTools.DataStacks
+Imports AeroTools.DataStore
 
 Namespace CalculationModel.Solver
 
