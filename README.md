@@ -3,6 +3,7 @@
 ### Welcome to Open VOGEL!
 This project is about developing an open source computer program useful to solve aerodynamic and aeroelastic problems, 100% free and for everyone. Open VOGEL can be used to calculate the airloads over complex configurations of slender and thick surfaces (wings and fuselages), or even to compute some important aeroelastic characteristics of wings.
 
+If you are looking for documentation, then visit our wikibook at https://en.wikibooks.org/wiki/Open_VOGEL.
 If you have questions about the software, or if you want to share data and/or chat with other users, you can join the community (visit our blog https://sites.google.com/site/gahvogel/main).
 
 ![](https://sites.google.com/site/gahvogel/_/rsrc/1455897404095/main/Air.png?height=171&width=320)![](https://sites.google.com/site/gahvogel/_/rsrc/1457720308039/main/WindTurbine12.png?height=161&width=200)
