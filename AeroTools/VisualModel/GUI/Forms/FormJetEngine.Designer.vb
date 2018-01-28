@@ -50,6 +50,10 @@ Partial Class FormJetEngine
         Me.Label8 = New System.Windows.Forms.Label()
         Me.nudPhi = New System.Windows.Forms.NumericUpDown()
         Me.Label9 = New System.Windows.Forms.Label()
+        Me.Label10 = New System.Windows.Forms.Label()
+        Me.nudResolution = New System.Windows.Forms.NumericUpDown()
+        Me.Label11 = New System.Windows.Forms.Label()
+        Me.nudCuttingStep = New System.Windows.Forms.NumericUpDown()
         CType(Me.nudY, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.nudX, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.nudZ, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -64,6 +68,8 @@ Partial Class FormJetEngine
         CType(Me.nudPsi, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.nudTita, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.nudPhi, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.nudResolution, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.nudCuttingStep, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'Label2
@@ -209,7 +215,7 @@ Partial Class FormJetEngine
         Me.Label4.AutoSize = True
         Me.Label4.Location = New System.Drawing.Point(7, 135)
         Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(72, 13)
+        Me.Label4.Size = New System.Drawing.Size(71, 13)
         Me.Label4.TabIndex = 150
         Me.Label4.Text = "Total lenght:"
         Me.Label4.TextAlign = System.Drawing.ContentAlignment.MiddleRight
@@ -279,6 +285,10 @@ Partial Class FormJetEngine
         '
         'gbDimensions
         '
+        Me.gbDimensions.Controls.Add(Me.Label11)
+        Me.gbDimensions.Controls.Add(Me.nudCuttingStep)
+        Me.gbDimensions.Controls.Add(Me.Label10)
+        Me.gbDimensions.Controls.Add(Me.nudResolution)
         Me.gbDimensions.Controls.Add(Me.Label5)
         Me.gbDimensions.Controls.Add(Me.nudFrontD)
         Me.gbDimensions.Controls.Add(Me.nudRearD)
@@ -373,6 +383,44 @@ Partial Class FormJetEngine
         Me.Label9.TabIndex = 138
         Me.Label9.Text = "f"
         '
+        'Label10
+        '
+        Me.Label10.AutoSize = True
+        Me.Label10.Location = New System.Drawing.Point(7, 161)
+        Me.Label10.Name = "Label10"
+        Me.Label10.Size = New System.Drawing.Size(66, 13)
+        Me.Label10.TabIndex = 152
+        Me.Label10.Text = "Resolution:"
+        Me.Label10.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'nudResolution
+        '
+        Me.nudResolution.Location = New System.Drawing.Point(126, 155)
+        Me.nudResolution.Maximum = New Decimal(New Integer() {1410065408, 2, 0, 0})
+        Me.nudResolution.Name = "nudResolution"
+        Me.nudResolution.Size = New System.Drawing.Size(75, 22)
+        Me.nudResolution.TabIndex = 151
+        Me.nudResolution.Value = New Decimal(New Integer() {4, 0, 0, 0})
+        '
+        'Label11
+        '
+        Me.Label11.AutoSize = True
+        Me.Label11.Location = New System.Drawing.Point(7, 187)
+        Me.Label11.Name = "Label11"
+        Me.Label11.Size = New System.Drawing.Size(74, 13)
+        Me.Label11.TabIndex = 154
+        Me.Label11.Text = "Cutting step:"
+        Me.Label11.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'nudCuttingStep
+        '
+        Me.nudCuttingStep.Location = New System.Drawing.Point(126, 181)
+        Me.nudCuttingStep.Maximum = New Decimal(New Integer() {1410065408, 2, 0, 0})
+        Me.nudCuttingStep.Name = "nudCuttingStep"
+        Me.nudCuttingStep.Size = New System.Drawing.Size(75, 22)
+        Me.nudCuttingStep.TabIndex = 153
+        Me.nudCuttingStep.Value = New Decimal(New Integer() {20, 0, 0, 0})
+        '
         'FormJetEngine
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -408,6 +456,8 @@ Partial Class FormJetEngine
         CType(Me.nudPsi, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.nudTita, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.nudPhi, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.nudResolution, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.nudCuttingStep, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -440,4 +490,8 @@ Partial Class FormJetEngine
     Friend WithEvents Label8 As Windows.Forms.Label
     Friend WithEvents nudPhi As Windows.Forms.NumericUpDown
     Friend WithEvents Label9 As Windows.Forms.Label
+    Friend WithEvents Label11 As Windows.Forms.Label
+    Friend WithEvents nudCuttingStep As Windows.Forms.NumericUpDown
+    Friend WithEvents Label10 As Windows.Forms.Label
+    Friend WithEvents nudResolution As Windows.Forms.NumericUpDown
 End Class

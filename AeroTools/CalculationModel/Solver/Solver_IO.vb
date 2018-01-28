@@ -63,10 +63,10 @@ Namespace CalculationModel.Solver
 
                     count += 1
 
-                    AddLiftingSurface(Wing, False, GenerateStructure)
+                    AddLiftingSurface(Wing, False, GenerateStructure, Wing.Symmetric)
 
                     If Wing.Symmetric Then
-                        AddLiftingSurface(Wing, True, GenerateStructure)
+                        AddLiftingSurface(Wing, True, GenerateStructure, Wing.Symmetric)
                     End If
 
                 End If
@@ -128,28 +128,7 @@ Namespace CalculationModel.Solver
 
                     Dim Nacelle As JetEngine = Model.Objects(i)
 
-                    Dim Lattice As New BoundedLattice
-
-                    Lattices.Add(Lattice)
-
-                    For j = 0 To Nacelle.NumberOfNodes - 1
-
-                        Lattice.AddNode(Nacelle.Mesh.Nodes(j).Position)
-
-                    Next
-
-                    For j = 0 To Nacelle.NumberOfPanels - 1
-
-                        Dim Node1 As Integer = Nacelle.Mesh.Panels(j).N1
-                        Dim Node2 As Integer = Nacelle.Mesh.Panels(j).N2
-                        Dim Node3 As Integer = Nacelle.Mesh.Panels(j).N3
-                        Dim Node4 As Integer = Nacelle.Mesh.Panels(j).N4
-                        Dim Reversed As Boolean = False
-                        Dim Slender As Boolean = True
-
-                        Lattice.AddVortexRing4(Node1, Node2, Node3, Node4, Reversed, Slender)
-
-                    Next
+                    AddJetEngine(Nacelle)
 
                 End If
 
@@ -187,10 +166,10 @@ Namespace CalculationModel.Solver
         ''' Adds a bounded lattice with wakes from a lifting surface.
         ''' </summary>
         ''' <param name="Surface"></param>
-        ''' <param name="Symmetric"></param>
+        ''' <param name="Mirror"></param>
         ''' <param name="GenerateStructure"></param>
         ''' <remarks></remarks>
-        Private Sub AddLiftingSurface(ByRef Surface As LiftingSurface, Optional ByVal Symmetric As Boolean = False, Optional ByVal GenerateStructure As Boolean = False)
+        Private Sub AddLiftingSurface(ByRef Surface As LiftingSurface, Optional ByVal Mirror As Boolean = False, Optional ByVal GenerateStructure As Boolean = False, Optional IsSymetric As Boolean = True)
 
             ' Add nodal points:
 
@@ -202,7 +181,7 @@ Namespace CalculationModel.Solver
 
                 Lattice.AddNode(Surface.Mesh.Nodes(j).Position)
 
-                If Symmetric Then Lattice.Nodes(Lattice.Nodes.Count - 1).Position.Y *= -1
+                If Mirror Then Lattice.Nodes(Lattice.Nodes.Count - 1).Position.Y *= -1
 
             Next
 
@@ -235,6 +214,8 @@ Namespace CalculationModel.Solver
 
                 Wake.CuttingStep = Surface.CuttingStep
 
+                Wake.SupressInnerCircuation = IsSymetric
+
                 Lattice.Wakes.Add(Wake)
 
             End If
@@ -262,7 +243,7 @@ Namespace CalculationModel.Solver
                 StructuralLink.StructuralCore.StructuralSettings = Settings.StructuralSettings
                 StructuralLink.StructuralCore.Nodes.Add(New StructuralNode(snCount))
                 StructuralLink.StructuralCore.Nodes(snCount).Position.Assign(Surface.StructuralPartition(0).p)
-                If (Symmetric) Then StructuralLink.StructuralCore.Nodes(snCount).Position.Y *= -1
+                If (Mirror) Then StructuralLink.StructuralCore.Nodes(snCount).Position.Y *= -1
                 StructuralLink.StructuralCore.Nodes(snCount).Contrains.Clamped()
 
                 ' Add kinematic link
@@ -286,7 +267,7 @@ Namespace CalculationModel.Solver
                     snCount += 1
                     StructuralLink.StructuralCore.Nodes.Add(New StructuralNode(snCount))
                     StructuralLink.StructuralCore.Nodes(snCount).Position.Assign(Surface.StructuralPartition(pn).p)
-                    If (Symmetric) Then StructuralLink.StructuralCore.Nodes(snCount).Position.Y *= -1
+                    If (Mirror) Then StructuralLink.StructuralCore.Nodes(snCount).Position.Y *= -1
 
                     ' Add element:
 
@@ -375,6 +356,60 @@ Namespace CalculationModel.Solver
                 'End If
 
             Next
+
+        End Sub
+
+        ''' <summary>
+        ''' Includes the model of a jet engine in the calculation core
+        ''' </summary>
+        Private Sub AddJetEngine(ByRef Nacelle As JetEngine)
+
+            Dim Lattice As New BoundedLattice
+
+            Lattices.Add(Lattice)
+
+            For j = 0 To Nacelle.NumberOfNodes - 1
+
+                Lattice.AddNode(Nacelle.Mesh.Nodes(j).Position)
+
+            Next
+
+            For j = 0 To Nacelle.NumberOfPanels - 1
+
+                Dim Node1 As Integer = Nacelle.Mesh.Panels(j).N1
+                Dim Node2 As Integer = Nacelle.Mesh.Panels(j).N2
+                Dim Node3 As Integer = Nacelle.Mesh.Panels(j).N3
+                Dim Node4 As Integer = Nacelle.Mesh.Panels(j).N4
+
+                Lattice.AddVortexRing4(Node1, Node2, Node3, Node4, False, True)
+
+            Next
+
+            ' Add wakes:
+
+            If Nacelle.ConvectWake And Nacelle.CuttingStep > 0 Then
+
+                Dim Wake As New Wake
+
+                Wake.SupressInnerCircuation = False
+
+                For k = 0 To Nacelle.Resolution
+                    Wake.Primitive.Nodes.Add(Nacelle.NumberOfNodes + k - Nacelle.Resolution - 1)
+                Next
+
+                Wake.Primitive.Nodes.Add(Nacelle.NumberOfNodes - Nacelle.Resolution - 1)
+
+                For k = 0 To Nacelle.Resolution
+                    Wake.Primitive.Rings.Add(Nacelle.NumberOfPanels + k - Nacelle.Resolution - 1)
+                Next
+
+                Wake.CuttingStep = Nacelle.CuttingStep
+
+                Lattice.Wakes.Add(Wake)
+
+            End If
+
+            If Not Settings.GlobalPanelSurvey Then Lattice.FindSurroundingRings()
 
         End Sub
 

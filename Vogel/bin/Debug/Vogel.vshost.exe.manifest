@@ -43,14 +43,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="AeroTools.dll" size="723968">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="AeroTools.dll" size="727040">
       <assemblyIdentity name="AeroTools" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>Rz4fpio7Khryy2TVPauFY2ff2vU=</dsig:DigestValue>
+        <dsig:DigestValue>y+o5cmPA0P9PF09ZF8EkxPiLH7E=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -74,7 +74,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>n468v7ij98oDdMuJHmcS+CwSofM=</dsig:DigestValue>
+        <dsig:DigestValue>cNzNW3A1oAJWAIqAm4BMH2yTIus=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -86,7 +86,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>3yR8yY5AuDsO5gqhxfUYF9ffXCM=</dsig:DigestValue>
+        <dsig:DigestValue>wClyp5H5c0HDGLtnrq2kofS641w=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -146,7 +146,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>HBXlx36ZIJzM8tDRrDKBNbZXGTs=</dsig:DigestValue>
+        <dsig:DigestValue>xoDX3bs7PGerRxYdJONv9zrfHN8=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -158,7 +158,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>4OGYJ8ASWohDMFQnr3Zir2KGmwQ=</dsig:DigestValue>
+        <dsig:DigestValue>YjjJrQJxPnQr8wCHQgrpY2cn89Q=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

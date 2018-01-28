@@ -301,7 +301,7 @@ Namespace CalculationModel.Models.Aero
         ''' <summary>
         ''' Convect all wakes on the primiteve edges of the bound lattice and adds new nodes and panels at primitive positions.
         ''' </summary>
-        Public Sub PopulateWakeVortices(ByVal Dt As Double, ByVal TimeStep As Integer, TameInnerCirculation As Boolean)
+        Public Sub PopulateWakeVortices(ByVal Dt As Double, ByVal TimeStep As Integer)
 
             For Each Wake As Wake In Wakes
 
@@ -365,7 +365,7 @@ Namespace CalculationModel.Models.Aero
 
                 ' Do this when there is a fuselage to avoid wake rollup next to the fuselage:
 
-                If TameInnerCirculation Then Wake.Vortices(nv).G = 0
+                If Wake.SupressInnerCircuation Then Wake.Vortices(nv).G = 0
 
                 ' Remove old vortices and nodes
 

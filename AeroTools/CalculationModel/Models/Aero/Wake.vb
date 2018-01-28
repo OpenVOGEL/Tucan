@@ -61,6 +61,15 @@ Namespace CalculationModel.Models.Aero
         ''' <remarks></remarks>
         Public Property FidexedStep As New EVector3
 
+        ''' <summary>
+        ''' Indicates if the inner circulation must be supressed in order to model
+        ''' an anchor line.
+        ''' </summary>
+        ''' <value></value>
+        ''' <returns></returns>
+        ''' <remarks></remarks>
+        Public Property SupressInnerCircuation As Boolean = False
+
         Public Sub Convect(ByVal Dt As Double)
 
             If FixStep Then

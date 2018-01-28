@@ -105,7 +105,7 @@ Namespace CalculationModel.Solver
 
                         ' We tame the root vortex when there are fuselages.
 
-                        Lattice.PopulateWakeVortices(Settings.Interval, TimeStep, WithSources)
+                        Lattice.PopulateWakeVortices(Settings.Interval, TimeStep)
 
                     End If
 

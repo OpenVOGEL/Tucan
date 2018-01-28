@@ -698,6 +698,7 @@ ErrSub:
             cbxShowSurface.Checked = _SelectedSurface.VisualProperties.ShowSurface
             pnlMeshColor.BackColor = _SelectedSurface.VisualProperties.ColorMesh
             pnlSurfaceColor.BackColor = _SelectedSurface.VisualProperties.ColorSurface
+            cbxInclude.Checked = _SelectedSurface.IncludeInCalculation
 
             nudPx.Value = _SelectedSurface.Position.X
             nudPy.Value = _SelectedSurface.Position.Y
@@ -985,6 +986,16 @@ ErrSub:
             _SelectedSurface.Orientate(_SelectedSurface.CenterOfRotation, _SelectedSurface.Orientation)
 
             ProjectRoot.RefreshOnGL()
+
+        End If
+
+    End Sub
+
+    Private Sub cbxInclude_CheckedChanged(sender As Object, e As EventArgs) Handles cbxInclude.CheckedChanged
+
+        If _SelectedSurface IsNot Nothing AndAlso Not _LockPropsEvents Then
+
+            _SelectedSurface.IncludeInCalculation = cbxInclude.Checked
 
         End If
 

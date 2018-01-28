@@ -39,7 +39,7 @@ Namespace VisualModel.Models.Components
             BackDiameter = 0.6
             FrontLength = 0.6
             BackLength = 0.4
-            Resolution = 10
+            Resolution = 15
 
             GenerateMesh()
 
@@ -60,6 +60,14 @@ Namespace VisualModel.Models.Components
 
         Public Property BackLength As Double
 
+        Public Property ConvectWake As Boolean = True
+
+        Public Property CuttingStep As Integer = 40
+
+        ''' <summary>
+        ''' The number of panels in radial direction
+        ''' </summary>
+        ''' <returns></returns>
         Public Property Resolution As Integer
 
         ''' <summary>
@@ -118,7 +126,7 @@ Namespace VisualModel.Models.Components
                             N3 = i * (Resolution + 1) + j + 1
                             N4 = i * (Resolution + 1) + j + 0
 
-                            Dim q As New Panel(N1, N2, N3, N4)
+                            Dim q As New Panel(N1, N4, N3, N2)
 
                             Mesh.Panels.Add(q)
 
@@ -129,7 +137,7 @@ Namespace VisualModel.Models.Components
                             N3 = i * (Resolution + 1) + 0
                             N4 = i * (Resolution + 1) + j + 0
 
-                            Dim q As New Panel(N1, N2, N3, N4)
+                            Dim q As New Panel(N1, N4, N3, N2)
 
                             Mesh.Panels.Add(q)
 
@@ -351,6 +359,8 @@ Namespace VisualModel.Models.Components
                         FrontLength = IOXML.ReadDouble(reader, "FL", 1)
                         BackLength = IOXML.ReadDouble(reader, "BL", 0.5)
                         Length = IOXML.ReadDouble(reader, "TL", 0.5)
+                        Resolution = Math.Max(11, IOXML.ReadInteger(reader, "RS", 15))
+                        CuttingStep = IOXML.ReadInteger(reader, "CS", 20)
 
                         Position.X = IOXML.ReadDouble(reader, "X", 0.0)
                         Position.Y = IOXML.ReadDouble(reader, "Y", 0.0)
@@ -389,6 +399,8 @@ Namespace VisualModel.Models.Components
             writer.WriteAttributeString("FL", CDbl(FrontLength))
             writer.WriteAttributeString("BL", CDbl(BackLength))
             writer.WriteAttributeString("TL", CDbl(Length))
+            writer.WriteAttributeString("RS", CInt(Resolution))
+            writer.WriteAttributeString("CS", CInt(CuttingStep))
 
             writer.WriteAttributeString("X", CDbl(Position.X))
             writer.WriteAttributeString("Y", CDbl(Position.Y))

@@ -34,7 +34,7 @@ AeroTools
  If RemoveOldest is marked as true, oldest wake panels will be removed.
  </summary>
 </member>
-<member name="M:AeroTools.CalculationModel.Models.Aero.BoundedLattice.PopulateWakeVortices(System.Double,System.Int32,System.Boolean)">
+<member name="M:AeroTools.CalculationModel.Models.Aero.BoundedLattice.PopulateWakeVortices(System.Double,System.Int32)">
  <summary>
  Convect all wakes on the primiteve edges of the bound lattice and adds new nodes and panels at primitive positions.
  </summary>
@@ -529,7 +529,8 @@ AeroTools
 </member>
 <member name="P:AeroTools.CalculationModel.Models.Aero.Components.VortexRing.IsPrimitive">
  <summary>
- Indicates whether the panel is used to convect wake or not. This conditionates the local circulation.
+ Indicates whether the panel is used to convect wake or not. 
+ This conditionates the local circulation to meet the Kutta condition.
  </summary>
 </member>
 <member name="P:AeroTools.CalculationModel.Models.Aero.Components.VortexRing.IsSlender">
@@ -1234,6 +1235,15 @@ AeroTools
 <member name="P:AeroTools.CalculationModel.Models.Aero.Wake.FidexedStep">
  <summary>
  Step to move the nodal points when the wake convection is prefixed.
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:AeroTools.CalculationModel.Models.Aero.Wake.SupressInnerCircuation">
+ <summary>
+ Indicates if the inner circulation must be supressed in order to model
+ an anchor line.
  </summary>
  <value></value>
  <returns></returns>
@@ -2137,14 +2147,19 @@ AeroTools
  <param name="GenerateStructure">Indicates if a structural link should be created</param>
  <remarks></remarks>
 </member>
-<member name="M:AeroTools.CalculationModel.Solver.Solver.AddLiftingSurface(AeroTools.VisualModel.Models.Components.LiftingSurface@,System.Boolean,System.Boolean)">
+<member name="M:AeroTools.CalculationModel.Solver.Solver.AddLiftingSurface(AeroTools.VisualModel.Models.Components.LiftingSurface@,System.Boolean,System.Boolean,System.Boolean)">
  <summary>
  Adds a bounded lattice with wakes from a lifting surface.
  </summary>
  <param name="Surface"></param>
- <param name="Symmetric"></param>
+ <param name="Mirror"></param>
  <param name="GenerateStructure"></param>
  <remarks></remarks>
+</member>
+<member name="M:AeroTools.CalculationModel.Solver.Solver.AddJetEngine(AeroTools.VisualModel.Models.Components.JetEngine@)">
+ <summary>
+ Includes the model of a jet engine in the calculation core
+ </summary>
 </member>
 <member name="M:AeroTools.CalculationModel.Solver.Solver.FindSurroundingRingsGlobally">
  <summary>
@@ -2901,6 +2916,12 @@ AeroTools
 <member name="M:AeroTools.VisualModel.Models.Components.ResultContainer.LoadFromTextFile">
  <summary>
  Loads the data from a text file (using the access path).
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:AeroTools.VisualModel.Models.Components.JetEngine.Resolution">
+ <summary>
+ The number of panels in radial direction
  </summary>
  <returns></returns>
 </member>

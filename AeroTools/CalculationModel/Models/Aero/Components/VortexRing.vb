@@ -207,7 +207,8 @@ Namespace CalculationModel.Models.Aero.Components
         Sub CalculateCP(ByVal VSqr As Double)
 
         ''' <summary>
-        ''' Indicates whether the panel is used to convect wake or not. This conditionates the local circulation.
+        ''' Indicates whether the panel is used to convect wake or not. 
+        ''' This conditionates the local circulation to meet the Kutta condition.
         ''' </summary>
         Property IsPrimitive As Boolean
 

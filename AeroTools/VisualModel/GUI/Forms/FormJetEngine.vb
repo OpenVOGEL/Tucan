@@ -54,17 +54,17 @@ Public Class FormJetEngine
         nudPsi.DecimalPlaces = 3
         nudPsi.Minimum = -180
         nudPsi.Maximum = 180
-        nudPsi.Value = _JetEngine.Orientation.Psi / Math.PI * 180
+        nudPsi.Value = _JetEngine.Orientation.Psi
 
         nudTita.DecimalPlaces = 3
         nudTita.Minimum = -180
         nudTita.Maximum = 180
-        nudTita.Value = _JetEngine.Orientation.Tita / Math.PI * 180
+        nudTita.Value = _JetEngine.Orientation.Tita
 
         nudPhi.DecimalPlaces = 3
         nudPhi.Minimum = -180
         nudPhi.Maximum = 180
-        nudPhi.Value = _JetEngine.Orientation.Fi / Math.PI * 180
+        nudPhi.Value = _JetEngine.Orientation.Fi
 
         nudFrontD.DecimalPlaces = 3
         nudFrontD.Value = _JetEngine.FrontDiameter
@@ -82,6 +82,10 @@ Public Class FormJetEngine
         nudTotalL.Value = _JetEngine.Length
 
         tbxName.Text = _JetEngine.Name
+
+        nudResolution.Value = _JetEngine.Resolution
+
+        nudCuttingStep.Value = _JetEngine.CuttingStep
 
     End Sub
 
@@ -147,4 +151,16 @@ Public Class FormJetEngine
         RaiseEvent UpdateModel()
     End Sub
 
+    Private Sub nudResolution_ValueChanged(sender As Object, e As EventArgs) Handles nudResolution.ValueChanged
+        If _JetEngine IsNot Nothing Then
+            _JetEngine.Resolution = nudResolution.Value
+            RaiseEvent UpdateModel()
+        End If
+    End Sub
+
+    Private Sub nudCuttingStep_ValueChanged(sender As Object, e As EventArgs) Handles nudCuttingStep.ValueChanged
+        If _JetEngine IsNot Nothing Then
+            _JetEngine.CuttingStep = nudCuttingStep.Value
+        End If
+    End Sub
 End Class
