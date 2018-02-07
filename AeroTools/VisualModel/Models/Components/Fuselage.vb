@@ -32,47 +32,85 @@ Namespace VisualModel.Models.Components
 
         Public Property ParentID As Guid
         Public Property AnchorFromTip = False
-        Public Property AnchorFromRoot As Boolean = False
+      Public Property AnchorFromRoot As Boolean = False
+      Public Property Symmetric As Boolean = True
+      Public Property Superposed As Boolean = False
 
-    End Class
+   End Class
 
-    ''' <summary>
-    ''' Represents a point in the surface where a vertex has to be added.
-    ''' </summary>
-    ''' <remarks></remarks>
-    Public Class AnchorPoint
+   ''' <summary>
+   ''' Represents a point in the surface where a vertex has to be added.
+   ''' </summary>
+   ''' <remarks></remarks>
+   Public Class AnchorPoint
 
-        ''' <summary>
-        ''' Curvilinear coordinate.
-        ''' </summary>
-        ''' <value></value>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
-        Public Property s As Double
+      ''' <summary>
+      ''' Curvilinear coordinate.
+      ''' </summary>
+      ''' <value></value>
+      ''' <returns></returns>
+      ''' <remarks></remarks>
+      Public Property s As Double
 
-        ''' <summary>
-        ''' Longitudinal coordinate.
-        ''' </summary>
-        ''' <value></value>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
-        Public Property Z As Double
+      ''' <summary>
+      ''' Longitudinal coordinate.
+      ''' </summary>
+      ''' <value></value>
+      ''' <returns></returns>
+      ''' <remarks></remarks>
+      Public Property Z As Double
 
-        ''' <summary>
-        ''' Perimeter of the section associated to this anchor point.
-        ''' </summary>
-        ''' <value></value>
-        ''' <returns></returns>
-        ''' <remarks>Used to find back the cartesian coordinates.</remarks>
-        Public Property Perimeter As Double
+      ''' <summary>
+      ''' Perimeter of the section associated to this anchor point.
+      ''' </summary>
+      ''' <value></value>
+      ''' <returns></returns>
+      ''' <remarks>Used to find back the cartesian coordinates.</remarks>
+      Public Property Perimeter As Double
 
-    End Class
+   End Class
 
-    ''' <summary>
-    ''' Represents a series of segments that have to be projected on a extruded surface.
-    ''' </summary>
-    ''' <remarks></remarks>
-    Public Class AnchorLine
+   Public Class Extension
+
+      ''' <summary>
+      ''' Length of the extension to the right side (Direction X)
+      ''' </summary>
+      Public Property RightLength As Double
+
+      ''' <summary>
+      ''' Number of projections points of the extension to the right side (Direction X)
+      ''' </summary>
+      ''' 
+      Public Property nRight As Integer
+
+      ''' <summary>
+      ''' Length of the extension to the left side (Direction -X)
+      ''' </summary>
+      Public Property LeftLength As Double
+
+      ''' <summary>
+      ''' Number of projections points of the extension to the left side (Direction -X)
+      ''' </summary>
+      Public Property nLeft As Integer
+
+      ''' <summary>
+      ''' Distance between two consecutive projections
+      ''' </summary>
+      Public Property Interval As Double
+
+      ''' <summary>
+      ''' AnchorLine of the lifting surface superposing it
+      ''' </summary>
+      Public Property SuperposedAnchor As AnchorLine = Nothing
+
+
+   End Class
+
+   ''' <summary>
+   ''' Represents a series of segments that have to be projected on a extruded surface.
+   ''' </summary>
+   ''' <remarks></remarks>
+   Public Class AnchorLine
 
         ''' <summary>
         ''' Lines of extrusion.
@@ -94,15 +132,20 @@ Namespace VisualModel.Models.Components
         ''' </summary>
         Public Property EndIndex As Integer
 
-        ''' <summary>
-        ''' Gather information about the parent lifting surface.
-        ''' </summary>
-        Public Property WingAnchorInfo As WingAnchorInfo
+      ''' <summary>
+      ''' Gather information about the parent lifting surface.
+      ''' </summary>
+      Public Property WingAnchorInfo As WingAnchorInfo
 
-        ''' <summary>
-        ''' Inidcates if the projections where created.
-        ''' </summary>
-        Public ReadOnly Property Generated As Boolean
+      ''' <summary>
+      ''' Represents the extension zone of the corresponding grid if there is a superposition
+      ''' </summary>
+      Public Property Extension As New Extension
+
+      ''' <summary>
+      ''' Inidcates if the projections where created.
+      ''' </summary>
+      Public ReadOnly Property Generated As Boolean
             Get
                 Return Projections.Count > 1
             End Get
@@ -225,9 +268,11 @@ Namespace VisualModel.Models.Components
 
         Public Nodes As New List(Of EVector2)
 
-        Public ParentAnchor As AnchorLine
+      Public ParentAnchor As AnchorLine
 
-        Public AnchorIndices() As Integer
+      Public AnchorPanels As New List(Of Panel)
+
+      Public AnchorIndices() As Integer
 
     End Class
 
@@ -562,616 +607,690 @@ Namespace VisualModel.Models.Components
 
         End Sub
 
-        ''' <summary>
-        ''' Generates a structured mesh of quadrilaterals.
-        ''' </summary>
-        ''' <remarks>Cannot handle "Z supperposed" anchors.</remarks>
-        Public Sub GenerateQuadrilateralMesh()
+      ''' <summary>
+      ''' Generates a structured mesh of quadrilaterals.
+      ''' </summary>
+      ''' <remarks>Cannot handle "Z supperposed" anchors.</remarks>
+      Public Sub GenerateQuadrilateralMesh()
+
+         Mesh.Panels.Clear()
+         Mesh.Nodes.Clear()
+
+         Try
+
+            UpdateAnchors()
+
+            ' First check: get valid anchors
+
+            Dim ValidAnchors As New List(Of AnchorLine)
+
+            For Each ank In AnchorLines
+
+               If ank.Projections.Count > 1 Then
+
+                  Dim valid As Boolean = True
+
+                  For i = 1 To ank.Projections.Count - 1
+
+                     If ank.Projections(i).Z <= ank.Projections(i - 1).Z Then
+
+                        valid = False
+
+                     End If
+
+                     If ank.Projections(i - 1).Z < CrossSections(0).Z Or ank.Projections(i).Z > CrossSections(CrossSections.Count - 1).Z Then
+
+                        valid = False
+
+                     End If
+
+                  Next
+
+                  If valid Then
+
+                     ValidAnchors.Add(ank)
+
+                  End If
+
+               End If
+
+            Next
+
+            ' Second check: compute supperposed anchors
+
+            For i = 0 To ValidAnchors.Count - 1
+
+               For j = 0 To Int(ValidAnchors.Count - 1)
+
+                  If ValidAnchors(i).WingAnchorInfo.Superposed Or ValidAnchors(j).WingAnchorInfo.Superposed Then Exit For
+
+                  If j <> i Then
+
+                     Dim Zi0 As Double = ValidAnchors(i).Projections(0).Z
+                     Dim Zin As Double = ValidAnchors(i).Projections(ValidAnchors(i).Projections.Count - 1).Z
+
+                     Dim Zj0 As Double = ValidAnchors(j).Projections(0).Z
+                     Dim Zjn As Double = ValidAnchors(j).Projections(ValidAnchors(j).Projections.Count - 1).Z
+
+
+                     If (Zi0 >= Zj0 And Zi0 <= Zjn) Or (Zin >= Zj0 And Zin <= Zjn) Or (Zi0 <= Zj0 And Zin >= Zjn) Then
+                        If Zj0 >= Zi0 And Zjn >= Zin Then
+
+                           ValidAnchors(j).Extension.Interval = (ValidAnchors(j).Projections(1).Z - ValidAnchors(j).Projections(0).Z)
+                           ValidAnchors(j).Extension.LeftLength = Zj0 - Zi0
+                           ValidAnchors(j).Extension.nLeft = Int(ValidAnchors(j).Extension.LeftLength / ValidAnchors(j).Extension.Interval)
+                           ValidAnchors(j).Extension.RightLength = 0
+                           ValidAnchors(j).Extension.nRight = 0
+
+
+
+                        End If
+                        If Zj0 >= Zi0 And Zin >= Zjn Then
+
+                           ValidAnchors(j).Extension.Interval = (Zjn - Zj0) / ValidAnchors(j).Projections.Count
+                           ValidAnchors(j).Extension.LeftLength = Zj0 - Zi0
+                           ValidAnchors(j).Extension.nLeft = Int(ValidAnchors(j).Extension.LeftLength / ValidAnchors(j).Extension.Interval)
+                           ValidAnchors(j).Extension.RightLength = Zin - Zjn
+                           ValidAnchors(j).Extension.nRight = Int(ValidAnchors(j).Extension.RightLength / ValidAnchors(j).Extension.Interval) + 1
+
+
+                        End If
+                        ValidAnchors(i).WingAnchorInfo.Superposed = True ' Consider only one of the two anchors as superposed
+                        ValidAnchors(i).Extension.Interval = ValidAnchors(j).Extension.Interval
+                        ValidAnchors(i).Extension.SuperposedAnchor = ValidAnchors(j)
+                        ValidAnchors(j).Extension.SuperposedAnchor = ValidAnchors(i)
+
+                     End If
+
+                  End If
+
+               Next
+
+            Next
+
+            'End While
+
+            ' Generate grids:
+
+            Dim npz As Integer = LongitudinalRefinement
+            Dim nps As Integer = CrossRefinement ' number of panels in s direction
+            Dim l As Double = CrossSections(CrossSections.Count - 1).Z - CrossSections(0).Z
+            Dim addTrailingWake As Boolean = False
+
+            Dim Grids As New List(Of FeatureGrid)
+
+
+
+            For Each ValidAnchor In ValidAnchors
+
+               Dim Grid As New FeatureGrid
+
+               Dim e As Integer
+               Dim s_mean As Double = 0.0#
+
+               For Each point In ValidAnchor.Projections
+
+                  s_mean += point.s / point.Perimeter
+
+               Next
+
+               s_mean /= ValidAnchor.Projections.Count
+
+               e = Math.Round(s_mean * nps)
+
+               If e < 0 Then e = 0
+
+               If e > nps Then e = nps - 1
+
+               Grid.e = e
+               Grid.nns = nps + 1
+               Grid.nnz = ValidAnchor.Projections.Count + ValidAnchor.Extension.nLeft + ValidAnchor.Extension.nRight
+               Grid.zo = ValidAnchor.Projections(0).Z - ValidAnchor.Extension.LeftLength
+               Grid.zf = ValidAnchor.Projections(ValidAnchor.Projections.Count - 1).Z + ValidAnchor.Extension.RightLength
+               Grid.ParentAnchor = ValidAnchor
+               ReDim Grid.AnchorIndices(Grid.nnz)
+
+               Dim Allign As Boolean = True
+               For i = 0 To Grid.nnz - 1
+                  Dim k As Integer = ValidAnchor.Extension.nLeft + ValidAnchor.Projections.Count - 1
+                  Dim z As Double
+                  If ValidAnchor.Projections(0).Z > Grid.zo + i * ValidAnchor.Extension.Interval Then
+
+                     z = Grid.zo + i * ValidAnchor.Extension.Interval
+                  ElseIf ValidAnchor.Projections.Last.Z < ValidAnchor.Projections.Last.Z + (i - k) * ValidAnchor.Extension.Interval Then
+                     z = ValidAnchor.Projections.Last.Z + (i - k) * ValidAnchor.Extension.Interval
+                  Else
+                     z = ValidAnchor.Projections(i - ValidAnchor.Extension.nLeft).Z
+                  End If
+
+                  If Allign And IsNothing(ValidAnchor.Extension.SuperposedAnchor) = False Then
+                     If z >= ValidAnchor.Extension.SuperposedAnchor.Projections.Last.Z And z - ValidAnchor.Extension.Interval <= ValidAnchor.Extension.SuperposedAnchor.Projections.Last.Z Then
+                        z = ValidAnchor.Extension.SuperposedAnchor.Projections.Last.Z
+                        Allign = False
+                     End If
+                  End If
+
+                  For j = 0 To nps
+
+                     Dim s As Double = 0.0#
+                     Dim ps As Double
+
+                     If ValidAnchor.Projections(0).Z > Grid.zo + i * ValidAnchor.Extension.Interval Then
+                        ps = ValidAnchor.Projections(0).s / ValidAnchor.Projections(0).Perimeter
+                     ElseIf ValidAnchor.Projections.Last.Z < ValidAnchor.Projections.Last.Z + (i - k) * ValidAnchor.Extension.Interval Then
+                        ps = ValidAnchor.Projections(ValidAnchor.Projections.Count - 1).s / ValidAnchor.Projections(ValidAnchor.Projections.Count - 1).Perimeter
+                     Else
+                        ps = ValidAnchor.Projections(i - ValidAnchor.Extension.nLeft).s / ValidAnchor.Projections(i - ValidAnchor.Extension.nLeft).Perimeter
+                     End If
+
+                     If j <= e Then
+                        s = ps * j / e
+                     Else
+                        s = ps + (1 - ps) * (j - e) / (nps - e)
+                     End If
+
+                     If j = 0 Then s = 0
+
+                     If j = nps Then s = 1
+
+                     Grid.Nodes.Add(New EVector2(z, s))
+
+                  Next
+
+               Next
+
+               Grids.Add(Grid)
+
+            Next
+
+            ' Generate mesh progressively:
+
+            If Grids.Count = 0 Then
+
+               For i = 0 To npz
+
+                  Dim z As Double = CrossSections(0).Z + l * i / npz
+
+                  For j = 0 To nps
+
+                     Dim s As Double = j / nps
+
+                     Mesh.Nodes.Add(New NodalPoint(GetPoint(z, s)))
+
+                     If (i > 0) And (j > 0) Then
+
+                        Dim N1 As Integer = (i - 1) * (nps + 1) + j
+                        Dim N2 As Integer = i * (nps + 1) + j
+                        Dim N3 As Integer = N2 + 1
+                        Dim N4 As Integer = N1 + 1
+
+                        Dim q4 As New Panel(N1, N2, N3, N4)
+
+                        q4.IsPrimitive = False
+                        q4.IsSlender = False
+
+                        Mesh.Panels.Add(q4)
+
+                     End If
+
+                  Next
+
+               Next
+
+            Else
+
+               ' If there are feature lines:
+
+               Dim dz As Double = l / npz
+               Dim p As Integer = 0
+               Dim g As Integer = Grids.Count - 1
+
+               For i = 0 To g
+
+                  ' Add panels between first section and first grid
+
+                  Dim zo As Double
+                  Dim lz As Double
+
+                  If i = 0 Then
+
+                     zo = CrossSections(0).Z
+                     lz = Grids(0).zo - zo
+
+                     Dim nz As Integer = Math.Ceiling(lz / dz)
+
+                     For k = 0 To nz - 1
+
+                        Dim z As Double = zo + lz * k / nz
+
+                        For j = 0 To nps
+
+                           Dim s As Double = j / nps + (Grids(0).Nodes(j).Y - j / nps) * k / nz
+
+                           Mesh.Nodes.Add(New NodalPoint(GetPoint(z, s)))
+
+                           If (p > 0) And (j > 0) Then
+
+                              Dim N1 As Integer = (p - 1) * (nps + 1) + j
+                              Dim N2 As Integer = p * (nps + 1) + j
+                              Dim N3 As Integer = N2 + 1
+                              Dim N4 As Integer = N1 + 1
+
+                              Dim q4 As New Panel(N1, N2, N3, N4)
+
+                              q4.IsPrimitive = False
+                              q4.IsSlender = False
+
+                              Mesh.Panels.Add(q4)
+
+                           End If
+
+                        Next
+
+                        p += 1
+
+                     Next
+
+                  End If
+
+                  ' Add the grid:
+
+                  Dim q As Integer = 0
+
+                  For k = 0 To Grids(i).nnz - 1
+
+                     If Grids(i).ParentAnchor.WingAnchorInfo.Superposed = False Then ' Only build the grids that aren't superposed, the superposed grids are built with the extensions of the others
+
+                        For j = 0 To nps
+
+                           Mesh.Nodes.Add(New NodalPoint(GetPoint(Grids(i).Nodes(q).X, Grids(i).Nodes(q).Y)))
+
+                           ' Save the position p when j = e here!
+
+                           If j = Grids(i).e Then
+
+                              Grids(i).AnchorIndices(k) = Mesh.Nodes.Count
+
+                           End If
+
+                           If Not IsNothing(Grids(i).ParentAnchor.Extension.SuperposedAnchor) Then
+                              Dim GridIndex As Integer = Grids.FindIndex(Function(x) x.ParentAnchor.WingAnchorInfo.ParentID = Grids(i).ParentAnchor.Extension.SuperposedAnchor.WingAnchorInfo.ParentID)
+                              If j = Grids(GridIndex).e And k < Grids(GridIndex).AnchorIndices.Count Then
+                                 Grids(GridIndex).AnchorIndices(k) = Mesh.Nodes.Count
+                              End If
+                           End If
+
+                           q += 1
+
+                           If (p > 0) And (j > 0) Then
+
+                              Dim N1 As Integer = (p - 1) * (nps + 1) + j
+                              Dim N2 As Integer = p * (nps + 1) + j
+                              Dim N3 As Integer = N2 + 1
+                              Dim N4 As Integer = N1 + 1
+
+                              Dim q4 As New Panel(N1, N2, N3, N4)
+
+                              q4.IsPrimitive = False
+                              q4.IsSlender = False
+
+                              Mesh.Panels.Add(q4)
+
+                           End If
+
+                        Next
+
+                        p += 1
+
+                     End If
+
+                  Next
+
+                  ' Add region between two grids:
+
+                  If i < g Then
+
+                     zo = Grids(i).zf
+                     lz = Grids(i + 1).zo - zo
+
+                     Dim nz As Integer = Math.Ceiling(lz / dz)
+
+                     For k = 1 To nz - 1
+
+                        For j = 0 To nps
+
+                           Dim z As Double = k / nz * lz + zo
+                           Dim s As Double = Grids(i).Nodes(j).Y + (Grids(i + 1).Nodes(j).Y - Grids(i).Nodes(j).Y) * j / nps
+
+                           Mesh.Nodes.Add(New NodalPoint(GetPoint(z, s)))
+
+                           If (p > 0) And (j > 0) Then
+
+                              Dim N1 As Integer = (p - 1) * (nps + 1) + j
+                              Dim N2 As Integer = p * (nps + 1) + j
+                              Dim N3 As Integer = N2 + 1
+                              Dim N4 As Integer = N1 + 1
+
+                              Dim q4 As New Panel(N1, N2, N3, N4)
+
+                              q4.IsPrimitive = False
+                              q4.IsSlender = False
+
+                              Mesh.Panels.Add(q4)
+
+                           End If
+
+                        Next
+
+                        p += 1
+
+                     Next
+
+                  End If
+
+                  ' Add region at the end:
+
+                  If i = g Then
+
+                     zo = Grids(i).zf
+                     lz = CrossSections(CrossSections.Count - 1).Z - zo
+
+                     Dim nz As Integer = Math.Ceiling(lz / dz)
+                     Dim nn As Integer = Grids(i).Nodes.Count - nps - 1
+
+                     For k = 1 To nz
+
+                        For j = 0 To nps
+
+                           Dim z As Double = k / nz * lz + zo
+                           Dim s As Double = Grids(i).Nodes(nn + j).Y + (j / nps - Grids(i).Nodes(nn + j).Y) * k / nz
+
+                           Mesh.Nodes.Add(New NodalPoint(GetPoint(z, s)))
+
+                           If (p > 0) And (j > 0) Then
+
+                              Dim N1 As Integer = (p - 1) * (nps + 1) + j
+                              Dim N2 As Integer = p * (nps + 1) + j
+                              Dim N3 As Integer = N2 + 1
+                              Dim N4 As Integer = N1 + 1
+
+                              Dim q4 As New Panel(N1, N2, N3, N4)
+
+                              q4.IsPrimitive = False
+                              q4.IsSlender = False
+
+                              Mesh.Panels.Add(q4)
+
+                           End If
+
+                        Next
+
+                        p += 1
+
+                     Next
+
+                  End If
+
+               Next
+
+            End If
+
+            ' If the last section has one node, replace rear quad panels by triangles:
+
+            If CrossSections(CrossSections.Count - 1).Vertices.Count = 1 Then
+
+               For i = 0 To nps - 1
+
+                  Mesh.Nodes.RemoveAt(Mesh.Nodes.Count - 1)
+                  Mesh.Panels.RemoveAt(Mesh.Panels.Count - 1)
+
+               Next
+
+               Dim m As Integer = Mesh.Nodes.Count
+
+               For i = 1 To nps
+
+                  Dim panel3 As New Panel(m, m - i, m - i - 1)
+
+                  panel3.IsSlender = False
+                  panel3.IsPrimitive = False
+
+                  Mesh.Panels.Add(panel3)
+
+               Next
+
+            End If
+
+            ' add the anchors:
+
+
+
+            For Each Grid In Grids
+
+               For i = 0 To Grid.nnz - 1 - Grid.ParentAnchor.Extension.nLeft - Grid.ParentAnchor.Extension.nRight
+
+                  Mesh.Nodes.Add(New NodalPoint(Grid.ParentAnchor.Lines(i).Point.Clone))
+
+                  If i > 0 Then
+
+                     Dim N1 As Integer = Grid.AnchorIndices(i - 1 + Grid.ParentAnchor.Extension.nLeft)
+                     Dim N2 As Integer = Grid.AnchorIndices(i + Grid.ParentAnchor.Extension.nLeft)
+                     Dim N3 As Integer = Mesh.Nodes.Count
+                     Dim N4 As Integer = Mesh.Nodes.Count - 1
+
+                     Dim q4 As New Panel(N1, N2, N3, N4)
+
+                     q4.IsPrimitive = i = Grid.nnz - 1 - Grid.ParentAnchor.Extension.nLeft - Grid.ParentAnchor.Extension.nRight
+                     q4.IsSlender = True
+
+                     Mesh.Panels.Add(q4)
+                     Grid.AnchorPanels.Add(q4)
+
+
+                  End If
+
+               Next
+
+            Next
+
+            ' If the first section only has one node, replace frontal quad panels by triangular panels:
+
+            If CrossSections(0).Vertices.Count = 1 Then
+
+               For i = 0 To nps - 1
+
+                  Mesh.Nodes.RemoveAt(0)
+                  Mesh.Panels.RemoveAt(0)
+
+               Next
+
+               For i = 0 To Mesh.Panels.Count - 1
+
+                  Mesh.Panels(i).N1 -= nps
+                  Mesh.Panels(i).N2 -= nps
+                  Mesh.Panels(i).N3 -= nps
+                  Mesh.Panels(i).N4 -= nps
+
+               Next
+
+               For i = 0 To nps - 1
+
+                  Dim panel3 As New Panel(1, i + 2, i + 3)
+
+                  panel3.IsSlender = False
+                  panel3.IsPrimitive = False
+
+                  Mesh.Panels.Insert(0, panel3)
+
+               Next
+
+            End If
+
+            ' add symmetric part: new panels are inserted so that symmetric panels are consecutive.
+
+            Dim n As Integer = Mesh.Nodes.Count - 1
+
+            For i = 0 To n
+
+               Dim point As New NodalPoint(-Mesh.Nodes(i).Position.X, Mesh.Nodes(i).Position.Y, Mesh.Nodes(i).Position.Z) '  vertex.X, vertex.Y, 0
+
+               Mesh.Nodes.Add(point)
+
+            Next
+
+            Dim r As Integer = Mesh.Panels.Count - 1
+
+            For i = 0 To r
+
+               Dim pnl As Panel
+
+               Dim index As Integer = 2 * i
+
+               If Mesh.Panels(index).IsTriangular Then
+
+                  Dim N1 As Integer = Mesh.Panels(index).N1
+                  Dim N2 As Integer = Mesh.Panels(index).N2
+                  Dim N3 As Integer = Mesh.Panels(index).N3
+
+                  Mesh.Panels(index).N1 = N1
+                  Mesh.Panels(index).N2 = N2
+                  Mesh.Panels(index).N3 = N3
+
+                  pnl = New Panel(N1 + n + 1, N2 + n + 1, N3 + n + 1)
+
+               Else
+
+                  Dim N1 As Integer = Mesh.Panels(index).N1
+                  Dim N2 As Integer = Mesh.Panels(index).N2
+                  Dim N3 As Integer = Mesh.Panels(index).N3
+                  Dim N4 As Integer = Mesh.Panels(index).N4
+
+                  Mesh.Panels(index).N1 = N1
+                  Mesh.Panels(index).N2 = N2
+                  Mesh.Panels(index).N3 = N3
+                  Mesh.Panels(index).N4 = N4
+
+                  pnl = New Panel(N1 + n + 1, N2 + n + 1, N3 + n + 1, N4 + n + 1)
+
+               End If
+
+               pnl.IsSlender = Mesh.Panels(index).IsSlender
+               pnl.IsPrimitive = Mesh.Panels(index).IsPrimitive
+
+               ' We don't reverse slender panels (because the same is done in wings, and this simplifies the canvection):
+
+               pnl.Reversed = Not pnl.IsSlender
+
+               Mesh.Panels.Insert(2 * i + 1, pnl)
+
+            Next
+
+            ' Remove Non Symmetrical anchors
+
+            For Each Grid In Grids
+               If Grid.ParentAnchor.WingAnchorInfo.Symmetric = False Then
+                  Dim pn As Integer
+                  For i = 0 To Grid.AnchorPanels.Count - 1
+                     Dim AnchorPanel As Panel = Grid.AnchorPanels(i)
+                     pn = Mesh.Panels.FindIndex(Function(x) x.N1 = AnchorPanel.N1 And x.N2 = AnchorPanel.N2 And x.N3 = AnchorPanel.N3 And x.N4 = AnchorPanel.N4)
+                     Mesh.Panels.RemoveAt(pn + 1)
+                  Next
+               End If
+            Next
+
+            ' Change indices to 0-based
+
+            For i = 0 To Mesh.Panels.Count - 1
+
+               Mesh.Panels(i).GlobalIndex = i
+
+            Next
+
+            For i = 0 To NumberOfPanels - 1
+
+               Mesh.Panels(i).N1 -= 1
+               Mesh.Panels(i).N2 -= 1
+               Mesh.Panels(i).N3 -= 1
+               Mesh.Panels(i).N4 -= 1
+
+            Next
+
+            ' Generate lattice
+
+            Mesh.GenerateLattice()
+
+            ' Rotate to align with global XYZ
+
+            For Each p In Mesh.Nodes
+
+               Dim x As Double = p.Position.X
+               Dim y As Double = p.Position.Y
+               Dim z As Double = p.Position.Z
+
+               p.Position.X = z
+               p.Position.Y = x
+               p.Position.Z = y
+
+            Next
+
+
+
+            Mesh.Rotate(CenterOfRotation, Orientation.ToRadians)
+            Mesh.Translate(Position)
+
+            ' Generate cross sections to display:
+
+            ReDim _CrossSectionsToDisplay(CrossSections.Count - 1)
+
+            For i = 0 To CrossSections.Count - 1
+               ReDim _CrossSectionsToDisplay(i)(2 * CrossSections(i).Vertices.Count - 1)
+            Next
+
+            Dim csIndex As Integer = 0
+
+            For Each CrossSection In CrossSections
+
+               Dim vIndex As Integer = 0
+
+               For Each Vertex In CrossSection.Vertices
+
+                  _CrossSectionsToDisplay(csIndex)(vIndex) = New EVector3(CrossSection.Z, Vertex.X, Vertex.Y)
+
+                  vIndex += 1
+
+               Next
+
+               vIndex = _CrossSectionsToDisplay(csIndex).Length - 1
+
+               For Each Vertex In CrossSection.Vertices
+
+                  _CrossSectionsToDisplay(csIndex)(vIndex) = New EVector3(CrossSection.Z, -Vertex.X, Vertex.Y)
+
+                  vIndex -= 1
+
+               Next
+
+               csIndex += 1
+
+            Next
+
+         Catch
 
             Mesh.Panels.Clear()
             Mesh.Nodes.Clear()
 
-            Try
-
-                UpdateAnchors()
-
-                ' First check: get valid anchors
-
-                Dim ValidAnchors As New List(Of AnchorLine)
-
-                For Each ank In AnchorLines
-
-                    If ank.Projections.Count > 1 Then
-
-                        Dim valid As Boolean = True
-
-                        For i = 1 To ank.Projections.Count - 1
-
-                            If ank.Projections(i).Z <= ank.Projections(i - 1).Z Then
-
-                                valid = False
-
-                            End If
-
-                            If ank.Projections(i - 1).Z < CrossSections(0).Z Or ank.Projections(i).Z > CrossSections(CrossSections.Count - 1).Z Then
-
-                                valid = False
-
-                            End If
-
-                        Next
-
-                        If valid Then
-
-                            ValidAnchors.Add(ank)
-
-                        End If
-
-                    End If
-
-                Next
-
-                ' Second check: remove supperposed anchors
-
-                Dim supperposed As Boolean = True
-
-                While supperposed
-
-                    supperposed = False
-
-                    For i = 0 To ValidAnchors.Count - 1
-
-                        For j = 0 To ValidAnchors.Count - 1
-
-                            If j <> i Then
-
-                                Dim Zi0 As Integer = ValidAnchors(i).Projections(0).Z
-                                Dim Zin As Integer = ValidAnchors(i).Projections(ValidAnchors(i).Projections.Count - 1).Z
-
-                                Dim Zj0 As Integer = ValidAnchors(j).Projections(0).Z
-                                Dim Zjn As Integer = ValidAnchors(j).Projections(ValidAnchors(j).Projections.Count - 1).Z
-
-                                If (Zi0 >= Zj0 And Zi0 <= Zjn) Or (Zin >= Zj0 And Zin <= Zjn) Then
-                                    supperposed = True
-                                    ValidAnchors.RemoveAt(j)
-                                    Exit For
-                                End If
-
-                            End If
-
-                        Next
-
-                        If supperposed Then Exit For
-
-                    Next
-
-                End While
-
-                ' Generate grids:
-
-                Dim npz As Integer = LongitudinalRefinement
-                Dim nps As Integer = CrossRefinement ' number of panels in s direction
-                Dim l As Double = CrossSections(CrossSections.Count - 1).Z - CrossSections(0).Z
-                Dim addTrailingWake As Boolean = False
-
-                Dim Grids As New List(Of FeatureGrid)
-
-                For Each ValidAnchor In ValidAnchors
-
-                    Dim Grid As New FeatureGrid
-
-                    Dim e As Integer
-                    Dim s_mean As Double = 0.0#
-
-                    For Each point In ValidAnchor.Projections
-
-                        s_mean += point.s / point.Perimeter
-
-                    Next
-
-                    s_mean /= ValidAnchor.Projections.Count
-
-                    e = Math.Round(s_mean * nps)
-
-                    If e < 0 Then e = 0
-
-                    If e > nps Then e = nps - 1
-
-                    Grid.e = e
-                    Grid.nns = nps + 1
-                    Grid.nnz = ValidAnchor.Projections.Count
-                    Grid.zo = ValidAnchor.Projections(0).Z
-                    Grid.zf = ValidAnchor.Projections(ValidAnchor.Projections.Count - 1).Z
-                    Grid.ParentAnchor = ValidAnchor
-                    ReDim Grid.AnchorIndices(Grid.nnz)
-
-                    For i = 0 To ValidAnchor.Projections.Count - 1
-
-                        Dim z As Double = ValidAnchor.Projections(i).Z
-
-                        For j = 0 To nps
-
-                            Dim s As Double = 0.0#
-                            Dim ps As Double = ValidAnchor.Projections(i).s / ValidAnchor.Projections(i).Perimeter
-
-                            If j <= e Then
-                                s = ps * j / e
-                            Else
-                                s = ps + (1 - ps) * (j - e) / (nps - e)
-                            End If
-
-                            If j = 0 Then s = 0
-
-                            If j = nps Then s = 1
-
-                            Grid.Nodes.Add(New EVector2(z, s))
-
-                        Next
-
-                    Next
-
-                    Grids.Add(Grid)
-
-                Next
-
-                ' Generate mesh progressively:
-
-                If Grids.Count = 0 Then
-
-                    For i = 0 To npz
-
-                        Dim z As Double = CrossSections(0).Z + l * i / npz
-
-                        For j = 0 To nps
-
-                            Dim s As Double = j / nps
-
-                            Mesh.Nodes.Add(New NodalPoint(GetPoint(z, s)))
-
-                            If (i > 0) And (j > 0) Then
-
-                                Dim N1 As Integer = (i - 1) * (nps + 1) + j
-                                Dim N2 As Integer = i * (nps + 1) + j
-                                Dim N3 As Integer = N2 + 1
-                                Dim N4 As Integer = N1 + 1
-
-                                Dim q4 As New Panel(N1, N2, N3, N4)
-
-                                q4.IsPrimitive = False
-                                q4.IsSlender = False
-
-                                Mesh.Panels.Add(q4)
-
-                            End If
-
-                        Next
-
-                    Next
-
-                Else
-
-                    ' If there are feature lines:
-
-                    Dim dz As Double = l / npz
-                    Dim p As Integer = 0
-                    Dim g As Integer = Grids.Count - 1
-
-                    For i = 0 To g
-
-                        ' Add panels between first section and first grid
-
-                        Dim zo As Double
-                        Dim lz As Double
-
-                        If i = 0 Then
-
-                            zo = CrossSections(0).Z
-                            lz = Grids(0).zo - zo
-
-                            Dim nz As Integer = Math.Ceiling(lz / dz)
-
-                            For k = 0 To nz - 1
-
-                                Dim z As Double = zo + lz * k / nz
-
-                                For j = 0 To nps
-
-                                    Dim s As Double = j / nps + (Grids(0).Nodes(j).Y - j / nps) * k / nz
-
-                                    Mesh.Nodes.Add(New NodalPoint(GetPoint(z, s)))
-
-                                    If (p > 0) And (j > 0) Then
-
-                                        Dim N1 As Integer = (p - 1) * (nps + 1) + j
-                                        Dim N2 As Integer = p * (nps + 1) + j
-                                        Dim N3 As Integer = N2 + 1
-                                        Dim N4 As Integer = N1 + 1
-
-                                        Dim q4 As New Panel(N1, N2, N3, N4)
-
-                                        q4.IsPrimitive = False
-                                        q4.IsSlender = False
-
-                                        Mesh.Panels.Add(q4)
-
-                                    End If
-
-                                Next
-
-                                p += 1
-
-                            Next
-
-                        End If
-
-                        ' Add the grid:
-
-                        Dim q As Integer = 0
-
-                        For k = 0 To Grids(i).nnz - 1
-
-                            For j = 0 To nps
-
-                                Mesh.Nodes.Add(New NodalPoint(GetPoint(Grids(i).Nodes(q).X, Grids(i).Nodes(q).Y)))
-
-                                ' Save the position p when j = e here!
-
-                                If j = Grids(i).e Then
-
-                                    Grids(i).AnchorIndices(k) = Mesh.Nodes.Count
-
-                                End If
-
-                                q += 1
-
-                                If (p > 0) And (j > 0) Then
-
-                                    Dim N1 As Integer = (p - 1) * (nps + 1) + j
-                                    Dim N2 As Integer = p * (nps + 1) + j
-                                    Dim N3 As Integer = N2 + 1
-                                    Dim N4 As Integer = N1 + 1
-
-                                    Dim q4 As New Panel(N1, N2, N3, N4)
-
-                                    q4.IsPrimitive = False
-                                    q4.IsSlender = False
-
-                                    Mesh.Panels.Add(q4)
-
-                                End If
-
-                            Next
-
-                            p += 1
-
-                        Next
-
-                        ' Add region between two grids:
-
-                        If i < g Then
-
-                            zo = Grids(i).zf
-                            lz = Grids(i + 1).zo - zo
-
-                            Dim nz As Integer = Math.Ceiling(lz / dz)
-
-                            For k = 1 To nz - 1
-
-                                For j = 0 To nps
-
-                                    Dim z As Double = k / nz * lz + zo
-                                    Dim s As Double = Grids(i).Nodes(j).Y + (Grids(i + 1).Nodes(j).Y - Grids(i).Nodes(j).Y) * j / nps
-
-                                    Mesh.Nodes.Add(New NodalPoint(GetPoint(z, s)))
-
-                                    If (p > 0) And (j > 0) Then
-
-                                        Dim N1 As Integer = (p - 1) * (nps + 1) + j
-                                        Dim N2 As Integer = p * (nps + 1) + j
-                                        Dim N3 As Integer = N2 + 1
-                                        Dim N4 As Integer = N1 + 1
-
-                                        Dim q4 As New Panel(N1, N2, N3, N4)
-
-                                        q4.IsPrimitive = False
-                                        q4.IsSlender = False
-
-                                        Mesh.Panels.Add(q4)
-
-                                    End If
-
-                                Next
-
-                                p += 1
-
-                            Next
-
-                        End If
-
-                        ' Add region at the end:
-
-                        If i = g Then
-
-                            zo = Grids(i).zf
-                            lz = CrossSections(CrossSections.Count - 1).Z - zo
-
-                            Dim nz As Integer = Math.Ceiling(lz / dz)
-                            Dim nn As Integer = Grids(i).Nodes.Count - nps - 1
-
-                            For k = 1 To nz
-
-                                For j = 0 To nps
-
-                                    Dim z As Double = k / nz * lz + zo
-                                    Dim s As Double = Grids(i).Nodes(nn + j).Y + (j / nps - Grids(i).Nodes(nn + j).Y) * k / nz
-
-                                    Mesh.Nodes.Add(New NodalPoint(GetPoint(z, s)))
-
-                                    If (p > 0) And (j > 0) Then
-
-                                        Dim N1 As Integer = (p - 1) * (nps + 1) + j
-                                        Dim N2 As Integer = p * (nps + 1) + j
-                                        Dim N3 As Integer = N2 + 1
-                                        Dim N4 As Integer = N1 + 1
-
-                                        Dim q4 As New Panel(N1, N2, N3, N4)
-
-                                        q4.IsPrimitive = False
-                                        q4.IsSlender = False
-
-                                        Mesh.Panels.Add(q4)
-
-                                    End If
-
-                                Next
-
-                                p += 1
-
-                            Next
-
-                        End If
-
-                    Next
-
-                End If
-
-                ' If the last section has one node, replace rear quad panels by triangles:
-
-                If CrossSections(CrossSections.Count - 1).Vertices.Count = 1 Then
-
-                    For i = 0 To nps - 1
-
-                        Mesh.Nodes.RemoveAt(Mesh.Nodes.Count - 1)
-                        Mesh.Panels.RemoveAt(Mesh.Panels.Count - 1)
-
-                    Next
-
-                    Dim m As Integer = Mesh.Nodes.Count
-
-                    For i = 1 To nps
-
-                        Dim panel3 As New Panel(m, m - i, m - i - 1)
-
-                        panel3.IsSlender = False
-                        panel3.IsPrimitive = False
-
-                        Mesh.Panels.Add(panel3)
-
-                    Next
-
-                End If
-
-                ' add the anchors:
-
-                For Each Grid In Grids
-
-                    For i = 0 To Grid.nnz - 1
-
-                        Mesh.Nodes.Add(New NodalPoint(Grid.ParentAnchor.Lines(i).Point.Clone))
-
-                        If i > 0 Then
-
-                            Dim N1 As Integer = Grid.AnchorIndices(i - 1)
-                            Dim N2 As Integer = Grid.AnchorIndices(i)
-                            Dim N3 As Integer = Mesh.Nodes.Count
-                            Dim N4 As Integer = Mesh.Nodes.Count - 1
-
-                            Dim q4 As New Panel(N1, N2, N3, N4)
-
-                            q4.IsPrimitive = i = Grid.nnz - 1
-                            q4.IsSlender = True
-
-                            Mesh.Panels.Add(q4)
-
-                        End If
-
-                    Next
-
-                Next
-
-                ' If the first section only has one node, replace frontal quad panels by triangular panels:
-
-                If CrossSections(0).Vertices.Count = 1 Then
-
-                    For i = 0 To nps - 1
-
-                        Mesh.Nodes.RemoveAt(0)
-                        Mesh.Panels.RemoveAt(0)
-
-                    Next
-
-                    For i = 0 To Mesh.Panels.Count - 1
-
-                        Mesh.Panels(i).N1 -= nps
-                        Mesh.Panels(i).N2 -= nps
-                        Mesh.Panels(i).N3 -= nps
-                        Mesh.Panels(i).N4 -= nps
-
-                    Next
-
-                    For i = 0 To nps - 1
-
-                        Dim panel3 As New Panel(1, i + 2, i + 3)
-
-                        panel3.IsSlender = False
-                        panel3.IsPrimitive = False
-
-                        Mesh.Panels.Insert(0, panel3)
-
-                    Next
-
-                End If
-
-                ' add symmetric part: new panels are inserted so that symmetric panels are consecutive.
-
-                Dim n As Integer = Mesh.Nodes.Count - 1
-
-                For i = 0 To n
-
-                    Dim point As New NodalPoint(-Mesh.Nodes(i).Position.X, Mesh.Nodes(i).Position.Y, Mesh.Nodes(i).Position.Z) '  vertex.X, vertex.Y, 0
-
-                    Mesh.Nodes.Add(point)
-
-                Next
-
-                Dim r As Integer = Mesh.Panels.Count - 1
-
-                For i = 0 To r
-
-                    Dim pnl As Panel
-
-                    Dim index As Integer = 2 * i
-
-                    If Mesh.Panels(index).IsTriangular Then
-
-                        Dim N1 As Integer = Mesh.Panels(index).N1
-                        Dim N2 As Integer = Mesh.Panels(index).N2
-                        Dim N3 As Integer = Mesh.Panels(index).N3
-
-                        Mesh.Panels(index).N1 = N1
-                        Mesh.Panels(index).N2 = N2
-                        Mesh.Panels(index).N3 = N3
-
-                        pnl = New Panel(N1 + n + 1, N2 + n + 1, N3 + n + 1)
-
-                    Else
-
-                        Dim N1 As Integer = Mesh.Panels(index).N1
-                        Dim N2 As Integer = Mesh.Panels(index).N2
-                        Dim N3 As Integer = Mesh.Panels(index).N3
-                        Dim N4 As Integer = Mesh.Panels(index).N4
-
-                        Mesh.Panels(index).N1 = N1
-                        Mesh.Panels(index).N2 = N2
-                        Mesh.Panels(index).N3 = N3
-                        Mesh.Panels(index).N4 = N4
-
-                        pnl = New Panel(N1 + n + 1, N2 + n + 1, N3 + n + 1, N4 + n + 1)
-
-                    End If
-
-                    pnl.IsSlender = Mesh.Panels(index).IsSlender
-                    pnl.IsPrimitive = Mesh.Panels(index).IsPrimitive
-
-                    ' We don't reverse slender panels (because the same is done in wings, and this simplifies the canvection):
-
-                    pnl.Reversed = Not pnl.IsSlender
-
-                    Mesh.Panels.Insert(2 * i + 1, pnl)
-
-                Next
-
-                ' Change indices to 0-based
-
-                For i = 0 To Mesh.Panels.Count - 1
-
-                    Mesh.Panels(i).GlobalIndex = i
-
-                Next
-
-                For i = 0 To NumberOfPanels - 1
-
-                    Mesh.Panels(i).N1 -= 1
-                    Mesh.Panels(i).N2 -= 1
-                    Mesh.Panels(i).N3 -= 1
-                    Mesh.Panels(i).N4 -= 1
-
-                Next
-
-                ' Generate lattice
-
-                Mesh.GenerateLattice()
-
-                ' Rotate to align with global XYZ
-
-                For Each p In Mesh.Nodes
-
-                    Dim x As Double = p.Position.X
-                    Dim y As Double = p.Position.Y
-                    Dim z As Double = p.Position.Z
-
-                    p.Position.X = z
-                    p.Position.Y = x
-                    p.Position.Z = y
-
-                Next
-
-                Mesh.Rotate(CenterOfRotation, Orientation.ToRadians)
-                Mesh.Translate(Position)
-
-                ' Generate cross sections to display:
-
-                ReDim _CrossSectionsToDisplay(CrossSections.Count - 1)
-
-                For i = 0 To CrossSections.Count - 1
-                    ReDim _CrossSectionsToDisplay(i)(2 * CrossSections(i).Vertices.Count - 1)
-                Next
-
-                Dim csIndex As Integer = 0
-
-                For Each CrossSection In CrossSections
-
-                    Dim vIndex As Integer = 0
-
-                    For Each Vertex In CrossSection.Vertices
-
-                        _CrossSectionsToDisplay(csIndex)(vIndex) = New EVector3(CrossSection.Z, Vertex.X, Vertex.Y)
-
-                        vIndex += 1
-
-                    Next
-
-                    vIndex = _CrossSectionsToDisplay(csIndex).Length - 1
-
-                    For Each Vertex In CrossSection.Vertices
-
-                        _CrossSectionsToDisplay(csIndex)(vIndex) = New EVector3(CrossSection.Z, -Vertex.X, Vertex.Y)
-
-                        vIndex -= 1
-
-                    Next
-
-                    csIndex += 1
-
-                Next
-
-            Catch
-
-                Mesh.Panels.Clear()
-                Mesh.Nodes.Clear()
-
-            End Try
-
-        End Sub
-
-        ''' <summary>
-        ''' Regenerates the 3D model in Open GL.
-        ''' </summary>
-        ''' <param name="gl"></param>
-        ''' <param name="SelectionMode"></param>
-        ''' <param name="ElementIndex"></param>
-        ''' <remarks></remarks>
-        Public Overrides Sub Refresh3DModel(ByRef gl As OpenGL, Optional ByVal SelectionMode As SelectionModes = SelectionModes.smNoSelection, Optional ByVal ElementIndex As Integer = 0)
+         End Try
+
+      End Sub
+
+      ''' <summary>
+      ''' Regenerates the 3D model in Open GL.
+      ''' </summary>
+      ''' <param name="gl"></param>
+      ''' <param name="SelectionMode"></param>
+      ''' <param name="ElementIndex"></param>
+      ''' <remarks></remarks>
+      Public Overrides Sub Refresh3DModel(ByRef gl As OpenGL, Optional ByVal SelectionMode As SelectionModes = SelectionModes.smNoSelection, Optional ByVal ElementIndex As Integer = 0)
 
             'Version para OpenGL
 

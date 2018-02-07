@@ -6,6 +6,27 @@ AeroTools
 </name>
 </assembly>
 <members>
+<member name="T:AeroTools.My.Resources.Resources">
+<summary>
+  Clase de recurso con establecimiento inflexible de tipos, para buscar cadenas traducidas, etc.
+</summary>
+</member>
+<member name="P:AeroTools.My.Resources.Resources.ResourceManager">
+<summary>
+  Devuelve la instancia de ResourceManager almacenada en caché utilizada por esta clase.
+</summary>
+</member>
+<member name="P:AeroTools.My.Resources.Resources.Culture">
+<summary>
+  Reemplaza la propiedad CurrentUICulture del subproceso actual para todas las
+  búsquedas de recursos mediante esta clase de recurso con establecimiento inflexible de tipos.
+</summary>
+</member>
+<member name="P:AeroTools.My.Resources.Resources.BuildMatrix">
+<summary>
+  Busca una cadena traducida similar a Building matrix.
+</summary>
+</member>
 <member name="T:AeroTools.CalculationModel.Models.Aero.BoundedLattice">
  <summary>
  Represents a lattice bounded to a solid surface where several wakes might be convected.
@@ -2264,27 +2285,6 @@ AeroTools
  </summary>
  <remarks></remarks>
 </member>
-<member name="T:AeroTools.My.Resources.Resources">
-<summary>
-  Clase de recurso con establecimiento inflexible de tipos, para buscar cadenas traducidas, etc.
-</summary>
-</member>
-<member name="P:AeroTools.My.Resources.Resources.ResourceManager">
-<summary>
-  Devuelve la instancia de ResourceManager almacenada en caché utilizada por esta clase.
-</summary>
-</member>
-<member name="P:AeroTools.My.Resources.Resources.Culture">
-<summary>
-  Reemplaza la propiedad CurrentUICulture del subproceso actual para todas las
-  búsquedas de recursos mediante esta clase de recurso con establecimiento inflexible de tipos.
-</summary>
-</member>
-<member name="P:AeroTools.My.Resources.Resources.BuildMatrix">
-<summary>
-  Busca una cadena traducida similar a Building matrix.
-</summary>
-</member>
 <member name="T:AeroTools.VisualModel.Tools.Colormaping.ColorSharpGL">
  <summary>
  Represents a color to be used on SharpGL
@@ -2661,6 +2661,37 @@ AeroTools
  <returns></returns>
  <remarks>Used to find back the cartesian coordinates.</remarks>
 </member>
+<member name="P:AeroTools.VisualModel.Models.Components.Extension.RightLength">
+ <summary>
+ Length of the extension to the right side (Direction X)
+ </summary>
+</member>
+<member name="P:AeroTools.VisualModel.Models.Components.Extension.nRight">
+ <summary>
+ Number of projections points of the extension to the right side (Direction X)
+ </summary>
+ 
+</member>
+<member name="P:AeroTools.VisualModel.Models.Components.Extension.LeftLength">
+ <summary>
+ Length of the extension to the left side (Direction -X)
+ </summary>
+</member>
+<member name="P:AeroTools.VisualModel.Models.Components.Extension.nLeft">
+ <summary>
+ Number of projections points of the extension to the left side (Direction -X)
+ </summary>
+</member>
+<member name="P:AeroTools.VisualModel.Models.Components.Extension.Interval">
+ <summary>
+ Distance between two consecutive projections
+ </summary>
+</member>
+<member name="P:AeroTools.VisualModel.Models.Components.Extension.SuperposedAnchor">
+ <summary>
+ AnchorLine of the lifting surface superposing it
+ </summary>
+</member>
 <member name="T:AeroTools.VisualModel.Models.Components.AnchorLine">
  <summary>
  Represents a series of segments that have to be projected on a extruded surface.
@@ -2690,6 +2721,11 @@ AeroTools
 <member name="P:AeroTools.VisualModel.Models.Components.AnchorLine.WingAnchorInfo">
  <summary>
  Gather information about the parent lifting surface.
+ </summary>
+</member>
+<member name="P:AeroTools.VisualModel.Models.Components.AnchorLine.Extension">
+ <summary>
+ Represents the extension zone of the corresponding grid if there is a superposition
  </summary>
 </member>
 <member name="P:AeroTools.VisualModel.Models.Components.AnchorLine.Generated">

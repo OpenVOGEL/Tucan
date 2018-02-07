@@ -1,0 +1,362 @@
+﻿<?xml version="1.0"?>
+<doc>
+<assembly>
+<name>
+MathTools
+</name>
+</assembly>
+<members>
+<member name="T:MathTools.Algebra.EuclideanSpace.Algebra">
+ <summary>
+ Provides static methods to operate with vectors and matrices.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="T:MathTools.Algebra.EuclideanSpace.EVector2">
+ <summary>
+ Represents an euclidean vector of two coordinates.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:MathTools.Algebra.EuclideanSpace.EVector2.Rotate(System.Double)">
+ <summary>
+ Rotates the vector an angle a [rad]
+ </summary>
+ <param name="a"></param>
+ <remarks></remarks>
+</member>
+<member name="M:MathTools.Algebra.EuclideanSpace.EVector2.Rotate(System.Double,System.Double,System.Double)">
+ <summary>
+ Rotates the vector an angle a [rad]
+ </summary>
+ <param name="a"></param>
+ <remarks></remarks>
+</member>
+<member name="M:MathTools.Algebra.EuclideanSpace.EVector2.IntersectionCoordinate(MathTools.Algebra.EuclideanSpace.EVector2,MathTools.Algebra.EuclideanSpace.EVector2,MathTools.Algebra.EuclideanSpace.EVector2,MathTools.Algebra.EuclideanSpace.EVector2)">
+ <summary>
+ Calculates the intersection between line {p, v} with segment {a, b} as a coordinate relative to point a.
+ </summary>
+ <param name="p"></param>
+ <param name="v"></param>
+ <param name="a"></param>
+ <param name="b"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="T:MathTools.Algebra.EuclideanSpace.EVector3">
+ <summary>
+ Represents an euclidean vector of three coordinates.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:MathTools.Algebra.EuclideanSpace.EVector3.Add(MathTools.Algebra.EuclideanSpace.EVector3)">
+ <summary>
+ Adds the given vector
+ </summary>
+ <param name="Vector"></param>
+ <remarks></remarks>
+</member>
+<member name="M:MathTools.Algebra.EuclideanSpace.EVector3.Add(MathTools.Algebra.EuclideanSpace.EVector3,System.Double)">
+ <summary>
+ Adds the given vector premltiplied by the given scalar
+ </summary>
+ <param name="Vector"></param>
+ <param name="Scalar"></param>
+ <remarks></remarks>
+</member>
+<member name="M:MathTools.Algebra.EuclideanSpace.EVector3.Add(System.Double,System.Double,System.Double)">
+ <summary>
+ Adds the given vector coordinates
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:MathTools.Algebra.EuclideanSpace.EVector3.Substract(MathTools.Algebra.EuclideanSpace.EVector3)">
+ <summary>
+ Substracts the given vector
+ </summary>
+ <param name="Vector"></param>
+ <remarks></remarks>
+</member>
+<member name="M:MathTools.Algebra.EuclideanSpace.EVector3.AddCrossProduct(MathTools.Algebra.EuclideanSpace.EVector3,MathTools.Algebra.EuclideanSpace.EVector3)">
+ <summary>
+ Adds the cross product between two vectors
+ </summary>
+ <param name="V1"></param>
+ <param name="V2"></param>
+ <remarks></remarks>
+</member>
+<member name="M:MathTools.Algebra.EuclideanSpace.EVector3.Scale(System.Double)">
+ <summary>
+ Multiplies the vector by a given scalar factor.
+ </summary>
+ <param name="Factor"></param>
+ <remarks></remarks>
+</member>
+<member name="M:MathTools.Algebra.EuclideanSpace.EVector3.Rotate(System.Double,System.Double,System.Double)">
+ <summary>
+ Rotatets the vector in euler angles.
+ </summary>
+ <param name="Psi"></param>
+ <param name="Tita"></param>
+ <param name="Fi"></param>
+ <remarks></remarks>
+</member>
+<member name="M:MathTools.Algebra.EuclideanSpace.EVector3.Rotate(MathTools.Algebra.CustomMatrices.RotationMatrix)">
+ <summary>
+ Rotatets the vector with a given rotation matrix.
+ </summary>
+ <param name="RotM"></param>
+ <remarks></remarks>
+</member>
+<member name="M:MathTools.Algebra.EuclideanSpace.EVector3.ProjectOnVector(MathTools.Algebra.EuclideanSpace.EVector3)">
+ <summary>
+ Projects the vector on a given direction.
+ </summary>
+ <param name="Direction"></param>
+ <remarks></remarks>
+</member>
+<member name="M:MathTools.Algebra.EuclideanSpace.EVector3.ProjectOnPlane(MathTools.Algebra.EuclideanSpace.EVector3)">
+ <summary>
+ Projects the vector on a given plane.
+ </summary>
+ <param name="NormalDirection"></param>
+ <remarks></remarks>
+</member>
+<member name="M:MathTools.Algebra.EuclideanSpace.EVector3.GetProjection(MathTools.Algebra.EuclideanSpace.EVector3)">
+ <summary>
+ Returns the projection of the vector on a given direction.
+ </summary>
+ <param name="Direction"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="T:MathTools.Algebra.EuclideanSpace.EBase3">
+ <summary>
+ Represents a basis of orthonormal vectors on the euclidean space.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="T:MathTools.Algebra.EuclideanSpace.ELine3">
+ <summary>
+ Represents a line in space.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="T:MathTools.Algebra.EuclideanSpace.EulerAngles">
+ <summary>
+ Represents an orientation in Euler angles
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="T:MathTools.MathLibrary.EigenValues.EigenValuesSolver">
+ <summary>
+ Provides methods to find eigen vectors and eigen values of systems with reduced number of DOF.
+ </summary>
+ <remarks>
+ This solver might not be fast for systems with large DOF
+ </remarks>
+</member>
+<member name="M:MathTools.MathLibrary.EigenValues.EigenValuesSolver.InverseIteration(System.String,System.String,System.String,System.Int32,System.Int32,System.Int32)">
+ <summary>
+ Finds modes and stores them on the database
+ </summary>
+ <param name="DataBasePath">File where matrices are to be found and results are to be written</param>
+ <param name="DOF">Number of degrees of freedom</param>
+ <param name="MaxIter">Maximum number of inverse iterations</param>
+ <param name="NModes">Number of wanted modes</param>
+ <remarks>This solver uses the inverse iteation method with Gram-Smith orthogonalization to find eigen vectors and values of the system KX = vMX.
+ Algorithm makes extensive use of Pardiso to solve systems of algabraic equations at each refining step.</remarks>
+</member>
+<member name="M:MathTools.MathLibrary.EigenValues.EigenValuesSolver.Jacobi(Meta.Numerics.Matrices.SymmetricMatrix@,Meta.Numerics.Matrices.SymmetricMatrix@,Meta.Numerics.Matrices.SymmetricMatrix@,Meta.Numerics.Matrices.ColumnVector@)">
+ <summary>
+ Finds the eigen values and eigen vectors of a small system Kφ = λMφ. K and M are dense symmetric matrices, K is non-singular and M is positive-definite. 
+ </summary>
+ <param name="K">K matrix</param>
+ <param name="M">M matrix</param>
+ <param name="Q">M-normalized eigen vectors (in columns)</param>
+ <param name="D">Eigen values</param>
+ <remarks>
+ This method is suitable for small systems only, and will work better as matrices K and M have many off-diagonal zeros. 
+ This is why this method can be succesfully implemented on the subspace iteration method (where projected matrices tend to diagonal form).
+ If a lumped matrix is applied, this method will work even faster.
+ </remarks>
+</member>
+<member name="M:MathTools.MathLibrary.EigenValues.EigenValuesSolver.AddMode(Meta.Numerics.Matrices.ColumnVector@)">
+ <summary>
+ Adds normalizes the given eigen vector with respect to M and stores it on the list.
+ </summary>
+</member>
+<member name="T:MathTools.MathLibrary.ODEs.TimeDomainSolver">
+ <summary>
+ Provides methods to solve ODEs of the type M d²y/dt² + C dy/dt + K y = P(t) being M, C and K real constants.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="T:MathTools.My.Resources.Resources">
+<summary>
+  A strongly-typed resource class, for looking up localized strings, etc.
+</summary>
+</member>
+<member name="P:MathTools.My.Resources.Resources.ResourceManager">
+<summary>
+  Returns the cached ResourceManager instance used by this class.
+</summary>
+</member>
+<member name="P:MathTools.My.Resources.Resources.Culture">
+<summary>
+  Overrides the current thread's CurrentUICulture property for all
+  resource lookups using this strongly typed resource class.
+</summary>
+</member>
+<member name="T:MathTools.Magnitudes.TimeMagnitude">
+ <summary>
+ Represents a time magnitude.
+ </summary>
+</member>
+<member name="T:MathTools.Magnitudes.TimeMagnitude.Units">
+ <summary>
+ Time units.
+ </summary>
+</member>
+<member name="F:MathTools.Magnitudes.TimeMagnitude.DefaultUnit">
+ <summary>
+ Unit used as reference.
+ </summary>
+</member>
+<member name="T:MathTools.Magnitudes.LengthMagnitude">
+ <summary>
+ Represents a length magnitude.
+ </summary>
+</member>
+<member name="T:MathTools.Magnitudes.LengthMagnitude.Units">
+ <summary>
+ Time units.
+ </summary>
+</member>
+<member name="F:MathTools.Magnitudes.LengthMagnitude.DefaultUnit">
+ <summary>
+ Unit used as reference.
+ </summary>
+</member>
+<member name="T:MathTools.Magnitudes.AreaMagnitude">
+ <summary>
+ Represents an area magnitude.
+ </summary>
+</member>
+<member name="T:MathTools.Magnitudes.AreaMagnitude.Units">
+ <summary>
+ Time units.
+ </summary>
+</member>
+<member name="F:MathTools.Magnitudes.AreaMagnitude.DefaultUnit">
+ <summary>
+ Unit used as reference.
+ </summary>
+</member>
+<member name="T:MathTools.Magnitudes.VelocityMagnitude">
+ <summary>
+ Represents a length magnitude.
+ </summary>
+</member>
+<member name="T:MathTools.Magnitudes.VelocityMagnitude.Units">
+ <summary>
+ Time units.
+ </summary>
+</member>
+<member name="F:MathTools.Magnitudes.VelocityMagnitude.DefaultUnit">
+ <summary>
+ Unit used as reference.
+ </summary>
+</member>
+<member name="T:MathTools.Magnitudes.DensityMagnitude">
+ <summary>
+ Represents a density magnitude.
+ </summary>
+</member>
+<member name="T:MathTools.Magnitudes.DensityMagnitude.Units">
+ <summary>
+ Time units.
+ </summary>
+</member>
+<member name="F:MathTools.Magnitudes.DensityMagnitude.DefaultUnit">
+ <summary>
+ Unit used as reference.
+ </summary>
+</member>
+<member name="T:MathTools.Magnitudes.ForceMagnitude">
+ <summary>
+ Represents a force magnitude.
+ </summary>
+</member>
+<member name="T:MathTools.Magnitudes.ForceMagnitude.Units">
+ <summary>
+ Time units.
+ </summary>
+</member>
+<member name="F:MathTools.Magnitudes.ForceMagnitude.DefaultUnit">
+ <summary>
+ Unit used as reference.
+ </summary>
+</member>
+<member name="T:MathTools.Magnitudes.PressureMagnitude">
+ <summary>
+ Represents a pressure magnitude.
+ </summary>
+</member>
+<member name="T:MathTools.Magnitudes.PressureMagnitude.Units">
+ <summary>
+ Time units.
+ </summary>
+</member>
+<member name="F:MathTools.Magnitudes.PressureMagnitude.DefaultUnit">
+ <summary>
+ Unit used as reference.
+ </summary>
+</member>
+<member name="T:MathTools.Magnitudes.MomentMagnitude">
+ <summary>
+ Represents a force magnitude.
+ </summary>
+</member>
+<member name="T:MathTools.Magnitudes.MomentMagnitude.Units">
+ <summary>
+ Time units.
+ </summary>
+</member>
+<member name="F:MathTools.Magnitudes.MomentMagnitude.DefaultUnit">
+ <summary>
+ Unit used as reference.
+ </summary>
+</member>
+<member name="T:MathTools.Magnitudes.AngularMagnitude">
+ <summary>
+ Represents an angular magnitude.
+ </summary>
+</member>
+<member name="T:MathTools.Magnitudes.AngularMagnitude.Units">
+ <summary>
+ Time units.
+ </summary>
+</member>
+<member name="F:MathTools.Magnitudes.AngularMagnitude.DefaultUnit">
+ <summary>
+ Unit used as reference.
+ </summary>
+</member>
+<member name="T:MathTools.Magnitudes.DimensionlessMagnitude">
+ <summary>
+ Represents a dimensionless magnitude.
+ </summary>
+</member>
+<member name="T:MathTools.Magnitudes.DimensionlessMagnitude.Units">
+ <summary>
+ Time units.
+ </summary>
+</member>
+<member name="F:MathTools.Magnitudes.DimensionlessMagnitude.DefaultUnit">
+ <summary>
+ Unit used as reference.
+ </summary>
+</member>
+</members>
+</doc>

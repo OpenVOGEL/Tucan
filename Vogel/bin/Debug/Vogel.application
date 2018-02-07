@@ -7,14 +7,14 @@
     <framework targetVersion="4.0" profile="Full" supportedRuntime="4.0.30319" />
   </compatibleFrameworks>
   <dependency>
-    <dependentAssembly dependencyType="install" codebase="Vogel.exe.manifest" size="9829">
+    <dependentAssembly dependencyType="install" codebase="Vogel.exe.manifest" size="9930">
       <assemblyIdentity name="Vogel.exe" version="2017.3.0.15" publicKeyToken="0000000000000000" language="neutral" processorArchitecture="msil" type="win32" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>XDkX68UwNAYfZPew6Zaj735f3mc=</dsig:DigestValue>
+        <dsig:DigestValue>BmAiVAlMQcK/xjTImkw4LGUZA2Q=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

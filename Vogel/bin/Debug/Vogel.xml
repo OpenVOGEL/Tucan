@@ -6,18 +6,6 @@ Vogel
 </name>
 </assembly>
 <members>
-<member name="M:Vogel.MainForm.SwitchToDesignMode">
- <summary>
- Changes project mode and window state to design mode.
- </summary>
- <remarks></remarks>
-</member>
-<member name="M:Vogel.MainForm.SwitchToPostprocessMode">
- <summary>
- Changes project mode and window state to post process mode.
- </summary>
- <remarks></remarks>
-</member>
 <member name="T:Vogel.My.Resources.Resources">
 <summary>
   A strongly-typed resource class, for looking up localized strings, etc.
@@ -38,6 +26,18 @@ Vogel
 <summary>
   Looks up a localized resource of type System.Drawing.Bitmap.
 </summary>
+</member>
+<member name="M:Vogel.MainForm.SwitchToDesignMode">
+ <summary>
+ Changes project mode and window state to design mode.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:Vogel.MainForm.SwitchToPostprocessMode">
+ <summary>
+ Changes project mode and window state to post process mode.
+ </summary>
+ <remarks></remarks>
 </member>
 </members>
 </doc>

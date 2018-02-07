@@ -735,9 +735,12 @@ Public Class FormFuselageEditor
                     Dim pb As EVector3 = _LiftingSurfaces(i).Mesh.Nodes(j + n + 1).Position
 
                     Line.Direction.X = pa.Y - pb.Y
-                    Line.Direction.Y = pa.Z - pb.Z
-                    Line.Direction.Z = pa.X - pb.X
-                    Line.Direction.Normalize()
+               Line.Direction.Y = pa.Z - pb.Z
+               Line.Direction.Z = pa.X - pb.X
+               If Math.Abs(Line.Direction.X) < 10 ^ -5 Then
+                  Line.Direction.X = 0
+               End If
+               Line.Direction.Normalize()
 
                     AnchorLine.Lines.Add(Line)
 
@@ -745,9 +748,10 @@ Public Class FormFuselageEditor
 
                 Dim Info As New WingAnchorInfo
 
-                Info.ParentID = _LiftingSurfaces(i).ID
+            Info.ParentID = _LiftingSurfaces(i).ID
+            Info.Symmetric = _LiftingSurfaces(i).Symmetric
 
-                AnchorLine.WingAnchorInfo = Info
+            AnchorLine.WingAnchorInfo = Info
 
                 _Fuselage.AnchorLines.Add(AnchorLine)
 
@@ -756,10 +760,38 @@ Public Class FormFuselageEditor
         Next
 
     End Sub
+   Public Sub UpdateAnchors()
 
+      'Identify if there are superpositions
+      LoadWingAnchorsToBody()
+      _Fuselage.GenerateMesh()
+
+      'Adjust the superposed lifting surfaces
+      Dim ExistSuperposition As Boolean = False
+
+      For Each AnchorLines In _Fuselage.AnchorLines
+         If AnchorLines.WingAnchorInfo.Superposed Then
+
+            Dim NLS As Integer = _LiftingSurfaces.FindIndex(Function(x) x.ID = AnchorLines.WingAnchorInfo.ParentID)
+            Dim RootChord As Double = _LiftingSurfaces(NLS).RootChord
+
+            _LiftingSurfaces(NLS).NumberOfChordPanels = Int(RootChord / AnchorLines.Extension.Interval)
+            _LiftingSurfaces(NLS).GenerateMesh()
+            ExistSuperposition = True
+         End If
+      Next
+
+      'Refresh the anchors and mesh if there is superposition
+      If ExistSuperposition Then
+         LoadWingAnchorsToBody()
+         _Fuselage.GenerateMesh()
+      End If
+
+
+   End Sub
 #End Region
 
-    Private Sub SelectQuads(sender As Object, e As EventArgs) Handles rbQuads.Click
+   Private Sub SelectQuads(sender As Object, e As EventArgs) Handles rbQuads.Click
         _Fuselage.MeshType = MeshTypes.StructuredQuadrilaterals
     End Sub
 
@@ -793,9 +825,9 @@ Public Class FormFuselageEditor
 
         _Fuselage.CrossSections.Sort()
 
-        LoadWingAnchorsToBody()
+      UpdateAnchors()
 
-    End Sub
+   End Sub
 
     Private DashedPen As New Pen(Color.Gray, 1)
     Private XaxisPen As New Pen(Color.Green, 2)
