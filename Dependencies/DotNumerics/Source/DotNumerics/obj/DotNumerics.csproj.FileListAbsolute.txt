@@ -1,7 +1,0 @@
-C:\Users\JADSC\Software\Projects\DotNumerics\Source\DotNumerics\bin\Debug\DotNumerics.dll
-C:\Users\JADSC\Software\Projects\DotNumerics\Source\DotNumerics\bin\Debug\DotNumerics.pdb
-C:\Users\JADSC\Software\Projects\DotNumerics\Source\DotNumerics\obj\Debug\ResolveAssemblyReference.cache
-C:\Users\JADSC\Software\Projects\DotNumerics\Source\DotNumerics\obj\Debug\DotNumerics.LinearAlgebra.MatrixView.resources
-C:\Users\JADSC\Software\Projects\DotNumerics\Source\DotNumerics\obj\Debug\DotNumerics.csproj.GenerateResource.Cache
-C:\Users\JADSC\Software\Projects\DotNumerics\Source\DotNumerics\obj\Debug\DotNumerics.dll
-C:\Users\JADSC\Software\Projects\DotNumerics\Source\DotNumerics\obj\Debug\DotNumerics.pdb

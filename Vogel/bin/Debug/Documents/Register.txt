@@ -1,7 +1,0 @@
-User name: g
-e-mail: g@g
-Occupation: g
-Organization: g
-Country: g
-City: g
-HostID: WX91A94C25YA
