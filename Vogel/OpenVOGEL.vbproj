@@ -6,9 +6,9 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{561A37B0-9AB2-4E70-88AD-6E9E27DCD92C}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <StartupObject>Vogel.My.MyApplication</StartupObject>
-    <RootNamespace>Vogel</RootNamespace>
-    <AssemblyName>Vogel</AssemblyName>
+    <StartupObject>OpenVOGEL.My.MyApplication</StartupObject>
+    <RootNamespace>OpenVOGEL</RootNamespace>
+    <AssemblyName>OpenVOGEL</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>WindowsForms</MyType>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
@@ -29,7 +29,7 @@
     <ProductName>Open VOGEL 2018 - Beta 1</ProductName>
     <PublisherName>Open VOGEL</PublisherName>
     <SuiteName>Open VOGEL</SuiteName>
-    <ApplicationRevision>4</ApplicationRevision>
+    <ApplicationRevision>5</ApplicationRevision>
     <ApplicationVersion>2018.1.1.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -42,7 +42,7 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\Debug\</OutputPath>
-    <DocumentationFile>Vogel.xml</DocumentationFile>
+    <DocumentationFile>OpenVOGEL.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -52,7 +52,7 @@
     <DefineTrace>true</DefineTrace>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DocumentationFile>Vogel.xml</DocumentationFile>
+    <DocumentationFile>OpenVOGEL.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup>
@@ -131,12 +131,6 @@
     <Compile Include="Dialogos\StartupScreen.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Dialogos\FormAskVelocity.Designer.vb">
-      <DependentUpon>FormAskVelocity.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Dialogos\FormAskVelocity.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="MainForm.Designer.vb">
       <DependentUpon>MainForm.vb</DependentUpon>
     </Compile>
@@ -168,9 +162,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogos\StartupScreen.resx">
       <DependentUpon>StartupScreen.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Dialogos\FormAskVelocity.resx">
-      <DependentUpon>FormAskVelocity.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.vb</DependentUpon>
