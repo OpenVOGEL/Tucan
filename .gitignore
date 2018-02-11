@@ -4,3 +4,10 @@ AeroTools/**/obj
 
 MathTools/**/bin
 MathTools/**/obj
+
+Vogel/**/bin
+Vogel/**/obj
+Vogel/**/publish
+
+Dependencies/DotNumerics/Source/DotNumerics/**/bin
+Dependencies/DotNumerics/Source/DotNumerics/**/obj
