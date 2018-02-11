@@ -23,3 +23,4 @@ Dependencies/DotNumerics/Source/DotNumerics/bin/**
 Dependencies/DotNumerics/Source/DotNumerics/obj/**
 
 **/.vs
+.vs/**
