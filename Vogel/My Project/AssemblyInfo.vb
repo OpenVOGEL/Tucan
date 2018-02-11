@@ -8,11 +8,11 @@ Imports System.Runtime.InteropServices
 
 ' Review the values of the assembly attributes
 
-<Assembly: AssemblyTitle("VOGEL 2015")>
+<Assembly: AssemblyTitle("VOGEL 2018")>
 <Assembly: AssemblyDescription("Software for aircraft design. Visit https://sites.google.com/site/gahvogel/main/steady-aerodynamics for more information.")>
 <Assembly: AssemblyCompany("")>
-<Assembly: AssemblyProduct("VOGEL 2015")>
-<Assembly: AssemblyCopyright("Copyright ©  2015 - Guillermo A. Hazebrouck")>
+<Assembly: AssemblyProduct("VOGEL 2018")>
+<Assembly: AssemblyCopyright("Copyright ©  2018 - Guillermo A. Hazebrouck")>
 <Assembly: AssemblyTrademark("")> 
 
 <Assembly: ComVisible(False)>
@@ -31,5 +31,5 @@ Imports System.Runtime.InteropServices
 ' by using the '*' as shown below:
 ' <Assembly: AssemblyVersion("1.0.*")> 
 
-<Assembly: AssemblyVersion("2015.0.0.0")>
+<Assembly: AssemblyVersion("2018.0.0.0")>
 <Assembly: AssemblyFileVersion("1.0.0.0")> 

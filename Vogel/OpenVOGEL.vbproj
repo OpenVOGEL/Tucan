@@ -26,17 +26,17 @@
     <MapFileExtensions>true</MapFileExtensions>
     <SupportUrl>https://sites.google.com/site/gahvogel/</SupportUrl>
     <ErrorReportUrl>https://github.com/GuillermoHazebrouck/OpenVOGEL/issues</ErrorReportUrl>
-    <ProductName>Open VOGEL 2017 - Beta 7</ProductName>
+    <ProductName>Open VOGEL 2018 - Beta 1</ProductName>
     <PublisherName>Open VOGEL</PublisherName>
     <SuiteName>Open VOGEL</SuiteName>
-    <ApplicationRevision>15</ApplicationRevision>
-    <ApplicationVersion>2017.3.0.%2a</ApplicationVersion>
+    <ApplicationRevision>4</ApplicationRevision>
+    <ApplicationVersion>2018.1.1.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
+    <PlatformTarget>x64</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <DefineDebug>true</DefineDebug>
@@ -81,6 +81,9 @@
   </PropertyGroup>
   <PropertyGroup>
     <SignManifests>false</SignManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>My Project\app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="SharpGL">
@@ -180,6 +183,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="My Project\app.manifest" />
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>

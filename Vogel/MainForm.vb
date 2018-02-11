@@ -36,7 +36,7 @@ Public Class MainForm
 
         ProjectRoot.Initialize()
 
-        Text = "Open VOGEL 2017 - Beta 7"
+        Text = Application.ProductName & "/" & Application.ProductVersion
 
         ' Initialize OpenGL control:
 

@@ -1,13 +1,22 @@
+AeroTools/bin/**
+AeroTools/obj/**
 AeroTools/**/bin
 AeroTools/**/obj
 
+MathTools/bin/**
+MathTools/obj/**
 MathTools/**/bin
 MathTools/**/obj
 
+Vogel/bin/**
+Vogel/obj/**
+Vogel/publish/**
 Vogel/**/bin
 Vogel/**/obj
 Vogel/**/publish
 
 Dependencies/DotNumerics/Source/DotNumerics/**/bin
 Dependencies/DotNumerics/Source/DotNumerics/**/obj
+Dependencies/DotNumerics/Source/DotNumerics/bin/**
+Dependencies/DotNumerics/Source/DotNumerics/obj/**
 

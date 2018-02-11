@@ -129,13 +129,13 @@
     <value>3, 198</value>
   </data>
   <data name="Label1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>249, 36</value>
+    <value>252, 36</value>
   </data>
   <data name="Label1.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
   </data>
   <data name="Label1.Text" xml:space="preserve">
-    <value>Open VOGEL 2017©</value>
+    <value>Open VOGEL 2018©</value>
   </data>
   <data name="&gt;&gt;Label1.Name" xml:space="preserve">
     <value>Label1</value>
