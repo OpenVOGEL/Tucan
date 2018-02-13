@@ -171,6 +171,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="DataStore\CamberLinesDatabase.vb" />
+    <Compile Include="Settings.vb" />
     <Compile Include="VisualModel\GUI\Forms\FormAskVelocity.Designer.vb">
       <DependentUpon>FormAskVelocity.vb</DependentUpon>
     </Compile>

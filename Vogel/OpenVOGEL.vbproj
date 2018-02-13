@@ -198,6 +198,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\SplashScreen.png" />
+    <None Include="Resources\VogelIcon.ico" />
     <Content Include="Vogel.ico" />
   </ItemGroup>
   <ItemGroup>
