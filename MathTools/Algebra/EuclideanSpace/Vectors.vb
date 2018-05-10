@@ -242,10 +242,18 @@ Namespace Algebra.EuclideanSpace
             Dim u As New EVector2(b.X - a.X, b.Y - a.Y)
             Dim coordinates As EVector2 = ParametricIntersection(p, v, a, u)
 
-            If coordinates.Y >= 0 And coordinates.Y <= 1 Then
-                Return coordinates.Y
-            Else
+            If IsNothing(coordinates) Then
+
                 Return Double.NaN
+
+            Else
+
+                If coordinates.Y >= 0 And coordinates.Y <= 1 Then
+                    Return coordinates.Y
+                Else
+                    Return Double.NaN
+                End If
+
             End If
 
         End Function
