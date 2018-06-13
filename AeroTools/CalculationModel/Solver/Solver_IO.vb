@@ -75,32 +75,32 @@ Namespace CalculationModel.Solver
 
             ' Add fuselages:
 
-            For i = 0 To Model.Objects.Count - 1
+            For ObjectIndex = 0 To Model.Objects.Count - 1
 
-                If TypeOf Model.Objects(i) Is Fuselage AndAlso Model.Objects(i).IncludeInCalculation Then
+                If TypeOf Model.Objects(ObjectIndex) Is Fuselage AndAlso Model.Objects(ObjectIndex).IncludeInCalculation Then
 
-                    Dim Body As Fuselage = Model.Objects(i)
+                    Dim Body As Fuselage = Model.Objects(ObjectIndex)
 
                     Dim Lattice As New BoundedLattice
 
                     Me.Lattices.Add(Lattice)
 
-                    For j = 0 To Body.NumberOfNodes - 1
+                    For NodeIndex = 0 To Body.NumberOfNodes - 1
 
-                        Lattice.AddNode(Body.Mesh.Nodes(j).Position)
+                        Lattice.AddNode(Body.Mesh.Nodes(NodeIndex).Position)
 
                     Next
 
-                    For j = 0 To Body.NumberOfPanels - 1
+                    For PanelIndex = 0 To Body.NumberOfPanels - 1
 
-                        Dim Node1 As Integer = Body.Mesh.Panels(j).N1
-                        Dim Node2 As Integer = Body.Mesh.Panels(j).N2
-                        Dim Node3 As Integer = Body.Mesh.Panels(j).N3
-                        Dim Node4 As Integer = Body.Mesh.Panels(j).N4
-                        Dim Reversed As Boolean = Body.Mesh.Panels(j).Reversed
-                        Dim Slender As Boolean = Body.Mesh.Panels(j).IsSlender
+                        Dim Node1 As Integer = Body.Mesh.Panels(PanelIndex).N1
+                        Dim Node2 As Integer = Body.Mesh.Panels(PanelIndex).N2
+                        Dim Node3 As Integer = Body.Mesh.Panels(PanelIndex).N3
+                        Dim Node4 As Integer = Body.Mesh.Panels(PanelIndex).N4
+                        Dim Reversed As Boolean = Body.Mesh.Panels(PanelIndex).Reversed
+                        Dim Slender As Boolean = Body.Mesh.Panels(PanelIndex).IsSlender
 
-                        If Body.Mesh.Panels(j).IsTriangular Then
+                        If Body.Mesh.Panels(PanelIndex).IsTriangular Then
 
                             Lattice.AddVortexRing3(Node1, Node2, Node3, Reversed, Slender)
 
@@ -110,7 +110,7 @@ Namespace CalculationModel.Solver
 
                         End If
 
-                        Lattice.VortexRings(j).IsPrimitive = Body.Mesh.Panels(j).IsPrimitive
+                        Lattice.VortexRings(PanelIndex).IsPrimitive = Body.Mesh.Panels(PanelIndex).IsPrimitive
 
                     Next
 
@@ -122,11 +122,11 @@ Namespace CalculationModel.Solver
 
             ' Add jet engine nacelles:
 
-            For i = 0 To Model.Objects.Count - 1
+            For ObjectIndex = 0 To Model.Objects.Count - 1
 
-                If TypeOf Model.Objects(i) Is JetEngine AndAlso Model.Objects(i).IncludeInCalculation Then
+                If TypeOf Model.Objects(ObjectIndex) Is JetEngine AndAlso Model.Objects(ObjectIndex).IncludeInCalculation Then
 
-                    Dim Nacelle As JetEngine = Model.Objects(i)
+                    Dim Nacelle As JetEngine = Model.Objects(ObjectIndex)
 
                     AddJetEngine(Nacelle)
 
@@ -177,9 +177,9 @@ Namespace CalculationModel.Solver
 
             Lattices.Add(Lattice)
 
-            For j = 0 To Surface.NumberOfNodes - 1
+            For NodeIndex = 0 To Surface.NumberOfNodes - 1
 
-                Lattice.AddNode(Surface.Mesh.Nodes(j).Position)
+                Lattice.AddNode(Surface.Mesh.Nodes(NodeIndex).Position)
 
                 If Mirror Then Lattice.Nodes(Lattice.Nodes.Count - 1).Position.Y *= -1
 
@@ -187,12 +187,12 @@ Namespace CalculationModel.Solver
 
             ' Add rings:
 
-            For j = 0 To Surface.NumberOfPanels - 1
+            For PanelIndex = 0 To Surface.NumberOfPanels - 1
 
-                Dim Node1 As Integer = Surface.Mesh.Panels(j).N1
-                Dim Node2 As Integer = Surface.Mesh.Panels(j).N2
-                Dim Node3 As Integer = Surface.Mesh.Panels(j).N3
-                Dim Node4 As Integer = Surface.Mesh.Panels(j).N4
+                Dim Node1 As Integer = Surface.Mesh.Panels(PanelIndex).N1
+                Dim Node2 As Integer = Surface.Mesh.Panels(PanelIndex).N2
+                Dim Node3 As Integer = Surface.Mesh.Panels(PanelIndex).N3
+                Dim Node4 As Integer = Surface.Mesh.Panels(PanelIndex).N4
 
                 Lattice.AddVortexRing4(Node1, Node2, Node3, Node4, False, True)
 
@@ -204,12 +204,12 @@ Namespace CalculationModel.Solver
 
                 Dim Wake As New Wake
 
-                For k = Surface.FirstPrimitiveNode To Surface.LastPrimitiveNode
-                    Wake.Primitive.Nodes.Add(Surface.GetPrimitiveNodeIndex(k) - 1)
+                For PrimitiveIndex = Surface.FirstPrimitiveNode To Surface.LastPrimitiveNode
+                    Wake.Primitive.Nodes.Add(Surface.GetPrimitiveNodeIndex(PrimitiveIndex) - 1)
                 Next
 
-                For k = Surface.FirstPrimitiveSegment To Surface.LastPrimitiveSegment
-                    Wake.Primitive.Rings.Add(Surface.GetPrimitivePanelIndex(k) - 1)
+                For PrimitiveIndex = Surface.FirstPrimitiveSegment To Surface.LastPrimitiveSegment
+                    Wake.Primitive.Rings.Add(Surface.GetPrimitivePanelIndex(PrimitiveIndex) - 1)
                 Next
 
                 Wake.CuttingStep = Surface.CuttingStep
@@ -226,11 +226,11 @@ Namespace CalculationModel.Solver
 
             ' Generate structural link:
 
-            Dim kLink As KinematicLink
-            Dim mLink As MechanicLink
+            Dim KineLink As KinematicLink
+            Dim MechaLink As MechanicLink
 
-            Dim snCount As Integer = -1
-            Dim seCount As Integer = -1
+            Dim StrNodeCount As Integer = -1
+            Dim StrElementCount As Integer = -1
 
             If Surface.IncludeStructure And GenerateStructure Then
 
@@ -238,87 +238,98 @@ Namespace CalculationModel.Solver
 
                 Dim StructuralLink As New StructuralLink
 
-                snCount = 0
-                seCount = -1
+                StrNodeCount = 0
+                StrElementCount = -1
                 StructuralLink.StructuralCore.StructuralSettings = Settings.StructuralSettings
-                StructuralLink.StructuralCore.Nodes.Add(New StructuralNode(snCount))
-                StructuralLink.StructuralCore.Nodes(snCount).Position.Assign(Surface.StructuralPartition(0).p)
-                If (Mirror) Then StructuralLink.StructuralCore.Nodes(snCount).Position.Y *= -1
-                StructuralLink.StructuralCore.Nodes(snCount).Contrains.Clamped()
+                StructuralLink.StructuralCore.Nodes.Add(New StructuralNode(StrNodeCount))
+                StructuralLink.StructuralCore.Nodes(StrNodeCount).Position.Assign(Surface.StructuralPartition(0).p)
+                If (Mirror) Then StructuralLink.StructuralCore.Nodes(StrNodeCount).Position.Y *= -1
+                StructuralLink.StructuralCore.Nodes(StrNodeCount).Contrains.Clamped()
 
                 ' Add kinematic link
 
-                Dim lv As Integer = -1 ' > linked vortex ring
-                Dim ln As Integer = -1 ' > linked node
+                Dim LinkedVortexIndex As Integer = -1 ' > linked vortex ring
+                Dim LinkedNodeIndex As Integer = -1 ' > linked node
 
-                kLink = New KinematicLink(StructuralLink.StructuralCore.Nodes(snCount))
+                KineLink = New KinematicLink(StructuralLink.StructuralCore.Nodes(StrNodeCount))
                 For n = 0 To Surface.NumberOfChordPanels
-                    ln += 1
-                    kLink.Link(Lattice.Nodes(ln))
+                    LinkedNodeIndex += 1
+                    KineLink.Link(Lattice.Nodes(LinkedNodeIndex))
                 Next
-                StructuralLink.KinematicLinks.Add(kLink)
+                StructuralLink.KinematicLinks.Add(KineLink)
 
                 ' Add rest of the nodes and elements:
 
-                For pn = 1 To Surface.StructuralPartition.Count - 1
+                For PartitionNodeIndex = 1 To Surface.StructuralPartition.Count - 1
 
                     ' Add nodes:
 
-                    snCount += 1
-                    StructuralLink.StructuralCore.Nodes.Add(New StructuralNode(snCount))
-                    StructuralLink.StructuralCore.Nodes(snCount).Position.Assign(Surface.StructuralPartition(pn).p)
-                    If (Mirror) Then StructuralLink.StructuralCore.Nodes(snCount).Position.Y *= -1
+                    StrNodeCount += 1
+
+                    StructuralLink.StructuralCore.Nodes.Add(New StructuralNode(StrNodeCount))
+                    StructuralLink.StructuralCore.Nodes(StrNodeCount).Position.Assign(Surface.StructuralPartition(PartitionNodeIndex).p)
+                    If (Mirror) Then StructuralLink.StructuralCore.Nodes(StrNodeCount).Position.Y *= -1
 
                     ' Add element:
 
-                    seCount += 1
-                    Dim element As New ConstantBeamElement(seCount)
-                    element.NodeA = StructuralLink.StructuralCore.Nodes(snCount - 1)
-                    element.NodeB = StructuralLink.StructuralCore.Nodes(snCount)
-                    element.Section.Assign(Surface.StructuralPartition(seCount).LocalSection)
-                    StructuralLink.StructuralCore.Elements.Add(element)
+                    StrElementCount += 1
+
+                    Dim StrElement As New ConstantBeamElement(StrElementCount)
+                    StrElement.NodeA = StructuralLink.StructuralCore.Nodes(StrNodeCount - 1)
+                    StrElement.NodeB = StructuralLink.StructuralCore.Nodes(StrNodeCount)
+                    StrElement.Section.Assign(Surface.StructuralPartition(StrElementCount).LocalSection)
+                    StructuralLink.StructuralCore.Elements.Add(StrElement)
 
                     ' Add kinematic link:
 
-                    Dim len As Integer = ln + 1 '(leading edge lattice node index)
+                    Dim LeadingEdgeNodeIndex As Integer = LinkedNodeIndex + 1 '(leading edge lattice node index)
 
-                    kLink = New KinematicLink(StructuralLink.StructuralCore.Nodes(snCount))
-                    For n = 0 To Surface.NumberOfChordPanels
-                        ln += 1
-                        kLink.Link(Lattice.Nodes(ln))
+                    KineLink = New KinematicLink(StructuralLink.StructuralCore.Nodes(StrNodeCount))
+
+                    For NodeCounter = 0 To Surface.NumberOfChordPanels
+                        LinkedNodeIndex += 1
+                        KineLink.Link(Lattice.Nodes(LinkedNodeIndex))
                     Next
-                    StructuralLink.KinematicLinks.Add(kLink)
 
-                    Dim ten As Integer = ln '(trailing edge lattice node index)
+                    StructuralLink.KinematicLinks.Add(KineLink)
+
+                    Dim TrailingEdgeNodeIndex As Integer = LinkedNodeIndex '(trailing edge lattice node index)
 
                     ' Add mechanic link:
 
-                    mLink = New MechanicLink(element)
-                    For r = 0 To Surface.NumberOfChordPanels - 1
-                        lv += 1
-                        mLink.Link(Lattice.VortexRings(lv))
+                    MechaLink = New MechanicLink(StrElement)
+
+                    For PanelCounter = 0 To Surface.NumberOfChordPanels - 1
+                        LinkedVortexIndex += 1
+                        MechaLink.Link(Lattice.VortexRings(LinkedVortexIndex))
                     Next
-                    StructuralLink.MechanicLinks.Add(mLink)
 
-                    ' Build the element basis:
+                    StructuralLink.MechanicLinks.Add(MechaLink)
 
-                    ' U has the direction of the element
-                    element.Basis.U.X = element.NodeB.Position.X - element.NodeA.Position.X
-                    element.Basis.U.Y = element.NodeB.Position.Y - element.NodeA.Position.Y
-                    element.Basis.U.Z = element.NodeB.Position.Z - element.NodeA.Position.Z
-                    element.Basis.U.Normalize()
+                    ' Find chordwise vector
 
-                    Dim c As New EVector3 ' chordwise vector
-                    c.X = Lattice.Nodes(ten).Position.X - Lattice.Nodes(len).Position.X
-                    c.Y = Lattice.Nodes(ten).Position.Y - Lattice.Nodes(len).Position.Y
-                    c.Z = Lattice.Nodes(ten).Position.Z - Lattice.Nodes(len).Position.Z
+                    Dim ChordVector As New EVector3
+                    ChordVector.X = Lattice.Nodes(TrailingEdgeNodeIndex).Position.X - Lattice.Nodes(LeadingEdgeNodeIndex).Position.X
+                    ChordVector.Y = Lattice.Nodes(TrailingEdgeNodeIndex).Position.Y - Lattice.Nodes(LeadingEdgeNodeIndex).Position.Y
+                    ChordVector.Z = Lattice.Nodes(TrailingEdgeNodeIndex).Position.Z - Lattice.Nodes(LeadingEdgeNodeIndex).Position.Z
 
-                    ' W is normal to the surface:
-                    element.Basis.W.FromVectorProduct(c, element.Basis.U)
-                    element.Basis.W.Normalize()
+                    ' Build the element orthonormal basis:
 
-                    ' V is normal to W and U, and points to the trailing edge
-                    element.Basis.V.FromVectorProduct(element.Basis.W, element.Basis.U)
+                    ' NOTE: U has the direction of the element
+
+                    StrElement.Basis.U.X = StrElement.NodeB.Position.X - StrElement.NodeA.Position.X
+                    StrElement.Basis.U.Y = StrElement.NodeB.Position.Y - StrElement.NodeA.Position.Y
+                    StrElement.Basis.U.Z = StrElement.NodeB.Position.Z - StrElement.NodeA.Position.Z
+                    StrElement.Basis.U.Normalize()
+
+                    ' NOTE: W is normal to the surface
+
+                    StrElement.Basis.W.FromVectorProduct(ChordVector, StrElement.Basis.U)
+                    StrElement.Basis.W.Normalize()
+
+                    ' NOTE: V is normal to W and U, and points to the trailing edge
+
+                    StrElement.Basis.V.FromVectorProduct(StrElement.Basis.W, StrElement.Basis.U)
 
                 Next
 
@@ -330,23 +341,23 @@ Namespace CalculationModel.Solver
 
             ' Load chordwise stripes (for skin drag computation)
 
-            Dim count As Integer = 0
+            Dim VortexRingIndex As Integer = 0
 
-            For j = 0 To Surface.WingRegions.Count - 1
+            For RegionIndex = 0 To Surface.WingRegions.Count - 1
 
-                Dim Region As WingRegion = Surface.WingRegions(j)
+                Dim Region As WingRegion = Surface.WingRegions(RegionIndex)
 
                 'If (Not IsNothing(PolarDataBase)) And PolarDataBase.Polars.Count > 0 Then
 
-                For k = 1 To Region.nSpanPanels
+                For SpanPanelIndex = 1 To Region.SpanPanelsCount
 
                     Dim Stripe As New ChorwiseStripe()
 
                     Stripe.Polars = Region.PolarFamiliy
 
-                    For p = 1 To Surface.NumberOfChordPanels
-                        Stripe.Rings.Add(Lattice.VortexRings(count))
-                        count += 1
+                    For PanelCount = 1 To Surface.NumberOfChordPanels
+                        Stripe.Rings.Add(Lattice.VortexRings(VortexRingIndex))
+                        VortexRingIndex += 1
                     Next
 
                     Lattice.ChordWiseStripes.Add(Stripe)

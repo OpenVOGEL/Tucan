@@ -67,13 +67,13 @@ Namespace CalculationModel.Models.Structural.Library.Elements
         ''' Y coordinate of center of mass [m]
         ''' </summary>
         ''' <remarks></remarks>
-        Public CMy As Double
+        Public CMy As Double = 0.0
 
         ''' <summary>
         ''' Z coordinate of center of mass [m]
         ''' </summary>
         ''' <remarks></remarks>
-        Public CMz As Double
+        Public CMz As Double = 0.0
 
         Public Sub Assign(ByVal Section As Section)
 

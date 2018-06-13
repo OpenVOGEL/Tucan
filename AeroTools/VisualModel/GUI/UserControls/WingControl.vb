@@ -93,7 +93,7 @@ Public Class WingControl
 
         PointToCurrentRegion()
 
-        Surface.CurrentRegion.nSpanPanels = nudSpanwiseRings.Value
+        Surface.CurrentRegion.SpanPanelsCount = nudSpanwiseRings.Value
         Surface.CurrentRegion.TipChord = nudTipChord.Value
         Surface.CurrentRegion.Length = nudLength.Value
         Surface.CurrentRegion.Sweepback = nudSweepback.Value
@@ -209,7 +209,7 @@ Public Class WingControl
 
         Ready = False
 
-        nudSpanwiseRings.Value = Surface.CurrentRegion.nSpanPanels
+        nudSpanwiseRings.Value = Surface.CurrentRegion.SpanPanelsCount
         nudTipChord.Value = Surface.CurrentRegion.TipChord
         nudLength.Value = Surface.CurrentRegion.Length
         nudSweepback.Value = Surface.CurrentRegion.Sweepback

@@ -59,7 +59,7 @@ Namespace VisualModel.Models.Components
         ''' <remarks></remarks>
         Public Sub Assign(ByVal PanelExt As WingRegion)
 
-            _SpanPanels = PanelExt.nSpanPanels
+            _SpanPanels = PanelExt.SpanPanelsCount
             _TipChord = PanelExt.TipChord
             _Sweepback = PanelExt.Sweepback
             _Length = PanelExt.Length
@@ -77,7 +77,7 @@ Namespace VisualModel.Models.Components
         ''' <value></value>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Property nSpanPanels As Integer
+        Public Property SpanPanelsCount As Integer
             Get
                 Return _SpanPanels
             End Get
@@ -92,7 +92,7 @@ Namespace VisualModel.Models.Components
         ''' <value></value>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Property nChordNodes As Integer
+        Public Property ChordNodesCount As Integer
             Get
                 Return _SpanPanels + 1
             End Get
@@ -241,7 +241,7 @@ Namespace VisualModel.Models.Components
         ''' <remarks></remarks>
         Public Sub WriteToXML(ByRef writer As XmlWriter)
 
-            writer.WriteAttributeString("SpanVortexRings", String.Format("{0}", nSpanPanels))
+            writer.WriteAttributeString("SpanVortexRings", String.Format("{0}", SpanPanelsCount))
             writer.WriteAttributeString("ExternalChord", String.Format("{0}", TipChord))
             writer.WriteAttributeString("Length", String.Format("{0}", Length))
             writer.WriteAttributeString("SweepBack", String.Format("{0}", Sweepback))
@@ -276,7 +276,7 @@ Namespace VisualModel.Models.Components
         ''' <remarks></remarks>
         Public Sub ReadFromXML(ByRef reader As XmlReader)
 
-            nSpanPanels = IOXML.ReadInteger(reader, "SpanVortexRings", 4)
+            SpanPanelsCount = IOXML.ReadInteger(reader, "SpanVortexRings", 4)
             TipChord = IOXML.ReadDouble(reader, "ExternalChord", 1.0)
             Length = IOXML.ReadDouble(reader, "Length", 1.0)
             Sweepback = IOXML.ReadDouble(reader, "SweepBack", 0.0)
@@ -417,7 +417,7 @@ Namespace VisualModel.Models.Components
             LastPrimitiveSegment = 1
 
             FirstPrimitiveSegment = NumberOfChordPanels + 1
-            LastPrimitiveSegment = FirstPrimitiveSegment + WingRegions(0).nSpanPanels - 1
+            LastPrimitiveSegment = FirstPrimitiveSegment + WingRegions(0).SpanPanelsCount - 1
 
             GenerateMesh()
 
@@ -711,7 +711,7 @@ Namespace VisualModel.Models.Components
         Public Sub InitializeRegions()
 
             Dim NewRegion As New WingRegion
-            NewRegion.nSpanPanels = 5
+            NewRegion.SpanPanelsCount = 5
             NewRegion.TipChord = 1.0#
             NewRegion.Length = 1.0#
             NewRegion.TwistAxis = 0.5#
@@ -726,7 +726,7 @@ Namespace VisualModel.Models.Components
         Public Sub AddRegion()
 
             Dim NewRegion As New WingRegion
-            NewRegion.nSpanPanels = 5
+            NewRegion.SpanPanelsCount = 5
             NewRegion.TipChord = 1.0#
             NewRegion.Length = 1.0#
             NewRegion.TwistAxis = 0.5#
@@ -744,7 +744,7 @@ Namespace VisualModel.Models.Components
             If Position >= 1 And Position <= WingRegions.Count Then
 
                 Dim NewRegion As New WingRegion
-                NewRegion.nSpanPanels = 5
+                NewRegion.SpanPanelsCount = 5
                 NewRegion.TipChord = 1.0#
                 NewRegion.Length = 1.0#
                 NewRegion.TwistAxis = 0.5#
@@ -761,7 +761,7 @@ Namespace VisualModel.Models.Components
         Public Overloads Sub InsertRegion()
 
             Dim NewRegion As New WingRegion
-            NewRegion.nSpanPanels = 5
+            NewRegion.SpanPanelsCount = 5
             NewRegion.TipChord = 1.0#
             NewRegion.Length = 1.0#
             NewRegion.TwistAxis = 0.5#
@@ -843,9 +843,9 @@ Namespace VisualModel.Models.Components
 
             For i = 0 To WingRegions.Count - 1
 
-                _nSpanNodes = WingRegions.Item(i).nChordNodes + _nSpanNodes
+                _nSpanNodes = WingRegions.Item(i).ChordNodesCount + _nSpanNodes
 
-                _nSpanPanels = WingRegions.Item(i).nSpanPanels + _nSpanPanels
+                _nSpanPanels = WingRegions.Item(i).SpanPanelsCount + _nSpanPanels
 
             Next
 
@@ -1078,11 +1078,11 @@ Namespace VisualModel.Models.Components
 
                 Stramo = WingRegions(mpIndex).Length
 
-                Sigma1 = 1 - 1 / WingRegions.Item(mpIndex).nSpanPanels
+                Sigma1 = 1 - 1 / WingRegions.Item(mpIndex).SpanPanelsCount
 
                 Scolumn1 = Stramo - Chordf / _nChordPanels
 
-                Sigma2 = 1 / WingRegions.Item(mpIndex).nSpanPanels
+                Sigma2 = 1 / WingRegions.Item(mpIndex).SpanPanelsCount
 
                 Scolumn2 = Chordi / _nChordPanels
 
@@ -1100,11 +1100,11 @@ Namespace VisualModel.Models.Components
 
                 ' Generate the geometry of each chordwise strip
 
-                For k = 1 To WingRegions(mpIndex).nSpanPanels
+                For k = 1 To WingRegions(mpIndex).SpanPanelsCount
 
                     ' a) Calculate the distance to the column in spanwise direction
 
-                    Y = k / WingRegions.Item(mpIndex).nSpanPanels
+                    Y = k / WingRegions.Item(mpIndex).SpanPanelsCount
 
                     Select Case WingRegions.Item(mpIndex).SpacementType
 
@@ -1216,7 +1216,7 @@ Namespace VisualModel.Models.Components
 
                         point.Position.Z = -Pij.X * Math.Cos(gamma) * Math.Sin(twist) + Pij.Y * Math.Sin(gamma) + Pij.Z * Math.Cos(gamma) * Math.Cos(twist) + leadingEdge.Z
 
-                        If k = WingRegions(mpIndex).nSpanPanels And l = 1 Then
+                        If k = WingRegions(mpIndex).SpanPanelsCount And l = 1 Then
 
                             XBp = point.Position.X
 
@@ -1730,7 +1730,7 @@ Namespace VisualModel.Models.Components
 
                 ' Create the partitions:
 
-                For i = i0 To Panel.nSpanPanels
+                For i = i0 To Panel.SpanPanelsCount
 
                     lePoint = Mesh.Nodes(sp * _nChordNodes).Position
 
@@ -1752,7 +1752,7 @@ Namespace VisualModel.Models.Components
                     LocalPartition.p.Y = pStructural.Y
                     LocalPartition.p.Z = pStructural.Z
 
-                    Dim coord As Double = i / (Panel.nSpanPanels - i0)
+                    Dim coord As Double = i / (Panel.SpanPanelsCount - i0)
 
                     LocalPartition.LocalSection.AE = RootSection.AE + coord * (Panel.TipSection.AE - RootSection.AE)
                     LocalPartition.LocalSection.GJ = RootSection.GJ + coord * (Panel.TipSection.GJ - RootSection.GJ)

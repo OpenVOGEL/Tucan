@@ -51,7 +51,7 @@ Namespace CalculationModel.Models.Structural
         ''' Generates the structure global stiffness and mass matrices
         ''' </summary>
         ''' <remarks></remarks>
-        Public Sub CreateMatrices(ByVal Path As String, Optional ByVal asTXT As Boolean = False)
+        Public Sub CreateMatrices(ByVal Path As String, Optional ByVal PrintAsTxt As Boolean = False)
 
             ' Generates structure mass and stiffness matrices
 
@@ -60,28 +60,52 @@ Namespace CalculationModel.Models.Structural
 
             ' Add element stiffnes:
 
+            Dim ElementCount As Integer = 0
+
             For Each Element In Elements
+
+                ElementCount += 1
 
                 Element.GenerateGlobalMatrices()
 
-                Dim BaseA As Integer = 6 * Element.NodeA.Index
-                Dim BaseB As Integer = 6 * Element.NodeB.Index
+                If PrintAsTxt Then
+
+                    Try
+
+                        Dim FileK As Integer = 1
+                        FileOpen(FileK, Path & String.Format("\KG_{0}.txt", ElementCount), OpenMode.Output, OpenAccess.Write)
+                        Print(FileK, String.Format("{0,12:F8};", Element.K.__repr__))
+                        FileClose(FileK)
+
+                        Dim FileM As Integer = 2
+                        FileOpen(FileM, Path & String.Format("\MG_{0}.txt", ElementCount), OpenMode.Output, OpenAccess.Write)
+                        Print(FileM, String.Format("{0,12:F8};", Element.M.__repr__))
+                        FileClose(FileM)
+
+                    Catch ex As Exception
+
+                    End Try
+
+                End If
+
+                Dim BaseIndexA As Integer = 6 * Element.NodeA.Index
+                Dim BaseIndexB As Integer = 6 * Element.NodeB.Index
 
                 For i = 0 To 5
 
                     For j = 0 To 5
 
-                        K(BaseA + i, BaseA + j) += Element.K(i, j)
-                        M(BaseA + i, BaseA + j) += Element.M(i, j)
+                        K(BaseIndexA + i, BaseIndexA + j) += Element.K(i, j)
+                        M(BaseIndexA + i, BaseIndexA + j) += Element.M(i, j)
 
-                        K(BaseA + i, BaseB + j) += Element.K(i, j + 6)
-                        M(BaseA + i, BaseB + j) += Element.M(i, j + 6)
+                        K(BaseIndexA + i, BaseIndexB + j) += Element.K(i, j + 6)
+                        M(BaseIndexA + i, BaseIndexB + j) += Element.M(i, j + 6)
 
-                        K(BaseB + i, BaseA + j) += Element.K(i + 6, j)
-                        M(BaseB + i, BaseA + j) += Element.M(i + 6, j)
+                        K(BaseIndexB + i, BaseIndexA + j) += Element.K(i + 6, j)
+                        M(BaseIndexB + i, BaseIndexA + j) += Element.M(i + 6, j)
 
-                        K(BaseB + i, BaseB + j) += Element.K(i + 6, j + 6)
-                        M(BaseB + i, BaseB + j) += Element.M(i + 6, j + 6)
+                        K(BaseIndexB + i, BaseIndexB + j) += Element.K(i + 6, j + 6)
+                        M(BaseIndexB + i, BaseIndexB + j) += Element.M(i + 6, j + 6)
 
                     Next
 
@@ -101,21 +125,19 @@ Namespace CalculationModel.Models.Structural
 
             'Next
 
-            If asTXT Then
+            If PrintAsTxt Then
 
                 Try
 
-                    Dim fK As Integer = 1
-                    FileOpen(fK, Path & "\KG.txt", OpenMode.Output, OpenAccess.Write)
+                    Dim FileK As Integer = 1
+                    FileOpen(FileK, Path & "\KG.txt", OpenMode.Output, OpenAccess.Write)
+                    Print(FileK, String.Format("{0,12:F8};", K.__repr__))
+                    FileClose(FileK)
 
-                    Dim fM As Integer = 2
-                    FileOpen(fM, Path & "\MG.txt", OpenMode.Output, OpenAccess.Write)
-
-                    Print(fK, String.Format("{0,12:F8};", K.__repr__))
-                    Print(fM, String.Format("{0,12:F8};", M.__repr__))
-
-                    FileClose(fK)
-                    FileClose(fM)
+                    Dim FileM As Integer = 2
+                    FileOpen(FileM, Path & "\MG.txt", OpenMode.Output, OpenAccess.Write)
+                    Print(FileM, String.Format("{0,12:F8};", M.__repr__))
+                    FileClose(FileM)
 
                 Catch ex As Exception
 
