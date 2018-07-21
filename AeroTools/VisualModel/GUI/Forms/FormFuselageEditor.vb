@@ -226,6 +226,7 @@ Public Class FormFuselageEditor
 
         Dim g As Graphics = e.Graphics
 
+        g.FillRectangle(DrawingBackground, e.ClipRectangle)
         g.DrawRectangle(Pens.DarkGray, 0, 0, e.ClipRectangle.Width - 1, e.ClipRectangle.Height - 1)
 
         g.SmoothingMode = Drawing2D.SmoothingMode.HighQuality
@@ -260,7 +261,7 @@ Public Class FormFuselageEditor
     End Sub
 
     Private MarkerPen As New Pen(Color.Black, 1)
-    Private FontLabel As New Font("Segoe UI", 6.5)
+    Private FontLabel As New Font("Consolas", 8.0)
 
     Private Sub DrawSection(ByVal Style As CrossSectionStyle, ByVal Section As CrossSection, ByVal g As Graphics)
 
@@ -327,7 +328,7 @@ Public Class FormFuselageEditor
                         g.FillEllipse(Brushes.Orange, po.X - 3, po.Y - 3, 6, 6)
                         g.DrawEllipse(MarkerPen, po.X - 3, po.Y - 3, 6, 6)
 
-                        content = String.Format("X:{0:F3}; Y:{1:F3}", Section.Vertices(i).X, Section.Vertices(i).Y)
+                        content = String.Format("{0:D}: [{1:F3}; {2:F3}]", i + 1, Section.Vertices(i).X, Section.Vertices(i).Y)
                         ps = po
 
                     Else
@@ -803,6 +804,7 @@ Public Class FormFuselageEditor
     Private ZaxisPen As New Pen(Color.Magenta, 2)
     Private Const AXIS_LENGHT As Single = 25
     Private SelectedLinePen As New Pen(Color.Black, 2)
+    Private DrawingBackground As New SolidBrush(Color.FromArgb(240, 240, 255))
 
     Private Sub pbSideView_Paint(sender As Object, e As PaintEventArgs) Handles pbSideView.Paint
 
@@ -812,6 +814,7 @@ Public Class FormFuselageEditor
 
         Dim g As Graphics = e.Graphics
 
+        g.FillRectangle(DrawingBackground, e.ClipRectangle)
         g.DrawRectangle(Pens.DarkGray, 0, 0, e.ClipRectangle.Width - 1, e.ClipRectangle.Height - 1)
 
         g.SmoothingMode = Drawing2D.SmoothingMode.HighQuality
@@ -912,7 +915,7 @@ Public Class FormFuselageEditor
 
                         g.FillPolygon(Brushes.Gray, pnts)
 
-                        Dim lblZ As String = String.Format("{0:F3}m", Section.Z)
+                        Dim lblZ As String = String.Format("{0:D}: {1:F3}", i + 1, Section.Z)
 
                         Dim lblZsize = g.MeasureString(lblZ, FontLabel)
 
