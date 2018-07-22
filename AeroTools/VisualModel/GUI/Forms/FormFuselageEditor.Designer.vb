@@ -49,6 +49,7 @@ Partial Class FormFuselageEditor
         Me.pbSideView = New System.Windows.Forms.PictureBox()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.Label4 = New System.Windows.Forms.Label()
+        Me.btnCenter = New System.Windows.Forms.Button()
         CType(Me.pbSections, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.nudPosition, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.nudX, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -351,11 +352,28 @@ Partial Class FormFuselageEditor
         Me.Label4.TabIndex = 142
         Me.Label4.Text = "Cross section"
         '
+        'btnCenter
+        '
+        Me.btnCenter.BackColor = System.Drawing.Color.White
+        Me.btnCenter.FlatAppearance.BorderColor = System.Drawing.Color.Gray
+        Me.btnCenter.FlatAppearance.CheckedBackColor = System.Drawing.Color.White
+        Me.btnCenter.FlatAppearance.MouseDownBackColor = System.Drawing.Color.PaleGreen
+        Me.btnCenter.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DeepSkyBlue
+        Me.btnCenter.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnCenter.Font = New System.Drawing.Font("Microsoft Sans Serif", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnCenter.Location = New System.Drawing.Point(263, 29)
+        Me.btnCenter.Name = "btnCenter"
+        Me.btnCenter.Size = New System.Drawing.Size(58, 23)
+        Me.btnCenter.TabIndex = 143
+        Me.btnCenter.Text = "Center"
+        Me.btnCenter.UseVisualStyleBackColor = False
+        '
         'FormFuselageEditor
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(748, 512)
+        Me.Controls.Add(Me.btnCenter)
         Me.Controls.Add(Me.Label4)
         Me.Controls.Add(Me.Label3)
         Me.Controls.Add(Me.pbSideView)
@@ -429,4 +447,5 @@ Partial Class FormFuselageEditor
     Friend WithEvents pbSideView As Windows.Forms.PictureBox
     Friend WithEvents Label3 As Windows.Forms.Label
     Friend WithEvents Label4 As Windows.Forms.Label
+    Friend WithEvents btnCenter As Windows.Forms.Button
 End Class

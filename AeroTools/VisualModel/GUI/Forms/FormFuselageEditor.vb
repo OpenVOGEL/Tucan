@@ -39,6 +39,7 @@ Public Class FormFuselageEditor
         CurrentSectionIndex = 0
         ObtainGlobalExtremeCoordinates()
         LoadLiftingSurfaces()
+        UpdateGeometricParameters()
 
         If _Fuselage.MeshType = MeshTypes.StructuredQuadrilaterals Then
             rbQuads.Checked = True
@@ -126,6 +127,8 @@ Public Class FormFuselageEditor
         _mcenter.SetCoordinates(_BLg.X, 0.5 * (_BLg.Y + _URg.Y))
         _gcenter.X = 0.5 * pbSections.Width
         _gcenter.Y = 0.5 * pbSections.Height
+        panningDisplacement.X = 0
+        panningDisplacement.Y = 0
 
     End Sub
 
@@ -222,7 +225,7 @@ Public Class FormFuselageEditor
 
     End Sub
 
-    Private Sub pbDrawing_Paint(ByVal sender As System.Object, ByVal e As System.Windows.Forms.PaintEventArgs) Handles pbSections.Paint
+    Private Sub pbSections_Paint(ByVal sender As System.Object, ByVal e As System.Windows.Forms.PaintEventArgs) Handles pbSections.Paint
 
         Dim g As Graphics = e.Graphics
 
@@ -232,8 +235,6 @@ Public Class FormFuselageEditor
         g.SmoothingMode = Drawing2D.SmoothingMode.HighQuality
 
         ' Draw axes:
-
-        UpdateGeometricParameters()
 
         Dim ori As PointF = GetPoint(0, 0)
 
@@ -268,8 +269,6 @@ Public Class FormFuselageEditor
         ObtainExtremeCoordinates(Section)
 
         If Not IsNothing(CurrentSection) Then
-
-            UpdateGeometricParameters()
 
             Dim po As PointF
             Dim pf As PointF
@@ -396,7 +395,7 @@ Public Class FormFuselageEditor
     Private panningAnkor As PointF
     Private panningDisplacement As PointF
 
-    Private Sub MoveSections(ByVal s As Object, ByVal e As MouseEventArgs) Handles pbSections.MouseMove
+    Private Sub pbSections_MouseMove(ByVal s As Object, ByVal e As MouseEventArgs) Handles pbSections.MouseMove
         If panning Then
             panningDisplacement.X = e.X - panningAnkor.X
             panningDisplacement.Y = e.Y - panningAnkor.Y
@@ -404,7 +403,7 @@ Public Class FormFuselageEditor
         End If
     End Sub
 
-    Private Sub SetAnkor(ByVal s As Object, ByVal e As MouseEventArgs) Handles pbSections.MouseDown
+    Private Sub pbSections_MouseDown(ByVal s As Object, ByVal e As MouseEventArgs) Handles pbSections.MouseDown
         If e.Button = MouseButtons.Middle Then
             panning = True
             panningAnkor.X = e.X - panningDisplacement.X
@@ -421,6 +420,17 @@ Public Class FormFuselageEditor
 
         Refresh()
 
+    End Sub
+
+    Private Sub pbSections_MouseHover(ByVal s As Object, ByVal e As EventArgs) Handles pbSections.MouseHover
+        pbSections.Focus()
+    End Sub
+
+    Private Sub pbSections_MouseWheel(ByVal s As Object, ByVal e As MouseEventArgs) Handles Me.MouseWheel
+        If pbSections.Focused Then
+            _scale = Math.Max(0, _scale + e.Delta)
+            Refresh()
+        End If
     End Sub
 
     Private _SelectedVertexIndex As Integer = -1
@@ -977,6 +987,11 @@ Public Class FormFuselageEditor
             pbSideView.Refresh()
         End If
 
+    End Sub
+
+    Private Sub btnCenter_Click(sender As Object, e As EventArgs) Handles btnCenter.Click
+        UpdateGeometricParameters()
+        Refresh()
     End Sub
 
 End Class
