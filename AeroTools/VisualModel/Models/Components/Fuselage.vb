@@ -1424,7 +1424,7 @@ Namespace VisualModel.Models.Components
 
                     ' Find intersection iteratively:
 
-                    Dim iterations = 2
+                    Dim iterations = 10
 
                     For k = 1 To iterations
 
