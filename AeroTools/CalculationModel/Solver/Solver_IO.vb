@@ -240,7 +240,7 @@ Namespace CalculationModel.Solver
 
                 StrNodeCount = 0
                 StrElementCount = -1
-                StructuralLink.StructuralCore.StructuralSettings = Settings.StructuralSettings
+                StructuralLink.StructuralCore.StructuralSettings.Assign(Settings.StructuralSettings)
                 StructuralLink.StructuralCore.Nodes.Add(New StructuralNode(StrNodeCount))
                 StructuralLink.StructuralCore.Nodes(StrNodeCount).Position.Assign(Surface.StructuralPartition(0).p)
                 If (Mirror) Then StructuralLink.StructuralCore.Nodes(StrNodeCount).Position.Y *= -1

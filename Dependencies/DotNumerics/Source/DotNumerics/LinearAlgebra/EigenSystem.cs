@@ -357,9 +357,486 @@ namespace DotNumerics.LinearAlgebra
             return EigenVals;
         }
 
+        public double EValError_Subspace = 1E-7;
+        public double EValError_Jacobi = 1E-7;
+
+        /// <summary>
+        /// Finds the eigen values and eigen vectors of a small system Kφ = λMφ. 
+        /// K and M are dense symmetric matrices, K is non-singular and M is positive-definite. 
+        /// </summary>
+        /// <param name="K">K matrix</param>
+        /// <param name="M">M matrix</param>
+        /// <param name="Q">M-normalized eigen vectors (in columns)</param>
+        /// <param name="D">Eigen values</param>
+        /// <remarks>
+        /// This method is suitable for small systems only, and will work better as matrices K and M have many off-diagonal zeros. 
+        /// This is why this method can be succesfully implemented on the subspace iteration method (where projected matrices tend to diagonal form).
+        /// If a lumped matrix is applied, this method will work even faster.
+        /// </remarks>
+        public void Jacobi(SymmetricMatrix K, SymmetricMatrix M, Matrix Q, Vector D)
+        {
+
+            int n = K.RowCount;
+            
+            if (M.RowCount != n | Q.RowCount != n | Q.ColumnCount != n | D.Length != n)
+            {
+                throw new Exception("Error on Jacobi solver: unconforming matrix sizes");
+            }
+                    
+            Vector L = new Vector(n);
+            Matrix X = new Matrix(n);
+
+            for (int i = 0; i < n; i++) // < load identity
+                X[i, i] = 1;
+
+            double er_evec = 0.0;               // < eigen vectors convergence threshold
+            double er_eval = EValError_Jacobi;  // < eigen values convergence threshold
+
+            bool Converged = false;
+            int Sweep = 0;
+
+            SymmetricMatrix newM = M.Clone ();
+            SymmetricMatrix newK = K.Clone ();
+
+            while (!Converged && Sweep < 100)
+            {
+
+                er_evec = Math.Pow(0.01, 2 * (Sweep + 1)); // < update sweep threshold
+
+                for (int i = 0; i < n - 1; i++)
+                {
+
+                    for (int j = i + 1; j < n; j++)
+                    {
+
+                        if ((newM[i, j] * newM[i, j]) / (newM[i, i] * newM[j, j]) < er_evec &&
+                            (newK[i, j] * newK[i, j]) / (newK[i, i] * newK[j, j]) < er_evec)
+                            continue; // < no zeroing required for this off-diagonal element
+
+                        // calculate alpha and beta to zero off-diagonal elements {i, j} on K and M:
+
+                        double kii = newK[i, i] * newM[i, j] - newM[i, i] * newK[i, j];
+                        double kjj = newK[j, j] * newM[i, j] - newM[j, j] * newK[i, j];
+                        double kdash = newK[i, i] * newM[j, j] - newK[j, j] * newM[i, i];
+
+                        double check = 0.25 * kdash * kdash + kii * kjj;
+
+                        double Den = 0.5 * kdash + System.Math.Sign(kdash) * System.Math.Sqrt(check);
+
+                        double g = 0.0;
+                        double a = 0.0;
+
+                        if (System.Math.Abs(Den) > 1E-50)
+                        {
+                            g = -kii / Den;
+                            a = kjj / Den;
+                        }
+                        else
+                        {
+                            g = -newK[i, j] / newK[j, j];
+                            a = 0.0;
+                        }
+
+                        // Perform rotation to annihilate off-diagonal element ij:
+
+                        for (int k = 0; k < i; k++)
+                        {
+                            double Kki = newK[k, i];
+                            double Kkj = newK[k, j];
+                            newK[k, i] = Kki + Kkj * g;
+                            newK[k, j] = Kkj + Kki * a;
+
+                            double Mki = newM[k, i];
+                            double Mkj = newM[k, j];
+                            newM[k, i] = Mki + Mkj * g;
+                            newM[k, j] = Mkj + Mki * a;
+                        }
+
+                        for (int k = j + 1; k < n; k++)
+                        {
+                            double Kik = newK[i, k];
+                            double Kjk = newK[j, k];
+                            newK[i, k] = Kik + Kjk * g;
+                            newK[j, k] = Kjk + Kik * a;
+
+                            double Mik = newM[i, k];
+                            double Mjk = newM[j, k];
+                            newM[i, k] = Mik + Mjk * g;
+                            newM[j, k] = Mjk + Mik * a;
+                        }
+
+                        for (int k = i + 1; k < j; k++)
+                        {
+                            double Kik = newK[i, k];
+                            double Kkj = newK[k, j];
+                            newK[i, k] = Kik + Kkj * g;
+                            newK[k, j] = Kkj + Kik * a;
+
+                            double Mik = newM[i, k];
+                            double Mkj = newM[k, j];
+                            newM[i, k] = Mik + Mkj * g;
+                            newM[k, j] = Mkj + Mik * a;
+                        }
+
+                        double Kjj = newK[j, j];
+                        double Mjj = newM[j, j];
+
+                        newK[j, j] = Kjj + 2.0 * a * newK[i, j] + a * a * newK[i, i];
+                        newM[j, j] = Mjj + 2.0 * a * newM[i, j] + a * a * newM[i, i];
+
+                        newK[i, i] = newK[i, i] + 2.0 * g * newK[i, j] + g * g * Kjj;
+                        newM[i, i] = newM[i, i] + 2.0 * g * newM[i, j] + g * g * Mjj;
+
+                        newK[i, j] = 0.0;
+                        newM[i, j] = 0.0;
+
+                        // apply transformation to initial identity to get eigen vectors:
+
+                        for (int k = 0; k < n; k++)
+                        {
+                            double Xki = X[k, i];
+                            double Xkj = X[k, j];
+                            X[k, i] = Xki + Xkj * g;
+                            X[k, j] = Xkj + Xki * a;
+                        }
+
+                    }
+
+                }
+
+                // update eigen values and check convergence:
+
+                Converged = true;
+
+                for (int i = 0; i < n; i++)
+                {
+                    if (newK[i, i] > 0 && newM[i, i] > 0)
+                    {
+                        double l = newK[i, i] / newM[i, i];
+                        Converged = Converged && System.Math.Abs((l - L[i]) / L[i]) < er_eval;
+                        L[i] = l;
+                    }
+                    else
+                        throw new Exception("Error on Jacobi solver: matrices are not positive definite.");
+                }
+
+                // if eigen values have converged: check if off-diagonal elements still need to be zeroed:
+
+                if (Converged)
+                {
+
+                    er_evec = er_eval * er_eval;
+
+                    for (int i = 0; i < n && Converged; i++)
+                    {
+
+                        for (int j = i + 1; j < n && Converged; j++)
+                        {
+
+                            if ((newM[i, j] * newM[i, j]) / (newM[i, i] * newM[j, j]) > er_evec ||
+                                (newK[i, j] * newK[i, j]) / (newK[i, i] * newK[j, j]) > er_evec)
+                            {
+                                Converged = false;
+                                continue;
+                            }
+
+                        }
+                    }
+                }
+
+                Sweep++;
+            }
+
+            // sacale eigenvectors:
+
+            for (int k = 0; k < n; k++)
+            {
+                for (int r = 0; r < n; r++)
+                {
+                    X[r, k] /= System.Math.Sqrt(newM[k, k]);
+                }
+            }
+
+            // find incresing order:
+
+            List<int> Ordered = new List<int>();
+            List<int> NotOrdered = new List<int>();
+
+            for (int i = 0; i < n; i++) { NotOrdered.Add(i); }
+
+            while (NotOrdered.Count > 0)
+            {
+                int minp = NotOrdered[0];
+                double minv = L[minp];
+                int remp = 0;
+                for (int i = 0; i < NotOrdered.Count; i++)
+                {
+                    if (L[NotOrdered[i]] < minv)
+                    {
+                        minv = L[NotOrdered[i]];
+                        minp = NotOrdered[i];
+                        remp = i;
+                    }
+                }
+                Ordered.Add(minp);
+                NotOrdered.RemoveAt(remp);
+            }
+
+            // set values and vectors in increasing order:
+            
+            int col = 0;
+
+            foreach (int j in Ordered)
+            {
+                D[col] = L[j];
+                for (int i = 0; i < n; i++)
+                {
+                    Q[i, col] = X[i, j];
+                }
+
+                col++;
+
+            }
+
+        }
+
+        /// <summary>
+        /// Solves an eigen value problem of the form Kφ = λMφ through the Lanczos iteration method. Both matrices should be positive definite.
+        /// </summary>
+        /// <param name="nSubSpace">Size of the modal subspace to converge</param>
+        /// <remarks>
+        /// This method uses the subspace iteration and Jacobi methods to aproach a limited number of eigen values of a large DOF system.
+        /// This method has been presented by K.J. Bathe as a quite robust one. Convergence might be slower than through Lanczos method, but the implementation involves much simpler algorithms, and 
+        /// convergence is much easier to control and checked.
+        /// Gram-smith KM-ortogonalization occurs simultaneously for all vectors through a Ritz transformation. This is why  the method is very stable and less round-off errors sensitive.
+        /// </remarks>
+        public void SubspaceIteration(SymmetricMatrix M, 
+                                      SymmetricMatrix K, 
+                                      int nSubSpace, 
+                                      int nModes, 
+                                      out Vector D, 
+                                      out Matrix V)
+        {
+            //------------------------------------------------------------------------------------
+            // Check subspace dimension
+            //------------------------------------------------------------------------------------
+
+            int nDOF = M.RowCount;
+
+            if (K.RowCount != nDOF)
+            {
+                throw new Exception("the size of the matrices does not match");
+            }
+
+            if (nSubSpace > nDOF)
+            {
+                throw new Exception("the subspace size is too large");
+            }
+
+            //------------------------------------------------------------------------------------
+            // Set eigen values convergence threshold
+            //------------------------------------------------------------------------------------
+
+            double er_eval = EValError_Subspace;
+
+            //------------------------------------------------------------------------------------
+            // Decompose K in LU
+            //------------------------------------------------------------------------------------
+
+            LinearEquations K_LU = new LinearEquations ();
+            K_LU.ComputeLU(K);
+
+            //------------------------------------------------------------------------------------
+            // Initialize temporal storage matrices
+            //------------------------------------------------------------------------------------
+
+            SymmetricMatrix K_p = new SymmetricMatrix(nSubSpace);
+            SymmetricMatrix M_p = new SymmetricMatrix(nSubSpace);
+            Matrix Q = new Matrix(nSubSpace);
+            Vector L = new Vector(nSubSpace);
+
+            D = new Vector(nSubSpace);
+            V = new Matrix(nDOF, nSubSpace);
+
+            bool Converged = false;
+            int Step = 0;
+
+            Matrix MV = new Matrix(nDOF, nSubSpace);
+            Matrix MX = new Matrix(nDOF, nSubSpace);
+            Matrix X = new Matrix(nDOF, nSubSpace);
+
+            //------------------------------------------------------------------------------------
+            // Set starting vectors
+            //------------------------------------------------------------------------------------
+
+            Random Rand = new Random();
+
+            for (int i = 0; i < nDOF; i++)
+            {
+                V[i, 0] = M[i, i];
+            }
+
+            for (int i = 1; i < nSubSpace; i++)
+            {
+                if (i == nSubSpace - 1)
+                {
+                    for (int j = 0; j < nDOF; j++)
+                    {
+                        double Sign;
+                        if (Rand.NextDouble() > 0.5)
+                            Sign = 1.0;
+                        else
+                            Sign = -1.0;
+                        V[j, i] = Rand.NextDouble() * Sign;
+                    }
+                }
+                else
+                    V[i, i] = 1.0;
+            }
+
+            //------------------------------------------------------------------------------------
+            // Start sub space iteration loop 
+            //------------------------------------------------------------------------------------
+
+            while (Step < 15 && !Converged)
+            {
+
+                //--------------------------------------------------------------------------------
+                // Find M.V
+                //--------------------------------------------------------------------------------
+
+                if (Step == 0)
+                {
+                    MV.Copy(V);
+                }
+                else
+                {
+                    // compute M.V
+
+                    for (int i = 0; i < nDOF; i++)
+                    {
+                        for (int j = 0; j < nSubSpace; j++)
+                        {
+                            double p = 0;
+                            for (int k = 0; k < nDOF; k++)
+                            {
+                                p += M[i, k] * V[k, j];
+                            }
+                            MV[i, j] = p;
+                        }
+                    }
+                }
+
+                //--------------------------------------------------------------------------------
+                // Find new vector X:
+                //--------------------------------------------------------------------------------
+
+                K_LU.SolveLU(MV, X);
+
+                //--------------------------------------------------------------------------------
+                // Find projected K -> K_p = X_T.K.X (note that M.V = K.X, and then K_p = X_T.M.V)
+                //--------------------------------------------------------------------------------
+
+                for (int i = 0; i < nSubSpace; i++)
+                {
+                    for (int j = i; j < nSubSpace; j++)
+                    {
+                        double p = 0;
+                        for (int k = 0; k < nDOF; k++)
+                        {
+                            p += X[k, i] * MV[k, j];
+                        }
+                        K_p[i, j] = p;
+                    }
+                }
+
+                //--------------------------------------------------------------------------------
+                // Find M.X  
+                //--------------------------------------------------------------------------------          
+
+                for (int i = 0; i < nDOF; i++)
+                {
+                    for (int j = 0; j < nSubSpace; j++)
+                    {
+                        double p = 0;
+                        for (int k = 0; k < nDOF; k++)
+                        {
+                            p += M[i, k] * X[k, j];
+                        }
+                        MX[i, j] = p;
+                    }
+                }
+
+                //--------------------------------------------------------------------------------
+                // Find projected M -> M_p = X_T.M.X  
+                //--------------------------------------------------------------------------------          
+
+                for (int i = 0; i < nSubSpace; i++)
+                {
+                    for (int j = i; j < nSubSpace; j++)
+                    {
+                        double p = 0;
+                        for (int k = 0; k < nDOF; k++)
+                        {
+                            p += X[k, i] * MX[k, j];
+                        }
+                        M_p[i, j] = p;
+                    }
+                }
+
+                //--------------------------------------------------------------------------------
+                // Save current values to check convergence
+                //--------------------------------------------------------------------------------
+
+                for (int i = 0; i < nSubSpace; i++)
+                {
+                    L[i] = D[i];
+                }
+
+                //--------------------------------------------------------------------------------
+                // Solve reduced eigensystem in the projected space
+                //--------------------------------------------------------------------------------
+
+                Jacobi(K_p, M_p, Q, D);
+
+                //--------------------------------------------------------------------------------
+                // Apply Ritz transformation -> V = X.Q
+                // V should tend to the truncated modal basis (subspace).
+                //--------------------------------------------------------------------------------
+                
+                for (int i = 0; i < nDOF; i++)
+                {
+                    for (int j = 0; j < nSubSpace; j++)
+                    {
+                        double p = 0;
+                        for (int k = 0; k < nSubSpace; k++)
+                        {
+                            p += X[i, k] * Q[k, j];
+                        }
+                        V[i, j] = p;
+                    }
+                }
+
+                //--------------------------------------------------------------------------------
+                // Check convergence
+                // Only the required values are cheked for convergence (not the entire subspace)
+                //--------------------------------------------------------------------------------
+
+                Converged = true;
+
+                for (int i = 0; i < nModes && Converged; i++)
+                {
+                    Converged = Converged && System.Math.Abs((D[i] - L[i]) / L[i]) < er_eval;
+                }
+
+                Step++;
+
+            }
+            
+        }
+
         #endregion
-
-
+        
         #region SymmetricBandMatrix
 
         /// <summary>

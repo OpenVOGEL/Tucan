@@ -23,7 +23,7 @@ namespace DotNumerics.LinearAlgebra
     [DebuggerDisplay("[{RowCount},{ColumnCount}]")]
     //[DebuggerDisplay("[{RowCount},{ColumnCount}]", Name = "BandMatrix")]
     [DebuggerTypeProxy(typeof(MatrixDebuggerDisplay))]
-    public abstract class BaseMatrix: IMatrix<double>
+    public abstract class BaseMatrix : IMatrix<double>
     {
         #region Static Fields
 
@@ -31,7 +31,7 @@ namespace DotNumerics.LinearAlgebra
         internal static DGETRI _dgetri;
 
         #endregion
-        
+
         #region Fields
         /// <summary>
         /// Los datos de la matriz, los datos se almacenan en un un array unidimensional,
@@ -52,7 +52,7 @@ namespace DotNumerics.LinearAlgebra
         protected int _ColumnCount;
 
         #endregion
-        
+
         #region  Public Constructors
 
         /// <summary>
@@ -128,7 +128,7 @@ namespace DotNumerics.LinearAlgebra
         }
 
         #endregion
-        
+
         #region Public Properties
 
         /// <summary>
@@ -183,19 +183,19 @@ namespace DotNumerics.LinearAlgebra
             {
                 if (column >= this._ColumnCount)
                 {
-                    throw new ArgumentException("Index was outside the bounds of the matrix.");             
+                    throw new ArgumentException("Index was outside the bounds of the matrix.");
                 }
 
-                return this._Data[row + column  * this._RowCount];
+                return this._Data[row + column * this._RowCount];
             }
             set
             {
                 if (column >= this._ColumnCount)
                 {
-                    throw new ArgumentException("Index was outside the bounds of the matrix.");             
+                    throw new ArgumentException("Index was outside the bounds of the matrix.");
                 }
 
-                this._Data[row  + column * this._RowCount] = value;
+                this._Data[row + column * this._RowCount] = value;
             }
         }
 
@@ -351,9 +351,6 @@ namespace DotNumerics.LinearAlgebra
             }
             return C;
 
-
-
-
             //To reading every time elements from array , why we are taking some group of element i.e. Block size, then no need to read every element. A groups of element will be on catche and we can do fast as given above algo. This algorithm called " Block Algorithm". This Block algorithm can be applied many place where this type of situation will come.
 
             //Block Algorithm for Matrix Multiplication:
@@ -408,15 +405,51 @@ namespace DotNumerics.LinearAlgebra
             //        }
             //           }
             // return 0;
-            //}
+            //} 
         }
 
+
         /// <summary>
-        /// Matrix subtraction, C=A-B
+        /// Matrix- Vector multiplication.
         /// </summary>
-        /// <param name="B">The Matrix</param>
-        /// <returns>C=A-B</returns>
-        public Matrix  Subtract(BaseMatrix B)
+        /// <param name="A">The left side matrix of the multiplication operator.</param>
+        /// <param name="B">The right side vector of the multiplication operator.</param>
+        /// <returns>A matrix that represents the result of the matrix multiplication.</returns>
+        public Vector Multiply(Vector B)
+        {
+
+            if (this.ColumnCount != B.Length)
+            {
+                throw new System.ArgumentException("This vector cannot multiply the matrix.");
+            }
+
+        Vector C = new Vector(B.Length);
+
+        double[] AData = this.Data;
+        double[] BData = B.Data;
+        double[] CData = C.Data;
+
+        int Size = B.Length;
+
+        double Sum = 0.0;
+        for (int i = 0; i < Size; i++)
+        {
+            Sum = 0.0;
+            for (int j = 0; j < Size; j++)
+            {
+                Sum += AData[i * Size + j] * BData[j];
+            }
+            CData[i] = Sum;
+        }
+        return C;
+    }
+
+    /// <summary>
+    /// Matrix subtraction, C=A-B
+    /// </summary>
+    /// <param name="B">The Matrix</param>
+    /// <returns>C=A-B</returns>
+    public Matrix  Subtract(BaseMatrix B)
         {
             CheckMatrixDimensions(B);
 

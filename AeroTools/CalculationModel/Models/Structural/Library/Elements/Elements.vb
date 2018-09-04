@@ -16,8 +16,7 @@
 'along with this program.  If Not, see < http:  //www.gnu.org/licenses/>.
 
 Imports AeroTools.CalculationModel.Models.Structural.Library.Nodes
-Imports MathTools.Algebra.EuclideanSpace
-Imports Meta.Numerics.Matrices
+Imports DotNumerics.LinearAlgebra
 
 Namespace CalculationModel.Models.Structural.Library.Elements
 
@@ -25,8 +24,8 @@ Namespace CalculationModel.Models.Structural.Library.Elements
 
         Property Nodes As StructuralNode()
 
-        Property M As SquareMatrix
-        Property K As SquareMatrix
+        Property M As SymmetricMatrix
+        Property K As SymmetricMatrix
 
         Sub GenerateLocalMass()
         Sub GenerateLocalStiffness()

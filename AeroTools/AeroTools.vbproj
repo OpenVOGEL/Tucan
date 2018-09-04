@@ -80,9 +80,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Dependencies\Cudafy\bin\Cudafy.NET.dll</HintPath>
     </Reference>
-    <Reference Include="Meta.Numerics">
-      <HintPath>..\Dependencies\MetaNumerics\Meta.Numerics.dll</HintPath>
-    </Reference>
     <Reference Include="PresentationFramework" />
     <Reference Include="SharpGL">
       <HintPath>..\Dependencies\SharpGL\SharpGL.dll</HintPath>
@@ -420,9 +417,7 @@
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Dependencies\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Service Include="{94E38DFF-614B-4CBD-B67C-F211BB35CE8B}" />
   </ItemGroup>

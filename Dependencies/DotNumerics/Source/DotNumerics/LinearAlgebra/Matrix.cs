@@ -176,7 +176,7 @@ namespace DotNumerics.LinearAlgebra
         {
             return A.Multiply(s);
         }
-
+        
         internal static void MultiplicationSM(double s, double[] A, double[] C)
         {
             for (int i = 0; i < C.Length; i++)
@@ -214,8 +214,38 @@ namespace DotNumerics.LinearAlgebra
             return NewMatrix;
         }
         
+        /// <summary>
+        /// Returns a vector representing the given column index.
+        /// </summary>
+        /// <param name="j">The column index.</param>
+        /// <returns></returns>
+        public Vector Column (int j)
+        {
+            Vector C = new Vector(this.RowCount);
+            for(int i = 0; i < RowCount; i++)
+            {
+                C[i] = this[i, j];
+            }
+            return C;
+        }
+
+        internal void Copy(Matrix M)
+        {
+            if (RowCount == M.RowCount & ColumnCount == M.ColumnCount)
+            {
+                for (int i = 0; i < RowCount * ColumnCount; i++)
+                {
+                    this.Data[i] = M.Data[i];
+                }
+            }
+            else
+            {
+                throw new Exception("wrong size, the matrices cannot be copied");
+            }
+        }
+
         #region Static methods
-        
+
         /// <summary>Generate a matrix with random elements</summary>
         /// <param name="rows">Number of rows.</param>
         /// <param name="columns">Number of columns.</param>
@@ -262,7 +292,7 @@ namespace DotNumerics.LinearAlgebra
             }
             return X;
         }
-        
+
         #endregion
 
         #endregion

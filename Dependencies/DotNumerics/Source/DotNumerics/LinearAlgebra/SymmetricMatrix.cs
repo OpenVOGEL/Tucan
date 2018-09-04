@@ -237,6 +237,57 @@ namespace DotNumerics.LinearAlgebra
             return NewMatrix;
         }
 
+        /// <summary>
+        /// Applies a transofrmation by multiplying the matrix first by the transponse of R, and then
+        /// by R.
+        /// </summary>
+        /// <param name="A">The left side matrix of the multiplication operator.</param>
+        /// <param name="B">The right side matrix of the multiplication operator.</param>
+        /// <returns>A matrix that represents the result of the matrix multiplication.</returns>
+        /// <remarks>Because this method handles symmetric matrices, it performs less operations.</remarks>
+        public SymmetricMatrix SymmetricTransformation(Matrix R)
+        {
+            if (RowCount == R.RowCount & RowCount == R.ColumnCount)
+            {
+                // Premultiply by transponse of R:
+
+                Matrix A = new Matrix(RowCount);
+                
+                for (int i = 0; i < RowCount; i++)
+                {
+                    for (int j = 0; j < RowCount; j++)
+                    {
+                        double S = 0.0;
+                        for (int k = 0; k < A.RowCount; k++)
+                        {
+                            S += this[i, k] * R[j, k];
+                        }
+                        A[i, j] = S;
+                    }
+                }
+
+                // Postmultiply by R:
+
+                SymmetricMatrix B = new SymmetricMatrix(RowCount);
+
+                for (int i = 0; i < RowCount; i++)
+                {
+                    for (int j = i; j < RowCount; j++)
+                    {
+                        double S = 0.0;
+                        for (int k = 0; k < A.RowCount; k++)
+                        {
+                            S += R[i, k] * A[k, j];
+                        }
+                        B[i, j] = S;
+                    }
+                }
+                
+                return B;
+            }
+            else return null;            
+        }
+
         #endregion
 
         #endregion

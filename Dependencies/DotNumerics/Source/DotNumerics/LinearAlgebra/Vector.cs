@@ -100,6 +100,35 @@ namespace DotNumerics.LinearAlgebra
         }
 
         /// <summary>
+        /// Returns the maximum value
+        /// </summary>
+        /// <returns></returns>
+        public double Max()
+        {
+            double Max = this[0];
+            for (int i = 0; i < Length; i++)
+            {
+                if (this[i] > Max)
+                    Max = this[i];
+            }
+            return Max;
+        }
+
+        /// <summary>
+        /// Returns the minimum value
+        /// </summary>
+        /// <returns></returns>
+        public double Min()
+        {
+            double Min = this[0];
+            for (int i = 0; i < Length; i++)
+            {
+                if (this[i] < Min)
+                    Min = this[i];
+            }
+            return Min;
+        }
+        /// <summary>
         /// Returns the number of elements.
         /// </summary>
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -341,7 +370,6 @@ namespace DotNumerics.LinearAlgebra
             }
             return C;
         }
-
 
         ///// <summary>
         ///// Vector-Matrix multiplication.

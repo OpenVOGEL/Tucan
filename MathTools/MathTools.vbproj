@@ -44,10 +44,6 @@
     <OptionInfer>On</OptionInfer>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Meta.Numerics">
-      <HintPath>..\Dependencies\MetaNumerics\Meta.Numerics.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
@@ -74,7 +70,6 @@
     <Compile Include="Conversion\Conversion.vb" />
     <Compile Include="Extesions\Extensions.vb" />
     <Compile Include="Integration\Newmark.vb" />
-    <Compile Include="EigenValues\Solver.vb" />
     <Compile Include="ODEs\ODEs.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">

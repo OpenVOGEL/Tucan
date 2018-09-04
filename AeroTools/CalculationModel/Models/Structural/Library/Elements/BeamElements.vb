@@ -17,7 +17,7 @@
 
 Imports AeroTools.CalculationModel.Models.Structural.Library.Nodes
 Imports MathTools.Algebra.EuclideanSpace
-Imports Meta.Numerics.Matrices
+Imports DotNumerics.LinearAlgebra
 
 Namespace CalculationModel.Models.Structural.Library.Elements
 
@@ -122,8 +122,8 @@ Namespace CalculationModel.Models.Structural.Library.Elements
         Public Property Basis As EBase3
         Public Property Index As Integer
 
-        Public Property M As SquareMatrix Implements IFiniteElement.M
-        Public Property K As SquareMatrix Implements IFiniteElement.K
+        Public Property M As SymmetricMatrix Implements IFiniteElement.M
+        Public Property K As SymmetricMatrix Implements IFiniteElement.K
 
         Public MustOverride Sub GenerateLocalMass() Implements IFiniteElement.GenerateLocalMass
         Public MustOverride Sub GenerateLocalStiffness() Implements IFiniteElement.GenerateLocalStiffness
@@ -147,8 +147,8 @@ Namespace CalculationModel.Models.Structural.Library.Elements
 
         Public Sub New(ByVal Index As Integer)
             Me.Index = Index
-            M = New SquareMatrix(12)
-            K = New SquareMatrix(12)
+            M = New SymmetricMatrix(12)
+            K = New SymmetricMatrix(12)
             Section = New Section()
             Basis = New EBase3()
         End Sub
@@ -168,120 +168,99 @@ Namespace CalculationModel.Models.Structural.Library.Elements
             Dim m_L3 As Double = Section.m * L ^ 3
             Dim r_J_L As Double = Section.rIp * L
 
-            ' Traction on local X
-
             M(0, 0) = m_L1 / 3
             M(0, 6) = m_L1 / 6
-
-            M(6, 6) = m_L1 / 3
-
-            ' Torsion on local X
-
-            M(3, 3) = r_J_L / 3
-            M(3, 9) = r_J_L / 6
-
-            M(9, 9) = r_J_L / 3
-
-            ' Flexion on local YX
 
             M(1, 1) = 13 * m_L1 / 35
             M(1, 5) = 11 * m_L2 / 210
             M(1, 7) = 9 * m_L1 / 70
             M(1, 11) = -13 * m_L2 / 420
 
-            M(5, 5) = m_L3 / 105
-            M(5, 7) = 13 * m_L2 / 410
-            M(5, 11) = -m_L3 / 140
-
-            M(7, 1) = 9 * m_L1 / 70
-            M(7, 5) = 13 * m_L2 / 410
-            M(7, 7) = 13 * m_L1 / 35
-            M(7, 11) = -11 * m_L2 / 210
-
-            M(11, 1) = -13 * m_L2 / 420
-            M(11, 5) = m_L3 / 140
-            M(11, 7) = -11 * m_L2 / 210
-            M(11, 11) = m_L3 / 105
-
-            ' Flexion on local ZX
-
             M(2, 2) = 13 * m_L1 / 35
             M(2, 4) = -11 * m_L2 / 210
             M(2, 8) = 9 * m_L1 / 70
             M(2, 10) = 13 * m_L2 / 420
 
+            M(3, 3) = r_J_L / 3
+            M(3, 9) = r_J_L / 6
+
             M(4, 4) = m_L3 / 105
-            M(4, 8) = -13 * m_L2 / 410
+            M(4, 8) = -13 * m_L2 / 420
             M(4, 10) = -m_L3 / 140
 
+            M(5, 5) = m_L3 / 105
+            M(5, 7) = 13 * m_L2 / 420
+            M(5, 11) = -m_L3 / 140
+
+            M(6, 6) = m_L1 / 3
+
+            M(7, 7) = 13 * m_L1 / 35
+            M(7, 11) = -11 * m_L2 / 210
+
             M(8, 8) = 13 * m_L1 / 35
-            M(8, 10) = -11 * m_L2 / 210
+            M(8, 10) = 11 * m_L2 / 210
+
+            M(9, 9) = r_J_L / 3
 
             M(10, 10) = m_L3 / 105
 
+            M(11, 11) = m_L3 / 105
+
             ' Excentrical mass:
 
-            Dim Sy As Double = Section.m * Section.CMy
-            Dim Sy_L1 As Double = Section.m * Section.CMy * L
-            Dim Sy_L2 As Double = Section.m * Section.CMy * L * L
+            If Math.Abs(Section.CMy) > 0 Or Math.Abs(Section.CMz) > 0 Then
 
-            Dim Sz As Double = Section.m * Section.CMz
-            Dim Sz_L1 As Double = Section.m * Section.CMz * L
-            Dim Sz_L2 As Double = Section.m * Section.CMz * L * L
+                Dim Sy As Double = Section.m * Section.CMy
+                Dim Sy_L1 As Double = Section.m * Section.CMy * L
+                Dim Sy_L2 As Double = Section.m * Section.CMy * L * L
 
-            M(0, 1) = Sy / 2
-            M(0, 2) = -Sz / 2
-            M(0, 4) = Sz_L1 / 12
-            M(0, 5) = -Sy_L1 / 12
-            M(0, 7) = -Sy / 2
-            M(0, 8) = Sz / 2
-            M(0, 10) = -Sz_L1 / 12
-            M(0, 11) = Sy_L1 / 12
+                Dim Sz As Double = Section.m * Section.CMz
+                Dim Sz_L1 As Double = Section.m * Section.CMz * L
+                Dim Sz_L2 As Double = Section.m * Section.CMz * L * L
 
-            M(1, 3) = -7 * Sz_L1 / 20
-            M(1, 6) = Sy / 2
-            M(1, 9) = -3 * Sz_L1 / 20
+                M(0, 1) = Sy / 2
+                M(0, 2) = -Sz / 2
+                M(0, 4) = Sz_L1 / 12
+                M(0, 5) = -Sy_L1 / 12
+                M(0, 7) = -Sy / 2
+                M(0, 8) = Sz / 2
+                M(0, 10) = -Sz_L1 / 12
+                M(0, 11) = Sy_L1 / 12
 
-            M(2, 3) = 7 * Sy_L1 / 20
-            M(2, 6) = -Sz / 2
-            M(2, 9) = 3 * Sy_L1 / 20
+                M(1, 3) = -7 * Sz_L1 / 20
+                M(1, 6) = Sy / 2
+                M(1, 9) = -3 * Sz_L1 / 20
 
-            M(3, 4) = -Sy_L2 / 20
-            M(3, 5) = -Sz_L2 / 20
-            M(3, 7) = -3 * Sz_L1 / 20
-            M(3, 8) = 3 * Sy_L1 / 20
-            M(3, 10) = Sy_L2 / 30
-            M(3, 11) = Sz_L2 / 30
+                M(2, 3) = 7 * Sy_L1 / 20
+                M(2, 6) = -Sz / 2
+                M(2, 9) = 3 * Sy_L1 / 20
 
-            M(4, 6) = -Sz_L1 / 12
-            M(4, 9) = Sy_L2 / 30
+                M(3, 4) = -Sy_L2 / 20
+                M(3, 5) = -Sz_L2 / 20
+                M(3, 7) = -3 * Sz_L1 / 20
+                M(3, 8) = 3 * Sy_L1 / 20
+                M(3, 10) = Sy_L2 / 30
+                M(3, 11) = Sz_L2 / 30
 
-            M(5, 6) = Sy_L1 / 12
-            M(5, 9) = -Sz_L2 / 30
+                M(4, 6) = -Sz_L1 / 12
+                M(4, 9) = Sy_L2 / 30
 
-            M(6, 7) = -Sy / 2
-            M(6, 8) = Sz / 2
-            M(6, 10) = Sz_L1 / 12
-            M(6, 11) = -Sy_L1 / 12
+                M(5, 6) = Sy_L1 / 12
+                M(5, 9) = -Sz_L2 / 30
 
-            M(7, 9) = -7 * Sz_L1 / 20
+                M(6, 7) = -Sy / 2
+                M(6, 8) = Sz / 2
+                M(6, 10) = Sz_L1 / 12
+                M(6, 11) = -Sy_L1 / 12
 
-            M(8, 9) = 7 * Sy_L1 / 20
+                M(7, 9) = -7 * Sz_L1 / 20
 
-            M(9, 10) = Sy_L2 / 20
-            M(9, 11) = Sz_L2 / 20
+                M(8, 9) = 7 * Sy_L1 / 20
 
-            ' Generate symetric matrix:
+                M(9, 10) = Sy_L2 / 20
+                M(9, 11) = Sz_L2 / 20
 
-            For i = 0 To 11
-
-                For j = i + 1 To 11
-
-                    M(j, i) = M(i, j)
-
-                Next
-
-            Next
+            End If
 
         End Sub
 
@@ -347,18 +326,6 @@ Namespace CalculationModel.Models.Structural.Library.Elements
 
             K(10, 10) = 4 * EIv_L1
 
-            ' Generate symetric matrix:
-
-            For i = 0 To 11
-
-                For j = i + 1 To 11
-
-                    K(j, i) = K(i, j)
-
-                Next
-
-            Next
-
         End Sub
 
         ''' <summary>
@@ -374,11 +341,11 @@ Namespace CalculationModel.Models.Structural.Library.Elements
 
             ' Transform coordinates:
 
-            Dim T As SquareMatrix = New SquareMatrix(12)
+            Dim T As Matrix = New Matrix(12)
 
-            For i = 0 To 1
+            For i = 0 To 3
 
-                Dim bIndx As Integer = 6 * i
+                Dim bIndx As Integer = 3 * i
 
                 T(0 + bIndx, 0 + bIndx) = Basis.U.X
                 T(0 + bIndx, 1 + bIndx) = Basis.U.Y
@@ -390,20 +357,10 @@ Namespace CalculationModel.Models.Structural.Library.Elements
                 T(2 + bIndx, 1 + bIndx) = Basis.W.Y
                 T(2 + bIndx, 2 + bIndx) = Basis.W.Z
 
-                T(3 + bIndx, 3 + bIndx) = Basis.U.X
-                T(3 + bIndx, 4 + bIndx) = Basis.U.Y
-                T(3 + bIndx, 5 + bIndx) = Basis.U.Z
-                T(4 + bIndx, 3 + bIndx) = Basis.V.X
-                T(4 + bIndx, 4 + bIndx) = Basis.V.Y
-                T(4 + bIndx, 5 + bIndx) = Basis.V.Z
-                T(5 + bIndx, 3 + bIndx) = Basis.W.X
-                T(5 + bIndx, 4 + bIndx) = Basis.W.Y
-                T(5 + bIndx, 5 + bIndx) = Basis.W.Z
-
             Next
 
-            K = T.Transpose * (K * T)
-            M = T.Transpose * (M * T)
+            K = K.SymmetricTransformation(T)
+            M = M.SymmetricTransformation(T)
 
             'Dim p As String = "C:\Users\Guillermo\Documents\Vogel tests\Aeroelasticity"
             'Dim f As Integer = 101

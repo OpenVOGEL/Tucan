@@ -801,7 +801,7 @@ Namespace CalculationModel.Models.Structural
 
             ' Read modes:
 
-            StructuralCore.Modes = New List(Of Mode)
+            StructuralCore.Modes.Clear()
 
             Dim nm As Integer = r.ReadInt32
 

@@ -16,36 +16,62 @@
 'along with this program.  If Not, see < http:  //www.gnu.org/licenses/>.
 
 Imports System.IO
-Imports Meta.Numerics.Matrices
-Imports MathTools.MathLibrary.EigenValues
 Imports AeroTools.CalculationModel.Models.Structural.Library
 Imports AeroTools.CalculationModel.Models.Structural.Library.Elements
 Imports AeroTools.CalculationModel.Models.Structural.Library.Nodes
+Imports DotNumerics.LinearAlgebra
 
 Namespace CalculationModel.Models.Structural
 
     ''' <summary>
-    ''' Structural model
+    ''' The structural model containing nodes and elements
     ''' </summary>
     ''' <remarks></remarks>
     Public Class StructuralCore
 
-        Public Nodes As New List(Of StructuralNode)
-        Public Elements As New List(Of BeamElement)
-
-        Private M As SparseSquareMatrix
-        Private K As SparseSquareMatrix
-        Private C As SparseSquareMatrix
-
-        Public StructuralSettings As New StructuralSettings
-
-        Private DOF As Integer = 0
+        ''' <summary>
+        ''' The structural nodes
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property Nodes As New List(Of StructuralNode)
 
         ''' <summary>
-        ''' Structure dynamic modes
+        ''' The list of structural elements
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property Elements As new List(Of BeamElement)
+
+        ''' <summary>
+        ''' The structural settings
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property StructuralSettings As New StructuralSettings
+
+        ''' <summary>
+        ''' The dynamic modes of the structure
         ''' </summary>
         ''' <remarks></remarks>
-        Public Modes As List(Of Mode)
+        Public ReadOnly Property Modes As New List(Of Mode)
+
+        ''' <summary>
+        ''' The complete mass matrix (including constrained DOF)
+        ''' </summary>
+        Private M As SymmetricMatrix
+
+        ''' <summary>
+        ''' The complete stiffness matrix (including constrained static DOF)
+        ''' </summary>
+        Private K As SymmetricMatrix
+
+        ''' <summary>
+        ''' The complete damping matrix (including constrained static DOF)
+        ''' </summary>
+        Private C As SymmetricMatrix
+
+        ''' <summary>
+        ''' The number of degrees of freedom
+        ''' </summary>
+        Private DOF As Integer = 0
 
         ''' <summary>
         ''' Generates the structure global stiffness and mass matrices
@@ -53,12 +79,17 @@ Namespace CalculationModel.Models.Structural
         ''' <remarks></remarks>
         Public Sub CreateMatrices(ByVal Path As String, Optional ByVal PrintAsTxt As Boolean = False)
 
+            '-----------------------------------------------------------------------------
             ' Generates structure mass and stiffness matrices
+            '-----------------------------------------------------------------------------
 
-            M = New SparseSquareMatrix(6 * Nodes.Count)
-            K = New SparseSquareMatrix(6 * Nodes.Count)
+            M = New SymmetricMatrix(6 * Nodes.Count)
 
-            ' Add element stiffnes:
+            K = New SymmetricMatrix(6 * Nodes.Count)
+
+            '-----------------------------------------------------------------------------
+            ' Add element stiffnes
+            '-----------------------------------------------------------------------------
 
             Dim ElementCount As Integer = 0
 
@@ -74,12 +105,12 @@ Namespace CalculationModel.Models.Structural
 
                         Dim FileK As Integer = 1
                         FileOpen(FileK, Path & String.Format("\KG_{0}.txt", ElementCount), OpenMode.Output, OpenAccess.Write)
-                        Print(FileK, String.Format("{0,12:F8};", Element.K.__repr__))
+                        Print(FileK, String.Format("{0,12:F8};", Element.K.ToString))
                         FileClose(FileK)
 
                         Dim FileM As Integer = 2
                         FileOpen(FileM, Path & String.Format("\MG_{0}.txt", ElementCount), OpenMode.Output, OpenAccess.Write)
-                        Print(FileM, String.Format("{0,12:F8};", Element.M.__repr__))
+                        Print(FileM, String.Format("{0,12:F8};", Element.M.ToString))
                         FileClose(FileM)
 
                     Catch ex As Exception
@@ -90,30 +121,46 @@ Namespace CalculationModel.Models.Structural
 
                 Dim BaseIndexA As Integer = 6 * Element.NodeA.Index
                 Dim BaseIndexB As Integer = 6 * Element.NodeB.Index
+                Dim r As Integer
+                Dim c As Integer
 
                 For i = 0 To 5
 
                     For j = 0 To 5
 
-                        K(BaseIndexA + i, BaseIndexA + j) += Element.K(i, j)
-                        M(BaseIndexA + i, BaseIndexA + j) += Element.M(i, j)
+                        Dim rA = BaseIndexA + i
+                        Dim cA = BaseIndexA + j
+                        Dim rB = BaseIndexB + i
+                        Dim cB = BaseIndexB + j
 
-                        K(BaseIndexA + i, BaseIndexB + j) += Element.K(i, j + 6)
-                        M(BaseIndexA + i, BaseIndexB + j) += Element.M(i, j + 6)
+                        If cA >= rA Then
+                            K(rA, cA) += Element.K(i, j)
+                            M(rA, cA) += Element.M(i, j)
+                        End If
 
-                        K(BaseIndexB + i, BaseIndexA + j) += Element.K(i + 6, j)
-                        M(BaseIndexB + i, BaseIndexA + j) += Element.M(i + 6, j)
+                        If cB >= rA Then
+                            K(rA, cB) += Element.K(i, j + 6)
+                            M(rA, cB) += Element.M(i, j + 6)
+                        End If
 
-                        K(BaseIndexB + i, BaseIndexB + j) += Element.K(i + 6, j + 6)
-                        M(BaseIndexB + i, BaseIndexB + j) += Element.M(i + 6, j + 6)
+                        If cA >= rB Then
+                            K(rB, cA) += Element.K(i + 6, j)
+                            M(rB, cA) += Element.M(i + 6, j)
+                        End If
 
+                        If cB >= rB Then
+                            K(rB, cB) += Element.K(i + 6, j + 6)
+                            M(rB, cB) += Element.M(i + 6, j + 6)
+                        End If
                     Next
 
                 Next
 
             Next
 
-            ' Add nodal stiffness due to constrains (springs):
+            '-----------------------------------------------------------------------------
+            ' Add nodal stiffness due to constrains (springs)
+            '-----------------------------------------------------------------------------
 
             'For Each Node In Nodes
 
@@ -131,12 +178,12 @@ Namespace CalculationModel.Models.Structural
 
                     Dim FileK As Integer = 1
                     FileOpen(FileK, Path & "\KG.txt", OpenMode.Output, OpenAccess.Write)
-                    Print(FileK, String.Format("{0,12:F8};", K.__repr__))
+                    Print(FileK, K.ToString)
                     FileClose(FileK)
 
                     Dim FileM As Integer = 2
                     FileOpen(FileM, Path & "\MG.txt", OpenMode.Output, OpenAccess.Write)
-                    Print(FileM, String.Format("{0,12:F8};", M.__repr__))
+                    Print(FileM, M.ToString)
                     FileClose(FileM)
 
                 Catch ex As Exception
@@ -148,86 +195,136 @@ Namespace CalculationModel.Models.Structural
         End Sub
 
         ''' <summary>
-        ''' Writes constrained stiffness and mass matrices to binary files
+        ''' Calculates structure dynamic modes using Subspace iteration and/or Jacobi.
         ''' </summary>
-        ''' <param name="PathK"></param>
-        ''' <param name="PathM"></param>
         ''' <remarks></remarks>
-        Private Sub WriteConstrainedMatrices(ByVal PathK As String, ByVal PathM As String, Optional ByVal asTXT As Boolean = False)
+        Public Sub FindModes(ByVal Path As String, ByVal LinkID As Integer)
 
-            Dim fK As Integer = 1
-            If asTXT Then FileOpen(fK, PathK & ".txt", OpenMode.Output, OpenAccess.Write)
+            TestEigenValues()
 
-            Dim fM As Integer = 2
-            If asTXT Then FileOpen(fM, PathM & ".txt", OpenMode.Output, OpenAccess.Write)
+            '-----------------------------------------------------------------------------
+            ' Generate constrained matrices
+            '-----------------------------------------------------------------------------
 
-            Dim rG As Integer = -1
-            Dim cG As Integer = -1
-
-            ' Write constrained matrices:
-
-            Dim wK As BinaryWriter = New BinaryWriter(New FileStream(PathK, FileMode.OpenOrCreate, FileAccess.Write))
-            Dim wM As BinaryWriter = New BinaryWriter(New FileStream(PathM, FileMode.OpenOrCreate, FileAccess.Write))
-
-            'Reserve space for number of non ceros and dimension:
-
-            wK.Write(0)
-            wK.Write(0)
-            Dim nK As Integer = 0
-
-            wM.Write(0)
-            wM.Write(0)
-            Dim nM As Integer = 0
-
-            Dim Row As Integer = -1
+            Dim nDOF As Integer = 0
 
             For Each Node In Nodes
-
                 For i = 0 To 5
-
-                    rG += 1
-                    cG = -1
-
                     If Not Node.Contrains.Fixed(i) Then
+                        nDOF += 1
+                    End If
+                Next
+            Next
 
-                        Row += 1
-                        Dim Col As Integer = -1
+            Dim _M_ As New SymmetricMatrix(nDOF)
+            Dim _K_ As New SymmetricMatrix(nDOF)
 
-                        For Each OtherNode In Nodes
+            Dim r As Integer = -1
+            Dim _r_ As Integer = -1
 
+            For Each Node_i In Nodes
+                For i = 0 To 5
+                    r += 1
+                    If Not Node_i.Contrains.Fixed(i) Then
+                        _r_ += 1
+                        Dim c As Integer = -1
+                        Dim _c_ As Integer = -1
+                        For Each Node_j In Nodes
                             For j = 0 To 5
-
-                                cG += 1
-
-                                If Not OtherNode.Contrains.Fixed(j) Then
-
-                                    Col += 1
-
-                                    If K(rG, cG) <> 0 Then
-                                        wK.Write(Row)
-                                        wK.Write(Col)
-                                        wK.Write(K(rG, cG))
-                                        nK += 1
+                                c += 1
+                                If Not Node_j.Contrains.Fixed(j) Then
+                                    _c_ += 1
+                                    If _c_ >= _r_ Then
+                                        _M_(_r_, _c_) = M(r, c)
+                                        _K_(_r_, _c_) = K(r, c)
                                     End If
-
-                                    If M(rG, cG) <> 0 Then
-                                        wM.Write(Row)
-                                        wM.Write(Col)
-                                        wM.Write(M(rG, cG))
-                                        nM += 1
-                                    End If
-
-                                    If asTXT Then Print(fK, String.Format("{0,12:F8};", K(rG, cG)))
-                                    If asTXT Then Print(fM, String.Format("{0,12:F8};", M(rG, cG)))
-
                                 End If
-
                             Next
-
                         Next
+                    End If
+                Next
+            Next
 
-                        If asTXT Then Print(fK, vbNewLine)
-                        If asTXT Then Print(fM, vbNewLine)
+            '-----------------------------------------------------------------------------
+            ' Find eigen values using subspace iteration
+            '-----------------------------------------------------------------------------
+
+            Dim nModes As Integer = StructuralSettings.NumberOfModes
+            Dim nSubspace As Integer = Math.Min(4 * StructuralSettings.NumberOfModes, nDOF)
+            Dim EigenSolver As New EigenSystem
+            Dim D As Vector = Nothing
+            Dim V As Matrix = Nothing
+
+            '/////////////////////////////////////
+            ' Use Jacobi
+            '/////////////////////////////////////
+            'D = New Vector(nDOF)
+            'V = New Matrix(nDOF, nDOF)
+            'EigenSolver.Jacobi(_K_, _M_, V, D)
+            '/////////////////////////////////////
+
+            '/////////////////////////////////////
+            ' Use subspace iteration
+            '/////////////////////////////////////
+            EigenSolver.SubspaceIteration(_M_, _K_, nSubspace, nModes, D, V)
+            '/////////////////////////////////////
+
+            '-----------------------------------------------------------------------------
+            ' Convert data to modal info
+            '-----------------------------------------------------------------------------
+
+            Modes.Clear()
+
+            For E = 0 To nModes - 1
+
+                Dim Mode As New Mode(E)
+
+                Mode.K = D(E)
+                Mode.w = Math.Sqrt(Mode.K)
+                Mode.M = 1.0
+                Mode.Cc = 2 * Math.Sqrt(Mode.M * Mode.K)
+                Mode.C = StructuralSettings.ModalDamping * Mode.Cc
+
+                Dim n As Integer = -1
+
+                For Each Node In Nodes
+                    Dim ModalDisplacement As New NodalDisplacement
+                    For i = 0 To 5
+                        If Not Node.Contrains.Fixed(i) Then
+                            n += 1
+                            ModalDisplacement.Values(i) = V(n, E)
+                        End If
+                    Next
+                    Mode.Shape.Add(ModalDisplacement)
+                Next
+                Modes.Add(Mode)
+
+            Next
+
+        End Sub
+
+        ''' <summary>
+        ''' Autotest that runs a couple of well known eigen-value examples.
+        ''' </summary>
+        Private Sub TestEigenValues()
+
+            '-----------------------------------------------------------
+            ' Test the Jacobi solver using a simple problem as reference
+            '-----------------------------------------------------------
+
+            Dim A As New SymmetricMatrix(5)
+            Dim B As New SymmetricMatrix(5)
+
+            For i = 0 To 4
+
+                A(i, i) = i + 1
+                B(i, i) = 1.0
+
+                For j = 0 To 4
+
+                    If j > i Then
+
+                        A(i, j) = 1.0
 
                     End If
 
@@ -235,103 +332,140 @@ Namespace CalculationModel.Models.Structural
 
             Next
 
-            wK.Seek(0, SeekOrigin.Begin)
-            wK.Write(Row)   ' Dimension
-            wK.Write(nK)    ' Written elements (non ceros).
+            Dim EigenSolver As New EigenSystem
+            Dim D As Vector
+            Dim V As Matrix
 
-            wM.Seek(0, SeekOrigin.Begin)
-            wM.Write(Row)
-            wM.Write(nM)
+            D = New Vector(5)
+            V = New Matrix(5, 5)
+            EigenSolver.Jacobi(A, B, V, D)
 
-            DOF = Row + 1
+            Dim L As New Vector(5)
+            L(0) = 0.277696
+            L(1) = 1.35663
+            L(2) = 2.43474
+            L(3) = 3.54039
+            L(4) = 7.39054
 
-            wK.Close()
-            wM.Close()
-
-            If asTXT Then FileClose(fK)
-            If asTXT Then FileClose(fM)
-
-        End Sub
-
-        ''' <summary>
-        ''' Calculates structure dynamic modes through inverse iteration method with Gram-Smith orthogonalization 
-        ''' </summary>
-        ''' <remarks></remarks>
-        Public Sub FindModes(Optional ByVal Path As String = "C:\Users\Guillermo\Documents\Vogel tests\Aeroelasticity", Optional ByVal LinkID As Integer = 0)
-
-            Dim PathM As String = String.Format("{0}\M{1}.bin", Path, LinkID)
-            Dim PathK As String = String.Format("{0}\K{1}.bin", Path, LinkID)
-
-            WriteConstrainedMatrices(PathK, PathM, False)
-
-            Dim ESolver As EigenValuesSolver = New EigenValuesSolver
-
-            ESolver.InverseIteration(Path, PathK, PathM, DOF, 800, StructuralSettings.NumberOfModes)
-
-            'ESolver.SubspaceIteration(Path, PathK, PathM, DOF, StructuralSettings.NumberOfModes, Math.Max(4 * StructuralSettings.NumberOfModes, 25))
-
-            ReadModes(Path)
-
-        End Sub
-
-        ''' <summary>
-        ''' Read modes from specific path
-        ''' </summary>
-        ''' <param name="DataBasePath"></param>
-        ''' <remarks></remarks>
-        Private Sub ReadModes(ByVal DataBasePath As String)
-
-            Modes = New List(Of Mode)
-
-            Dim sr As New BinaryReader(File.Open(DataBasePath + "\x.bin", FileMode.Open)) ' Shapes reader
-            Dim vr As New BinaryReader(File.Open(DataBasePath + "\e.bin", FileMode.Open)) ' Values reader
-
-            Dim dof As Integer = sr.ReadInt32
-            Dim nm As Integer = sr.ReadInt32
-
-            vr.ReadInt32()
-            vr.ReadInt32()
-
-            For mindex = 0 To nm - 1
-
-                Dim Mode As New Mode(mindex)
-                Dim r As Integer = -1
-
-                Mode.K = vr.ReadDouble
-                Mode.w = Math.Sqrt(Mode.K)
-                Mode.M = 1.0
-                Mode.Cc = 2 * Math.Sqrt(Mode.M * Mode.K)
-                Mode.C = StructuralSettings.ModalDamping * Mode.Cc
-
-                For Each Node In Nodes
-
-                    Dim ModalDisplacement As New NodalDisplacement
-
-                    For i = 0 To 5
-
-                        If Not Node.Contrains.Fixed(i) Then
-
-                            r += 1
-
-                            ModalDisplacement.Values(i) = sr.ReadDouble()
-
-                        End If
-
-                    Next
-
-                    Mode.Shape.Add(ModalDisplacement)
-
-                Next
-
-                Modes.Add(Mode)
-
+            For i = 0 To 4
+                If Math.Abs(L(i) - D(i)) > 0.00001 Then
+                    Throw New Exception("Jacobi solver did not pass test")
+                End If
             Next
 
-            sr.Close()
-            vr.Close()
+            '-----------------------------------------------------------
+            ' Try solving simple structural problem
+            '-----------------------------------------------------------
+
+            Dim Beam As New ConstantBeamElement(0)
+
+            Beam.Basis.U.X = 1.0
+            Beam.Basis.U.Y = 0.0
+            Beam.Basis.U.Z = 0.0
+
+            Beam.Basis.V.X = 0.0
+            Beam.Basis.V.Y = 1.0
+            Beam.Basis.V.Z = 0.0
+
+            Beam.Basis.W.X = 0.0
+            Beam.Basis.W.Y = 0.0
+            Beam.Basis.W.Z = 1.0
+
+            Beam.NodeA = New StructuralNode(0)
+            Beam.NodeA.Position.X = 0.0
+            Beam.NodeA.Position.Y = 0.0
+            Beam.NodeA.Position.Z = 0.0
+            Beam.NodeB = New StructuralNode(1)
+            Beam.NodeB.Position.X = 1.0
+            Beam.NodeB.Position.Y = 0.0
+            Beam.NodeB.Position.Z = 0.0
+
+            ' Basic flexional test
+
+            Beam.Section.AE = 1000.0
+            Beam.Section.EIy = 1.0
+            Beam.Section.EIz = 1.0
+            Beam.Section.GJ = 1000.0
+
+            Beam.Section.m = 1.0
+            Beam.Section.rIp = 1.0
+
+            Beam.GenerateGlobalMatrices()
+
+            Dim M As New SymmetricMatrix(6)
+            Dim K As New SymmetricMatrix(6)
+
+            For i = 0 To 5
+                For j = i To 5
+                    M(i, j) = Beam.M(i, j)
+                    K(i, j) = Beam.K(i, j)
+                Next
+            Next
+
+            D = New Vector(6)
+            V = New Matrix(6, 6)
+            EigenSolver.Jacobi(K, M, V, D)
+
+            If Math.Abs(Math.Sqrt(D(1)) - 3.53273) > 0.00001 Then
+                Throw New Exception("Structural solver did not pass basic test")
+            End If
+
+            If Math.Abs(Math.Sqrt(D(2)) - 34.80689) > 0.00001 Then
+                Throw New Exception("Structural solver did not pass basic test")
+            End If
+
+            '-----------------------------------------------------------
+            ' Check 90 degrees rotated beam
+            '-----------------------------------------------------------
+
+            Beam.Basis.U.X = 0.0
+            Beam.Basis.U.Y = 1.0
+            Beam.Basis.U.Z = 0.0
+
+            Beam.Basis.V.X = -1.0
+            Beam.Basis.V.Y = 0.0
+            Beam.Basis.V.Z = 0.0
+
+            Beam.Basis.W.X = 0.0
+            Beam.Basis.W.Y = 0.0
+            Beam.Basis.W.Z = 1.0
+
+            Beam.NodeA.Position.X = 0.0
+            Beam.NodeA.Position.Y = 0.0
+            Beam.NodeA.Position.Z = 0.0
+
+            Beam.NodeB.Position.X = 0.0
+            Beam.NodeB.Position.Y = 1.0
+            Beam.NodeB.Position.Z = 0.0
+
+            Beam.GenerateGlobalMatrices()
+
+            For i = 0 To 5
+                For j = i To 5
+                    M(i, j) = Beam.M(i, j)
+                    K(i, j) = Beam.K(i, j)
+                Next
+            Next
+
+            D = New Vector(6)
+            V = New Matrix(6, 6)
+            EigenSolver.Jacobi(K, M, V, D)
+
+            If Math.Abs(Math.Sqrt(D(1)) - 3.53273) > 0.00001 Then
+                Throw New Exception("Structural solver did not pass basic test")
+            End If
+
+            If Math.Abs(Math.Sqrt(D(2)) - 34.80689) > 0.00001 Then
+                Throw New Exception("Structural solver did not pass basic test")
+            End If
 
         End Sub
 
+        ''' <summary>
+        ''' Transfers the mode shape to the nodal displacement using the given scale factor.
+        ''' </summary>
+        ''' <param name="ModeIndex">The mode shape to be transferred.</param>
+        ''' <param name="Scale">The amplitude of the displacemet relative to the modal shape.</param>
         Public Sub TransferModeShapeToNodes(ByVal ModeIndex As Integer, Optional ByVal Scale As Double = 1.0)
 
             For Each n As StructuralNode In Nodes
@@ -347,6 +481,9 @@ Namespace CalculationModel.Models.Structural
 
         End Sub
 
+        ''' <summary>
+        ''' Sets all nodal displacements to zero.
+        ''' </summary>
         Public Sub ResetDisplacements()
 
             For Each n As StructuralNode In Nodes

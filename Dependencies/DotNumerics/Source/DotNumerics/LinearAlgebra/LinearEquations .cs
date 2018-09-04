@@ -187,17 +187,40 @@ namespace DotNumerics.LinearAlgebra
             }
         }
 
+        public void SolveLU(Matrix B, Matrix X)
+        {
+            if (_LU != null)
+            {
+                if (B.RowCount == _N & X.RowCount == _N & B.ColumnCount == X.ColumnCount)
+                {
+                    for (int j = 0; j < B.ColumnCount; j++)
+                    {
+                        Vector _X = new Vector(_N);
+                        SolveLU(B.Column(j), _X);
+                        for (int i = 0; i < _N; i++)
+                        {
+                            X[i, j] = _X[i];
+                        }
+                    }
+                }
+                else
+                {
+                    throw new Exception("wrong sizes");
+                }
+            }
+        }
+
         #endregion
-        
-        #region BandMatrix
-        
-        /// <summary>
-        /// Computes the solution to a real system of linear equations
-        /// A * X = B, where A is a band matrix.
-        /// </summary>
-        /// <param name="A">The band matrix.</param>
-        /// <param name="B">The vector containing the right-hand side of the linear system.</param>
-        /// <returns>A vector containing the solution to the linear system of equations.</returns>
+
+            #region BandMatrix
+
+            /// <summary>
+            /// Computes the solution to a real system of linear equations
+            /// A * X = B, where A is a band matrix.
+            /// </summary>
+            /// <param name="A">The band matrix.</param>
+            /// <param name="B">The vector containing the right-hand side of the linear system.</param>
+            /// <returns>A vector containing the solution to the linear system of equations.</returns>
         public Vector Solve(BandMatrix A, Vector B)
         {
             Matrix myB = B;
