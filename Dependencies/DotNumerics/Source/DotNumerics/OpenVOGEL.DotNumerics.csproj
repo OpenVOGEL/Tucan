@@ -8,8 +8,8 @@
     <ProjectGuid>{48185EF1-B73B-457B-AA37-0BCE567C5AB1}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DotNumerics</RootNamespace>
-    <AssemblyName>DotNumerics</AssemblyName>
+    <RootNamespace>OpenVOGEL.DotNumerics</RootNamespace>
+    <AssemblyName>OpenVOGEL.DotNumerics</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <FileUpgradeFlags>

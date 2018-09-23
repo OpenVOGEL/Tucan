@@ -15,8 +15,8 @@
 'You should have received a copy Of the GNU General Public License
 'along with this program.  If Not, see < http:  //www.gnu.org/licenses/>.
 
-Imports AeroTools.CalculationModel.Models.Structural.Library.Elements
-Imports MathTools.Algebra.EuclideanSpace
+Imports OpenVOGEL.AeroTools.CalculationModel.Models.Structural.Library.Elements
+Imports OpenVOGEL.MathTools.Algebra.EuclideanSpace
 
 Namespace VisualModel.Models.Components.Basics
 

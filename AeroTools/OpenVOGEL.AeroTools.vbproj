@@ -9,8 +9,8 @@
     </SchemaVersion>
     <ProjectGuid>{5085A290-ADD2-429E-A3A3-CF4158147E27}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>AeroTools</RootNamespace>
-    <AssemblyName>AeroTools</AssemblyName>
+    <RootNamespace>OpenVOGEL.AeroTools</RootNamespace>
+    <AssemblyName>OpenVOGEL.AeroTools</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>Windows</MyType>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
@@ -21,7 +21,7 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\Debug\</OutputPath>
-    <DocumentationFile>AeroTools.xml</DocumentationFile>
+    <DocumentationFile>OpenVOGEL.AeroTools.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -30,7 +30,7 @@
     <DefineTrace>true</DefineTrace>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DocumentationFile>AeroTools.xml</DocumentationFile>
+    <DocumentationFile>OpenVOGEL.AeroTools.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <DefineConstants>WITH_BOUNDED_VORTICES = true, WITH_PARALLEL_MATRIX = true</DefineConstants>
   </PropertyGroup>
@@ -56,7 +56,7 @@
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\ReleaseFull\</OutputPath>
     <DefineConstants>WITH_BOUNDED_VORTICES = true, WITH_PARALLEL_MATRIX = true</DefineConstants>
-    <DocumentationFile>AeroTools.xml</DocumentationFile>
+    <DocumentationFile>OpenVOGEL.AeroTools.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <DebugType>pdbonly</DebugType>
@@ -68,7 +68,7 @@
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\ReleaseLight\</OutputPath>
     <DefineConstants>WITH_BOUNDED_VORTICES = true, WITH_PARALLEL_MATRIX = true</DefineConstants>
-    <DocumentationFile>AeroTools.xml</DocumentationFile>
+    <DocumentationFile>OpenVOGEL.AeroTools.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <DebugType>pdbonly</DebugType>
@@ -422,13 +422,13 @@
     <Service Include="{94E38DFF-614B-4CBD-B67C-F211BB35CE8B}" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Dependencies\DotNumerics\Source\DotNumerics\DotNumerics.csproj">
+    <ProjectReference Include="..\Dependencies\DotNumerics\Source\DotNumerics\OpenVOGEL.DotNumerics.csproj">
       <Project>{48185ef1-b73b-457b-aa37-0bce567c5ab1}</Project>
-      <Name>DotNumerics</Name>
+      <Name>OpenVOGEL.DotNumerics</Name>
     </ProjectReference>
-    <ProjectReference Include="..\MathTools\MathTools.vbproj">
+    <ProjectReference Include="..\MathTools\OpenVOGEL.MathTools.vbproj">
       <Project>{7b3d8e3f-d52b-4118-9178-f457444c596d}</Project>
-      <Name>MathTools</Name>
+      <Name>OpenVOGEL.MathTools</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />

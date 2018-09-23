@@ -16,18 +16,18 @@
 'along with this program.  If Not, see < http:  //www.gnu.org/licenses/>.
 
 Imports System.IO
-Imports MathTools.Algebra.EuclideanSpace
-Imports AeroTools.CalculationModel.Models.Aero
-Imports AeroTools.CalculationModel.Models.Aero.Components
-Imports AeroTools.CalculationModel.Models.Structural
+Imports OpenVOGEL.MathTools.Algebra.EuclideanSpace
+Imports OpenVOGEL.AeroTools.CalculationModel.Models.Aero
+Imports OpenVOGEL.AeroTools.CalculationModel.Models.Aero.Components
+Imports OpenVOGEL.AeroTools.CalculationModel.Models.Structural
 Imports System.Xml
-Imports AeroTools.CalculationModel.Models.Structural.Library
-Imports AeroTools.VisualModel.Models
-Imports AeroTools.VisualModel.Models.Components
-Imports AeroTools.VisualModel.IO
-Imports AeroTools.CalculationModel.Models.Structural.Library.Nodes
-Imports AeroTools.CalculationModel.Models.Structural.Library.Elements
-Imports AeroTools.DataStore
+Imports OpenVOGEL.AeroTools.CalculationModel.Models.Structural.Library
+Imports OpenVOGEL.AeroTools.VisualModel.Models
+Imports OpenVOGEL.AeroTools.VisualModel.Models.Components
+Imports OpenVOGEL.AeroTools.VisualModel.IO
+Imports OpenVOGEL.AeroTools.CalculationModel.Models.Structural.Library.Nodes
+Imports OpenVOGEL.AeroTools.CalculationModel.Models.Structural.Library.Elements
+Imports OpenVOGEL.AeroTools.DataStore
 
 Namespace CalculationModel.Solver
 
@@ -39,7 +39,7 @@ Namespace CalculationModel.Solver
         ''' <param name="Model">Model to be transferred</param>
         ''' <param name="GenerateStructure">Indicates if a structural link should be created</param>
         ''' <remarks></remarks>
-        Public Sub GenerateFromExistingModel(ByVal Model As VisualModel.Models.DesignModel, Optional ByVal GenerateStructure As Boolean = False)
+        Public Sub GenerateFromExistingModel(ByVal Model As DesignModel, Optional ByVal GenerateStructure As Boolean = False)
 
             ' Import polar database:
 

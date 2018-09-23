@@ -15,11 +15,11 @@
 'You should have received a copy Of the GNU General Public License
 'along with this program.  If Not, see < http:  //www.gnu.org/licenses/>.
 
-Imports AeroTools.VisualModel.Models.Components
+Imports OpenVOGEL.AeroTools.VisualModel.Models.Components
 Imports System.Drawing
-Imports MathTools.Algebra.EuclideanSpace
+Imports OpenVOGEL.MathTools.Algebra.EuclideanSpace
 Imports System.Windows.Forms
-Imports MathTools
+Imports OpenVOGEL.MathTools
 
 Public Class FormFuselageEditor
 

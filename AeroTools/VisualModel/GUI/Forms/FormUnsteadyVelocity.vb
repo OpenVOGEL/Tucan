@@ -15,8 +15,8 @@
 'You should have received a copy Of the GNU General Public License
 'along with this program.  If Not, see < http:  //www.gnu.org/licenses/>.
 
-Imports AeroTools.CalculationModel.SimulationTools
-Imports AeroTools.CalculationModel.Settings
+Imports OpenVOGEL.AeroTools.CalculationModel.SimulationTools
+Imports OpenVOGEL.AeroTools.CalculationModel.Settings
 
 Public Class FormUnsteadyVelocity
 

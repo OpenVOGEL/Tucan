@@ -16,8 +16,8 @@
 'along with this program.  If Not, see < http:  //www.gnu.org/licenses/>.
 
 Imports System.Xml
-Imports AeroTools.VisualModel.IO
-Imports MathTools.Algebra.EuclideanSpace
+Imports OpenVOGEL.AeroTools.VisualModel.IO
+Imports OpenVOGEL.MathTools.Algebra.EuclideanSpace
 
 Namespace VisualModel.Models.Components.Basics
 

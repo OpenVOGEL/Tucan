@@ -16,8 +16,8 @@
 'along with this program.  If Not, see < http:  //www.gnu.org/licenses/>.
 
 Imports System.IO
-Imports MathTools.Algebra.EuclideanSpace
-Imports AeroTools.CalculationModel.Models.Aero.Components
+Imports OpenVOGEL.MathTools.Algebra.EuclideanSpace
+Imports OpenVOGEL.AeroTools.CalculationModel.Models.Aero.Components
 
 Namespace CalculationModel.Models.Aero
 

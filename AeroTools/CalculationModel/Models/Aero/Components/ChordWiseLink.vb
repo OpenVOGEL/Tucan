@@ -16,8 +16,8 @@
 'along with this program.  If Not, see < http:  //www.gnu.org/licenses/>.
 
 Imports System.IO
-Imports AeroTools.DataStore
-Imports MathTools.Algebra.EuclideanSpace
+Imports OpenVOGEL.AeroTools.DataStore
+Imports OpenVOGEL.MathTools.Algebra.EuclideanSpace
 
 Namespace CalculationModel.Models.Aero.Components
 

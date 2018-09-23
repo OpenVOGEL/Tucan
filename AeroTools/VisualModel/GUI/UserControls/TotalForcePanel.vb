@@ -15,10 +15,10 @@
 'You should have received a copy Of the GNU General Public License
 'along with this program.  If Not, see < http:  //www.gnu.org/licenses/>.
 
-Imports AeroTools.DataStore
-Imports MathTools.Magnitudes
-Imports AeroTools.CalculationModel.Models.Aero
-Imports MathTools.Algebra.EuclideanSpace
+Imports OpenVOGEL.AeroTools.DataStore
+Imports OpenVOGEL.MathTools.Magnitudes
+Imports OpenVOGEL.AeroTools.CalculationModel.Models.Aero
+Imports OpenVOGEL.MathTools.Algebra.EuclideanSpace
 
 Public Class TotalForcePanel
 

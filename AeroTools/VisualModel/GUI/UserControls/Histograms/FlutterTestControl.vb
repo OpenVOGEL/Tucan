@@ -15,10 +15,10 @@
 'You should have received a copy Of the GNU General Public License
 'along with this program.  If Not, see < http:  //www.gnu.org/licenses/>.
 
-Imports AeroTools.CalculationModel.SimulationTools
+Imports OpenVOGEL.AeroTools.CalculationModel.SimulationTools
 Imports System.Windows.Forms
 Imports System.Drawing
-Imports MathTools.Algebra.EuclideanSpace
+Imports OpenVOGEL.MathTools.Algebra.EuclideanSpace
 
 Public Class FlutterTestControl
 

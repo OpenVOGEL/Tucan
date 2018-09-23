@@ -15,12 +15,12 @@
 'You should have received a copy Of the GNU General Public License
 'along with this program.  If Not, see < http:  //www.gnu.org/licenses/>.
 
-Imports AeroTools.CalculationModel.Settings
-Imports AeroTools.CalculationModel.Models.Structural
-Imports MathTools.Algebra.EuclideanSpace
-Imports AeroTools.CalculationModel.Models.Aero
+Imports OpenVOGEL.AeroTools.CalculationModel.Settings
+Imports OpenVOGEL.AeroTools.CalculationModel.Models.Structural
+Imports OpenVOGEL.MathTools.Algebra.EuclideanSpace
+Imports OpenVOGEL.AeroTools.CalculationModel.Models.Aero
 Imports DotNumerics.LinearAlgebra
-Imports AeroTools.DataStore
+Imports OpenVOGEL.AeroTools.DataStore
 
 Namespace CalculationModel.Solver
 

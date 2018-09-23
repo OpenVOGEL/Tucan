@@ -1,5 +1,5 @@
 ﻿
-Imports MathTools.Magnitudes
+Imports OpenVOGEL.MathTools.Magnitudes
 
 Namespace DataStore
 

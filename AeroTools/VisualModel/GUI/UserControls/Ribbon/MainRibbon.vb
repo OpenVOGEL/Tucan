@@ -1,9 +1,9 @@
 ﻿
 Imports System.Windows.Forms
-Imports AeroTools.CalculationModel.Settings
-Imports AeroTools.VisualModel.Interface
-Imports AeroTools.VisualModel.Models.Components.Basics
-Imports AeroTools.DataStore
+Imports OpenVOGEL.AeroTools.CalculationModel.Settings
+Imports OpenVOGEL.AeroTools.VisualModel.Interface
+Imports OpenVOGEL.AeroTools.VisualModel.Models.Components.Basics
+Imports OpenVOGEL.AeroTools.DataStore
 
 Public Class MainRibbon
 

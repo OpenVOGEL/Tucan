@@ -16,12 +16,12 @@
 'along with this program.  If Not, see < http:  //www.gnu.org/licenses/>.
 
 Imports System.IO
-Imports MathTools.Algebra.EuclideanSpace
-Imports AeroTools.CalculationModel.Models.Structural.Library
-Imports AeroTools.CalculationModel.Models.Aero.Components
-Imports MathTools.Integration
-Imports AeroTools.CalculationModel.Models.Structural.Library.Nodes
-Imports AeroTools.CalculationModel.Models.Structural.Library.Elements
+Imports OpenVOGEL.MathTools.Algebra.EuclideanSpace
+Imports OpenVOGEL.AeroTools.CalculationModel.Models.Structural.Library
+Imports OpenVOGEL.AeroTools.CalculationModel.Models.Aero.Components
+Imports OpenVOGEL.MathTools.Integration
+Imports OpenVOGEL.AeroTools.CalculationModel.Models.Structural.Library.Nodes
+Imports OpenVOGEL.AeroTools.CalculationModel.Models.Structural.Library.Elements
 
 Namespace CalculationModel.Models.Structural
 

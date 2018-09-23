@@ -15,9 +15,9 @@
 'You should have received a copy Of the GNU General Public License
 'along with this program.  If Not, see < http:  //www.gnu.org/licenses/>.
 
-Imports AeroTools.VisualModel.Models.Components.Basics
-Imports MathTools.Algebra.EuclideanSpace
-Imports AeroTools.DataStore
+Imports OpenVOGEL.AeroTools.VisualModel.Models.Components.Basics
+Imports OpenVOGEL.MathTools.Algebra.EuclideanSpace
+Imports OpenVOGEL.AeroTools.DataStore
 
 Public Class FormAskVelocity
 

@@ -15,10 +15,10 @@
 'You should have received a copy Of the GNU General Public License
 'along with this program.  If Not, see < http:  //www.gnu.org/licenses/>.
 
-Imports MathTools.Algebra.EuclideanSpace
-Imports AeroTools.CalculationModel.Models.Aero.Components
+Imports OpenVOGEL.MathTools.Algebra.EuclideanSpace
+Imports OpenVOGEL.AeroTools.CalculationModel.Models.Aero.Components
 Imports System.IO
-Imports AeroTools.DataStore
+Imports OpenVOGEL.AeroTools.DataStore
 
 Namespace CalculationModel.Models.Aero
 

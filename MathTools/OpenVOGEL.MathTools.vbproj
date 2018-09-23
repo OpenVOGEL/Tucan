@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{7B3D8E3F-D52B-4118-9178-F457444C596D}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>MathTools</RootNamespace>
-    <AssemblyName>MathTools</AssemblyName>
+    <RootNamespace>OpenVOGEL.MathTools</RootNamespace>
+    <AssemblyName>OpenVOGEL.MathTools</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>Windows</MyType>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
@@ -19,7 +19,7 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\Debug\</OutputPath>
-    <DocumentationFile>MathTools.xml</DocumentationFile>
+    <DocumentationFile>OpenVOGEL.MathTools.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -28,7 +28,7 @@
     <DefineTrace>true</DefineTrace>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DocumentationFile>MathTools.xml</DocumentationFile>
+    <DocumentationFile>OpenVOGEL.MathTools.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup>
@@ -108,9 +108,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Dependencies\DotNumerics\Source\DotNumerics\DotNumerics.csproj">
+    <ProjectReference Include="..\Dependencies\DotNumerics\Source\DotNumerics\OpenVOGEL.DotNumerics.csproj">
       <Project>{48185ef1-b73b-457b-aa37-0bce567c5ab1}</Project>
-      <Name>DotNumerics</Name>
+      <Name>OpenVOGEL.DotNumerics</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />

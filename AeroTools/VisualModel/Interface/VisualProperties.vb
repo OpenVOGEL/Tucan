@@ -18,7 +18,7 @@
 Imports System.Xml
 Imports System.Drawing
 Imports System.ComponentModel
-Imports AeroTools.VisualModel.IO
+Imports OpenVOGEL.AeroTools.VisualModel.IO
 
 Namespace VisualModel.Interface
 

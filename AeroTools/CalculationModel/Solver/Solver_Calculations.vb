@@ -17,10 +17,10 @@
 
 Imports DotNumerics.LinearAlgebra
 Imports System.Threading.Tasks
-Imports MathTools.Algebra.EuclideanSpace
-Imports MathTools.Extensions
-Imports AeroTools.CalculationModel.Models.Aero
-Imports AeroTools.CalculationModel.Models.Aero.Components
+Imports OpenVOGEL.MathTools.Algebra.EuclideanSpace
+Imports OpenVOGEL.MathTools.Extensions
+Imports OpenVOGEL.AeroTools.CalculationModel.Models.Aero
+Imports OpenVOGEL.AeroTools.CalculationModel.Models.Aero.Components
 
 #Const WITH_BOUNDED_VORTICES = False
 #Const WITH_PARALLEL_LOOPS = False
@@ -213,12 +213,6 @@ Namespace CalculationModel.Solver
                 Next
 
             Next
-
-#If DEBUG Then
-
-            MatrixSources.WriteTXT(String.Format("{0}\Matrix_Sources.txt", Steady_Path))
-
-#End If
 
         End Sub
 

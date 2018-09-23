@@ -15,8 +15,8 @@
 'You should have received a copy Of the GNU General Public License
 'along with this program.  If Not, see < http:  //www.gnu.org/licenses/>.
 
-Imports MathTools.Algebra.EuclideanSpace
-Imports AeroTools.VisualModel.Interface
+Imports OpenVOGEL.MathTools.Algebra.EuclideanSpace
+Imports OpenVOGEL.AeroTools.VisualModel.Interface
 Imports SharpGL
 Imports System.Xml
 

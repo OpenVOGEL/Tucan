@@ -15,12 +15,11 @@
 'You should have received a copy Of the GNU General Public License
 'along with this program.  If Not, see < http:  //www.gnu.org/licenses/>.
 
-Imports AeroTools.VisualModel.Interface
-Imports AeroTools.VisualModel.Models.Components
+Imports OpenVOGEL.AeroTools.VisualModel.Interface
+Imports OpenVOGEL.AeroTools.VisualModel.Models.Components
+Imports OpenVOGEL.AeroTools.VisualModel.Models.Components.Basics
+Imports OpenVOGEL.AeroTools.DataStore
 Imports System.Xml
-Imports AeroTools.VisualModel.Models.Components.Basics
-Imports AeroTools.CalculationModel.Models.Aero.Components
-Imports AeroTools.DataStore
 
 Namespace VisualModel.Models
 

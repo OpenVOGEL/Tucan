@@ -5,11 +5,13 @@ VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "OpenVOGEL", "Vogel\OpenVOGEL.vbproj", "{561A37B0-9AB2-4E70-88AD-6E9E27DCD92C}"
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "AeroTools", "AeroTools\AeroTools.vbproj", "{5085A290-ADD2-429E-A3A3-CF4158147E27}"
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "OpenVOGEL.AeroTools", "AeroTools\OpenVOGEL.AeroTools.vbproj", "{5085A290-ADD2-429E-A3A3-CF4158147E27}"
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "MathTools", "MathTools\MathTools.vbproj", "{7B3D8E3F-D52B-4118-9178-F457444C596D}"
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "OpenVOGEL.MathTools", "MathTools\OpenVOGEL.MathTools.vbproj", "{7B3D8E3F-D52B-4118-9178-F457444C596D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNumerics", "Dependencies\DotNumerics\Source\DotNumerics\DotNumerics.csproj", "{48185EF1-B73B-457B-AA37-0BCE567C5AB1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenVOGEL.DotNumerics", "Dependencies\DotNumerics\Source\DotNumerics\OpenVOGEL.DotNumerics.csproj", "{48185EF1-B73B-457B-AA37-0BCE567C5AB1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenVOGEL.GpuTools", "OpenVOGEL.GpuTools\OpenVOGEL.GpuTools.csproj", "{C65957C3-F947-4684-BE1B-5C03FC2760C8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +53,14 @@ Global
 		{48185EF1-B73B-457B-AA37-0BCE567C5AB1}.ReleaseFull|Any CPU.Build.0 = Release|Any CPU
 		{48185EF1-B73B-457B-AA37-0BCE567C5AB1}.ReleaseLight|Any CPU.ActiveCfg = Release|Any CPU
 		{48185EF1-B73B-457B-AA37-0BCE567C5AB1}.ReleaseLight|Any CPU.Build.0 = Release|Any CPU
+		{C65957C3-F947-4684-BE1B-5C03FC2760C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C65957C3-F947-4684-BE1B-5C03FC2760C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C65957C3-F947-4684-BE1B-5C03FC2760C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C65957C3-F947-4684-BE1B-5C03FC2760C8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C65957C3-F947-4684-BE1B-5C03FC2760C8}.ReleaseFull|Any CPU.ActiveCfg = Release|Any CPU
+		{C65957C3-F947-4684-BE1B-5C03FC2760C8}.ReleaseFull|Any CPU.Build.0 = Release|Any CPU
+		{C65957C3-F947-4684-BE1B-5C03FC2760C8}.ReleaseLight|Any CPU.ActiveCfg = Release|Any CPU
+		{C65957C3-F947-4684-BE1B-5C03FC2760C8}.ReleaseLight|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

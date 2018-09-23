@@ -16,11 +16,11 @@
 'along with this program.  If Not, see < http:  //www.gnu.org/licenses/>.
 
 Imports SharpGL
-Imports MathTools.Algebra.EuclideanSpace
+Imports OpenVOGEL.MathTools.Algebra.EuclideanSpace
 Imports System.Xml
 Imports System.Drawing
 Imports System.Windows.Forms.DataVisualization.Charting
-Imports AeroTools.VisualModel.IO
+Imports OpenVOGEL.AeroTools.VisualModel.IO
 
 Namespace CalculationModel.SimulationTools
 

@@ -15,9 +15,9 @@
 'You should have received a copy Of the GNU General Public License
 'along with this program.  If Not, see < http:  //www.gnu.org/licenses/>.
 
-Imports AeroTools.CalculationModel.Models.Structural
+Imports OpenVOGEL.AeroTools.CalculationModel.Models.Structural
 Imports DotNumerics.LinearAlgebra
-Imports AeroTools.CalculationModel.Models.Structural.Library
+Imports OpenVOGEL.AeroTools.CalculationModel.Models.Structural.Library
 
 Namespace CalculationModel.Solver
 

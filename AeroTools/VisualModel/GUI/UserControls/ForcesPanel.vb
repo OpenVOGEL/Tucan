@@ -17,9 +17,9 @@
 
 Imports System.Drawing
 Imports System.Windows.Forms
-Imports AeroTools.CalculationModel.Models.Aero.Components
-Imports AeroTools.DataStore
-Imports MathTools.Magnitudes
+Imports OpenVOGEL.AeroTools.CalculationModel.Models.Aero.Components
+Imports OpenVOGEL.AeroTools.DataStore
+Imports OpenVOGEL.MathTools.Magnitudes
 
 Public Class ForcesPanel
 

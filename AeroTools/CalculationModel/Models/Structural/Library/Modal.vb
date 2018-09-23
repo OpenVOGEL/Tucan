@@ -15,7 +15,7 @@
 'You should have received a copy Of the GNU General Public License
 'along with this program.  If Not, see < http:  //www.gnu.org/licenses/>.
 
-Imports AeroTools.CalculationModel.Models.Structural.Library.Nodes
+Imports OpenVOGEL.AeroTools.CalculationModel.Models.Structural.Library.Nodes
 
 Namespace CalculationModel.Models.Structural.Library
 

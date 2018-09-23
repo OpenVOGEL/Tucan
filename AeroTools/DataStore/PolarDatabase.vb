@@ -1,7 +1,7 @@
 ﻿
 Imports System.IO
 Imports System.Xml
-Imports AeroTools.CalculationModel.Models.Aero.Components
+Imports OpenVOGEL.AeroTools.CalculationModel.Models.Aero.Components
 
 Namespace DataStore
 

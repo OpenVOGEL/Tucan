@@ -17,8 +17,8 @@
 
 Imports System.IO
 Imports System.Threading.Tasks
-Imports AeroTools.CalculationModel.Models.Aero.Components
-Imports MathTools.Algebra.EuclideanSpace
+Imports OpenVOGEL.AeroTools.CalculationModel.Models.Aero.Components
+Imports OpenVOGEL.MathTools.Algebra.EuclideanSpace
 
 Namespace CalculationModel.Models.Aero
 

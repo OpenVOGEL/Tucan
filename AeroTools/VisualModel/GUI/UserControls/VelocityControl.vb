@@ -16,9 +16,9 @@
 'along with this program.  If Not, see < http:  //www.gnu.org/licenses/>.
 
 Imports System.Threading.Tasks
-Imports MathTools.Algebra.EuclideanSpace
-Imports AeroTools.CalculationModel.SimulationTools
-Imports AeroTools.DataStore
+Imports OpenVOGEL.MathTools.Algebra.EuclideanSpace
+Imports OpenVOGEL.AeroTools.CalculationModel.SimulationTools
+Imports OpenVOGEL.AeroTools.DataStore
 
 Public Class VelocityControl
 

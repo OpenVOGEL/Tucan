@@ -15,7 +15,7 @@
 'You should have received a copy Of the GNU General Public License
 'along with this program.  If Not, see < http:  //www.gnu.org/licenses/>.
 
-Imports AeroTools.CalculationModel.Settings
+Imports OpenVOGEL.AeroTools.CalculationModel.Settings
 
 Public Class FormSettings
 

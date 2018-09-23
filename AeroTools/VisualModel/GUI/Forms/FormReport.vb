@@ -15,9 +15,9 @@
 'You should have received a copy Of the GNU General Public License
 'along with this program.  If Not, see < http:  //www.gnu.org/licenses/>.
 
-Imports AeroTools.CalculationModel.Models.Aero.Components
+Imports OpenVOGEL.AeroTools.CalculationModel.Models.Aero.Components
 Imports System.Windows.Forms
-Imports AeroTools.CalculationModel.Models.Structural
+Imports OpenVOGEL.AeroTools.CalculationModel.Models.Structural
 
 Public Class FormReport
 

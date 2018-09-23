@@ -16,16 +16,16 @@
 'along with this program.  If Not, see < http:  //www.gnu.org/licenses/>.
 
 Imports SharpGL
-Imports AeroTools.VisualModel.Interface
-Imports AeroTools.VisualModel.Models.Components.Basics
-Imports AeroTools.CalculationModel.Models.Aero
-Imports MathTools.Algebra.EuclideanSpace
-Imports MathTools.Algebra.CustomMatrices
+Imports OpenVOGEL.AeroTools.VisualModel.Interface
+Imports OpenVOGEL.AeroTools.VisualModel.Models.Components.Basics
+Imports OpenVOGEL.AeroTools.CalculationModel.Models.Aero
+Imports OpenVOGEL.MathTools.Algebra.EuclideanSpace
+Imports OpenVOGEL.MathTools.Algebra.CustomMatrices
 Imports System.IO
-Imports AeroTools.CalculationModel.Settings
+Imports OpenVOGEL.AeroTools.CalculationModel.Settings
 Imports System.Xml
-Imports AeroTools.VisualModel.Tools.Colormaping
-Imports MathTools
+Imports OpenVOGEL.AeroTools.VisualModel.Tools.Colormaping
+Imports OpenVOGEL.MathTools
 
 Namespace VisualModel.Models.Components
 
