@@ -201,7 +201,7 @@
   <data name="Label3.Text" xml:space="preserve">
     <value>This software is copyright protected
 and distrbuted under General Public Licence GPL v3
-Original author: Guillermo Hazebrouck</value>
+Original author: Ir. Guillermo Hazebrouck</value>
   </data>
   <data name="Label3.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
     <value>MiddleRight</value>
@@ -228,13 +228,13 @@ Original author: Guillermo Hazebrouck</value>
     <value>6, 255</value>
   </data>
   <data name="LabelLicencia.Size" type="System.Drawing.Size, System.Drawing">
-    <value>144, 15</value>
+    <value>151, 15</value>
   </data>
   <data name="LabelLicencia.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>
   </data>
   <data name="LabelLicencia.Text" xml:space="preserve">
-    <value>Compilation 2017 / Beta 5</value>
+    <value>Compilation 2018 / Beta 10</value>
   </data>
   <data name="LabelLicencia.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
     <value>MiddleRight</value>

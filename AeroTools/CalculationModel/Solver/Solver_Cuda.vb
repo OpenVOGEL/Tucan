@@ -1,6 +1,6 @@
-﻿'Open VOGEL (www.openvogel.com)
+﻿'Open VOGEL (https://en.wikibooks.org/wiki/Open_VOGEL)
 'Open source software for aerodynamics
-'Copyright (C) 2016 Guillermo Hazebrouck (guillermo.hazebrouck@openvogel.com)
+'Copyright (C) 2018 Guillermo Hazebrouck (gahazebrouck@gmail.com)
 
 'This program Is free software: you can redistribute it And/Or modify
 'it under the terms Of the GNU General Public License As published by
@@ -26,6 +26,51 @@ Namespace CalculationModel.Solver
     Partial Public Class Solver
 
         Public Const FourPi As Double = 4 * Math.PI
+
+        Private Sub TestCuda()
+
+            RaiseEvent PushMessage("Testing cuda")
+
+            CudafyModes.Target = eGPUType.OpenCL
+            CudafyModes.DeviceId = 2
+            CudafyTranslator.Language = eLanguage.OpenCL
+
+            Dim km As CudafyModule = CudafyTranslator.Cudafy
+            Dim GPU As GPGPU = CudafyHost.GetDevice(CudafyModes.Target, CudafyModes.DeviceId)
+            GPU.LoadModule(km)
+
+            Dim a(3) As Double
+            a(0) = 1
+            a(1) = 2
+            a(2) = 3
+            a(3) = 4
+            Dim a_dev() As Double = GPU.Allocate(Of Double)(a)
+            GPU.CopyToDevice(a, a_dev)
+
+            Dim s(4) As Double
+            Dim s_dev() As Double = GPU.Allocate(Of Double)(s)
+            GPU.CopyToDevice(s, s_dev)
+
+            GPU.Launch(4, 1, "TestCudaMethod", a_dev, s_dev)
+
+            GPU.CopyFromDevice(s_dev, s)
+
+            RaiseEvent PushMessage("Cuda test done")
+
+        End Sub
+
+        <Cudafy()>
+        Public Shared Sub TestCudaMethod(thread As GThread, a As Double(), s As Double())
+
+            Dim tid As Integer = thread.blockIdx.x
+
+            If tid < 4 Then
+                For i = 0 To tid
+                    s(tid) = a(i)
+                Next
+            End If
+
+        End Sub
 
         Private Sub CalculateVelocityI_CUDA(Optional ByVal WithStreamOmega As Boolean = False)
 

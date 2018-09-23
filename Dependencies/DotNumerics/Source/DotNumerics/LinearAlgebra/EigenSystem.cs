@@ -372,6 +372,13 @@ namespace DotNumerics.LinearAlgebra
         /// This method is suitable for small systems only, and will work better as matrices K and M have many off-diagonal zeros. 
         /// This is why this method can be succesfully implemented on the subspace iteration method (where projected matrices tend to diagonal form).
         /// If a lumped matrix is applied, this method will work even faster.
+        /// This method has been brought here as a complement to the OpenVOGEL project publisehd on GPLv3.
+        /// Open VOGEL (https://en.wikibooks.org/wiki/Open_VOGEL)
+        /// Open source software for aerodynamics
+        /// Copyright (C) 2018 Guillermo Hazebrouck (gahazebrouck@gmail.com)
+        /// <http://www.gnu.org/licenses/>.
+        /// This algorithm is a .NET interpretation of the original method published in "J. Bathe, Finite elements procedures",
+        /// which was written in FORTRAN.
         /// </remarks>
         public void Jacobi(SymmetricMatrix K, SymmetricMatrix M, Matrix Q, Vector D)
         {
@@ -609,6 +616,11 @@ namespace DotNumerics.LinearAlgebra
         /// This method has been presented by K.J. Bathe as a quite robust one. Convergence might be slower than through Lanczos method, but the implementation involves much simpler algorithms, and 
         /// convergence is much easier to control and checked.
         /// Gram-smith KM-ortogonalization occurs simultaneously for all vectors through a Ritz transformation. This is why  the method is very stable and less round-off errors sensitive.
+        /// This method has been brought here as a complement to the OpenVOGEL project publisehd on GPLv3.
+        /// Open VOGEL (https://en.wikibooks.org/wiki/Open_VOGEL)
+        /// Open source software for aerodynamics
+        /// Copyright (C) 2018 Guillermo Hazebrouck (gahazebrouck@gmail.com)
+        /// <http://www.gnu.org/licenses/>.
         /// </remarks>
         public void SubspaceIteration(SymmetricMatrix M, 
                                       SymmetricMatrix K, 
