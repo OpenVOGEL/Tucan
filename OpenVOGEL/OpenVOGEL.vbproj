@@ -26,10 +26,10 @@
     <MapFileExtensions>true</MapFileExtensions>
     <SupportUrl>https://sites.google.com/site/gahvogel/</SupportUrl>
     <ErrorReportUrl>https://github.com/GuillermoHazebrouck/OpenVOGEL/issues</ErrorReportUrl>
-    <ProductName>Open VOGEL 2018 - Beta 9</ProductName>
+    <ProductName>Open VOGEL 2018 - Beta 10</ProductName>
     <PublisherName>Open VOGEL</PublisherName>
     <SuiteName>Open VOGEL</SuiteName>
-    <ApplicationRevision>8</ApplicationRevision>
+    <ApplicationRevision>11</ApplicationRevision>
     <ApplicationVersion>2018.2.1.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -187,16 +187,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AeroTools\AeroTools.vbproj">
-      <Project>{5085a290-add2-429e-a3a3-cf4158147e27}</Project>
-      <Name>AeroTools</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\MathTools\MathTools.vbproj">
-      <Project>{7b3d8e3f-d52b-4118-9178-f457444c596d}</Project>
-      <Name>MathTools</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\SplashScreen.png" />
     <None Include="Resources\VogelIcon.ico" />
     <Content Include="Vogel.ico" />
@@ -230,6 +220,16 @@
       <Progid>0</Progid>
       <DefaultIcon>Vogel.ico</DefaultIcon>
     </FileAssociation>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\OpenVOGEL.AeroTools\OpenVOGEL.AeroTools.vbproj">
+      <Project>{5085a290-add2-429e-a3a3-cf4158147e27}</Project>
+      <Name>OpenVOGEL.AeroTools</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\OpenVOGEL.MathTools\OpenVOGEL.MathTools.vbproj">
+      <Project>{7b3d8e3f-d52b-4118-9178-f457444c596d}</Project>
+      <Name>OpenVOGEL.MathTools</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

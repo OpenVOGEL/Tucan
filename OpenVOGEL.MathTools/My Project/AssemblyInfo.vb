@@ -8,12 +8,12 @@ Imports System.Runtime.InteropServices
 
 ' Review the values of the assembly attributes
 
-<Assembly: AssemblyTitle("MathTools")> 
-<Assembly: AssemblyDescription("")> 
-<Assembly: AssemblyCompany("")> 
-<Assembly: AssemblyProduct("MathTools")> 
-<Assembly: AssemblyCopyright("Copyright ©  2015")> 
-<Assembly: AssemblyTrademark("")> 
+<Assembly: AssemblyTitle("MathTools")>
+<Assembly: AssemblyDescription("Math classes and algorithms for OpenVOGEL")>
+<Assembly: AssemblyCompany("OpenVOGEL")>
+<Assembly: AssemblyProduct("MathTools")>
+<Assembly: AssemblyCopyright("Copyright © Guillermo Hazebrouck")>
+<Assembly: AssemblyTrademark("OpenVOGEL")>
 
 <Assembly: ComVisible(False)>
 

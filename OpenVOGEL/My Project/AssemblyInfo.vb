@@ -8,12 +8,12 @@ Imports System.Runtime.InteropServices
 
 ' Review the values of the assembly attributes
 
-<Assembly: AssemblyTitle("VOGEL 2018")>
-<Assembly: AssemblyDescription("Software for aircraft design. Visit https://sites.google.com/site/gahvogel/main/steady-aerodynamics for more information.")>
-<Assembly: AssemblyCompany("")>
+<Assembly: AssemblyTitle("OpenVOGEL 2018")>
+<Assembly: AssemblyDescription("Software for aircraft design")>
+<Assembly: AssemblyCompany("OpenVOGEL")>
 <Assembly: AssemblyProduct("VOGEL 2018")>
 <Assembly: AssemblyCopyright("Copyright ©  2018 - Guillermo A. Hazebrouck")>
-<Assembly: AssemblyTrademark("")> 
+<Assembly: AssemblyTrademark("OpenVOGEL")>
 
 <Assembly: ComVisible(False)>
 

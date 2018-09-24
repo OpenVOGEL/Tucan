@@ -9,11 +9,11 @@ Imports System.Runtime.InteropServices
 ' Revisar los valores de los atributos del ensamblado
 
 <Assembly: AssemblyTitle("OpenVOGEL.AeroTools")>
-<Assembly: AssemblyDescription("")>
+<Assembly: AssemblyDescription("Aerodynamic and structural kernel models for OpenVOGEL")>
 <Assembly: AssemblyCompany("OpenVOGEL")>
 <Assembly: AssemblyProduct("AeroTools")>
 <Assembly: AssemblyCopyright("Copyright © Guillermo Hazebrouck")>
-<Assembly: AssemblyTrademark("")> 
+<Assembly: AssemblyTrademark("OpenVOGEL")>
 
 <Assembly: ComVisible(False)>
 
