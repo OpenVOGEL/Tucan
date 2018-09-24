@@ -422,7 +422,7 @@
     <Service Include="{94E38DFF-614B-4CBD-B67C-F211BB35CE8B}" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\OpenVOGEL.DotNumerics\Source\DotNumerics\OpenVOGEL.DotNumerics.csproj">
+    <ProjectReference Include="..\OpenVOGEL.DotNumerics\OpenVOGEL.DotNumerics.csproj">
       <Project>{48185ef1-b73b-457b-aa37-0bce567c5ab1}</Project>
       <Name>OpenVOGEL.DotNumerics</Name>
     </ProjectReference>

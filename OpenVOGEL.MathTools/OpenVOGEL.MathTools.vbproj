@@ -108,7 +108,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Dependencies\DotNumerics\Source\DotNumerics\OpenVOGEL.DotNumerics.csproj">
+    <ProjectReference Include="..\OpenVOGEL.DotNumerics\OpenVOGEL.DotNumerics.csproj">
       <Project>{48185ef1-b73b-457b-aa37-0bce567c5ab1}</Project>
       <Name>OpenVOGEL.DotNumerics</Name>
     </ProjectReference>
