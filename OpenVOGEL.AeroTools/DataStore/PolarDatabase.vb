@@ -125,7 +125,7 @@ Namespace DataStore
 
         End Sub
 
-        Friend Function GetFamilyFromID(FamilyID As Guid) As PolarFamily
+        Function GetFamilyFromID(FamilyID As Guid) As PolarFamily
             For Each Family In Families
                 If Family.ID.Equals(FamilyID) Then
                     Return Family
