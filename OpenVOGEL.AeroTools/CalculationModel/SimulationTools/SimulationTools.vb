@@ -17,10 +17,10 @@
 
 Imports SharpGL
 Imports OpenVOGEL.MathTools.Algebra.EuclideanSpace
+Imports System.Windows.Forms.DataVisualization.Charting
+Imports OpenVOGEL.AeroTools.IoHelper
 Imports System.Xml
 Imports System.Drawing
-Imports System.Windows.Forms.DataVisualization.Charting
-Imports OpenVOGEL.AeroTools.VisualModel.IO
 
 Namespace CalculationModel.SimulationTools
 

@@ -18,7 +18,6 @@
 Imports OpenVOGEL.MathTools.Algebra.EuclideanSpace
 Imports OpenVOGEL.AeroTools.CalculationModel.Models.Aero.Components
 Imports System.IO
-Imports OpenVOGEL.AeroTools.DataStore
 
 Namespace CalculationModel.Models.Aero
 

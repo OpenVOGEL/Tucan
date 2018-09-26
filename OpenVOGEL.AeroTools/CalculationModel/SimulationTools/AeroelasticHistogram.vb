@@ -16,8 +16,8 @@
 'along with this program.  If Not, see < http:  //www.gnu.org/licenses/>.
 
 Imports OpenVOGEL.MathTools.Algebra.EuclideanSpace
+Imports OpenVOGEL.AeroTools.IoHelper
 Imports System.Xml
-Imports OpenVOGEL.AeroTools.VisualModel.IO
 
 Namespace CalculationModel.SimulationTools
 

@@ -41,7 +41,7 @@ Namespace CalculationModel.Solver
         ''' <summary>
         ''' Gives to each vortex its corresponding global index on vectors and matrices and returns the number of bounded vortex rings.
         ''' </summary>
-        Private Function IndexateLattices() As Integer
+        Public Function IndexateLattices() As Integer
 
             Dim nIndex As Integer = 0
             Dim eIndex As Integer = 0
@@ -449,7 +449,7 @@ Namespace CalculationModel.Solver
         ''' </summary>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Private Function CheckIfThereAreSources() As Boolean
+        Public Function CheckIfThereAreSources() As Boolean
 
             For Each Lattice In Lattices
 

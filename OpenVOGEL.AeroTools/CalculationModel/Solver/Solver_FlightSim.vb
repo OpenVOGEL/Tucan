@@ -26,7 +26,7 @@ Namespace CalculationModel.Solver
         ''' <summary>
         ''' Convect wakes and calculates loads at the last time step.
         ''' </summary>
-        Public Sub FlightSim(ByRef f As FormProgress, ByVal DataBasePath As String)
+        Public Sub FlightSim(ByVal DataBasePath As String)
 
             CreateSubFoldersNames(DataBasePath)
             CreateSubFolder(DataBaseSection.Steady)
@@ -39,7 +39,7 @@ Namespace CalculationModel.Solver
             _StreamDynamicPressure = 0.5 * _StreamDensity * SquareVelocity
             Dim WithStreamOmega As Boolean = _StreamOmega.EuclideanNorm > 0.00001
 
-            f.PushMessageWithProgress("Building matrix", 0)
+            'f.PushMessageWithProgress("Building matrix", 0)
 
             BuildMatrixForDoublets()
             BuildRHS_I(WithStreamOmega)
@@ -51,7 +51,7 @@ Namespace CalculationModel.Solver
 
             For TimeStep = 1 To Settings.SimulationSteps
 
-                f.PushMessageWithProgress(String.Format("Step {0}", TimeStep), 100 * TimeStep / Settings.SimulationSteps)
+                'f.PushMessageWithProgress(String.Format("Step {0}", TimeStep), 100 * TimeStep / Settings.SimulationSteps)
 
                 LE.Solve(RHS, G)
 
@@ -75,7 +75,7 @@ Namespace CalculationModel.Solver
 
                 'Next time step
 
-                f.PushMessageWithProgress("Calculating airloads", 0)
+                'PushMessageWithProgress("Calculating airloads", 0)
 
                 CalculateTotalVelocityOnBoundedLattices(WithStreamOmega)
 
@@ -96,11 +96,11 @@ Namespace CalculationModel.Solver
 
             ' Ready
 
-            f.PushMessageWithProgress("Writing to database", 100)
+            'f.PushMessageWithProgress("Writing to database", 100)
 
             Me.WriteToXML(String.Format("{0}\Steady.res", Steady_Path), True)
 
-            f.PushState("Calculation finished")
+            'f.PushState("Calculation finished")
 
         End Sub
 

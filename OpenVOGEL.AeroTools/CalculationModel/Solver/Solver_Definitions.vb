@@ -20,7 +20,7 @@ Imports OpenVOGEL.AeroTools.CalculationModel.Models.Structural
 Imports OpenVOGEL.MathTools.Algebra.EuclideanSpace
 Imports OpenVOGEL.AeroTools.CalculationModel.Models.Aero
 Imports DotNumerics.LinearAlgebra
-Imports OpenVOGEL.AeroTools.DataStore
+Imports OpenVOGEL.AeroTools.CalculationModel.Models.Aero.Components
 
 Namespace CalculationModel.Solver
 
@@ -29,13 +29,6 @@ Namespace CalculationModel.Solver
         Public Sub New()
             Lattices = New List(Of BoundedLattice)
             Settings = New SimulationSettings
-        End Sub
-
-        Public Sub New(ByVal Model As VisualModel.Models.DesignModel, ByVal Simulation As SimulationSettings, Optional ByVal GenerateStructure As Boolean = False)
-            Lattices = New List(Of BoundedLattice)
-            Settings = New SimulationSettings
-            Settings.Assign(Simulation)
-            GenerateFromExistingModel(Model, GenerateStructure)
         End Sub
 
         ' Public fields:
