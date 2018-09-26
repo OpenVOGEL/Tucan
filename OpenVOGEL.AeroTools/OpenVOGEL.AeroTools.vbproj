@@ -83,15 +83,6 @@
     <Reference Include="PresentationFramework" />
     <Reference Include="SharpGL">
       <HintPath>..\Dependencies\SharpGL\SharpGL.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="SharpGL.WinForms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=27fc851303210b27, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Dependencies\SharpGL\SharpGL.WinForms.dll</HintPath>
-    </Reference>
-    <Reference Include="SharpGL.WPF">
-      <HintPath>..\Dependencies\SharpGL\SharpGL.WPF.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />

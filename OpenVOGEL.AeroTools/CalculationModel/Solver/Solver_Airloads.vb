@@ -163,16 +163,16 @@ Namespace CalculationModel.Solver
             Dim dL As Double
             Dim CDi As Double = 0.0#
 
-            Dim d As New Windows.Forms.SaveFileDialog
-            Dim r As Windows.Forms.DialogResult = d.ShowDialog()
-            Dim file As String = ""
-            Dim write As Boolean = False
-            If r = Windows.Forms.DialogResult.OK Then
-                file = d.FileName
-                write = True
-                FileOpen(120, file, OpenMode.Output)
-                PrintLine(120, "PA.X, PA.Y, PB.X, PB.Y, Δl, Δφ, dφ/dn")
-            End If
+            'Dim d As New Windows.Forms.SaveFileDialog
+            'Dim r As Windows.Forms.DialogResult = d.ShowDialog()
+            'Dim file As String = ""
+            'Dim write As Boolean = False
+            'If r = Windows.Forms.DialogResult.OK Then
+            'file = d.FileName
+            'Write = True
+            'FileOpen(120, file, OpenMode.Output)
+            'PrintLine(120, "PA.X, PA.Y, PB.X, PB.Y, Δl, Δφ, dφ/dn")
+            'End If
 
             For Each Segment In TrefftzSegments
 
@@ -211,17 +211,17 @@ Namespace CalculationModel.Solver
 
                 CDi += Segment.G * nV * dL
 
-                If write Then
-                    PrintLine(120, String.Format("{0,12:F8}, {1,12:F8}, {2,12:F8}, {3,12:F8}, {4,12:F8}, {5,12:F8}, {6,12:F8}", Segment.PA.X, Segment.PA.Y, Segment.PB.X, Segment.PB.Y, dL, Segment.G, nV))
-                End If
+                'If write Then
+                'PrintLine(120, String.Format("{0,12:F8}, {1,12:F8}, {2,12:F8}, {3,12:F8}, {4,12:F8}, {5,12:F8}, {6,12:F8}", Segment.PA.X, Segment.PA.Y, Segment.PB.X, Segment.PB.Y, dL, Segment.G, nV))
+                'End If
 
             Next
 
-            If write Then
-                CDi /= Math.Sign(CDi) * _StreamVelocity.SquareEuclideanNorm * S
-                PrintLine(120, String.Format("CDi = {0,12:F8}", CDi))
-                FileClose(120)
-            End If
+            'If write Then
+            'CDi /= Math.Sign(CDi) * _StreamVelocity.SquareEuclideanNorm * S
+            'PrintLine(120, String.Format("CDi = {0,12:F8}", CDi))
+            'FileClose(120)
+            'End If
 
             'MsgBox(String.Format("Computed S.CDi = {0,12:F8}m²", CDi))
 
