@@ -188,6 +188,10 @@
       <Project>{48185ef1-b73b-457b-aa37-0bce567c5ab1}</Project>
       <Name>OpenVOGEL.DotNumerics</Name>
     </ProjectReference>
+    <ProjectReference Include="..\OpenVOGEL.GpuTools\OpenVOGEL.GpuTools.csproj">
+      <Project>{c65957c3-f947-4684-be1b-5c03fc2760c8}</Project>
+      <Name>OpenVOGEL.GpuTools</Name>
+    </ProjectReference>
     <ProjectReference Include="..\OpenVOGEL.MathTools\OpenVOGEL.MathTools.vbproj">
       <Project>{7b3d8e3f-d52b-4118-9178-f457444c596d}</Project>
       <Name>OpenVOGEL.MathTools</Name>
