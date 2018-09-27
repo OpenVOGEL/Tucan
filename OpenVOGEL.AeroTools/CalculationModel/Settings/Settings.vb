@@ -15,11 +15,9 @@
 'You should have received a copy Of the GNU General Public License
 'along with this program.  If Not, see < http:  //www.gnu.org/licenses/>.
 
-Imports SharpGL
 Imports OpenVOGEL.MathTools.Algebra.EuclideanSpace
 Imports System.Xml
 Imports OpenVOGEL.AeroTools.CalculationModel.Perturbations
-Imports OpenVOGEL.AeroTools.VisualModel.IO
 Imports OpenVOGEL.AeroTools.IoHelper
 
 Namespace CalculationModel.Settings
