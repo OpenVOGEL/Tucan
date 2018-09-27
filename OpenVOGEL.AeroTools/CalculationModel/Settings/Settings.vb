@@ -18,7 +18,7 @@
 Imports SharpGL
 Imports OpenVOGEL.MathTools.Algebra.EuclideanSpace
 Imports System.Xml
-Imports OpenVOGEL.AeroTools.CalculationModel.SimulationTools
+Imports OpenVOGEL.AeroTools.CalculationModel.Perturbations
 Imports OpenVOGEL.AeroTools.VisualModel.IO
 Imports OpenVOGEL.AeroTools.IoHelper
 
@@ -293,26 +293,6 @@ Namespace CalculationModel.Settings
                 Return Me.StreamVelocity.EuclideanNorm * Me.Density / Me.Viscocity
             End Get
         End Property
-
-        Public Sub RepresentVelocityVector(ByVal gl As OpenGL, ByVal Posición As EVector3)
-
-            Dim VectorVelocidad As New EVector3
-
-            VectorVelocidad.Assign(Me.StreamVelocity)
-
-            VectorVelocidad.Normalize()
-
-            gl.LineWidth(1.0F)
-            gl.Begin(OpenGL.GL_LINES)
-
-            gl.Color(0.1, 0.1, 0.8)
-
-            gl.Vertex(Posición.X, Posición.Y, Posición.Z)
-            gl.Vertex(Posición.X - VectorVelocidad.X, Posición.Y - VectorVelocidad.Y, Posición.Z - VectorVelocidad.Z)
-
-            gl.End()
-
-        End Sub
 
         ''' <summary>
         ''' Generates a vector containing the velocity at each time step.

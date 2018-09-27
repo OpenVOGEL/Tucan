@@ -19,7 +19,7 @@ Imports OpenVOGEL.MathTools.Algebra.EuclideanSpace
 Imports OpenVOGEL.AeroTools.IoHelper
 Imports System.Xml
 
-Namespace CalculationModel.SimulationTools
+Namespace CalculationModel.Perturbations
 
     Public Enum HistogramType As Byte
 

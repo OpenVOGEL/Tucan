@@ -20,12 +20,12 @@ Imports OpenVOGEL.MathTools.Algebra.EuclideanSpace
 Imports OpenVOGEL.DesignTools.VisualModel.Models
 Imports OpenVOGEL.AeroTools.CalculationModel.Solver
 Imports OpenVOGEL.AeroTools.CalculationModel.Settings
-Imports OpenVOGEL.AeroTools.CalculationModel.SimulationTools
 Imports System.ComponentModel
 Imports System.Windows.Forms
 Imports System.Xml
 Imports OpenVOGEL.DesignTools.VisualModel.Tools.Properties
 Imports OpenVOGEL.DesignTools.VisualModel.Interface
+Imports OpenVOGEL.DesignTools.VisualModel.Models.Components
 
 Namespace DataStore
 
@@ -65,7 +65,7 @@ Namespace DataStore
 
             SimulationSettings.InitializaParameters()
 
-            VelocityPlane.GenerarMallado()
+            VelocityPlane.GenerateMesh()
 
             Visualization.Initialize()
 
@@ -324,7 +324,7 @@ Namespace DataStore
 
                         End If
 
-                        VelocityPlane.ActualizarModelo3D(ControlGL)
+                        VelocityPlane.Updte3DModel(ControlGL)
 
                     End If
 
@@ -441,7 +441,7 @@ Namespace DataStore
                         Plane.ShowOnRotate = False
                         ListOfSurfacesToDraw.Add(Plane)
                         ControlGL.NewList(Plane.Name, OpenGL.GL_COMPILE)
-                        VelocityPlane.ActualizarModelo3D(ControlGL)
+                        VelocityPlane.Updte3DModel(ControlGL)
                         ControlGL.EndList()
 
                     End If
@@ -538,7 +538,7 @@ Namespace DataStore
 
             If Visualization.AllowLineSmoothing Then ControlGL.Enable(OpenGL.GL_LINE_SMOOTH) Else ControlGL.Disable(OpenGL.GL_LINE_SMOOTH)
 
-            Dim Origen As New EVector3
+            Dim Origin As New EVector3
             Dim Punto As EVector3 = Visualization.CameraPosition
             Dim Orientacion As EulerAngles = Visualization.CameraOrientation
 
@@ -557,7 +557,7 @@ Namespace DataStore
             Visualization.Axes.GenerateWireFrame(ControlGL)
             Visualization.ReferenceFrame.GenerateWireFrame(ControlGL)
 
-            SimulationSettings.RepresentVelocityVector(ControlGL, Origen)
+            VelocityPlane.RepresentVelocityVector(ControlGL, SimulationSettings.StreamVelocity, Origin)
 
             Results.RepresentTransitState(ControlGL, TimeStep)
 
@@ -583,25 +583,21 @@ Namespace DataStore
 
             ControlGL.Ortho(-0.5 * ControlGLWidth, 0.5 * ControlGLWidth, -0.5 * ControlGLHeight, 0.5 * ControlGLHeight, -100000, 100000)
 
-            Dim Origen As New EVector3
-            Dim Punto As EVector3 = Visualization.CameraPosition
-            Dim Orientacion As EulerAngles = Visualization.CameraOrientation
+            Dim Origin As New EVector3
+            Dim Point As EVector3 = Visualization.CameraPosition
+            Dim Orientation As EulerAngles = Visualization.CameraOrientation
 
             ControlGL.Translate(Visualization.CameraPosition.X, Visualization.CameraPosition.Y, 0)
-            ControlGL.Rotate(Orientacion.Fi, Orientacion.Tita, Orientacion.Psi)
+            ControlGL.Rotate(Orientation.Fi, Orientation.Tita, Orientation.Psi)
             ControlGL.Scale(Visualization.Proximity, Visualization.Proximity, Visualization.Proximity)
 
-            'VisualizationParameters.EjeDeCoordenadas.Extension = SimulationSettings.CharacteristicLenght
-            'VisualizationParameters.EjeDeCoordenadas.CrearWireFrame(GL)
-            'VisualizationParameters.ReferenceFrame.CrearWireFrame(GL)
-
-            SimulationSettings.RepresentVelocityVector(ControlGL, Origen)
+            VelocityPlane.RepresentVelocityVector(ControlGL, SimulationSettings.StreamVelocity, Origin)
 
             For i = 0 To Model.Objects.Count - 1
 
                 If Model.Objects(i) IsNot Nothing Then
 
-                    Model.Objects(i).Selected = False ' unselect the surface
+                    Model.Objects(i).Selected = False
 
                     If Not Model.Selection.MultipleSelection Then Model.Objects(i).UnselectAll()
 

@@ -15,7 +15,8 @@
 'You should have received a copy Of the GNU General Public License
 'along with this program.  If Not, see < http:  //www.gnu.org/licenses/>.
 
-Imports OpenVOGEL.AeroTools.CalculationModel.SimulationTools
+Imports System.Windows.Forms.DataVisualization.Charting
+Imports OpenVOGEL.AeroTools.CalculationModel.Perturbations
 Imports OpenVOGEL.AeroTools.CalculationModel.Settings
 
 Public Class FormUnsteadyVelocity
@@ -44,9 +45,9 @@ Public Class FormUnsteadyVelocity
 
     Private ReadOnly Property SelectedType As ProfileType
         Get
-            If rbtImpulsive.Checked Then Return ProfileType.Impulsivo
-            If rbtPerturbation.Checked Then Return ProfileType.Perturbado
-            Return ProfileType.Impulsivo
+            If rbtImpulsive.Checked Then Return ProfileType.Impulsive
+            If rbtPerturbation.Checked Then Return ProfileType.Perturbation
+            Return ProfileType.Impulsive
         End Get
     End Property
 
@@ -99,11 +100,39 @@ Public Class FormUnsteadyVelocity
 
     Private _AllowGetData As Boolean = False
 
+    Public Sub PlotOnChart(Perturbation As UnsteadyVelocity, ByRef Graph As Chart)
+
+        Graph.Titles.Item(0).Text = "Unsteady velocity"
+        Graph.ChartAreas.Item(0).AxisY.Title = "V(t)/Vo"
+        Graph.ChartAreas.Item(0).AxisX.Title = "t/Δt"
+
+        If Graph.Series("Vx").Points.Count >= 0 Then
+            Graph.Series("Vx").Points.Clear()
+        End If
+
+        If Graph.Series("Vy").Points.Count >= 0 Then
+            Graph.Series("Vy").Points.Clear()
+        End If
+
+        If Graph.Series("Vz").Points.Count >= 0 Then
+            Graph.Series("Vz").Points.Clear()
+        End If
+
+        For i = 0 To Perturbation.nSteps - 1
+
+            Graph.Series("Vx").Points.AddXY(i + 1, Perturbation.Intensity(i).X)
+            Graph.Series("Vy").Points.AddXY(i + 1, Perturbation.Intensity(i).Y)
+            Graph.Series("Vz").Points.AddXY(i + 1, Perturbation.Intensity(i).Z)
+
+        Next
+
+    End Sub
+
     Private Sub ShowData()
 
         _AllowGetData = False
 
-        Dim ShowPerturbation As Boolean = _Profile.Type = ProfileType.Perturbado
+        Dim ShowPerturbation As Boolean = _Profile.Type = ProfileType.Perturbation
         rbtPerturbation.Checked = ShowPerturbation
         rbtImpulsive.Checked = Not ShowPerturbation
         nudStart.Enabled = ShowPerturbation
@@ -120,7 +149,8 @@ Public Class FormUnsteadyVelocity
         nudInterval.Value = _Profile.Perturbation(Axis).ElapsedTime
 
         _Profile.GeneratePerturbation(_Settings.SimulationSteps)
-        _Profile.PlotOnChart(gVelocity)
+
+        PlotOnChart(_Profile, gVelocity)
 
         _AllowGetData = True
 
@@ -137,7 +167,8 @@ Public Class FormUnsteadyVelocity
             _Profile.Perturbation(Axis).FinalDrop = nudFinalValue.Value
             _Profile.Perturbation(Axis).ElapsedTime = nudInterval.Value
             _Profile.GeneratePerturbation(_Settings.SimulationSteps)
-            _Profile.PlotOnChart(gVelocity)
+
+            PlotOnChart(_Profile, gVelocity)
 
         End If
 

@@ -15,11 +15,9 @@
 'You should have received a copy Of the GNU General Public License
 'along with this program.  If Not, see < http:  //www.gnu.org/licenses/>.
 
-Imports System.Threading.Tasks
 Imports OpenVOGEL.MathTools.Algebra.EuclideanSpace
-Imports OpenVOGEL.AeroTools.CalculationModel.SimulationTools
-Imports OpenVOGEL.AeroTools.DataStore
 Imports OpenVOGEL.DesignTools.DataStore
+Imports OpenVOGEL.DesignTools.VisualModel.Models.Components
 
 Public Class VelocityControl
 
@@ -27,13 +25,13 @@ Public Class VelocityControl
 
     Private Ready As Boolean = False
     Private ModyfingData As Boolean = True
-    Private PlanoDeVelocidad As VelocityPlane
+    Private Plane As VelocityPlane
 
     Public Sub Initialize()
 
         Me.Ready = False
-        Me.PlanoDeVelocidad = ProjectRoot.VelocityPlane
-        Me.Ready = True And (Not PlanoDeVelocidad Is Nothing) And (ProjectRoot.Initialized)
+        Me.Plane = ProjectRoot.VelocityPlane
+        Me.Ready = True And (Not Plane Is Nothing) And (ProjectRoot.Initialized)
 
         If Ready Then Me.AcomodarDatosAlForm()
 
@@ -45,30 +43,30 @@ Public Class VelocityControl
 
         ModyfingData = True
 
-        Me.PsiBox.Value = MathTools.Conversion.RadToDeg(PlanoDeVelocidad.Psi)
-        Me.TitaBox.Value = MathTools.Conversion.RadToDeg(PlanoDeVelocidad.Tita)
+        Me.PsiBox.Value = MathTools.Conversion.RadToDeg(Plane.Psi)
+        Me.TitaBox.Value = MathTools.Conversion.RadToDeg(Plane.Tita)
 
-        Me.NxBox.Value = PlanoDeVelocidad.NodesInDirection_1
-        Me.NyBox.Value = PlanoDeVelocidad.NodesInDirection_2
+        Me.NxBox.Value = Plane.NodesInDirection1
+        Me.NyBox.Value = Plane.NodesInDirection2
 
-        Me.ExtensionX.Value = PlanoDeVelocidad.Extension_1
-        Me.ExtensionY.Value = PlanoDeVelocidad.Extension_2
+        Me.ExtensionX.Value = Plane.Extension1
+        Me.ExtensionY.Value = Plane.Extension2
 
-        Me.OrigenX.Value = PlanoDeVelocidad.Origin.X
-        Me.OrigenY.Value = PlanoDeVelocidad.Origin.Y
-        Me.OrigenZ.Value = PlanoDeVelocidad.Origin.Z
+        Me.OrigenX.Value = Plane.Origin.X
+        Me.OrigenY.Value = Plane.Origin.Y
+        Me.OrigenZ.Value = Plane.Origin.Z
 
-        Me.VisualizarPlano.Checked = PlanoDeVelocidad.Visible
+        Me.VisualizarPlano.Checked = Plane.Visible
 
-        Me.EscalaBox.Value = PlanoDeVelocidad.Scale
+        Me.EscalaBox.Value = Plane.Scale
 
-        Me.VectoresSampleColor.BackColor = PlanoDeVelocidad.ColorDeVectores
-        Me.NodoSampleColor.BackColor = PlanoDeVelocidad.ColorDeNodos
-        Me.NodeSize.Value = PlanoDeVelocidad.NodeSize
-        Me.LineSize.Value = PlanoDeVelocidad.VectorThickness
+        Me.VectoresSampleColor.BackColor = Plane.ColorVectors
+        Me.NodoSampleColor.BackColor = Plane.ColorNodes
+        Me.NodeSize.Value = Plane.NodeSize
+        Me.LineSize.Value = Plane.VectorThickness
 
-        Me.rdInducedVelocity.Checked = PlanoDeVelocidad.InducedVelocity
-        Me.rdTotalVelocity.Checked = Not PlanoDeVelocidad.InducedVelocity
+        Me.rdInducedVelocity.Checked = Plane.InducedVelocity
+        Me.rdTotalVelocity.Checked = Not Plane.InducedVelocity
 
         ModyfingData = False
 
@@ -78,25 +76,25 @@ Public Class VelocityControl
 
         If Not Ready Then Exit Sub
 
-        PlanoDeVelocidad.Psi = MathTools.Conversion.DegToRad(Me.PsiBox.Value)
-        PlanoDeVelocidad.Tita = MathTools.Conversion.DegToRad(Me.TitaBox.Value)
+        Plane.Psi = MathTools.Conversion.DegToRad(Me.PsiBox.Value)
+        Plane.Tita = MathTools.Conversion.DegToRad(Me.TitaBox.Value)
 
-        PlanoDeVelocidad.NodesInDirection_1 = Me.NxBox.Value
-        PlanoDeVelocidad.NodesInDirection_2 = Me.NyBox.Value
+        Plane.NodesInDirection1 = Me.NxBox.Value
+        Plane.NodesInDirection2 = Me.NyBox.Value
 
-        PlanoDeVelocidad.Extension_1 = Me.ExtensionX.Value
-        PlanoDeVelocidad.Extension_2 = Me.ExtensionY.Value
+        Plane.Extension1 = Me.ExtensionX.Value
+        Plane.Extension2 = Me.ExtensionY.Value
 
-        PlanoDeVelocidad.Origin.X = Me.OrigenX.Value
-        PlanoDeVelocidad.Origin.Y = Me.OrigenY.Value
-        PlanoDeVelocidad.Origin.Z = Me.OrigenZ.Value
+        Plane.Origin.X = Me.OrigenX.Value
+        Plane.Origin.Y = Me.OrigenY.Value
+        Plane.Origin.Z = Me.OrigenZ.Value
 
-        PlanoDeVelocidad.Scale = Me.EscalaBox.Value
+        Plane.Scale = Me.EscalaBox.Value
 
-        PlanoDeVelocidad.Visible = Me.VisualizarPlano.Checked
-        PlanoDeVelocidad.InducedVelocity = Me.rdInducedVelocity.Checked
+        Plane.Visible = Me.VisualizarPlano.Checked
+        Plane.InducedVelocity = Me.rdInducedVelocity.Checked
 
-        Me.PlanoDeVelocidad.GenerarMallado()
+        Me.Plane.GenerateMesh()
         ProjectRoot.RepresentOnGL()
 
         RaiseEvent RefreshGL()
@@ -107,7 +105,7 @@ Public Class VelocityControl
 
         If Not Ready Then Exit Sub
 
-        PlanoDeVelocidad.GenerarMallado()
+        Plane.GenerateMesh()
 
         RaiseEvent RefreshGL()
 
@@ -118,19 +116,19 @@ Public Class VelocityControl
         If Not Ready Then Exit Sub
 
         AdquirirDatosDelForm()
-        PlanoDeVelocidad.GenerarMallado()
-        Dim CantidadDeNodos As Integer = PlanoDeVelocidad.NumberOfNodes
+        Plane.GenerateMesh()
+        Dim CantidadDeNodos As Integer = Plane.NumberOfNodes
         Dim RefVelocity As New EVector3
 
         If ProjectRoot.CalculationCore Is Nothing Then Exit Sub
 
         Dim WithStreamOmega As Boolean = ProjectRoot.CalculationCore.Settings.Omega.EuclideanNorm > 0.0
 
-        Dim Total As Boolean = Not PlanoDeVelocidad.InducedVelocity
+        Dim Total As Boolean = Not Plane.InducedVelocity
 
         Parallel.For(1, CantidadDeNodos + 1, Sub(i As Integer)
-                                                 PlanoDeVelocidad.ObtenerVelocidadInducida(i).Assign(ProjectRoot.CalculationCore.CalculateVelocityAtPoint(PlanoDeVelocidad.ObtenerNodo(i), Total, WithStreamOmega))
-                                                 PlanoDeVelocidad.ObtenerVelocidadInducida(i).ProjectOnPlane(PlanoDeVelocidad.VectorNormal)
+                                                 Plane.GetInducedVelocity(i).Assign(ProjectRoot.CalculationCore.CalculateVelocityAtPoint(Plane.GetNode(i), Total, WithStreamOmega))
+                                                 Plane.GetInducedVelocity(i).ProjectOnPlane(Plane.NormalVector)
                                              End Sub)
         ProjectRoot.RepresentOnGL()
 
@@ -138,7 +136,7 @@ Public Class VelocityControl
 
     Private Sub CalculateTreftzIntegral()
 
-        ProjectRoot.CalculationCore.ComputeTrefftzIntegral(PlanoDeVelocidad.VectorNormal, PlanoDeVelocidad.Origin, PlanoDeVelocidad.TreftSegments)
+        ProjectRoot.CalculationCore.ComputeTrefftzIntegral(Plane.NormalVector, Plane.Origin, Plane.TreftSegments)
 
     End Sub
 
@@ -156,19 +154,19 @@ Public Class VelocityControl
         Dim Respuesta As MsgBoxResult = Colores.ShowDialog()
         If Respuesta = MsgBoxResult.Ok Then
             VectoresSampleColor.BackColor = Colores.Color
-            PlanoDeVelocidad.ColorDeVectores = Colores.Color
+            Plane.ColorVectors = Colores.Color
         End If
 
     End Sub
 
     Private Sub LineSize_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles LineSize.ValueChanged
         If Not Ready Then Exit Sub
-        PlanoDeVelocidad.VectorThickness = Me.LineSize.Value
+        Plane.VectorThickness = Me.LineSize.Value
     End Sub
 
     Private Sub NodeSize_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles NodeSize.ValueChanged
         If Not Ready Then Exit Sub
-        PlanoDeVelocidad.NodeSize = Me.NodeSize.Value
+        Plane.NodeSize = Me.NodeSize.Value
     End Sub
 
     Private Sub ColorNodo_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ColorNodo.Click
@@ -176,13 +174,13 @@ Public Class VelocityControl
         Dim Respuesta As MsgBoxResult = Colores.ShowDialog()
         If Respuesta = MsgBoxResult.Ok Then
             NodoSampleColor.BackColor = Colores.Color
-            PlanoDeVelocidad.ColorDeNodos = Colores.Color
+            Plane.ColorNodes = Colores.Color
         End If
     End Sub
 
     Private Sub EscalaBox_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles EscalaBox.ValueChanged
         If Not Ready Then Exit Sub
-        PlanoDeVelocidad.Scale = Me.EscalaBox.Value
+        Plane.Scale = Me.EscalaBox.Value
         ProjectRoot.RepresentOnGL()
     End Sub
 

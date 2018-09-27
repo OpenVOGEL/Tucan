@@ -76,19 +76,9 @@
     <CodeAnalysisRuleSet>ManagedMinimumRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Cudafy.NET, Version=1.28.5482.15045, Culture=neutral, PublicKeyToken=63a4c9931616906b, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Dependencies\Cudafy\bin\Cudafy.NET.dll</HintPath>
-    </Reference>
     <Reference Include="PresentationFramework" />
-    <Reference Include="SharpGL">
-      <HintPath>..\Dependencies\SharpGL\SharpGL.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Windows.Forms.DataVisualization" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -132,7 +122,7 @@
     <Compile Include="CalculationModel\Models\Structural\StructuralCore.vb" />
     <Compile Include="CalculationModel\Settings\Settings.vb" />
     <Compile Include="CalculationModel\SimulationTools\AeroelasticHistogram.vb" />
-    <Compile Include="CalculationModel\SimulationTools\SimulationTools.vb" />
+    <Compile Include="CalculationModel\SimulationTools\Perturbations.vb" />
     <Compile Include="CalculationModel\Solver\Solver_Aeroelastic.vb" />
     <Compile Include="CalculationModel\Solver\Solver_Airloads.vb" />
     <Compile Include="CalculationModel\Solver\Solver_Calculations.vb" />
