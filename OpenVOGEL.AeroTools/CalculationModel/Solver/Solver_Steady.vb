@@ -32,6 +32,8 @@ Namespace CalculationModel.Solver
         ''' </summary>
         Public Sub SteadyState(ByVal DataBasePath As String)
 
+            TestOpenCL()
+
             Dim StartingTime As Date = Now
 
             CreateSubFoldersNames(DataBasePath)

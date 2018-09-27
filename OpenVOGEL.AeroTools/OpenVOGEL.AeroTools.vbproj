@@ -126,7 +126,7 @@
     <Compile Include="CalculationModel\Solver\Solver_Aeroelastic.vb" />
     <Compile Include="CalculationModel\Solver\Solver_Airloads.vb" />
     <Compile Include="CalculationModel\Solver\Solver_Calculations.vb" />
-    <Compile Include="CalculationModel\Solver\Solver_Cuda.vb" />
+    <Compile Include="CalculationModel\Solver\Solver_OpenCL.vb" />
     <Compile Include="CalculationModel\Solver\Solver_Definitions.vb" />
     <Compile Include="CalculationModel\Solver\Solver_FlightSim.vb" />
     <Compile Include="CalculationModel\Solver\Solver_IO.vb" />
