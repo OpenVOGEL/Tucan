@@ -10,17 +10,22 @@ OpenVOGEL.MathTools/obj/**
 OpenVOGEL.MathTools/**/bin
 OpenVOGEL.MathTools/**/obj
 
+OpenVOGEL.DesignTools/bin/**
+OpenVOGEL.DesignTools/obj/**
+OpenVOGEL.DesignTools/**/bin
+OpenVOGEL.DesignTools/**/obj
+
+OpenVOGEL.DotNumerics/DotNumerics/bin/**
+OpenVOGEL.DotNumerics/DotNumerics/obj/**
+OpenVOGEL.DotNumerics/DotNumerics/**/bin
+OpenVOGEL.DotNumerics/DotNumerics/**/obj
+
 OpenVOGEL/bin/**
 OpenVOGEL/obj/**
 OpenVOGEL/publish/**
 OpenVOGEL/**/bin
 OpenVOGEL/**/obj
 OpenVOGEL/**/publish
-
-OpenVOGEL.DotNumerics/DotNumerics/bin/**
-OpenVOGEL.DotNumerics/DotNumerics/obj/**
-OpenVOGEL.DotNumerics/DotNumerics/**/bin
-OpenVOGEL.DotNumerics/DotNumerics/**/obj
 
 .vs/**
 **/.vs
