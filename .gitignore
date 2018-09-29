@@ -15,10 +15,10 @@ OpenVOGEL.DesignTools/obj/**
 OpenVOGEL.DesignTools/**/bin
 OpenVOGEL.DesignTools/**/obj
 
-OpenVOGEL.DotNumerics/DotNumerics/bin/**
-OpenVOGEL.DotNumerics/DotNumerics/obj/**
-OpenVOGEL.DotNumerics/DotNumerics/**/bin
-OpenVOGEL.DotNumerics/DotNumerics/**/obj
+OpenVOGEL.DotNumerics/bin/**
+OpenVOGEL.DotNumerics/obj/**
+OpenVOGEL.DotNumerics/**/bin
+OpenVOGEL.DotNumerics/**/obj
 
 OpenVOGEL/bin/**
 OpenVOGEL/obj/**
