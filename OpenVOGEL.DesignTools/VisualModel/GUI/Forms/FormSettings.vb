@@ -52,6 +52,11 @@ Public Class FormSettings
         cbGlobalSurvey.Checked = LocalSettings.GlobalPanelSurvey
         LongCaracteristricaBox.Value = LocalSettings.CharacteristicLenght
 
+        ' GPU
+
+        cbUseGpu.Checked = LocalSettings.UseGpu
+        nudDeviceId.Value = LocalSettings.GpuDeviceId
+
         ' Structural:
 
         nudStructureStart.Value = LocalSettings.StructuralSettings.StructuralLinkingStep
@@ -91,6 +96,9 @@ Public Class FormSettings
         LocalSettings.CalculateCutoff = cbAutoCutOff.Checked
         LocalSettings.GlobalPanelSurvey = cbGlobalSurvey.Checked
         LocalSettings.CharacteristicLenght = LongCaracteristricaBox.Value
+
+        LocalSettings.UseGpu = cbUseGpu.Checked
+        LocalSettings.GpuDeviceId = nudDeviceId.Value
 
         LocalSettings.GlobalPosition.X = PxBox.Value
         LocalSettings.GlobalPosition.Y = PyBox.Value
@@ -136,7 +144,5 @@ Public Class FormSettings
             _AllowStructuralSettings = value
         End Set
     End Property
-
-
 
 End Class

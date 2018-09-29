@@ -27,17 +27,27 @@ Namespace CalculationModel.Solver
 
         Private Sub TestOpenCL()
 
-            RaiseEvent PushMessage("Testing GPU double presition capability...")
+            If Settings.UseGpu Then
 
-            If GpuTools.GpuCore.TestGpuDoublePresition Then
+                RaiseEvent PushMessage("Testing GPU double precision capability...")
 
-                RaiseEvent PushMessage("Double presition enabled")
+                If GpuTools.GpuCore.TestGpuDoublePrecision(Settings.GpuDeviceId) Then
+
+                    RaiseEvent PushMessage("Double precision enabled")
+
+                Else
+
+                    RaiseEvent PushMessage("Double precision disabled")
+
+                    Settings.UseGpu = False
+
+                End If
 
             Else
 
-                RaiseEvent PushMessage("Double presition disabled")
+                RaiseEvent PushMessage("Hardware acceleration disabled")
 
-            End If
+            End if
 
         End Sub
 

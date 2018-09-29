@@ -2,30 +2,34 @@
 using Cudafy.Host;
 using Cudafy.Translator;
 using System;
+using System.Collections.Generic;
 
 namespace OpenVOGEL.GpuTools
 {
     public static class GpuCore
     {
 
-        public static bool TestGpuDoublePresition()
+        public static bool TestGpuDoublePrecision(int DeviceId)
         {
+            if (DeviceId > CudafyHost.GetDeviceCount (eGPUType.OpenCL))
+            {
+                return false;
+            }
+
             try
             {
                 CudafyModes.Target = eGPUType.OpenCL;
                 CudafyTranslator.Language = eLanguage.OpenCL;
                 CudafyModule km = CudafyTranslator.Cudafy();
-                GPGPU gpu = CudafyHost.GetDevice(CudafyModes.Target, 2);
+                GPGPU gpu = CudafyHost.GetDevice(eGPUType.OpenCL, DeviceId);
                 gpu.LoadModule(km);
 
                 double c;
-                double[] dev_c = gpu.Allocate<double>(); // cudaMalloc one Int32
-                gpu.Launch().add_double(2.5d, 7.5d, dev_c); // or gpu.Launch(1, 1, "add", 2, 7, dev_c);
-                gpu.CopyFromDevice(dev_c, out c);
-
-                return c == 10.0d;
-                
+                double[] dev_c = gpu.Allocate<double>(); 
+                gpu.Launch().add_double(2.5d, 7.5d, dev_c);
+                gpu.CopyFromDevice(dev_c, out c);                
                 gpu.Free(dev_c);
+                return c == 10.0d;
             }
             catch
             { return false; }

@@ -16,9 +16,9 @@
 'along with this program.  If Not, see < http:  //www.gnu.org/licenses/>.
 
 Imports OpenVOGEL.MathTools.Algebra.EuclideanSpace
-Imports System.Xml
 Imports OpenVOGEL.AeroTools.CalculationModel.Perturbations
 Imports OpenVOGEL.AeroTools.IoHelper
+Imports System.Xml
 
 Namespace CalculationModel.Settings
 
@@ -217,6 +217,18 @@ Namespace CalculationModel.Settings
         Public Property StrongWakeInfluence As Boolean = False
 
         ''' <summary>
+        ''' Indicates if the GPU can be used to accelerate the computation.
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property UseGpu As Boolean = False
+
+        ''' <summary>
+        ''' The id of the Gpu device to use.
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property GpuDeviceId As Integer = 0
+
+        ''' <summary>
         ''' Sets default values.
         ''' </summary>
         ''' <remarks></remarks>
@@ -238,6 +250,8 @@ Namespace CalculationModel.Settings
             SimulationSteps = 25
             ClippingStep = 25
             StructuralSettings.StructuralLinkingStep = 5
+            UseGpu = False
+            GpuDeviceId = 0
             StructuralSettings.ModalDamping = 0.05
 
             Interval = 0.01
@@ -251,29 +265,31 @@ Namespace CalculationModel.Settings
         ''' <summary>
         ''' Copies the object content into another one.
         ''' </summary>
-        ''' <param name="Simulacion"></param>
+        ''' <param name="SimuData"></param>
         ''' <remarks></remarks>
-        Public Sub Assign(ByVal Simulacion As SimulationSettings)
+        Public Sub Assign(ByVal SimuData As SimulationSettings)
 
-            AnalysisType = Simulacion.AnalysisType
-            Cutoff = Simulacion.Cutoff
-            StreamVelocity.Assign(Simulacion.StreamVelocity)
-            Omega.Assign(Simulacion.Omega)
-            SimulationSteps = Simulacion.SimulationSteps
-            ClippingStep = Simulacion.ClippingStep
-            Interval = Simulacion.Interval
-            Viscocity = Simulacion.Viscocity
-            Density = Simulacion.Density
-            StaticPressure = Simulacion.StaticPressure
-            SurveyTolerance = Simulacion.SurveyTolerance
-            GlobalPanelSurvey = Simulacion.GlobalPanelSurvey
-            GlobalPosition.Assign(Simulacion.GlobalPosition)
-            GlobalRotationCenter = Simulacion.GlobalRotationCenter
-            UnsteadyVelocity.Assign(Simulacion.UnsteadyVelocity)
-            StructuralSettings.Assign(Simulacion.StructuralSettings)
+            AnalysisType = SimuData.AnalysisType
+            Cutoff = SimuData.Cutoff
+            StreamVelocity.Assign(SimuData.StreamVelocity)
+            Omega.Assign(SimuData.Omega)
+            SimulationSteps = SimuData.SimulationSteps
+            ClippingStep = SimuData.ClippingStep
+            Interval = SimuData.Interval
+            Viscocity = SimuData.Viscocity
+            Density = SimuData.Density
+            StaticPressure = SimuData.StaticPressure
+            SurveyTolerance = SimuData.SurveyTolerance
+            GlobalPanelSurvey = SimuData.GlobalPanelSurvey
+            UseGpu = SimuData.UseGpu
+            GpuDeviceId = SimuData.GpuDeviceId
+            GlobalPosition.Assign(SimuData.GlobalPosition)
+            GlobalRotationCenter = SimuData.GlobalRotationCenter
+            UnsteadyVelocity.Assign(SimuData.UnsteadyVelocity)
+            StructuralSettings.Assign(SimuData.StructuralSettings)
 
-            If Not IsNothing(Simulacion.AeroelasticHistogram) Then
-                AeroelasticHistogram = Simulacion.AeroelasticHistogram.Clone
+            If Not IsNothing(SimuData.AeroelasticHistogram) Then
+                AeroelasticHistogram = SimuData.AeroelasticHistogram.Clone
             Else
                 AeroelasticHistogram = Nothing
             End If
@@ -334,6 +350,8 @@ Namespace CalculationModel.Settings
             writer.WriteAttributeString("Cutoff", String.Format("{0}", Cutoff))
             writer.WriteAttributeString("GlobalSurvey", String.Format("{0}", GlobalPanelSurvey))
             writer.WriteAttributeString("SurveyTolerance", String.Format("{0}", SurveyTolerance))
+            writer.WriteAttributeString("UseGpu", String.Format("{0}", UseGpu))
+            writer.WriteAttributeString("GpuDeviceId", String.Format("{0}", GpuDeviceId))
             writer.WriteEndElement()
 
             writer.WriteStartElement("Fluid")
@@ -389,6 +407,8 @@ Namespace CalculationModel.Settings
                             Cutoff = IOXML.ReadDouble(reader, "Cutoff", 0.0001)
                             GlobalPanelSurvey = IOXML.ReadBoolean(reader, "GlobalSurvey", False)
                             SurveyTolerance = IOXML.ReadDouble(reader, "SurveyTolerance", 0.001)
+                            UseGpu = IOXML.ReadBoolean(reader, "UseGpu", False)
+                            GpuDeviceId = IOXML.ReadInteger(reader, "GpuDeviceId", 0)
 
                         Case "Fluid"
                             Density = IOXML.ReadDouble(reader, "Density", 1.225)

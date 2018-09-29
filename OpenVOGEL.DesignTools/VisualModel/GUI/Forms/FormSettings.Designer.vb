@@ -23,7 +23,7 @@ Partial Class FormSettings
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.tpSettings = New System.Windows.Forms.TabControl()
-        Me.TabPage1 = New System.Windows.Forms.TabPage()
+        Me.tpStream = New System.Windows.Forms.TabPage()
         Me.gbFlowRotation = New System.Windows.Forms.GroupBox()
         Me.Label19 = New System.Windows.Forms.Label()
         Me.Label20 = New System.Windows.Forms.Label()
@@ -53,7 +53,7 @@ Partial Class FormSettings
         Me.Label26 = New System.Windows.Forms.Label()
         Me.Label35 = New System.Windows.Forms.Label()
         Me.Label36 = New System.Windows.Forms.Label()
-        Me.TabPage2 = New System.Windows.Forms.TabPage()
+        Me.tpAero = New System.Windows.Forms.TabPage()
         Me.GroupBox2 = New System.Windows.Forms.GroupBox()
         Me.nudAdjacencyTolerance = New System.Windows.Forms.NumericUpDown()
         Me.cbAutoCutOff = New System.Windows.Forms.CheckBox()
@@ -78,7 +78,7 @@ Partial Class FormSettings
         Me.Label30 = New System.Windows.Forms.Label()
         Me.nudStructureStart = New System.Windows.Forms.NumericUpDown()
         Me.Label31 = New System.Windows.Forms.Label()
-        Me.TabPage4 = New System.Windows.Forms.TabPage()
+        Me.tpModel = New System.Windows.Forms.TabPage()
         Me.Label15 = New System.Windows.Forms.Label()
         Me.LongCaracteristricaBox = New System.Windows.Forms.NumericUpDown()
         Me.Label16 = New System.Windows.Forms.Label()
@@ -101,10 +101,15 @@ Partial Class FormSettings
         Me.Label68 = New System.Windows.Forms.Label()
         Me.Label69 = New System.Windows.Forms.Label()
         Me.Label70 = New System.Windows.Forms.Label()
+        Me.tpGpu = New System.Windows.Forms.TabPage()
+        Me.cbUseGpu = New System.Windows.Forms.CheckBox()
+        Me.nudDeviceId = New System.Windows.Forms.NumericUpDown()
+        Me.Label34 = New System.Windows.Forms.Label()
         Me.btOK = New System.Windows.Forms.Button()
         Me.btnCancel = New System.Windows.Forms.Button()
+        Me.Label37 = New System.Windows.Forms.Label()
         Me.tpSettings.SuspendLayout()
-        Me.TabPage1.SuspendLayout()
+        Me.tpStream.SuspendLayout()
         Me.gbFlowRotation.SuspendLayout()
         CType(Me.nudOmagaz, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.nudOmegay, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -116,7 +121,7 @@ Partial Class FormSettings
         CType(Me.nudVz, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.nudVy, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.nudVx, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.TabPage2.SuspendLayout()
+        Me.tpAero.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
         CType(Me.nudAdjacencyTolerance, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.CUTOFFBox, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -127,7 +132,7 @@ Partial Class FormSettings
         CType(Me.nudDamping, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.nudnModes, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.nudStructureStart, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.TabPage4.SuspendLayout()
+        Me.tpModel.SuspendLayout()
         CType(Me.LongCaracteristricaBox, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupBox7.SuspendLayout()
         CType(Me.PzBox, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -139,14 +144,17 @@ Partial Class FormSettings
         CType(Me.PzoBox, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PyoBox, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PxoBox, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.tpGpu.SuspendLayout()
+        CType(Me.nudDeviceId, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'tpSettings
         '
-        Me.tpSettings.Controls.Add(Me.TabPage1)
-        Me.tpSettings.Controls.Add(Me.TabPage2)
+        Me.tpSettings.Controls.Add(Me.tpStream)
+        Me.tpSettings.Controls.Add(Me.tpAero)
         Me.tpSettings.Controls.Add(Me.tpStructural)
-        Me.tpSettings.Controls.Add(Me.TabPage4)
+        Me.tpSettings.Controls.Add(Me.tpModel)
+        Me.tpSettings.Controls.Add(Me.tpGpu)
         Me.tpSettings.Dock = System.Windows.Forms.DockStyle.Top
         Me.tpSettings.Location = New System.Drawing.Point(2, 2)
         Me.tpSettings.Name = "tpSettings"
@@ -154,17 +162,17 @@ Partial Class FormSettings
         Me.tpSettings.Size = New System.Drawing.Size(352, 273)
         Me.tpSettings.TabIndex = 101
         '
-        'TabPage1
+        'tpStream
         '
-        Me.TabPage1.BackColor = System.Drawing.Color.White
-        Me.TabPage1.Controls.Add(Me.gbFlowRotation)
-        Me.TabPage1.Controls.Add(Me.bgStreamVelocity)
-        Me.TabPage1.Location = New System.Drawing.Point(4, 22)
-        Me.TabPage1.Name = "TabPage1"
-        Me.TabPage1.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage1.Size = New System.Drawing.Size(344, 247)
-        Me.TabPage1.TabIndex = 0
-        Me.TabPage1.Text = "Stream"
+        Me.tpStream.BackColor = System.Drawing.Color.White
+        Me.tpStream.Controls.Add(Me.gbFlowRotation)
+        Me.tpStream.Controls.Add(Me.bgStreamVelocity)
+        Me.tpStream.Location = New System.Drawing.Point(4, 22)
+        Me.tpStream.Name = "tpStream"
+        Me.tpStream.Padding = New System.Windows.Forms.Padding(3)
+        Me.tpStream.Size = New System.Drawing.Size(344, 247)
+        Me.tpStream.TabIndex = 0
+        Me.tpStream.Text = "Stream"
         '
         'gbFlowRotation
         '
@@ -512,16 +520,16 @@ Partial Class FormSettings
         Me.Label36.TabIndex = 92
         Me.Label36.Text = "Vz"
         '
-        'TabPage2
+        'tpAero
         '
-        Me.TabPage2.BackColor = System.Drawing.Color.White
-        Me.TabPage2.Controls.Add(Me.GroupBox2)
-        Me.TabPage2.Location = New System.Drawing.Point(4, 22)
-        Me.TabPage2.Name = "TabPage2"
-        Me.TabPage2.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage2.Size = New System.Drawing.Size(348, 247)
-        Me.TabPage2.TabIndex = 1
-        Me.TabPage2.Text = "UVLM"
+        Me.tpAero.BackColor = System.Drawing.Color.White
+        Me.tpAero.Controls.Add(Me.GroupBox2)
+        Me.tpAero.Location = New System.Drawing.Point(4, 22)
+        Me.tpAero.Name = "tpAero"
+        Me.tpAero.Padding = New System.Windows.Forms.Padding(3)
+        Me.tpAero.Size = New System.Drawing.Size(344, 247)
+        Me.tpAero.TabIndex = 1
+        Me.tpAero.Text = "UVLM"
         '
         'GroupBox2
         '
@@ -543,7 +551,7 @@ Partial Class FormSettings
         Me.GroupBox2.Dock = System.Windows.Forms.DockStyle.Top
         Me.GroupBox2.Location = New System.Drawing.Point(3, 3)
         Me.GroupBox2.Name = "GroupBox2"
-        Me.GroupBox2.Size = New System.Drawing.Size(342, 151)
+        Me.GroupBox2.Size = New System.Drawing.Size(338, 151)
         Me.GroupBox2.TabIndex = 2
         Me.GroupBox2.TabStop = False
         Me.GroupBox2.Text = "Simulación parameters"
@@ -724,7 +732,7 @@ Partial Class FormSettings
         Me.tpStructural.Controls.Add(Me.Label31)
         Me.tpStructural.Location = New System.Drawing.Point(4, 22)
         Me.tpStructural.Name = "tpStructural"
-        Me.tpStructural.Size = New System.Drawing.Size(348, 247)
+        Me.tpStructural.Size = New System.Drawing.Size(344, 247)
         Me.tpStructural.TabIndex = 2
         Me.tpStructural.Text = "Structural"
         '
@@ -802,18 +810,18 @@ Partial Class FormSettings
         Me.Label31.TabIndex = 118
         Me.Label31.Text = "Structural link starts at:"
         '
-        'TabPage4
+        'tpModel
         '
-        Me.TabPage4.BackColor = System.Drawing.Color.White
-        Me.TabPage4.Controls.Add(Me.Label15)
-        Me.TabPage4.Controls.Add(Me.LongCaracteristricaBox)
-        Me.TabPage4.Controls.Add(Me.Label16)
-        Me.TabPage4.Controls.Add(Me.GroupBox7)
-        Me.TabPage4.Location = New System.Drawing.Point(4, 22)
-        Me.TabPage4.Name = "TabPage4"
-        Me.TabPage4.Size = New System.Drawing.Size(348, 247)
-        Me.TabPage4.TabIndex = 3
-        Me.TabPage4.Text = "Model"
+        Me.tpModel.BackColor = System.Drawing.Color.White
+        Me.tpModel.Controls.Add(Me.Label15)
+        Me.tpModel.Controls.Add(Me.LongCaracteristricaBox)
+        Me.tpModel.Controls.Add(Me.Label16)
+        Me.tpModel.Controls.Add(Me.GroupBox7)
+        Me.tpModel.Location = New System.Drawing.Point(4, 22)
+        Me.tpModel.Name = "tpModel"
+        Me.tpModel.Size = New System.Drawing.Size(344, 247)
+        Me.tpModel.TabIndex = 3
+        Me.tpModel.Text = "Model"
         '
         'Label15
         '
@@ -874,7 +882,7 @@ Partial Class FormSettings
         Me.GroupBox7.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.GroupBox7.Location = New System.Drawing.Point(0, 0)
         Me.GroupBox7.Name = "GroupBox7"
-        Me.GroupBox7.Size = New System.Drawing.Size(348, 95)
+        Me.GroupBox7.Size = New System.Drawing.Size(344, 95)
         Me.GroupBox7.TabIndex = 89
         Me.GroupBox7.TabStop = False
         Me.GroupBox7.Text = "Global position and orientation"
@@ -1095,6 +1103,49 @@ Partial Class FormSettings
         Me.Label70.TabIndex = 65
         Me.Label70.Text = "Zr"
         '
+        'tpGpu
+        '
+        Me.tpGpu.Controls.Add(Me.Label37)
+        Me.tpGpu.Controls.Add(Me.cbUseGpu)
+        Me.tpGpu.Controls.Add(Me.nudDeviceId)
+        Me.tpGpu.Controls.Add(Me.Label34)
+        Me.tpGpu.Location = New System.Drawing.Point(4, 22)
+        Me.tpGpu.Name = "tpGpu"
+        Me.tpGpu.Size = New System.Drawing.Size(344, 247)
+        Me.tpGpu.TabIndex = 4
+        Me.tpGpu.Text = "GPU"
+        Me.tpGpu.UseVisualStyleBackColor = True
+        '
+        'cbUseGpu
+        '
+        Me.cbUseGpu.AutoSize = True
+        Me.cbUseGpu.Location = New System.Drawing.Point(8, 7)
+        Me.cbUseGpu.Name = "cbUseGpu"
+        Me.cbUseGpu.Size = New System.Drawing.Size(302, 17)
+        Me.cbUseGpu.TabIndex = 119
+        Me.cbUseGpu.Text = "Enable hardware acceleration using GPU and OpenCL"
+        Me.cbUseGpu.UseVisualStyleBackColor = True
+        '
+        'nudDeviceId
+        '
+        Me.nudDeviceId.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.nudDeviceId.Location = New System.Drawing.Point(76, 28)
+        Me.nudDeviceId.Maximum = New Decimal(New Integer() {10, 0, 0, 0})
+        Me.nudDeviceId.Name = "nudDeviceId"
+        Me.nudDeviceId.Size = New System.Drawing.Size(50, 22)
+        Me.nudDeviceId.TabIndex = 103
+        Me.nudDeviceId.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        '
+        'Label34
+        '
+        Me.Label34.AutoSize = True
+        Me.Label34.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label34.Location = New System.Drawing.Point(5, 30)
+        Me.Label34.Name = "Label34"
+        Me.Label34.Size = New System.Drawing.Size(65, 13)
+        Me.Label34.TabIndex = 102
+        Me.Label34.Text = "Device ID *:"
+        '
         'btOK
         '
         Me.btOK.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
@@ -1129,6 +1180,15 @@ Partial Class FormSettings
         Me.btnCancel.Text = "Cancel"
         Me.btnCancel.UseVisualStyleBackColor = False
         '
+        'Label37
+        '
+        Me.Label37.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label37.Location = New System.Drawing.Point(5, 55)
+        Me.Label37.Name = "Label37"
+        Me.Label37.Size = New System.Drawing.Size(336, 33)
+        Me.Label37.TabIndex = 120
+        Me.Label37.Text = "* : you can use Cudafy tools to find the Id of the device you want to use."
+        '
         'FormSettings
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -1146,7 +1206,7 @@ Partial Class FormSettings
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
         Me.Text = "Settings"
         Me.tpSettings.ResumeLayout(False)
-        Me.TabPage1.ResumeLayout(False)
+        Me.tpStream.ResumeLayout(False)
         Me.gbFlowRotation.ResumeLayout(False)
         Me.gbFlowRotation.PerformLayout()
         CType(Me.nudOmagaz, System.ComponentModel.ISupportInitialize).EndInit()
@@ -1160,7 +1220,7 @@ Partial Class FormSettings
         CType(Me.nudVz, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.nudVy, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.nudVx, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.TabPage2.ResumeLayout(False)
+        Me.tpAero.ResumeLayout(False)
         Me.GroupBox2.ResumeLayout(False)
         Me.GroupBox2.PerformLayout()
         CType(Me.nudAdjacencyTolerance, System.ComponentModel.ISupportInitialize).EndInit()
@@ -1173,8 +1233,8 @@ Partial Class FormSettings
         CType(Me.nudDamping, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.nudnModes, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.nudStructureStart, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.TabPage4.ResumeLayout(False)
-        Me.TabPage4.PerformLayout()
+        Me.tpModel.ResumeLayout(False)
+        Me.tpModel.PerformLayout()
         CType(Me.LongCaracteristricaBox, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupBox7.ResumeLayout(False)
         Me.GroupBox7.PerformLayout()
@@ -1187,11 +1247,14 @@ Partial Class FormSettings
         CType(Me.PzoBox, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PyoBox, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PxoBox, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.tpGpu.ResumeLayout(False)
+        Me.tpGpu.PerformLayout()
+        CType(Me.nudDeviceId, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
     Friend WithEvents tpSettings As System.Windows.Forms.TabControl
-    Friend WithEvents TabPage1 As System.Windows.Forms.TabPage
+    Friend WithEvents tpStream As System.Windows.Forms.TabPage
     Friend WithEvents gbFlowRotation As System.Windows.Forms.GroupBox
     Friend WithEvents Label19 As System.Windows.Forms.Label
     Friend WithEvents Label20 As System.Windows.Forms.Label
@@ -1218,7 +1281,7 @@ Partial Class FormSettings
     Friend WithEvents Label26 As System.Windows.Forms.Label
     Friend WithEvents Label35 As System.Windows.Forms.Label
     Friend WithEvents Label36 As System.Windows.Forms.Label
-    Friend WithEvents TabPage2 As System.Windows.Forms.TabPage
+    Friend WithEvents tpAero As System.Windows.Forms.TabPage
     Friend WithEvents GroupBox2 As System.Windows.Forms.GroupBox
     Friend WithEvents nudAdjacencyTolerance As System.Windows.Forms.NumericUpDown
     Friend WithEvents cbAutoCutOff As System.Windows.Forms.CheckBox
@@ -1245,7 +1308,7 @@ Partial Class FormSettings
     Friend WithEvents Label30 As System.Windows.Forms.Label
     Friend WithEvents nudStructureStart As System.Windows.Forms.NumericUpDown
     Friend WithEvents Label31 As System.Windows.Forms.Label
-    Friend WithEvents TabPage4 As System.Windows.Forms.TabPage
+    Friend WithEvents tpModel As System.Windows.Forms.TabPage
     Friend WithEvents Label15 As System.Windows.Forms.Label
     Friend WithEvents LongCaracteristricaBox As System.Windows.Forms.NumericUpDown
     Friend WithEvents Label16 As System.Windows.Forms.Label
@@ -1271,4 +1334,9 @@ Partial Class FormSettings
     Friend WithEvents Label32 As System.Windows.Forms.Label
     Friend WithEvents Label33 As System.Windows.Forms.Label
     Friend WithEvents nudStaticPressure As System.Windows.Forms.NumericUpDown
+    Friend WithEvents tpGpu As Windows.Forms.TabPage
+    Friend WithEvents cbUseGpu As Windows.Forms.CheckBox
+    Friend WithEvents nudDeviceId As Windows.Forms.NumericUpDown
+    Friend WithEvents Label34 As Windows.Forms.Label
+    Friend WithEvents Label37 As Windows.Forms.Label
 End Class
