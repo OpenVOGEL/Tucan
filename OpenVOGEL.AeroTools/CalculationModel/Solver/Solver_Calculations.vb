@@ -478,33 +478,41 @@ Namespace CalculationModel.Solver
         ''' </summary>
         Private Sub CalculateVelocityInducedByTheWakesOnBoundedLattices(Optional ByVal SlenderRingsOnly As Boolean = True)
 
-            Dim CutOff As Double = Settings.Cutoff
+            If Settings.UseGpu Then
 
-            For Each Lattice As BoundedLattice In Lattices
+                CalculateVelocityInducedByTheWakesOnBoundedLatticesWithOpenCL(SlenderRingsOnly)
 
-                Parallel.ForEach(Lattice.VortexRings, Sub(VortexRing As VortexRing)
+            Else
 
-                                                          If (SlenderRingsOnly And VortexRing.IsSlender) Or Not SlenderRingsOnly Then
+                Dim CutOff As Double = Settings.Cutoff
 
-                                                              VortexRing.VelocityW.X = 0.0#
-                                                              VortexRing.VelocityW.Y = 0.0#
-                                                              VortexRing.VelocityW.Z = 0.0#
+                For Each Lattice As BoundedLattice In Lattices
 
-                                                              For Each OtherLattice As BoundedLattice In Lattices
+                    Parallel.ForEach(Lattice.VortexRings, Sub(VortexRing As VortexRing)
 
-                                                                  For Each Wake As Wake In OtherLattice.Wakes
+                                                              If (SlenderRingsOnly And VortexRing.IsSlender) Or Not SlenderRingsOnly Then
 
-                                                                      Wake.AddInducedVelocity(VortexRing.VelocityW, VortexRing.ControlPoint, CutOff)
+                                                                  VortexRing.VelocityW.X = 0.0#
+                                                                  VortexRing.VelocityW.Y = 0.0#
+                                                                  VortexRing.VelocityW.Z = 0.0#
+
+                                                                  For Each OtherLattice As BoundedLattice In Lattices
+
+                                                                      For Each Wake As Wake In OtherLattice.Wakes
+
+                                                                          Wake.AddInducedVelocity(VortexRing.VelocityW, VortexRing.ControlPoint, CutOff)
+
+                                                                      Next
 
                                                                   Next
 
-                                                              Next
+                                                              End If
 
-                                                          End If
+                                                          End Sub)
 
-                                                      End Sub)
+                Next
 
-            Next
+            End If
 
         End Sub
 
@@ -572,7 +580,6 @@ Namespace CalculationModel.Solver
             For Each Lattice In Lattices
 
 #If WITH_PARALLEL_LOOPS Then
-
                 Parallel.ForEach(Lattice.VortexRings, Sub(Ring As VortexRing)
 
                     For Each Ring In Lattice.VortexRings
@@ -612,9 +619,7 @@ Namespace CalculationModel.Solver
                     Next
 
                End Sub)
-
 #Else
-
                 For Each Ring In Lattice.VortexRings
 
                     Ring.VelocityT.X = _StreamVelocity.X
@@ -650,9 +655,7 @@ Namespace CalculationModel.Solver
                     Next
 
                 Next
-
 #End If
-
             Next
 
         End Sub

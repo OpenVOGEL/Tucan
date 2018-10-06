@@ -21,9 +21,14 @@
 'Imports Cudafy.Translator
 'Imports Cudafy.Host
 
+Imports OpenVOGEL.AeroTools.CalculationModel.Models.Aero
+Imports OpenVOGEL.AeroTools.CalculationModel.Models.Aero.Components
+
 Namespace CalculationModel.Solver
 
     Partial Public Class Solver
+
+        Private GpuVortexSolver As GpuTools.VortexSolver
 
         Private Sub TestOpenCL()
 
@@ -47,223 +52,289 @@ Namespace CalculationModel.Solver
 
                 RaiseEvent PushMessage("Hardware acceleration disabled")
 
-            End if
+            End If
 
         End Sub
 
-        '        Public Const FourPi As Double = 4 * Math.PI
+        Private Sub CalculateVelocityInducedByTheWakesOnBoundedLatticesWithOpenCL(ByVal SlenderRingsOnly As Boolean)
 
-        '        Private Sub TestCuda()
+            ' Count number of vortices in the wakes
 
-        '            RaiseEvent PushMessage("Testing cuda")
+            Dim nVortices As Integer = 0
 
-        '            CudafyModes.Target = eGPUType.OpenCL
-        '            CudafyModes.DeviceId = 2
-        '            CudafyTranslator.Language = eLanguage.OpenCL
+            For Each Lattice As BoundedLattice In Lattices
 
-        '            Dim km As CudafyModule = CudafyTranslator.Cudafy
-        '            Dim GPU As GPGPU = CudafyHost.GetDevice(CudafyModes.Target, CudafyModes.DeviceId)
-        '            GPU.LoadModule(km)
+                For Each Wake As Wake In Lattice.Wakes
 
-        '            Dim a(3) As Double
-        '            a(0) = 1
-        '            a(1) = 2
-        '            a(2) = 3
-        '            a(3) = 4
-        '            Dim a_dev() As Double = GPU.Allocate(Of Double)(a)
-        '            GPU.CopyToDevice(a, a_dev)
+                    nVortices += Wake.Vortices.Count
 
-        '            Dim s(4) As Double
-        '            Dim s_dev() As Double = GPU.Allocate(Of Double)(s)
-        '            GPU.CopyToDevice(s, s_dev)
+                Next
 
-        '            GPU.Launch(4, 1, "TestCudaMethod", a_dev, s_dev)
+            Next
 
-        '            GPU.CopyFromDevice(s_dev, s)
+            ' Generate array
 
-        '            RaiseEvent PushMessage("Cuda test done")
+            Dim G(nVortices - 1) As Double
+            Dim Ax(nVortices - 1) As Double
+            Dim Ay(nVortices - 1) As Double
+            Dim Az(nVortices - 1) As Double
+            Dim Bx(nVortices - 1) As Double
+            Dim By(nVortices - 1) As Double
+            Dim Bz(nVortices - 1) As Double
 
-        '        End Sub
+            ' Make a list of vortices
 
-        '        <Cudafy()>
-        '        Public Shared Sub TestCudaMethod(thread As GThread, a As Double(), s As Double())
+            Dim i As Integer = 0
 
-        '            Dim tid As Integer = thread.blockIdx.x
+            For Each Lattice As BoundedLattice In Lattices
 
-        '            If tid < 4 Then
-        '                For i = 0 To tid
-        '                    s(tid) = a(i)
-        '                Next
-        '            End If
+                For Each Wake As Wake In Lattice.Wakes
 
-        '        End Sub
+                    For Each Vortex As Vortex In Wake.Vortices
 
-        '        Private Sub CalculateVelocityI_CUDA(Optional ByVal WithStreamOmega As Boolean = False)
+                        Ax(i) = Vortex.Node1.Position.X
+                        Ay(i) = Vortex.Node1.Position.Y
+                        Az(i) = Vortex.Node1.Position.Z
 
-        '            ' Generate and load module:
+                        Bx(i) = Vortex.Node2.Position.X
+                        By(i) = Vortex.Node2.Position.Y
+                        Bz(i) = Vortex.Node2.Position.Z
 
-        '            CudafyModes.Target = eGPUType.Cuda
-        '            CudafyModes.DeviceId = 0
-        '            CudafyTranslator.Language = eLanguage.Cuda
+                        G(i) = Vortex.G
 
-        '            Dim GPU As GPGPU = CudafyHost.GetDevice(CudafyModes.Target, CudafyModes.DeviceId)
-        '            Dim km As CudafyModule = CudafyTranslator.Cudafy
-        '            GPU.LoadModule(km)
+                        i += 1
 
-        '            ' Count number of vortices
+                    Next
 
-        '            Dim nVortices As Integer = 0
+                Next
 
-        '            For Each Lattice As BoundedLattice In Lattices
+            Next
 
-        '                nVortices += Lattice.Vortices.Count
+            Dim nRings As Integer = 0
 
-        '                For Each Wake As Wake In Lattice.Wakes
+            For Each Lattice As BoundedLattice In Lattices
 
-        '                    nVortices += Wake.Vortices.Count
+                For Each Ring As VortexRing In Lattice.VortexRings
 
-        '                Next
+                    If (Not SlenderRingsOnly) OrElse (Ring.IsSlender) Then
 
-        '            Next
+                        Ring.VelocityW.X = 0.0#
+                        Ring.VelocityW.Y = 0.0#
+                        Ring.VelocityW.Z = 0.0#
 
-        '            ' Generate array
+                        nRings += 1
 
-        '            Dim VORTEX_INFO(nVortices - 1, 6) As Double ' pAx, pAy, pAz, pBx, pBy, pBz, G
+                    End If
 
-        '            Dim VORTEX_INFO_D(,) As Double = GPU.Allocate(Of Double)(VORTEX_INFO)
+                Next
 
-        '            ' Make a list of vortices
+            Next
 
-        '            Dim i As Integer = 0
+            Dim Vx(nRings - 1) As Double
+            Dim Vy(nRings - 1) As Double
+            Dim Vz(nRings - 1) As Double
 
-        '            For Each Lattice As BoundedLattice In Lattices
+            Dim Px(nRings - 1) As Double
+            Dim Py(nRings - 1) As Double
+            Dim Pz(nRings - 1) As Double
 
-        '                For Each Vortex As Vortex In Lattice.Vortices
+            i = 0
 
-        '                    VORTEX_INFO(i, 0) = Vortex.Node1.Position.X
-        '                    VORTEX_INFO(i, 1) = Vortex.Node1.Position.Y
-        '                    VORTEX_INFO(i, 2) = Vortex.Node1.Position.Z
+            For Each Lattice As BoundedLattice In Lattices
 
-        '                    VORTEX_INFO(i, 3) = Vortex.Node2.Position.X
-        '                    VORTEX_INFO(i, 4) = Vortex.Node2.Position.Y
-        '                    VORTEX_INFO(i, 5) = Vortex.Node2.Position.Z
+                For Each Ring As VortexRing In Lattice.VortexRings
 
-        '                    VORTEX_INFO(i, 6) = Vortex.G
+                    If (Not SlenderRingsOnly) OrElse (Ring.IsSlender) Then
 
-        '                    i += 1
+                        Px(i) = Ring.ControlPoint.X
+                        Py(i) = Ring.ControlPoint.Y
+                        Pz(i) = Ring.ControlPoint.Z
 
-        '                Next
+                        i += 1
 
-        '                For Each Wake As Wake In Lattice.Wakes
+                    End If
 
-        '                    For Each Vortex As Vortex In Wake.Vortices
+                Next
 
-        '                        VORTEX_INFO(i, 0) = Vortex.Node1.Position.X
-        '                        VORTEX_INFO(i, 1) = Vortex.Node1.Position.Y
-        '                        VORTEX_INFO(i, 2) = Vortex.Node1.Position.Z
+            Next
 
-        '                        VORTEX_INFO(i, 3) = Vortex.Node2.Position.X
-        '                        VORTEX_INFO(i, 4) = Vortex.Node2.Position.Y
-        '                        VORTEX_INFO(i, 5) = Vortex.Node2.Position.Z
+            GpuVortexSolver.CalculateVelocity(G,
+                                              Ax, Ay, Az,
+                                              Bx, By, Bz,
+                                              Px, Py, Pz,
+                                              Vx, Vx, Vz,
+                                              Settings.Cutoff)
 
-        '                        VORTEX_INFO(i, 6) = Vortex.G
+            ' Set information to lattice:
 
-        '                        i += 1
+            i = 0
 
-        '                    Next
+            For Each Lattice As BoundedLattice In Lattices
 
-        '                Next
+                For Each Ring As VortexRing In Lattice.VortexRings
 
-        '            Next
+                    If (Not SlenderRingsOnly) OrElse (Ring.IsSlender) Then
 
-        '            Dim nRings As Integer = 0
+                        Ring.VelocityW.X += Vx(i)
+                        Ring.VelocityW.Y += Vy(i)
+                        Ring.VelocityW.Z += Vz(i)
 
-        '            For Each Lattice As BoundedLattice In Lattices
+                        i += 1
 
-        '                nRings += Lattice.VortexRings.Count
+                    End If
 
-        '            Next
+                Next
 
-        '            Dim nThreads As Integer = 1
-        '            Dim nBlocks As Integer = Math.Ceiling(nRings / nThreads)
+            Next
 
-        '            Dim VELOCITY_INFO(nRings - 1, 2) As Double
-        '            Dim VELOCITY_INFO_D(,) As Double = GPU.Allocate(Of Double)(VELOCITY_INFO)
+        End Sub
 
-        '            Dim LOCATION_INFO(nRings - 1, 2) As Double
-        '            Dim LOCATION_INFO_D(,) As Double = GPU.Allocate(Of Double)(LOCATION_INFO)
+        Private Sub CalculateTotalVelocityOnBoundedLatticesWithOpenCL(ByVal WithStreamOmega As Boolean)
 
-        '            i = 0
+            ' Count number of vortices
 
-        '            For Each Lattice As BoundedLattice In Lattices
+            Dim nVortices As Integer = 0
 
-        '                For Each Ring In Lattice.VortexRings
+            For Each Lattice As BoundedLattice In Lattices
 
-        '                    LOCATION_INFO(i, 0) = Ring.ControlPoint.X
-        '                    LOCATION_INFO(i, 1) = Ring.ControlPoint.Y
-        '                    LOCATION_INFO(i, 2) = Ring.ControlPoint.Z
+                nVortices += Lattice.Vortices.Count
 
-        '                    i += 1
+                For Each Wake As Wake In Lattice.Wakes
 
-        '                Next
+                    nVortices += Wake.Vortices.Count
 
-        '            Next
+                Next
 
-        '            GPU.CopyToDevice(VORTEX_INFO, VORTEX_INFO_D)
-        '            GPU.CopyToDevice(LOCATION_INFO, LOCATION_INFO_D)
+            Next
 
-        '            Dim Cutoff(0) As Double
-        '            Cutoff(0) = Settings.Cutoff
-        '            Dim Cutoff_D() As Double = GPU.Allocate(Of Double)(Cutoff)
-        '            GPU.CopyToDevice(Cutoff, Cutoff_D)
+            ' Generate array
 
-        '            Try
+            Dim G(nVortices - 1) As Double
+            Dim Ax(nVortices - 1) As Double
+            Dim Ay(nVortices - 1) As Double
+            Dim Az(nVortices - 1) As Double
+            Dim Bx(nVortices - 1) As Double
+            Dim By(nVortices - 1) As Double
+            Dim Bz(nVortices - 1) As Double
 
-        '                GPU.Launch(nBlocks, nThreads).AddVelocities(VELOCITY_INFO_D, LOCATION_INFO_D, VORTEX_INFO_D, Cutoff_D)
-        '                GPU.CopyFromDevice(VELOCITY_INFO_D, VELOCITY_INFO)
+            ' Make a list of vortices
 
-        '            Finally
+            Dim i As Integer = 0
 
-        '                GPU.Free(VORTEX_INFO_D)
-        '                GPU.Free(VELOCITY_INFO_D)
-        '                GPU.Free(LOCATION_INFO_D)
-        '                GPU.Free(Cutoff_D)
+            For Each Lattice As BoundedLattice In Lattices
 
-        '            End Try
+                For Each Vortex As Vortex In Lattice.Vortices
 
-        '            ' Set information to lattice:
+                    Ax(i) = Vortex.Node1.Position.X
+                    Ay(i) = Vortex.Node1.Position.Y
+                    Az(i) = Vortex.Node1.Position.Z
 
-        '            i = 0
+                    Bx(i) = Vortex.Node2.Position.X
+                    By(i) = Vortex.Node2.Position.Y
+                    Bz(i) = Vortex.Node2.Position.Z
 
-        '            For Each Lattice As BoundedLattice In Lattices
+                    G(i) = Vortex.G
 
-        '                For Each Ring In Lattice.VortexRings
+                    i += 1
 
-        '                    Ring.VelocityW.X = _StreamVelocity.X
-        '                    Ring.VelocityW.Y = _StreamVelocity.Y
-        '                    Ring.VelocityW.Z = _StreamVelocity.Z
+                Next
 
-        '                    Ring.VelocityW.X += Ring.VelocityS.X
-        '                    Ring.VelocityW.Y += Ring.VelocityS.Y
-        '                    Ring.VelocityW.Z += Ring.VelocityS.Z
+                For Each Wake As Wake In Lattice.Wakes
 
-        '                    If WithStreamOmega Then
+                    For Each Vortex As Vortex In Wake.Vortices
 
-        '                        Ring.VelocityW.AddCrossProduct(_StreamOmega, Ring.ControlPoint) ' Add stream angular velocity
+                        Ax(i) = Vortex.Node1.Position.X
+                        Ay(i) = Vortex.Node1.Position.Y
+                        Az(i) = Vortex.Node1.Position.Z
 
-        '                    End If
+                        Bx(i) = Vortex.Node2.Position.X
+                        By(i) = Vortex.Node2.Position.Y
+                        Bz(i) = Vortex.Node2.Position.Z
 
-        '                    Ring.VelocityW.X += VELOCITY_INFO(i, 0)
-        '                    Ring.VelocityW.Y += VELOCITY_INFO(i, 1)
-        '                    Ring.VelocityW.Z += VELOCITY_INFO(i, 2)
+                        G(i) = Vortex.G
 
-        '                    i += 1
+                        i += 1
 
-        '                Next
+                    Next
 
-        '            Next
+                Next
 
-        '        End Sub
+            Next
+
+            Dim nRings As Integer = 0
+
+            For Each Lattice As BoundedLattice In Lattices
+
+                nRings += Lattice.VortexRings.Count
+
+            Next
+
+            Dim Vx(nRings - 1) As Double
+            Dim Vy(nRings - 1) As Double
+            Dim Vz(nRings - 1) As Double
+
+            Dim Px(nRings - 1) As Double
+            Dim Py(nRings - 1) As Double
+            Dim Pz(nRings - 1) As Double
+
+            i = 0
+
+            For Each Lattice As BoundedLattice In Lattices
+
+                For Each Ring In Lattice.VortexRings
+
+                    Px(i) = Ring.ControlPoint.X
+                    Py(i) = Ring.ControlPoint.Y
+                    Pz(i) = Ring.ControlPoint.Z
+
+                    i += 1
+
+                Next
+
+            Next
+
+            Dim VortexSolver As New GpuTools.VortexSolver
+
+            VortexSolver.CalculateVelocity(G,
+                                           Ax, Ay, Az,
+                                           Bx, By, Bz,
+                                           Px, Py, Pz,
+                                           Vx, Vx, Vz,
+                                           Settings.Cutoff)
+
+            ' Set information to lattice:
+
+            i = 0
+
+            For Each Lattice As BoundedLattice In Lattices
+
+                For Each Ring In Lattice.VortexRings
+
+                    Ring.VelocityT.X = _StreamVelocity.X
+                    Ring.VelocityT.Y = _StreamVelocity.Y
+                    Ring.VelocityT.Z = _StreamVelocity.Z
+
+                    Ring.VelocityT.X += Ring.VelocityS.X
+                    Ring.VelocityT.Y += Ring.VelocityS.Y
+                    Ring.VelocityT.Z += Ring.VelocityS.Z
+
+                    If WithStreamOmega Then
+
+                        Ring.VelocityT.AddCrossProduct(_StreamOmega, Ring.ControlPoint) ' Add stream angular velocity
+
+                    End If
+
+                    Ring.VelocityT.X += Vx(i)
+                    Ring.VelocityT.Y += Vy(i)
+                    Ring.VelocityT.Z += Vz(i)
+
+                    i += 1
+
+                Next
+
+            Next
+
+        End Sub
 
         '        ''' <summary>
         '        ''' General Kernel to calculate the velocities on the given points.

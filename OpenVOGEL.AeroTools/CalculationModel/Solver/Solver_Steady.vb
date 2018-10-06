@@ -34,6 +34,13 @@ Namespace CalculationModel.Solver
 
             TestOpenCL()
 
+            If Settings.UseGpu Then
+
+                GpuVortexSolver = New GpuTools.VortexSolver
+                GpuVortexSolver.Initialize(Settings.GpuDeviceId)
+
+            End If
+
             Dim StartingTime As Date = Now
 
             CreateSubFoldersNames(DataBasePath)
