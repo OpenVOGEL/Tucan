@@ -1203,8 +1203,8 @@ ErrSub:
             nudScaleVelocity.Value = ProjectRoot.Results.Model.VisualProperties.ScaleVelocity
 
             cbxShowColormap.Checked = ProjectRoot.Results.Model.VisualProperties.ShowColormap
-            nudCpmax.Value = ProjectRoot.Results.Model.PressureRange.Maximum
-            nudCpmin.Value = ProjectRoot.Results.Model.PressureRange.Minimum
+            nudCpmax.Value = ProjectRoot.Results.Model.WingPressureRange.Maximum
+            nudCpmin.Value = ProjectRoot.Results.Model.WingPressureRange.Minimum
 
             cbxShowWakeSurface.Checked = ProjectRoot.Results.Wakes.VisualProperties.ShowSurface
             cbxShowWakeMesh.Checked = ProjectRoot.Results.Wakes.VisualProperties.ShowMesh
@@ -1550,7 +1550,7 @@ ErrSub:
 
         If (Not _LockResultPropsEvents) And ProjectRoot.Initialized Then
 
-            ProjectRoot.Results.Model.PressureRange.Maximum = nudCpmax.Value
+            ProjectRoot.Results.Model.WingPressureRange.Maximum = nudCpmax.Value
 
             ProjectRoot.Results.Model.UpdateColormapWithPressure()
 
@@ -1564,7 +1564,7 @@ ErrSub:
 
         If (Not _LockResultPropsEvents) And ProjectRoot.Initialized Then
 
-            ProjectRoot.Results.Model.PressureRange.Minimum = nudCpmin.Value
+            ProjectRoot.Results.Model.WingPressureRange.Minimum = nudCpmin.Value
 
             ProjectRoot.Results.Model.UpdateColormapWithPressure()
 
@@ -1584,8 +1584,8 @@ ErrSub:
 
             _LockResultPropsEvents = True
 
-            nudCpmax.Value = ProjectRoot.Results.Model.PressureRange.Maximum
-            nudCpmin.Value = ProjectRoot.Results.Model.PressureRange.Minimum
+            nudCpmax.Value = ProjectRoot.Results.Model.WingPressureRange.Maximum
+            nudCpmin.Value = ProjectRoot.Results.Model.WingPressureRange.Minimum
 
             _LockResultPropsEvents = False
 

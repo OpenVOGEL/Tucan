@@ -85,7 +85,7 @@ Namespace VisualModel.Models
             _Wakes = New ResultContainer
             _DynamicModes = New List(Of ResultContainer)
 
-            Me._Model.Name = "Modelo"
+            Me._Model.Name = "Full_Model"
             Me._Model.VisualProperties.ColorMesh = System.Drawing.Color.Maroon
             Me._Model.VisualProperties.ColorSurface = System.Drawing.Color.Orange
             Me._Model.VisualProperties.Transparency = 1.0
@@ -95,7 +95,7 @@ Namespace VisualModel.Models
             Me._Model.VisualProperties.ThicknessMesh = 0.8
             Me._Model.VisualProperties.ShowNodes = False
 
-            Me._Wakes.Name = "Estelas"
+            Me._Wakes.Name = "All_Wakes"
             Me._Wakes.VisualProperties.ColorMesh = System.Drawing.Color.Silver
             Me._Wakes.VisualProperties.ColorSurface = System.Drawing.Color.LightBlue
             Me._Wakes.VisualProperties.ColorNodes = Drawing.Color.Black

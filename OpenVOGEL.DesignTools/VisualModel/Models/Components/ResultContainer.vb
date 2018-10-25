@@ -66,7 +66,13 @@ Namespace VisualModel.Models.Components
         ''' Extreme values of the local pressure.
         ''' </summary>
         ''' <returns></returns>
-        Public Property PressureRange As New LimitValues
+        Public Property WingPressureRange As New LimitValues
+
+        ''' <summary>
+        ''' Extreme values of the local pressure.
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property BodyPressureRange As New LimitValues
 
         ''' <summary>
         ''' Maximum and minimum displacements.
@@ -728,10 +734,10 @@ Namespace VisualModel.Models.Components
         ''' <param name="AbsoluteValue"></param>
         Public Sub FindPressureRange(Optional ByVal AbsoluteValue As Boolean = True)
 
-            If Me.NumberOfPanels >= 0 And AbsoluteValue Then
+            Dim FirstWing As Boolean = True
+            Dim FirstBody As Boolean = True
 
-                PressureRange.Maximum = Mesh.Panels(0).Cp
-                PressureRange.Minimum = Mesh.Panels(0).Cp
+            If NumberOfPanels >= 0 And AbsoluteValue Then
 
                 Dim Cp As Double
 
@@ -740,11 +746,30 @@ Namespace VisualModel.Models.Components
                     Cp = Mesh.Panels(i).Cp
 
                     If Mesh.Panels(i).IsSlender Then
-                        Cp = Math.Abs(Cp)
-                    End If
 
-                    If Cp > PressureRange.Maximum Then PressureRange.Maximum = Cp
-                    If Cp < PressureRange.Minimum Then PressureRange.Minimum = Cp
+                        Cp = Math.Abs(Cp)
+
+                        If FirstWing Then
+                            WingPressureRange.Maximum = Mesh.Panels(0).Cp
+                            WingPressureRange.Minimum = Mesh.Panels(0).Cp
+                            FirstWing = False
+                        End If
+
+                        If Cp > WingPressureRange.Maximum Then WingPressureRange.Maximum = Cp
+                        If Cp < WingPressureRange.Minimum Then WingPressureRange.Minimum = Cp
+
+                    Else
+
+                        If FirstBody Then
+                            BodyPressureRange.Maximum = Mesh.Panels(0).Cp
+                            BodyPressureRange.Minimum = Mesh.Panels(0).Cp
+                            FirstBody = False
+                        End If
+
+                        If Cp > BodyPressureRange.Maximum Then BodyPressureRange.Maximum = Cp
+                        If Cp < BodyPressureRange.Minimum Then BodyPressureRange.Minimum = Cp
+
+                    End If
 
                 Next
 
@@ -757,17 +782,11 @@ Namespace VisualModel.Models.Components
         ''' </summary>
         Public Sub DistributePressureOnNodes()
 
-            ' Esta subrutina busca los paneles que rodea a un nodo y le asigna a ese nodo una presión promedio.
-
-            Dim CpLocal As Double = 0.0#
-            Dim nPanels As Integer
-
-            If PressureRange.Maximum = 0 And PressureRange.Minimum = 0 Then FindPressureRange(True)
-
             For i = 0 To NumberOfNodes - 1
 
-                CpLocal = 0.0#
-                nPanels = 0
+                Dim Slender As Boolean = False
+                Dim LocalCp As Double = 0.0#
+                Dim PanelsCount As Integer = 0
 
                 For j = 0 To NumberOfPanels - 1
 
@@ -775,12 +794,13 @@ Namespace VisualModel.Models.Components
 
                         If .N1 = i Or .N2 = i Or .N3 = i Or .N4 = i Then
 
-                            nPanels = nPanels + 1
+                            PanelsCount = PanelsCount + 1
 
                             If .IsSlender Then
-                                CpLocal = CpLocal + Math.Abs(.Cp)
+                                LocalCp = LocalCp + Math.Abs(.Cp)
+                                Slender = True
                             Else
-                                CpLocal = CpLocal + .Cp
+                                LocalCp = LocalCp + .Cp
                             End If
 
                         End If
@@ -789,13 +809,24 @@ Namespace VisualModel.Models.Components
 
                 Next
 
-                ' Saca un promedio:
+                ' Compute mean value:
 
-                If nPanels > 0 Then Mesh.Nodes(i).Pressure = CpLocal / nPanels
+                If PanelsCount > 0 Then Mesh.Nodes(i).Pressure = LocalCp / PanelsCount
 
-                ' Finalmente asigna un color:
+                ' Assign a color:
 
-                Mesh.Nodes(i).Color = Colormap.ScalarToColor(Math.Abs(Mesh.Nodes(i).Pressure), PressureRange.Maximum, PressureRange.Minimum)
+                Dim Range As LimitValues
+                Dim Value As Double
+
+                If Slender Then
+                    Range = WingPressureRange
+                    Value = Math.Abs(Mesh.Nodes(i).Pressure)
+                Else
+                    Range = BodyPressureRange
+                    Value = Mesh.Nodes(i).Pressure
+                End If
+
+                Mesh.Nodes(i).Color = Colormap.ScalarToColor(Value, Range.Maximum, Range.Minimum)
 
             Next
 
@@ -806,11 +837,11 @@ Namespace VisualModel.Models.Components
         ''' </summary>
         Public Sub UpdateColormapWithPressure()
 
-            For i = 0 To NumberOfNodes - 1
+            DistributePressureOnNodes()
 
-                Mesh.Nodes(i).Color = Colormap.ScalarToColor(Mesh.Nodes(i).Pressure, PressureRange.Maximum, PressureRange.Minimum)
-
-            Next
+            'For i = 0 To NumberOfNodes - 1
+            'Mesh.Nodes(i).Color = Colormap.ScalarToColor(Mesh.Nodes(i).Pressure, WingPressureRange.Maximum, WingPressureRange.Minimum)
+            'Next
 
         End Sub
 
