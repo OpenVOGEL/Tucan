@@ -37,6 +37,14 @@ Namespace CalculationModel.Solver
 
             End If
 
+            If Settings.UseGpu Then
+
+                RaiseEvent PushMessage("Cannot run transit analysis with OpenCL")
+                RaiseEvent CalculationAborted()
+                Exit Sub
+
+            End If
+
             ' Create database:
 
             RaiseEvent PushMessage("Creating database structure")

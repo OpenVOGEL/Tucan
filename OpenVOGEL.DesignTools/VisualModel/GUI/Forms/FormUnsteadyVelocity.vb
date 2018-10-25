@@ -118,7 +118,7 @@ Public Class FormUnsteadyVelocity
             Graph.Series("Vz").Points.Clear()
         End If
 
-        For i = 0 To Perturbation.nSteps - 1
+        For i = 1 To Perturbation.nSteps
 
             Graph.Series("Vx").Points.AddXY(i + 1, Perturbation.Intensity(i).X)
             Graph.Series("Vy").Points.AddXY(i + 1, Perturbation.Intensity(i).Y)

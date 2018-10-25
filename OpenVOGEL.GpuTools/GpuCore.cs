@@ -54,7 +54,7 @@ namespace OpenVOGEL.GpuTools
             CudafyModes.Target = eGPUType.OpenCL;
             CudafyTranslator.Language = eLanguage.OpenCL;
             CudafyModule km = CudafyTranslator.Cudafy();
-            GPGPU Gpu = CudafyHost.GetDevice(eGPUType.OpenCL, DeviceId);
+            Gpu = CudafyHost.GetDevice(eGPUType.OpenCL, DeviceId);
             Gpu.LoadModule(km);
         }
 

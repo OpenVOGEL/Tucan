@@ -102,12 +102,12 @@ Partial Class FormSettings
         Me.Label69 = New System.Windows.Forms.Label()
         Me.Label70 = New System.Windows.Forms.Label()
         Me.tpGpu = New System.Windows.Forms.TabPage()
+        Me.Label37 = New System.Windows.Forms.Label()
         Me.cbUseGpu = New System.Windows.Forms.CheckBox()
         Me.nudDeviceId = New System.Windows.Forms.NumericUpDown()
         Me.Label34 = New System.Windows.Forms.Label()
         Me.btOK = New System.Windows.Forms.Button()
         Me.btnCancel = New System.Windows.Forms.Button()
-        Me.Label37 = New System.Windows.Forms.Label()
         Me.tpSettings.SuspendLayout()
         Me.tpStream.SuspendLayout()
         Me.gbFlowRotation.SuspendLayout()
@@ -1116,14 +1116,23 @@ Partial Class FormSettings
         Me.tpGpu.Text = "GPU"
         Me.tpGpu.UseVisualStyleBackColor = True
         '
+        'Label37
+        '
+        Me.Label37.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label37.Location = New System.Drawing.Point(5, 55)
+        Me.Label37.Name = "Label37"
+        Me.Label37.Size = New System.Drawing.Size(336, 33)
+        Me.Label37.TabIndex = 120
+        Me.Label37.Text = "* : use the Cudafy tools to find the Id of the device you want to use."
+        '
         'cbUseGpu
         '
         Me.cbUseGpu.AutoSize = True
         Me.cbUseGpu.Location = New System.Drawing.Point(8, 7)
         Me.cbUseGpu.Name = "cbUseGpu"
-        Me.cbUseGpu.Size = New System.Drawing.Size(302, 17)
+        Me.cbUseGpu.Size = New System.Drawing.Size(175, 17)
         Me.cbUseGpu.TabIndex = 119
-        Me.cbUseGpu.Text = "Enable hardware acceleration using GPU and OpenCL"
+        Me.cbUseGpu.Text = "Enable OpenCL (test module)"
         Me.cbUseGpu.UseVisualStyleBackColor = True
         '
         'nudDeviceId
@@ -1179,15 +1188,6 @@ Partial Class FormSettings
         Me.btnCancel.TabIndex = 103
         Me.btnCancel.Text = "Cancel"
         Me.btnCancel.UseVisualStyleBackColor = False
-        '
-        'Label37
-        '
-        Me.Label37.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label37.Location = New System.Drawing.Point(5, 55)
-        Me.Label37.Name = "Label37"
-        Me.Label37.Size = New System.Drawing.Size(336, 33)
-        Me.Label37.TabIndex = 120
-        Me.Label37.Text = "* : you can use Cudafy tools to find the Id of the device you want to use."
         '
         'FormSettings
         '

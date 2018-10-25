@@ -34,6 +34,14 @@ Namespace CalculationModel.Solver
 
             End If
 
+            If Settings.UseGpu Then
+
+                RaiseEvent PushMessage("Cannot run transit analysis with OpenCL")
+                RaiseEvent CalculationAborted()
+                Exit Sub
+
+            End If
+
             CreateSubFoldersNames(DataBasePath)
             CreateSubFolder(DataBaseSection.Unsteady)
             CleanDirectory(DataBaseSection.Unsteady)

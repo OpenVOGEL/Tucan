@@ -178,26 +178,26 @@ Namespace CalculationModel.Perturbations
         ''' <summary>
         ''' Gets the velocity at a given time step
         ''' </summary>
-        ''' <param name="Instant">Time stape (1-based)</param>
+        ''' <param name="TimeStep">Time step (1-based)</param>
         ''' <value></value>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public ReadOnly Property Velocity(ByVal Instant As Integer) As EVector3
+        Public ReadOnly Property Velocity(ByVal TimeStep As Integer) As EVector3
             Get
-                Return _Velocity(Instant - 1)
+                Return _Velocity(TimeStep - 1)
             End Get
         End Property
 
         ''' <summary>
         ''' Gets the intensity at a given time step
         ''' </summary>
-        ''' <param name="Instant">Time stape (1-based)</param>
+        ''' <param name="TimeStep">Time step (1-based)</param>
         ''' <value></value>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public ReadOnly Property Intensity(ByVal Instant As Integer) As EVector3
+        Public ReadOnly Property Intensity(ByVal TimeStep As Integer) As EVector3
             Get
-                Return _Intensity(Instant - 1)
+                Return _Intensity(TimeStep - 1)
             End Get
         End Property
 
