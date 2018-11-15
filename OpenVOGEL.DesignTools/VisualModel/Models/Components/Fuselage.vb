@@ -1472,7 +1472,7 @@ Namespace VisualModel.Models.Components
 
                             Dim s As Double = 0
                             Dim z As Double = (currentZ - CrossSections(bIndex).Z) / (CrossSections(eIndex).Z - CrossSections(bIndex).Z)
-                            Dim Resolution As Integer = Math.Ceiling(0.5 * (CrossSections(bIndex).Vertices.Count + CrossSections(eIndex).Vertices.Count))
+                            Dim Resolution As Integer = 250
 
                             For i = 0 To Resolution
 
