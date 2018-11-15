@@ -64,6 +64,7 @@ Partial Class MainRibbon
         Me.bntAlign = New System.Windows.Forms.Button()
         Me.btnMove = New System.Windows.Forms.Button()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.cbxInclude = New System.Windows.Forms.CheckBox()
         Me.btnClone = New System.Windows.Forms.Button()
         Me.btnAddObject = New System.Windows.Forms.Button()
         Me.btnRemove = New System.Windows.Forms.Button()
@@ -131,12 +132,16 @@ Partial Class MainRibbon
         Me.cbxShowForce = New System.Windows.Forms.CheckBox()
         Me.pnlForceColor = New System.Windows.Forms.Panel()
         Me.GroupBox9 = New System.Windows.Forms.GroupBox()
+        Me.Label29 = New System.Windows.Forms.Label()
+        Me.nudCpmin = New System.Windows.Forms.NumericUpDown()
+        Me.Label30 = New System.Windows.Forms.Label()
+        Me.nudCpmax = New System.Windows.Forms.NumericUpDown()
         Me.cbxShowColormap = New System.Windows.Forms.CheckBox()
         Me.Label18 = New System.Windows.Forms.Label()
         Me.btnResetColormap = New System.Windows.Forms.Button()
-        Me.nudCpmin = New System.Windows.Forms.NumericUpDown()
+        Me.nudDCpmin = New System.Windows.Forms.NumericUpDown()
         Me.Label17 = New System.Windows.Forms.Label()
-        Me.nudCpmax = New System.Windows.Forms.NumericUpDown()
+        Me.nudDCpmax = New System.Windows.Forms.NumericUpDown()
         Me.GroupBox8 = New System.Windows.Forms.GroupBox()
         Me.cbxShowWakeNodes = New System.Windows.Forms.CheckBox()
         Me.pnlWakeNodeColor = New System.Windows.Forms.Panel()
@@ -152,7 +157,6 @@ Partial Class MainRibbon
         Me.GroupBox6 = New System.Windows.Forms.GroupBox()
         Me.btnReport = New System.Windows.Forms.Button()
         Me.btnLoadResults = New System.Windows.Forms.Button()
-        Me.cbxInclude = New System.Windows.Forms.CheckBox()
         Me.tcRibbon.SuspendLayout()
         Me.tpModel.SuspendLayout()
         Me.TableLayoutPanel1.SuspendLayout()
@@ -201,6 +205,8 @@ Partial Class MainRibbon
         Me.GroupBox9.SuspendLayout()
         CType(Me.nudCpmin, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.nudCpmax, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.nudDCpmin, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.nudDCpmax, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupBox8.SuspendLayout()
         Me.GroupBox4.SuspendLayout()
         Me.GroupBox6.SuspendLayout()
@@ -760,6 +766,18 @@ Partial Class MainRibbon
         Me.GroupBox1.TabIndex = 505
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "Components"
+        '
+        'cbxInclude
+        '
+        Me.cbxInclude.AutoSize = True
+        Me.cbxInclude.Checked = True
+        Me.cbxInclude.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.cbxInclude.Location = New System.Drawing.Point(250, 63)
+        Me.cbxInclude.Name = "cbxInclude"
+        Me.cbxInclude.Size = New System.Drawing.Size(52, 16)
+        Me.cbxInclude.TabIndex = 73
+        Me.cbxInclude.Text = "Include"
+        Me.cbxInclude.UseVisualStyleBackColor = True
         '
         'btnClone
         '
@@ -1431,7 +1449,7 @@ Partial Class MainRibbon
         Me.gbxAeroelastic.Controls.Add(Me.cbxModes)
         Me.gbxAeroelastic.Dock = System.Windows.Forms.DockStyle.Left
         Me.gbxAeroelastic.Font = New System.Drawing.Font("Segoe UI", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.gbxAeroelastic.Location = New System.Drawing.Point(747, 3)
+        Me.gbxAeroelastic.Location = New System.Drawing.Point(771, 3)
         Me.gbxAeroelastic.Name = "gbxAeroelastic"
         Me.gbxAeroelastic.Size = New System.Drawing.Size(128, 98)
         Me.gbxAeroelastic.TabIndex = 519
@@ -1493,7 +1511,7 @@ Partial Class MainRibbon
         Me.GroupBox5.Controls.Add(Me.cbxShowVelocityPlane)
         Me.GroupBox5.Dock = System.Windows.Forms.DockStyle.Left
         Me.GroupBox5.Font = New System.Drawing.Font("Segoe UI", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.GroupBox5.Location = New System.Drawing.Point(666, 3)
+        Me.GroupBox5.Location = New System.Drawing.Point(690, 3)
         Me.GroupBox5.Name = "GroupBox5"
         Me.GroupBox5.Size = New System.Drawing.Size(75, 98)
         Me.GroupBox5.TabIndex = 518
@@ -1539,7 +1557,7 @@ Partial Class MainRibbon
         Me.GroupBox10.Controls.Add(Me.pnlForceColor)
         Me.GroupBox10.Dock = System.Windows.Forms.DockStyle.Left
         Me.GroupBox10.Font = New System.Drawing.Font("Segoe UI", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.GroupBox10.Location = New System.Drawing.Point(492, 3)
+        Me.GroupBox10.Location = New System.Drawing.Point(516, 3)
         Me.GroupBox10.Name = "GroupBox10"
         Me.GroupBox10.Size = New System.Drawing.Size(168, 98)
         Me.GroupBox10.TabIndex = 517
@@ -1610,20 +1628,70 @@ Partial Class MainRibbon
         '
         'GroupBox9
         '
+        Me.GroupBox9.Controls.Add(Me.Label29)
+        Me.GroupBox9.Controls.Add(Me.nudCpmin)
+        Me.GroupBox9.Controls.Add(Me.Label30)
+        Me.GroupBox9.Controls.Add(Me.nudCpmax)
         Me.GroupBox9.Controls.Add(Me.cbxShowColormap)
         Me.GroupBox9.Controls.Add(Me.Label18)
         Me.GroupBox9.Controls.Add(Me.btnResetColormap)
-        Me.GroupBox9.Controls.Add(Me.nudCpmin)
+        Me.GroupBox9.Controls.Add(Me.nudDCpmin)
         Me.GroupBox9.Controls.Add(Me.Label17)
-        Me.GroupBox9.Controls.Add(Me.nudCpmax)
+        Me.GroupBox9.Controls.Add(Me.nudDCpmax)
         Me.GroupBox9.Dock = System.Windows.Forms.DockStyle.Left
         Me.GroupBox9.Font = New System.Drawing.Font("Segoe UI", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.GroupBox9.Location = New System.Drawing.Point(312, 3)
         Me.GroupBox9.Name = "GroupBox9"
-        Me.GroupBox9.Size = New System.Drawing.Size(174, 98)
+        Me.GroupBox9.Size = New System.Drawing.Size(198, 98)
         Me.GroupBox9.TabIndex = 516
         Me.GroupBox9.TabStop = False
         Me.GroupBox9.Text = "Colormap"
+        '
+        'Label29
+        '
+        Me.Label29.AutoSize = True
+        Me.Label29.ForeColor = System.Drawing.SystemColors.ControlDarkDark
+        Me.Label29.Location = New System.Drawing.Point(104, 46)
+        Me.Label29.Name = "Label29"
+        Me.Label29.Size = New System.Drawing.Size(33, 12)
+        Me.Label29.TabIndex = 107
+        Me.Label29.Text = "Cp min"
+        Me.Label29.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'nudCpmin
+        '
+        Me.nudCpmin.DecimalPlaces = 3
+        Me.nudCpmin.Increment = New Decimal(New Integer() {1, 0, 0, 196608})
+        Me.nudCpmin.Location = New System.Drawing.Point(142, 44)
+        Me.nudCpmin.Maximum = New Decimal(New Integer() {1000, 0, 0, 0})
+        Me.nudCpmin.Minimum = New Decimal(New Integer() {1000, 0, 0, -2147483648})
+        Me.nudCpmin.Name = "nudCpmin"
+        Me.nudCpmin.Size = New System.Drawing.Size(50, 19)
+        Me.nudCpmin.TabIndex = 105
+        Me.nudCpmin.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        '
+        'Label30
+        '
+        Me.Label30.AutoSize = True
+        Me.Label30.ForeColor = System.Drawing.SystemColors.ControlDarkDark
+        Me.Label30.Location = New System.Drawing.Point(104, 67)
+        Me.Label30.Name = "Label30"
+        Me.Label30.Size = New System.Drawing.Size(35, 12)
+        Me.Label30.TabIndex = 106
+        Me.Label30.Text = "Cp max"
+        Me.Label30.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'nudCpmax
+        '
+        Me.nudCpmax.DecimalPlaces = 3
+        Me.nudCpmax.Increment = New Decimal(New Integer() {1, 0, 0, 196608})
+        Me.nudCpmax.Location = New System.Drawing.Point(142, 65)
+        Me.nudCpmax.Maximum = New Decimal(New Integer() {1000, 0, 0, 0})
+        Me.nudCpmax.Minimum = New Decimal(New Integer() {1000, 0, 0, -2147483648})
+        Me.nudCpmax.Name = "nudCpmax"
+        Me.nudCpmax.Size = New System.Drawing.Size(50, 19)
+        Me.nudCpmax.TabIndex = 104
+        Me.nudCpmax.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'cbxShowColormap
         '
@@ -1641,11 +1709,11 @@ Partial Class MainRibbon
         '
         Me.Label18.AutoSize = True
         Me.Label18.ForeColor = System.Drawing.SystemColors.ControlDarkDark
-        Me.Label18.Location = New System.Drawing.Point(10, 39)
+        Me.Label18.Location = New System.Drawing.Point(5, 46)
         Me.Label18.Name = "Label18"
-        Me.Label18.Size = New System.Drawing.Size(33, 12)
+        Me.Label18.Size = New System.Drawing.Size(39, 12)
         Me.Label18.TabIndex = 103
-        Me.Label18.Text = "Cp min"
+        Me.Label18.Text = "ΔCp min"
         Me.Label18.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'btnResetColormap
@@ -1658,47 +1726,47 @@ Partial Class MainRibbon
         Me.btnResetColormap.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.btnResetColormap.Font = New System.Drawing.Font("Segoe UI", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnResetColormap.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.btnResetColormap.Location = New System.Drawing.Point(107, 37)
+        Me.btnResetColormap.Location = New System.Drawing.Point(132, 14)
         Me.btnResetColormap.Name = "btnResetColormap"
         Me.btnResetColormap.Size = New System.Drawing.Size(60, 22)
         Me.btnResetColormap.TabIndex = 66
         Me.btnResetColormap.Text = "Reset"
         Me.btnResetColormap.UseVisualStyleBackColor = False
         '
-        'nudCpmin
+        'nudDCpmin
         '
-        Me.nudCpmin.DecimalPlaces = 3
-        Me.nudCpmin.Increment = New Decimal(New Integer() {1, 0, 0, 196608})
-        Me.nudCpmin.Location = New System.Drawing.Point(51, 37)
-        Me.nudCpmin.Maximum = New Decimal(New Integer() {1000, 0, 0, 0})
-        Me.nudCpmin.Minimum = New Decimal(New Integer() {1000, 0, 0, -2147483648})
-        Me.nudCpmin.Name = "nudCpmin"
-        Me.nudCpmin.Size = New System.Drawing.Size(50, 19)
-        Me.nudCpmin.TabIndex = 101
-        Me.nudCpmin.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.nudDCpmin.DecimalPlaces = 3
+        Me.nudDCpmin.Increment = New Decimal(New Integer() {1, 0, 0, 196608})
+        Me.nudDCpmin.Location = New System.Drawing.Point(49, 44)
+        Me.nudDCpmin.Maximum = New Decimal(New Integer() {1000, 0, 0, 0})
+        Me.nudDCpmin.Minimum = New Decimal(New Integer() {1000, 0, 0, -2147483648})
+        Me.nudDCpmin.Name = "nudDCpmin"
+        Me.nudDCpmin.Size = New System.Drawing.Size(50, 19)
+        Me.nudDCpmin.TabIndex = 101
+        Me.nudDCpmin.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'Label17
         '
         Me.Label17.AutoSize = True
         Me.Label17.ForeColor = System.Drawing.SystemColors.ControlDarkDark
-        Me.Label17.Location = New System.Drawing.Point(10, 60)
+        Me.Label17.Location = New System.Drawing.Point(5, 67)
         Me.Label17.Name = "Label17"
-        Me.Label17.Size = New System.Drawing.Size(35, 12)
+        Me.Label17.Size = New System.Drawing.Size(41, 12)
         Me.Label17.TabIndex = 102
-        Me.Label17.Text = "Cp max"
+        Me.Label17.Text = "ΔCp max"
         Me.Label17.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
-        'nudCpmax
+        'nudDCpmax
         '
-        Me.nudCpmax.DecimalPlaces = 3
-        Me.nudCpmax.Increment = New Decimal(New Integer() {1, 0, 0, 196608})
-        Me.nudCpmax.Location = New System.Drawing.Point(51, 58)
-        Me.nudCpmax.Maximum = New Decimal(New Integer() {1000, 0, 0, 0})
-        Me.nudCpmax.Minimum = New Decimal(New Integer() {1000, 0, 0, -2147483648})
-        Me.nudCpmax.Name = "nudCpmax"
-        Me.nudCpmax.Size = New System.Drawing.Size(50, 19)
-        Me.nudCpmax.TabIndex = 100
-        Me.nudCpmax.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.nudDCpmax.DecimalPlaces = 3
+        Me.nudDCpmax.Increment = New Decimal(New Integer() {1, 0, 0, 196608})
+        Me.nudDCpmax.Location = New System.Drawing.Point(49, 65)
+        Me.nudDCpmax.Maximum = New Decimal(New Integer() {1000, 0, 0, 0})
+        Me.nudDCpmax.Minimum = New Decimal(New Integer() {1000, 0, 0, -2147483648})
+        Me.nudDCpmax.Name = "nudDCpmax"
+        Me.nudDCpmax.Size = New System.Drawing.Size(50, 19)
+        Me.nudDCpmax.TabIndex = 100
+        Me.nudDCpmax.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'GroupBox8
         '
@@ -1882,18 +1950,6 @@ Partial Class MainRibbon
         Me.btnLoadResults.Text = "Load"
         Me.btnLoadResults.UseVisualStyleBackColor = False
         '
-        'cbxInclude
-        '
-        Me.cbxInclude.AutoSize = True
-        Me.cbxInclude.Checked = True
-        Me.cbxInclude.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.cbxInclude.Location = New System.Drawing.Point(250, 63)
-        Me.cbxInclude.Name = "cbxInclude"
-        Me.cbxInclude.Size = New System.Drawing.Size(52, 16)
-        Me.cbxInclude.TabIndex = 73
-        Me.cbxInclude.Text = "Include"
-        Me.cbxInclude.UseVisualStyleBackColor = True
-        '
         'MainRibbon
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -1959,6 +2015,8 @@ Partial Class MainRibbon
         Me.GroupBox9.PerformLayout()
         CType(Me.nudCpmin, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.nudCpmax, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.nudDCpmin, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.nudDCpmax, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupBox8.ResumeLayout(False)
         Me.GroupBox8.PerformLayout()
         Me.GroupBox4.ResumeLayout(False)
@@ -2080,9 +2138,9 @@ Partial Class MainRibbon
     Friend WithEvents cbxShowColormap As System.Windows.Forms.CheckBox
     Friend WithEvents Label18 As System.Windows.Forms.Label
     Friend WithEvents btnResetColormap As System.Windows.Forms.Button
-    Friend WithEvents nudCpmin As System.Windows.Forms.NumericUpDown
+    Friend WithEvents nudDCpmin As System.Windows.Forms.NumericUpDown
     Friend WithEvents Label17 As System.Windows.Forms.Label
-    Friend WithEvents nudCpmax As System.Windows.Forms.NumericUpDown
+    Friend WithEvents nudDCpmax As System.Windows.Forms.NumericUpDown
     Friend WithEvents GroupBox8 As System.Windows.Forms.GroupBox
     Friend WithEvents cbxShowWakeNodes As System.Windows.Forms.CheckBox
     Friend WithEvents pnlWakeNodeColor As System.Windows.Forms.Panel
@@ -2099,4 +2157,8 @@ Partial Class MainRibbon
     Friend WithEvents btnReport As System.Windows.Forms.Button
     Friend WithEvents btnLoadResults As System.Windows.Forms.Button
     Friend WithEvents cbxInclude As System.Windows.Forms.CheckBox
+    Friend WithEvents Label29 As Windows.Forms.Label
+    Friend WithEvents nudCpmin As Windows.Forms.NumericUpDown
+    Friend WithEvents Label30 As Windows.Forms.Label
+    Friend WithEvents nudCpmax As Windows.Forms.NumericUpDown
 End Class

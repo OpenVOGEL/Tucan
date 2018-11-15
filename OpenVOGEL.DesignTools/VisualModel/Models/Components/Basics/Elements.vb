@@ -177,7 +177,9 @@ Namespace VisualModel.Models.Components.Basics
         Public ReferencePosition As EVector3
         Public Position As EVector3
         Public Displacement As EVector3
-        Public Color As ColorSharpGL
+        Public PressureDeltaColor As ColorSharpGL
+        Public PressureColor As ColorSharpGL
+        Public PressureDelta As Double
         Public Pressure As Double
 
         Public Sub New()

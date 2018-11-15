@@ -1203,8 +1203,10 @@ ErrSub:
             nudScaleVelocity.Value = ProjectRoot.Results.Model.VisualProperties.ScaleVelocity
 
             cbxShowColormap.Checked = ProjectRoot.Results.Model.VisualProperties.ShowColormap
-            nudCpmax.Value = ProjectRoot.Results.Model.WingPressureRange.Maximum
-            nudCpmin.Value = ProjectRoot.Results.Model.WingPressureRange.Minimum
+            nudDCpmax.Value = ProjectRoot.Results.Model.PressureDeltaRange.Maximum
+            nudDCpmin.Value = ProjectRoot.Results.Model.PressureDeltaRange.Minimum
+            nudCpmax.Value = ProjectRoot.Results.Model.PressureRange.Maximum
+            nudCpmin.Value = ProjectRoot.Results.Model.PressureRange.Minimum
 
             cbxShowWakeSurface.Checked = ProjectRoot.Results.Wakes.VisualProperties.ShowSurface
             cbxShowWakeMesh.Checked = ProjectRoot.Results.Wakes.VisualProperties.ShowMesh
@@ -1546,11 +1548,25 @@ ErrSub:
 
     End Sub
 
-    Private Sub nudCpmax_ValueChanged(sender As Object, e As EventArgs) Handles nudCpmax.ValueChanged
+    Private Sub nudDCpmax_ValueChanged(sender As Object, e As EventArgs) Handles nudDCpmax.ValueChanged
 
         If (Not _LockResultPropsEvents) And ProjectRoot.Initialized Then
 
-            ProjectRoot.Results.Model.WingPressureRange.Maximum = nudCpmax.Value
+            ProjectRoot.Results.Model.PressureDeltaRange.Maximum = nudDCpmax.Value
+
+            ProjectRoot.Results.Model.UpdateColormapWithPressure()
+
+            ProjectRoot.RefreshOnGL()
+
+        End If
+
+    End Sub
+
+    Private Sub nudDCpmin_ValueChanged(sender As Object, e As EventArgs) Handles nudDCpmin.ValueChanged
+
+        If (Not _LockResultPropsEvents) And ProjectRoot.Initialized Then
+
+            ProjectRoot.Results.Model.PressureDeltaRange.Minimum = nudDCpmin.Value
 
             ProjectRoot.Results.Model.UpdateColormapWithPressure()
 
@@ -1564,7 +1580,21 @@ ErrSub:
 
         If (Not _LockResultPropsEvents) And ProjectRoot.Initialized Then
 
-            ProjectRoot.Results.Model.WingPressureRange.Minimum = nudCpmin.Value
+            ProjectRoot.Results.Model.PressureRange.Minimum = nudCpmin.Value
+
+            ProjectRoot.Results.Model.UpdateColormapWithPressure()
+
+            ProjectRoot.RefreshOnGL()
+
+        End If
+
+    End Sub
+
+    Private Sub nudCpmax_ValueChanged(sender As Object, e As EventArgs) Handles nudCpmax.ValueChanged
+
+        If (Not _LockResultPropsEvents) And ProjectRoot.Initialized Then
+
+            ProjectRoot.Results.Model.PressureRange.Maximum = nudCpmax.Value
 
             ProjectRoot.Results.Model.UpdateColormapWithPressure()
 
@@ -1584,8 +1614,11 @@ ErrSub:
 
             _LockResultPropsEvents = True
 
-            nudCpmax.Value = ProjectRoot.Results.Model.WingPressureRange.Maximum
-            nudCpmin.Value = ProjectRoot.Results.Model.WingPressureRange.Minimum
+            nudDCpmax.Value = ProjectRoot.Results.Model.PressureDeltaRange.Maximum
+            nudDCpmin.Value = ProjectRoot.Results.Model.PressureDeltaRange.Minimum
+
+            nudCpmax.Value = ProjectRoot.Results.Model.PressureRange.Maximum
+            nudCpmin.Value = ProjectRoot.Results.Model.PressureRange.Minimum
 
             _LockResultPropsEvents = False
 
@@ -1691,6 +1724,10 @@ ErrSub:
             Dialog.ShowDialog()
 
         End If
+
+    End Sub
+
+    Private Sub GroupBox9_Enter(sender As Object, e As EventArgs) Handles GroupBox9.Enter
 
     End Sub
 

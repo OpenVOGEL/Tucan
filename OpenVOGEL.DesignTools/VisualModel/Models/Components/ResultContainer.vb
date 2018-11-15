@@ -66,13 +66,13 @@ Namespace VisualModel.Models.Components
         ''' Extreme values of the local pressure.
         ''' </summary>
         ''' <returns></returns>
-        Public Property WingPressureRange As New LimitValues
+        Public Property PressureDeltaRange As New LimitValues
 
         ''' <summary>
         ''' Extreme values of the local pressure.
         ''' </summary>
         ''' <returns></returns>
-        Public Property BodyPressureRange As New LimitValues
+        Public Property PressureRange As New LimitValues
 
         ''' <summary>
         ''' Maximum and minimum displacements.
@@ -180,33 +180,33 @@ Namespace VisualModel.Models.Components
 
             Dim i As Integer
 
-            Dim Nodo As NodalPoint
+            Dim Node As NodalPoint
 
             If VisualProperties.ShowSurface Then
 
-                ' load homogeneous color:
+                ' Load homogeneous color:
 
-                Dim cX As Double
-                Dim cY As Double
-                Dim cZ As Double
+                Dim R As Double
+                Dim G As Double
+                Dim B As Double
 
                 If Not Selected Then
 
-                    cX = VisualProperties.ColorSurface.R / 255
-                    cY = VisualProperties.ColorSurface.G / 255
-                    cZ = VisualProperties.ColorSurface.B / 255
+                    R = VisualProperties.ColorSurface.R / 255
+                    G = VisualProperties.ColorSurface.G / 255
+                    B = VisualProperties.ColorSurface.B / 255
 
                 Else
 
-                    ' default selected color is {255, 194, 14} (orange)
+                    ' Default selected color is {255, 194, 14} (orange)
 
-                    cX = 1
-                    cY = 0.76078
-                    cZ = 0.0549
+                    R = 1
+                    G = 0.76078
+                    B = 0.0549
 
                 End If
 
-                gl.Color(cX, cY, cZ, VisualProperties.Transparency)
+                gl.Color(R, G, B, VisualProperties.Transparency)
 
                 gl.InitNames()
 
@@ -217,29 +217,107 @@ Namespace VisualModel.Models.Components
                     gl.PushName(Code + i)
                     gl.Begin(OpenGL.GL_TRIANGLES)
 
-                    Nodo = Mesh.Nodes((Mesh.Panels(i).N1))
-                    If VisualProperties.ShowColormap Then gl.Color(Nodo.Color.R, Nodo.Color.G, Nodo.Color.B)
-                    gl.Vertex(Nodo.Position.X, Nodo.Position.Y, Nodo.Position.Z)
+                    If Mesh.Panels(i).IsSlender Then
 
-                    Nodo = Mesh.Nodes((Mesh.Panels(i).N2))
-                    If VisualProperties.ShowColormap Then gl.Color(Nodo.Color.R, Nodo.Color.G, Nodo.Color.B)
-                    gl.Vertex(Nodo.Position.X, Nodo.Position.Y, Nodo.Position.Z)
+                        If VisualProperties.ShowColormap Then
 
-                    Nodo = Mesh.Nodes((Mesh.Panels(i).N3))
-                    If VisualProperties.ShowColormap Then gl.Color(Nodo.Color.R, Nodo.Color.G, Nodo.Color.B)
-                    gl.Vertex(Nodo.Position.X, Nodo.Position.Y, Nodo.Position.Z)
+                            Node = Mesh.Nodes((Mesh.Panels(i).N1))
+                            gl.Color(Node.PressureDeltaColor.R, Node.PressureDeltaColor.G, Node.PressureDeltaColor.B)
+                            gl.Vertex(Node.Position.X, Node.Position.Y, Node.Position.Z)
 
-                    Nodo = Mesh.Nodes((Mesh.Panels(i).N3))
-                    If VisualProperties.ShowColormap Then gl.Color(Nodo.Color.R, Nodo.Color.G, Nodo.Color.B)
-                    gl.Vertex(Nodo.Position.X, Nodo.Position.Y, Nodo.Position.Z)
+                            Node = Mesh.Nodes((Mesh.Panels(i).N2))
+                            gl.Color(Node.PressureDeltaColor.R, Node.PressureDeltaColor.G, Node.PressureDeltaColor.B)
+                            gl.Vertex(Node.Position.X, Node.Position.Y, Node.Position.Z)
 
-                    Nodo = Mesh.Nodes((Mesh.Panels(i).N4))
-                    If VisualProperties.ShowColormap Then gl.Color(Nodo.Color.R, Nodo.Color.G, Nodo.Color.B)
-                    gl.Vertex(Nodo.Position.X, Nodo.Position.Y, Nodo.Position.Z)
+                            Node = Mesh.Nodes((Mesh.Panels(i).N3))
+                            gl.Color(Node.PressureDeltaColor.R, Node.PressureDeltaColor.G, Node.PressureDeltaColor.B)
+                            gl.Vertex(Node.Position.X, Node.Position.Y, Node.Position.Z)
 
-                    Nodo = Mesh.Nodes((Mesh.Panels(i).N1))
-                    If VisualProperties.ShowColormap Then gl.Color(Nodo.Color.R, Nodo.Color.G, Nodo.Color.B)
-                    gl.Vertex(Nodo.Position.X, Nodo.Position.Y, Nodo.Position.Z)
+                            Node = Mesh.Nodes((Mesh.Panels(i).N3))
+                            gl.Color(Node.PressureDeltaColor.R, Node.PressureDeltaColor.G, Node.PressureDeltaColor.B)
+                            gl.Vertex(Node.Position.X, Node.Position.Y, Node.Position.Z)
+
+                            Node = Mesh.Nodes((Mesh.Panels(i).N4))
+                            gl.Color(Node.PressureDeltaColor.R, Node.PressureDeltaColor.G, Node.PressureDeltaColor.B)
+                            gl.Vertex(Node.Position.X, Node.Position.Y, Node.Position.Z)
+
+                            Node = Mesh.Nodes((Mesh.Panels(i).N1))
+                            gl.Color(Node.PressureDeltaColor.R, Node.PressureDeltaColor.G, Node.PressureDeltaColor.B)
+                            gl.Vertex(Node.Position.X, Node.Position.Y, Node.Position.Z)
+
+                        Else
+
+                            Node = Mesh.Nodes((Mesh.Panels(i).N1))
+                            gl.Vertex(Node.Position.X, Node.Position.Y, Node.Position.Z)
+
+                            Node = Mesh.Nodes((Mesh.Panels(i).N2))
+                            gl.Vertex(Node.Position.X, Node.Position.Y, Node.Position.Z)
+
+                            Node = Mesh.Nodes((Mesh.Panels(i).N3))
+                            gl.Vertex(Node.Position.X, Node.Position.Y, Node.Position.Z)
+
+                            Node = Mesh.Nodes((Mesh.Panels(i).N3))
+                            gl.Vertex(Node.Position.X, Node.Position.Y, Node.Position.Z)
+
+                            Node = Mesh.Nodes((Mesh.Panels(i).N4))
+                            gl.Vertex(Node.Position.X, Node.Position.Y, Node.Position.Z)
+
+                            Node = Mesh.Nodes((Mesh.Panels(i).N1))
+                            gl.Vertex(Node.Position.X, Node.Position.Y, Node.Position.Z)
+
+                        End If
+
+                    Else
+
+                        If VisualProperties.ShowColormap Then
+
+                            Node = Mesh.Nodes((Mesh.Panels(i).N1))
+                            gl.Color(Node.PressureColor.R, Node.PressureColor.G, Node.PressureColor.B)
+                            gl.Vertex(Node.Position.X, Node.Position.Y, Node.Position.Z)
+
+                            Node = Mesh.Nodes((Mesh.Panels(i).N2))
+                            gl.Color(Node.PressureColor.R, Node.PressureColor.G, Node.PressureColor.B)
+                            gl.Vertex(Node.Position.X, Node.Position.Y, Node.Position.Z)
+
+                            Node = Mesh.Nodes((Mesh.Panels(i).N3))
+                            gl.Color(Node.PressureColor.R, Node.PressureColor.G, Node.PressureColor.B)
+                            gl.Vertex(Node.Position.X, Node.Position.Y, Node.Position.Z)
+
+                            Node = Mesh.Nodes((Mesh.Panels(i).N3))
+                            gl.Color(Node.PressureColor.R, Node.PressureColor.G, Node.PressureColor.B)
+                            gl.Vertex(Node.Position.X, Node.Position.Y, Node.Position.Z)
+
+                            Node = Mesh.Nodes((Mesh.Panels(i).N4))
+                            gl.Color(Node.PressureColor.R, Node.PressureColor.G, Node.PressureColor.B)
+                            gl.Vertex(Node.Position.X, Node.Position.Y, Node.Position.Z)
+
+                            Node = Mesh.Nodes((Mesh.Panels(i).N1))
+                            gl.Color(Node.PressureColor.R, Node.PressureColor.G, Node.PressureColor.B)
+                            gl.Vertex(Node.Position.X, Node.Position.Y, Node.Position.Z)
+
+                        Else
+
+                            Node = Mesh.Nodes((Mesh.Panels(i).N1))
+                            gl.Vertex(Node.Position.X, Node.Position.Y, Node.Position.Z)
+
+                            Node = Mesh.Nodes((Mesh.Panels(i).N2))
+                            gl.Vertex(Node.Position.X, Node.Position.Y, Node.Position.Z)
+
+                            Node = Mesh.Nodes((Mesh.Panels(i).N3))
+                            gl.Vertex(Node.Position.X, Node.Position.Y, Node.Position.Z)
+
+                            Node = Mesh.Nodes((Mesh.Panels(i).N3))
+                            gl.Vertex(Node.Position.X, Node.Position.Y, Node.Position.Z)
+
+                            Node = Mesh.Nodes((Mesh.Panels(i).N4))
+                            gl.Vertex(Node.Position.X, Node.Position.Y, Node.Position.Z)
+
+                            Node = Mesh.Nodes((Mesh.Panels(i).N1))
+                            gl.Vertex(Node.Position.X, Node.Position.Y, Node.Position.Z)
+
+                        End If
+
+                    End If
 
                     gl.End()
                     gl.PopName()
@@ -263,8 +341,8 @@ Namespace VisualModel.Models.Components
 
                     gl.PushName(Code + i)
                     gl.Begin(OpenGL.GL_POINTS)
-                    Nodo = Mesh.Nodes(i)
-                    gl.Vertex(Nodo.Position.X, Nodo.Position.Y, Nodo.Position.Z)
+                    Node = Mesh.Nodes(i)
+                    gl.Vertex(Node.Position.X, Node.Position.Y, Node.Position.Z)
                     gl.End()
                     gl.PopName()
 
@@ -750,24 +828,24 @@ Namespace VisualModel.Models.Components
                         Cp = Math.Abs(Cp)
 
                         If FirstWing Then
-                            WingPressureRange.Maximum = Mesh.Panels(0).Cp
-                            WingPressureRange.Minimum = Mesh.Panels(0).Cp
+                            PressureDeltaRange.Maximum = Cp
+                            PressureDeltaRange.Minimum = Cp
                             FirstWing = False
+                        Else
+                            If Cp > PressureDeltaRange.Maximum Then PressureDeltaRange.Maximum = Cp
+                            If Cp < PressureDeltaRange.Minimum Then PressureDeltaRange.Minimum = Cp
                         End If
-
-                        If Cp > WingPressureRange.Maximum Then WingPressureRange.Maximum = Cp
-                        If Cp < WingPressureRange.Minimum Then WingPressureRange.Minimum = Cp
 
                     Else
 
                         If FirstBody Then
-                            BodyPressureRange.Maximum = Mesh.Panels(0).Cp
-                            BodyPressureRange.Minimum = Mesh.Panels(0).Cp
+                            PressureRange.Maximum = Cp
+                            PressureRange.Minimum = Cp
                             FirstBody = False
+                        Else
+                            If Cp > PressureRange.Maximum Then PressureRange.Maximum = Cp
+                            If Cp < PressureRange.Minimum Then PressureRange.Minimum = Cp
                         End If
-
-                        If Cp > BodyPressureRange.Maximum Then BodyPressureRange.Maximum = Cp
-                        If Cp < BodyPressureRange.Minimum Then BodyPressureRange.Minimum = Cp
 
                     End If
 
@@ -784,8 +862,8 @@ Namespace VisualModel.Models.Components
 
             For i = 0 To NumberOfNodes - 1
 
-                Dim Slender As Boolean = False
                 Dim LocalCp As Double = 0.0#
+                Dim LocalCpDelta As Double = 0.0#
                 Dim PanelsCount As Integer = 0
 
                 For j = 0 To NumberOfPanels - 1
@@ -797,8 +875,7 @@ Namespace VisualModel.Models.Components
                             PanelsCount = PanelsCount + 1
 
                             If .IsSlender Then
-                                LocalCp = LocalCp + Math.Abs(.Cp)
-                                Slender = True
+                                LocalCpDelta = LocalCpDelta + Math.Abs(.Cp)
                             Else
                                 LocalCp = LocalCp + .Cp
                             End If
@@ -811,22 +888,23 @@ Namespace VisualModel.Models.Components
 
                 ' Compute mean value:
 
-                If PanelsCount > 0 Then Mesh.Nodes(i).Pressure = LocalCp / PanelsCount
-
-                ' Assign a color:
-
-                Dim Range As LimitValues
-                Dim Value As Double
-
-                If Slender Then
-                    Range = WingPressureRange
-                    Value = Math.Abs(Mesh.Nodes(i).Pressure)
+                If PanelsCount > 0 Then
+                    Mesh.Nodes(i).Pressure = LocalCp / PanelsCount
+                    Mesh.Nodes(i).PressureDelta = LocalCpDelta / PanelsCount
                 Else
-                    Range = BodyPressureRange
-                    Value = Mesh.Nodes(i).Pressure
+                    Mesh.Nodes(i).Pressure = 0.0#
+                    Mesh.Nodes(i).PressureDelta = 0.0#
                 End If
 
-                Mesh.Nodes(i).Color = Colormap.ScalarToColor(Value, Range.Maximum, Range.Minimum)
+                ' Assign a color to each result:
+
+                Mesh.Nodes(i).PressureDeltaColor = Colormap.ScalarToColor(Mesh.Nodes(i).PressureDelta,
+                                                                          PressureDeltaRange.Maximum,
+                                                                          PressureDeltaRange.Minimum)
+
+                Mesh.Nodes(i).PressureDeltaColor = Colormap.ScalarToColor(Mesh.Nodes(i).Pressure,
+                                                                          PressureRange.Maximum,
+                                                                          PressureRange.Minimum)
 
             Next
 
@@ -837,11 +915,16 @@ Namespace VisualModel.Models.Components
         ''' </summary>
         Public Sub UpdateColormapWithPressure()
 
-            DistributePressureOnNodes()
+            For i = 0 To NumberOfNodes - 1
 
-            'For i = 0 To NumberOfNodes - 1
-            'Mesh.Nodes(i).Color = Colormap.ScalarToColor(Mesh.Nodes(i).Pressure, WingPressureRange.Maximum, WingPressureRange.Minimum)
-            'Next
+                Mesh.Nodes(i).PressureDeltaColor = Colormap.ScalarToColor(Mesh.Nodes(i).PressureDelta,
+                                                                          PressureDeltaRange.Maximum,
+                                                                          PressureDeltaRange.Minimum)
+
+                Mesh.Nodes(i).PressureColor = Colormap.ScalarToColor(Mesh.Nodes(i).Pressure,
+                                                                          PressureRange.Maximum,
+                                                                          PressureRange.Minimum)
+            Next
 
         End Sub
 
@@ -870,7 +953,7 @@ Namespace VisualModel.Models.Components
 
             For i = 0 To NumberOfNodes - 1
 
-                Mesh.Nodes(i).Color = Colormap.ScalarToColor(Mesh.Nodes(i).Displacement.EuclideanNorm, DisplacementRange.Maximum, DisplacementRange.Minimum)
+                Mesh.Nodes(i).PressureDeltaColor = Colormap.ScalarToColor(Mesh.Nodes(i).Displacement.EuclideanNorm, DisplacementRange.Maximum, DisplacementRange.Minimum)
 
             Next
 

@@ -1213,29 +1213,29 @@ Namespace VisualModel.Models.Components
                     gl.Begin(OpenGL.GL_TRIANGLES)
 
                     Nodo = Mesh.Nodes(p.N1)
-                    If VisualProperties.ShowColormap Then gl.Color(Nodo.Color.R, Nodo.Color.G, Nodo.Color.B)
+                    If VisualProperties.ShowColormap Then gl.Color(Nodo.PressureDeltaColor.R, Nodo.PressureDeltaColor.G, Nodo.PressureDeltaColor.B)
                     gl.Vertex(Nodo.Position.X, Nodo.Position.Y, Nodo.Position.Z)
 
                     Nodo = Mesh.Nodes(p.N2)
-                    If VisualProperties.ShowColormap Then gl.Color(Nodo.Color.R, Nodo.Color.G, Nodo.Color.B)
+                    If VisualProperties.ShowColormap Then gl.Color(Nodo.PressureDeltaColor.R, Nodo.PressureDeltaColor.G, Nodo.PressureDeltaColor.B)
                     gl.Vertex(Nodo.Position.X, Nodo.Position.Y, Nodo.Position.Z)
 
                     Nodo = Mesh.Nodes(p.N3)
-                    If VisualProperties.ShowColormap Then gl.Color(Nodo.Color.R, Nodo.Color.G, Nodo.Color.B)
+                    If VisualProperties.ShowColormap Then gl.Color(Nodo.PressureDeltaColor.R, Nodo.PressureDeltaColor.G, Nodo.PressureDeltaColor.B)
                     gl.Vertex(Nodo.Position.X, Nodo.Position.Y, Nodo.Position.Z)
 
                     If Not p.IsTriangular Then
 
                         Nodo = Mesh.Nodes(p.N3)
-                        If VisualProperties.ShowColormap Then gl.Color(Nodo.Color.R, Nodo.Color.G, Nodo.Color.B)
+                        If VisualProperties.ShowColormap Then gl.Color(Nodo.PressureDeltaColor.R, Nodo.PressureDeltaColor.G, Nodo.PressureDeltaColor.B)
                         gl.Vertex(Nodo.Position.X, Nodo.Position.Y, Nodo.Position.Z)
 
                         Nodo = Mesh.Nodes(p.N4)
-                        If VisualProperties.ShowColormap Then gl.Color(Nodo.Color.R, Nodo.Color.G, Nodo.Color.B)
+                        If VisualProperties.ShowColormap Then gl.Color(Nodo.PressureDeltaColor.R, Nodo.PressureDeltaColor.G, Nodo.PressureDeltaColor.B)
                         gl.Vertex(Nodo.Position.X, Nodo.Position.Y, Nodo.Position.Z)
 
                         Nodo = Mesh.Nodes(p.N1)
-                        If VisualProperties.ShowColormap Then gl.Color(Nodo.Color.R, Nodo.Color.G, Nodo.Color.B)
+                        If VisualProperties.ShowColormap Then gl.Color(Nodo.PressureDeltaColor.R, Nodo.PressureDeltaColor.G, Nodo.PressureDeltaColor.B)
                         gl.Vertex(Nodo.Position.X, Nodo.Position.Y, Nodo.Position.Z)
 
                     End If
