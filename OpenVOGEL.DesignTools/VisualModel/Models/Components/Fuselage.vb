@@ -1168,74 +1168,66 @@ Namespace VisualModel.Models.Components
         ''' Regenerates the 3D model in Open GL.
         ''' </summary>
         ''' <param name="gl"></param>
-        ''' <param name="SelectionMode"></param>
         ''' <param name="ElementIndex"></param>
         ''' <remarks></remarks>
-        Public Overrides Sub Refresh3DModel(ByRef gl As OpenGL, Optional ByVal SelectionMode As SelectionModes = SelectionModes.smNoSelection, Optional ByVal ElementIndex As Integer = 0)
+        Public Overrides Sub Refresh3DModel(ByRef gl As OpenGL,
+                                            Optional ByVal ForSelection As Boolean = False,
+                                            Optional ByVal ElementIndex As Integer = 0)
 
-            'Version para OpenGL
+            Dim Code As Integer = 0
 
-            Dim i As Integer
+            If ForSelection Or VisualProperties.ShowSurface Then
 
-            Dim Nodo As NodalPoint
+                ' Load homogeneous color:
 
-            If VisualProperties.ShowSurface Then
+                Dim SurfaceColor As New EVector3
 
-                ' load homogeneous color:
-
-                Dim SColor As New EVector3
-
-                If Not Selected Then
-
-                    SColor.X = VisualProperties.ColorSurface.R / 255
-                    SColor.Y = VisualProperties.ColorSurface.G / 255
-                    SColor.Z = VisualProperties.ColorSurface.B / 255
-                    gl.Color(SColor.X, SColor.Y, SColor.Z, VisualProperties.Transparency)
-
+                If Not Active Then
+                    SurfaceColor.X = VisualProperties.ColorSurface.R / 255
+                    SurfaceColor.Y = VisualProperties.ColorSurface.G / 255
+                    SurfaceColor.Z = VisualProperties.ColorSurface.B / 255
                 Else
-
-                    ' default selected color is {255, 194, 14} (orange)
-
-                    SColor.X = 1
-                    SColor.Y = 0.76078
-                    SColor.Z = 0.0549
-                    gl.Color(SColor.X, SColor.Y, SColor.Z, 1.0)
-
+                    SurfaceColor.X = 1.0
+                    SurfaceColor.Y = 0.8
+                    SurfaceColor.Z = 0.0
                 End If
 
                 gl.InitNames()
-                Dim Code As Integer = Selection.GetSelectionCode(ComponentTypes.etFuselage, ElementIndex, EntityTypes.etQuadPanel, 0)
-                Dim Count As Integer = 0
+                Code = Selection.GetSelectionCode(ComponentTypes.etFuselage, ElementIndex, EntityTypes.etPanel, 0)
 
-                For Each p In Mesh.Panels
+                Dim Nodo As NodalPoint
 
-                    gl.PushName(Code + Count)
+                For Each Panel In Mesh.Panels
+
+                    gl.PushName(Code)
+                    Code += 1
+
                     gl.Begin(OpenGL.GL_TRIANGLES)
 
-                    Nodo = Mesh.Nodes(p.N1)
-                    If VisualProperties.ShowColormap Then gl.Color(Nodo.PressureDeltaColor.R, Nodo.PressureDeltaColor.G, Nodo.PressureDeltaColor.B)
+                    If Panel.Active Then
+                        gl.Color(1.0, 0.0, 0.5)
+                    Else
+                        gl.Color(SurfaceColor.X, SurfaceColor.Y, SurfaceColor.Z, VisualProperties.Transparency)
+                    End If
+
+                    Nodo = Mesh.Nodes(Panel.N1)
                     gl.Vertex(Nodo.Position.X, Nodo.Position.Y, Nodo.Position.Z)
 
-                    Nodo = Mesh.Nodes(p.N2)
-                    If VisualProperties.ShowColormap Then gl.Color(Nodo.PressureDeltaColor.R, Nodo.PressureDeltaColor.G, Nodo.PressureDeltaColor.B)
+                    Nodo = Mesh.Nodes(Panel.N2)
                     gl.Vertex(Nodo.Position.X, Nodo.Position.Y, Nodo.Position.Z)
 
-                    Nodo = Mesh.Nodes(p.N3)
-                    If VisualProperties.ShowColormap Then gl.Color(Nodo.PressureDeltaColor.R, Nodo.PressureDeltaColor.G, Nodo.PressureDeltaColor.B)
+                    Nodo = Mesh.Nodes(Panel.N3)
                     gl.Vertex(Nodo.Position.X, Nodo.Position.Y, Nodo.Position.Z)
 
-                    If Not p.IsTriangular Then
+                    If Not Panel.IsTriangular Then
 
-                        Nodo = Mesh.Nodes(p.N3)
-                        If VisualProperties.ShowColormap Then gl.Color(Nodo.PressureDeltaColor.R, Nodo.PressureDeltaColor.G, Nodo.PressureDeltaColor.B)
+                        Nodo = Mesh.Nodes(Panel.N3)
                         gl.Vertex(Nodo.Position.X, Nodo.Position.Y, Nodo.Position.Z)
 
-                        Nodo = Mesh.Nodes(p.N4)
-                        If VisualProperties.ShowColormap Then gl.Color(Nodo.PressureDeltaColor.R, Nodo.PressureDeltaColor.G, Nodo.PressureDeltaColor.B)
+                        Nodo = Mesh.Nodes(Panel.N4)
                         gl.Vertex(Nodo.Position.X, Nodo.Position.Y, Nodo.Position.Z)
 
-                        Nodo = Mesh.Nodes(p.N1)
-                        If VisualProperties.ShowColormap Then gl.Color(Nodo.PressureDeltaColor.R, Nodo.PressureDeltaColor.G, Nodo.PressureDeltaColor.B)
+                        Nodo = Mesh.Nodes(Panel.N1)
                         gl.Vertex(Nodo.Position.X, Nodo.Position.Y, Nodo.Position.Z)
 
                     End If
@@ -1247,152 +1239,79 @@ Namespace VisualModel.Models.Components
 
             End If
 
-            If SelectionMode = SelectionModes.smNodePicking Then
+            gl.InitNames()
+            Code = Selection.GetSelectionCode(ComponentTypes.etFuselage, ElementIndex, EntityTypes.etNode, 0)
 
-                gl.InitNames()
-                Dim Code As Integer = Selection.GetSelectionCode(ComponentTypes.etFuselage, ElementIndex, EntityTypes.etNode, 0)
+            gl.PointSize(VisualProperties.SizeNodes)
+            gl.Color(VisualProperties.ColorNodes.R / 255, VisualProperties.ColorNodes.G / 255, VisualProperties.ColorNodes.B / 255)
 
-                gl.PointSize(VisualProperties.SizeNodes)
-                gl.Color(VisualProperties.ColorNodes.R / 255, VisualProperties.ColorNodes.G / 255, VisualProperties.ColorNodes.B / 255)
+            For Each Node In Mesh.Nodes
 
-                For i = 0 To Mesh.Nodes.Count - 1
-
-                    gl.PushName(Code + i)
+                If ForSelection Or Node.Active Then
+                    gl.PushName(Code)
+                    Code += 1
                     gl.Begin(OpenGL.GL_POINTS)
-                    Nodo = Mesh.Nodes(i)
-                    gl.Vertex(Nodo.Position.X, Nodo.Position.Y, Nodo.Position.Z)
+                    gl.Vertex(Node.Position.X, Node.Position.Y, Node.Position.Z)
                     gl.End()
                     gl.PopName()
+                End If
 
-                Next
-
-            End If
+            Next
 
             ' Represent lattice:
 
             If VisualProperties.ShowMesh Then
 
-                gl.LineWidth(VisualProperties.ThicknessMesh)
-                gl.Begin(OpenGL.GL_LINES)
+                gl.InitNames()
+                Code = Selection.GetSelectionCode(ComponentTypes.etFuselage, ElementIndex, EntityTypes.etSegment, 0)
 
-                Dim Nodo1 As EVector3
-                Dim Nodo2 As EVector3
-                Dim Vector As EVector3
-                Dim Carga As New EVector3
+                gl.LineWidth(VisualProperties.ThicknessMesh)
+
+                Dim Node1 As EVector3
+                Dim Node2 As EVector3
 
                 gl.Color(VisualProperties.ColorMesh.R / 255, VisualProperties.ColorMesh.G / 255, VisualProperties.ColorMesh.B / 255)
 
                 If Mesh.Nodes.Count > 0 Then
 
-                    For i = 0 To Mesh.Lattice.Count - 1
+                    For Each Segment In Mesh.Lattice
 
-                        Nodo1 = Mesh.Nodes(Mesh.Lattice(i).N1).Position
-                        Nodo2 = Mesh.Nodes(Mesh.Lattice(i).N2).Position
+                        Node1 = Mesh.Nodes(Segment.N1).Position
+                        Node2 = Mesh.Nodes(Segment.N2).Position
 
-                        gl.Vertex(Nodo1.X, Nodo1.Y, Nodo1.Z)
-                        gl.Vertex(Nodo2.X, Nodo2.Y, Nodo2.Z)
-
-                    Next
-
-                End If
-
-                ' Normals:
-
-                For i = 0 To Mesh.Panels.Count - 1
-
-                    Nodo1 = Mesh.Panels(i).ControlPoint
-                    Carga.Assign(Mesh.Panels(i).NormalVector)
-
-                    gl.Vertex(Nodo1.X, Nodo1.Y, Nodo1.Z)
-                    gl.Vertex(Nodo1.X + Carga.X, Nodo1.Y + Carga.Y, Nodo1.Z + Carga.Z)
-
-                Next
-
-                gl.Color(VisualProperties.ColorVelocity.R / 255, VisualProperties.ColorVelocity.G / 255, VisualProperties.ColorVelocity.B / 255)
-
-                If VisualProperties.ShowVelocityVectors Then
-
-                    For i = 0 To Mesh.Panels.Count - 1
-
-                        Nodo1 = Mesh.Panels(i).ControlPoint
-                        Vector = Mesh.Panels(i).LocalVelocity
-
-                        gl.Vertex(Nodo1.X, Nodo1.Y, Nodo1.Z)
-                        gl.Vertex(Nodo1.X + VisualProperties.ScaleVelocity * Vector.X, Nodo1.Y + VisualProperties.ScaleVelocity * Vector.Y, Nodo1.Z + VisualProperties.ScaleVelocity * Vector.Z)
+                        gl.PushName(Code)
+                        Code += 1
+                        gl.Begin(OpenGL.GL_LINES)
+                        gl.Vertex(Node1.X, Node1.Y, Node1.Z)
+                        gl.Vertex(Node2.X, Node2.Y, Node2.Z)
+                        gl.End()
+                        gl.PopName()
 
                     Next
 
                 End If
+
+            End If
+
+            ' Normals:
+
+            If VisualProperties.ShowNormalVectors Then
+
+                gl.Begin(OpenGL.GL_LINES)
 
                 gl.Color(VisualProperties.ColorLoads.R / 255, VisualProperties.ColorLoads.G / 255, VisualProperties.ColorLoads.B / 255)
 
-                If VisualProperties.ShowLoadVectors Then
+                For Each Panel In Mesh.Panels
+                    gl.Vertex(Panel.ControlPoint.X, Panel.ControlPoint.Y, Panel.ControlPoint.Z)
+                    gl.Vertex(Panel.ControlPoint.X + Panel.NormalVector.X,
+                              Panel.ControlPoint.Y + Panel.NormalVector.Y,
+                              Panel.ControlPoint.Z + Panel.NormalVector.Z)
 
-                    For i = 0 To Mesh.Panels.Count - 1
-
-                        Nodo1 = Mesh.Panels(i).ControlPoint
-                        Carga.Assign(Mesh.Panels(i).NormalVector)
-                        Carga.Scale(VisualProperties.ScalePressure * Mesh.Panels(i).Cp)
-
-                        gl.Vertex(Nodo1.X, Nodo1.Y, Nodo1.Z)
-                        gl.Vertex(Nodo1.X + Carga.X, Nodo1.Y + Carga.Y, Nodo1.Z + Carga.Z)
-
-                    Next
-
-                End If
+                Next
 
                 gl.End()
 
             End If
-
-            ' Sections:
-
-            'For i = 0 To _CrossSectionsToDisplay.Length - 1
-
-            '    If _CrossSectionsToDisplay(i) IsNot Nothing Then
-
-            '        gl.LineWidth(2 * VisualizationProperties.ThicknessMesh)
-            '        gl.Begin(OpenGL.GL_LINES)
-
-            '        gl.Color(0, 0, 0)
-
-            '        For j = 1 To _CrossSectionsToDisplay(i).Length - 1
-
-            '            gl.Vertex(_CrossSectionsToDisplay(i)(j - 1).X, _CrossSectionsToDisplay(i)(j - 1).Y, _CrossSectionsToDisplay(i)(j - 1).Z)
-            '            gl.Vertex(_CrossSectionsToDisplay(i)(j).X, _CrossSectionsToDisplay(i)(j).Y, _CrossSectionsToDisplay(i)(j).Z)
-
-            '        Next
-
-            '        gl.End()
-
-            '        gl.PointSize(VisualizationProperties.SizeNodes)
-            '        gl.Color(Me.VisualizationProperties.ColorNodes.R / 255, Me.VisualizationProperties.ColorNodes.G / 255, Me.VisualizationProperties.ColorNodes.B / 255)
-
-            '        gl.Begin(OpenGL.GL_POINTS)
-
-            '        For j = 0 To _CrossSectionsToDisplay(i).Length - 1
-
-            '            gl.Vertex(_CrossSectionsToDisplay(i)(j).X, _CrossSectionsToDisplay(i)(j).Y, _CrossSectionsToDisplay(i)(j).Z)
-
-            '        Next
-
-            '        gl.End()
-
-            '    End If
-
-            'Next
-
-            'If _SelectedControlPoint >= 1 And _SelectedControlPoint <= Me.NumberOfPanels Then
-
-            '    gl.PointSize(2 * Me.VisualizationProperties.SizeNodes)
-            '    gl.Color(VisualizationProperties.ColorNodes.R / 255, VisualizationProperties.ColorNodes.G / 255, VisualizationProperties.ColorNodes.B / 255)
-            '    gl.Begin(OpenGL.GL_POINTS)
-
-            '    gl.Vertex(Me.QuadPanel(_SelectedControlPoint).PuntoDeControl.X, Me.QuadPanel(_SelectedControlPoint).PuntoDeControl.Y, Me.QuadPanel(_SelectedControlPoint).PuntoDeControl.Z)
-
-            '    gl.End()
-
-            'End If
 
         End Sub
 

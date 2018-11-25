@@ -340,7 +340,7 @@ Public Class MainForm
 
     End Sub
 
-    Private Sub ControlOpenGL_MouseDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles ControlOpenGL.MouseDown
+    Private Sub ControlOpenGL_MouseDown(ByVal sender As Object, ByVal e As MouseEventArgs) Handles ControlOpenGL.MouseDown
 
         If e.Button = MouseButtons.Middle Then
             ProjectRoot.Visualization.Panning = True
@@ -371,48 +371,92 @@ Public Class MainForm
 
     Private Sub SelectAndProcessItems(ByVal X As Integer, ByVal Y As Integer)
 
-        With ProjectRoot.Model
+        ProjectRoot.SelectOnGL(X, Y, ControlOpenGL.Width, ControlOpenGL.Height)
 
-            Select Case ProjectRoot.InterfaceMode
+        Select Case ProjectRoot.InterfaceMode
 
-                Case InterfaceModes.Design
+            Case InterfaceModes.Design
 
-                    .Selection.SelectionMode = SelectionModes.smNodePicking
-                    ProjectRoot.SelectOnGL(X, Y, ControlOpenGL.Width, ControlOpenGL.Height)
+                ' There is a priority list to show the item info: structural elements, nodes and lattice rings
 
-                    ' there is a priority list to show the item info: structural elements, nodes and lattice rings
+                Dim KeepSearching As Boolean = True
 
-                    Dim KeepSearching As Boolean = True
+                ' Search a structural element:
 
-                    ' search for a structural element:
+                For Each SelectedItem As SelectionRecord In ProjectRoot.Selection.SelectionList
 
-                    For Each sr As SelectionRecord In .Selection.SelectionList
+                    If SelectedItem.EntityType = EntityTypes.etStructuralElement Then
 
-                        If sr.EntityType = EntityTypes.etStructuralElement Then
+                        If SelectedItem.ComponentType = ComponentTypes.etLiftingSurface Then
 
-                            If sr.ComponentType = ComponentTypes.etLiftingSurface Then
+                            Dim Wing As LiftingSurface = ProjectRoot.Model.Objects(SelectedItem.ComponentIndex)
 
-                                Dim wing As LiftingSurface = .Objects(sr.ComponentIndex)
+                            ProjectRoot.Model.OperationsTool.SetDestinationObject(Wing)
 
-                                ProjectRoot.Model.OperationsTool.SetDestinationObject(wing)
+                            mrRibbon.ChangeSurfaceIndex(SelectedItem.ComponentIndex)
 
-                                mrRibbon.ChangeSurfaceIndex(sr.ComponentIndex)
+                            lblStatus.Text = String.Format("Structural element {0} at {1}; AE = {2,6:F2}; GJ = {3,6:F2}; EIx = {4,6:F2}; EIy = {4,6:F2}", SelectedItem.EntityIndex,
+                                                                          Wing.Name,
+                                                                          Wing.StructuralPartition(SelectedItem.EntityIndex).LocalSection.AE,
+                                                                          Wing.StructuralPartition(SelectedItem.EntityIndex).LocalSection.GJ,
+                                                                          Wing.StructuralPartition(SelectedItem.EntityIndex).LocalSection.EIy,
+                                                                          Wing.StructuralPartition(SelectedItem.EntityIndex).LocalSection.EIz)
 
-                                'If Project.Model.OperationsTool.Operation = Operations.NoOperation Then
-                                '    ShowLiftingSurfaceEditor(wing)
-                                'End If
+                        End If
 
-                                ttSelectedEntity.Show(String.Format("Structural element {0}", sr.EntityIndex), ControlOpenGL)
-                                lblStatus.Text = String.Format("Structural element {0} at {1}; AE = {2,6:F2}; GJ = {3,6:F2}; EIx = {4,6:F2}; EIy = {4,6:F2}", sr.EntityIndex,
-                                                                              wing.Name,
-                                                                              wing.StructuralPartition(sr.EntityIndex).LocalSection.AE,
-                                                                              wing.StructuralPartition(sr.EntityIndex).LocalSection.GJ,
-                                                                              wing.StructuralPartition(sr.EntityIndex).LocalSection.EIy,
-                                                                              wing.StructuralPartition(sr.EntityIndex).LocalSection.EIz)
+                        KeepSearching = False
 
-                            End If
+                        Exit For
+
+                    End If
+
+                Next
+
+                ' Search for a node:
+
+                If KeepSearching Then
+
+                    For Each SelectedItem As SelectionRecord In ProjectRoot.Selection.SelectionList
+
+                        If SelectedItem.EntityType = EntityTypes.etNode Then
+
+                            Dim SelectedObject As Surface = ProjectRoot.Model.Objects(SelectedItem.ComponentIndex)
+
+                            ProjectRoot.Model.OperationsTool.SetDestinationObject(SelectedObject)
+
+                            mrRibbon.ChangeSurfaceIndex(SelectedItem.ComponentIndex)
+
+                            lblStatus.Text = String.Format("{1}: Node {0} ({2:F2}, {3:F2}, {4:F2})", SelectedItem.EntityIndex,
+                                                                              SelectedObject.Name,
+                                                                              SelectedObject.Mesh.Nodes(SelectedItem.EntityIndex).Position.X,
+                                                                              SelectedObject.Mesh.Nodes(SelectedItem.EntityIndex).Position.Y,
+                                                                              SelectedObject.Mesh.Nodes(SelectedItem.EntityIndex).Position.Z)
+
+                            ProjectRoot.Model.OperationsTool.SetEntityToQueue(SelectedObject.Mesh.Nodes(SelectedItem.EntityIndex))
 
                             KeepSearching = False
+
+                        End If
+                    Next
+
+                End If
+
+                ' Search for a panel:
+
+                If KeepSearching Then
+
+                    For Each SelectedItem As SelectionRecord In ProjectRoot.Selection.SelectionList
+
+                        If SelectedItem.EntityType = EntityTypes.etPanel Then
+
+                            ' show associated surface info
+
+                            ProjectRoot.Model.OperationsTool.SetDestinationObject(ProjectRoot.Model.Objects(SelectedItem.ComponentIndex))
+
+                            mrRibbon.ChangeSurfaceIndex(SelectedItem.ComponentIndex)
+
+                            lblStatus.Text = String.Format("{1}: Panel {0}", SelectedItem.EntityIndex,
+                                                                              ProjectRoot.Model.Objects(SelectedItem.ComponentIndex).Name)
 
                             Exit For
 
@@ -420,169 +464,49 @@ Public Class MainForm
 
                     Next
 
-                    ' search for a lattice node:
+                End If
 
-                    If KeepSearching Then
+                ' It didnt find anything:
 
-                        For Each sr As SelectionRecord In .Selection.SelectionList
+                If KeepSearching Then
 
-                            If sr.EntityType = EntityTypes.etNode Then
+                    ContractLeftPanel()
 
-                                If sr.ComponentType = ComponentTypes.etLiftingSurface Then
+                End If
 
-                                    Dim wing As LiftingSurface = .Objects(sr.ComponentIndex)
+            Case InterfaceModes.Postprocess
 
-                                    ProjectRoot.Model.OperationsTool.SetDestinationObject(wing)
+                For Each SelectedItem As SelectionRecord In ProjectRoot.Selection.SelectionList
 
-                                    mrRibbon.ChangeSurfaceIndex(sr.ComponentIndex)
+                    If SelectedItem.ComponentType = ComponentTypes.etResultContainer Then
 
-                                    'If Project.Model.OperationsTool.Operation = Operations.NoOperation Then
-                                    '    ShowLiftingSurfaceEditor(wing)
-                                    'End If
+                        Select Case SelectedItem.EntityType
 
-                                    ttSelectedEntity.Show(String.Format("Lattice node {0}", sr.EntityIndex), ControlOpenGL)
-                                    lblStatus.Text = String.Format("{1}: Node {0} ({2:F2}, {3:F2}, {4:F2})", sr.EntityIndex,
-                                                                                  wing.Name,
-                                                                                  wing.Mesh.Nodes(sr.EntityIndex).Position.X,
-                                                                                  wing.Mesh.Nodes(sr.EntityIndex).Position.Y,
-                                                                                  wing.Mesh.Nodes(sr.EntityIndex).Position.Z)
+                            Case EntityTypes.etPanel
 
-                                    ProjectRoot.Model.OperationsTool.SetEntityToQueue(wing.Mesh.Nodes(sr.EntityIndex))
+                                ' show associated surface info
 
-                                    KeepSearching = False
+                                lblStatus.Text = String.Format("Panel {0}: Cp={1:F4}", SelectedItem.EntityIndex,
+                                                                              Results.Model.Mesh.Panels(SelectedItem.EntityIndex).Cp)
 
-                                    Exit For
+                                Exit For
 
-                                End If
+                            Case EntityTypes.etNode
 
-                                If sr.ComponentType = ComponentTypes.etFuselage Then
+                                ' show associated surface info
 
-                                    Dim body As Fuselage = .Objects(sr.ComponentIndex)
+                                lblStatus.Text = String.Format("Node {0}: ", SelectedItem.EntityIndex,
+                                                                              Results.Model.Mesh.Nodes(SelectedItem.EntityIndex).Position.ToString)
 
-                                    ProjectRoot.Model.OperationsTool.SetDestinationObject(body)
+                                Exit For
 
-                                    mrRibbon.ChangeSurfaceIndex(sr.ComponentIndex)
-
-                                    'If Project.Model.OperationsTool.Operation = Operations.NoOperation Then
-                                    '    ShowFuselageEditor(body)
-                                    'End If
-
-                                    ttSelectedEntity.Show(String.Format("Lattice node {0}", sr.EntityIndex), ControlOpenGL)
-                                    lblStatus.Text = String.Format("{1}: Node {0} ({2:F2}, {3:F2}, {4:F2})", sr.EntityIndex,
-                                                                                  body.Name,
-                                                                                  body.Mesh.Nodes(sr.EntityIndex).Position.X,
-                                                                                  body.Mesh.Nodes(sr.EntityIndex).Position.Y,
-                                                                                  body.Mesh.Nodes(sr.EntityIndex).Position.Z)
-                                    ProjectRoot.Model.OperationsTool.SetEntityToQueue(body.Mesh.Nodes(sr.EntityIndex).Position)
-
-                                    KeepSearching = False
-
-                                    Exit For
-
-                                End If
-
-                            End If
-                        Next
+                        End Select
 
                     End If
 
-                    ' search for a lattice ring:
+                Next
 
-                    If KeepSearching Then
-
-                        For Each sr As SelectionRecord In .Selection.SelectionList
-
-                            If sr.EntityType = EntityTypes.etQuadPanel Then
-
-                                If sr.EntityType = EntityTypes.etQuadPanel Then
-
-                                    ' show associated surface info
-
-                                    If sr.ComponentType = ComponentTypes.etLiftingSurface Then
-
-                                        Dim wing As LiftingSurface = .Objects(sr.ComponentIndex)
-
-                                        ProjectRoot.Model.OperationsTool.SetDestinationObject(wing)
-
-                                        mrRibbon.ChangeSurfaceIndex(sr.ComponentIndex)
-
-                                        'If Project.Model.OperationsTool.Operation = Operations.NoOperation Then
-                                        '    ShowLiftingSurfaceEditor(wing)
-                                        'End If
-
-                                        ttSelectedEntity.Show(String.Format("Vortex ring {0}", sr.EntityIndex), ControlOpenGL)
-                                        lblStatus.Text = String.Format("{1}: Vortex ring {0}", sr.EntityIndex,
-                                                                                      wing.Name)
-
-                                        KeepSearching = False
-
-                                        Exit For
-
-                                    End If
-
-                                    If sr.ComponentType = ComponentTypes.etFuselage Then
-
-                                        Dim body As Fuselage = .Objects(sr.ComponentIndex)
-
-                                        ProjectRoot.Model.OperationsTool.SetDestinationObject(body)
-
-                                        mrRibbon.ChangeSurfaceIndex(sr.ComponentIndex)
-
-                                        'If Project.Model.OperationsTool.Operation = Operations.NoOperation Then
-                                        '    ShowFuselageEditor(body)
-                                        'End If
-
-                                        ttSelectedEntity.Show(String.Format("Vortex ring {0}", sr.EntityIndex), ControlOpenGL)
-                                        lblStatus.Text = String.Format("{1}: Vortex ring {0}", sr.EntityIndex,
-                                                                                      body.Name)
-
-                                        KeepSearching = False
-
-                                        Exit For
-
-                                    End If
-
-                                    If sr.ComponentType = ComponentTypes.etJetEngine Then
-
-                                        Dim nacelle As JetEngine = .Objects(sr.ComponentIndex)
-
-                                        ProjectRoot.Model.OperationsTool.SetDestinationObject(nacelle)
-
-                                        mrRibbon.ChangeSurfaceIndex(sr.ComponentIndex)
-
-                                        'If Project.Model.OperationsTool.Operation = Operations.NoOperation Then
-                                        '    ShowJetEngineEditor(nacelle)
-                                        'End If
-
-                                        ttSelectedEntity.Show(String.Format("Vortex ring {0}", sr.EntityIndex), ControlOpenGL)
-                                        lblStatus.Text = String.Format("{1}: Vortex ring {0}", sr.EntityIndex,
-                                                                                     nacelle.Name)
-
-                                        KeepSearching = False
-
-                                        Exit For
-
-                                    End If
-
-                                End If
-
-                            End If
-
-                        Next
-
-                    End If
-
-                    ' It didnt find anything:
-
-                    If KeepSearching Then
-
-                        ContractLeftPanel()
-
-                    End If
-
-            End Select
-
-        End With
+        End Select
 
     End Sub
 
@@ -592,18 +516,6 @@ Public Class MainForm
         ProjectRoot.RepresentOnGL()
     End Sub
 
-    Private Sub ControlOpenGL_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs)
-        If e.KeyCode = Keys.M Then
-            If ProjectRoot.Model.Selection.MultipleSelection = False Then
-                ProjectRoot.Model.Selection.MultipleSelection = True
-                PushMessage("Selección múltiple activada")
-            Else
-                ProjectRoot.Model.Selection.MultipleSelection = False
-                PushMessage("Selección múltiple desactivada")
-            End If
-        End If
-    End Sub
-
     Private Sub ControlOpenGL_OpenGLDraw(ByVal sender As System.Object, ByVal e As System.Windows.Forms.PaintEventArgs) Handles ControlOpenGL.OpenGLDraw
 
         If FormCargado Then ProjectRoot.RepresentOnGL()
@@ -611,8 +523,6 @@ Public Class MainForm
     End Sub
 
     Private Sub ControlOpenGL_MouseLeave(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ControlOpenGL.MouseLeave
-
-        ttSelectedEntity.Hide(ControlOpenGL)
 
     End Sub
 

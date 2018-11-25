@@ -147,12 +147,33 @@ Namespace DataStore
 
 #Region " Visualization and selection with SharpGL "
 
+        ''' <summary>
+        ''' Visuazation properties
+        ''' </summary>
+        ''' <returns></returns>
         Public Property Visualization As New VisualizationParameters
 
+        ''' <summary>
+        ''' Selection tool.
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property Selection As New Selection
+
+        ''' <summary>
+        ''' The OpenGL control provided by SharpGL
+        ''' </summary>
         Private ControlGL As OpenGL
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <returns></returns>
         Public Property ControlGLWidth As Integer
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <returns></returns>
         Public Property ControlGLHeight As Integer
 
         ''' <summary>
@@ -565,7 +586,7 @@ Namespace DataStore
 
         End Sub
 
-        Private Sub SelectElementAtDesignWithOpenGL(ByVal X As Double, ByVal Y As Double)
+        Public Sub SelectOnGL(ByVal X As Double, ByVal Y As Double, Width As Integer, Height As Integer)
 
             ControlGL.ClearColor(Visualization.ScreenColor.R / 255, Visualization.ScreenColor.G / 255, Visualization.ScreenColor.B / 255, Visualization.ScreenColor.A / 255)
 
@@ -579,7 +600,7 @@ Namespace DataStore
 
             Dim Viewport(3) As Integer
             ControlGL.GetInteger(OpenGL.GL_VIEWPORT, Viewport)
-            ControlGL.PickMatrix(X, Viewport(3) - Y, 15, 15, Viewport)
+            ControlGL.PickMatrix(X, Viewport(3) - Y, 5, 5, Viewport)
 
             ControlGL.Ortho(-0.5 * ControlGLWidth, 0.5 * ControlGLWidth, -0.5 * ControlGLHeight, 0.5 * ControlGLHeight, -100000, 100000)
 
@@ -591,44 +612,72 @@ Namespace DataStore
             ControlGL.Rotate(Orientation.Fi, Orientation.Tita, Orientation.Psi)
             ControlGL.Scale(Visualization.Proximity, Visualization.Proximity, Visualization.Proximity)
 
-            VelocityPlane.RepresentVelocityVector(ControlGL, SimulationSettings.StreamVelocity, Origin)
+            Select Case InterfaceMode
 
-            For i = 0 To Model.Objects.Count - 1
+                Case InterfaceModes.Design
 
-                If Model.Objects(i) IsNot Nothing Then
+                    If Not Selection.MultipleSelection Then Selection.SelectionList.Clear()
 
-                    Model.Objects(i).Selected = False
+                    For i = 0 To Model.Objects.Count - 1
 
-                    If Not Model.Selection.MultipleSelection Then Model.Objects(i).UnselectAll()
+                        If Model.Objects(i) IsNot Nothing Then
 
-                    If Model.Objects(i).VisualProperties.ShowSurface Then
+                            Model.Objects(i).Active = False
 
-                        Model.Objects(i).Refresh3DModel(ControlGL, Model.Selection.SelectionMode, i)
+                            If Not Selection.MultipleSelection Then Model.Objects(i).UnselectAll()
+
+                            If Model.Objects(i).VisualProperties.ShowSurface Then
+
+                                Model.Objects(i).Refresh3DModel(ControlGL, True, i)
+
+                            End If
+
+                        End If
+
+                    Next
+
+                Case InterfaceModes.Postprocess
+
+                    If Results.Model IsNot Nothing Then
+
+                        Results.Model.Active = False
+
+                        If Not Selection.MultipleSelection Then
+                            Results.Model.UnselectAll()
+                            Selection.SelectionList.Clear()
+                        End If
+
+                        Results.Model.Refresh3DModel(ControlGL, True, 0)
 
                     End If
 
-                End If
-
-            Next
+            End Select
 
             ControlGL.Flush()
 
-            Dim Hits As Integer = ControlGL.RenderMode(OpenGL.GL_RENDER)
-
             ' Read the buffer and store selected elements on selection list:
 
-            If Not Model.Selection.MultipleSelection Then Model.Selection.SelectionList.Clear()
+            Dim Hits As Integer = ControlGL.RenderMode(OpenGL.GL_RENDER)
 
             If Hits > 0 Then
 
                 Dim InitialPos As Integer = 0
                 Dim PreviousHits As Integer = 0
                 Dim SelectedItem As SelectionRecord
-                Dim AddNode As Boolean = True
-                Dim AddVortex As Boolean = True
-                Dim AddRing As Boolean = True
-                Dim AddStrElement As Boolean = True
-                Dim AddStrNode As Boolean = True
+                Dim LocalList As New List(Of SelectionRecord)
+                Dim Mesh As Basics.Mesh
+                Dim R1 As EVector3
+                Dim R2 As EVector3
+                Dim R3 As EVector3
+                Dim R4 As EVector3
+                Dim N1 As Integer
+                Dim N2 As Integer
+                Dim N3 As Integer
+                Dim N4 As Integer
+                Dim EyeVector As New EVector3
+
+                EyeVector.Z = 1.0
+                EyeVector.Rotate(-Orientation.Psi, -Orientation.Tita, -Orientation.Fi)
 
                 For i = 1 To Hits
 
@@ -638,40 +687,102 @@ Namespace DataStore
 
                         SelectedItem.ID = Buffer(InitialPos + 2 + PreviousHits)
 
-                        ' It will only select one element of each entity type. This is to avoid confusion as geometric actions are excecuted.
+                        ' Only take the entities of the active selection type
 
-                        Model.Objects(SelectedItem.ComponentIndex).Selected = True
+                        If SelectedItem.EntityType = Selection.EntityToSelect Then
 
-                        Select Case SelectedItem.EntityType
+                            ' Calculate the eye depth
 
-                            Case EntityTypes.etNode
+                            Select Case InterfaceMode
 
-                                If AddNode Then Model.Selection.SelectionList.Add(SelectedItem)
-                                AddNode = False
+                                Case InterfaceModes.Design
 
-                            Case EntityTypes.etVortex
-                                If AddVortex Then Model.Selection.SelectionList.Add(SelectedItem)
-                                AddVortex = False
+                                    Mesh = Model.Objects(SelectedItem.ComponentIndex).Mesh
 
-                            Case EntityTypes.etQuadPanel
-                                If AddRing Then Model.Selection.SelectionList.Add(SelectedItem)
-                                AddRing = False
+                                    Select Case SelectedItem.EntityType
 
-                            Case EntityTypes.etStructuralElement
-                                If AddStrElement Then Model.Selection.SelectionList.Add(SelectedItem)
-                                AddStrElement = False
+                                        Case EntityTypes.etNode
 
-                            Case EntityTypes.etStructuralNode
-                                If AddStrNode Then Model.Selection.SelectionList.Add(SelectedItem)
-                                AddStrNode = False
+                                            R1 = Mesh.Nodes(SelectedItem.EntityIndex).Position
+                                            SelectedItem.EyeDepth =
+                                                                EyeVector.X * R1.X +
+                                                                EyeVector.Y * R1.Y +
+                                                                EyeVector.Z * R1.Z
 
-                            Case Else
+                                            LocalList.Add(SelectedItem)
 
-                                ' Other elements are loaded
+                                        Case EntityTypes.etSegment
 
-                                Model.Selection.SelectionList.Add(SelectedItem)
+                                            N1 = Mesh.Lattice(SelectedItem.EntityIndex).N1
+                                            N2 = Mesh.Lattice(SelectedItem.EntityIndex).N2
+                                            R1 = Mesh.Nodes(N1).Position
+                                            R2 = Mesh.Nodes(N2).Position
+                                            SelectedItem.EyeDepth =
+                                                                EyeVector.X * (0.5 * (R1.X + R2.X)) +
+                                                                EyeVector.Y * (0.5 * (R1.Y + R2.Y)) +
+                                                                EyeVector.Z * (0.5 * (R1.Z + R2.Z))
 
-                        End Select
+                                            LocalList.Add(SelectedItem)
+
+                                        Case EntityTypes.etPanel
+
+                                            N1 = Mesh.Panels(SelectedItem.EntityIndex).N1
+                                            N2 = Mesh.Panels(SelectedItem.EntityIndex).N2
+                                            N3 = Mesh.Panels(SelectedItem.EntityIndex).N3
+                                            N4 = Mesh.Panels(SelectedItem.EntityIndex).N4
+                                            R1 = Mesh.Nodes(N1).Position
+                                            R2 = Mesh.Nodes(N2).Position
+                                            R3 = Mesh.Nodes(N3).Position
+                                            R4 = Mesh.Nodes(N4).Position
+                                            SelectedItem.EyeDepth =
+                                                                EyeVector.X * (0.25 * (R1.X + R2.X + R3.X + R4.X)) +
+                                                                EyeVector.Y * (0.25 * (R1.Y + R2.Y + R3.Y + R4.Y)) +
+                                                                EyeVector.Z * (0.25 * (R1.Z + R2.Z + R3.Z + R4.Z))
+
+                                            LocalList.Add(SelectedItem)
+
+                                        Case EntityTypes.etStructuralElement
+
+                                            LocalList.Add(SelectedItem)
+
+                                        Case EntityTypes.etStructuralNode
+
+                                            LocalList.Add(SelectedItem)
+
+                                    End Select
+
+                                Case InterfaceModes.Postprocess
+
+                                    If SelectedItem.ComponentType = ComponentTypes.etResultContainer Then
+
+                                        Mesh = Results.Model.Mesh
+
+                                        Select Case SelectedItem.EntityType
+
+                                            Case EntityTypes.etPanel
+
+                                                N1 = Mesh.Panels(SelectedItem.EntityIndex).N1
+                                                N2 = Mesh.Panels(SelectedItem.EntityIndex).N2
+                                                N3 = Mesh.Panels(SelectedItem.EntityIndex).N3
+                                                N4 = Mesh.Panels(SelectedItem.EntityIndex).N4
+                                                R1 = Mesh.Nodes(N1).Position
+                                                R2 = Mesh.Nodes(N2).Position
+                                                R3 = Mesh.Nodes(N3).Position
+                                                R4 = Mesh.Nodes(N4).Position
+                                                SelectedItem.EyeDepth =
+                                                                    EyeVector.X * (0.25 * (R1.X + R2.X + R3.X + R4.X)) +
+                                                                    EyeVector.Y * (0.25 * (R1.Y + R2.Y + R3.Y + R4.Y)) +
+                                                                    EyeVector.Z * (0.25 * (R1.Z + R2.Z + R3.Z + R4.Z))
+
+                                                LocalList.Add(SelectedItem)
+
+                                        End Select
+
+                                    End If
+
+                            End Select
+
+                        End If
 
                     End If
 
@@ -679,21 +790,77 @@ Namespace DataStore
 
                 Next
 
-            End If
+                ' Only add the item closest to the eye
 
-        End Sub
+                If LocalList.Count > 0 Then
 
-        Public Sub SelectOnGL(ByVal X As Double, ByVal Y As Double, Width As Integer, Height As Integer)
+                    Dim ClosestItem As SelectionRecord
+                    Dim First As Boolean = True
 
-            Select Case InterfaceMode
+                    For Each Record In LocalList
+                        If First Or Record.EyeDepth > ClosestItem.EyeDepth Then
+                            ClosestItem = Record
+                            First = False
+                        End If
+                    Next
 
-                Case InterfaceModes.Design
+                    If ClosestItem.EntityType <> EntityTypes.etNothing Then
 
-                    SelectElementAtDesignWithOpenGL(X, Y)
+                        Selection.SelectionList.Add(ClosestItem)
 
-            End Select
+                        Select Case InterfaceMode
 
-            RefreshOnGL()
+                            Case InterfaceModes.Design
+
+                                Mesh = Model.Objects(ClosestItem.ComponentIndex).Mesh
+
+                                Select Case ClosestItem.EntityType
+
+                                    Case EntityTypes.etNode
+                                        Mesh.Nodes(ClosestItem.EntityIndex).Active = True
+
+                                    Case EntityTypes.etSegment
+                                        'TODO: mark as active
+
+                                    Case EntityTypes.etPanel
+                                        Model.Objects(ClosestItem.ComponentIndex).Active = True
+                                        Mesh.Panels(ClosestItem.EntityIndex).Active = True
+
+                                    Case EntityTypes.etStructuralElement
+                                        'TODO: mark as active
+
+                                    Case EntityTypes.etStructuralNode
+                                        'TODO: mark as active
+
+                                End Select
+
+                            Case InterfaceModes.Postprocess
+
+                                If ClosestItem.ComponentType = ComponentTypes.etResultContainer Then
+
+                                    Mesh = Results.Model.Mesh
+
+                                    Select Case ClosestItem.EntityType
+
+                                        Case EntityTypes.etNode
+                                            Mesh.Nodes(ClosestItem.EntityIndex).Active = True
+
+                                        Case EntityTypes.etPanel
+                                            Mesh.Panels(ClosestItem.EntityIndex).Active = True
+
+                                    End Select
+
+                                End If
+
+                        End Select
+
+                    End If
+
+                End If
+
+                RefreshOnGL()
+
+                End If
 
         End Sub
 

@@ -39,12 +39,6 @@ Namespace VisualModel.Models
         Public Property Objects As New List(Of Surface)
 
         ''' <summary>
-        ''' Selection tool.
-        ''' </summary>
-        ''' <returns></returns>
-        Public Property Selection As New Selection
-
-        ''' <summary>
         ''' Tool that provides back up info while operating (moving or aligning objects).
         ''' </summary>
         ''' <returns></returns>

@@ -22,7 +22,7 @@ Namespace VisualModel.Interface
         etNothing = 0
         etLiftingSurface = 1
         etFuselage = 2
-        etCompleteModel = 3
+        etResultContainer = 3
         etWake = 4
         etJetEngine = 5
 
@@ -32,20 +32,10 @@ Namespace VisualModel.Interface
 
         etNothing = 0
         etNode = 1
-        etVortex = 2
-        etQuadPanel = 3
+        etSegment = 2
+        etPanel = 3
         etStructuralElement = 4
         etStructuralNode = 5
-
-    End Enum
-
-    Public Enum SelectionModes As Integer
-
-        smNoSelection = 0
-        smSurface = 1
-        smNodePicking = 2
-        smVortexPicking = 3
-        smQuadPicking = 4
 
     End Enum
 
@@ -113,12 +103,14 @@ Namespace VisualModel.Interface
 
         End Sub
 
+        Public Property EyeDepth As Double
+
     End Structure
 
     Public Class Selection
 
         Public SelectionList As New List(Of SelectionRecord)
-        Public SelectionMode As SelectionModes = SelectionModes.smSurface
+        Public EntityToSelect As EntityTypes = EntityTypes.etPanel
         Public MultipleSelection As Boolean = False
 
         Public Shared Function GetSelectionCode(ByVal ElementType As ComponentTypes, ByVal ElementIndex As Integer, ByVal EntityType As EntityTypes, ByVal EntityIndex As Integer) As Integer
@@ -129,7 +121,7 @@ Namespace VisualModel.Interface
 
     Public Interface ISelectable
 
-        Property Selected As Boolean
+        Property Active As Boolean
         Sub UnselectAll()
 
     End Interface

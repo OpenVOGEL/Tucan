@@ -42,8 +42,10 @@ Namespace VisualModel.Models.Components.Basics
         Public Property Circulation As Double = 0.0#
         Public Property Cp As Double = 0.0#
 
-        Public IsPrimitive As Boolean = False
-        Public IsSlender As Boolean = True
+        Public Property IsPrimitive As Boolean = False
+        Public Property IsSlender As Boolean = True
+        Public Property Active As Boolean = False
+
         Private _IsTriangular As Boolean
 
         Public ReadOnly Property IsTriangular As Boolean

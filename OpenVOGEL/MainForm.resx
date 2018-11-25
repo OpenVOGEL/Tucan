@@ -140,51 +140,6 @@
   <data name="&gt;&gt;ControlOpenGL.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <metadata name="ssStatus.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>452, 23</value>
-  </metadata>
-  <data name="lblWebSite.Size" type="System.Drawing.Size, System.Drawing">
-    <value>93, 17</value>
-  </data>
-  <data name="lblWebSite.Text" xml:space="preserve">
-    <value>Visit our website</value>
-  </data>
-  <data name="ToolStripStatusLabel2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>163, 17</value>
-  </data>
-  <data name="ToolStripStatusLabel2.Text" xml:space="preserve">
-    <value>&lt;OpenVOGEL (C) 2009/2017&gt;</value>
-  </data>
-  <data name="lblStatus.Size" type="System.Drawing.Size, System.Drawing">
-    <value>39, 17</value>
-  </data>
-  <data name="lblStatus.Text" xml:space="preserve">
-    <value>Status</value>
-  </data>
-  <data name="ssStatus.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 686</value>
-  </data>
-  <data name="ssStatus.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1230, 22</value>
-  </data>
-  <data name="ssStatus.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="ssStatus.Text" xml:space="preserve">
-    <value>StatusStrip1</value>
-  </data>
-  <data name="&gt;&gt;ssStatus.Name" xml:space="preserve">
-    <value>ssStatus</value>
-  </data>
-  <data name="&gt;&gt;ssStatus.Type" xml:space="preserve">
-    <value>System.Windows.Forms.StatusStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;ssStatus.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;ssStatus.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
   <metadata name="dlgSaveFile.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>240, 25</value>
   </metadata>
@@ -499,36 +454,6 @@
   <data name="&gt;&gt;miniToolStrip.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <metadata name="ttSelectedEntity.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>802, 23</value>
-  </metadata>
-  <data name="sbHorizontal.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Bottom</value>
-  </data>
-  <data name="sbHorizontal.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="sbHorizontal.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 668</value>
-  </data>
-  <data name="sbHorizontal.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1230, 18</value>
-  </data>
-  <data name="sbHorizontal.TabIndex" type="System.Int32, mscorlib">
-    <value>108</value>
-  </data>
-  <data name="&gt;&gt;sbHorizontal.Name" xml:space="preserve">
-    <value>sbHorizontal</value>
-  </data>
-  <data name="&gt;&gt;sbHorizontal.Type" xml:space="preserve">
-    <value>System.Windows.Forms.HScrollBar, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;sbHorizontal.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;sbHorizontal.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
   <data name="sbVertical.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Right</value>
   </data>
@@ -536,10 +461,10 @@
     <value>NoControl</value>
   </data>
   <data name="sbVertical.Location" type="System.Drawing.Point, System.Drawing">
-    <value>1212, 128</value>
+    <value>1166, 137</value>
   </data>
   <data name="sbVertical.Size" type="System.Drawing.Size, System.Drawing">
-    <value>18, 540</value>
+    <value>18, 359</value>
   </data>
   <data name="sbVertical.TabIndex" type="System.Int32, mscorlib">
     <value>109</value>
@@ -560,7 +485,7 @@
     <value>Fill</value>
   </data>
   <data name="scMain.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 128</value>
+    <value>0, 137</value>
   </data>
   <data name="&gt;&gt;scMain.Panel1.Name" xml:space="preserve">
     <value>scMain.Panel1</value>
@@ -587,7 +512,7 @@
     <value>1</value>
   </data>
   <data name="scMain.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1212, 540</value>
+    <value>1166, 359</value>
   </data>
   <data name="scMain.SplitterDistance" type="System.Int32, mscorlib">
     <value>141</value>
@@ -607,6 +532,93 @@
   <data name="&gt;&gt;scMain.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
+  <data name="sbHorizontal.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Bottom</value>
+  </data>
+  <data name="sbHorizontal.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="sbHorizontal.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 496</value>
+  </data>
+  <data name="sbHorizontal.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1184, 18</value>
+  </data>
+  <data name="sbHorizontal.TabIndex" type="System.Int32, mscorlib">
+    <value>108</value>
+  </data>
+  <data name="&gt;&gt;sbHorizontal.Name" xml:space="preserve">
+    <value>sbHorizontal</value>
+  </data>
+  <data name="&gt;&gt;sbHorizontal.Type" xml:space="preserve">
+    <value>System.Windows.Forms.HScrollBar, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;sbHorizontal.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;sbHorizontal.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="lblStatus.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Courier New, 9.75pt</value>
+  </data>
+  <data name="lblStatus.Size" type="System.Drawing.Size, System.Drawing">
+    <value>56, 17</value>
+  </data>
+  <data name="lblStatus.Text" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="lblStatus.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleLeft</value>
+  </data>
+  <data name="ToolStripStatusLabel2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>163, 17</value>
+  </data>
+  <data name="ToolStripStatusLabel2.Text" xml:space="preserve">
+    <value>&lt;OpenVOGEL (C) 2009/2017&gt;</value>
+  </data>
+  <data name="lblWebSite.ImageAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleRight</value>
+  </data>
+  <data name="lblWebSite.RightToLeft" type="System.Windows.Forms.RightToLeft, System.Windows.Forms">
+    <value>No</value>
+  </data>
+  <data name="lblWebSite.Size" type="System.Drawing.Size, System.Drawing">
+    <value>93, 17</value>
+  </data>
+  <data name="lblWebSite.Text" xml:space="preserve">
+    <value>Visit our website</value>
+  </data>
+  <data name="lblWebSite.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleRight</value>
+  </data>
+  <metadata name="ssStatus.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>452, 23</value>
+  </metadata>
+  <data name="ssStatus.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 514</value>
+  </data>
+  <data name="ssStatus.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1184, 22</value>
+  </data>
+  <data name="ssStatus.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="ssStatus.Text" xml:space="preserve">
+    <value>StatusStrip1</value>
+  </data>
+  <data name="&gt;&gt;ssStatus.Name" xml:space="preserve">
+    <value>ssStatus</value>
+  </data>
+  <data name="&gt;&gt;ssStatus.Type" xml:space="preserve">
+    <value>System.Windows.Forms.StatusStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;ssStatus.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;ssStatus.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
   <data name="mrRibbon.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Top</value>
   </data>
@@ -617,7 +629,7 @@
     <value>2, 2, 2, 2</value>
   </data>
   <data name="mrRibbon.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1230, 128</value>
+    <value>1184, 137</value>
   </data>
   <data name="mrRibbon.TabIndex" type="System.Int32, mscorlib">
     <value>107</value>
@@ -626,7 +638,7 @@
     <value>mrRibbon</value>
   </data>
   <data name="&gt;&gt;mrRibbon.Type" xml:space="preserve">
-    <value>AeroTools.MainRibbon, AeroTools, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>OpenVOGEL.DesignTools.MainRibbon, OpenVOGEL.DesignTools, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;mrRibbon.Parent" xml:space="preserve">
     <value>$this</value>
@@ -647,7 +659,7 @@
     <value>True</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>1230, 708</value>
+    <value>1184, 536</value>
   </data>
   <data name="$this.Font" type="System.Drawing.Font, System.Drawing">
     <value>Segoe UI, 8.25pt</value>
@@ -2996,24 +3008,6 @@
   <data name="$this.Text" xml:space="preserve">
     <value>VOGEL</value>
   </data>
-  <data name="&gt;&gt;lblWebSite.Name" xml:space="preserve">
-    <value>lblWebSite</value>
-  </data>
-  <data name="&gt;&gt;lblWebSite.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripStatusLabel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;ToolStripStatusLabel2.Name" xml:space="preserve">
-    <value>ToolStripStatusLabel2</value>
-  </data>
-  <data name="&gt;&gt;ToolStripStatusLabel2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripStatusLabel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;lblStatus.Name" xml:space="preserve">
-    <value>lblStatus</value>
-  </data>
-  <data name="&gt;&gt;lblStatus.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripStatusLabel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="&gt;&gt;dlgSaveFile.Name" xml:space="preserve">
     <value>dlgSaveFile</value>
   </data>
@@ -3038,11 +3032,23 @@
   <data name="&gt;&gt;niNotificationTool.Type" xml:space="preserve">
     <value>System.Windows.Forms.NotifyIcon, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;ttSelectedEntity.Name" xml:space="preserve">
-    <value>ttSelectedEntity</value>
+  <data name="&gt;&gt;lblStatus.Name" xml:space="preserve">
+    <value>lblStatus</value>
   </data>
-  <data name="&gt;&gt;ttSelectedEntity.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolTip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="&gt;&gt;lblStatus.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripStatusLabel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;ToolStripStatusLabel2.Name" xml:space="preserve">
+    <value>ToolStripStatusLabel2</value>
+  </data>
+  <data name="&gt;&gt;ToolStripStatusLabel2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripStatusLabel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblWebSite.Name" xml:space="preserve">
+    <value>lblWebSite</value>
+  </data>
+  <data name="&gt;&gt;lblWebSite.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripStatusLabel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>MainForm</value>

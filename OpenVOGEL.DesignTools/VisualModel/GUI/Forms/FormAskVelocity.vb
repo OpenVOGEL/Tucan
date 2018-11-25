@@ -78,9 +78,4 @@ Public Class FormAskVelocity
 
     End Sub
 
-    Private Sub PuntoDeControl_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles PuntoDeControl.ValueChanged
-        ProjectRoot.Results.Model.SelectControlPoint(PuntoDeControl.Value)
-        ProjectRoot.RepresentOnGL()
-    End Sub
-
 End Class

@@ -670,9 +670,9 @@ ErrSub:
 
         For i = 0 To ProjectRoot.Model.Objects.Count - 1
 
-            ProjectRoot.Model.Objects(i).Selected = i = cbxSurfaces.SelectedIndex
+            ProjectRoot.Model.Objects(i).Active = i = cbxSurfaces.SelectedIndex
 
-            If ProjectRoot.Model.Objects(i).Selected Then
+            If ProjectRoot.Model.Objects(i).Active Then
 
                 _SelectedSurface = ProjectRoot.Model.Objects(i)
 
@@ -1727,7 +1727,33 @@ ErrSub:
 
     End Sub
 
-    Private Sub GroupBox9_Enter(sender As Object, e As EventArgs) Handles GroupBox9.Enter
+    Private Sub rbNode_CheckedChanged(sender As Object, e As EventArgs) Handles rbNode.CheckedChanged
+
+        ProjectRoot.Selection.EntityToSelect = EntityTypes.etNode
+
+    End Sub
+
+    Private Sub rbSegment_CheckedChanged(sender As Object, e As EventArgs) Handles rbSegment.CheckedChanged
+
+        ProjectRoot.Selection.EntityToSelect = EntityTypes.etSegment
+
+    End Sub
+
+    Private Sub rnPanel_CheckedChanged(sender As Object, e As EventArgs) Handles rnPanel.CheckedChanged
+
+        ProjectRoot.Selection.EntityToSelect = EntityTypes.etPanel
+
+    End Sub
+
+    Private Sub rbNoSelection_CheckedChanged(sender As Object, e As EventArgs) Handles rbNoSelection.CheckedChanged
+
+        ProjectRoot.Selection.EntityToSelect = EntityTypes.etNothing
+
+    End Sub
+
+    Private Sub cbMultiselect_CheckedChanged(sender As Object, e As EventArgs) Handles cbMultiselect.CheckedChanged
+
+        ProjectRoot.Selection.MultipleSelection = cbMultiselect.Checked
 
     End Sub
 

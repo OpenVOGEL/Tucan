@@ -160,6 +160,7 @@ Namespace VisualModel.Interface
         Public Property ShowLoadVectors As Boolean
         Public Property ShowColormap As Boolean
         Public Property ShowLocalCoordinates As Boolean = True
+        Public Property ShowNormalVectors As Boolean
 
         Private _VisualizationMode As VisualizationMode = [Interface].VisualizationMode.Lattice
 

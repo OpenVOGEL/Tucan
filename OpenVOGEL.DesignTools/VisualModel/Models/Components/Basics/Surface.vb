@@ -205,7 +205,7 @@ Namespace VisualModel.Models.Components.Basics
         ''' <value></value>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Property Selected As Boolean = False Implements ISelectable.Selected
+        Public Property Active As Boolean = False Implements ISelectable.Active
 
         ''' <summary>
         ''' Unselects all nodal points.
@@ -213,8 +213,12 @@ Namespace VisualModel.Models.Components.Basics
         ''' <remarks></remarks>
         Public Sub UnselectAll() Implements ISelectable.UnselectAll
 
-            For Each node In Mesh.Nodes
-                node.Active = False
+            For Each Node In Mesh.Nodes
+                Node.Active = False
+            Next
+
+            For Each Panel In Mesh.Panels
+                Panel.Active = False
             Next
 
         End Sub
@@ -227,10 +231,12 @@ Namespace VisualModel.Models.Components.Basics
         ''' Refresh the 3D model on a OpenGL control.
         ''' </summary>
         ''' <param name="gl"></param>
-        ''' <param name="SelectionMode"></param>
+        ''' <param name="ForSelection">Refresh for selection</param>
         ''' <param name="ElementIndex"></param>
         ''' <remarks></remarks>
-        Public MustOverride Sub Refresh3DModel(ByRef gl As OpenGL, Optional ByVal SelectionMode As SelectionModes = SelectionModes.smNoSelection, Optional ByVal ElementIndex As Integer = 0)
+        Public MustOverride Sub Refresh3DModel(ByRef gl As OpenGL,
+                                               Optional ByVal ForSelection As Boolean = False,
+                                               Optional ByVal ElementIndex As Integer = 0)
 
         ''' <summary>
         ''' Generates the mesh.

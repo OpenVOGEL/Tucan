@@ -21,6 +21,7 @@ Imports OpenVOGEL.MathTools.Algebra.EuclideanSpace
 Imports OpenVOGEL.AeroTools.IoHelper
 Imports System.IO
 Imports System.Xml
+Imports OpenVOGEL.DesignTools.VisualModel.Interface
 
 Namespace VisualModel.Models
 

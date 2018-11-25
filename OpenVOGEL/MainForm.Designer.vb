@@ -25,10 +25,6 @@ Partial Class MainForm
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(MainForm))
         Me.ControlOpenGL = New SharpGL.OpenGLControl()
-        Me.ssStatus = New System.Windows.Forms.StatusStrip()
-        Me.lblWebSite = New System.Windows.Forms.ToolStripStatusLabel()
-        Me.ToolStripStatusLabel2 = New System.Windows.Forms.ToolStripStatusLabel()
-        Me.lblStatus = New System.Windows.Forms.ToolStripStatusLabel()
         Me.dlgSaveFile = New System.Windows.Forms.SaveFileDialog()
         Me.dlgOpenFile = New System.Windows.Forms.OpenFileDialog()
         Me.ToolTipS = New System.Windows.Forms.ToolTip(Me.components)
@@ -39,16 +35,19 @@ Partial Class MainForm
         Me.LeftToolStripPanel = New System.Windows.Forms.ToolStripPanel()
         Me.ContentPanel = New System.Windows.Forms.ToolStripContentPanel()
         Me.miniToolStrip = New System.Windows.Forms.ToolStrip()
-        Me.ttSelectedEntity = New System.Windows.Forms.ToolTip(Me.components)
-        Me.sbHorizontal = New System.Windows.Forms.HScrollBar()
         Me.sbVertical = New System.Windows.Forms.VScrollBar()
         Me.scMain = New System.Windows.Forms.SplitContainer()
-        Me.mrRibbon = New DesignTools.MainRibbon()
+        Me.sbHorizontal = New System.Windows.Forms.HScrollBar()
+        Me.lblStatus = New System.Windows.Forms.ToolStripStatusLabel()
+        Me.ToolStripStatusLabel2 = New System.Windows.Forms.ToolStripStatusLabel()
+        Me.lblWebSite = New System.Windows.Forms.ToolStripStatusLabel()
+        Me.ssStatus = New System.Windows.Forms.StatusStrip()
+        Me.mrRibbon = New OpenVOGEL.DesignTools.MainRibbon()
         CType(Me.ControlOpenGL, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.ssStatus.SuspendLayout()
         CType(Me.scMain, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.scMain.Panel2.SuspendLayout()
         Me.scMain.SuspendLayout()
+        Me.ssStatus.SuspendLayout()
         Me.SuspendLayout()
         '
         'ControlOpenGL
@@ -60,33 +59,6 @@ Partial Class MainForm
         resources.ApplyResources(Me.ControlOpenGL, "ControlOpenGL")
         Me.ControlOpenGL.Name = "ControlOpenGL"
         Me.ControlOpenGL.RenderContextType = SharpGL.RenderContextType.DIBSection
-        '
-        'ssStatus
-        '
-        Me.ssStatus.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.lblWebSite, Me.ToolStripStatusLabel2, Me.lblStatus})
-        resources.ApplyResources(Me.ssStatus, "ssStatus")
-        Me.ssStatus.Name = "ssStatus"
-        '
-        'lblWebSite
-        '
-        Me.lblWebSite.BackColor = System.Drawing.Color.Transparent
-        Me.lblWebSite.ForeColor = System.Drawing.SystemColors.ControlDarkDark
-        Me.lblWebSite.IsLink = True
-        Me.lblWebSite.Name = "lblWebSite"
-        resources.ApplyResources(Me.lblWebSite, "lblWebSite")
-        '
-        'ToolStripStatusLabel2
-        '
-        Me.ToolStripStatusLabel2.BackColor = System.Drawing.Color.Transparent
-        Me.ToolStripStatusLabel2.Name = "ToolStripStatusLabel2"
-        resources.ApplyResources(Me.ToolStripStatusLabel2, "ToolStripStatusLabel2")
-        '
-        'lblStatus
-        '
-        Me.lblStatus.BackColor = System.Drawing.Color.Transparent
-        Me.lblStatus.ForeColor = System.Drawing.Color.Black
-        Me.lblStatus.Name = "lblStatus"
-        resources.ApplyResources(Me.lblStatus, "lblStatus")
         '
         'dlgSaveFile
         '
@@ -142,18 +114,6 @@ Partial Class MainForm
         Me.miniToolStrip.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow
         Me.miniToolStrip.Name = "miniToolStrip"
         '
-        'ttSelectedEntity
-        '
-        Me.ttSelectedEntity.AutomaticDelay = 100
-        Me.ttSelectedEntity.UseAnimation = False
-        '
-        'sbHorizontal
-        '
-        resources.ApplyResources(Me.sbHorizontal, "sbHorizontal")
-        Me.sbHorizontal.Maximum = 180
-        Me.sbHorizontal.Minimum = -180
-        Me.sbHorizontal.Name = "sbHorizontal"
-        '
         'sbVertical
         '
         resources.ApplyResources(Me.sbVertical, "sbVertical")
@@ -172,6 +132,40 @@ Partial Class MainForm
         '
         Me.scMain.Panel2.Controls.Add(Me.ControlOpenGL)
         Me.scMain.TabStop = False
+        '
+        'sbHorizontal
+        '
+        resources.ApplyResources(Me.sbHorizontal, "sbHorizontal")
+        Me.sbHorizontal.Maximum = 180
+        Me.sbHorizontal.Minimum = -180
+        Me.sbHorizontal.Name = "sbHorizontal"
+        '
+        'lblStatus
+        '
+        Me.lblStatus.BackColor = System.Drawing.Color.Transparent
+        resources.ApplyResources(Me.lblStatus, "lblStatus")
+        Me.lblStatus.ForeColor = System.Drawing.Color.Black
+        Me.lblStatus.Name = "lblStatus"
+        '
+        'ToolStripStatusLabel2
+        '
+        Me.ToolStripStatusLabel2.BackColor = System.Drawing.Color.Transparent
+        Me.ToolStripStatusLabel2.Name = "ToolStripStatusLabel2"
+        resources.ApplyResources(Me.ToolStripStatusLabel2, "ToolStripStatusLabel2")
+        '
+        'lblWebSite
+        '
+        Me.lblWebSite.BackColor = System.Drawing.Color.Transparent
+        Me.lblWebSite.ForeColor = System.Drawing.SystemColors.ControlDarkDark
+        resources.ApplyResources(Me.lblWebSite, "lblWebSite")
+        Me.lblWebSite.IsLink = True
+        Me.lblWebSite.Name = "lblWebSite"
+        '
+        'ssStatus
+        '
+        Me.ssStatus.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.lblStatus, Me.ToolStripStatusLabel2, Me.lblWebSite})
+        resources.ApplyResources(Me.ssStatus, "ssStatus")
+        Me.ssStatus.Name = "ssStatus"
         '
         'mrRibbon
         '
@@ -193,17 +187,15 @@ Partial Class MainForm
         Me.Name = "MainForm"
         Me.WindowState = System.Windows.Forms.FormWindowState.Maximized
         CType(Me.ControlOpenGL, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.ssStatus.ResumeLayout(False)
-        Me.ssStatus.PerformLayout()
         Me.scMain.Panel2.ResumeLayout(False)
         CType(Me.scMain, System.ComponentModel.ISupportInitialize).EndInit()
         Me.scMain.ResumeLayout(False)
+        Me.ssStatus.ResumeLayout(False)
+        Me.ssStatus.PerformLayout()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
     End Sub
-    Friend WithEvents ssStatus As System.Windows.Forms.StatusStrip
-    Friend WithEvents lblStatus As System.Windows.Forms.ToolStripStatusLabel
     Friend WithEvents dlgSaveFile As System.Windows.Forms.SaveFileDialog
     Friend WithEvents dlgOpenFile As System.Windows.Forms.OpenFileDialog
     Friend WithEvents ToolTipS As System.Windows.Forms.ToolTip
@@ -211,10 +203,7 @@ Partial Class MainForm
     Friend WithEvents miniToolStrip As System.Windows.Forms.ToolStrip
     Friend WithEvents ContenedorDeBarras As System.Windows.Forms.ToolStripPanel
     Friend WithEvents ControlOpenGL As SharpGL.OpenGLControl
-    Friend WithEvents ttSelectedEntity As System.Windows.Forms.ToolTip
     Friend WithEvents mrRibbon As DesignTools.MainRibbon
-    Friend WithEvents lblWebSite As ToolStripStatusLabel
-    Friend WithEvents sbHorizontal As HScrollBar
     Friend WithEvents sbVertical As VScrollBar
     Friend WithEvents scMain As SplitContainer
     Friend WithEvents BottomToolStripPanel As ToolStripPanel
@@ -222,5 +211,9 @@ Partial Class MainForm
     Friend WithEvents RightToolStripPanel As ToolStripPanel
     Friend WithEvents LeftToolStripPanel As ToolStripPanel
     Friend WithEvents ContentPanel As ToolStripContentPanel
+    Friend WithEvents sbHorizontal As HScrollBar
+    Friend WithEvents lblStatus As ToolStripStatusLabel
     Friend WithEvents ToolStripStatusLabel2 As ToolStripStatusLabel
+    Friend WithEvents lblWebSite As ToolStripStatusLabel
+    Friend WithEvents ssStatus As StatusStrip
 End Class
