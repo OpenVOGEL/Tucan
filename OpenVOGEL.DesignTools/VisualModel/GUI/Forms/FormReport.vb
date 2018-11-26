@@ -207,6 +207,10 @@ Public Class FormReport
 
     End Sub
 
+    Public Sub Clear()
+        _CalculationCore = Nothing
+    End Sub
+
     Private Sub LoadLink()
 
         If (Not IsNothing(_CalculationCore)) And cbLink.SelectedIndex >= 0 And cbLink.SelectedIndex < _CalculationCore.StructuralLinks.Count Then

@@ -148,9 +148,10 @@ Namespace VisualModel.Interface
             End Get
         End Property
 
-        Public Property ColorNodes As System.Drawing.Color
-        Public Property ColorVelocity As System.Drawing.Color
-        Public Property ColorLoads As System.Drawing.Color
+        Public Property ColorNodes As Color
+        Public Property ColorVelocity As Color
+        Public Property ColorPositiveLoad As Color
+        Public Property ColorNegativeLoad As Color
         Public Property SizeNodes As Double
         Public Property ScaleVelocity As Double
         Public Property ScalePressure As Double
@@ -184,24 +185,21 @@ Namespace VisualModel.Interface
 
                 Case ComponentTypes.etLiftingSurface
 
-                    ColorSurface = System.Drawing.Color.Gray
-                    ColorMesh = System.Drawing.Color.Black
-                    ColorPrimitives = System.Drawing.Color.SkyBlue
-                    ColorSelection = System.Drawing.Color.Beige
-                    ColorNodes = System.Drawing.Color.Black
-                    ColorVelocity = System.Drawing.Color.BlueViolet
-                    ColorLoads = System.Drawing.Color.Red
-
+                    ColorSurface = Color.Gray
+                    ColorMesh = Color.Black
+                    ColorPrimitives = Color.SkyBlue
+                    ColorSelection = Color.Beige
+                    ColorNodes = Color.Black
+                    ColorVelocity = Color.BlueViolet
                     ShowMesh = True
                     ShowSurface = True
                     ShowPrimitives = True
                     ShowNodes = False
-
                     Transparency = 1.0#
                     ThicknessMesh = 1.0#
-                    SizeNodes = 4.0#
-                    ScaleVelocity = 0.01#
-                    ScalePressure = 1.0#
+                    SizeNodes = 8.0#
+                    ScaleVelocity = 0.0#
+                    ScalePressure = 0.0#
 
                 Case ComponentTypes.etFuselage
 
@@ -209,12 +207,11 @@ Namespace VisualModel.Interface
                     ColorMesh = Color.Black
                     ColorNodes = Color.Black
                     ColorVelocity = Color.BlueViolet
-                    ColorLoads = Color.Red
                     Transparency = 1.0#
-                    ThicknessMesh = 0.1#
-                    SizeNodes = 4.0#
-                    ScaleVelocity = 0.01#
-                    ScalePressure = 1.0#
+                    ThicknessMesh = 1.0#
+                    SizeNodes = 8.0#
+                    ScaleVelocity = 0.0#
+                    ScalePressure = 0.0#
                     ShowMesh = True
                     ShowSurface = True
                     ShowNodes = False
@@ -225,14 +222,45 @@ Namespace VisualModel.Interface
                     ColorMesh = Color.Black
                     ColorNodes = Color.Black
                     ColorVelocity = Color.BlueViolet
-                    ColorLoads = Color.Red
                     Transparency = 1.0#
-                    ThicknessMesh = 0.1#
-                    SizeNodes = 4.0#
+                    ThicknessMesh = 1.0#
+                    SizeNodes = 8.0#
+                    ScaleVelocity = 0.0#
+                    ScalePressure = 0.0#
+                    ShowMesh = True
+                    ShowSurface = True
+                    ShowNodes = False
+
+                Case ComponentTypes.etResultContainer
+
+                    ColorSurface = Color.LightGray
+                    ColorMesh = Color.Black
+                    ColorNodes = Color.Black
+                    ColorVelocity = Color.BlueViolet
+                    ColorPositiveLoad = Color.Red
+                    ColorNegativeLoad = Color.Blue
+                    Transparency = 1.0#
+                    ThicknessMesh = 1.0#
+                    SizeNodes = 8.0#
                     ScaleVelocity = 0.01#
                     ScalePressure = 1.0#
                     ShowMesh = True
                     ShowSurface = True
+                    ShowNodes = False
+
+                Case ComponentTypes.etWake
+
+                    ColorSurface = Color.LightGray
+                    ColorMesh = Color.Black
+                    ColorNodes = Color.Black
+                    ColorVelocity = Color.BlueViolet
+                    Transparency = 1.0#
+                    ThicknessMesh = 1.0#
+                    SizeNodes = 2.0#
+                    ScaleVelocity = 0.0#
+                    ScalePressure = 0.0#
+                    ShowMesh = True
+                    ShowSurface = False
                     ShowNodes = False
 
             End Select

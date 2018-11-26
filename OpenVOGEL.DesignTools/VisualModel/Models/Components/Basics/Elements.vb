@@ -130,7 +130,7 @@ Namespace VisualModel.Models.Components.Basics
             End Set
         End Property
 
-        Public ReadOnly Property VelocidadInducida As EVector3
+        Public ReadOnly Property InducedVelocity As EVector3
             Get
                 Return _InducedVelocity
             End Get
@@ -167,7 +167,7 @@ Namespace VisualModel.Models.Components.Basics
             'Me.SentidoDePanelesAdyacentes(4) As Sentido
             'Me.PanelesAdyacentes(4) As TQuadPanel
 
-            Me._InducedVelocity.Assign(Panel.VelocidadInducida)
+            Me._InducedVelocity.Assign(Panel.InducedVelocity)
 
         End Sub
 

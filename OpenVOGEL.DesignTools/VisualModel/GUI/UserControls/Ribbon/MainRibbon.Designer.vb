@@ -143,8 +143,8 @@ Partial Class MainRibbon
         Me.btnReport = New System.Windows.Forms.Button()
         Me.btnLoadResults = New System.Windows.Forms.Button()
         Me.GroupBox3 = New System.Windows.Forms.GroupBox()
+        Me.cbMultiselect = New System.Windows.Forms.CheckBox()
         Me.rnPanel = New System.Windows.Forms.RadioButton()
-        Me.rbSegment = New System.Windows.Forms.RadioButton()
         Me.rbNode = New System.Windows.Forms.RadioButton()
         Me.Label31 = New System.Windows.Forms.Label()
         Me.btnFrontView = New System.Windows.Forms.Button()
@@ -162,8 +162,7 @@ Partial Class MainRibbon
         Me.cbxShowRulers = New System.Windows.Forms.CheckBox()
         Me.pnlScreenColor = New System.Windows.Forms.Panel()
         Me.TableLayoutPanel4 = New System.Windows.Forms.TableLayoutPanel()
-        Me.rbNoSelection = New System.Windows.Forms.RadioButton()
-        Me.cbMultiselect = New System.Windows.Forms.CheckBox()
+        Me.rbStructure = New System.Windows.Forms.RadioButton()
         Me.tcRibbon.SuspendLayout()
         Me.tpModel.SuspendLayout()
         Me.TableLayoutPanel1.SuspendLayout()
@@ -1779,10 +1778,9 @@ Partial Class MainRibbon
         '
         'GroupBox3
         '
+        Me.GroupBox3.Controls.Add(Me.rbStructure)
         Me.GroupBox3.Controls.Add(Me.cbMultiselect)
-        Me.GroupBox3.Controls.Add(Me.rbNoSelection)
         Me.GroupBox3.Controls.Add(Me.rnPanel)
-        Me.GroupBox3.Controls.Add(Me.rbSegment)
         Me.GroupBox3.Controls.Add(Me.rbNode)
         Me.GroupBox3.Controls.Add(Me.Label31)
         Me.GroupBox3.Controls.Add(Me.btnFrontView)
@@ -1809,6 +1807,16 @@ Partial Class MainRibbon
         Me.GroupBox3.TabStop = False
         Me.GroupBox3.Text = "Screen"
         '
+        'cbMultiselect
+        '
+        Me.cbMultiselect.AutoSize = True
+        Me.cbMultiselect.Location = New System.Drawing.Point(82, 94)
+        Me.cbMultiselect.Name = "cbMultiselect"
+        Me.cbMultiselect.Size = New System.Drawing.Size(56, 16)
+        Me.cbMultiselect.TabIndex = 96
+        Me.cbMultiselect.Text = "multiple"
+        Me.cbMultiselect.UseVisualStyleBackColor = True
+        '
         'rnPanel
         '
         Me.rnPanel.Appearance = System.Windows.Forms.Appearance.Button
@@ -1818,30 +1826,13 @@ Partial Class MainRibbon
         Me.rnPanel.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Lime
         Me.rnPanel.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.rnPanel.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.rnPanel.Location = New System.Drawing.Point(54, 90)
+        Me.rnPanel.Location = New System.Drawing.Point(31, 90)
         Me.rnPanel.Name = "rnPanel"
         Me.rnPanel.Size = New System.Drawing.Size(22, 22)
         Me.rnPanel.TabIndex = 94
-        Me.rnPanel.TabStop = True
         Me.rnPanel.Text = "P"
         Me.rnPanel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         Me.rnPanel.UseVisualStyleBackColor = True
-        '
-        'rbSegment
-        '
-        Me.rbSegment.Appearance = System.Windows.Forms.Appearance.Button
-        Me.rbSegment.FlatAppearance.BorderColor = System.Drawing.Color.Gray
-        Me.rbSegment.FlatAppearance.CheckedBackColor = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(128, Byte), Integer))
-        Me.rbSegment.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Lime
-        Me.rbSegment.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.rbSegment.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.rbSegment.Location = New System.Drawing.Point(31, 90)
-        Me.rbSegment.Name = "rbSegment"
-        Me.rbSegment.Size = New System.Drawing.Size(22, 22)
-        Me.rbSegment.TabIndex = 93
-        Me.rbSegment.Text = "S"
-        Me.rbSegment.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        Me.rbSegment.UseVisualStyleBackColor = True
         '
         'rbNode
         '
@@ -2054,33 +2045,21 @@ Partial Class MainRibbon
         Me.TableLayoutPanel4.Size = New System.Drawing.Size(1204, 175)
         Me.TableLayoutPanel4.TabIndex = 508
         '
-        'rbNoSelection
+        'rbStructure
         '
-        Me.rbNoSelection.Appearance = System.Windows.Forms.Appearance.Button
-        Me.rbNoSelection.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(224, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.rbNoSelection.FlatAppearance.BorderColor = System.Drawing.Color.Gray
-        Me.rbNoSelection.FlatAppearance.CheckedBackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer))
-        Me.rbNoSelection.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Lime
-        Me.rbNoSelection.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.rbNoSelection.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.rbNoSelection.ForeColor = System.Drawing.Color.Maroon
-        Me.rbNoSelection.Location = New System.Drawing.Point(77, 90)
-        Me.rbNoSelection.Name = "rbNoSelection"
-        Me.rbNoSelection.Size = New System.Drawing.Size(22, 22)
-        Me.rbNoSelection.TabIndex = 95
-        Me.rbNoSelection.Text = "X"
-        Me.rbNoSelection.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        Me.rbNoSelection.UseVisualStyleBackColor = False
-        '
-        'cbMultiselect
-        '
-        Me.cbMultiselect.AutoSize = True
-        Me.cbMultiselect.Location = New System.Drawing.Point(105, 94)
-        Me.cbMultiselect.Name = "cbMultiselect"
-        Me.cbMultiselect.Size = New System.Drawing.Size(56, 16)
-        Me.cbMultiselect.TabIndex = 96
-        Me.cbMultiselect.Text = "multiple"
-        Me.cbMultiselect.UseVisualStyleBackColor = True
+        Me.rbStructure.Appearance = System.Windows.Forms.Appearance.Button
+        Me.rbStructure.FlatAppearance.BorderColor = System.Drawing.Color.Gray
+        Me.rbStructure.FlatAppearance.CheckedBackColor = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(128, Byte), Integer))
+        Me.rbStructure.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Lime
+        Me.rbStructure.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.rbStructure.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.rbStructure.Location = New System.Drawing.Point(54, 90)
+        Me.rbStructure.Name = "rbStructure"
+        Me.rbStructure.Size = New System.Drawing.Size(22, 22)
+        Me.rbStructure.TabIndex = 97
+        Me.rbStructure.Text = "S"
+        Me.rbStructure.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        Me.rbStructure.UseVisualStyleBackColor = True
         '
         'MainRibbon
         '
@@ -2297,8 +2276,7 @@ Partial Class MainRibbon
     Friend WithEvents TableLayoutPanel4 As Windows.Forms.TableLayoutPanel
     Friend WithEvents Label31 As Windows.Forms.Label
     Friend WithEvents rnPanel As Windows.Forms.RadioButton
-    Friend WithEvents rbSegment As Windows.Forms.RadioButton
     Friend WithEvents rbNode As Windows.Forms.RadioButton
-    Friend WithEvents rbNoSelection As Windows.Forms.RadioButton
     Friend WithEvents cbMultiselect As Windows.Forms.CheckBox
+    Friend WithEvents rbStructure As Windows.Forms.RadioButton
 End Class

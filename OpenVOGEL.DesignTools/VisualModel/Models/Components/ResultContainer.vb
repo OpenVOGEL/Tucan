@@ -39,7 +39,7 @@ Namespace VisualModel.Models.Components
         Public Sub New()
 
             Mesh = New Mesh()
-            VisualProperties = New VisualProperties(ComponentTypes.etFuselage)
+            VisualProperties = New VisualProperties(ComponentTypes.etResultContainer)
 
         End Sub
 
@@ -321,7 +321,9 @@ Namespace VisualModel.Models.Components
 
                 gl.PointSize(VisualProperties.SizeNodes)
 
-                gl.Color(VisualProperties.ColorNodes.R / 255, VisualProperties.ColorNodes.G / 255, VisualProperties.ColorNodes.B / 255)
+                gl.Color(VisualProperties.ColorNodes.R / 255,
+                         VisualProperties.ColorNodes.G / 255,
+                         VisualProperties.ColorNodes.B / 255)
 
                 Index = 0
 
@@ -346,13 +348,14 @@ Namespace VisualModel.Models.Components
 
                 Dim Node1 As EVector3
                 Dim Node2 As EVector3
-                Dim Vector As EVector3
                 Dim Load As New EVector3
 
                 gl.InitNames()
                 Dim Code As Integer = Selection.GetSelectionCode(ComponentTypes.etResultContainer, ElementIndex, EntityTypes.etSegment, 0)
 
-                gl.Color(VisualProperties.ColorMesh.R / 255, VisualProperties.ColorMesh.G / 255, VisualProperties.ColorMesh.B / 255)
+                gl.Color(VisualProperties.ColorMesh.R / 255,
+                         VisualProperties.ColorMesh.G / 255,
+                         VisualProperties.ColorMesh.B / 255)
 
                 Index = 0
 
@@ -378,13 +381,14 @@ Namespace VisualModel.Models.Components
 
                     gl.Begin(OpenGL.GL_LINES)
 
-                    For i = 0 To NumberOfPanels - 1
+                    For Each Panel In Mesh.Panels
 
-                        Node1 = Mesh.Panels(i).ControlPoint
-                        Vector = Mesh.Panels(i).LocalVelocity
-
-                        gl.Vertex(Node1.X, Node1.Y, Node1.Z)
-                        gl.Vertex(Node1.X + VisualProperties.ScaleVelocity * Vector.X, Node1.Y + VisualProperties.ScaleVelocity * Vector.Y, Node1.Z + VisualProperties.ScaleVelocity * Vector.Z)
+                        gl.Vertex(Panel.ControlPoint.X,
+                                  Panel.ControlPoint.Y,
+                                  Panel.ControlPoint.Z)
+                        gl.Vertex(Panel.ControlPoint.X + VisualProperties.ScaleVelocity * Panel.LocalVelocity.X,
+                                  Panel.ControlPoint.Y + VisualProperties.ScaleVelocity * Panel.LocalVelocity.Y,
+                                  Panel.ControlPoint.Z + VisualProperties.ScaleVelocity * Panel.LocalVelocity.Z)
 
                     Next
 
@@ -392,24 +396,38 @@ Namespace VisualModel.Models.Components
 
                 End If
 
-                gl.Color(VisualProperties.ColorLoads.R / 255, VisualProperties.ColorLoads.G / 255, VisualProperties.ColorLoads.B / 255)
-
                 If VisualProperties.ShowLoadVectors Then
 
-                    gl.Begin(OpenGL.GL_LINES)
+                    For Each Panel In Mesh.Panels
 
-                    For i = 0 To NumberOfPanels - 1
+                        Load.Assign(Panel.NormalVector)
+                        If Panel.IsSlender Then
+                            gl.Color(VisualProperties.ColorPositiveLoad.R / 255,
+                                     VisualProperties.ColorPositiveLoad.G / 255,
+                                     VisualProperties.ColorPositiveLoad.B / 255)
+                            Load.Scale(VisualProperties.ScalePressure * Panel.Cp * Panel.Area)
+                        Else
+                            If Panel.Cp > 0 Then
+                                gl.Color(VisualProperties.ColorPositiveLoad.R / 255,
+                                         VisualProperties.ColorPositiveLoad.G / 255,
+                                         VisualProperties.ColorPositiveLoad.B / 255)
+                                Load.Scale(VisualProperties.ScalePressure * Panel.Cp * Panel.Area)
+                            Else
+                                gl.Color(VisualProperties.ColorPositiveLoad.R, VisualProperties.ColorPositiveLoad.G, VisualProperties.ColorPositiveLoad.B)
+                                Load.Scale(-VisualProperties.ScalePressure * Panel.Cp * Panel.Area)
+                            End If
+                        End If
 
-                        Node1 = Mesh.Panels(i).ControlPoint
-                        Load.Assign(Mesh.Panels(i).NormalVector)
-                        Load.Scale(VisualProperties.ScalePressure * Mesh.Panels(i).Cp * Mesh.Panels(i).Area)
-
-                        gl.Vertex(Node1.X, Node1.Y, Node1.Z)
-                        gl.Vertex(Node1.X + Load.X, Node1.Y + Load.Y, Node1.Z + Load.Z)
+                        gl.Begin(OpenGL.GL_LINES)
+                        gl.Vertex(Panel.ControlPoint.X,
+                                  Panel.ControlPoint.Y,
+                                  Panel.ControlPoint.Z)
+                        gl.Vertex(Panel.ControlPoint.X + Load.X,
+                                  Panel.ControlPoint.Y + Load.Y,
+                                  Panel.ControlPoint.Z + Load.Z)
+                        gl.End()
 
                     Next
-
-                    gl.End()
 
                 End If
 

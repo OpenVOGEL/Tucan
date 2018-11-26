@@ -3,7 +3,6 @@ Imports System.Windows.Forms
 Imports OpenVOGEL.AeroTools.CalculationModel.Settings
 Imports OpenVOGEL.DesignTools.VisualModel.Interface
 Imports OpenVOGEL.DesignTools.VisualModel.Models.Components.Basics
-Imports OpenVOGEL.AeroTools.DataStore
 Imports OpenVOGEL.DesignTools.DataStore
 
 Public Class MainRibbon
@@ -13,6 +12,9 @@ Public Class MainRibbon
     Public Event PushMessage(msg As String)
     Public Event EditSurface(ByRef Surface As Surface)
     Public Event EditVelocityPlane()
+
+    Private CalculationBussy As Boolean = False
+    Private FormReport As New FormReport
 
     Public Sub New()
 
@@ -40,6 +42,8 @@ Public Class MainRibbon
                 ProjectRoot.DesignMode()
 
                 StopTransit()
+
+                FormReport.Hide()
 
                 RaiseEvent SwitchToDesignMode()
 
@@ -445,6 +449,7 @@ ErrSub:
             RaiseEvent PushMessage("Calculation started.")
 
             niNotification.Text = "Calculating..."
+            CalculationBussy = True
 
             Select Case CalculationType
 
@@ -484,6 +489,8 @@ ErrSub:
             niNotification.ShowBalloonTip(3000)
             LoadResultProperties()
             LoadModes()
+            FormReport.ReportResults(ProjectRoot.CalculationCore)
+            CalculationBussy = False
             RaiseEvent PushMessage("Calculation done!")
         End If
 
@@ -492,6 +499,9 @@ ErrSub:
     Private Sub btnStartCalculation_Click(sender As Object, e As EventArgs) Handles btnStartCalculation.Click
 
         If ProjectRoot.Initialized Then
+
+            FormReport.Clear()
+            FormReport.Hide()
 
             Calculate(cbxSimulationMode.SelectedIndex)
 
@@ -1194,7 +1204,7 @@ ErrSub:
             pnlResultMeshColor.BackColor = ProjectRoot.Results.Model.VisualProperties.ColorMesh
             pnlResultSurfaceColor.BackColor = ProjectRoot.Results.Model.VisualProperties.ColorSurface
 
-            pnlForceColor.BackColor = ProjectRoot.Results.Model.VisualProperties.ColorLoads
+            pnlForceColor.BackColor = ProjectRoot.Results.Model.VisualProperties.ColorPositiveLoad
             pnlVelocityColor.BackColor = ProjectRoot.Results.Model.VisualProperties.ColorVelocity
             cbxShowForce.Checked = ProjectRoot.Results.Model.VisualProperties.ShowLoadVectors
             cbxShowVelocity.Checked = ProjectRoot.Results.Model.VisualProperties.ShowVelocityVectors
@@ -1316,13 +1326,13 @@ ErrSub:
 
             Dim dialog As New ColorDialog
 
-            dialog.Color = ProjectRoot.Results.Model.VisualProperties.ColorLoads
+            dialog.Color = ProjectRoot.Results.Model.VisualProperties.ColorPositiveLoad
 
             ' show dialog:
 
             If dialog.ShowDialog = DialogResult.OK Then
 
-                ProjectRoot.Results.Model.VisualProperties.ColorLoads = dialog.Color
+                ProjectRoot.Results.Model.VisualProperties.ColorPositiveLoad = dialog.Color
 
                 pnlForceColor.BackColor = dialog.Color
 
@@ -1535,15 +1545,19 @@ ErrSub:
     Private Sub btnReport_Click(sender As Object, e As EventArgs) Handles btnReport.Click
 
         If ProjectRoot.Initialized Then
-
-            If (Not ProjectRoot.CalculationCore Is Nothing) Then
-                Dim FormReport As New FormReport
-                FormReport.ReportResults(ProjectRoot.CalculationCore)
-                FormReport.ShowDialog()
+            If FormReport.Visible Then
+                FormReport.Hide()
             Else
-                MsgBox("Results are not available. Load a results file or execute the calculation first.")
+                If CalculationBussy Then
+                    MsgBox("Please, wait until the calculation is done.")
+                Else
+                    If (Not ProjectRoot.CalculationCore Is Nothing) Then
+                        FormReport.Show(ParentForm)
+                    Else
+                        MsgBox("Results are not available. Load a results file or execute the calculation first.")
+                    End If
+                End If
             End If
-
         End If
 
     End Sub
@@ -1733,27 +1747,21 @@ ErrSub:
 
     End Sub
 
-    Private Sub rbSegment_CheckedChanged(sender As Object, e As EventArgs) Handles rbSegment.CheckedChanged
-
-        ProjectRoot.Selection.EntityToSelect = EntityTypes.etSegment
-
-    End Sub
-
     Private Sub rnPanel_CheckedChanged(sender As Object, e As EventArgs) Handles rnPanel.CheckedChanged
 
         ProjectRoot.Selection.EntityToSelect = EntityTypes.etPanel
 
     End Sub
 
-    Private Sub rbNoSelection_CheckedChanged(sender As Object, e As EventArgs) Handles rbNoSelection.CheckedChanged
-
-        ProjectRoot.Selection.EntityToSelect = EntityTypes.etNothing
-
-    End Sub
-
     Private Sub cbMultiselect_CheckedChanged(sender As Object, e As EventArgs) Handles cbMultiselect.CheckedChanged
 
         ProjectRoot.Selection.MultipleSelection = cbMultiselect.Checked
+
+    End Sub
+
+    Private Sub rbStructure_CheckedChanged(sender As Object, e As EventArgs) Handles rbStructure.CheckedChanged
+
+        ProjectRoot.Selection.EntityToSelect = EntityTypes.etStructuralElement
 
     End Sub
 

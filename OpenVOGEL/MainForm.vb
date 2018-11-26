@@ -484,16 +484,19 @@ Public Class MainForm
 
                             Case EntityTypes.etPanel
 
-                                ' show associated surface info
+                                ' Show associated surface info
 
-                                lblStatus.Text = String.Format("Panel {0}: Cp={1:F4}", SelectedItem.EntityIndex,
-                                                                              Results.Model.Mesh.Panels(SelectedItem.EntityIndex).Cp)
+                                lblStatus.Text = String.Format("Panel {0}: Cp={1:F5}; V={2:F5}; G={3:F5}; A={4:F5}", SelectedItem.EntityIndex,
+                                                               Results.Model.Mesh.Panels(SelectedItem.EntityIndex).Cp,
+                                                               Results.Model.Mesh.Panels(SelectedItem.EntityIndex).LocalVelocity.EuclideanNorm,
+                                                               Results.Model.Mesh.Panels(SelectedItem.EntityIndex).Circulation,
+                                                               Results.Model.Mesh.Panels(SelectedItem.EntityIndex).Area)
 
                                 Exit For
 
                             Case EntityTypes.etNode
 
-                                ' show associated surface info
+                                ' Show associated surface info
 
                                 lblStatus.Text = String.Format("Node {0}: ", SelectedItem.EntityIndex,
                                                                               Results.Model.Mesh.Nodes(SelectedItem.EntityIndex).Position.ToString)

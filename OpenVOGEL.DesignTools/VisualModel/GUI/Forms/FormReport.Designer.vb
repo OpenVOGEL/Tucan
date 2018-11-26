@@ -170,6 +170,7 @@ Partial Class FormReport
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.SystemColors.Control
         Me.ClientSize = New System.Drawing.Size(807, 464)
+        Me.ControlBox = False
         Me.Controls.Add(Me.tcResults)
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Name = "FormReport"

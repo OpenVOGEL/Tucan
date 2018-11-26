@@ -283,7 +283,7 @@ Namespace VisualModel.Models.Components
 
                 gl.Begin(OpenGL.GL_LINES)
 
-                gl.Color(VisualProperties.ColorLoads.R / 255, VisualProperties.ColorLoads.G / 255, VisualProperties.ColorLoads.B / 255)
+                gl.Color(VisualProperties.ColorPositiveLoad.R / 255, VisualProperties.ColorPositiveLoad.G / 255, VisualProperties.ColorPositiveLoad.B / 255)
 
                 For Each Panel In Mesh.Panels
                     gl.Vertex(Panel.ControlPoint.X, Panel.ControlPoint.Y, Panel.ControlPoint.Z)
