@@ -68,6 +68,14 @@ Public Class ForcesPanel
     Private Const strCDp As String = "CDp"
     Private Const strCDi As String = "CDi"
 
+    Public Sub New()
+
+        InitializeComponent()
+
+        SetUpComponents()
+
+    End Sub
+
     Private Sub SetUpComponents()
 
         rbVelocity.Name = "V"
@@ -279,6 +287,7 @@ Public Class ForcesPanel
             rbDensity.Value = _CalculationCore.StreamDensity
             rbAlpha.Value = Math.Asin(_CalculationCore.StreamVelocity.Z / _CalculationCore.StreamVelocity.EuclideanNorm)
             rbBeta.Value = Math.Asin(_CalculationCore.StreamVelocity.Y / _CalculationCore.StreamVelocity.EuclideanNorm)
+            cbLattices.Items.Clear()
 
             For i = 0 To _CalculationCore.Lattices.Count - 1
 
@@ -336,19 +345,7 @@ Public Class ForcesPanel
 
     End Sub
 
-    Public Sub New()
-
-        InitializeComponent()
-
-        SetUpComponents()
-
-    End Sub
-
-    Public Sub New(CalculationCore As CalculationModel.Solver.Solver)
-
-        InitializeComponent()
-
-        SetUpComponents()
+    Public Sub LoadResults(CalculationCore As CalculationModel.Solver.Solver)
 
         _CalculationCore = CalculationCore
 

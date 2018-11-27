@@ -62,11 +62,15 @@ Public Class TotalForcePanel
     Private TotalForce As New EVector3
     Private TotalMoment As New EVector3
 
-    Public Sub New(CalculationCore As CalculationModel.Solver.Solver)
+    Public Sub New()
 
         InitializeComponent()
 
         SetUpComponents()
+
+    End Sub
+
+    Public Sub LoadResults(CalculationCore As CalculationModel.Solver.Solver)
 
         _CalculationCore = CalculationCore
 

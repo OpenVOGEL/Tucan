@@ -1032,6 +1032,8 @@ ErrSub:
 
                 ProjectRoot.PostprocessMode()
 
+                FormReport.ReportResults(ProjectRoot.CalculationCore)
+
                 LoadResultProperties()
 
                 LoadModes()

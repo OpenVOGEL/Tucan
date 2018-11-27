@@ -67,7 +67,7 @@ Partial Class StartupScreen
         '
         resources.ApplyResources(Me, "$this")
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.BackColor = System.Drawing.Color.SlateGray
+        Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(64, Byte), Integer))
         Me.Controls.Add(Me.Logo)
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.LabelLicencia)

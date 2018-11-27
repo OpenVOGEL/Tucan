@@ -24,41 +24,59 @@ Public Class FormReport
 
     'Private Result As String
 
-    Private _CalculationCore As CalculationModel.Solver.Solver
-    Private _ForcesPanel As ForcesPanel
-    Private _TotalForcePanel As TotalForcePanel
+    Private CalculationCore As CalculationModel.Solver.Solver
+    Private ForcesPanel As ForcesPanel
+    Private TotalForcePanel As TotalForcePanel
+    Private RawResults As New Text.StringBuilder
+
+    Public Sub New()
+
+        ' This call is required by the designer.
+        InitializeComponent()
+
+        ' Add any initialization after the InitializeComponent() call.
+
+        ForcesPanel = New ForcesPanel
+        ForcesPanel.Parent = tbLoads
+        ForcesPanel.Dock = DockStyle.Fill
+        ForcesPanel.BorderStyle = BorderStyle.Fixed3D
+
+        TotalForcePanel = New TotalForcePanel
+        TotalForcePanel.Parent = tbTotalLoads
+        TotalForcePanel.Dock = DockStyle.Fill
+        TotalForcePanel.BorderStyle = BorderStyle.Fixed3D
+
+    End Sub
 
     Public Sub ReportResults(ByRef CalculationCore As CalculationModel.Solver.Solver)
 
-        _CalculationCore = CalculationCore
+        Me.CalculationCore = CalculationCore
 
-        _ForcesPanel = New ForcesPanel(CalculationCore)
-        _ForcesPanel.Parent = tbLoads
-        _ForcesPanel.Dock = DockStyle.Fill
-        _ForcesPanel.BorderStyle = BorderStyle.Fixed3D
+        ' Load the total forces panels
 
-        _TotalForcePanel = New TotalForcePanel(CalculationCore)
-        _TotalForcePanel.Parent = tbTotalLoads
-        _TotalForcePanel.Dock = DockStyle.Fill
-        _TotalForcePanel.BorderStyle = BorderStyle.Fixed3D
+        TotalForcePanel.LoadResults(CalculationCore)
 
-        Dim Result As New System.Text.StringBuilder
+        ' Load the forces by component
 
-        'Dont write a string! Use text class instead!
+        ForcesPanel.LoadResults(CalculationCore)
+
+        ' Write the raw results text block
+
+        RawResults.Clear()
 
         If Not IsNothing(CalculationCore) Then
 
-            Result.AppendLine("RESULS OF THE AERODYNAMIC ANALYSIS:")
-            Result.AppendLine("")
+            RawResults.AppendLine("RESULS OF THE AERODYNAMIC ANALYSIS:")
+            RawResults.AppendLine("")
 
-            Result.AppendLine("Reference velocity:")
-            Result.AppendLine(String.Format("V = {0:F6}m/s", CalculationCore.StreamVelocity.EuclideanNorm))
-            Result.AppendLine(String.Format("Vx = {0:F6}m/s, Vy = {1:F6}m/s, Vz = {2:F6}m/s", _
-                                            CalculationCore.StreamVelocity.X, _
+            RawResults.AppendLine("Reference velocity:")
+            RawResults.AppendLine(String.Format("V = {0:F6}m/s", CalculationCore.StreamVelocity.EuclideanNorm))
+            RawResults.AppendLine(String.Format("Vx = {0:F6}m/s, Vy = {1:F6}m/s, Vz = {2:F6}m/s",
+                                            CalculationCore.StreamVelocity.X,
                                             CalculationCore.StreamVelocity.Y,
                                             CalculationCore.StreamVelocity.Z))
-            Result.AppendLine(String.Format("Rho = {0:F6}kg/m³", CalculationCore.StreamDensity))
-            Result.AppendLine(String.Format("q = {0:F6}Pa", CalculationCore.StreamDynamicPressure))
+            RawResults.AppendLine(String.Format("Rho = {0:F6}kg/m³", CalculationCore.StreamDensity))
+            RawResults.AppendLine(String.Format("q = {0:F6}Pa", CalculationCore.StreamDynamicPressure))
 
             Dim i As Integer = 0
 
@@ -66,119 +84,119 @@ Public Class FormReport
 
                 i += 1
 
-                Result.AppendLine("")
-                Result.AppendLine(String.Format("LATTICE {0}", i))
-                Result.AppendLine("")
+                RawResults.AppendLine("")
+                RawResults.AppendLine(String.Format("LATTICE {0}", i))
+                RawResults.AppendLine("")
 
-                Result.AppendLine("Total area: (ΣSi)")
-                Result.AppendLine(String.Format("S = {0:F6}m²", Lattice.AirLoads.Area))
-                Result.AppendLine("")
+                RawResults.AppendLine("Total area: (ΣSi)")
+                RawResults.AppendLine(String.Format("S = {0:F6}m²", Lattice.AirLoads.Area))
+                RawResults.AppendLine("")
 
-                Result.AppendLine(String.Format("CL = {0:F6}", Lattice.AirLoads.CL))
-                Result.AppendLine(String.Format("CDi = {0:F6}", Lattice.AirLoads.CDi))
-                Result.AppendLine(String.Format("CDp = {0:F6}", Lattice.AirLoads.CDp))
-                Result.AppendLine("")
+                RawResults.AppendLine(String.Format("CL = {0:F6}", Lattice.AirLoads.CL))
+                RawResults.AppendLine(String.Format("CDi = {0:F6}", Lattice.AirLoads.CDi))
+                RawResults.AppendLine(String.Format("CDp = {0:F6}", Lattice.AirLoads.CDp))
+                RawResults.AppendLine("")
 
-                Result.AppendLine("Force due to local lift")
+                RawResults.AppendLine("Force due to local lift")
 
-                Result.AppendLine(String.Format("Fx/qS = {0:F8}", Lattice.AirLoads.SlenderForce.X))
-                Result.AppendLine(String.Format("Fy/qS = {0:F8}", Lattice.AirLoads.SlenderForce.Y))
-                Result.AppendLine(String.Format("Fz/qS = {0:F8}", Lattice.AirLoads.SlenderForce.Z))
-                Result.AppendLine("")
+                RawResults.AppendLine(String.Format("Fx/qS = {0:F8}", Lattice.AirLoads.SlenderForce.X))
+                RawResults.AppendLine(String.Format("Fy/qS = {0:F8}", Lattice.AirLoads.SlenderForce.Y))
+                RawResults.AppendLine(String.Format("Fz/qS = {0:F8}", Lattice.AirLoads.SlenderForce.Z))
+                RawResults.AppendLine("")
 
-                Result.AppendLine("Moment due to local lift")
+                RawResults.AppendLine("Moment due to local lift")
 
-                Result.AppendLine(String.Format("Mx/qS = {0:F8}", Lattice.AirLoads.SlenderMoment.X))
-                Result.AppendLine(String.Format("My/qS = {0:F8}", Lattice.AirLoads.SlenderMoment.Y))
-                Result.AppendLine(String.Format("Mz/qS = {0:F8}", Lattice.AirLoads.SlenderMoment.Z))
-                Result.AppendLine("")
+                RawResults.AppendLine(String.Format("Mx/qS = {0:F8}", Lattice.AirLoads.SlenderMoment.X))
+                RawResults.AppendLine(String.Format("My/qS = {0:F8}", Lattice.AirLoads.SlenderMoment.Y))
+                RawResults.AppendLine(String.Format("Mz/qS = {0:F8}", Lattice.AirLoads.SlenderMoment.Z))
+                RawResults.AppendLine("")
 
-                Result.AppendLine("Force due to local induced drag")
+                RawResults.AppendLine("Force due to local induced drag")
 
-                Result.AppendLine(String.Format("Fx/qS = {0:F8}", Lattice.AirLoads.InducedDrag.X))
-                Result.AppendLine(String.Format("Fy/qS = {0:F8}", Lattice.AirLoads.InducedDrag.Y))
-                Result.AppendLine(String.Format("Fz/qS = {0:F8}", Lattice.AirLoads.InducedDrag.Z))
-                Result.AppendLine("")
+                RawResults.AppendLine(String.Format("Fx/qS = {0:F8}", Lattice.AirLoads.InducedDrag.X))
+                RawResults.AppendLine(String.Format("Fy/qS = {0:F8}", Lattice.AirLoads.InducedDrag.Y))
+                RawResults.AppendLine(String.Format("Fz/qS = {0:F8}", Lattice.AirLoads.InducedDrag.Z))
+                RawResults.AppendLine("")
 
-                Result.AppendLine("Moment due to local induced drag")
+                RawResults.AppendLine("Moment due to local induced drag")
 
-                Result.AppendLine(String.Format("Mx/qS = {0:F8}", Lattice.AirLoads.InducedMoment.X))
-                Result.AppendLine(String.Format("My/qS = {0:F8}", Lattice.AirLoads.InducedMoment.Y))
-                Result.AppendLine(String.Format("Mz/qS = {0:F8}", Lattice.AirLoads.InducedMoment.Z))
-                Result.AppendLine("")
+                RawResults.AppendLine(String.Format("Mx/qS = {0:F8}", Lattice.AirLoads.InducedMoment.X))
+                RawResults.AppendLine(String.Format("My/qS = {0:F8}", Lattice.AirLoads.InducedMoment.Y))
+                RawResults.AppendLine(String.Format("Mz/qS = {0:F8}", Lattice.AirLoads.InducedMoment.Z))
+                RawResults.AppendLine("")
 
-                Result.AppendLine("Force due to local skin drag")
+                RawResults.AppendLine("Force due to local skin drag")
 
-                Result.AppendLine(String.Format("Fx/qS = {0:F8}", Lattice.AirLoads.SkinDrag.X))
-                Result.AppendLine(String.Format("Fy/qS = {0:F8}", Lattice.AirLoads.SkinDrag.Y))
-                Result.AppendLine(String.Format("Fz/qS = {0:F8}", Lattice.AirLoads.SkinDrag.Z))
-                Result.AppendLine("")
+                RawResults.AppendLine(String.Format("Fx/qS = {0:F8}", Lattice.AirLoads.SkinDrag.X))
+                RawResults.AppendLine(String.Format("Fy/qS = {0:F8}", Lattice.AirLoads.SkinDrag.Y))
+                RawResults.AppendLine(String.Format("Fz/qS = {0:F8}", Lattice.AirLoads.SkinDrag.Z))
+                RawResults.AppendLine("")
 
-                Result.AppendLine("Moment due to local skin drag")
+                RawResults.AppendLine("Moment due to local skin drag")
 
-                Result.AppendLine(String.Format("Mx/qS = {0:F8}", Lattice.AirLoads.SkinMoment.X))
-                Result.AppendLine(String.Format("My/qS = {0:F8}", Lattice.AirLoads.SkinMoment.Y))
-                Result.AppendLine(String.Format("Mz/qS = {0:F8}", Lattice.AirLoads.SkinMoment.Z))
-                Result.AppendLine("")
-                Result.AppendLine("Force on body")
+                RawResults.AppendLine(String.Format("Mx/qS = {0:F8}", Lattice.AirLoads.SkinMoment.X))
+                RawResults.AppendLine(String.Format("My/qS = {0:F8}", Lattice.AirLoads.SkinMoment.Y))
+                RawResults.AppendLine(String.Format("Mz/qS = {0:F8}", Lattice.AirLoads.SkinMoment.Z))
+                RawResults.AppendLine("")
+                RawResults.AppendLine("Force on body")
 
-                Result.AppendLine(String.Format("Fx/qS = {0:F8}", Lattice.AirLoads.BodyForce.X))
-                Result.AppendLine(String.Format("Fy/qS = {0:F8}", Lattice.AirLoads.BodyForce.Y))
-                Result.AppendLine(String.Format("Fz/qS = {0:F8}", Lattice.AirLoads.BodyForce.Z))
-                Result.AppendLine("")
+                RawResults.AppendLine(String.Format("Fx/qS = {0:F8}", Lattice.AirLoads.BodyForce.X))
+                RawResults.AppendLine(String.Format("Fy/qS = {0:F8}", Lattice.AirLoads.BodyForce.Y))
+                RawResults.AppendLine(String.Format("Fz/qS = {0:F8}", Lattice.AirLoads.BodyForce.Z))
+                RawResults.AppendLine("")
 
-                Result.AppendLine("Moment on body")
+                RawResults.AppendLine("Moment on body")
 
-                Result.AppendLine(String.Format("Mx/qS = {0:F8}", Lattice.AirLoads.BodyMoment.X))
-                Result.AppendLine(String.Format("My/qS = {0:F8}", Lattice.AirLoads.BodyMoment.Y))
-                Result.AppendLine(String.Format("Mz/qS = {0:F8}", Lattice.AirLoads.BodyMoment.Z))
-                Result.AppendLine("")
+                RawResults.AppendLine(String.Format("Mx/qS = {0:F8}", Lattice.AirLoads.BodyMoment.X))
+                RawResults.AppendLine(String.Format("My/qS = {0:F8}", Lattice.AirLoads.BodyMoment.Y))
+                RawResults.AppendLine(String.Format("Mz/qS = {0:F8}", Lattice.AirLoads.BodyMoment.Z))
+                RawResults.AppendLine("")
 
-                Result.AppendLine("Chordwise stations:")
-                Result.AppendLine("CD, CDi, CDp")
+                RawResults.AppendLine("Chordwise stations:")
+                RawResults.AppendLine("CD, CDi, CDp")
 
                 For Each cl In Lattice.ChordWiseStripes
-                    Result.AppendLine(String.Format("{0:F8}, {1:F8}, {2:F8}", cl.CL, cl.CDi, cl.CDp))
+                    RawResults.AppendLine(String.Format("{0:F8}, {1:F8}, {2:F8}", cl.CL, cl.CDi, cl.CDp))
                 Next
 
-                Result.AppendLine("")
-                Result.AppendLine("Local vortex ring properties:")
-                Result.AppendLine("Index, Cp, Area, G, S, Vx, Vy, Vz")
+                RawResults.AppendLine("")
+                RawResults.AppendLine("Local vortex ring properties:")
+                RawResults.AppendLine("Index, Cp, Area, G, S, Vx, Vy, Vz")
                 For Each Ring As VortexRing In Lattice.VortexRings
-                    Result.AppendLine(String.Format("{0,4:D}: {1,12:F8}, {2,12:F8}, {3,12:F8}, {4,12:F8}, {5,12:F8}, {6,12:F8}, {7,12:F8}", Ring.IndexL, Ring.Cp, Ring.Area, Ring.G, Ring.S, Ring.VelocityT.X, Ring.VelocityT.Y, Ring.VelocityT.Z))
+                    RawResults.AppendLine(String.Format("{0,4:D}: {1,12:F8}, {2,12:F8}, {3,12:F8}, {4,12:F8}, {5,12:F8}, {6,12:F8}, {7,12:F8}", Ring.IndexL, Ring.Cp, Ring.Area, Ring.G, Ring.S, Ring.VelocityT.X, Ring.VelocityT.Y, Ring.VelocityT.Z))
                 Next
 
-                Result.AppendLine("")
-                Result.AppendLine("Control point")
-                Result.AppendLine("Index, CPx, CPy, CPz")
+                RawResults.AppendLine("")
+                RawResults.AppendLine("Control point")
+                RawResults.AppendLine("Index, CPx, CPy, CPz")
                 For Each Ring As VortexRing In Lattice.VortexRings
-                    Result.AppendLine(String.Format("{0,4:D}: {1,12:F8}, {2,12:F8}, {3,12:F8}", Ring.IndexL, Ring.ControlPoint.X, Ring.ControlPoint.Y, Ring.ControlPoint.Z))
+                    RawResults.AppendLine(String.Format("{0,4:D}: {1,12:F8}, {2,12:F8}, {3,12:F8}", Ring.IndexL, Ring.ControlPoint.X, Ring.ControlPoint.Y, Ring.ControlPoint.Z))
                 Next
 
-                Result.AppendLine("")
-                Result.AppendLine("Outer control point")
-                Result.AppendLine("Index, CPx, CPy, CPz")
+                RawResults.AppendLine("")
+                RawResults.AppendLine("Outer control point")
+                RawResults.AppendLine("Index, CPx, CPy, CPz")
                 For Each Ring As VortexRing In Lattice.VortexRings
                     If Ring.OuterControlPoint IsNot Nothing Then
-                        Result.AppendLine(String.Format("{0,4:D}: {1,12:F8}, {2,12:F8}, {3,12:F8}", Ring.IndexL, Ring.OuterControlPoint.X, Ring.OuterControlPoint.Y, Ring.OuterControlPoint.Z))
+                        RawResults.AppendLine(String.Format("{0,4:D}: {1,12:F8}, {2,12:F8}, {3,12:F8}", Ring.IndexL, Ring.OuterControlPoint.X, Ring.OuterControlPoint.Y, Ring.OuterControlPoint.Z))
                     End If
                 Next
 
-                Result.AppendLine("")
-                Result.AppendLine("Index, Nx, Ny, Nz")
+                RawResults.AppendLine("")
+                RawResults.AppendLine("Index, Nx, Ny, Nz")
                 For Each Ring As VortexRing In Lattice.VortexRings
-                    Result.AppendLine(String.Format("{0,4:D}: {1,12:F8}, {2,12:F8}, {3,12:F8}", Ring.IndexL, Ring.Normal.X, Ring.Normal.Y, Ring.Normal.Z))
+                    RawResults.AppendLine(String.Format("{0,4:D}: {1,12:F8}, {2,12:F8}, {3,12:F8}", Ring.IndexL, Ring.Normal.X, Ring.Normal.Y, Ring.Normal.Z))
                 Next
 
             Next
 
         Else
 
-            Result.AppendLine("« Calculation core is not available »")
+            RawResults.AppendLine("« Calculation core is not available »")
 
         End If
 
-        Me.tbRawData.Text = Result.ToString
+        tbRawData.Text = RawResults.ToString
 
         If Not IsNothing(CalculationCore.StructuralLinks) Then
 
@@ -208,14 +226,14 @@ Public Class FormReport
     End Sub
 
     Public Sub Clear()
-        _CalculationCore = Nothing
+        CalculationCore = Nothing
     End Sub
 
     Private Sub LoadLink()
 
-        If (Not IsNothing(_CalculationCore)) And cbLink.SelectedIndex >= 0 And cbLink.SelectedIndex < _CalculationCore.StructuralLinks.Count Then
+        If (Not IsNothing(CalculationCore)) And cbLink.SelectedIndex >= 0 And cbLink.SelectedIndex < CalculationCore.StructuralLinks.Count Then
 
-            Dim sl As StructuralLink = _CalculationCore.StructuralLinks(cbLink.SelectedIndex)
+            Dim sl As StructuralLink = CalculationCore.StructuralLinks(cbLink.SelectedIndex)
             cbModes.Items.Clear()
 
             For Mode = 0 To sl.StructuralCore.Modes.Count - 1
@@ -231,9 +249,9 @@ Public Class FormReport
 
     Private Sub LoadMode(obj As Object, e As EventArgs)
 
-        If (Not IsNothing(_CalculationCore)) And cbLink.SelectedIndex >= 0 And cbLink.SelectedIndex < _CalculationCore.StructuralLinks.Count Then
+        If (Not IsNothing(CalculationCore)) And cbLink.SelectedIndex >= 0 And cbLink.SelectedIndex < CalculationCore.StructuralLinks.Count Then
 
-            Dim sl As StructuralLink = _CalculationCore.StructuralLinks(cbLink.SelectedIndex)
+            Dim sl As StructuralLink = CalculationCore.StructuralLinks(cbLink.SelectedIndex)
 
             If cbModes.SelectedIndex >= 0 And cbModes.SelectedIndex < sl.StructuralCore.Modes.Count Then
 

@@ -9,7 +9,7 @@ Namespace DataStore
 
         Public GlobalDecimals As New Dictionary(Of Magnitudes, Integer)
 
-        Public Sub Initialize()
+        Sub New()
 
             UserMagnitudes.Clear()
 
@@ -27,8 +27,6 @@ Namespace DataStore
             GlobalDecimals(Magnitudes.Moment) = 0
 
         End Sub
-
-
 
     End Module
 

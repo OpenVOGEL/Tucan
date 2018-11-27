@@ -24,7 +24,7 @@ Namespace DataStore
 
         Public CamberLines As New List(Of CamberLine)
 
-        Public Sub Initialize()
+        Sub New()
 
             CamberLines.Clear()
             Dim symmetric As New CamberLine

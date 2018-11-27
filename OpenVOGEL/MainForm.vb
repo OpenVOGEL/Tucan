@@ -46,11 +46,11 @@ Public Class MainForm
 
         ' Initialize the camber line database:
 
-        CamberLinesDatabase.Initialize()
+        'CamberLinesDatabase.Initialize()
 
         ' Initialize declaration of global magitudes:
 
-        GlobalMagnitudes.Initialize()
+        'GlobalMagnitudes.Initialize()
 
         ' Force design mode:
 
