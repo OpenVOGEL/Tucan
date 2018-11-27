@@ -129,13 +129,13 @@
     <value>3, 198</value>
   </data>
   <data name="Label1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>252, 36</value>
+    <value>251, 36</value>
   </data>
   <data name="Label1.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
   </data>
   <data name="Label1.Text" xml:space="preserve">
-    <value>Open VOGEL 2018©</value>
+    <value>Open VOGEL 2019©</value>
   </data>
   <data name="&gt;&gt;Label1.Name" xml:space="preserve">
     <value>Label1</value>
@@ -228,13 +228,13 @@ Original author: Guillermo Hazebrouck</value>
     <value>6, 255</value>
   </data>
   <data name="LabelLicencia.Size" type="System.Drawing.Size, System.Drawing">
-    <value>149, 15</value>
+    <value>154, 15</value>
   </data>
   <data name="LabelLicencia.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>
   </data>
   <data name="LabelLicencia.Text" xml:space="preserve">
-    <value>Compilation 2018 / Alpha 1</value>
+    <value>Compilation 2019 / Rlease 1</value>
   </data>
   <data name="LabelLicencia.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
     <value>MiddleRight</value>
@@ -2303,6 +2303,9 @@ Original author: Guillermo Hazebrouck</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
     <value>377, 335</value>
+  </data>
+  <data name="$this.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
   <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
     <value>CenterScreen</value>
