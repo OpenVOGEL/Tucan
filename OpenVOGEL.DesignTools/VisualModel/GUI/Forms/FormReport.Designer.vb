@@ -106,14 +106,14 @@ Partial Class FormReport
         Me.tcResults.Location = New System.Drawing.Point(2, 2)
         Me.tcResults.Name = "tcResults"
         Me.tcResults.SelectedIndex = 0
-        Me.tcResults.Size = New System.Drawing.Size(803, 460)
+        Me.tcResults.Size = New System.Drawing.Size(632, 377)
         Me.tcResults.TabIndex = 8
         '
         'tbTotalLoads
         '
         Me.tbTotalLoads.Location = New System.Drawing.Point(4, 22)
         Me.tbTotalLoads.Name = "tbTotalLoads"
-        Me.tbTotalLoads.Size = New System.Drawing.Size(795, 434)
+        Me.tbTotalLoads.Size = New System.Drawing.Size(624, 351)
         Me.tbTotalLoads.TabIndex = 3
         Me.tbTotalLoads.Text = "Total aerodynamic loads"
         Me.tbTotalLoads.UseVisualStyleBackColor = True
@@ -169,7 +169,7 @@ Partial Class FormReport
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.SystemColors.Control
-        Me.ClientSize = New System.Drawing.Size(807, 464)
+        Me.ClientSize = New System.Drawing.Size(636, 381)
         Me.ControlBox = False
         Me.Controls.Add(Me.tcResults)
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)

@@ -25,6 +25,7 @@ Namespace DataStore
 
             GlobalDecimals(Magnitudes.Force) = 0
             GlobalDecimals(Magnitudes.Moment) = 0
+            GlobalDecimals(Magnitudes.Dimensionless) = 5
 
         End Sub
 

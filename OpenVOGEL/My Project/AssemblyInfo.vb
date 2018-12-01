@@ -8,10 +8,10 @@ Imports System.Runtime.InteropServices
 
 ' Review the values of the assembly attributes
 
-<Assembly: AssemblyTitle("OpenVOGEL 2019")>
-<Assembly: AssemblyDescription("Software for aircraft design")>
+<Assembly: AssemblyTitle("OpenVOGEL 2019 - R01")>
+<Assembly: AssemblyDescription("Software for aerodynamic analysis and aircraft design")>
 <Assembly: AssemblyCompany("OpenVOGEL")>
-<Assembly: AssemblyProduct("VOGEL 2019")>
+<Assembly: AssemblyProduct("OpenVOGEL 2019")>
 <Assembly: AssemblyCopyright("Copyright ©  2019 - Guillermo A. Hazebrouck")>
 <Assembly: AssemblyTrademark("OpenVOGEL")>
 
@@ -32,4 +32,4 @@ Imports System.Runtime.InteropServices
 ' <Assembly: AssemblyVersion("1.0.*")> 
 
 <Assembly: AssemblyVersion("2019.0.0.0")>
-<Assembly: AssemblyFileVersion("2.0.0.0")>
+<Assembly: AssemblyFileVersion("0.0.0.0")>

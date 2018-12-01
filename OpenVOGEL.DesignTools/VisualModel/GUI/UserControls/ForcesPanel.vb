@@ -120,46 +120,55 @@ Public Class ForcesPanel
         rbCL.Top = rbArea.Bottom + 10
         rbCL.Left = rbArea.Left
         rbCL.Parent = Me
+        rbCL.Decimals = GlobalDecimals(Magnitudes.Dimensionless)
 
         rbCDi.Name = "CDi"
         rbCDi.Top = rbCL.Bottom + 10
         rbCDi.Left = rbCL.Left
         rbCDi.Parent = Me
+        rbCDi.Decimals = GlobalDecimals(Magnitudes.Dimensionless)
 
         rbCDp.Name = "CDp"
         rbCDp.Top = rbCDi.Bottom + 10
         rbCDp.Left = rbCDi.Left
         rbCDp.Parent = Me
+        rbCDp.Decimals = GlobalDecimals(Magnitudes.Dimensionless)
 
         rbCFx.Name = "CFx"
         rbCFx.Top = rbCL.Top
         rbCFx.Left = rbCL.Right + 10
         rbCFx.Parent = Me
+        rbCFx.Decimals = GlobalDecimals(Magnitudes.Dimensionless)
 
         rbCFy.Name = "CFy"
         rbCFy.Top = rbCFx.Bottom + 10
         rbCFy.Left = rbCFx.Left
         rbCFy.Parent = Me
+        rbCFy.Decimals = GlobalDecimals(Magnitudes.Dimensionless)
 
         rbCFz.Name = "CFz"
         rbCFz.Top = rbCFy.Bottom + 10
         rbCFz.Left = rbCFy.Left
         rbCFz.Parent = Me
+        rbCFz.Decimals = GlobalDecimals(Magnitudes.Dimensionless)
 
         rbCMx.Name = "CMx"
         rbCMx.Top = rbCFx.Top
         rbCMx.Left = rbCFx.Right + 10
         rbCMx.Parent = Me
+        rbCMx.Decimals = GlobalDecimals(Magnitudes.Dimensionless)
 
         rbCMy.Name = "CMy"
         rbCMy.Top = rbCMx.Bottom + 10
         rbCMy.Left = rbCMx.Left
         rbCMy.Parent = Me
+        rbCMy.Decimals = GlobalDecimals(Magnitudes.Dimensionless)
 
         rbCMz.Name = "CMz"
         rbCMz.Top = rbCMy.Bottom + 10
         rbCMz.Left = rbCMy.Left
         rbCMz.Parent = Me
+        rbCMz.Decimals = GlobalDecimals(Magnitudes.Dimensionless)
 
         ' Net forces:
 

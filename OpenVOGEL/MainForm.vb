@@ -36,21 +36,13 @@ Public Class MainForm
 
         ProjectRoot.Initialize()
 
-        Text = Application.ProductName & "/" & Application.ProductVersion
+        Text = Application.ProductName
 
         ' Initialize OpenGL control:
 
         ControlOpenGL.Dock = DockStyle.Fill
 
         ProjectRoot.SetControlGL(ControlOpenGL.OpenGL)
-
-        ' Initialize the camber line database:
-
-        'CamberLinesDatabase.Initialize()
-
-        ' Initialize declaration of global magitudes:
-
-        'GlobalMagnitudes.Initialize()
 
         ' Force design mode:
 
@@ -63,6 +55,7 @@ Public Class MainForm
         AddHandler mrRibbon.EditVelocityPlane, AddressOf ShowVelocityPlaneFrame
         AddHandler mrRibbon.SwitchToDesignMode, AddressOf SwitchToDesignMode
         AddHandler mrRibbon.SwitchToResultsMode, AddressOf SwitchToPostprocessMode
+        AddHandler ProjectRoot.PathChanged, AddressOf ChangeTitle
 
         ' Read command line arguments:
 
@@ -98,6 +91,12 @@ Public Class MainForm
     Public Sub PushMessage(ByVal Mensaje As String)
 
         lblStatus.Text = Mensaje
+
+    End Sub
+
+    Private Sub ChangeTitle(Text As String)
+
+        Me.Text = Application.ProductName & " - " & Text
 
     End Sub
 

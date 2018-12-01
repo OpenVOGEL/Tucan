@@ -152,31 +152,37 @@ Public Class TotalForcePanel
         rbCFx.Top = rbBeta.Bottom + 10
         rbCFx.Left = rbVelocity.Left
         rbCFx.Parent = Me
+        rbCFx.Decimals = GlobalDecimals(Magnitudes.Dimensionless)
 
         rbCFy.Name = "CFy"
         rbCFy.Top = rbFx.Bottom + 10
         rbCFy.Left = rbVelocity.Left
         rbCFy.Parent = Me
+        rbCFy.Decimals = GlobalDecimals(Magnitudes.Dimensionless)
 
         rbCFz.Name = "CFz"
         rbCFz.Top = rbFy.Bottom + 10
         rbCFz.Left = rbVelocity.Left
         rbCFz.Parent = Me
+        rbCFz.Decimals = GlobalDecimals(Magnitudes.Dimensionless)
 
         rbCMx.Name = "CMx"
         rbCMx.Top = rbBeta.Bottom + 10
         rbCMx.Left = rbFx.Right + 10
         rbCMx.Parent = Me
+        rbCMx.Decimals = GlobalDecimals(Magnitudes.Dimensionless)
 
         rbCMy.Name = "CMy"
         rbCMy.Top = rbMx.Bottom + 10
         rbCMy.Left = rbMx.Left
         rbCMy.Parent = Me
+        rbCMy.Decimals = GlobalDecimals(Magnitudes.Dimensionless)
 
         rbCMz.Name = "CMz"
         rbCMz.Top = rbMy.Bottom + 10
         rbCMz.Left = rbMx.Left
         rbCMz.Parent = Me
+        rbCMz.Decimals = GlobalDecimals(Magnitudes.Dimensionless)
 
         ' Aerodynamic coordinates
 
@@ -200,16 +206,19 @@ Public Class TotalForcePanel
         rbCL.Top = rbBeta.Bottom + 10
         rbCL.Left = rbVelocity.Left
         rbCL.Parent = Me
+        rbCL.Decimals = GlobalDecimals(Magnitudes.Dimensionless)
 
         rbCD.Name = "CD"
         rbCD.Top = rbFx.Bottom + 10
         rbCD.Left = rbVelocity.Left
         rbCD.Parent = Me
+        rbCD.Decimals = GlobalDecimals(Magnitudes.Dimensionless)
 
         rbCY.Name = "CY"
         rbCY.Top = rbFy.Bottom + 10
         rbCY.Left = rbVelocity.Left
         rbCY.Parent = Me
+        rbCY.Decimals = GlobalDecimals(Magnitudes.Dimensionless)
 
 
         ' Labels

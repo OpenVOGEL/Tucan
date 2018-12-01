@@ -36,18 +36,21 @@ Namespace DataStore
 
     Public Module ProjectRoot
 
-        ''' <summary>
-        ''' Project name
-        ''' </summary>
-        ''' <returns></returns>
         Public Property Name As String = "New aircraft"
 
         Public Property FilePath As String = ""
+
         Public Property SimulationSettings As New SimulationSettings
+
         Public Property Model As DesignModel
+
         Public Property Results As New ResultModel
+
         Public Property VelocityPlane As New VelocityPlane
+
         Public Property CalculationCore As Solver
+
+        Public Event PathChanged(Title As String)
 
         Private _Initialized As Boolean = False
 
@@ -860,7 +863,7 @@ Namespace DataStore
 
                 RefreshOnGL()
 
-                End If
+            End If
 
         End Sub
 
@@ -1026,6 +1029,8 @@ Namespace DataStore
 
             RepresentOnGL()
 
+            RaiseEvent PathChanged(FilePath)
+
         End Sub
 
         Public Sub WriteToXML()
@@ -1055,6 +1060,8 @@ Namespace DataStore
             writer.WriteEndElement() ' Project
 
             writer.Close()
+
+            RaiseEvent PathChanged(FilePath)
 
         End Sub
 

@@ -145,9 +145,9 @@ Public Class MainRibbon
 
     Private Sub OpenProject()
 
-        Dim Respuesta1 As MsgBoxResult = MsgBox("The current project will be closed. Do you wish to save it?", vbYesNoCancel, "Opening exsisting project")
+        Dim SaveBeforeClose As MsgBoxResult = MsgBox("The current project will be closed. Do you wish to save it?", vbYesNoCancel, "Opening exsisting project")
 
-        Select Case Respuesta1
+        Select Case SaveBeforeClose
 
             Case MsgBoxResult.Yes
 
@@ -180,9 +180,9 @@ Public Class MainRibbon
 
             dlgOpenFile.Filter = "Vogel proyect files (*.vog)|*.vog"
 
-            Dim Respuesta2 As MsgBoxResult = dlgOpenFile.ShowDialog()
+            Dim AcceptFile As MsgBoxResult = dlgOpenFile.ShowDialog()
 
-            If Respuesta2 = MsgBoxResult.Ok Then
+            If AcceptFile = MsgBoxResult.Ok Then
 
                 ProjectRoot.RestartProject()
                 ProjectRoot.FilePath = dlgOpenFile.FileName
