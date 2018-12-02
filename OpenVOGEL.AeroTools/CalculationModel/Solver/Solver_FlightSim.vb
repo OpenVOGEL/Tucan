@@ -65,7 +65,7 @@ Namespace CalculationModel.Solver
 
                 For Each Lattice In Lattices
 
-                    Lattice.PopulateWakeRings(Settings.Interval, TimeStep)
+                    Lattice.PopulateWakeRings(Settings.Interval, TimeStep, False, Nothing)
 
                 Next
 

@@ -87,7 +87,10 @@ Namespace CalculationModel.Models.Aero
         ''' Convect all wakes on the primiteve edges of the bound lattice and adds new nodes and panels at primitive positions.
         ''' If RemoveOldest is marked as true, oldest wake panels will be removed.
         ''' </summary>
-        Public Sub PopulateWakeRings(Dt As Double, TimeStep As Integer)
+        Public Sub PopulateWakeRings(Dt As Double,
+                                     TimeStep As Integer,
+                                     ExtendWakes As Boolean,
+                                     Extension As EVector3)
 
             Dim N1 As Integer
             Dim N2 As Integer
@@ -142,7 +145,14 @@ Namespace CalculationModel.Models.Aero
 
                     Wake.VortexRings.RemoveRange(0, p)
                     Wake.Nodes.RemoveRange(0, n)
-                    'Wake.Vortices.RemoveRange(0, n + p)
+
+                    ' Extend the trailing part of the wake if requested
+
+                    If ExtendWakes AndAlso TimeStep > Wake.CuttingStep + 5 Then
+
+                        Wake.Extend(Extension)
+
+                    End If
 
                 End If
 
@@ -154,7 +164,10 @@ Namespace CalculationModel.Models.Aero
         ''' Convect all wakes on the primiteve edges of the bound lattice and adds new nodes and panels at primitive positions.
         ''' If RemoveOldest is marked as true, oldest wake panels will be removed.
         ''' </summary>
-        Public Sub PopulateWakeRingsAndVortices(Dt As Double, TimeStep As Integer)
+        Public Sub PopulateWakeRingsAndVortices(Dt As Double,
+                                                TimeStep As Integer,
+                                                ExtendWakes As Boolean,
+                                                Extension As EVector3)
 
             Dim N1 As Integer
             Dim N2 As Integer
@@ -263,6 +276,14 @@ Namespace CalculationModel.Models.Aero
 
                     Wake.VortexRings.RemoveRange(0, p)
 
+                    ' Extend the trailing part of the wake if requested
+
+                    If ExtendWakes AndAlso TimeStep > Wake.CuttingStep + 5 Then
+
+                        Wake.Extend(Extension)
+
+                    End If
+
                 End If
 
             Next
@@ -300,7 +321,10 @@ Namespace CalculationModel.Models.Aero
         ''' <summary>
         ''' Convect all wakes on the primiteve edges of the bound lattice and adds new nodes and panels at primitive positions.
         ''' </summary>
-        Public Sub PopulateWakeVortices(ByVal Dt As Double, ByVal TimeStep As Integer)
+        Public Sub PopulateWakeVortices(Dt As Double,
+                                        TimeStep As Integer,
+                                        ExtendWakes As Boolean,
+                                        Extension As EVector3)
 
             For Each Wake As Wake In Wakes
 
@@ -372,6 +396,14 @@ Namespace CalculationModel.Models.Aero
 
                     Wake.Nodes.RemoveRange(0, n)
                     Wake.Vortices.RemoveRange(0, n + p)
+
+                    ' Extend the trailing part of the wake if requested
+
+                    If ExtendWakes AndAlso TimeStep > Wake.CuttingStep + 5 Then
+
+                        Wake.Extend(Extension)
+
+                    End If
 
                 End If
 

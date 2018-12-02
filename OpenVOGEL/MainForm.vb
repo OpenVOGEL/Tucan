@@ -591,7 +591,7 @@ Public Class MainForm
     End Sub
 
     Private Sub MainForm_MouseWheel(ByVal sender As Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles MyBase.MouseWheel
-        ProjectRoot.Visualization.Proximity = ProjectRoot.Visualization.Proximity + 0.05 * ProjectRoot.SimulationSettings.CharacteristicLenght * e.Delta
+        ProjectRoot.Visualization.Proximity = ProjectRoot.Visualization.Proximity + 0.05 * e.Delta
         ProjectRoot.RepresentOnGL()
     End Sub
 

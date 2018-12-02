@@ -50,7 +50,7 @@ Public Class FormSettings
 
         cbAutoCutOff.Checked = LocalSettings.CalculateCutoff
         cbGlobalSurvey.Checked = LocalSettings.GlobalPanelSurvey
-        LongCaracteristricaBox.Value = LocalSettings.CharacteristicLenght
+        cbExtendWakes.Checked = LocalSettings.ExtendWakes
 
         ' GPU
 
@@ -95,22 +95,10 @@ Public Class FormSettings
         End If
         LocalSettings.CalculateCutoff = cbAutoCutOff.Checked
         LocalSettings.GlobalPanelSurvey = cbGlobalSurvey.Checked
-        LocalSettings.CharacteristicLenght = LongCaracteristricaBox.Value
+        LocalSettings.ExtendWakes = cbExtendWakes.Checked
 
         LocalSettings.UseGpu = cbUseGpu.Checked
         LocalSettings.GpuDeviceId = nudDeviceId.Value
-
-        LocalSettings.GlobalPosition.X = PxBox.Value
-        LocalSettings.GlobalPosition.Y = PyBox.Value
-        LocalSettings.GlobalPosition.Z = PzBox.Value
-
-        LocalSettings.GlobalRotationCenter.X = PxoBox.Value
-        LocalSettings.GlobalRotationCenter.Y = PyoBox.Value
-        LocalSettings.GlobalRotationCenter.Z = PzoBox.Value
-
-        LocalSettings.GlobalOrientation.Psi = PsioBox.Value
-        LocalSettings.GlobalOrientation.Tita = TitaoBox.Value
-        LocalSettings.GlobalOrientation.Fi = FioBox.Value
 
         LocalSettings.StructuralSettings.StructuralLinkingStep = nudStructureStart.Value
         LocalSettings.StructuralSettings.NumberOfModes = nudnModes.Value

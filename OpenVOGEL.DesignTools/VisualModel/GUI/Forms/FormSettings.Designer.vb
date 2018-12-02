@@ -1,9 +1,9 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class FormSettings
     Inherits System.Windows.Forms.Form
 
     'Form reemplaza a Dispose para limpiar la lista de componentes.
-    <System.Diagnostics.DebuggerNonUserCode()> _
+    <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
             If disposing AndAlso components IsNot Nothing Then
@@ -20,7 +20,7 @@ Partial Class FormSettings
     'NOTA: el Diseñador de Windows Forms necesita el siguiente procedimiento
     'Se puede modificar usando el Diseñador de Windows Forms.  
     'No lo modifique con el editor de código.
-    <System.Diagnostics.DebuggerStepThrough()> _
+    <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.tpSettings = New System.Windows.Forms.TabControl()
         Me.tpStream = New System.Windows.Forms.TabPage()
@@ -55,19 +55,21 @@ Partial Class FormSettings
         Me.Label36 = New System.Windows.Forms.Label()
         Me.tpAero = New System.Windows.Forms.TabPage()
         Me.GroupBox2 = New System.Windows.Forms.GroupBox()
+        Me.cbExtendWakes = New System.Windows.Forms.CheckBox()
+        Me.Label5 = New System.Windows.Forms.Label()
+        Me.CSTEPSBox = New System.Windows.Forms.NumericUpDown()
+        Me.Label38 = New System.Windows.Forms.Label()
+        Me.Label7 = New System.Windows.Forms.Label()
         Me.nudAdjacencyTolerance = New System.Windows.Forms.NumericUpDown()
         Me.cbAutoCutOff = New System.Windows.Forms.CheckBox()
+        Me.Label9 = New System.Windows.Forms.Label()
         Me.cbGlobalSurvey = New System.Windows.Forms.CheckBox()
+        Me.DTBox = New System.Windows.Forms.NumericUpDown()
+        Me.Label8 = New System.Windows.Forms.Label()
         Me.Label10 = New System.Windows.Forms.Label()
         Me.CUTOFFBox = New System.Windows.Forms.NumericUpDown()
         Me.Label11 = New System.Windows.Forms.Label()
-        Me.Label8 = New System.Windows.Forms.Label()
-        Me.DTBox = New System.Windows.Forms.NumericUpDown()
-        Me.Label9 = New System.Windows.Forms.Label()
-        Me.Label7 = New System.Windows.Forms.Label()
         Me.Label6 = New System.Windows.Forms.Label()
-        Me.CSTEPSBox = New System.Windows.Forms.NumericUpDown()
-        Me.Label5 = New System.Windows.Forms.Label()
         Me.STEPSBox = New System.Windows.Forms.NumericUpDown()
         Me.Label4 = New System.Windows.Forms.Label()
         Me.tpStructural = New System.Windows.Forms.TabPage()
@@ -78,29 +80,6 @@ Partial Class FormSettings
         Me.Label30 = New System.Windows.Forms.Label()
         Me.nudStructureStart = New System.Windows.Forms.NumericUpDown()
         Me.Label31 = New System.Windows.Forms.Label()
-        Me.tpModel = New System.Windows.Forms.TabPage()
-        Me.Label15 = New System.Windows.Forms.Label()
-        Me.LongCaracteristricaBox = New System.Windows.Forms.NumericUpDown()
-        Me.Label16 = New System.Windows.Forms.Label()
-        Me.GroupBox7 = New System.Windows.Forms.GroupBox()
-        Me.PzBox = New System.Windows.Forms.NumericUpDown()
-        Me.PyBox = New System.Windows.Forms.NumericUpDown()
-        Me.PxBox = New System.Windows.Forms.NumericUpDown()
-        Me.Label62 = New System.Windows.Forms.Label()
-        Me.Label63 = New System.Windows.Forms.Label()
-        Me.Label64 = New System.Windows.Forms.Label()
-        Me.Label17 = New System.Windows.Forms.Label()
-        Me.Label18 = New System.Windows.Forms.Label()
-        Me.Label27 = New System.Windows.Forms.Label()
-        Me.FioBox = New System.Windows.Forms.NumericUpDown()
-        Me.TitaoBox = New System.Windows.Forms.NumericUpDown()
-        Me.PsioBox = New System.Windows.Forms.NumericUpDown()
-        Me.PzoBox = New System.Windows.Forms.NumericUpDown()
-        Me.PyoBox = New System.Windows.Forms.NumericUpDown()
-        Me.PxoBox = New System.Windows.Forms.NumericUpDown()
-        Me.Label68 = New System.Windows.Forms.Label()
-        Me.Label69 = New System.Windows.Forms.Label()
-        Me.Label70 = New System.Windows.Forms.Label()
         Me.tpGpu = New System.Windows.Forms.TabPage()
         Me.Label37 = New System.Windows.Forms.Label()
         Me.cbUseGpu = New System.Windows.Forms.CheckBox()
@@ -123,27 +102,15 @@ Partial Class FormSettings
         CType(Me.nudVx, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.tpAero.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
-        CType(Me.nudAdjacencyTolerance, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.CUTOFFBox, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.DTBox, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.CSTEPSBox, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.nudAdjacencyTolerance, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.DTBox, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.CUTOFFBox, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.STEPSBox, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.tpStructural.SuspendLayout()
         CType(Me.nudDamping, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.nudnModes, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.nudStructureStart, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.tpModel.SuspendLayout()
-        CType(Me.LongCaracteristricaBox, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.GroupBox7.SuspendLayout()
-        CType(Me.PzBox, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.PyBox, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.PxBox, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.FioBox, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.TitaoBox, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.PsioBox, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.PzoBox, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.PyoBox, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.PxoBox, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.tpGpu.SuspendLayout()
         CType(Me.nudDeviceId, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -153,7 +120,6 @@ Partial Class FormSettings
         Me.tpSettings.Controls.Add(Me.tpStream)
         Me.tpSettings.Controls.Add(Me.tpAero)
         Me.tpSettings.Controls.Add(Me.tpStructural)
-        Me.tpSettings.Controls.Add(Me.tpModel)
         Me.tpSettings.Controls.Add(Me.tpGpu)
         Me.tpSettings.Dock = System.Windows.Forms.DockStyle.Top
         Me.tpSettings.Location = New System.Drawing.Point(2, 2)
@@ -533,35 +499,89 @@ Partial Class FormSettings
         '
         'GroupBox2
         '
+        Me.GroupBox2.Controls.Add(Me.cbExtendWakes)
+        Me.GroupBox2.Controls.Add(Me.Label5)
+        Me.GroupBox2.Controls.Add(Me.CSTEPSBox)
+        Me.GroupBox2.Controls.Add(Me.Label38)
+        Me.GroupBox2.Controls.Add(Me.Label7)
         Me.GroupBox2.Controls.Add(Me.nudAdjacencyTolerance)
         Me.GroupBox2.Controls.Add(Me.cbAutoCutOff)
+        Me.GroupBox2.Controls.Add(Me.Label9)
         Me.GroupBox2.Controls.Add(Me.cbGlobalSurvey)
+        Me.GroupBox2.Controls.Add(Me.DTBox)
+        Me.GroupBox2.Controls.Add(Me.Label8)
         Me.GroupBox2.Controls.Add(Me.Label10)
         Me.GroupBox2.Controls.Add(Me.CUTOFFBox)
         Me.GroupBox2.Controls.Add(Me.Label11)
-        Me.GroupBox2.Controls.Add(Me.Label8)
-        Me.GroupBox2.Controls.Add(Me.DTBox)
-        Me.GroupBox2.Controls.Add(Me.Label9)
-        Me.GroupBox2.Controls.Add(Me.Label7)
         Me.GroupBox2.Controls.Add(Me.Label6)
-        Me.GroupBox2.Controls.Add(Me.CSTEPSBox)
-        Me.GroupBox2.Controls.Add(Me.Label5)
         Me.GroupBox2.Controls.Add(Me.STEPSBox)
         Me.GroupBox2.Controls.Add(Me.Label4)
         Me.GroupBox2.Dock = System.Windows.Forms.DockStyle.Top
         Me.GroupBox2.Location = New System.Drawing.Point(3, 3)
         Me.GroupBox2.Name = "GroupBox2"
-        Me.GroupBox2.Size = New System.Drawing.Size(338, 151)
+        Me.GroupBox2.Size = New System.Drawing.Size(338, 238)
         Me.GroupBox2.TabIndex = 2
         Me.GroupBox2.TabStop = False
         Me.GroupBox2.Text = "Simulación parameters"
+        '
+        'cbExtendWakes
+        '
+        Me.cbExtendWakes.AutoSize = True
+        Me.cbExtendWakes.Location = New System.Drawing.Point(18, 159)
+        Me.cbExtendWakes.Name = "cbExtendWakes"
+        Me.cbExtendWakes.Size = New System.Drawing.Size(197, 17)
+        Me.cbExtendWakes.TabIndex = 125
+        Me.cbExtendWakes.Text = "Extend wakes after trimming step"
+        Me.cbExtendWakes.UseVisualStyleBackColor = True
+        '
+        'Label5
+        '
+        Me.Label5.AutoSize = True
+        Me.Label5.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label5.Location = New System.Drawing.Point(15, 134)
+        Me.Label5.Name = "Label5"
+        Me.Label5.Size = New System.Drawing.Size(93, 13)
+        Me.Label5.TabIndex = 101
+        Me.Label5.Text = "Global wake life:"
+        '
+        'CSTEPSBox
+        '
+        Me.CSTEPSBox.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.CSTEPSBox.Location = New System.Drawing.Point(115, 131)
+        Me.CSTEPSBox.Maximum = New Decimal(New Integer() {99999, 0, 0, 0})
+        Me.CSTEPSBox.Minimum = New Decimal(New Integer() {1, 0, 0, 0})
+        Me.CSTEPSBox.Name = "CSTEPSBox"
+        Me.CSTEPSBox.Size = New System.Drawing.Size(51, 22)
+        Me.CSTEPSBox.TabIndex = 102
+        Me.CSTEPSBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.CSTEPSBox.Value = New Decimal(New Integer() {5, 0, 0, 0})
+        '
+        'Label38
+        '
+        Me.Label38.AutoSize = True
+        Me.Label38.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label38.Location = New System.Drawing.Point(247, 105)
+        Me.Label38.Name = "Label38"
+        Me.Label38.Size = New System.Drawing.Size(15, 13)
+        Me.Label38.TabIndex = 123
+        Me.Label38.Text = "m"
+        '
+        'Label7
+        '
+        Me.Label7.AutoSize = True
+        Me.Label7.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label7.Location = New System.Drawing.Point(171, 133)
+        Me.Label7.Name = "Label7"
+        Me.Label7.Size = New System.Drawing.Size(34, 13)
+        Me.Label7.TabIndex = 104
+        Me.Label7.Text = "steps"
         '
         'nudAdjacencyTolerance
         '
         Me.nudAdjacencyTolerance.DecimalPlaces = 6
         Me.nudAdjacencyTolerance.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.nudAdjacencyTolerance.Increment = New Decimal(New Integer() {1, 0, 0, 196608})
-        Me.nudAdjacencyTolerance.Location = New System.Drawing.Point(168, 119)
+        Me.nudAdjacencyTolerance.Location = New System.Drawing.Point(166, 103)
         Me.nudAdjacencyTolerance.Maximum = New Decimal(New Integer() {99999, 0, 0, 0})
         Me.nudAdjacencyTolerance.Name = "nudAdjacencyTolerance"
         Me.nudAdjacencyTolerance.Size = New System.Drawing.Size(77, 22)
@@ -573,39 +593,72 @@ Partial Class FormSettings
         '
         Me.cbAutoCutOff.AutoSize = True
         Me.cbAutoCutOff.Enabled = False
-        Me.cbAutoCutOff.Location = New System.Drawing.Point(187, 93)
+        Me.cbAutoCutOff.Location = New System.Drawing.Point(177, 76)
         Me.cbAutoCutOff.Name = "cbAutoCutOff"
-        Me.cbAutoCutOff.Size = New System.Drawing.Size(50, 17)
+        Me.cbAutoCutOff.Size = New System.Drawing.Size(77, 17)
         Me.cbAutoCutOff.TabIndex = 119
-        Me.cbAutoCutOff.Text = "auto"
+        Me.cbAutoCutOff.Text = "automatic"
         Me.cbAutoCutOff.UseVisualStyleBackColor = True
+        '
+        'Label9
+        '
+        Me.Label9.AutoSize = True
+        Me.Label9.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label9.Location = New System.Drawing.Point(13, 47)
+        Me.Label9.Name = "Label9"
+        Me.Label9.Size = New System.Drawing.Size(48, 13)
+        Me.Label9.TabIndex = 105
+        Me.Label9.Text = "Interval:"
         '
         'cbGlobalSurvey
         '
         Me.cbGlobalSurvey.AutoSize = True
-        Me.cbGlobalSurvey.Location = New System.Drawing.Point(14, 120)
+        Me.cbGlobalSurvey.Location = New System.Drawing.Point(18, 104)
         Me.cbGlobalSurvey.Name = "cbGlobalSurvey"
         Me.cbGlobalSurvey.Size = New System.Drawing.Size(148, 17)
         Me.cbGlobalSurvey.TabIndex = 118
         Me.cbGlobalSurvey.Text = "Global adjacency survey"
         Me.cbGlobalSurvey.UseVisualStyleBackColor = True
         '
+        'DTBox
+        '
+        Me.DTBox.DecimalPlaces = 6
+        Me.DTBox.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.DTBox.Increment = New Decimal(New Integer() {1, 0, 0, 196608})
+        Me.DTBox.Location = New System.Drawing.Point(63, 45)
+        Me.DTBox.Maximum = New Decimal(New Integer() {99999, 0, 0, 0})
+        Me.DTBox.Name = "DTBox"
+        Me.DTBox.Size = New System.Drawing.Size(103, 22)
+        Me.DTBox.TabIndex = 106
+        Me.DTBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.DTBox.Value = New Decimal(New Integer() {52, 0, 0, 262144})
+        '
+        'Label8
+        '
+        Me.Label8.AutoSize = True
+        Me.Label8.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label8.Location = New System.Drawing.Point(171, 47)
+        Me.Label8.Name = "Label8"
+        Me.Label8.Size = New System.Drawing.Size(12, 13)
+        Me.Label8.TabIndex = 107
+        Me.Label8.Text = "s"
+        '
         'Label10
         '
         Me.Label10.AutoSize = True
         Me.Label10.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label10.Location = New System.Drawing.Point(169, 92)
+        Me.Label10.Location = New System.Drawing.Point(160, 76)
         Me.Label10.Name = "Label10"
-        Me.Label10.Size = New System.Drawing.Size(12, 13)
+        Me.Label10.Size = New System.Drawing.Size(15, 13)
         Me.Label10.TabIndex = 111
-        Me.Label10.Text = "s"
+        Me.Label10.Text = "m"
         '
         'CUTOFFBox
         '
         Me.CUTOFFBox.DecimalPlaces = 10
         Me.CUTOFFBox.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.CUTOFFBox.Increment = New Decimal(New Integer() {1, 0, 0, 196608})
-        Me.CUTOFFBox.Location = New System.Drawing.Point(67, 90)
+        Me.CUTOFFBox.Location = New System.Drawing.Point(59, 74)
         Me.CUTOFFBox.Maximum = New Decimal(New Integer() {99999, 0, 0, 0})
         Me.CUTOFFBox.Name = "CUTOFFBox"
         Me.CUTOFFBox.Size = New System.Drawing.Size(95, 22)
@@ -617,95 +670,30 @@ Partial Class FormSettings
         '
         Me.Label11.AutoSize = True
         Me.Label11.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label11.Location = New System.Drawing.Point(11, 92)
+        Me.Label11.Location = New System.Drawing.Point(15, 76)
         Me.Label11.Name = "Label11"
         Me.Label11.Size = New System.Drawing.Size(43, 13)
         Me.Label11.TabIndex = 109
         Me.Label11.Text = "Cutoff:"
         '
-        'Label8
-        '
-        Me.Label8.AutoSize = True
-        Me.Label8.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label8.Location = New System.Drawing.Point(169, 71)
-        Me.Label8.Name = "Label8"
-        Me.Label8.Size = New System.Drawing.Size(12, 13)
-        Me.Label8.TabIndex = 107
-        Me.Label8.Text = "s"
-        '
-        'DTBox
-        '
-        Me.DTBox.DecimalPlaces = 6
-        Me.DTBox.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.DTBox.Increment = New Decimal(New Integer() {1, 0, 0, 196608})
-        Me.DTBox.Location = New System.Drawing.Point(67, 69)
-        Me.DTBox.Maximum = New Decimal(New Integer() {99999, 0, 0, 0})
-        Me.DTBox.Name = "DTBox"
-        Me.DTBox.Size = New System.Drawing.Size(95, 22)
-        Me.DTBox.TabIndex = 106
-        Me.DTBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        Me.DTBox.Value = New Decimal(New Integer() {52, 0, 0, 262144})
-        '
-        'Label9
-        '
-        Me.Label9.AutoSize = True
-        Me.Label9.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label9.Location = New System.Drawing.Point(11, 71)
-        Me.Label9.Name = "Label9"
-        Me.Label9.Size = New System.Drawing.Size(48, 13)
-        Me.Label9.TabIndex = 105
-        Me.Label9.Text = "Interval:"
-        '
-        'Label7
-        '
-        Me.Label7.AutoSize = True
-        Me.Label7.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label7.Location = New System.Drawing.Point(199, 42)
-        Me.Label7.Name = "Label7"
-        Me.Label7.Size = New System.Drawing.Size(34, 13)
-        Me.Label7.TabIndex = 104
-        Me.Label7.Text = "steps"
-        '
         'Label6
         '
         Me.Label6.AutoSize = True
         Me.Label6.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label6.Location = New System.Drawing.Point(199, 21)
+        Me.Label6.Location = New System.Drawing.Point(171, 23)
         Me.Label6.Name = "Label6"
         Me.Label6.Size = New System.Drawing.Size(34, 13)
         Me.Label6.TabIndex = 103
         Me.Label6.Text = "steps"
         '
-        'CSTEPSBox
-        '
-        Me.CSTEPSBox.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.CSTEPSBox.Location = New System.Drawing.Point(143, 40)
-        Me.CSTEPSBox.Maximum = New Decimal(New Integer() {99999, 0, 0, 0})
-        Me.CSTEPSBox.Minimum = New Decimal(New Integer() {1, 0, 0, 0})
-        Me.CSTEPSBox.Name = "CSTEPSBox"
-        Me.CSTEPSBox.Size = New System.Drawing.Size(50, 22)
-        Me.CSTEPSBox.TabIndex = 102
-        Me.CSTEPSBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        Me.CSTEPSBox.Value = New Decimal(New Integer() {5, 0, 0, 0})
-        '
-        'Label5
-        '
-        Me.Label5.AutoSize = True
-        Me.Label5.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label5.Location = New System.Drawing.Point(11, 42)
-        Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(122, 13)
-        Me.Label5.TabIndex = 101
-        Me.Label5.Text = "Global wake rings life:"
-        '
         'STEPSBox
         '
         Me.STEPSBox.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.STEPSBox.Location = New System.Drawing.Point(143, 19)
+        Me.STEPSBox.Location = New System.Drawing.Point(115, 21)
         Me.STEPSBox.Maximum = New Decimal(New Integer() {99999, 0, 0, 0})
         Me.STEPSBox.Minimum = New Decimal(New Integer() {1, 0, 0, 0})
         Me.STEPSBox.Name = "STEPSBox"
-        Me.STEPSBox.Size = New System.Drawing.Size(50, 22)
+        Me.STEPSBox.Size = New System.Drawing.Size(51, 22)
         Me.STEPSBox.TabIndex = 100
         Me.STEPSBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         Me.STEPSBox.Value = New Decimal(New Integer() {5, 0, 0, 0})
@@ -714,7 +702,7 @@ Partial Class FormSettings
         '
         Me.Label4.AutoSize = True
         Me.Label4.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label4.Location = New System.Drawing.Point(11, 21)
+        Me.Label4.Location = New System.Drawing.Point(13, 23)
         Me.Label4.Name = "Label4"
         Me.Label4.Size = New System.Drawing.Size(102, 13)
         Me.Label4.TabIndex = 99
@@ -740,10 +728,10 @@ Partial Class FormSettings
         '
         Me.nudDamping.DecimalPlaces = 3
         Me.nudDamping.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.nudDamping.Location = New System.Drawing.Point(140, 57)
+        Me.nudDamping.Location = New System.Drawing.Point(140, 54)
         Me.nudDamping.Maximum = New Decimal(New Integer() {1000000000, 0, 0, 0})
         Me.nudDamping.Name = "nudDamping"
-        Me.nudDamping.Size = New System.Drawing.Size(50, 22)
+        Me.nudDamping.Size = New System.Drawing.Size(64, 22)
         Me.nudDamping.TabIndex = 124
         Me.nudDamping.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         Me.nudDamping.Value = New Decimal(New Integer() {5, 0, 0, 131072})
@@ -752,7 +740,7 @@ Partial Class FormSettings
         '
         Me.Label28.AutoSize = True
         Me.Label28.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label28.Location = New System.Drawing.Point(8, 59)
+        Me.Label28.Location = New System.Drawing.Point(8, 56)
         Me.Label28.Name = "Label28"
         Me.Label28.Size = New System.Drawing.Size(109, 13)
         Me.Label28.TabIndex = 123
@@ -762,7 +750,7 @@ Partial Class FormSettings
         '
         Me.Label29.AutoSize = True
         Me.Label29.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label29.Location = New System.Drawing.Point(196, 10)
+        Me.Label29.Location = New System.Drawing.Point(210, 10)
         Me.Label29.Name = "Label29"
         Me.Label29.Size = New System.Drawing.Size(34, 13)
         Me.Label29.TabIndex = 122
@@ -771,10 +759,10 @@ Partial Class FormSettings
         'nudnModes
         '
         Me.nudnModes.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.nudnModes.Location = New System.Drawing.Point(140, 29)
+        Me.nudnModes.Location = New System.Drawing.Point(140, 31)
         Me.nudnModes.Maximum = New Decimal(New Integer() {1000000000, 0, 0, 0})
         Me.nudnModes.Name = "nudnModes"
-        Me.nudnModes.Size = New System.Drawing.Size(50, 22)
+        Me.nudnModes.Size = New System.Drawing.Size(64, 22)
         Me.nudnModes.TabIndex = 121
         Me.nudnModes.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         Me.nudnModes.Value = New Decimal(New Integer() {6, 0, 0, 0})
@@ -783,7 +771,7 @@ Partial Class FormSettings
         '
         Me.Label30.AutoSize = True
         Me.Label30.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label30.Location = New System.Drawing.Point(8, 31)
+        Me.Label30.Location = New System.Drawing.Point(8, 33)
         Me.Label30.Name = "Label30"
         Me.Label30.Size = New System.Drawing.Size(102, 13)
         Me.Label30.TabIndex = 120
@@ -795,7 +783,7 @@ Partial Class FormSettings
         Me.nudStructureStart.Location = New System.Drawing.Point(140, 8)
         Me.nudStructureStart.Maximum = New Decimal(New Integer() {1000000000, 0, 0, 0})
         Me.nudStructureStart.Name = "nudStructureStart"
-        Me.nudStructureStart.Size = New System.Drawing.Size(50, 22)
+        Me.nudStructureStart.Size = New System.Drawing.Size(64, 22)
         Me.nudStructureStart.TabIndex = 119
         Me.nudStructureStart.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         Me.nudStructureStart.Value = New Decimal(New Integer() {20, 0, 0, 0})
@@ -809,299 +797,6 @@ Partial Class FormSettings
         Me.Label31.Size = New System.Drawing.Size(126, 13)
         Me.Label31.TabIndex = 118
         Me.Label31.Text = "Structural link starts at:"
-        '
-        'tpModel
-        '
-        Me.tpModel.BackColor = System.Drawing.Color.White
-        Me.tpModel.Controls.Add(Me.Label15)
-        Me.tpModel.Controls.Add(Me.LongCaracteristricaBox)
-        Me.tpModel.Controls.Add(Me.Label16)
-        Me.tpModel.Controls.Add(Me.GroupBox7)
-        Me.tpModel.Location = New System.Drawing.Point(4, 22)
-        Me.tpModel.Name = "tpModel"
-        Me.tpModel.Size = New System.Drawing.Size(344, 247)
-        Me.tpModel.TabIndex = 3
-        Me.tpModel.Text = "Model"
-        '
-        'Label15
-        '
-        Me.Label15.AutoSize = True
-        Me.Label15.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label15.Location = New System.Drawing.Point(196, 98)
-        Me.Label15.Name = "Label15"
-        Me.Label15.Size = New System.Drawing.Size(16, 13)
-        Me.Label15.TabIndex = 102
-        Me.Label15.Text = "m"
-        '
-        'LongCaracteristricaBox
-        '
-        Me.LongCaracteristricaBox.DecimalPlaces = 3
-        Me.LongCaracteristricaBox.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LongCaracteristricaBox.Increment = New Decimal(New Integer() {1, 0, 0, 65536})
-        Me.LongCaracteristricaBox.Location = New System.Drawing.Point(140, 96)
-        Me.LongCaracteristricaBox.Maximum = New Decimal(New Integer() {99999, 0, 0, 0})
-        Me.LongCaracteristricaBox.Minimum = New Decimal(New Integer() {99999, 0, 0, -2147483648})
-        Me.LongCaracteristricaBox.Name = "LongCaracteristricaBox"
-        Me.LongCaracteristricaBox.Size = New System.Drawing.Size(50, 22)
-        Me.LongCaracteristricaBox.TabIndex = 101
-        Me.LongCaracteristricaBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        Me.LongCaracteristricaBox.Value = New Decimal(New Integer() {1, 0, 0, 0})
-        '
-        'Label16
-        '
-        Me.Label16.AutoSize = True
-        Me.Label16.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label16.Location = New System.Drawing.Point(8, 98)
-        Me.Label16.Name = "Label16"
-        Me.Label16.Size = New System.Drawing.Size(116, 13)
-        Me.Label16.TabIndex = 100
-        Me.Label16.Text = "Characteristic length:"
-        '
-        'GroupBox7
-        '
-        Me.GroupBox7.Controls.Add(Me.PzBox)
-        Me.GroupBox7.Controls.Add(Me.PyBox)
-        Me.GroupBox7.Controls.Add(Me.PxBox)
-        Me.GroupBox7.Controls.Add(Me.Label62)
-        Me.GroupBox7.Controls.Add(Me.Label63)
-        Me.GroupBox7.Controls.Add(Me.Label64)
-        Me.GroupBox7.Controls.Add(Me.Label17)
-        Me.GroupBox7.Controls.Add(Me.Label18)
-        Me.GroupBox7.Controls.Add(Me.Label27)
-        Me.GroupBox7.Controls.Add(Me.FioBox)
-        Me.GroupBox7.Controls.Add(Me.TitaoBox)
-        Me.GroupBox7.Controls.Add(Me.PsioBox)
-        Me.GroupBox7.Controls.Add(Me.PzoBox)
-        Me.GroupBox7.Controls.Add(Me.PyoBox)
-        Me.GroupBox7.Controls.Add(Me.PxoBox)
-        Me.GroupBox7.Controls.Add(Me.Label68)
-        Me.GroupBox7.Controls.Add(Me.Label69)
-        Me.GroupBox7.Controls.Add(Me.Label70)
-        Me.GroupBox7.Dock = System.Windows.Forms.DockStyle.Top
-        Me.GroupBox7.Enabled = False
-        Me.GroupBox7.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.GroupBox7.Location = New System.Drawing.Point(0, 0)
-        Me.GroupBox7.Name = "GroupBox7"
-        Me.GroupBox7.Size = New System.Drawing.Size(344, 95)
-        Me.GroupBox7.TabIndex = 89
-        Me.GroupBox7.TabStop = False
-        Me.GroupBox7.Text = "Global position and orientation"
-        '
-        'PzBox
-        '
-        Me.PzBox.DecimalPlaces = 4
-        Me.PzBox.Font = New System.Drawing.Font("Segoe UI", 8.25!)
-        Me.PzBox.Increment = New Decimal(New Integer() {1, 0, 0, 65536})
-        Me.PzBox.Location = New System.Drawing.Point(29, 64)
-        Me.PzBox.Maximum = New Decimal(New Integer() {99999, 0, 0, 0})
-        Me.PzBox.Minimum = New Decimal(New Integer() {99999, 0, 0, -2147483648})
-        Me.PzBox.Name = "PzBox"
-        Me.PzBox.Size = New System.Drawing.Size(85, 22)
-        Me.PzBox.TabIndex = 105
-        Me.PzBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        '
-        'PyBox
-        '
-        Me.PyBox.DecimalPlaces = 4
-        Me.PyBox.Font = New System.Drawing.Font("Segoe UI", 8.25!)
-        Me.PyBox.Increment = New Decimal(New Integer() {1, 0, 0, 65536})
-        Me.PyBox.Location = New System.Drawing.Point(29, 43)
-        Me.PyBox.Maximum = New Decimal(New Integer() {99999, 0, 0, 0})
-        Me.PyBox.Minimum = New Decimal(New Integer() {99999, 0, 0, -2147483648})
-        Me.PyBox.Name = "PyBox"
-        Me.PyBox.Size = New System.Drawing.Size(85, 22)
-        Me.PyBox.TabIndex = 104
-        Me.PyBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        '
-        'PxBox
-        '
-        Me.PxBox.DecimalPlaces = 4
-        Me.PxBox.Font = New System.Drawing.Font("Segoe UI", 8.25!)
-        Me.PxBox.Increment = New Decimal(New Integer() {1, 0, 0, 65536})
-        Me.PxBox.Location = New System.Drawing.Point(29, 22)
-        Me.PxBox.Maximum = New Decimal(New Integer() {99999, 0, 0, 0})
-        Me.PxBox.Minimum = New Decimal(New Integer() {99999, 0, 0, -2147483648})
-        Me.PxBox.Name = "PxBox"
-        Me.PxBox.Size = New System.Drawing.Size(85, 22)
-        Me.PxBox.TabIndex = 103
-        Me.PxBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        '
-        'Label62
-        '
-        Me.Label62.AutoSize = True
-        Me.Label62.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!)
-        Me.Label62.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.Label62.Location = New System.Drawing.Point(8, 24)
-        Me.Label62.Name = "Label62"
-        Me.Label62.Size = New System.Drawing.Size(14, 13)
-        Me.Label62.TabIndex = 100
-        Me.Label62.Text = "X"
-        '
-        'Label63
-        '
-        Me.Label63.AutoSize = True
-        Me.Label63.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!)
-        Me.Label63.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.Label63.Location = New System.Drawing.Point(8, 45)
-        Me.Label63.Name = "Label63"
-        Me.Label63.Size = New System.Drawing.Size(14, 13)
-        Me.Label63.TabIndex = 101
-        Me.Label63.Text = "Y"
-        '
-        'Label64
-        '
-        Me.Label64.AutoSize = True
-        Me.Label64.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!)
-        Me.Label64.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.Label64.Location = New System.Drawing.Point(8, 66)
-        Me.Label64.Name = "Label64"
-        Me.Label64.Size = New System.Drawing.Size(14, 13)
-        Me.Label64.TabIndex = 102
-        Me.Label64.Text = "Z"
-        '
-        'Label17
-        '
-        Me.Label17.AutoSize = True
-        Me.Label17.Font = New System.Drawing.Font("Symbol", 9.75!)
-        Me.Label17.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.Label17.Location = New System.Drawing.Point(229, 63)
-        Me.Label17.Name = "Label17"
-        Me.Label17.Size = New System.Drawing.Size(15, 16)
-        Me.Label17.TabIndex = 99
-        Me.Label17.Text = "j"
-        '
-        'Label18
-        '
-        Me.Label18.AutoSize = True
-        Me.Label18.Font = New System.Drawing.Font("Symbol", 9.75!)
-        Me.Label18.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.Label18.Location = New System.Drawing.Point(228, 22)
-        Me.Label18.Name = "Label18"
-        Me.Label18.Size = New System.Drawing.Size(17, 16)
-        Me.Label18.TabIndex = 98
-        Me.Label18.Text = "y"
-        '
-        'Label27
-        '
-        Me.Label27.AutoSize = True
-        Me.Label27.Font = New System.Drawing.Font("Symbol", 9.75!)
-        Me.Label27.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.Label27.Location = New System.Drawing.Point(229, 45)
-        Me.Label27.Name = "Label27"
-        Me.Label27.Size = New System.Drawing.Size(15, 16)
-        Me.Label27.TabIndex = 97
-        Me.Label27.Text = "q"
-        '
-        'FioBox
-        '
-        Me.FioBox.DecimalPlaces = 3
-        Me.FioBox.Font = New System.Drawing.Font("Segoe UI", 8.25!)
-        Me.FioBox.Increment = New Decimal(New Integer() {1, 0, 0, 65536})
-        Me.FioBox.Location = New System.Drawing.Point(247, 64)
-        Me.FioBox.Maximum = New Decimal(New Integer() {360, 0, 0, 0})
-        Me.FioBox.Minimum = New Decimal(New Integer() {360, 0, 0, -2147483648})
-        Me.FioBox.Name = "FioBox"
-        Me.FioBox.Size = New System.Drawing.Size(85, 22)
-        Me.FioBox.TabIndex = 89
-        Me.FioBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        '
-        'TitaoBox
-        '
-        Me.TitaoBox.DecimalPlaces = 3
-        Me.TitaoBox.Font = New System.Drawing.Font("Segoe UI", 8.25!)
-        Me.TitaoBox.Increment = New Decimal(New Integer() {1, 0, 0, 65536})
-        Me.TitaoBox.Location = New System.Drawing.Point(247, 43)
-        Me.TitaoBox.Maximum = New Decimal(New Integer() {360, 0, 0, 0})
-        Me.TitaoBox.Minimum = New Decimal(New Integer() {360, 0, 0, -2147483648})
-        Me.TitaoBox.Name = "TitaoBox"
-        Me.TitaoBox.Size = New System.Drawing.Size(85, 22)
-        Me.TitaoBox.TabIndex = 88
-        Me.TitaoBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        '
-        'PsioBox
-        '
-        Me.PsioBox.DecimalPlaces = 3
-        Me.PsioBox.Font = New System.Drawing.Font("Segoe UI", 8.25!)
-        Me.PsioBox.Increment = New Decimal(New Integer() {1, 0, 0, 65536})
-        Me.PsioBox.Location = New System.Drawing.Point(247, 22)
-        Me.PsioBox.Maximum = New Decimal(New Integer() {360, 0, 0, 0})
-        Me.PsioBox.Minimum = New Decimal(New Integer() {360, 0, 0, -2147483648})
-        Me.PsioBox.Name = "PsioBox"
-        Me.PsioBox.Size = New System.Drawing.Size(85, 22)
-        Me.PsioBox.TabIndex = 87
-        Me.PsioBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        '
-        'PzoBox
-        '
-        Me.PzoBox.DecimalPlaces = 4
-        Me.PzoBox.Font = New System.Drawing.Font("Segoe UI", 8.25!)
-        Me.PzoBox.Increment = New Decimal(New Integer() {1, 0, 0, 65536})
-        Me.PzoBox.Location = New System.Drawing.Point(138, 64)
-        Me.PzoBox.Maximum = New Decimal(New Integer() {99999, 0, 0, 0})
-        Me.PzoBox.Minimum = New Decimal(New Integer() {99999, 0, 0, -2147483648})
-        Me.PzoBox.Name = "PzoBox"
-        Me.PzoBox.Size = New System.Drawing.Size(85, 22)
-        Me.PzoBox.TabIndex = 86
-        Me.PzoBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        '
-        'PyoBox
-        '
-        Me.PyoBox.DecimalPlaces = 4
-        Me.PyoBox.Font = New System.Drawing.Font("Segoe UI", 8.25!)
-        Me.PyoBox.Increment = New Decimal(New Integer() {1, 0, 0, 65536})
-        Me.PyoBox.Location = New System.Drawing.Point(138, 43)
-        Me.PyoBox.Maximum = New Decimal(New Integer() {99999, 0, 0, 0})
-        Me.PyoBox.Minimum = New Decimal(New Integer() {99999, 0, 0, -2147483648})
-        Me.PyoBox.Name = "PyoBox"
-        Me.PyoBox.Size = New System.Drawing.Size(85, 22)
-        Me.PyoBox.TabIndex = 85
-        Me.PyoBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        '
-        'PxoBox
-        '
-        Me.PxoBox.DecimalPlaces = 4
-        Me.PxoBox.Font = New System.Drawing.Font("Segoe UI", 8.25!)
-        Me.PxoBox.Increment = New Decimal(New Integer() {1, 0, 0, 65536})
-        Me.PxoBox.Location = New System.Drawing.Point(138, 22)
-        Me.PxoBox.Maximum = New Decimal(New Integer() {99999, 0, 0, 0})
-        Me.PxoBox.Minimum = New Decimal(New Integer() {99999, 0, 0, -2147483648})
-        Me.PxoBox.Name = "PxoBox"
-        Me.PxoBox.Size = New System.Drawing.Size(85, 22)
-        Me.PxoBox.TabIndex = 84
-        Me.PxoBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        '
-        'Label68
-        '
-        Me.Label68.AutoSize = True
-        Me.Label68.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!)
-        Me.Label68.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.Label68.Location = New System.Drawing.Point(118, 24)
-        Me.Label68.Name = "Label68"
-        Me.Label68.Size = New System.Drawing.Size(17, 13)
-        Me.Label68.TabIndex = 63
-        Me.Label68.Text = "Xr"
-        '
-        'Label69
-        '
-        Me.Label69.AutoSize = True
-        Me.Label69.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!)
-        Me.Label69.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.Label69.Location = New System.Drawing.Point(118, 45)
-        Me.Label69.Name = "Label69"
-        Me.Label69.Size = New System.Drawing.Size(17, 13)
-        Me.Label69.TabIndex = 64
-        Me.Label69.Text = "Yr"
-        '
-        'Label70
-        '
-        Me.Label70.AutoSize = True
-        Me.Label70.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!)
-        Me.Label70.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.Label70.Location = New System.Drawing.Point(118, 66)
-        Me.Label70.Name = "Label70"
-        Me.Label70.Size = New System.Drawing.Size(17, 13)
-        Me.Label70.TabIndex = 65
-        Me.Label70.Text = "Zr"
         '
         'tpGpu
         '
@@ -1223,30 +918,16 @@ Partial Class FormSettings
         Me.tpAero.ResumeLayout(False)
         Me.GroupBox2.ResumeLayout(False)
         Me.GroupBox2.PerformLayout()
-        CType(Me.nudAdjacencyTolerance, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.CUTOFFBox, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.DTBox, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.CSTEPSBox, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.nudAdjacencyTolerance, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.DTBox, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.CUTOFFBox, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.STEPSBox, System.ComponentModel.ISupportInitialize).EndInit()
         Me.tpStructural.ResumeLayout(False)
         Me.tpStructural.PerformLayout()
         CType(Me.nudDamping, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.nudnModes, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.nudStructureStart, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.tpModel.ResumeLayout(False)
-        Me.tpModel.PerformLayout()
-        CType(Me.LongCaracteristricaBox, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.GroupBox7.ResumeLayout(False)
-        Me.GroupBox7.PerformLayout()
-        CType(Me.PzBox, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.PyBox, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.PxBox, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.FioBox, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.TitaoBox, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.PsioBox, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.PzoBox, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.PyoBox, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.PxoBox, System.ComponentModel.ISupportInitialize).EndInit()
         Me.tpGpu.ResumeLayout(False)
         Me.tpGpu.PerformLayout()
         CType(Me.nudDeviceId, System.ComponentModel.ISupportInitialize).EndInit()
@@ -1308,29 +989,6 @@ Partial Class FormSettings
     Friend WithEvents Label30 As System.Windows.Forms.Label
     Friend WithEvents nudStructureStart As System.Windows.Forms.NumericUpDown
     Friend WithEvents Label31 As System.Windows.Forms.Label
-    Friend WithEvents tpModel As System.Windows.Forms.TabPage
-    Friend WithEvents Label15 As System.Windows.Forms.Label
-    Friend WithEvents LongCaracteristricaBox As System.Windows.Forms.NumericUpDown
-    Friend WithEvents Label16 As System.Windows.Forms.Label
-    Friend WithEvents GroupBox7 As System.Windows.Forms.GroupBox
-    Friend WithEvents PzBox As System.Windows.Forms.NumericUpDown
-    Friend WithEvents PyBox As System.Windows.Forms.NumericUpDown
-    Friend WithEvents PxBox As System.Windows.Forms.NumericUpDown
-    Friend WithEvents Label62 As System.Windows.Forms.Label
-    Friend WithEvents Label63 As System.Windows.Forms.Label
-    Friend WithEvents Label64 As System.Windows.Forms.Label
-    Friend WithEvents Label17 As System.Windows.Forms.Label
-    Friend WithEvents Label18 As System.Windows.Forms.Label
-    Friend WithEvents Label27 As System.Windows.Forms.Label
-    Friend WithEvents FioBox As System.Windows.Forms.NumericUpDown
-    Friend WithEvents TitaoBox As System.Windows.Forms.NumericUpDown
-    Friend WithEvents PsioBox As System.Windows.Forms.NumericUpDown
-    Friend WithEvents PzoBox As System.Windows.Forms.NumericUpDown
-    Friend WithEvents PyoBox As System.Windows.Forms.NumericUpDown
-    Friend WithEvents PxoBox As System.Windows.Forms.NumericUpDown
-    Friend WithEvents Label68 As System.Windows.Forms.Label
-    Friend WithEvents Label69 As System.Windows.Forms.Label
-    Friend WithEvents Label70 As System.Windows.Forms.Label
     Friend WithEvents Label32 As System.Windows.Forms.Label
     Friend WithEvents Label33 As System.Windows.Forms.Label
     Friend WithEvents nudStaticPressure As System.Windows.Forms.NumericUpDown
@@ -1339,4 +997,6 @@ Partial Class FormSettings
     Friend WithEvents nudDeviceId As Windows.Forms.NumericUpDown
     Friend WithEvents Label34 As Windows.Forms.Label
     Friend WithEvents Label37 As Windows.Forms.Label
+    Friend WithEvents Label38 As Windows.Forms.Label
+    Friend WithEvents cbExtendWakes As Windows.Forms.CheckBox
 End Class

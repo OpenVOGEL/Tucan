@@ -194,7 +194,7 @@ Namespace CalculationModel.Solver
 
                 For Each Lattice In Lattices
 
-                    Lattice.PopulateWakeVortices(Settings.Interval, TimeStep)
+                    Lattice.PopulateWakeVortices(Settings.Interval, TimeStep, False, Nothing)
 
                 Next
 
@@ -488,7 +488,7 @@ Namespace CalculationModel.Solver
 
                     For Each Lattice In Lattices
 
-                        Lattice.PopulateWakeVortices(Settings.Interval, TimeStep)
+                        Lattice.PopulateWakeVortices(Settings.Interval, TimeStep, False, Nothing)
 
                     Next
 

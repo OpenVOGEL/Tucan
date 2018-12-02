@@ -46,22 +46,6 @@ Namespace CalculationModel.Models.Aero
         Public Property CuttingStep As Integer = 100
 
         ''' <summary>
-        ''' Indicates if a fixed step has to be used (use this to model a prefixed wake).
-        ''' </summary>
-        ''' <value></value>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
-        Public Property FixStep As Boolean = False
-
-        ''' <summary>
-        ''' Step to move the nodal points when the wake convection is prefixed.
-        ''' </summary>
-        ''' <value></value>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
-        Public Property FidexedStep As New EVector3
-
-        ''' <summary>
         ''' Indicates if the inner circulation must be supressed in order to model
         ''' an anchor line.
         ''' </summary>
@@ -70,26 +54,31 @@ Namespace CalculationModel.Models.Aero
         ''' <remarks></remarks>
         Public Property SupressInnerCircuation As Boolean = False
 
+        ''' <summary>
+        ''' Convects the wake using the local nodal velocity
+        ''' </summary>
+        ''' <param name="Dt">The time interval</param>
         Public Sub Convect(ByVal Dt As Double)
 
-            If FixStep Then
+            Parallel.ForEach(Nodes, Sub(Node As Node)
+                                        Node.Position.X += Dt * Node.Velocity.X
+                                        Node.Position.Y += Dt * Node.Velocity.Y
+                                        Node.Position.Z += Dt * Node.Velocity.Z
+                                    End Sub)
 
-                Parallel.ForEach(Nodes, Sub(Node As Node)
-                                            Node.Position.X += FidexedStep.X
-                                            Node.Position.Y += FidexedStep.Y
-                                            Node.Position.Z += FidexedStep.Z
-                                        End Sub)
+        End Sub
 
-            Else
+        ''' <summary>
+        ''' Extends the trailing part of the wake
+        ''' </summary>
+        ''' <param name="Vector">The vector used to extend the wake</param>
+        Public Sub Extend(ByVal Vector As EVector3)
 
-                Parallel.ForEach(Nodes, Sub(Node As Node)
-                                            Node.Position.X += Dt * Node.Velocity.X
-                                            Node.Position.Y += Dt * Node.Velocity.Y
-                                            Node.Position.Z += Dt * Node.Velocity.Z
-                                        End Sub)
-
-            End If
-
+            For i = 0 To Primitive.Nodes.Count - 1
+                Nodes(i).Position.X += Vector.X
+                Nodes(i).Position.Y += Vector.Y
+                Nodes(i).Position.Z += Vector.Z
+            Next
 
         End Sub
 

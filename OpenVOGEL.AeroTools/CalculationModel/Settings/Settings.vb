@@ -160,32 +160,10 @@ Namespace CalculationModel.Settings
         Public Property AeroelasticHistogram As IAeroelasticHistogram
 
         ''' <summary>
-        ''' Parameter used to parametrizise force and moment coeficients.
+        ''' The type of analysis to be performed.
         ''' </summary>
-        ''' <remarks></remarks>
-        Public Property CharacteristicLenght As Double = 1
-
-        'Public Property SolverType As SolverType = SolverType.stParallelNET
-
+        ''' <returns></returns>
         Public Property AnalysisType As CalculationType = CalculationType.ctSteady
-
-        ''' <summary>
-        ''' Global model position
-        ''' </summary>
-        ''' <remarks></remarks>
-        Public Property GlobalPosition As New EVector3
-
-        ''' <summary>
-        ''' Global center of rotation
-        ''' </summary>
-        ''' <remarks></remarks>
-        Public Property GlobalRotationCenter As New EVector3
-
-        ''' <summary>
-        ''' Global orientation
-        ''' </summary>
-        ''' <remarks></remarks>
-        Public Property GlobalOrientation As New EulerAngles
 
         ''' <summary>
         ''' Indicates if adjacent rings should be searched by proximity and not by indexation.
@@ -229,6 +207,12 @@ Namespace CalculationModel.Settings
         Public Property GpuDeviceId As Integer = 0
 
         ''' <summary>
+        ''' Indicates if the wakes must be prefixed.
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property ExtendWakes As Boolean = False
+
+        ''' <summary>
         ''' Sets default values.
         ''' </summary>
         ''' <remarks></remarks>
@@ -257,7 +241,7 @@ Namespace CalculationModel.Settings
             Interval = 0.01
             Cutoff = 0.0001
             CalculateCutoff = False
-
+            ExtendWakes = False
             GlobalPanelSurvey = True
 
         End Sub
@@ -283,8 +267,7 @@ Namespace CalculationModel.Settings
             GlobalPanelSurvey = SimuData.GlobalPanelSurvey
             UseGpu = SimuData.UseGpu
             GpuDeviceId = SimuData.GpuDeviceId
-            GlobalPosition.Assign(SimuData.GlobalPosition)
-            GlobalRotationCenter = SimuData.GlobalRotationCenter
+            ExtendWakes = SimuData.ExtendWakes
             UnsteadyVelocity.Assign(SimuData.UnsteadyVelocity)
             StructuralSettings.Assign(SimuData.StructuralSettings)
 
@@ -350,6 +333,7 @@ Namespace CalculationModel.Settings
             writer.WriteAttributeString("Cutoff", String.Format("{0}", Cutoff))
             writer.WriteAttributeString("GlobalSurvey", String.Format("{0}", GlobalPanelSurvey))
             writer.WriteAttributeString("SurveyTolerance", String.Format("{0}", SurveyTolerance))
+            writer.WriteAttributeString("ExtendWakes", String.Format("{0}", ExtendWakes))
             writer.WriteAttributeString("UseGpu", String.Format("{0}", UseGpu))
             writer.WriteAttributeString("GpuDeviceId", String.Format("{0}", GpuDeviceId))
             writer.WriteEndElement()
@@ -407,6 +391,7 @@ Namespace CalculationModel.Settings
                             Cutoff = IOXML.ReadDouble(reader, "Cutoff", 0.0001)
                             GlobalPanelSurvey = IOXML.ReadBoolean(reader, "GlobalSurvey", False)
                             SurveyTolerance = IOXML.ReadDouble(reader, "SurveyTolerance", 0.001)
+                            ExtendWakes = IOXML.ReadBoolean(reader, "ExtendWakes", False)
                             UseGpu = IOXML.ReadBoolean(reader, "UseGpu", False)
                             GpuDeviceId = IOXML.ReadInteger(reader, "GpuDeviceId", 0)
 

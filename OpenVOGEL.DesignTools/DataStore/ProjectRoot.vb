@@ -305,7 +305,7 @@ Namespace DataStore
             ControlGL.Rotate(Orientacion.Fi, Orientacion.Tita, Orientacion.Psi)
             ControlGL.Scale(Visualization.Proximity, Visualization.Proximity, Visualization.Proximity)
 
-            Visualization.Axes.Extension = SimulationSettings.CharacteristicLenght
+            Visualization.Axes.Extension = 1.0
             Visualization.Axes.GenerateWireFrame(ControlGL)
             Visualization.ReferenceFrame.GenerateWireFrame(ControlGL)
 
@@ -378,7 +378,7 @@ Namespace DataStore
 
             ListOfSurfacesToDraw.Clear()
 
-            Visualization.Axes.Extension = SimulationSettings.CharacteristicLenght
+            Visualization.Axes.Extension = 1.0
 
             Dim Coordinates As GLElement
             Coordinates.Name = ControlGL.GenLists(1)
@@ -577,7 +577,7 @@ Namespace DataStore
             ControlGL.Rotate(Orientacion.Fi, Orientacion.Tita, Orientacion.Psi)
             ControlGL.Scale(Visualization.Proximity, Visualization.Proximity, Visualization.Proximity)
 
-            Visualization.Axes.Extension = SimulationSettings.CharacteristicLenght
+            Visualization.Axes.Extension = 1.0
             Visualization.Axes.GenerateWireFrame(ControlGL)
             Visualization.ReferenceFrame.GenerateWireFrame(ControlGL)
 

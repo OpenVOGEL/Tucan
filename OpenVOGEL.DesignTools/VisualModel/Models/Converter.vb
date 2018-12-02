@@ -42,7 +42,10 @@ Namespace VisualModel.Models
         ''' <param name="GenerateStructure">Indicates if a structural link should be created</param>
         ''' <remarks></remarks>
         <Extension()>
-        Public Sub GenerateFromExistingModel(This As Solver, ByVal Model As DesignModel, Settings As SimulationSettings, Optional ByVal GenerateStructure As Boolean = False)
+        Public Sub GenerateFromExistingModel(This As Solver,
+                                             ByVal Model As DesignModel,
+                                             Settings As SimulationSettings,
+                                             Optional ByVal GenerateStructure As Boolean = False)
 
             This.Settings = New SimulationSettings
             This.Settings.Assign(Settings)
@@ -176,7 +179,11 @@ Namespace VisualModel.Models
         ''' <param name="GenerateStructure"></param>
         ''' <remarks></remarks>
         <Extension()>
-        Private Sub AddLiftingSurface(This As Solver, ByRef Surface As LiftingSurface, Optional ByVal Mirror As Boolean = False, Optional ByVal GenerateStructure As Boolean = False, Optional IsSymetric As Boolean = True)
+        Private Sub AddLiftingSurface(This As Solver,
+                                      ByRef Surface As LiftingSurface,
+                                      Optional ByVal Mirror As Boolean = False,
+                                      Optional ByVal GenerateStructure As Boolean = False,
+                                      Optional IsSymetric As Boolean = True)
 
             ' Add nodal points:
 

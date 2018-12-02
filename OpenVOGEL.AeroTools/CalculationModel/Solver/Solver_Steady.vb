@@ -16,6 +16,7 @@
 'along with this program.  If Not, see < http:  //www.gnu.org/licenses/>.
 
 Imports DotNumerics.LinearAlgebra
+Imports OpenVOGEL.MathTools.Algebra.EuclideanSpace
 
 Namespace CalculationModel.Solver
 
@@ -58,6 +59,10 @@ Namespace CalculationModel.Solver
             _StreamDynamicPressure = 0.5 * _StreamDensity * SquareVelocity
 
             Dim WithStreamOmega As Boolean = _StreamOmega.EuclideanNorm > 0
+
+            Dim WakeExtension As New EVector3(Settings.StreamVelocity)
+            WakeExtension.Normalize()
+            WakeExtension.Scale(100.0)
 
             RaiseEvent PushMessage("Building doublets matrix")
             BuildMatrixForDoublets()
@@ -106,13 +111,13 @@ Namespace CalculationModel.Solver
 
                     If WithSources And Settings.StrongWakeInfluence Then
 
-                        Lattice.PopulateWakeRingsAndVortices(Settings.Interval, TimeStep)
+                        Lattice.PopulateWakeRingsAndVortices(Settings.Interval, TimeStep, Settings.ExtendWakes, WakeExtension)
 
                     Else
 
                         ' We tame the root vortex when there are fuselages.
 
-                        Lattice.PopulateWakeVortices(Settings.Interval, TimeStep)
+                        Lattice.PopulateWakeVortices(Settings.Interval, TimeStep, Settings.ExtendWakes, WakeExtension)
 
                     End If
 
