@@ -224,59 +224,25 @@ Namespace VisualModel.Models.Components
 
                     ElseIf VisualProperties.ShowColormap Then
 
-                        If Panel.IsSlender Then
+                        gl.Color(Panel.CpColor.R, Panel.CpColor.G, Panel.CpColor.B)
 
-                            Node = Mesh.Nodes(Panel.N1)
-                            gl.Color(Node.PressureDeltaColor.R, Node.PressureDeltaColor.G, Node.PressureDeltaColor.B)
-                            gl.Vertex(Node.Position.X, Node.Position.Y, Node.Position.Z)
+                        Node = Mesh.Nodes(Panel.N1)
+                        gl.Vertex(Node.Position.X, Node.Position.Y, Node.Position.Z)
 
-                            Node = Mesh.Nodes(Panel.N2)
-                            gl.Color(Node.PressureDeltaColor.R, Node.PressureDeltaColor.G, Node.PressureDeltaColor.B)
-                            gl.Vertex(Node.Position.X, Node.Position.Y, Node.Position.Z)
+                        Node = Mesh.Nodes(Panel.N2)
+                        gl.Vertex(Node.Position.X, Node.Position.Y, Node.Position.Z)
 
-                            Node = Mesh.Nodes(Panel.N3)
-                            gl.Color(Node.PressureDeltaColor.R, Node.PressureDeltaColor.G, Node.PressureDeltaColor.B)
-                            gl.Vertex(Node.Position.X, Node.Position.Y, Node.Position.Z)
+                        Node = Mesh.Nodes(Panel.N3)
+                        gl.Vertex(Node.Position.X, Node.Position.Y, Node.Position.Z)
 
-                            Node = Mesh.Nodes(Panel.N3)
-                            gl.Color(Node.PressureDeltaColor.R, Node.PressureDeltaColor.G, Node.PressureDeltaColor.B)
-                            gl.Vertex(Node.Position.X, Node.Position.Y, Node.Position.Z)
+                        Node = Mesh.Nodes(Panel.N3)
+                        gl.Vertex(Node.Position.X, Node.Position.Y, Node.Position.Z)
 
-                            Node = Mesh.Nodes(Panel.N4)
-                            gl.Color(Node.PressureDeltaColor.R, Node.PressureDeltaColor.G, Node.PressureDeltaColor.B)
-                            gl.Vertex(Node.Position.X, Node.Position.Y, Node.Position.Z)
+                        Node = Mesh.Nodes(Panel.N4)
+                        gl.Vertex(Node.Position.X, Node.Position.Y, Node.Position.Z)
 
-                            Node = Mesh.Nodes(Panel.N1)
-                            gl.Color(Node.PressureDeltaColor.R, Node.PressureDeltaColor.G, Node.PressureDeltaColor.B)
-                            gl.Vertex(Node.Position.X, Node.Position.Y, Node.Position.Z)
-
-                        Else
-
-                            Node = Mesh.Nodes(Panel.N1)
-                            gl.Color(Node.PressureColor.R, Node.PressureColor.G, Node.PressureColor.B)
-                            gl.Vertex(Node.Position.X, Node.Position.Y, Node.Position.Z)
-
-                            Node = Mesh.Nodes(Panel.N2)
-                            gl.Color(Node.PressureColor.R, Node.PressureColor.G, Node.PressureColor.B)
-                            gl.Vertex(Node.Position.X, Node.Position.Y, Node.Position.Z)
-
-                            Node = Mesh.Nodes(Panel.N3)
-                            gl.Color(Node.PressureColor.R, Node.PressureColor.G, Node.PressureColor.B)
-                            gl.Vertex(Node.Position.X, Node.Position.Y, Node.Position.Z)
-
-                            Node = Mesh.Nodes(Panel.N3)
-                            gl.Color(Node.PressureColor.R, Node.PressureColor.G, Node.PressureColor.B)
-                            gl.Vertex(Node.Position.X, Node.Position.Y, Node.Position.Z)
-
-                            Node = Mesh.Nodes(Panel.N4)
-                            gl.Color(Node.PressureColor.R, Node.PressureColor.G, Node.PressureColor.B)
-                            gl.Vertex(Node.Position.X, Node.Position.Y, Node.Position.Z)
-
-                            Node = Mesh.Nodes(Panel.N1)
-                            gl.Color(Node.PressureColor.R, Node.PressureColor.G, Node.PressureColor.B)
-                            gl.Vertex(Node.Position.X, Node.Position.Y, Node.Position.Z)
-
-                        End If
+                        Node = Mesh.Nodes(Panel.N1)
+                        gl.Vertex(Node.Position.X, Node.Position.Y, Node.Position.Z)
 
                     Else
 
@@ -601,74 +567,21 @@ Namespace VisualModel.Models.Components
         End Sub
 
         ''' <summary>
-        ''' Assignes an interpolated value to the nodal pressures (just for the colormap).
-        ''' </summary>
-        Public Sub DistributePressureOnNodes()
-
-            For i = 0 To NumberOfNodes - 1
-
-                Dim LocalCp As Double = 0.0#
-                Dim LocalCpDelta As Double = 0.0#
-                Dim PanelsCount As Integer = 0
-
-                For j = 0 To NumberOfPanels - 1
-
-                    With Mesh.Panels(j)
-
-                        If .N1 = i Or .N2 = i Or .N3 = i Or .N4 = i Then
-
-                            PanelsCount = PanelsCount + 1
-
-                            If .IsSlender Then
-                                LocalCpDelta = LocalCpDelta + Math.Abs(.Cp)
-                            Else
-                                LocalCp = LocalCp + .Cp
-                            End If
-
-                        End If
-
-                    End With
-
-                Next
-
-                ' Compute mean value:
-
-                If PanelsCount > 0 Then
-                    Mesh.Nodes(i).Pressure = LocalCp / PanelsCount
-                    Mesh.Nodes(i).PressureDelta = LocalCpDelta / PanelsCount
-                Else
-                    Mesh.Nodes(i).Pressure = 0.0#
-                    Mesh.Nodes(i).PressureDelta = 0.0#
-                End If
-
-                ' Assign a color to each result:
-
-                Mesh.Nodes(i).PressureDeltaColor = Colormap.ScalarToColor(Mesh.Nodes(i).PressureDelta,
-                                                                          PressureDeltaRange.Maximum,
-                                                                          PressureDeltaRange.Minimum)
-
-                Mesh.Nodes(i).PressureDeltaColor = Colormap.ScalarToColor(Mesh.Nodes(i).Pressure,
-                                                                          PressureRange.Maximum,
-                                                                          PressureRange.Minimum)
-
-            Next
-
-        End Sub
-
-        ''' <summary>
         ''' Updates the map with pressure.
         ''' </summary>
-        Public Sub UpdateColormapWithPressure()
+        Public Sub UpdateColormapPressureColormap()
 
-            For i = 0 To NumberOfNodes - 1
+            For Each Panel In Mesh.Panels
 
-                Mesh.Nodes(i).PressureDeltaColor = Colormap.ScalarToColor(Mesh.Nodes(i).PressureDelta,
-                                                                          PressureDeltaRange.Maximum,
-                                                                          PressureDeltaRange.Minimum)
-
-                Mesh.Nodes(i).PressureColor = Colormap.ScalarToColor(Mesh.Nodes(i).Pressure,
-                                                                          PressureRange.Maximum,
-                                                                          PressureRange.Minimum)
+                If Panel.IsSlender Then
+                    Panel.CpColor = Colormap.ScalarToColor(Math.Abs(Panel.Cp),
+                                                           PressureDeltaRange.Maximum,
+                                                           PressureDeltaRange.Minimum)
+                Else
+                    Panel.CpColor = Colormap.ScalarToColor(Panel.Cp,
+                                                           PressureRange.Maximum,
+                                                           PressureRange.Minimum)
+                End If
             Next
 
         End Sub
@@ -696,9 +609,9 @@ Namespace VisualModel.Models.Components
 
         Public Sub UpdateColormapWithDisplacements()
 
-            For i = 0 To NumberOfNodes - 1
+            For Each Node In Mesh.Nodes
 
-                Mesh.Nodes(i).PressureDeltaColor = Colormap.ScalarToColor(Mesh.Nodes(i).Displacement.EuclideanNorm, DisplacementRange.Maximum, DisplacementRange.Minimum)
+                Node.DisplacementColor = Colormap.ScalarToColor(Node.Displacement.EuclideanNorm, DisplacementRange.Maximum, DisplacementRange.Minimum)
 
             Next
 

@@ -494,8 +494,7 @@ Namespace VisualModel.Models
             Next
 
             Results.Model.FindPressureRange()
-            Results.Model.DistributePressureOnNodes()
-            Results.Model.UpdateColormapWithPressure()
+            Results.Model.UpdateColormapPressureColormap()
             Results.Model.VisualProperties.ShowColormap = True
 
             Results.Model.Mesh.GenerateLattice()

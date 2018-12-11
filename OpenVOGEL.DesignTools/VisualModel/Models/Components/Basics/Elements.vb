@@ -41,6 +41,7 @@ Namespace VisualModel.Models.Components.Basics
         Public Property LocalVelocity As New EVector3
         Public Property Circulation As Double = 0.0#
         Public Property Cp As Double = 0.0#
+        Public Property CpColor As ColorSharpGL
 
         Public Property IsPrimitive As Boolean = False
         Public Property IsSlender As Boolean = True
@@ -179,10 +180,7 @@ Namespace VisualModel.Models.Components.Basics
         Public ReferencePosition As EVector3
         Public Position As EVector3
         Public Displacement As EVector3
-        Public PressureDeltaColor As ColorSharpGL
-        Public PressureColor As ColorSharpGL
-        Public PressureDelta As Double
-        Public Pressure As Double
+        Public DisplacementColor As ColorSharpGL
 
         Public Sub New()
             Position = New EVector3

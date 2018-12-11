@@ -196,27 +196,21 @@ Namespace VisualModel.Models.Components
                     gl.Begin(OpenGL.GL_TRIANGLES)
 
                     Nodo = Mesh.Nodes((Mesh.Panels(i).N1))
-                    If VisualProperties.ShowColormap Then gl.Color(Nodo.PressureDeltaColor.R, Nodo.PressureDeltaColor.G, Nodo.PressureDeltaColor.B)
                     gl.Vertex(Nodo.Position.X, Nodo.Position.Y, Nodo.Position.Z)
 
                     Nodo = Mesh.Nodes((Mesh.Panels(i).N2))
-                    If VisualProperties.ShowColormap Then gl.Color(Nodo.PressureDeltaColor.R, Nodo.PressureDeltaColor.G, Nodo.PressureDeltaColor.B)
                     gl.Vertex(Nodo.Position.X, Nodo.Position.Y, Nodo.Position.Z)
 
                     Nodo = Mesh.Nodes((Mesh.Panels(i).N3))
-                    If VisualProperties.ShowColormap Then gl.Color(Nodo.PressureDeltaColor.R, Nodo.PressureDeltaColor.G, Nodo.PressureDeltaColor.B)
                     gl.Vertex(Nodo.Position.X, Nodo.Position.Y, Nodo.Position.Z)
 
                     Nodo = Mesh.Nodes((Mesh.Panels(i).N3))
-                    If VisualProperties.ShowColormap Then gl.Color(Nodo.PressureDeltaColor.R, Nodo.PressureDeltaColor.G, Nodo.PressureDeltaColor.B)
                     gl.Vertex(Nodo.Position.X, Nodo.Position.Y, Nodo.Position.Z)
 
                     Nodo = Mesh.Nodes((Mesh.Panels(i).N4))
-                    If VisualProperties.ShowColormap Then gl.Color(Nodo.PressureDeltaColor.R, Nodo.PressureDeltaColor.G, Nodo.PressureDeltaColor.B)
                     gl.Vertex(Nodo.Position.X, Nodo.Position.Y, Nodo.Position.Z)
 
                     Nodo = Mesh.Nodes((Mesh.Panels(i).N1))
-                    If VisualProperties.ShowColormap Then gl.Color(Nodo.PressureDeltaColor.R, Nodo.PressureDeltaColor.G, Nodo.PressureDeltaColor.B)
                     gl.Vertex(Nodo.Position.X, Nodo.Position.Y, Nodo.Position.Z)
 
                     gl.End()
