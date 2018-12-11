@@ -143,6 +143,7 @@ Partial Class MainRibbon
         Me.btnReport = New System.Windows.Forms.Button()
         Me.btnLoadResults = New System.Windows.Forms.Button()
         Me.GroupBox3 = New System.Windows.Forms.GroupBox()
+        Me.rbStructure = New System.Windows.Forms.RadioButton()
         Me.cbMultiselect = New System.Windows.Forms.CheckBox()
         Me.rnPanel = New System.Windows.Forms.RadioButton()
         Me.rbNode = New System.Windows.Forms.RadioButton()
@@ -162,7 +163,6 @@ Partial Class MainRibbon
         Me.cbxShowRulers = New System.Windows.Forms.CheckBox()
         Me.pnlScreenColor = New System.Windows.Forms.Panel()
         Me.TableLayoutPanel4 = New System.Windows.Forms.TableLayoutPanel()
-        Me.rbStructure = New System.Windows.Forms.RadioButton()
         Me.tcRibbon.SuspendLayout()
         Me.tpModel.SuspendLayout()
         Me.TableLayoutPanel1.SuspendLayout()
@@ -1000,7 +1000,7 @@ Partial Class MainRibbon
         Me.btnHistogram.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.btnHistogram.Font = New System.Drawing.Font("Segoe UI", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnHistogram.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.btnHistogram.Location = New System.Drawing.Point(182, 64)
+        Me.btnHistogram.Location = New System.Drawing.Point(182, 59)
         Me.btnHistogram.Name = "btnHistogram"
         Me.btnHistogram.Size = New System.Drawing.Size(60, 22)
         Me.btnHistogram.TabIndex = 108
@@ -1059,7 +1059,7 @@ Partial Class MainRibbon
         Me.Label23.Name = "Label23"
         Me.Label23.Size = New System.Drawing.Size(16, 12)
         Me.Label23.TabIndex = 101
-        Me.Label23.Text = "Oz"
+        Me.Label23.Text = "Ωz"
         Me.Label23.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'Label24
@@ -1070,7 +1070,7 @@ Partial Class MainRibbon
         Me.Label24.Name = "Label24"
         Me.Label24.Size = New System.Drawing.Size(16, 12)
         Me.Label24.TabIndex = 100
-        Me.Label24.Text = "Oy"
+        Me.Label24.Text = "Ωy"
         Me.Label24.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'Label25
@@ -1081,7 +1081,7 @@ Partial Class MainRibbon
         Me.Label25.Name = "Label25"
         Me.Label25.Size = New System.Drawing.Size(16, 12)
         Me.Label25.TabIndex = 99
-        Me.Label25.Text = "Ox"
+        Me.Label25.Text = "Ωx"
         Me.Label25.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'nudOz
@@ -1807,6 +1807,22 @@ Partial Class MainRibbon
         Me.GroupBox3.TabStop = False
         Me.GroupBox3.Text = "Screen"
         '
+        'rbStructure
+        '
+        Me.rbStructure.Appearance = System.Windows.Forms.Appearance.Button
+        Me.rbStructure.FlatAppearance.BorderColor = System.Drawing.Color.Gray
+        Me.rbStructure.FlatAppearance.CheckedBackColor = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(128, Byte), Integer))
+        Me.rbStructure.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Lime
+        Me.rbStructure.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.rbStructure.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.rbStructure.Location = New System.Drawing.Point(54, 90)
+        Me.rbStructure.Name = "rbStructure"
+        Me.rbStructure.Size = New System.Drawing.Size(22, 22)
+        Me.rbStructure.TabIndex = 97
+        Me.rbStructure.Text = "S"
+        Me.rbStructure.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        Me.rbStructure.UseVisualStyleBackColor = True
+        '
         'cbMultiselect
         '
         Me.cbMultiselect.AutoSize = True
@@ -1830,6 +1846,7 @@ Partial Class MainRibbon
         Me.rnPanel.Name = "rnPanel"
         Me.rnPanel.Size = New System.Drawing.Size(22, 22)
         Me.rnPanel.TabIndex = 94
+        Me.rnPanel.TabStop = True
         Me.rnPanel.Text = "P"
         Me.rnPanel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         Me.rnPanel.UseVisualStyleBackColor = True
@@ -2044,22 +2061,6 @@ Partial Class MainRibbon
         Me.TableLayoutPanel4.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
         Me.TableLayoutPanel4.Size = New System.Drawing.Size(1204, 175)
         Me.TableLayoutPanel4.TabIndex = 508
-        '
-        'rbStructure
-        '
-        Me.rbStructure.Appearance = System.Windows.Forms.Appearance.Button
-        Me.rbStructure.FlatAppearance.BorderColor = System.Drawing.Color.Gray
-        Me.rbStructure.FlatAppearance.CheckedBackColor = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(128, Byte), Integer))
-        Me.rbStructure.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Lime
-        Me.rbStructure.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.rbStructure.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.rbStructure.Location = New System.Drawing.Point(54, 90)
-        Me.rbStructure.Name = "rbStructure"
-        Me.rbStructure.Size = New System.Drawing.Size(22, 22)
-        Me.rbStructure.TabIndex = 97
-        Me.rbStructure.Text = "S"
-        Me.rbStructure.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        Me.rbStructure.UseVisualStyleBackColor = True
         '
         'MainRibbon
         '

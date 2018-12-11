@@ -25,36 +25,37 @@ Partial Class FormSettings
         Me.tpSettings = New System.Windows.Forms.TabControl()
         Me.tpStream = New System.Windows.Forms.TabPage()
         Me.gbFlowRotation = New System.Windows.Forms.GroupBox()
-        Me.Label19 = New System.Windows.Forms.Label()
-        Me.Label20 = New System.Windows.Forms.Label()
-        Me.Label22 = New System.Windows.Forms.Label()
-        Me.nudOmagaz = New System.Windows.Forms.NumericUpDown()
-        Me.nudOmegay = New System.Windows.Forms.NumericUpDown()
-        Me.nudOmegax = New System.Windows.Forms.NumericUpDown()
-        Me.Label23 = New System.Windows.Forms.Label()
-        Me.Label24 = New System.Windows.Forms.Label()
-        Me.Label25 = New System.Windows.Forms.Label()
-        Me.bgStreamVelocity = New System.Windows.Forms.GroupBox()
-        Me.Label32 = New System.Windows.Forms.Label()
-        Me.Label33 = New System.Windows.Forms.Label()
-        Me.nudStaticPressure = New System.Windows.Forms.NumericUpDown()
         Me.Label14 = New System.Windows.Forms.Label()
         Me.Label21 = New System.Windows.Forms.Label()
         Me.Label12 = New System.Windows.Forms.Label()
         Me.Label13 = New System.Windows.Forms.Label()
         Me.nudViscosity = New System.Windows.Forms.NumericUpDown()
         Me.nudDensity = New System.Windows.Forms.NumericUpDown()
+        Me.bgFreeStream = New System.Windows.Forms.GroupBox()
+        Me.Label32 = New System.Windows.Forms.Label()
         Me.Label3 = New System.Windows.Forms.Label()
+        Me.Label33 = New System.Windows.Forms.Label()
+        Me.Label19 = New System.Windows.Forms.Label()
+        Me.nudStaticPressure = New System.Windows.Forms.NumericUpDown()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.Label1 = New System.Windows.Forms.Label()
+        Me.Label20 = New System.Windows.Forms.Label()
         Me.nudVz = New System.Windows.Forms.NumericUpDown()
         Me.nudVy = New System.Windows.Forms.NumericUpDown()
+        Me.Label22 = New System.Windows.Forms.Label()
         Me.nudVx = New System.Windows.Forms.NumericUpDown()
         Me.Label26 = New System.Windows.Forms.Label()
+        Me.nudOmagaz = New System.Windows.Forms.NumericUpDown()
         Me.Label35 = New System.Windows.Forms.Label()
         Me.Label36 = New System.Windows.Forms.Label()
+        Me.nudOmegay = New System.Windows.Forms.NumericUpDown()
+        Me.nudOmegax = New System.Windows.Forms.NumericUpDown()
+        Me.Label25 = New System.Windows.Forms.Label()
+        Me.Label24 = New System.Windows.Forms.Label()
+        Me.Label23 = New System.Windows.Forms.Label()
         Me.tpAero = New System.Windows.Forms.TabPage()
-        Me.GroupBox2 = New System.Windows.Forms.GroupBox()
+        Me.gbParameters = New System.Windows.Forms.GroupBox()
+        Me.Label15 = New System.Windows.Forms.Label()
         Me.cbExtendWakes = New System.Windows.Forms.CheckBox()
         Me.Label5 = New System.Windows.Forms.Label()
         Me.CSTEPSBox = New System.Windows.Forms.NumericUpDown()
@@ -86,22 +87,21 @@ Partial Class FormSettings
         Me.Label34 = New System.Windows.Forms.Label()
         Me.btOK = New System.Windows.Forms.Button()
         Me.btnCancel = New System.Windows.Forms.Button()
-        Me.Label15 = New System.Windows.Forms.Label()
         Me.tpSettings.SuspendLayout()
         Me.tpStream.SuspendLayout()
         Me.gbFlowRotation.SuspendLayout()
-        CType(Me.nudOmagaz, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.nudOmegay, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.nudOmegax, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.bgStreamVelocity.SuspendLayout()
-        CType(Me.nudStaticPressure, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.nudViscosity, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.nudDensity, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.bgFreeStream.SuspendLayout()
+        CType(Me.nudStaticPressure, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.nudVz, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.nudVy, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.nudVx, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.nudOmagaz, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.nudOmegay, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.nudOmegax, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.tpAero.SuspendLayout()
-        Me.GroupBox2.SuspendLayout()
+        Me.gbParameters.SuspendLayout()
         CType(Me.CSTEPSBox, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.nudAdjacencyTolerance, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.DTBox, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -125,205 +125,42 @@ Partial Class FormSettings
         Me.tpSettings.Location = New System.Drawing.Point(2, 2)
         Me.tpSettings.Name = "tpSettings"
         Me.tpSettings.SelectedIndex = 0
-        Me.tpSettings.Size = New System.Drawing.Size(352, 273)
+        Me.tpSettings.Size = New System.Drawing.Size(337, 273)
         Me.tpSettings.TabIndex = 101
         '
         'tpStream
         '
         Me.tpStream.BackColor = System.Drawing.Color.White
         Me.tpStream.Controls.Add(Me.gbFlowRotation)
-        Me.tpStream.Controls.Add(Me.bgStreamVelocity)
+        Me.tpStream.Controls.Add(Me.bgFreeStream)
         Me.tpStream.Location = New System.Drawing.Point(4, 22)
         Me.tpStream.Name = "tpStream"
         Me.tpStream.Padding = New System.Windows.Forms.Padding(3)
-        Me.tpStream.Size = New System.Drawing.Size(344, 247)
+        Me.tpStream.Size = New System.Drawing.Size(329, 247)
         Me.tpStream.TabIndex = 0
         Me.tpStream.Text = "Stream"
         '
         'gbFlowRotation
         '
-        Me.gbFlowRotation.Controls.Add(Me.Label19)
-        Me.gbFlowRotation.Controls.Add(Me.Label20)
-        Me.gbFlowRotation.Controls.Add(Me.Label22)
-        Me.gbFlowRotation.Controls.Add(Me.nudOmagaz)
-        Me.gbFlowRotation.Controls.Add(Me.nudOmegay)
-        Me.gbFlowRotation.Controls.Add(Me.nudOmegax)
-        Me.gbFlowRotation.Controls.Add(Me.Label23)
-        Me.gbFlowRotation.Controls.Add(Me.Label24)
-        Me.gbFlowRotation.Controls.Add(Me.Label25)
+        Me.gbFlowRotation.Controls.Add(Me.Label14)
+        Me.gbFlowRotation.Controls.Add(Me.Label21)
+        Me.gbFlowRotation.Controls.Add(Me.Label12)
+        Me.gbFlowRotation.Controls.Add(Me.Label13)
+        Me.gbFlowRotation.Controls.Add(Me.nudViscosity)
+        Me.gbFlowRotation.Controls.Add(Me.nudDensity)
         Me.gbFlowRotation.Dock = System.Windows.Forms.DockStyle.Top
-        Me.gbFlowRotation.Location = New System.Drawing.Point(3, 98)
+        Me.gbFlowRotation.Location = New System.Drawing.Point(3, 129)
         Me.gbFlowRotation.Name = "gbFlowRotation"
-        Me.gbFlowRotation.Size = New System.Drawing.Size(338, 99)
+        Me.gbFlowRotation.Size = New System.Drawing.Size(323, 76)
         Me.gbFlowRotation.TabIndex = 3
         Me.gbFlowRotation.TabStop = False
-        Me.gbFlowRotation.Text = "Flow rotation"
-        '
-        'Label19
-        '
-        Me.Label19.AutoSize = True
-        Me.Label19.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label19.Location = New System.Drawing.Point(150, 68)
-        Me.Label19.Name = "Label19"
-        Me.Label19.Size = New System.Drawing.Size(33, 13)
-        Me.Label19.TabIndex = 98
-        Me.Label19.Text = "rad/s"
-        '
-        'Label20
-        '
-        Me.Label20.AutoSize = True
-        Me.Label20.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label20.Location = New System.Drawing.Point(150, 47)
-        Me.Label20.Name = "Label20"
-        Me.Label20.Size = New System.Drawing.Size(33, 13)
-        Me.Label20.TabIndex = 97
-        Me.Label20.Text = "rad/s"
-        '
-        'Label22
-        '
-        Me.Label22.AutoSize = True
-        Me.Label22.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label22.Location = New System.Drawing.Point(150, 26)
-        Me.Label22.Name = "Label22"
-        Me.Label22.Size = New System.Drawing.Size(33, 13)
-        Me.Label22.TabIndex = 96
-        Me.Label22.Text = "rad/s"
-        '
-        'nudOmagaz
-        '
-        Me.nudOmagaz.DecimalPlaces = 5
-        Me.nudOmagaz.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.nudOmagaz.Increment = New Decimal(New Integer() {1, 0, 0, 131072})
-        Me.nudOmagaz.Location = New System.Drawing.Point(63, 66)
-        Me.nudOmagaz.Maximum = New Decimal(New Integer() {99999, 0, 0, 0})
-        Me.nudOmagaz.Minimum = New Decimal(New Integer() {99999, 0, 0, -2147483648})
-        Me.nudOmagaz.Name = "nudOmagaz"
-        Me.nudOmagaz.Size = New System.Drawing.Size(85, 22)
-        Me.nudOmagaz.TabIndex = 95
-        Me.nudOmagaz.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        '
-        'nudOmegay
-        '
-        Me.nudOmegay.DecimalPlaces = 5
-        Me.nudOmegay.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.nudOmegay.Increment = New Decimal(New Integer() {1, 0, 0, 131072})
-        Me.nudOmegay.Location = New System.Drawing.Point(63, 45)
-        Me.nudOmegay.Maximum = New Decimal(New Integer() {99999, 0, 0, 0})
-        Me.nudOmegay.Minimum = New Decimal(New Integer() {99999, 0, 0, -2147483648})
-        Me.nudOmegay.Name = "nudOmegay"
-        Me.nudOmegay.Size = New System.Drawing.Size(85, 22)
-        Me.nudOmegay.TabIndex = 94
-        Me.nudOmegay.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        '
-        'nudOmegax
-        '
-        Me.nudOmegax.DecimalPlaces = 5
-        Me.nudOmegax.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.nudOmegax.Increment = New Decimal(New Integer() {1, 0, 0, 131072})
-        Me.nudOmegax.Location = New System.Drawing.Point(63, 24)
-        Me.nudOmegax.Maximum = New Decimal(New Integer() {99999, 0, 0, 0})
-        Me.nudOmegax.Minimum = New Decimal(New Integer() {99999, 0, 0, -2147483648})
-        Me.nudOmegax.Name = "nudOmegax"
-        Me.nudOmegax.Size = New System.Drawing.Size(85, 22)
-        Me.nudOmegax.TabIndex = 93
-        Me.nudOmegax.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        Me.nudOmegax.Value = New Decimal(New Integer() {1, 0, 0, 0})
-        '
-        'Label23
-        '
-        Me.Label23.AutoSize = True
-        Me.Label23.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label23.Location = New System.Drawing.Point(8, 26)
-        Me.Label23.Name = "Label23"
-        Me.Label23.Size = New System.Drawing.Size(52, 13)
-        Me.Label23.TabIndex = 90
-        Me.Label23.Text = "Omega x"
-        '
-        'Label24
-        '
-        Me.Label24.AutoSize = True
-        Me.Label24.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label24.Location = New System.Drawing.Point(8, 47)
-        Me.Label24.Name = "Label24"
-        Me.Label24.Size = New System.Drawing.Size(52, 13)
-        Me.Label24.TabIndex = 91
-        Me.Label24.Text = "Omega y"
-        '
-        'Label25
-        '
-        Me.Label25.AutoSize = True
-        Me.Label25.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label25.Location = New System.Drawing.Point(8, 68)
-        Me.Label25.Name = "Label25"
-        Me.Label25.Size = New System.Drawing.Size(52, 13)
-        Me.Label25.TabIndex = 92
-        Me.Label25.Text = "Omega z"
-        '
-        'bgStreamVelocity
-        '
-        Me.bgStreamVelocity.Controls.Add(Me.Label32)
-        Me.bgStreamVelocity.Controls.Add(Me.Label33)
-        Me.bgStreamVelocity.Controls.Add(Me.nudStaticPressure)
-        Me.bgStreamVelocity.Controls.Add(Me.Label14)
-        Me.bgStreamVelocity.Controls.Add(Me.Label21)
-        Me.bgStreamVelocity.Controls.Add(Me.Label12)
-        Me.bgStreamVelocity.Controls.Add(Me.Label13)
-        Me.bgStreamVelocity.Controls.Add(Me.nudViscosity)
-        Me.bgStreamVelocity.Controls.Add(Me.nudDensity)
-        Me.bgStreamVelocity.Controls.Add(Me.Label3)
-        Me.bgStreamVelocity.Controls.Add(Me.Label2)
-        Me.bgStreamVelocity.Controls.Add(Me.Label1)
-        Me.bgStreamVelocity.Controls.Add(Me.nudVz)
-        Me.bgStreamVelocity.Controls.Add(Me.nudVy)
-        Me.bgStreamVelocity.Controls.Add(Me.nudVx)
-        Me.bgStreamVelocity.Controls.Add(Me.Label26)
-        Me.bgStreamVelocity.Controls.Add(Me.Label35)
-        Me.bgStreamVelocity.Controls.Add(Me.Label36)
-        Me.bgStreamVelocity.Dock = System.Windows.Forms.DockStyle.Top
-        Me.bgStreamVelocity.Location = New System.Drawing.Point(3, 3)
-        Me.bgStreamVelocity.Name = "bgStreamVelocity"
-        Me.bgStreamVelocity.Size = New System.Drawing.Size(338, 95)
-        Me.bgStreamVelocity.TabIndex = 1
-        Me.bgStreamVelocity.TabStop = False
-        Me.bgStreamVelocity.Text = "Free stream velocity"
-        '
-        'Label32
-        '
-        Me.Label32.AutoSize = True
-        Me.Label32.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label32.Location = New System.Drawing.Point(157, 66)
-        Me.Label32.Name = "Label32"
-        Me.Label32.Size = New System.Drawing.Size(20, 13)
-        Me.Label32.TabIndex = 107
-        Me.Label32.Text = "Po"
-        '
-        'Label33
-        '
-        Me.Label33.AutoSize = True
-        Me.Label33.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label33.Location = New System.Drawing.Point(264, 66)
-        Me.Label33.Name = "Label33"
-        Me.Label33.Size = New System.Drawing.Size(19, 13)
-        Me.Label33.TabIndex = 106
-        Me.Label33.Text = "Pa"
-        '
-        'nudStaticPressure
-        '
-        Me.nudStaticPressure.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.nudStaticPressure.Increment = New Decimal(New Integer() {10, 0, 0, 0})
-        Me.nudStaticPressure.Location = New System.Drawing.Point(177, 64)
-        Me.nudStaticPressure.Maximum = New Decimal(New Integer() {276447232, 23283, 0, 0})
-        Me.nudStaticPressure.Name = "nudStaticPressure"
-        Me.nudStaticPressure.Size = New System.Drawing.Size(85, 22)
-        Me.nudStaticPressure.TabIndex = 105
-        Me.nudStaticPressure.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        Me.nudStaticPressure.Value = New Decimal(New Integer() {101300, 0, 0, 0})
+        Me.gbFlowRotation.Text = "Fluid properties"
         '
         'Label14
         '
         Me.Label14.AutoSize = True
         Me.Label14.Font = New System.Drawing.Font("Symbol", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(2, Byte))
-        Me.Label14.Location = New System.Drawing.Point(157, 45)
+        Me.Label14.Location = New System.Drawing.Point(9, 47)
         Me.Label14.Name = "Label14"
         Me.Label14.Size = New System.Drawing.Size(13, 13)
         Me.Label14.TabIndex = 104
@@ -333,7 +170,7 @@ Partial Class FormSettings
         '
         Me.Label21.AutoSize = True
         Me.Label21.Font = New System.Drawing.Font("Symbol", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(2, Byte))
-        Me.Label21.Location = New System.Drawing.Point(157, 24)
+        Me.Label21.Location = New System.Drawing.Point(9, 23)
         Me.Label21.Name = "Label21"
         Me.Label21.Size = New System.Drawing.Size(14, 13)
         Me.Label21.TabIndex = 103
@@ -343,7 +180,7 @@ Partial Class FormSettings
         '
         Me.Label12.AutoSize = True
         Me.Label12.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label12.Location = New System.Drawing.Point(264, 45)
+        Me.Label12.Location = New System.Drawing.Point(116, 47)
         Me.Label12.Name = "Label12"
         Me.Label12.Size = New System.Drawing.Size(38, 13)
         Me.Label12.TabIndex = 102
@@ -353,7 +190,7 @@ Partial Class FormSettings
         '
         Me.Label13.AutoSize = True
         Me.Label13.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label13.Location = New System.Drawing.Point(264, 24)
+        Me.Label13.Location = New System.Drawing.Point(116, 23)
         Me.Label13.Name = "Label13"
         Me.Label13.Size = New System.Drawing.Size(37, 13)
         Me.Label13.TabIndex = 101
@@ -364,7 +201,7 @@ Partial Class FormSettings
         Me.nudViscosity.DecimalPlaces = 8
         Me.nudViscosity.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.nudViscosity.Increment = New Decimal(New Integer() {1, 0, 0, 458752})
-        Me.nudViscosity.Location = New System.Drawing.Point(177, 43)
+        Me.nudViscosity.Location = New System.Drawing.Point(29, 45)
         Me.nudViscosity.Maximum = New Decimal(New Integer() {99999, 0, 0, 0})
         Me.nudViscosity.Minimum = New Decimal(New Integer() {99999, 0, 0, -2147483648})
         Me.nudViscosity.Name = "nudViscosity"
@@ -378,7 +215,7 @@ Partial Class FormSettings
         Me.nudDensity.DecimalPlaces = 5
         Me.nudDensity.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.nudDensity.Increment = New Decimal(New Integer() {1, 0, 0, 65536})
-        Me.nudDensity.Location = New System.Drawing.Point(177, 22)
+        Me.nudDensity.Location = New System.Drawing.Point(29, 21)
         Me.nudDensity.Maximum = New Decimal(New Integer() {99999, 0, 0, 0})
         Me.nudDensity.Name = "nudDensity"
         Me.nudDensity.Size = New System.Drawing.Size(85, 22)
@@ -386,21 +223,94 @@ Partial Class FormSettings
         Me.nudDensity.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         Me.nudDensity.Value = New Decimal(New Integer() {1225, 0, 0, 196608})
         '
+        'bgFreeStream
+        '
+        Me.bgFreeStream.Controls.Add(Me.Label32)
+        Me.bgFreeStream.Controls.Add(Me.Label3)
+        Me.bgFreeStream.Controls.Add(Me.Label33)
+        Me.bgFreeStream.Controls.Add(Me.Label19)
+        Me.bgFreeStream.Controls.Add(Me.nudStaticPressure)
+        Me.bgFreeStream.Controls.Add(Me.Label2)
+        Me.bgFreeStream.Controls.Add(Me.Label1)
+        Me.bgFreeStream.Controls.Add(Me.Label20)
+        Me.bgFreeStream.Controls.Add(Me.nudVz)
+        Me.bgFreeStream.Controls.Add(Me.nudVy)
+        Me.bgFreeStream.Controls.Add(Me.Label22)
+        Me.bgFreeStream.Controls.Add(Me.nudVx)
+        Me.bgFreeStream.Controls.Add(Me.Label26)
+        Me.bgFreeStream.Controls.Add(Me.nudOmagaz)
+        Me.bgFreeStream.Controls.Add(Me.Label35)
+        Me.bgFreeStream.Controls.Add(Me.Label36)
+        Me.bgFreeStream.Controls.Add(Me.nudOmegay)
+        Me.bgFreeStream.Controls.Add(Me.nudOmegax)
+        Me.bgFreeStream.Controls.Add(Me.Label25)
+        Me.bgFreeStream.Controls.Add(Me.Label24)
+        Me.bgFreeStream.Controls.Add(Me.Label23)
+        Me.bgFreeStream.Dock = System.Windows.Forms.DockStyle.Top
+        Me.bgFreeStream.Location = New System.Drawing.Point(3, 3)
+        Me.bgFreeStream.Name = "bgFreeStream"
+        Me.bgFreeStream.Size = New System.Drawing.Size(323, 126)
+        Me.bgFreeStream.TabIndex = 1
+        Me.bgFreeStream.TabStop = False
+        Me.bgFreeStream.Text = "Free stream"
+        '
+        'Label32
+        '
+        Me.Label32.AutoSize = True
+        Me.Label32.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label32.Location = New System.Drawing.Point(9, 96)
+        Me.Label32.Name = "Label32"
+        Me.Label32.Size = New System.Drawing.Size(20, 13)
+        Me.Label32.TabIndex = 107
+        Me.Label32.Text = "Po"
+        '
         'Label3
         '
         Me.Label3.AutoSize = True
         Me.Label3.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label3.Location = New System.Drawing.Point(116, 66)
+        Me.Label3.Location = New System.Drawing.Point(116, 72)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(25, 13)
         Me.Label3.TabIndex = 98
         Me.Label3.Text = "m/s"
         '
+        'Label33
+        '
+        Me.Label33.AutoSize = True
+        Me.Label33.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label33.Location = New System.Drawing.Point(116, 96)
+        Me.Label33.Name = "Label33"
+        Me.Label33.Size = New System.Drawing.Size(19, 13)
+        Me.Label33.TabIndex = 106
+        Me.Label33.Text = "Pa"
+        '
+        'Label19
+        '
+        Me.Label19.AutoSize = True
+        Me.Label19.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label19.Location = New System.Drawing.Point(257, 72)
+        Me.Label19.Name = "Label19"
+        Me.Label19.Size = New System.Drawing.Size(33, 13)
+        Me.Label19.TabIndex = 98
+        Me.Label19.Text = "rad/s"
+        '
+        'nudStaticPressure
+        '
+        Me.nudStaticPressure.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.nudStaticPressure.Increment = New Decimal(New Integer() {10, 0, 0, 0})
+        Me.nudStaticPressure.Location = New System.Drawing.Point(29, 94)
+        Me.nudStaticPressure.Maximum = New Decimal(New Integer() {276447232, 23283, 0, 0})
+        Me.nudStaticPressure.Name = "nudStaticPressure"
+        Me.nudStaticPressure.Size = New System.Drawing.Size(85, 22)
+        Me.nudStaticPressure.TabIndex = 105
+        Me.nudStaticPressure.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.nudStaticPressure.Value = New Decimal(New Integer() {101300, 0, 0, 0})
+        '
         'Label2
         '
         Me.Label2.AutoSize = True
         Me.Label2.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label2.Location = New System.Drawing.Point(116, 45)
+        Me.Label2.Location = New System.Drawing.Point(116, 48)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(25, 13)
         Me.Label2.TabIndex = 97
@@ -416,12 +326,22 @@ Partial Class FormSettings
         Me.Label1.TabIndex = 96
         Me.Label1.Text = "m/s"
         '
+        'Label20
+        '
+        Me.Label20.AutoSize = True
+        Me.Label20.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label20.Location = New System.Drawing.Point(257, 48)
+        Me.Label20.Name = "Label20"
+        Me.Label20.Size = New System.Drawing.Size(33, 13)
+        Me.Label20.TabIndex = 97
+        Me.Label20.Text = "rad/s"
+        '
         'nudVz
         '
         Me.nudVz.DecimalPlaces = 3
         Me.nudVz.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.nudVz.Increment = New Decimal(New Integer() {1, 0, 0, 65536})
-        Me.nudVz.Location = New System.Drawing.Point(29, 64)
+        Me.nudVz.Location = New System.Drawing.Point(29, 70)
         Me.nudVz.Maximum = New Decimal(New Integer() {99999, 0, 0, 0})
         Me.nudVz.Minimum = New Decimal(New Integer() {99999, 0, 0, -2147483648})
         Me.nudVz.Name = "nudVz"
@@ -434,13 +354,23 @@ Partial Class FormSettings
         Me.nudVy.DecimalPlaces = 3
         Me.nudVy.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.nudVy.Increment = New Decimal(New Integer() {1, 0, 0, 65536})
-        Me.nudVy.Location = New System.Drawing.Point(29, 43)
+        Me.nudVy.Location = New System.Drawing.Point(29, 46)
         Me.nudVy.Maximum = New Decimal(New Integer() {99999, 0, 0, 0})
         Me.nudVy.Minimum = New Decimal(New Integer() {99999, 0, 0, -2147483648})
         Me.nudVy.Name = "nudVy"
         Me.nudVy.Size = New System.Drawing.Size(85, 22)
         Me.nudVy.TabIndex = 94
         Me.nudVy.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        '
+        'Label22
+        '
+        Me.Label22.AutoSize = True
+        Me.Label22.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label22.Location = New System.Drawing.Point(257, 24)
+        Me.Label22.Name = "Label22"
+        Me.Label22.Size = New System.Drawing.Size(33, 13)
+        Me.Label22.TabIndex = 96
+        Me.Label22.Text = "rad/s"
         '
         'nudVx
         '
@@ -466,11 +396,24 @@ Partial Class FormSettings
         Me.Label26.TabIndex = 90
         Me.Label26.Text = "Vx"
         '
+        'nudOmagaz
+        '
+        Me.nudOmagaz.DecimalPlaces = 5
+        Me.nudOmagaz.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.nudOmagaz.Increment = New Decimal(New Integer() {1, 0, 0, 131072})
+        Me.nudOmagaz.Location = New System.Drawing.Point(170, 70)
+        Me.nudOmagaz.Maximum = New Decimal(New Integer() {99999, 0, 0, 0})
+        Me.nudOmagaz.Minimum = New Decimal(New Integer() {99999, 0, 0, -2147483648})
+        Me.nudOmagaz.Name = "nudOmagaz"
+        Me.nudOmagaz.Size = New System.Drawing.Size(85, 22)
+        Me.nudOmagaz.TabIndex = 95
+        Me.nudOmagaz.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        '
         'Label35
         '
         Me.Label35.AutoSize = True
         Me.Label35.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label35.Location = New System.Drawing.Point(8, 45)
+        Me.Label35.Location = New System.Drawing.Point(8, 48)
         Me.Label35.Name = "Label35"
         Me.Label35.Size = New System.Drawing.Size(19, 13)
         Me.Label35.TabIndex = 91
@@ -480,49 +423,116 @@ Partial Class FormSettings
         '
         Me.Label36.AutoSize = True
         Me.Label36.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label36.Location = New System.Drawing.Point(8, 66)
+        Me.Label36.Location = New System.Drawing.Point(8, 72)
         Me.Label36.Name = "Label36"
         Me.Label36.Size = New System.Drawing.Size(19, 13)
         Me.Label36.TabIndex = 92
         Me.Label36.Text = "Vz"
         '
+        'nudOmegay
+        '
+        Me.nudOmegay.DecimalPlaces = 5
+        Me.nudOmegay.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.nudOmegay.Increment = New Decimal(New Integer() {1, 0, 0, 131072})
+        Me.nudOmegay.Location = New System.Drawing.Point(170, 46)
+        Me.nudOmegay.Maximum = New Decimal(New Integer() {99999, 0, 0, 0})
+        Me.nudOmegay.Minimum = New Decimal(New Integer() {99999, 0, 0, -2147483648})
+        Me.nudOmegay.Name = "nudOmegay"
+        Me.nudOmegay.Size = New System.Drawing.Size(85, 22)
+        Me.nudOmegay.TabIndex = 94
+        Me.nudOmegay.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        '
+        'nudOmegax
+        '
+        Me.nudOmegax.DecimalPlaces = 5
+        Me.nudOmegax.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.nudOmegax.Increment = New Decimal(New Integer() {1, 0, 0, 131072})
+        Me.nudOmegax.Location = New System.Drawing.Point(170, 22)
+        Me.nudOmegax.Maximum = New Decimal(New Integer() {99999, 0, 0, 0})
+        Me.nudOmegax.Minimum = New Decimal(New Integer() {99999, 0, 0, -2147483648})
+        Me.nudOmegax.Name = "nudOmegax"
+        Me.nudOmegax.Size = New System.Drawing.Size(85, 22)
+        Me.nudOmegax.TabIndex = 93
+        Me.nudOmegax.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.nudOmegax.Value = New Decimal(New Integer() {1, 0, 0, 0})
+        '
+        'Label25
+        '
+        Me.Label25.AutoSize = True
+        Me.Label25.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label25.Location = New System.Drawing.Point(147, 74)
+        Me.Label25.Name = "Label25"
+        Me.Label25.Size = New System.Drawing.Size(21, 13)
+        Me.Label25.TabIndex = 92
+        Me.Label25.Text = "Ωz"
+        '
+        'Label24
+        '
+        Me.Label24.AutoSize = True
+        Me.Label24.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label24.Location = New System.Drawing.Point(147, 50)
+        Me.Label24.Name = "Label24"
+        Me.Label24.Size = New System.Drawing.Size(21, 13)
+        Me.Label24.TabIndex = 91
+        Me.Label24.Text = "Ωy"
+        '
+        'Label23
+        '
+        Me.Label23.AutoSize = True
+        Me.Label23.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label23.Location = New System.Drawing.Point(147, 26)
+        Me.Label23.Name = "Label23"
+        Me.Label23.Size = New System.Drawing.Size(21, 13)
+        Me.Label23.TabIndex = 90
+        Me.Label23.Text = "Ωx"
+        '
         'tpAero
         '
         Me.tpAero.BackColor = System.Drawing.Color.White
-        Me.tpAero.Controls.Add(Me.GroupBox2)
+        Me.tpAero.Controls.Add(Me.gbParameters)
         Me.tpAero.Location = New System.Drawing.Point(4, 22)
         Me.tpAero.Name = "tpAero"
         Me.tpAero.Padding = New System.Windows.Forms.Padding(3)
-        Me.tpAero.Size = New System.Drawing.Size(344, 247)
+        Me.tpAero.Size = New System.Drawing.Size(329, 247)
         Me.tpAero.TabIndex = 1
         Me.tpAero.Text = "UVLM"
         '
-        'GroupBox2
+        'gbParameters
         '
-        Me.GroupBox2.Controls.Add(Me.Label15)
-        Me.GroupBox2.Controls.Add(Me.cbExtendWakes)
-        Me.GroupBox2.Controls.Add(Me.Label5)
-        Me.GroupBox2.Controls.Add(Me.CSTEPSBox)
-        Me.GroupBox2.Controls.Add(Me.Label38)
-        Me.GroupBox2.Controls.Add(Me.Label7)
-        Me.GroupBox2.Controls.Add(Me.nudAdjacencyTolerance)
-        Me.GroupBox2.Controls.Add(Me.cbAutoCutOff)
-        Me.GroupBox2.Controls.Add(Me.Label9)
-        Me.GroupBox2.Controls.Add(Me.DTBox)
-        Me.GroupBox2.Controls.Add(Me.Label8)
-        Me.GroupBox2.Controls.Add(Me.Label10)
-        Me.GroupBox2.Controls.Add(Me.CUTOFFBox)
-        Me.GroupBox2.Controls.Add(Me.Label11)
-        Me.GroupBox2.Controls.Add(Me.Label6)
-        Me.GroupBox2.Controls.Add(Me.STEPSBox)
-        Me.GroupBox2.Controls.Add(Me.Label4)
-        Me.GroupBox2.Dock = System.Windows.Forms.DockStyle.Top
-        Me.GroupBox2.Location = New System.Drawing.Point(3, 3)
-        Me.GroupBox2.Name = "GroupBox2"
-        Me.GroupBox2.Size = New System.Drawing.Size(338, 238)
-        Me.GroupBox2.TabIndex = 2
-        Me.GroupBox2.TabStop = False
-        Me.GroupBox2.Text = "Simulation parameters"
+        Me.gbParameters.Controls.Add(Me.Label15)
+        Me.gbParameters.Controls.Add(Me.cbExtendWakes)
+        Me.gbParameters.Controls.Add(Me.Label5)
+        Me.gbParameters.Controls.Add(Me.CSTEPSBox)
+        Me.gbParameters.Controls.Add(Me.Label38)
+        Me.gbParameters.Controls.Add(Me.Label7)
+        Me.gbParameters.Controls.Add(Me.nudAdjacencyTolerance)
+        Me.gbParameters.Controls.Add(Me.cbAutoCutOff)
+        Me.gbParameters.Controls.Add(Me.Label9)
+        Me.gbParameters.Controls.Add(Me.DTBox)
+        Me.gbParameters.Controls.Add(Me.Label8)
+        Me.gbParameters.Controls.Add(Me.Label10)
+        Me.gbParameters.Controls.Add(Me.CUTOFFBox)
+        Me.gbParameters.Controls.Add(Me.Label11)
+        Me.gbParameters.Controls.Add(Me.Label6)
+        Me.gbParameters.Controls.Add(Me.STEPSBox)
+        Me.gbParameters.Controls.Add(Me.Label4)
+        Me.gbParameters.Dock = System.Windows.Forms.DockStyle.Top
+        Me.gbParameters.Location = New System.Drawing.Point(3, 3)
+        Me.gbParameters.Name = "gbParameters"
+        Me.gbParameters.Size = New System.Drawing.Size(323, 238)
+        Me.gbParameters.TabIndex = 2
+        Me.gbParameters.TabStop = False
+        Me.gbParameters.Text = "Simulation parameters"
+        '
+        'Label15
+        '
+        Me.Label15.AutoSize = True
+        Me.Label15.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label15.Location = New System.Drawing.Point(7, 93)
+        Me.Label15.Name = "Label15"
+        Me.Label15.Size = New System.Drawing.Size(130, 13)
+        Me.Label15.TabIndex = 126
+        Me.Label15.Text = "Global survey tolerance:"
         '
         'cbExtendWakes
         '
@@ -570,7 +580,7 @@ Partial Class FormSettings
         '
         Me.Label7.AutoSize = True
         Me.Label7.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label7.Location = New System.Drawing.Point(225, 117)
+        Me.Label7.Location = New System.Drawing.Point(224, 117)
         Me.Label7.Name = "Label7"
         Me.Label7.Size = New System.Drawing.Size(34, 13)
         Me.Label7.TabIndex = 104
@@ -593,7 +603,7 @@ Partial Class FormSettings
         '
         Me.cbAutoCutOff.AutoSize = True
         Me.cbAutoCutOff.Enabled = False
-        Me.cbAutoCutOff.Location = New System.Drawing.Point(243, 69)
+        Me.cbAutoCutOff.Location = New System.Drawing.Point(242, 69)
         Me.cbAutoCutOff.Name = "cbAutoCutOff"
         Me.cbAutoCutOff.Size = New System.Drawing.Size(77, 17)
         Me.cbAutoCutOff.TabIndex = 119
@@ -637,7 +647,7 @@ Partial Class FormSettings
         '
         Me.Label10.AutoSize = True
         Me.Label10.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label10.Location = New System.Drawing.Point(226, 69)
+        Me.Label10.Location = New System.Drawing.Point(225, 69)
         Me.Label10.Name = "Label10"
         Me.Label10.Size = New System.Drawing.Size(15, 13)
         Me.Label10.TabIndex = 111
@@ -670,7 +680,7 @@ Partial Class FormSettings
         '
         Me.Label6.AutoSize = True
         Me.Label6.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label6.Location = New System.Drawing.Point(225, 21)
+        Me.Label6.Location = New System.Drawing.Point(224, 21)
         Me.Label6.Name = "Label6"
         Me.Label6.Size = New System.Drawing.Size(34, 13)
         Me.Label6.TabIndex = 103
@@ -710,7 +720,7 @@ Partial Class FormSettings
         Me.tpStructural.Controls.Add(Me.Label31)
         Me.tpStructural.Location = New System.Drawing.Point(4, 22)
         Me.tpStructural.Name = "tpStructural"
-        Me.tpStructural.Size = New System.Drawing.Size(344, 247)
+        Me.tpStructural.Size = New System.Drawing.Size(329, 247)
         Me.tpStructural.TabIndex = 2
         Me.tpStructural.Text = "Structural"
         '
@@ -796,7 +806,7 @@ Partial Class FormSettings
         Me.tpGpu.Controls.Add(Me.Label34)
         Me.tpGpu.Location = New System.Drawing.Point(4, 22)
         Me.tpGpu.Name = "tpGpu"
-        Me.tpGpu.Size = New System.Drawing.Size(344, 247)
+        Me.tpGpu.Size = New System.Drawing.Size(329, 247)
         Me.tpGpu.TabIndex = 4
         Me.tpGpu.Text = "GPU"
         Me.tpGpu.UseVisualStyleBackColor = True
@@ -806,7 +816,7 @@ Partial Class FormSettings
         Me.Label37.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label37.Location = New System.Drawing.Point(5, 55)
         Me.Label37.Name = "Label37"
-        Me.Label37.Size = New System.Drawing.Size(336, 33)
+        Me.Label37.Size = New System.Drawing.Size(321, 33)
         Me.Label37.TabIndex = 120
         Me.Label37.Text = "* : use the Cudafy tools to find the Id of the device you want to use."
         '
@@ -850,7 +860,7 @@ Partial Class FormSettings
         Me.btOK.FlatAppearance.MouseDownBackColor = System.Drawing.Color.PaleGreen
         Me.btOK.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DeepSkyBlue
         Me.btOK.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btOK.Location = New System.Drawing.Point(275, 277)
+        Me.btOK.Location = New System.Drawing.Point(260, 277)
         Me.btOK.Name = "btOK"
         Me.btOK.Size = New System.Drawing.Size(75, 23)
         Me.btOK.TabIndex = 102
@@ -867,28 +877,18 @@ Partial Class FormSettings
         Me.btnCancel.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LightCoral
         Me.btnCancel.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DeepSkyBlue
         Me.btnCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btnCancel.Location = New System.Drawing.Point(194, 277)
+        Me.btnCancel.Location = New System.Drawing.Point(179, 277)
         Me.btnCancel.Name = "btnCancel"
         Me.btnCancel.Size = New System.Drawing.Size(75, 23)
         Me.btnCancel.TabIndex = 103
         Me.btnCancel.Text = "Cancel"
         Me.btnCancel.UseVisualStyleBackColor = False
         '
-        'Label15
-        '
-        Me.Label15.AutoSize = True
-        Me.Label15.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label15.Location = New System.Drawing.Point(7, 93)
-        Me.Label15.Name = "Label15"
-        Me.Label15.Size = New System.Drawing.Size(130, 13)
-        Me.Label15.TabIndex = 126
-        Me.Label15.Text = "Global survey tolerance:"
-        '
         'FormSettings
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(356, 308)
+        Me.ClientSize = New System.Drawing.Size(341, 308)
         Me.Controls.Add(Me.btnCancel)
         Me.Controls.Add(Me.btOK)
         Me.Controls.Add(Me.tpSettings)
@@ -904,20 +904,20 @@ Partial Class FormSettings
         Me.tpStream.ResumeLayout(False)
         Me.gbFlowRotation.ResumeLayout(False)
         Me.gbFlowRotation.PerformLayout()
-        CType(Me.nudOmagaz, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.nudOmegay, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.nudOmegax, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.bgStreamVelocity.ResumeLayout(False)
-        Me.bgStreamVelocity.PerformLayout()
-        CType(Me.nudStaticPressure, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.nudViscosity, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.nudDensity, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.bgFreeStream.ResumeLayout(False)
+        Me.bgFreeStream.PerformLayout()
+        CType(Me.nudStaticPressure, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.nudVz, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.nudVy, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.nudVx, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.nudOmagaz, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.nudOmegay, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.nudOmegax, System.ComponentModel.ISupportInitialize).EndInit()
         Me.tpAero.ResumeLayout(False)
-        Me.GroupBox2.ResumeLayout(False)
-        Me.GroupBox2.PerformLayout()
+        Me.gbParameters.ResumeLayout(False)
+        Me.gbParameters.PerformLayout()
         CType(Me.CSTEPSBox, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.nudAdjacencyTolerance, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.DTBox, System.ComponentModel.ISupportInitialize).EndInit()
@@ -946,7 +946,7 @@ Partial Class FormSettings
     Friend WithEvents Label23 As System.Windows.Forms.Label
     Friend WithEvents Label24 As System.Windows.Forms.Label
     Friend WithEvents Label25 As System.Windows.Forms.Label
-    Friend WithEvents bgStreamVelocity As System.Windows.Forms.GroupBox
+    Friend WithEvents bgFreeStream As System.Windows.Forms.GroupBox
     Friend WithEvents Label14 As System.Windows.Forms.Label
     Friend WithEvents Label21 As System.Windows.Forms.Label
     Friend WithEvents Label12 As System.Windows.Forms.Label
@@ -963,7 +963,7 @@ Partial Class FormSettings
     Friend WithEvents Label35 As System.Windows.Forms.Label
     Friend WithEvents Label36 As System.Windows.Forms.Label
     Friend WithEvents tpAero As System.Windows.Forms.TabPage
-    Friend WithEvents GroupBox2 As System.Windows.Forms.GroupBox
+    Friend WithEvents gbParameters As System.Windows.Forms.GroupBox
     Friend WithEvents nudAdjacencyTolerance As System.Windows.Forms.NumericUpDown
     Friend WithEvents cbAutoCutOff As System.Windows.Forms.CheckBox
     Friend WithEvents Label10 As System.Windows.Forms.Label

@@ -18,7 +18,6 @@
 Imports DotNumerics.LinearAlgebra
 Imports System.Threading.Tasks
 Imports OpenVOGEL.MathTools.Algebra.EuclideanSpace
-Imports OpenVOGEL.MathTools.Extensions
 Imports OpenVOGEL.AeroTools.CalculationModel.Models.Aero
 Imports OpenVOGEL.AeroTools.CalculationModel.Models.Aero.Components
 
@@ -60,6 +59,197 @@ Namespace CalculationModel.Solver
             Return eIndex
 
         End Function
+
+        ''' <summary>
+        ''' Assign surrounding rings to each panel by scanning all lattices.
+        ''' Additionally, it marks primitive panels as such.
+        ''' </summary>
+        Public Sub FindSurroundingRingsGlobally()
+
+            Dim Tolerance As Double = Settings.SurveyTolerance
+
+            Dim Order4(4, 2) As Integer
+
+            Order4(0, 0) = 1
+            Order4(0, 1) = 2
+
+            Order4(1, 0) = 2
+            Order4(1, 1) = 3
+
+            Order4(2, 0) = 3
+            Order4(2, 1) = 4
+
+            Order4(3, 0) = 4
+            Order4(3, 1) = 1
+
+            Dim Order3(3, 2) As Integer
+
+            Order3(0, 0) = 1
+            Order3(0, 1) = 2
+
+            Order3(1, 0) = 2
+            Order3(1, 1) = 3
+
+            Order3(2, 0) = 3
+            Order3(2, 1) = 1
+
+            For Each Lattice In Lattices
+
+                Dim Pi As EVector3
+                Dim Pj As EVector3
+
+                Dim Pm As EVector3
+                Dim Pn As EVector3
+
+                For Each Ring In Lattice.VortexRings
+
+                    If Not Ring.IsSlender Then Continue For ' Do not find adjacent panels of non-slender rings (not required)
+
+                    Ring.InitializeSurroundingRings()
+
+                    If Ring.Type = VortexRingType.VR4 Then
+
+                        For m = 0 To 3 ' For each local segment:
+
+                            Pi = Ring.Node(Order4(m, 0)).Position
+                            Pj = Ring.Node(Order4(m, 1)).Position
+
+                            For Each OtherLattice In Lattices
+
+                                For Each OtherRing In OtherLattice.VortexRings
+
+                                    If Ring.IndexG <> OtherRing.IndexG Then
+
+                                        If OtherRing.Type = VortexRingType.VR4 Then
+
+                                            For n = 0 To 3 ' For each other segment:
+
+                                                If OtherRing.Reversed Then
+                                                    Pm = OtherRing.Node(Order4(n, 1)).Position
+                                                    Pn = OtherRing.Node(Order4(n, 0)).Position
+                                                Else
+                                                    Pm = OtherRing.Node(Order4(n, 0)).Position
+                                                    Pn = OtherRing.Node(Order4(n, 1)).Position
+                                                End If
+
+                                                If (Pi.DistanceTo(Pm) < Tolerance AndAlso Pj.DistanceTo(Pn) < Tolerance) Then
+                                                    Ring.AttachNeighbourAtSide(m, OtherRing, -1)
+                                                ElseIf (Pi.DistanceTo(Pn) < Tolerance AndAlso Pj.DistanceTo(Pm) < Tolerance) Then
+                                                    Ring.AttachNeighbourAtSide(m, OtherRing, 1)
+                                                End If
+
+                                            Next
+
+                                        ElseIf OtherRing.Type = VortexRingType.VR3 Then
+
+                                            For n = 0 To 2 ' For each other segment:
+
+                                                If OtherRing.Reversed Then
+                                                    Pm = OtherRing.Node(Order3(n, 1)).Position
+                                                    Pn = OtherRing.Node(Order3(n, 0)).Position
+                                                Else
+                                                    Pm = OtherRing.Node(Order3(n, 0)).Position
+                                                    Pn = OtherRing.Node(Order3(n, 1)).Position
+                                                End If
+
+                                                If (Pi.DistanceTo(Pm) < Tolerance AndAlso Pj.DistanceTo(Pn) < Tolerance) Then
+                                                    Ring.AttachNeighbourAtSide(m, OtherRing, -1)
+                                                ElseIf (Pi.DistanceTo(Pn) < Tolerance AndAlso Pj.DistanceTo(Pm) < Tolerance) Then
+                                                    Ring.AttachNeighbourAtSide(m, OtherRing, 1)
+                                                End If
+
+                                            Next
+
+                                        End If
+
+                                    End If
+
+                                Next
+
+                            Next
+
+                        Next
+
+                    ElseIf Ring.Type = VortexRingType.VR3 Then
+
+                        For m = 0 To 2 ' For each local segment:
+
+                            Pi = Ring.Node(Order3(m, 0)).Position
+                            Pj = Ring.Node(Order3(m, 1)).Position
+
+                            For Each OtherLattice In Lattices
+
+                                For Each OtherRing In OtherLattice.VortexRings
+
+                                    If Ring.IndexG <> OtherRing.IndexG Then
+
+                                        If OtherRing.Type = VortexRingType.VR4 Then
+
+                                            For n = 0 To 3 ' For each other segment:
+
+                                                If OtherRing.Reversed Then
+                                                    Pm = OtherRing.Node(Order4(n, 1)).Position
+                                                    Pn = OtherRing.Node(Order4(n, 0)).Position
+                                                Else
+                                                    Pm = OtherRing.Node(Order4(n, 0)).Position
+                                                    Pn = OtherRing.Node(Order4(n, 1)).Position
+                                                End If
+
+                                                If (Pi.DistanceTo(Pm) < Tolerance And Pj.DistanceTo(Pn) < Tolerance) Then
+                                                    Ring.AttachNeighbourAtSide(m, OtherRing, -1)
+                                                ElseIf (Pi.DistanceTo(Pn) < Tolerance And Pj.DistanceTo(Pm) < Tolerance) Then
+                                                    Ring.AttachNeighbourAtSide(m, OtherRing, 1)
+                                                End If
+
+                                            Next
+
+                                        ElseIf OtherRing.Type = VortexRingType.VR3 Then
+
+                                            For n = 0 To 2 ' For each other segment:
+
+                                                If OtherRing.Reversed Then
+                                                    Pm = OtherRing.Node(Order3(n, 1)).Position
+                                                    Pn = OtherRing.Node(Order3(n, 0)).Position
+                                                Else
+                                                    Pm = OtherRing.Node(Order3(n, 0)).Position
+                                                    Pn = OtherRing.Node(Order3(n, 1)).Position
+                                                End If
+
+                                                If (Pi.DistanceTo(Pm) < Tolerance And Pj.DistanceTo(Pn) < Tolerance) Then
+                                                    Ring.AttachNeighbourAtSide(m, OtherRing, -1)
+                                                ElseIf (Pi.DistanceTo(Pn) < Tolerance And Pj.DistanceTo(Pm) < Tolerance) Then
+                                                    Ring.AttachNeighbourAtSide(m, OtherRing, 1)
+                                                End If
+
+                                            Next
+
+                                        End If
+
+                                    End If
+
+                                Next
+
+                            Next
+
+                        Next
+
+                    End If
+
+                Next
+
+                ' Set primitive flag on primitive panels:
+
+                For Each Wake In Lattice.Wakes
+
+                    For Each Primitive In Wake.Primitive.Rings
+                        Lattice.VortexRings(Primitive).IsPrimitive = True
+                    Next
+
+                Next
+
+            Next
+
+        End Sub
 
         ''' <summary>
         ''' Constructs the matrix of mutual influence coeficients.
