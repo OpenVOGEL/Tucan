@@ -63,7 +63,6 @@ Partial Class FormSettings
         Me.nudAdjacencyTolerance = New System.Windows.Forms.NumericUpDown()
         Me.cbAutoCutOff = New System.Windows.Forms.CheckBox()
         Me.Label9 = New System.Windows.Forms.Label()
-        Me.cbGlobalSurvey = New System.Windows.Forms.CheckBox()
         Me.DTBox = New System.Windows.Forms.NumericUpDown()
         Me.Label8 = New System.Windows.Forms.Label()
         Me.Label10 = New System.Windows.Forms.Label()
@@ -87,6 +86,7 @@ Partial Class FormSettings
         Me.Label34 = New System.Windows.Forms.Label()
         Me.btOK = New System.Windows.Forms.Button()
         Me.btnCancel = New System.Windows.Forms.Button()
+        Me.Label15 = New System.Windows.Forms.Label()
         Me.tpSettings.SuspendLayout()
         Me.tpStream.SuspendLayout()
         Me.gbFlowRotation.SuspendLayout()
@@ -499,6 +499,7 @@ Partial Class FormSettings
         '
         'GroupBox2
         '
+        Me.GroupBox2.Controls.Add(Me.Label15)
         Me.GroupBox2.Controls.Add(Me.cbExtendWakes)
         Me.GroupBox2.Controls.Add(Me.Label5)
         Me.GroupBox2.Controls.Add(Me.CSTEPSBox)
@@ -507,7 +508,6 @@ Partial Class FormSettings
         Me.GroupBox2.Controls.Add(Me.nudAdjacencyTolerance)
         Me.GroupBox2.Controls.Add(Me.cbAutoCutOff)
         Me.GroupBox2.Controls.Add(Me.Label9)
-        Me.GroupBox2.Controls.Add(Me.cbGlobalSurvey)
         Me.GroupBox2.Controls.Add(Me.DTBox)
         Me.GroupBox2.Controls.Add(Me.Label8)
         Me.GroupBox2.Controls.Add(Me.Label10)
@@ -522,12 +522,12 @@ Partial Class FormSettings
         Me.GroupBox2.Size = New System.Drawing.Size(338, 238)
         Me.GroupBox2.TabIndex = 2
         Me.GroupBox2.TabStop = False
-        Me.GroupBox2.Text = "Simulación parameters"
+        Me.GroupBox2.Text = "Simulation parameters"
         '
         'cbExtendWakes
         '
         Me.cbExtendWakes.AutoSize = True
-        Me.cbExtendWakes.Location = New System.Drawing.Point(18, 159)
+        Me.cbExtendWakes.Location = New System.Drawing.Point(12, 143)
         Me.cbExtendWakes.Name = "cbExtendWakes"
         Me.cbExtendWakes.Size = New System.Drawing.Size(197, 17)
         Me.cbExtendWakes.TabIndex = 125
@@ -538,7 +538,7 @@ Partial Class FormSettings
         '
         Me.Label5.AutoSize = True
         Me.Label5.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label5.Location = New System.Drawing.Point(15, 134)
+        Me.Label5.Location = New System.Drawing.Point(7, 117)
         Me.Label5.Name = "Label5"
         Me.Label5.Size = New System.Drawing.Size(93, 13)
         Me.Label5.TabIndex = 101
@@ -547,11 +547,11 @@ Partial Class FormSettings
         'CSTEPSBox
         '
         Me.CSTEPSBox.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.CSTEPSBox.Location = New System.Drawing.Point(115, 131)
+        Me.CSTEPSBox.Location = New System.Drawing.Point(143, 115)
         Me.CSTEPSBox.Maximum = New Decimal(New Integer() {99999, 0, 0, 0})
         Me.CSTEPSBox.Minimum = New Decimal(New Integer() {1, 0, 0, 0})
         Me.CSTEPSBox.Name = "CSTEPSBox"
-        Me.CSTEPSBox.Size = New System.Drawing.Size(51, 22)
+        Me.CSTEPSBox.Size = New System.Drawing.Size(77, 22)
         Me.CSTEPSBox.TabIndex = 102
         Me.CSTEPSBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         Me.CSTEPSBox.Value = New Decimal(New Integer() {5, 0, 0, 0})
@@ -560,7 +560,7 @@ Partial Class FormSettings
         '
         Me.Label38.AutoSize = True
         Me.Label38.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label38.Location = New System.Drawing.Point(247, 105)
+        Me.Label38.Location = New System.Drawing.Point(224, 93)
         Me.Label38.Name = "Label38"
         Me.Label38.Size = New System.Drawing.Size(15, 13)
         Me.Label38.TabIndex = 123
@@ -570,7 +570,7 @@ Partial Class FormSettings
         '
         Me.Label7.AutoSize = True
         Me.Label7.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label7.Location = New System.Drawing.Point(171, 133)
+        Me.Label7.Location = New System.Drawing.Point(225, 117)
         Me.Label7.Name = "Label7"
         Me.Label7.Size = New System.Drawing.Size(34, 13)
         Me.Label7.TabIndex = 104
@@ -578,10 +578,10 @@ Partial Class FormSettings
         '
         'nudAdjacencyTolerance
         '
-        Me.nudAdjacencyTolerance.DecimalPlaces = 6
+        Me.nudAdjacencyTolerance.DecimalPlaces = 7
         Me.nudAdjacencyTolerance.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.nudAdjacencyTolerance.Increment = New Decimal(New Integer() {1, 0, 0, 196608})
-        Me.nudAdjacencyTolerance.Location = New System.Drawing.Point(166, 103)
+        Me.nudAdjacencyTolerance.Location = New System.Drawing.Point(143, 91)
         Me.nudAdjacencyTolerance.Maximum = New Decimal(New Integer() {99999, 0, 0, 0})
         Me.nudAdjacencyTolerance.Name = "nudAdjacencyTolerance"
         Me.nudAdjacencyTolerance.Size = New System.Drawing.Size(77, 22)
@@ -593,7 +593,7 @@ Partial Class FormSettings
         '
         Me.cbAutoCutOff.AutoSize = True
         Me.cbAutoCutOff.Enabled = False
-        Me.cbAutoCutOff.Location = New System.Drawing.Point(177, 76)
+        Me.cbAutoCutOff.Location = New System.Drawing.Point(243, 69)
         Me.cbAutoCutOff.Name = "cbAutoCutOff"
         Me.cbAutoCutOff.Size = New System.Drawing.Size(77, 17)
         Me.cbAutoCutOff.TabIndex = 119
@@ -604,31 +604,21 @@ Partial Class FormSettings
         '
         Me.Label9.AutoSize = True
         Me.Label9.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label9.Location = New System.Drawing.Point(13, 47)
+        Me.Label9.Location = New System.Drawing.Point(7, 45)
         Me.Label9.Name = "Label9"
-        Me.Label9.Size = New System.Drawing.Size(48, 13)
+        Me.Label9.Size = New System.Drawing.Size(74, 13)
         Me.Label9.TabIndex = 105
-        Me.Label9.Text = "Interval:"
-        '
-        'cbGlobalSurvey
-        '
-        Me.cbGlobalSurvey.AutoSize = True
-        Me.cbGlobalSurvey.Location = New System.Drawing.Point(18, 104)
-        Me.cbGlobalSurvey.Name = "cbGlobalSurvey"
-        Me.cbGlobalSurvey.Size = New System.Drawing.Size(148, 17)
-        Me.cbGlobalSurvey.TabIndex = 118
-        Me.cbGlobalSurvey.Text = "Global adjacency survey"
-        Me.cbGlobalSurvey.UseVisualStyleBackColor = True
+        Me.Label9.Text = "Step interval:"
         '
         'DTBox
         '
-        Me.DTBox.DecimalPlaces = 6
+        Me.DTBox.DecimalPlaces = 7
         Me.DTBox.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.DTBox.Increment = New Decimal(New Integer() {1, 0, 0, 196608})
-        Me.DTBox.Location = New System.Drawing.Point(63, 45)
+        Me.DTBox.Location = New System.Drawing.Point(143, 43)
         Me.DTBox.Maximum = New Decimal(New Integer() {99999, 0, 0, 0})
         Me.DTBox.Name = "DTBox"
-        Me.DTBox.Size = New System.Drawing.Size(103, 22)
+        Me.DTBox.Size = New System.Drawing.Size(77, 22)
         Me.DTBox.TabIndex = 106
         Me.DTBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         Me.DTBox.Value = New Decimal(New Integer() {52, 0, 0, 262144})
@@ -637,7 +627,7 @@ Partial Class FormSettings
         '
         Me.Label8.AutoSize = True
         Me.Label8.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label8.Location = New System.Drawing.Point(171, 47)
+        Me.Label8.Location = New System.Drawing.Point(225, 45)
         Me.Label8.Name = "Label8"
         Me.Label8.Size = New System.Drawing.Size(12, 13)
         Me.Label8.TabIndex = 107
@@ -647,7 +637,7 @@ Partial Class FormSettings
         '
         Me.Label10.AutoSize = True
         Me.Label10.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label10.Location = New System.Drawing.Point(160, 76)
+        Me.Label10.Location = New System.Drawing.Point(226, 69)
         Me.Label10.Name = "Label10"
         Me.Label10.Size = New System.Drawing.Size(15, 13)
         Me.Label10.TabIndex = 111
@@ -655,13 +645,13 @@ Partial Class FormSettings
         '
         'CUTOFFBox
         '
-        Me.CUTOFFBox.DecimalPlaces = 10
+        Me.CUTOFFBox.DecimalPlaces = 7
         Me.CUTOFFBox.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.CUTOFFBox.Increment = New Decimal(New Integer() {1, 0, 0, 196608})
-        Me.CUTOFFBox.Location = New System.Drawing.Point(59, 74)
+        Me.CUTOFFBox.Location = New System.Drawing.Point(143, 67)
         Me.CUTOFFBox.Maximum = New Decimal(New Integer() {99999, 0, 0, 0})
         Me.CUTOFFBox.Name = "CUTOFFBox"
-        Me.CUTOFFBox.Size = New System.Drawing.Size(95, 22)
+        Me.CUTOFFBox.Size = New System.Drawing.Size(77, 22)
         Me.CUTOFFBox.TabIndex = 110
         Me.CUTOFFBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         Me.CUTOFFBox.Value = New Decimal(New Integer() {1, 0, 0, 196608})
@@ -670,17 +660,17 @@ Partial Class FormSettings
         '
         Me.Label11.AutoSize = True
         Me.Label11.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label11.Location = New System.Drawing.Point(15, 76)
+        Me.Label11.Location = New System.Drawing.Point(7, 70)
         Me.Label11.Name = "Label11"
-        Me.Label11.Size = New System.Drawing.Size(43, 13)
+        Me.Label11.Size = New System.Drawing.Size(78, 13)
         Me.Label11.TabIndex = 109
-        Me.Label11.Text = "Cutoff:"
+        Me.Label11.Text = "Cutoff radius:"
         '
         'Label6
         '
         Me.Label6.AutoSize = True
         Me.Label6.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label6.Location = New System.Drawing.Point(171, 23)
+        Me.Label6.Location = New System.Drawing.Point(225, 21)
         Me.Label6.Name = "Label6"
         Me.Label6.Size = New System.Drawing.Size(34, 13)
         Me.Label6.TabIndex = 103
@@ -689,11 +679,11 @@ Partial Class FormSettings
         'STEPSBox
         '
         Me.STEPSBox.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.STEPSBox.Location = New System.Drawing.Point(115, 21)
+        Me.STEPSBox.Location = New System.Drawing.Point(143, 19)
         Me.STEPSBox.Maximum = New Decimal(New Integer() {99999, 0, 0, 0})
         Me.STEPSBox.Minimum = New Decimal(New Integer() {1, 0, 0, 0})
         Me.STEPSBox.Name = "STEPSBox"
-        Me.STEPSBox.Size = New System.Drawing.Size(51, 22)
+        Me.STEPSBox.Size = New System.Drawing.Size(77, 22)
         Me.STEPSBox.TabIndex = 100
         Me.STEPSBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         Me.STEPSBox.Value = New Decimal(New Integer() {5, 0, 0, 0})
@@ -702,11 +692,11 @@ Partial Class FormSettings
         '
         Me.Label4.AutoSize = True
         Me.Label4.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label4.Location = New System.Drawing.Point(13, 23)
+        Me.Label4.Location = New System.Drawing.Point(7, 21)
         Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(102, 13)
+        Me.Label4.Size = New System.Drawing.Size(121, 13)
         Me.Label4.TabIndex = 99
-        Me.Label4.Text = "Simulation period:"
+        Me.Label4.Text = "Total simulation steps:"
         '
         'tpStructural
         '
@@ -884,6 +874,16 @@ Partial Class FormSettings
         Me.btnCancel.Text = "Cancel"
         Me.btnCancel.UseVisualStyleBackColor = False
         '
+        'Label15
+        '
+        Me.Label15.AutoSize = True
+        Me.Label15.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label15.Location = New System.Drawing.Point(7, 93)
+        Me.Label15.Name = "Label15"
+        Me.Label15.Size = New System.Drawing.Size(130, 13)
+        Me.Label15.TabIndex = 126
+        Me.Label15.Text = "Global survey tolerance:"
+        '
         'FormSettings
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -966,7 +966,6 @@ Partial Class FormSettings
     Friend WithEvents GroupBox2 As System.Windows.Forms.GroupBox
     Friend WithEvents nudAdjacencyTolerance As System.Windows.Forms.NumericUpDown
     Friend WithEvents cbAutoCutOff As System.Windows.Forms.CheckBox
-    Friend WithEvents cbGlobalSurvey As System.Windows.Forms.CheckBox
     Friend WithEvents Label10 As System.Windows.Forms.Label
     Friend WithEvents CUTOFFBox As System.Windows.Forms.NumericUpDown
     Friend WithEvents Label11 As System.Windows.Forms.Label
@@ -999,4 +998,5 @@ Partial Class FormSettings
     Friend WithEvents Label37 As Windows.Forms.Label
     Friend WithEvents Label38 As Windows.Forms.Label
     Friend WithEvents cbExtendWakes As Windows.Forms.CheckBox
+    Friend WithEvents Label15 As Windows.Forms.Label
 End Class

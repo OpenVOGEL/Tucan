@@ -165,12 +165,6 @@ Namespace CalculationModel.Settings
         ''' <returns></returns>
         Public Property AnalysisType As CalculationType = CalculationType.ctSteady
 
-        ''' <summary>
-        ''' Indicates if adjacent rings should be searched by proximity and not by indexation.
-        ''' </summary>
-        ''' <remarks></remarks>
-        Public Property GlobalPanelSurvey As Boolean = True
-
         Private _SurveyTolerance As Double = 0.001
 
         ''' <summary>
@@ -242,7 +236,6 @@ Namespace CalculationModel.Settings
             Cutoff = 0.0001
             CalculateCutoff = False
             ExtendWakes = False
-            GlobalPanelSurvey = True
 
         End Sub
 
@@ -264,7 +257,6 @@ Namespace CalculationModel.Settings
             Density = SimuData.Density
             StaticPressure = SimuData.StaticPressure
             SurveyTolerance = SimuData.SurveyTolerance
-            GlobalPanelSurvey = SimuData.GlobalPanelSurvey
             UseGpu = SimuData.UseGpu
             GpuDeviceId = SimuData.GpuDeviceId
             ExtendWakes = SimuData.ExtendWakes
@@ -331,7 +323,6 @@ Namespace CalculationModel.Settings
             writer.WriteAttributeString("Steps", String.Format("{0}", SimulationSteps))
             writer.WriteAttributeString("MaxSteps", String.Format("{0}", ClippingStep))
             writer.WriteAttributeString("Cutoff", String.Format("{0}", Cutoff))
-            writer.WriteAttributeString("GlobalSurvey", String.Format("{0}", GlobalPanelSurvey))
             writer.WriteAttributeString("SurveyTolerance", String.Format("{0}", SurveyTolerance))
             writer.WriteAttributeString("ExtendWakes", String.Format("{0}", ExtendWakes))
             writer.WriteAttributeString("UseGpu", String.Format("{0}", UseGpu))
@@ -389,7 +380,6 @@ Namespace CalculationModel.Settings
                             SimulationSteps = IOXML.ReadInteger(reader, "Steps", 15)
                             ClippingStep = IOXML.ReadInteger(reader, "MaxSteps", 15)
                             Cutoff = IOXML.ReadDouble(reader, "Cutoff", 0.0001)
-                            GlobalPanelSurvey = IOXML.ReadBoolean(reader, "GlobalSurvey", False)
                             SurveyTolerance = IOXML.ReadDouble(reader, "SurveyTolerance", 0.001)
                             ExtendWakes = IOXML.ReadBoolean(reader, "ExtendWakes", False)
                             UseGpu = IOXML.ReadBoolean(reader, "UseGpu", False)

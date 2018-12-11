@@ -49,7 +49,6 @@ Public Class FormSettings
         nudOmagaz.Enabled = _AllowFlowRotation
 
         cbAutoCutOff.Checked = LocalSettings.CalculateCutoff
-        cbGlobalSurvey.Checked = LocalSettings.GlobalPanelSurvey
         cbExtendWakes.Checked = LocalSettings.ExtendWakes
 
         ' GPU
@@ -94,7 +93,6 @@ Public Class FormSettings
             LocalSettings.Omega.SetToCero()
         End If
         LocalSettings.CalculateCutoff = cbAutoCutOff.Checked
-        LocalSettings.GlobalPanelSurvey = cbGlobalSurvey.Checked
         LocalSettings.ExtendWakes = cbExtendWakes.Checked
 
         LocalSettings.UseGpu = cbUseGpu.Checked

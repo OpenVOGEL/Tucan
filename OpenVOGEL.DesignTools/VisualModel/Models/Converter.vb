@@ -123,8 +123,6 @@ Namespace VisualModel.Models
 
                     Next
 
-                    If Not This.Settings.GlobalPanelSurvey Then Lattice.FindSurroundingRings()
-
                 End If
 
             Next
@@ -155,13 +153,13 @@ Namespace VisualModel.Models
 
             ' Find surrounding rings
 
-            If This.Settings.GlobalPanelSurvey Then
+            This.FindSurroundingRingsGlobally()
 
-                This.FindSurroundingRingsGlobally()
-
-            End If
+            ' Check if sources must be included (thick bodies are present)
 
             This.WithSources = This.CheckIfThereAreSources()
+
+            ' Populate wakes with vortices
 
             For Each Lattice In This.Lattices
 
@@ -233,10 +231,6 @@ Namespace VisualModel.Models
                 Lattice.Wakes.Add(Wake)
 
             End If
-
-            ' Find surrounding rings (for loads calculation), only if global survey options has not been turned on.
-
-            If Not This.Settings.GlobalPanelSurvey Then Lattice.FindSurroundingRings()
 
             ' Generate structural link:
 
@@ -434,8 +428,6 @@ Namespace VisualModel.Models
                 Lattice.Wakes.Add(Wake)
 
             End If
-
-            If Not This.Settings.GlobalPanelSurvey Then Lattice.FindSurroundingRings()
 
         End Sub
 
