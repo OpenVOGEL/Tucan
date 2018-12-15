@@ -31,7 +31,7 @@ Namespace VisualModel.Tools.Properties
         Public Property OrthoProjection As Boolean
         Public Property ReferenceFrame As New ReferenceFrame
         Public Property Axes As New CoordinateAxes
-        Public Property ScreenColor As Color = Color.White ' Drawing.Color.FromArgb(49, 49, 49)
+        Public Property ScreenColor As Color = Color.FromArgb(50, 50, 50)
         Public Property AllowLineSmoothing As Boolean = True
         Public Property AllowAlphaBlending As Boolean = True
         Public Property MouseStartPosition As EVector2

@@ -35,8 +35,46 @@ Namespace VisualModel.Models.Components
 
         Inherits Surface
 
+        ''' <summary>
+        ''' The different kind of results
+        ''' </summary>
+        Public Enum ResultKinds
+
+            ''' <summary>
+            ''' No results
+            ''' </summary>
+            None
+            ''' <summary>
+            ''' The mean pressure over a panel
+            ''' </summary>
+            PanelPressure
+
+            ''' <summary>
+            ''' The velocity computed at the panel control point
+            ''' </summary>
+            PanelVelocity
+
+            ''' <summary>
+            ''' The pressure interpolated over the nodes
+            ''' </summary>
+            NodalPressure
+
+            ''' <summary>
+            ''' The nodal displacements (for dynamic modes and aeroelasticity)
+            ''' </summary>
+            NodalDisplacement
+
+        End Enum
+
+        ''' <summary>
+        ''' The active result
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property ActiveResult As ResultKinds
+
         Public Sub New()
 
+            ActiveResult = ResultKinds.None
             Mesh = New Mesh()
             VisualProperties = New VisualProperties(ComponentTypes.etResultContainer)
 
@@ -224,29 +262,91 @@ Namespace VisualModel.Models.Components
 
                     ElseIf VisualProperties.ShowColormap Then
 
-                        gl.Color(Panel.CpColor.R, Panel.CpColor.G, Panel.CpColor.B)
+                        Select Case ActiveResult
 
-                        Node = Mesh.Nodes(Panel.N1)
-                        gl.Vertex(Node.Position.X, Node.Position.Y, Node.Position.Z)
+                            Case ResultKinds.PanelPressure
 
-                        Node = Mesh.Nodes(Panel.N2)
-                        gl.Vertex(Node.Position.X, Node.Position.Y, Node.Position.Z)
+                                gl.Color(Panel.CpColor.R, Panel.CpColor.G, Panel.CpColor.B)
 
-                        Node = Mesh.Nodes(Panel.N3)
-                        gl.Vertex(Node.Position.X, Node.Position.Y, Node.Position.Z)
+                                Node = Mesh.Nodes(Panel.N1)
+                                gl.Vertex(Node.Position.X, Node.Position.Y, Node.Position.Z)
 
-                        Node = Mesh.Nodes(Panel.N3)
-                        gl.Vertex(Node.Position.X, Node.Position.Y, Node.Position.Z)
+                                Node = Mesh.Nodes(Panel.N2)
+                                gl.Vertex(Node.Position.X, Node.Position.Y, Node.Position.Z)
 
-                        Node = Mesh.Nodes(Panel.N4)
-                        gl.Vertex(Node.Position.X, Node.Position.Y, Node.Position.Z)
+                                Node = Mesh.Nodes(Panel.N3)
+                                gl.Vertex(Node.Position.X, Node.Position.Y, Node.Position.Z)
 
-                        Node = Mesh.Nodes(Panel.N1)
-                        gl.Vertex(Node.Position.X, Node.Position.Y, Node.Position.Z)
+                                Node = Mesh.Nodes(Panel.N3)
+                                gl.Vertex(Node.Position.X, Node.Position.Y, Node.Position.Z)
+
+                                Node = Mesh.Nodes(Panel.N4)
+                                gl.Vertex(Node.Position.X, Node.Position.Y, Node.Position.Z)
+
+                                Node = Mesh.Nodes(Panel.N1)
+                                gl.Vertex(Node.Position.X, Node.Position.Y, Node.Position.Z)
+
+                            Case ResultKinds.NodalDisplacement
+
+                                Node = Mesh.Nodes(Panel.N1)
+                                gl.Color(Node.DisplacementColor.R, Node.DisplacementColor.G, Node.DisplacementColor.B)
+                                gl.Vertex(Node.Position.X, Node.Position.Y, Node.Position.Z)
+
+                                Node = Mesh.Nodes(Panel.N2)
+                                gl.Color(Node.DisplacementColor.R, Node.DisplacementColor.G, Node.DisplacementColor.B)
+                                gl.Vertex(Node.Position.X, Node.Position.Y, Node.Position.Z)
+
+                                Node = Mesh.Nodes(Panel.N3)
+                                gl.Color(Node.DisplacementColor.R, Node.DisplacementColor.G, Node.DisplacementColor.B)
+                                gl.Vertex(Node.Position.X, Node.Position.Y, Node.Position.Z)
+
+                                Node = Mesh.Nodes(Panel.N3)
+                                gl.Color(Node.DisplacementColor.R, Node.DisplacementColor.G, Node.DisplacementColor.B)
+                                gl.Vertex(Node.Position.X, Node.Position.Y, Node.Position.Z)
+
+                                Node = Mesh.Nodes(Panel.N4)
+                                gl.Color(Node.DisplacementColor.R, Node.DisplacementColor.G, Node.DisplacementColor.B)
+                                gl.Vertex(Node.Position.X, Node.Position.Y, Node.Position.Z)
+
+                                Node = Mesh.Nodes(Panel.N1)
+                                gl.Color(Node.DisplacementColor.R, Node.DisplacementColor.G, Node.DisplacementColor.B)
+                                gl.Vertex(Node.Position.X, Node.Position.Y, Node.Position.Z)
+
+                            Case ResultKinds.NodalPressure
+
+                                If Panel.IsSlender Then
+
+                                Else
+
+                                    Node = Mesh.Nodes(Panel.N1)
+                                    gl.Color(Node.DisplacementColor.R, Node.DisplacementColor.G, Node.DisplacementColor.B)
+                                    gl.Vertex(Node.Position.X, Node.Position.Y, Node.Position.Z)
+
+                                    Node = Mesh.Nodes(Panel.N2)
+                                    gl.Color(Node.DisplacementColor.R, Node.DisplacementColor.G, Node.DisplacementColor.B)
+                                    gl.Vertex(Node.Position.X, Node.Position.Y, Node.Position.Z)
+
+                                    Node = Mesh.Nodes(Panel.N3)
+                                    gl.Color(Node.DisplacementColor.R, Node.DisplacementColor.G, Node.DisplacementColor.B)
+                                    gl.Vertex(Node.Position.X, Node.Position.Y, Node.Position.Z)
+
+                                    Node = Mesh.Nodes(Panel.N3)
+                                    gl.Color(Node.DisplacementColor.R, Node.DisplacementColor.G, Node.DisplacementColor.B)
+                                    gl.Vertex(Node.Position.X, Node.Position.Y, Node.Position.Z)
+
+                                    Node = Mesh.Nodes(Panel.N4)
+                                    gl.Color(Node.DisplacementColor.R, Node.DisplacementColor.G, Node.DisplacementColor.B)
+                                    gl.Vertex(Node.Position.X, Node.Position.Y, Node.Position.Z)
+
+                                    Node = Mesh.Nodes(Panel.N1)
+                                    gl.Color(Node.DisplacementColor.R, Node.DisplacementColor.G, Node.DisplacementColor.B)
+                                    gl.Vertex(Node.Position.X, Node.Position.Y, Node.Position.Z)
+
+                                End If
+
+                        End Select
 
                     Else
-
-                        gl.Color(R, G, B)
 
                         Node = Mesh.Nodes(Panel.N1)
                         gl.Vertex(Node.Position.X, Node.Position.Y, Node.Position.Z)
@@ -313,7 +413,6 @@ Namespace VisualModel.Models.Components
 
                 Dim Node1 As EVector3
                 Dim Node2 As EVector3
-                Dim Load As New EVector3
 
                 gl.InitNames()
                 Dim Code As Integer = Selection.GetSelectionCode(ComponentTypes.etResultContainer, ElementIndex, EntityTypes.etSegment, 0)
@@ -340,61 +439,63 @@ Namespace VisualModel.Models.Components
 
                 Next
 
+            End If
+
+            If VisualProperties.ShowVelocityVectors Then
+
                 gl.Color(VisualProperties.ColorVelocity.R / 255, VisualProperties.ColorVelocity.G / 255, VisualProperties.ColorVelocity.B / 255)
 
-                If VisualProperties.ShowVelocityVectors Then
+                gl.Begin(OpenGL.GL_LINES)
 
-                    gl.Begin(OpenGL.GL_LINES)
+                For Each Panel In Mesh.Panels
 
-                    For Each Panel In Mesh.Panels
-
-                        gl.Vertex(Panel.ControlPoint.X,
+                    gl.Vertex(Panel.ControlPoint.X,
                                   Panel.ControlPoint.Y,
                                   Panel.ControlPoint.Z)
-                        gl.Vertex(Panel.ControlPoint.X + VisualProperties.ScaleVelocity * Panel.LocalVelocity.X,
+                    gl.Vertex(Panel.ControlPoint.X + VisualProperties.ScaleVelocity * Panel.LocalVelocity.X,
                                   Panel.ControlPoint.Y + VisualProperties.ScaleVelocity * Panel.LocalVelocity.Y,
                                   Panel.ControlPoint.Z + VisualProperties.ScaleVelocity * Panel.LocalVelocity.Z)
 
-                    Next
+                Next
 
-                    gl.End()
+                gl.End()
 
-                End If
+            End If
 
-                If VisualProperties.ShowLoadVectors Then
+            If VisualProperties.ShowLoadVectors Then
 
-                    For Each Panel In Mesh.Panels
+                Dim Load As New EVector3
 
-                        Load.Assign(Panel.NormalVector)
-                        If Panel.IsSlender Then
+                For Each Panel In Mesh.Panels
+
+                    Load.Assign(Panel.NormalVector)
+                    If Panel.IsSlender Then
+                        gl.Color(VisualProperties.ColorPositiveLoad.R / 255,
+                                 VisualProperties.ColorPositiveLoad.G / 255,
+                                 VisualProperties.ColorPositiveLoad.B / 255)
+                        Load.Scale(VisualProperties.ScalePressure * Panel.Cp * Panel.Area)
+                    Else
+                        If Panel.Cp > 0 Then
                             gl.Color(VisualProperties.ColorPositiveLoad.R / 255,
                                      VisualProperties.ColorPositiveLoad.G / 255,
                                      VisualProperties.ColorPositiveLoad.B / 255)
                             Load.Scale(VisualProperties.ScalePressure * Panel.Cp * Panel.Area)
                         Else
-                            If Panel.Cp > 0 Then
-                                gl.Color(VisualProperties.ColorPositiveLoad.R / 255,
-                                         VisualProperties.ColorPositiveLoad.G / 255,
-                                         VisualProperties.ColorPositiveLoad.B / 255)
-                                Load.Scale(VisualProperties.ScalePressure * Panel.Cp * Panel.Area)
-                            Else
-                                gl.Color(VisualProperties.ColorPositiveLoad.R, VisualProperties.ColorPositiveLoad.G, VisualProperties.ColorPositiveLoad.B)
-                                Load.Scale(-VisualProperties.ScalePressure * Panel.Cp * Panel.Area)
-                            End If
+                            gl.Color(VisualProperties.ColorPositiveLoad.R, VisualProperties.ColorPositiveLoad.G, VisualProperties.ColorPositiveLoad.B)
+                            Load.Scale(-VisualProperties.ScalePressure * Panel.Cp * Panel.Area)
                         End If
+                    End If
 
-                        gl.Begin(OpenGL.GL_LINES)
-                        gl.Vertex(Panel.ControlPoint.X,
-                                  Panel.ControlPoint.Y,
-                                  Panel.ControlPoint.Z)
-                        gl.Vertex(Panel.ControlPoint.X + Load.X,
-                                  Panel.ControlPoint.Y + Load.Y,
-                                  Panel.ControlPoint.Z + Load.Z)
-                        gl.End()
+                    gl.Begin(OpenGL.GL_LINES)
+                    gl.Vertex(Panel.ControlPoint.X,
+                              Panel.ControlPoint.Y,
+                              Panel.ControlPoint.Z)
+                    gl.Vertex(Panel.ControlPoint.X + Load.X,
+                              Panel.ControlPoint.Y + Load.Y,
+                              Panel.ControlPoint.Z + Load.Z)
+                    gl.End()
 
-                    Next
-
-                End If
+                Next
 
             End If
 
@@ -569,7 +670,7 @@ Namespace VisualModel.Models.Components
         ''' <summary>
         ''' Updates the map with pressure.
         ''' </summary>
-        Public Sub UpdateColormapPressureColormap()
+        Public Sub UpdatePressureColormap()
 
             For Each Panel In Mesh.Panels
 
@@ -614,40 +715,6 @@ Namespace VisualModel.Models.Components
                 Node.DisplacementColor = Colormap.ScalarToColor(Node.Displacement.EuclideanNorm, DisplacementRange.Maximum, DisplacementRange.Minimum)
 
             Next
-
-        End Sub
-
-        ''' <summary>
-        ''' Obsolete sub.
-        ''' </summary>
-        Public Sub CalculateAerodynamiLoad(ByRef Force As EVector3, ByRef Moment As EVector3, ByRef Area As Double)
-
-            Area = 0
-            Force.SetToCero()
-            Moment.SetToCero()
-
-            Dim LocalF As New EVector3
-
-            For Each Ring In Mesh.Panels
-
-                Area += Ring.Area
-
-                LocalF.X = Ring.Area * Ring.Cp * Ring.NormalVector.X
-                LocalF.Y = Ring.Area * Ring.Cp * Ring.NormalVector.Y
-                LocalF.Z = Ring.Area * Ring.Cp * Ring.NormalVector.Z
-
-                Force.X += LocalF.X
-                Force.Y += LocalF.Y
-                Force.Z += LocalF.Z
-
-                Moment.X += Ring.ControlPoint.Y * LocalF.Z - Ring.ControlPoint.Z * LocalF.Y
-                Moment.Y += Ring.ControlPoint.Z * LocalF.X - Ring.ControlPoint.X * LocalF.Z
-                Moment.Z += Ring.ControlPoint.X * LocalF.Y - Ring.ControlPoint.Y * LocalF.X
-
-            Next
-
-            Force.Scale(1 / Area)
-            Moment.Scale(1 / Area)
 
         End Sub
 

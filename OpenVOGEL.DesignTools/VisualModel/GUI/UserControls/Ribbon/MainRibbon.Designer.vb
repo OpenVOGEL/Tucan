@@ -1388,7 +1388,7 @@ Partial Class MainRibbon
         '
         'nudScaleForce
         '
-        Me.nudScaleForce.DecimalPlaces = 1
+        Me.nudScaleForce.DecimalPlaces = 2
         Me.nudScaleForce.Increment = New Decimal(New Integer() {1, 0, 0, 65536})
         Me.nudScaleForce.Location = New System.Drawing.Point(110, 39)
         Me.nudScaleForce.Maximum = New Decimal(New Integer() {1000, 0, 0, 0})
@@ -1411,7 +1411,7 @@ Partial Class MainRibbon
         '
         'nudScaleVelocity
         '
-        Me.nudScaleVelocity.DecimalPlaces = 2
+        Me.nudScaleVelocity.DecimalPlaces = 3
         Me.nudScaleVelocity.Increment = New Decimal(New Integer() {1, 0, 0, 131072})
         Me.nudScaleVelocity.Location = New System.Drawing.Point(110, 17)
         Me.nudScaleVelocity.Maximum = New Decimal(New Integer() {1000, 0, 0, 0})

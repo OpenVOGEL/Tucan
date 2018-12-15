@@ -422,7 +422,7 @@ ErrSub:
 
         If ProjectRoot.Initialized AndAlso Not _LockScreenPropEvents Then
 
-            ProjectRoot.Visualization.ReferenceFrame.Xmin = nudYmin.Value
+            ProjectRoot.Visualization.ReferenceFrame.Ymin = nudYmin.Value
 
             ProjectRoot.RefreshOnGL()
 
@@ -1570,7 +1570,7 @@ ErrSub:
 
             ProjectRoot.Results.Model.PressureDeltaRange.Maximum = nudDCpmax.Value
 
-            ProjectRoot.Results.Model.UpdateColormapPressureColormap()
+            ProjectRoot.Results.Model.UpdatePressureColormap()
 
             ProjectRoot.RefreshOnGL()
 
@@ -1584,7 +1584,7 @@ ErrSub:
 
             ProjectRoot.Results.Model.PressureDeltaRange.Minimum = nudDCpmin.Value
 
-            ProjectRoot.Results.Model.UpdateColormapPressureColormap()
+            ProjectRoot.Results.Model.UpdatePressureColormap()
 
             ProjectRoot.RefreshOnGL()
 
@@ -1598,7 +1598,7 @@ ErrSub:
 
             ProjectRoot.Results.Model.PressureRange.Minimum = nudCpmin.Value
 
-            ProjectRoot.Results.Model.UpdateColormapPressureColormap()
+            ProjectRoot.Results.Model.UpdatePressureColormap()
 
             ProjectRoot.RefreshOnGL()
 
@@ -1612,7 +1612,7 @@ ErrSub:
 
             ProjectRoot.Results.Model.PressureRange.Maximum = nudCpmax.Value
 
-            ProjectRoot.Results.Model.UpdateColormapPressureColormap()
+            ProjectRoot.Results.Model.UpdatePressureColormap()
 
             ProjectRoot.RefreshOnGL()
 
@@ -1626,7 +1626,7 @@ ErrSub:
 
             ProjectRoot.Results.Model.FindPressureRange()
 
-            ProjectRoot.Results.Model.UpdateColormapPressureColormap()
+            ProjectRoot.Results.Model.UpdatePressureColormap()
 
             _LockResultPropsEvents = True
 

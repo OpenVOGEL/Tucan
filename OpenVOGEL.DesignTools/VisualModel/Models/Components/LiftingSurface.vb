@@ -557,8 +557,8 @@ Namespace VisualModel.Models.Components
         ''' <remarks></remarks>
         Public ReadOnly Property nPrimitiveSegments
             Get
-                Me.SetPrimitives()
-                Return Me._nPrimitivePanels
+                SetPrimitives()
+                Return _nPrimitivePanels
             End Get
         End Property
 
@@ -570,8 +570,8 @@ Namespace VisualModel.Models.Components
         ''' <remarks></remarks>
         Public ReadOnly Property nPrimitiveNodes
             Get
-                Me.SetPrimitives()
-                Return Me._nPrimitiveNodes
+                SetPrimitives()
+                Return _nPrimitiveNodes
             End Get
         End Property
 
@@ -586,8 +586,8 @@ Namespace VisualModel.Models.Components
                 Return _PrimitiveData(1, 1)
             End Get
             Set(ByVal value As Integer)
-                Me._PrimitiveData(1, 1) = value
-                Me.SetPrimitives()
+                _PrimitiveData(1, 1) = value
+                SetPrimitives()
             End Set
         End Property
 
@@ -2043,9 +2043,10 @@ Namespace VisualModel.Models.Components
                         CenterOfRotation.Y = IOXML.ReadDouble(reader, "PCRY", 0.0)
                         CenterOfRotation.Z = IOXML.ReadDouble(reader, "PCRZ", 0.0)
 
-                        TrailingEdgeConvection = IOXML.ReadBoolean(reader, "TrailingConvection", False)
                         FirstPrimitiveSegment = IOXML.ReadInteger(reader, "PRIM1", 1)
                         LastPrimitiveSegment = IOXML.ReadInteger(reader, "PRIM2", 2)
+                        TrailingEdgeConvection = IOXML.ReadBoolean(reader, "TrailingConvection", False)
+
                         ConvectWake = IOXML.ReadBoolean(reader, "ConvectWake", True)
                         CuttingStep = IOXML.ReadInteger(reader, "CuttingStep", 1)
                         Symmetric = IOXML.ReadBoolean(reader, "Symmetric", True)
@@ -2081,7 +2082,9 @@ Namespace VisualModel.Models.Components
 
             End While
 
-            Me.GenerateMesh()
+            SetPrimitives()
+
+            GenerateMesh()
 
         End Sub
 

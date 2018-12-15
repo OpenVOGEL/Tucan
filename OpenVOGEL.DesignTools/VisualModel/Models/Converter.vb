@@ -494,8 +494,10 @@ Namespace VisualModel.Models
             Next
 
             Results.Model.FindPressureRange()
-            Results.Model.UpdateColormapPressureColormap()
+            Results.Model.UpdatePressureColormap()
             Results.Model.VisualProperties.ShowColormap = True
+            Results.Model.VisualProperties.ShowVelocityVectors = True
+            Results.Model.VisualProperties.ShowMesh = False
 
             Results.Model.Mesh.GenerateLattice()
 
@@ -536,7 +538,8 @@ Namespace VisualModel.Models
 
             Next
 
-            Results.Wakes.VisualProperties.ShowMesh = True
+            Results.Wakes.VisualProperties.ShowMesh = False
+            Results.Wakes.VisualProperties.ShowNodes = True
 
             If This.StructuralLinks IsNot Nothing Then
 
@@ -614,6 +617,7 @@ Namespace VisualModel.Models
 
                             Next
 
+                            ModalShapeModel.ActiveResult = ResultContainer.ResultKinds.NodalDisplacement
                             ModalShapeModel.Mesh.GenerateLattice()
                             ModalShapeModel.FindDisplacementsRange()
                             ModalShapeModel.UpdateColormapWithDisplacements()

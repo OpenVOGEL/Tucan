@@ -37,9 +37,6 @@ Namespace VisualModel.Models
         Private _Wakes As ResultContainer
         Private _DynamicModes As List(Of ResultContainer)
 
-        Public Property AerodynamicForce As New EVector3
-        Public Property AerodynamicMoment As New EVector3
-
         Public Property SimulationSettings As New SimulationSettings
         Public TotalArea As Double
 
@@ -86,26 +83,28 @@ Namespace VisualModel.Models
             _Wakes = New ResultContainer
             _DynamicModes = New List(Of ResultContainer)
 
-            Me._Model.Name = "Full_Model"
-            Me._Model.VisualProperties.ColorMesh = System.Drawing.Color.Maroon
-            Me._Model.VisualProperties.ColorSurface = System.Drawing.Color.Orange
-            Me._Model.VisualProperties.Transparency = 1.0
-            Me._Model.VisualProperties.ShowSurface = True
-            Me._Model.VisualProperties.ShowMesh = True
-            Me._Model.VisualProperties.ShowNodes = False
-            Me._Model.VisualProperties.ThicknessMesh = 0.8
-            Me._Model.VisualProperties.ShowNodes = False
+            _Model.Name = "Full_Model"
+            _Model.VisualProperties.ColorMesh = System.Drawing.Color.Maroon
+            _Model.VisualProperties.ColorSurface = System.Drawing.Color.Orange
+            _Model.VisualProperties.Transparency = 1.0
+            _Model.VisualProperties.ShowSurface = True
+            _Model.VisualProperties.ShowMesh = False
+            _Model.VisualProperties.ShowNodes = False
+            _Model.VisualProperties.ThicknessMesh = 0.8
+            _Model.VisualProperties.ShowNodes = False
+            _Model.ActiveResult = ResultContainer.ResultKinds.PanelPressure
 
-            Me._Wakes.Name = "All_Wakes"
-            Me._Wakes.VisualProperties.ColorMesh = System.Drawing.Color.Silver
-            Me._Wakes.VisualProperties.ColorSurface = System.Drawing.Color.LightBlue
-            Me._Wakes.VisualProperties.ColorNodes = Drawing.Color.Black
-            Me._Wakes.VisualProperties.Transparency = 1.0
-            Me._Wakes.VisualProperties.ShowSurface = False
-            Me._Wakes.VisualProperties.ShowMesh = False
-            Me._Wakes.VisualProperties.ThicknessMesh = 0.8
-            Me._Wakes.VisualProperties.SizeNodes = 3.0#
-            Me._Wakes.VisualProperties.ShowNodes = False
+            _Wakes.Name = "All_Wakes"
+            _Wakes.VisualProperties.ColorMesh = System.Drawing.Color.Silver
+            _Wakes.VisualProperties.ColorSurface = System.Drawing.Color.LightBlue
+            _Wakes.VisualProperties.ColorNodes = Drawing.Color.Black
+            _Wakes.VisualProperties.Transparency = 1.0
+            _Wakes.VisualProperties.ShowSurface = False
+            _Wakes.VisualProperties.ShowMesh = False
+            _Wakes.VisualProperties.ThicknessMesh = 0.8
+            _Wakes.VisualProperties.SizeNodes = 3.0#
+            _Wakes.VisualProperties.ShowNodes = True
+            _Wakes.ActiveResult = ResultContainer.ResultKinds.None
 
             _Model.Clear()
             _Wakes.Clear()
@@ -116,88 +115,9 @@ Namespace VisualModel.Models
 
             _Model.Clear()
             _Wakes.Clear()
+            _DynamicModes.Clear()
 
         End Sub
-
-        Public Sub CalculateLoads()
-
-            _Model.CalculateAerodynamiLoad(AerodynamicForce, AerodynamicMoment, TotalArea)
-
-        End Sub
-
-#Region " IO "
-
-        Public Sub ReadFromXML(ByVal FilePath As String)
-
-            If Not File.Exists(FilePath) Then Throw New Exception("Results file could not have been found")
-
-            Dim reader As XmlReader = XmlReader.Create(FilePath)
-
-            If reader.ReadToFollowing("Result", "TResultados") Then
-
-                Name = reader.GetAttribute("Name")
-
-                _Model.AccessPath = reader.GetAttribute("ModelPath")
-                _Model.ReadFromBinary()
-
-                _Wakes.AccessPath = reader.GetAttribute("WakePath")
-                _Wakes.ReadFromBinary()
-
-                If reader.ReadToFollowing("Simulacion", "TSimulacion") Then
-                    SimulationSettings.ReadFromXML(reader)
-                End If
-
-                Dim nModes As Integer = IOXML.ReadInteger(reader, "nModes", 0)
-
-                For i = 0 To nModes - 1
-
-                    Dim Mode As New ResultContainer()
-                    Mode.AccessPath = IOXML.ReadString(reader, "Mode" + i, 0)
-                    Mode.ReadFromBinary()
-
-                Next
-
-            End If
-
-            reader.Close()
-
-            Loaded = True
-
-        End Sub
-
-        Public Sub WriteToXML(ByVal FilePath As String)
-
-            Dim writer As XmlWriter = XmlWriter.Create(FilePath)
-
-            _Model.AccessPath = FilePath & ".mod"
-            _Wakes.AccessPath = FilePath & ".wks"
-
-            writer.WriteStartElement("Result", "TResultados")
-
-            writer.WriteAttributeString("Name", Name)
-            writer.WriteAttributeString("ModelPath", _Model.AccessPath)
-            writer.WriteAttributeString("WakePath", _Wakes.AccessPath)
-
-            writer.WriteStartElement("Simulacion", "TSimulacion")
-            SimulationSettings.SaveToXML(writer)
-            writer.WriteEndElement()
-
-            writer.WriteAttributeString("nModes", DynamicModes.Count)
-            For i = 0 To DynamicModes.Count - 1
-                _DynamicModes(i).AccessPath = FilePath & ".dynmode" + i
-                writer.WriteAttributeString("Mode" + i, _DynamicModes(i).AccessPath)
-            Next
-
-            writer.WriteEndElement() ' Project
-
-            writer.Close()
-
-            _Model.WriteToBinary()
-            _Wakes.WriteToBinary()
-
-        End Sub
-
-#End Region
 
 #Region " Transit simulation "
 
