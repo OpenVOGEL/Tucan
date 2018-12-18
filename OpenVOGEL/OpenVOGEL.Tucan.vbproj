@@ -8,7 +8,7 @@
     <OutputType>WinExe</OutputType>
     <StartupObject>OpenVOGEL.My.MyApplication</StartupObject>
     <RootNamespace>OpenVOGEL</RootNamespace>
-    <AssemblyName>OpenVOGEL</AssemblyName>
+    <AssemblyName>Tucan</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>WindowsForms</MyType>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
@@ -26,10 +26,10 @@
     <MapFileExtensions>true</MapFileExtensions>
     <SupportUrl>https://sites.google.com/site/gahvogel/</SupportUrl>
     <ErrorReportUrl>https://github.com/GuillermoHazebrouck/OpenVOGEL/issues</ErrorReportUrl>
-    <ProductName>Open VOGEL 2019</ProductName>
-    <PublisherName>Open VOGEL</PublisherName>
-    <SuiteName>Open VOGEL</SuiteName>
-    <ApplicationRevision>5</ApplicationRevision>
+    <ProductName>Tucan 2019</ProductName>
+    <PublisherName>OpenVOGEL</PublisherName>
+    <SuiteName>OpenVOGEL Tucan</SuiteName>
+    <ApplicationRevision>6</ApplicationRevision>
     <ApplicationVersion>2019.1.1.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -42,7 +42,7 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\Debug\</OutputPath>
-    <DocumentationFile>OpenVOGEL.xml</DocumentationFile>
+    <DocumentationFile>Tucan.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -52,7 +52,7 @@
     <DefineTrace>true</DefineTrace>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DocumentationFile>OpenVOGEL.xml</DocumentationFile>
+    <DocumentationFile>Tucan.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup>

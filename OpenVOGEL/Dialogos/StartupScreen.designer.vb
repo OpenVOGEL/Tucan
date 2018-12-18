@@ -23,37 +23,22 @@ Partial Class StartupScreen
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(StartupScreen))
-        Me.Label1 = New System.Windows.Forms.Label()
-        Me.Label2 = New System.Windows.Forms.Label()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.LabelLicencia = New System.Windows.Forms.Label()
         Me.Logo = New System.Windows.Forms.PictureBox()
         CType(Me.Logo, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
-        'Label1
-        '
-        resources.ApplyResources(Me.Label1, "Label1")
-        Me.Label1.BackColor = System.Drawing.Color.Transparent
-        Me.Label1.ForeColor = System.Drawing.SystemColors.GradientActiveCaption
-        Me.Label1.Name = "Label1"
-        '
-        'Label2
-        '
-        resources.ApplyResources(Me.Label2, "Label2")
-        Me.Label2.ForeColor = System.Drawing.SystemColors.GradientActiveCaption
-        Me.Label2.Name = "Label2"
-        '
         'Label3
         '
         resources.ApplyResources(Me.Label3, "Label3")
-        Me.Label3.ForeColor = System.Drawing.SystemColors.GradientActiveCaption
+        Me.Label3.ForeColor = System.Drawing.Color.Gray
         Me.Label3.Name = "Label3"
         '
         'LabelLicencia
         '
         resources.ApplyResources(Me.LabelLicencia, "LabelLicencia")
-        Me.LabelLicencia.ForeColor = System.Drawing.SystemColors.GradientActiveCaption
+        Me.LabelLicencia.ForeColor = System.Drawing.Color.Gray
         Me.LabelLicencia.Name = "LabelLicencia"
         '
         'Logo
@@ -67,12 +52,10 @@ Partial Class StartupScreen
         '
         resources.ApplyResources(Me, "$this")
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(64, Byte), Integer))
-        Me.Controls.Add(Me.Logo)
-        Me.Controls.Add(Me.Label1)
+        Me.BackColor = System.Drawing.Color.Black
         Me.Controls.Add(Me.LabelLicencia)
-        Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.Label3)
+        Me.Controls.Add(Me.Logo)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
         Me.Name = "StartupScreen"
         Me.ShowInTaskbar = False
@@ -81,8 +64,6 @@ Partial Class StartupScreen
         Me.PerformLayout()
 
     End Sub
-    Friend WithEvents Label1 As System.Windows.Forms.Label
-    Friend WithEvents Label2 As System.Windows.Forms.Label
     Friend WithEvents Label3 As System.Windows.Forms.Label
     Friend WithEvents LabelLicencia As System.Windows.Forms.Label
     Friend WithEvents Logo As PictureBox
