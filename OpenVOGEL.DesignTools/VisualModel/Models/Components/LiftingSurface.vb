@@ -51,6 +51,7 @@ Namespace VisualModel.Models.Components
 
             FlapChord = 0.3
             PolarID = Guid.Empty
+            SpacementType = Spacements.Constant
 
         End Sub
 

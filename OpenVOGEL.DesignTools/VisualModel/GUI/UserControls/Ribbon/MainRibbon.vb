@@ -67,19 +67,19 @@ Public Class MainRibbon
 
     Private Sub btnAddObject_Click(sender As Object, e As EventArgs) Handles btnAddObject.Click
 
-        Dim dialog As New FormSelectObject
+        Dim Dialog As New FormSelectObject
 
-        If dialog.ShowDialog() = DialogResult.OK Then
+        If Dialog.ShowDialog() = DialogResult.OK Then
 
-            If dialog.rbFuselage.Checked Then
+            If Dialog.rbFuselage.Checked Then
                 ProjectRoot.Model.AddExtrudedBody()
             End If
 
-            If dialog.rbLiftingSurface.Checked Then
+            If Dialog.rbLiftingSurface.Checked Then
                 ProjectRoot.Model.AddLiftingSurface()
             End If
 
-            If dialog.rbJetEngine.Checked Then
+            If Dialog.rbJetEngine.Checked Then
                 ProjectRoot.Model.AddJetEngine()
             End If
 

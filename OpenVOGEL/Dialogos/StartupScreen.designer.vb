@@ -24,7 +24,7 @@ Partial Class StartupScreen
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(StartupScreen))
         Me.Label3 = New System.Windows.Forms.Label()
-        Me.LabelLicencia = New System.Windows.Forms.Label()
+        Me.LabelLicense = New System.Windows.Forms.Label()
         Me.Logo = New System.Windows.Forms.PictureBox()
         CType(Me.Logo, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -35,11 +35,11 @@ Partial Class StartupScreen
         Me.Label3.ForeColor = System.Drawing.Color.Gray
         Me.Label3.Name = "Label3"
         '
-        'LabelLicencia
+        'LabelLicense
         '
-        resources.ApplyResources(Me.LabelLicencia, "LabelLicencia")
-        Me.LabelLicencia.ForeColor = System.Drawing.Color.Gray
-        Me.LabelLicencia.Name = "LabelLicencia"
+        resources.ApplyResources(Me.LabelLicense, "LabelLicense")
+        Me.LabelLicense.ForeColor = System.Drawing.Color.Gray
+        Me.LabelLicense.Name = "LabelLicense"
         '
         'Logo
         '
@@ -53,7 +53,7 @@ Partial Class StartupScreen
         resources.ApplyResources(Me, "$this")
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.Black
-        Me.Controls.Add(Me.LabelLicencia)
+        Me.Controls.Add(Me.LabelLicense)
         Me.Controls.Add(Me.Label3)
         Me.Controls.Add(Me.Logo)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
@@ -65,6 +65,6 @@ Partial Class StartupScreen
 
     End Sub
     Friend WithEvents Label3 As System.Windows.Forms.Label
-    Friend WithEvents LabelLicencia As System.Windows.Forms.Label
+    Friend WithEvents LabelLicense As System.Windows.Forms.Label
     Friend WithEvents Logo As PictureBox
 End Class

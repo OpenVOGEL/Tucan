@@ -44,8 +44,6 @@ Partial Class FormFuselageEditor
         Me.lblNPZ = New System.Windows.Forms.Label()
         Me.nudNPZ = New System.Windows.Forms.NumericUpDown()
         Me.tbName = New System.Windows.Forms.TextBox()
-        Me.rbQuads = New System.Windows.Forms.RadioButton()
-        Me.rbTriangles = New System.Windows.Forms.RadioButton()
         Me.pbSideView = New System.Windows.Forms.PictureBox()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.Label4 = New System.Windows.Forms.Label()
@@ -64,7 +62,7 @@ Partial Class FormFuselageEditor
         Me.lbSections.FormattingEnabled = True
         Me.lbSections.Location = New System.Drawing.Point(6, 29)
         Me.lbSections.Name = "lbSections"
-        Me.lbSections.Size = New System.Drawing.Size(189, 95)
+        Me.lbSections.Size = New System.Drawing.Size(189, 134)
         Me.lbSections.TabIndex = 1
         '
         'btnAddSection
@@ -115,7 +113,7 @@ Partial Class FormFuselageEditor
         'nudPosition
         '
         Me.nudPosition.Increment = New Decimal(New Integer() {1, 0, 0, 65536})
-        Me.nudPosition.Location = New System.Drawing.Point(164, 130)
+        Me.nudPosition.Location = New System.Drawing.Point(164, 168)
         Me.nudPosition.Name = "nudPosition"
         Me.nudPosition.Size = New System.Drawing.Size(67, 22)
         Me.nudPosition.TabIndex = 108
@@ -123,7 +121,7 @@ Partial Class FormFuselageEditor
         'lblPosition
         '
         Me.lblPosition.AutoSize = True
-        Me.lblPosition.Location = New System.Drawing.Point(8, 133)
+        Me.lblPosition.Location = New System.Drawing.Point(8, 171)
         Me.lblPosition.Name = "lblPosition"
         Me.lblPosition.Size = New System.Drawing.Size(150, 13)
         Me.lblPosition.TabIndex = 109
@@ -150,7 +148,7 @@ Partial Class FormFuselageEditor
         'Label1
         '
         Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(3, 233)
+        Me.Label1.Location = New System.Drawing.Point(3, 260)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(61, 13)
         Me.Label1.TabIndex = 122
@@ -159,7 +157,7 @@ Partial Class FormFuselageEditor
         'clbWingsToAnchor
         '
         Me.clbWingsToAnchor.FormattingEnabled = True
-        Me.clbWingsToAnchor.Location = New System.Drawing.Point(6, 248)
+        Me.clbWingsToAnchor.Location = New System.Drawing.Point(6, 275)
         Me.clbWingsToAnchor.Name = "clbWingsToAnchor"
         Me.clbWingsToAnchor.Size = New System.Drawing.Size(248, 72)
         Me.clbWingsToAnchor.TabIndex = 121
@@ -173,7 +171,7 @@ Partial Class FormFuselageEditor
         Me.btnAddPoint.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DeepSkyBlue
         Me.btnAddPoint.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.btnAddPoint.Font = New System.Drawing.Font("Microsoft Sans Serif", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnAddPoint.Location = New System.Drawing.Point(196, 162)
+        Me.btnAddPoint.Location = New System.Drawing.Point(196, 196)
         Me.btnAddPoint.Name = "btnAddPoint"
         Me.btnAddPoint.Size = New System.Drawing.Size(58, 23)
         Me.btnAddPoint.TabIndex = 126
@@ -189,7 +187,7 @@ Partial Class FormFuselageEditor
         Me.btnRemovePoint.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DeepSkyBlue
         Me.btnRemovePoint.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.btnRemovePoint.Font = New System.Drawing.Font("Microsoft Sans Serif", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnRemovePoint.Location = New System.Drawing.Point(196, 186)
+        Me.btnRemovePoint.Location = New System.Drawing.Point(196, 220)
         Me.btnRemovePoint.Name = "btnRemovePoint"
         Me.btnRemovePoint.Size = New System.Drawing.Size(58, 23)
         Me.btnRemovePoint.TabIndex = 127
@@ -215,7 +213,7 @@ Partial Class FormFuselageEditor
         'lblNode
         '
         Me.lblNode.AutoSize = True
-        Me.lblNode.Location = New System.Drawing.Point(8, 162)
+        Me.lblNode.Location = New System.Drawing.Point(8, 196)
         Me.lblNode.Name = "lblNode"
         Me.lblNode.Size = New System.Drawing.Size(124, 13)
         Me.lblNode.TabIndex = 128
@@ -225,7 +223,7 @@ Partial Class FormFuselageEditor
         '
         Me.nudX.DecimalPlaces = 4
         Me.nudX.Increment = New Decimal(New Integer() {5, 0, 0, 131072})
-        Me.nudX.Location = New System.Drawing.Point(11, 202)
+        Me.nudX.Location = New System.Drawing.Point(11, 231)
         Me.nudX.Maximum = New Decimal(New Integer() {1410065408, 2, 0, 0})
         Me.nudX.Name = "nudX"
         Me.nudX.Size = New System.Drawing.Size(75, 22)
@@ -235,7 +233,7 @@ Partial Class FormFuselageEditor
         '
         Me.nudY.DecimalPlaces = 4
         Me.nudY.Increment = New Decimal(New Integer() {5, 0, 0, 131072})
-        Me.nudY.Location = New System.Drawing.Point(92, 202)
+        Me.nudY.Location = New System.Drawing.Point(92, 231)
         Me.nudY.Maximum = New Decimal(New Integer() {1410065408, 2, 0, 0})
         Me.nudY.Minimum = New Decimal(New Integer() {1410065408, 2, 0, -2147483648})
         Me.nudY.Name = "nudY"
@@ -245,7 +243,7 @@ Partial Class FormFuselageEditor
         'lblX
         '
         Me.lblX.AutoSize = True
-        Me.lblX.Location = New System.Drawing.Point(11, 186)
+        Me.lblX.Location = New System.Drawing.Point(11, 215)
         Me.lblX.Name = "lblX"
         Me.lblX.Size = New System.Drawing.Size(16, 13)
         Me.lblX.TabIndex = 131
@@ -254,7 +252,7 @@ Partial Class FormFuselageEditor
         'Label2
         '
         Me.Label2.AutoSize = True
-        Me.Label2.Location = New System.Drawing.Point(93, 186)
+        Me.Label2.Location = New System.Drawing.Point(93, 215)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(15, 13)
         Me.Label2.TabIndex = 132
@@ -262,7 +260,7 @@ Partial Class FormFuselageEditor
         '
         'nudNPS
         '
-        Me.nudNPS.Location = New System.Drawing.Point(107, 379)
+        Me.nudNPS.Location = New System.Drawing.Point(110, 376)
         Me.nudNPS.Name = "nudNPS"
         Me.nudNPS.Size = New System.Drawing.Size(67, 22)
         Me.nudNPS.TabIndex = 135
@@ -270,7 +268,7 @@ Partial Class FormFuselageEditor
         'lblNPS
         '
         Me.lblNPS.AutoSize = True
-        Me.lblNPS.Location = New System.Drawing.Point(3, 381)
+        Me.lblNPS.Location = New System.Drawing.Point(6, 378)
         Me.lblNPS.Name = "lblNPS"
         Me.lblNPS.Size = New System.Drawing.Size(97, 13)
         Me.lblNPS.TabIndex = 136
@@ -279,7 +277,7 @@ Partial Class FormFuselageEditor
         'lblNPZ
         '
         Me.lblNPZ.AutoSize = True
-        Me.lblNPZ.Location = New System.Drawing.Point(3, 358)
+        Me.lblNPZ.Location = New System.Drawing.Point(6, 355)
         Me.lblNPZ.Name = "lblNPZ"
         Me.lblNPZ.Size = New System.Drawing.Size(98, 13)
         Me.lblNPZ.TabIndex = 138
@@ -287,7 +285,7 @@ Partial Class FormFuselageEditor
         '
         'nudNPZ
         '
-        Me.nudNPZ.Location = New System.Drawing.Point(107, 356)
+        Me.nudNPZ.Location = New System.Drawing.Point(110, 353)
         Me.nudNPZ.Name = "nudNPZ"
         Me.nudNPZ.Size = New System.Drawing.Size(67, 22)
         Me.nudNPZ.TabIndex = 137
@@ -298,28 +296,6 @@ Partial Class FormFuselageEditor
         Me.tbName.Name = "tbName"
         Me.tbName.Size = New System.Drawing.Size(248, 22)
         Me.tbName.TabIndex = 139
-        '
-        'rbQuads
-        '
-        Me.rbQuads.AutoSize = True
-        Me.rbQuads.Location = New System.Drawing.Point(6, 333)
-        Me.rbQuads.Name = "rbQuads"
-        Me.rbQuads.Size = New System.Drawing.Size(58, 17)
-        Me.rbQuads.TabIndex = 133
-        Me.rbQuads.TabStop = True
-        Me.rbQuads.Text = "Quads"
-        Me.rbQuads.UseVisualStyleBackColor = True
-        '
-        'rbTriangles
-        '
-        Me.rbTriangles.AutoSize = True
-        Me.rbTriangles.Location = New System.Drawing.Point(77, 333)
-        Me.rbTriangles.Name = "rbTriangles"
-        Me.rbTriangles.Size = New System.Drawing.Size(70, 17)
-        Me.rbTriangles.TabIndex = 134
-        Me.rbTriangles.TabStop = True
-        Me.rbTriangles.Text = "Triangles"
-        Me.rbTriangles.UseVisualStyleBackColor = True
         '
         'pbSideView
         '
@@ -382,8 +358,6 @@ Partial Class FormFuselageEditor
         Me.Controls.Add(Me.nudNPZ)
         Me.Controls.Add(Me.lblNPS)
         Me.Controls.Add(Me.nudNPS)
-        Me.Controls.Add(Me.rbTriangles)
-        Me.Controls.Add(Me.rbQuads)
         Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.lblX)
         Me.Controls.Add(Me.nudY)
@@ -442,8 +416,6 @@ Partial Class FormFuselageEditor
     Friend WithEvents lblNPZ As System.Windows.Forms.Label
     Friend WithEvents nudNPZ As System.Windows.Forms.NumericUpDown
     Friend WithEvents tbName As System.Windows.Forms.TextBox
-    Friend WithEvents rbQuads As System.Windows.Forms.RadioButton
-    Friend WithEvents rbTriangles As System.Windows.Forms.RadioButton
     Friend WithEvents pbSideView As System.Windows.Forms.PictureBox
     Friend WithEvents Label3 As System.Windows.Forms.Label
     Friend WithEvents Label4 As System.Windows.Forms.Label

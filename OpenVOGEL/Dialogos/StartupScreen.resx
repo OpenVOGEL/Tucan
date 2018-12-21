@@ -158,37 +158,37 @@ Original author: Guillermo Hazebrouck</value>
   <data name="&gt;&gt;Label3.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="LabelLicencia.AutoSize" type="System.Boolean, mscorlib">
+  <data name="LabelLicense.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="LabelLicencia.Font" type="System.Drawing.Font, System.Drawing">
+  <data name="LabelLicense.Font" type="System.Drawing.Font, System.Drawing">
     <value>Candara, 9.75pt</value>
   </data>
-  <data name="LabelLicencia.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="LabelLicense.Location" type="System.Drawing.Point, System.Drawing">
     <value>6, 220</value>
   </data>
-  <data name="LabelLicencia.Size" type="System.Drawing.Size, System.Drawing">
-    <value>130, 15</value>
+  <data name="LabelLicense.Size" type="System.Drawing.Size, System.Drawing">
+    <value>91, 15</value>
   </data>
-  <data name="LabelLicencia.TabIndex" type="System.Int32, mscorlib">
+  <data name="LabelLicense.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>
   </data>
-  <data name="LabelLicencia.Text" xml:space="preserve">
-    <value>Compilation 2019 / R01</value>
+  <data name="LabelLicense.Text" xml:space="preserve">
+    <value>Compilation 1.0</value>
   </data>
-  <data name="LabelLicencia.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+  <data name="LabelLicense.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
     <value>MiddleRight</value>
   </data>
-  <data name="&gt;&gt;LabelLicencia.Name" xml:space="preserve">
-    <value>LabelLicencia</value>
+  <data name="&gt;&gt;LabelLicense.Name" xml:space="preserve">
+    <value>LabelLicense</value>
   </data>
-  <data name="&gt;&gt;LabelLicencia.Type" xml:space="preserve">
+  <data name="&gt;&gt;LabelLicense.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;LabelLicencia.Parent" xml:space="preserve">
+  <data name="&gt;&gt;LabelLicense.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;LabelLicencia.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;LabelLicense.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
   <data name="Logo.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">

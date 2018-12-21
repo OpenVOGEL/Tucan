@@ -1522,9 +1522,22 @@ Namespace VisualModel.Models.Components
 
                         Name = reader.GetAttribute("Name")
                         ID = New Guid(IOXML.ReadString(reader, "ID", Guid.NewGuid.ToString))
+
+                    Case "SurfaceProperties"
+
                         MeshType = IOXML.ReadInteger(reader, "MeshType", MeshTypes.StructuredQuadrilaterals)
                         CrossRefinement = IOXML.ReadInteger(reader, "NPS", 10)
                         LongitudinalRefinement = IOXML.ReadInteger(reader, "NPZ", 10)
+                        Position.X = IOXML.ReadDouble(reader, "X", 0.0#)
+                        Position.Y = IOXML.ReadDouble(reader, "Y", 0.0#)
+                        Position.Z = IOXML.ReadDouble(reader, "Z", 0.0#)
+                        Orientation.Psi = IOXML.ReadDouble(reader, "Psi", 0.0)
+                        Orientation.Tita = IOXML.ReadDouble(reader, "Tita", 0.0)
+                        Orientation.Fi = IOXML.ReadDouble(reader, "Fi", 0.0)
+                        Orientation.Secuence = IOXML.ReadInteger(reader, "Secuence", CInt(EulerAngles.RotationSecuence.ZYX))
+                        CenterOfRotation.X = IOXML.ReadDouble(reader, "RX", 0.0)
+                        CenterOfRotation.Y = IOXML.ReadDouble(reader, "RY", 0.0)
+                        CenterOfRotation.Z = IOXML.ReadDouble(reader, "RZ", 0.0)
 
                     Case "CrossSection"
 
@@ -1558,9 +1571,24 @@ Namespace VisualModel.Models.Components
             writer.WriteStartElement("Identity")
             writer.WriteAttributeString("Name", Name)
             writer.WriteAttributeString("ID", ID.ToString)
+            writer.WriteEndElement()
+
+            ' Surface properties:
+
+            writer.WriteStartElement("SurfaceProperties")
             writer.WriteAttributeString("MeshType", CInt(MeshType))
             writer.WriteAttributeString("NPS", CInt(CrossRefinement))
             writer.WriteAttributeString("NPZ", CInt(LongitudinalRefinement))
+            writer.WriteAttributeString("X", String.Format("{0}", Position.X))
+            writer.WriteAttributeString("Y", String.Format("{0}", Position.Y))
+            writer.WriteAttributeString("Z", String.Format("{0}", Position.Z))
+            writer.WriteAttributeString("Psi", String.Format("{0}", Orientation.Psi))
+            writer.WriteAttributeString("Tita", String.Format("{0}", Orientation.Tita))
+            writer.WriteAttributeString("Fi", String.Format("{0}", Orientation.Fi))
+            writer.WriteAttributeString("Secuence", String.Format("{0}", CInt(Orientation.Secuence)))
+            writer.WriteAttributeString("RX", String.Format("{0}", CenterOfRotation.X))
+            writer.WriteAttributeString("RY", String.Format("{0}", CenterOfRotation.Y))
+            writer.WriteAttributeString("RZ", String.Format("{0}", CenterOfRotation.Z))
             writer.WriteEndElement()
 
             ' Sections:

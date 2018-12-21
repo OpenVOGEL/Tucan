@@ -41,14 +41,6 @@ Public Class FormFuselageEditor
         LoadLiftingSurfaces()
         UpdateGeometricParameters()
 
-        If _Fuselage.MeshType = MeshTypes.StructuredQuadrilaterals Then
-            rbQuads.Checked = True
-        Else
-            rbTriangles.Checked = True
-        End If
-
-        rbTriangles.Enabled = False
-
         nudNPS.Value = _Fuselage.CrossRefinement
         nudNPZ.Value = _Fuselage.LongitudinalRefinement
 
@@ -769,29 +761,6 @@ Public Class FormFuselageEditor
     End Sub
 
 #End Region
-
-    Private Sub SelectQuads(sender As Object, e As EventArgs) Handles rbQuads.Click
-        _Fuselage.MeshType = MeshTypes.StructuredQuadrilaterals
-    End Sub
-
-    Private Sub SelectTriangles(sender As Object, e As EventArgs) Handles rbTriangles.Click
-        _Fuselage.MeshType = MeshTypes.UnstructuredTriangles
-    End Sub
-
-    Private Sub rbQuads_CheckedChanged(sender As Object, e As EventArgs) Handles rbQuads.CheckedChanged
-        nudNPS.Enabled = rbQuads.Checked
-        lblNPS.Enabled = rbQuads.Checked
-        nudNPZ.Enabled = rbQuads.Checked
-        lblNPZ.Enabled = rbQuads.Checked
-    End Sub
-
-    Private Sub rbTriangles_CheckedChanged(sender As Object, e As EventArgs) Handles rbTriangles.CheckedChanged
-        nudNPS.Enabled = rbQuads.Checked
-        lblNPS.Enabled = rbQuads.Checked
-        nudNPZ.Enabled = rbQuads.Checked
-        lblNPZ.Enabled = rbQuads.Checked
-    End Sub
-
     Private Sub nudNPS_ValueChanged(sender As Object, e As EventArgs) Handles nudNPS.ValueChanged
         _Fuselage.CrossRefinement = nudNPS.Value
     End Sub
