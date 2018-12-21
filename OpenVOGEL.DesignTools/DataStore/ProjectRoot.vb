@@ -91,6 +91,7 @@ Namespace DataStore
             SimulationSettings.InitializaParameters()
             Visualization.Initialize()
             Results.InitializeResults()
+            CalculationCore = Nothing
             RefreshOnGL()
 
         End Sub
@@ -488,61 +489,6 @@ Namespace DataStore
                 End If
             End Get
         End Property
-
-        'Private Sub RepresentStaticResultsWithOpenGL()
-
-        '    'Dim GL As OpenGL = ControlGL.OpenGL
-
-        '    'GL.ClearColor(VisualizationParameters.ColorDePantalla.R / 255, VisualizationParameters.ColorDePantalla.G / 255, VisualizationParameters.ColorDePantalla.B / 255, VisualizationParameters.ColorDePantalla.A / 255)
-
-        '    'GL.Clear(OpenGL.GL_COLOR_BUFFER_BIT)
-        '    'GL.Clear(OpenGL.GL_DEPTH_BUFFER_BIT)
-
-        '    'If VisualizationParameters.PermitirAlphaBlending Then
-        '    '    GL.Enable(OpenGL.GL_BLEND)
-        '    '    GL.BlendFunc(OpenGL.GL_SRC_ALPHA, OpenGL.GL_ONE_MINUS_SRC_ALPHA)
-        '    'Else
-        '    '    GL.Disable(OpenGL.GL_BLEND)
-        '    'End If
-
-        '    'If VisualizationParameters.SuavisadoDeLineas Then GL.Enable(OpenGL.GL_LINE_SMOOTH) Else GL.Disable(OpenGL.GL_LINE_SMOOTH)
-
-        '    'Dim Origen As New EPoint3
-        '    'Dim Punto As EPoint3 = VisualizationParameters.PoscionDeCamara
-        '    'Dim Orientacion As TOrientacion = VisualizationParameters.OrientacionDeCamara
-
-        '    'GL.RenderMode(OpenGL.GL_RENDER)
-        '    'GL.MatrixMode(OpenGL.GL_PROJECTION)
-
-        '    'GL.LoadIdentity()
-
-        '    'GL.Ortho(-0.5 * ControlGL.Width, 0.5 * ControlGL.Width, -0.5 * ControlGL.Height, 0.5 * ControlGL.Height, -100000, 100000)
-
-        '    'GL.Translate(VisualizationParameters.PoscionDeCamara.X, VisualizationParameters.PoscionDeCamara.Y, 0)
-        '    'GL.Rotate(Orientacion.Fi, Orientacion.Tita, Orientacion.Psi)
-        '    'GL.Scale(VisualizationParameters.Acercamiento, VisualizationParameters.Acercamiento, VisualizationParameters.Acercamiento)
-
-        '    'VisualizationParameters.EjeDeCoordenadas.Extension = Simulacion.LongitudCaracterística
-        '    'VisualizationParameters.EjeDeCoordenadas.CrearWireFrame(GL)
-        '    'VisualizationParameters.ReferenceFrame.CrearWireFrame(GL)
-
-        '    'Simulacion.RepresentarVectorDeVelocidad(GL, Origen)
-
-        '    'If Resultados.ObtenerModelo.VProps.MostrarSuperficie Then
-        '    '    Resultados.ObtenerModelo.ActualizarModelo3D(GL)
-        '    'End If
-
-        '    'If Not Me.VisualizationParameters.Panning And Not Me.VisualizationParameters.Rotating Then
-        '    '    If Not IsNothing(Resultados.ObtenerEstelas) Then
-        '    '        Resultados.ObtenerEstelas.ActualizarModelo3D(GL)
-        '    '    End If
-        '    'End If
-
-        '    'PlanoDeVelocidad.ActualizarModelo3D(GL)
-
-        '    'GL.Flush()
-
-        'End Sub
 
         Public Simulating As Boolean = False
 

@@ -26,11 +26,11 @@
     <MapFileExtensions>true</MapFileExtensions>
     <SupportUrl>https://sites.google.com/site/gahvogel/</SupportUrl>
     <ErrorReportUrl>https://github.com/GuillermoHazebrouck/OpenVOGEL/issues</ErrorReportUrl>
-    <ProductName>Tucan 2019</ProductName>
+    <ProductName>Tucan</ProductName>
     <PublisherName>OpenVOGEL</PublisherName>
     <SuiteName>OpenVOGEL Tucan</SuiteName>
-    <ApplicationRevision>6</ApplicationRevision>
-    <ApplicationVersion>2019.1.1.%2a</ApplicationVersion>
+    <ApplicationRevision>7</ApplicationRevision>
+    <ApplicationVersion>1.1.1.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>

@@ -28,6 +28,9 @@ Imports OpenVOGEL.AeroTools.IoHelper
 
 Namespace VisualModel.Models.Components
 
+    ''' <summary>
+    ''' Represents a quadrilateral region on a wing
+    ''' </summary>
     Public Class WingRegion
 
 #Region " Geometry "
@@ -307,6 +310,9 @@ Namespace VisualModel.Models.Components
 
     End Class
 
+    ''' <summary>
+    ''' Represents wings
+    ''' </summary>
     Public Class LiftingSurface
 
         Inherits Surface

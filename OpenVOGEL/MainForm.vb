@@ -633,7 +633,7 @@ Public Class MainForm
 
     End Sub
 
-    Private Sub lblWebSite_Click(sender As Object, e As EventArgs) Handles lblWebSite.Click
+    Private Sub lblWebSite_Click(sender As Object, e As EventArgs) 
 
         Process.Start("https://sites.google.com/site/gahvogel/main")
 

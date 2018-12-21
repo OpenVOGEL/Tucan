@@ -8,10 +8,10 @@ Imports System.Runtime.InteropServices
 
 ' Review the values of the assembly attributes
 
-<Assembly: AssemblyTitle("Tucan 2019")>
+<Assembly: AssemblyTitle("Tucan")>
 <Assembly: AssemblyDescription("Software for aerodynamic analysis and aircraft design")>
 <Assembly: AssemblyCompany("OpenVOGEL")>
-<Assembly: AssemblyProduct("Tucan 2019")>
+<Assembly: AssemblyProduct("Tucan")>
 <Assembly: AssemblyCopyright("Copyright ©  2019 - Guillermo A. Hazebrouck")>
 <Assembly: AssemblyTrademark("OpenVOGEL Tucan")>
 

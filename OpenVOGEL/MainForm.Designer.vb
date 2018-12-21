@@ -39,8 +39,6 @@ Partial Class MainForm
         Me.scMain = New System.Windows.Forms.SplitContainer()
         Me.sbHorizontal = New System.Windows.Forms.HScrollBar()
         Me.lblStatus = New System.Windows.Forms.ToolStripStatusLabel()
-        Me.ToolStripStatusLabel2 = New System.Windows.Forms.ToolStripStatusLabel()
-        Me.lblWebSite = New System.Windows.Forms.ToolStripStatusLabel()
         Me.ssStatus = New System.Windows.Forms.StatusStrip()
         Me.mrRibbon = New OpenVOGEL.DesignTools.MainRibbon()
         CType(Me.ControlOpenGL, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -147,23 +145,9 @@ Partial Class MainForm
         Me.lblStatus.ForeColor = System.Drawing.Color.Black
         Me.lblStatus.Name = "lblStatus"
         '
-        'ToolStripStatusLabel2
-        '
-        Me.ToolStripStatusLabel2.BackColor = System.Drawing.Color.Transparent
-        Me.ToolStripStatusLabel2.Name = "ToolStripStatusLabel2"
-        resources.ApplyResources(Me.ToolStripStatusLabel2, "ToolStripStatusLabel2")
-        '
-        'lblWebSite
-        '
-        Me.lblWebSite.BackColor = System.Drawing.Color.Transparent
-        Me.lblWebSite.ForeColor = System.Drawing.SystemColors.ControlDarkDark
-        resources.ApplyResources(Me.lblWebSite, "lblWebSite")
-        Me.lblWebSite.IsLink = True
-        Me.lblWebSite.Name = "lblWebSite"
-        '
         'ssStatus
         '
-        Me.ssStatus.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.lblStatus, Me.ToolStripStatusLabel2, Me.lblWebSite})
+        Me.ssStatus.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.lblStatus})
         resources.ApplyResources(Me.ssStatus, "ssStatus")
         Me.ssStatus.Name = "ssStatus"
         '
@@ -213,7 +197,5 @@ Partial Class MainForm
     Friend WithEvents ContentPanel As ToolStripContentPanel
     Friend WithEvents sbHorizontal As HScrollBar
     Friend WithEvents lblStatus As ToolStripStatusLabel
-    Friend WithEvents ToolStripStatusLabel2 As ToolStripStatusLabel
-    Friend WithEvents lblWebSite As ToolStripStatusLabel
     Friend WithEvents ssStatus As StatusStrip
 End Class

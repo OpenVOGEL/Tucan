@@ -321,20 +321,16 @@ ErrSub:
 
     Private Sub LoadVisualization()
 
-        If ProjectRoot.Initialized Then
+        _LockScreenPropEvents = True
 
-            _LockScreenPropEvents = True
+        pnlScreenColor.BackColor = ProjectRoot.Visualization.ScreenColor
+        cbxShowRulers.Checked = ProjectRoot.Visualization.ReferenceFrame.Visible
+        nudXmax.Value = ProjectRoot.Visualization.ReferenceFrame.Xmax
+        nudXmin.Value = ProjectRoot.Visualization.ReferenceFrame.Xmin
+        nudYmax.Value = ProjectRoot.Visualization.ReferenceFrame.Ymax
+        nudYmin.Value = ProjectRoot.Visualization.ReferenceFrame.Ymin
 
-            pnlScreenColor.BackColor = ProjectRoot.Visualization.ScreenColor
-            cbxShowRulers.Checked = ProjectRoot.Visualization.ReferenceFrame.Visible
-            nudXmax.Value = ProjectRoot.Visualization.ReferenceFrame.Xmax
-            nudXmin.Value = ProjectRoot.Visualization.ReferenceFrame.Xmin
-            nudYmax.Value = ProjectRoot.Visualization.ReferenceFrame.Ymax
-            nudYmin.Value = ProjectRoot.Visualization.ReferenceFrame.Ymin
-
-            _LockScreenPropEvents = False
-
-        End If
+        _LockScreenPropEvents = False
 
     End Sub
 
