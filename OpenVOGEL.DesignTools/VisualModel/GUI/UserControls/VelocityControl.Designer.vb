@@ -24,17 +24,19 @@ Partial Class VelocityControl
     Private Sub InitializeComponent()
         Me.BarraDeEstado = New System.Windows.Forms.ProgressBar()
         Me.gbViewOptions = New System.Windows.Forms.GroupBox()
-        Me.rdInducedVelocity = New System.Windows.Forms.RadioButton()
-        Me.NodoSampleColor = New System.Windows.Forms.PictureBox()
-        Me.rdTotalVelocity = New System.Windows.Forms.RadioButton()
+        Me.Label14 = New System.Windows.Forms.Label()
+        Me.Label13 = New System.Windows.Forms.Label()
+        Me.NodeSampleColor = New System.Windows.Forms.PictureBox()
         Me.ColorNodo = New System.Windows.Forms.Button()
         Me.NodeSize = New System.Windows.Forms.NumericUpDown()
-        Me.VisualizarPlano = New System.Windows.Forms.CheckBox()
         Me.LineSize = New System.Windows.Forms.NumericUpDown()
-        Me.VectoresSampleColor = New System.Windows.Forms.PictureBox()
+        Me.VectorsSampleColor = New System.Windows.Forms.PictureBox()
         Me.Formato = New System.Windows.Forms.Button()
         Me.EscalaBox = New System.Windows.Forms.NumericUpDown()
         Me.Label12 = New System.Windows.Forms.Label()
+        Me.rdInducedVelocity = New System.Windows.Forms.RadioButton()
+        Me.rdTotalVelocity = New System.Windows.Forms.RadioButton()
+        Me.VisualizarPlano = New System.Windows.Forms.CheckBox()
         Me.Calcular = New System.Windows.Forms.Button()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
         Me.Label9 = New System.Windows.Forms.Label()
@@ -59,15 +61,13 @@ Partial Class VelocityControl
         Me.OrigenX = New System.Windows.Forms.NumericUpDown()
         Me.TitaBox = New System.Windows.Forms.NumericUpDown()
         Me.PsiBox = New System.Windows.Forms.NumericUpDown()
-        Me.Colores = New System.Windows.Forms.ColorDialog()
+        Me.ColorsDialog = New System.Windows.Forms.ColorDialog()
         Me.btnOk = New System.Windows.Forms.Button()
-        Me.Label13 = New System.Windows.Forms.Label()
-        Me.Label14 = New System.Windows.Forms.Label()
         Me.gbViewOptions.SuspendLayout()
-        CType(Me.NodoSampleColor, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.NodeSampleColor, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.NodeSize, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.LineSize, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.VectoresSampleColor, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.VectorsSampleColor, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.EscalaBox, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupBox1.SuspendLayout()
         CType(Me.NyBox, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -84,9 +84,9 @@ Partial Class VelocityControl
         'BarraDeEstado
         '
         Me.BarraDeEstado.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
-                    Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.BarraDeEstado.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.BarraDeEstado.Location = New System.Drawing.Point(0, 347)
+        Me.BarraDeEstado.Location = New System.Drawing.Point(0, 346)
         Me.BarraDeEstado.Name = "BarraDeEstado"
         Me.BarraDeEstado.Size = New System.Drawing.Size(216, 13)
         Me.BarraDeEstado.Style = System.Windows.Forms.ProgressBarStyle.Continuous
@@ -95,56 +95,54 @@ Partial Class VelocityControl
         'gbViewOptions
         '
         Me.gbViewOptions.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                    Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.gbViewOptions.Controls.Add(Me.Label14)
         Me.gbViewOptions.Controls.Add(Me.Label13)
-        Me.gbViewOptions.Controls.Add(Me.NodoSampleColor)
+        Me.gbViewOptions.Controls.Add(Me.NodeSampleColor)
         Me.gbViewOptions.Controls.Add(Me.ColorNodo)
         Me.gbViewOptions.Controls.Add(Me.NodeSize)
         Me.gbViewOptions.Controls.Add(Me.LineSize)
-        Me.gbViewOptions.Controls.Add(Me.VectoresSampleColor)
+        Me.gbViewOptions.Controls.Add(Me.VectorsSampleColor)
         Me.gbViewOptions.Controls.Add(Me.Formato)
         Me.gbViewOptions.Controls.Add(Me.EscalaBox)
         Me.gbViewOptions.Controls.Add(Me.Label12)
         Me.gbViewOptions.Location = New System.Drawing.Point(0, 230)
         Me.gbViewOptions.Name = "gbViewOptions"
-        Me.gbViewOptions.Size = New System.Drawing.Size(215, 111)
+        Me.gbViewOptions.Size = New System.Drawing.Size(215, 110)
         Me.gbViewOptions.TabIndex = 125
         Me.gbViewOptions.TabStop = False
         Me.gbViewOptions.Text = "View options"
         '
-        'rdInducedVelocity
+        'Label14
         '
-        Me.rdInducedVelocity.AutoSize = True
-        Me.rdInducedVelocity.Location = New System.Drawing.Point(11, 205)
-        Me.rdInducedVelocity.Name = "rdInducedVelocity"
-        Me.rdInducedVelocity.Size = New System.Drawing.Size(67, 17)
-        Me.rdInducedVelocity.TabIndex = 131
-        Me.rdInducedVelocity.TabStop = True
-        Me.rdInducedVelocity.Text = "Induced"
-        Me.rdInducedVelocity.UseVisualStyleBackColor = True
+        Me.Label14.AutoSize = True
+        Me.Label14.ImeMode = System.Windows.Forms.ImeMode.NoControl
+        Me.Label14.Location = New System.Drawing.Point(12, 78)
+        Me.Label14.Name = "Label14"
+        Me.Label14.Size = New System.Drawing.Size(42, 13)
+        Me.Label14.TabIndex = 129
+        Me.Label14.Text = "Points:"
         '
-        'NodoSampleColor
+        'Label13
         '
-        Me.NodoSampleColor.BackColor = System.Drawing.Color.Lime
-        Me.NodoSampleColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.NodoSampleColor.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.NodoSampleColor.Location = New System.Drawing.Point(124, 76)
-        Me.NodoSampleColor.Name = "NodoSampleColor"
-        Me.NodoSampleColor.Size = New System.Drawing.Size(27, 26)
-        Me.NodoSampleColor.TabIndex = 127
-        Me.NodoSampleColor.TabStop = False
+        Me.Label13.AutoSize = True
+        Me.Label13.ImeMode = System.Windows.Forms.ImeMode.NoControl
+        Me.Label13.Location = New System.Drawing.Point(12, 52)
+        Me.Label13.Name = "Label13"
+        Me.Label13.Size = New System.Drawing.Size(47, 13)
+        Me.Label13.TabIndex = 128
+        Me.Label13.Text = "Vectors:"
         '
-        'rdTotalVelocity
+        'NodeSampleColor
         '
-        Me.rdTotalVelocity.AutoSize = True
-        Me.rdTotalVelocity.Location = New System.Drawing.Point(11, 186)
-        Me.rdTotalVelocity.Name = "rdTotalVelocity"
-        Me.rdTotalVelocity.Size = New System.Drawing.Size(50, 17)
-        Me.rdTotalVelocity.TabIndex = 130
-        Me.rdTotalVelocity.TabStop = True
-        Me.rdTotalVelocity.Text = "Total"
-        Me.rdTotalVelocity.UseVisualStyleBackColor = True
+        Me.NodeSampleColor.BackColor = System.Drawing.Color.Lime
+        Me.NodeSampleColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.NodeSampleColor.ImeMode = System.Windows.Forms.ImeMode.NoControl
+        Me.NodeSampleColor.Location = New System.Drawing.Point(124, 74)
+        Me.NodeSampleColor.Name = "NodeSampleColor"
+        Me.NodeSampleColor.Size = New System.Drawing.Size(27, 26)
+        Me.NodeSampleColor.TabIndex = 127
+        Me.NodeSampleColor.TabStop = False
         '
         'ColorNodo
         '
@@ -156,7 +154,7 @@ Partial Class VelocityControl
         Me.ColorNodo.Font = New System.Drawing.Font("Segoe UI", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.ColorNodo.ForeColor = System.Drawing.Color.Black
         Me.ColorNodo.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.ColorNodo.Location = New System.Drawing.Point(159, 78)
+        Me.ColorNodo.Location = New System.Drawing.Point(159, 76)
         Me.ColorNodo.Name = "ColorNodo"
         Me.ColorNodo.Size = New System.Drawing.Size(39, 22)
         Me.ColorNodo.TabIndex = 126
@@ -167,24 +165,13 @@ Partial Class VelocityControl
         '
         Me.NodeSize.DecimalPlaces = 2
         Me.NodeSize.Increment = New Decimal(New Integer() {5, 0, 0, 131072})
-        Me.NodeSize.Location = New System.Drawing.Point(68, 78)
+        Me.NodeSize.Location = New System.Drawing.Point(68, 76)
         Me.NodeSize.Maximum = New Decimal(New Integer() {5, 0, 0, 0})
         Me.NodeSize.Name = "NodeSize"
         Me.NodeSize.Size = New System.Drawing.Size(44, 22)
         Me.NodeSize.TabIndex = 124
         Me.NodeSize.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         Me.NodeSize.Value = New Decimal(New Integer() {25, 0, 0, 65536})
-        '
-        'VisualizarPlano
-        '
-        Me.VisualizarPlano.AutoSize = True
-        Me.VisualizarPlano.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.VisualizarPlano.Location = New System.Drawing.Point(152, 187)
-        Me.VisualizarPlano.Name = "VisualizarPlano"
-        Me.VisualizarPlano.Size = New System.Drawing.Size(60, 17)
-        Me.VisualizarPlano.TabIndex = 116
-        Me.VisualizarPlano.Text = "Visible"
-        Me.VisualizarPlano.UseVisualStyleBackColor = True
         '
         'LineSize
         '
@@ -198,16 +185,16 @@ Partial Class VelocityControl
         Me.LineSize.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         Me.LineSize.Value = New Decimal(New Integer() {2, 0, 0, 65536})
         '
-        'VectoresSampleColor
+        'VectorsSampleColor
         '
-        Me.VectoresSampleColor.BackColor = System.Drawing.Color.Lime
-        Me.VectoresSampleColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.VectoresSampleColor.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.VectoresSampleColor.Location = New System.Drawing.Point(124, 46)
-        Me.VectoresSampleColor.Name = "VectoresSampleColor"
-        Me.VectoresSampleColor.Size = New System.Drawing.Size(27, 26)
-        Me.VectoresSampleColor.TabIndex = 121
-        Me.VectoresSampleColor.TabStop = False
+        Me.VectorsSampleColor.BackColor = System.Drawing.Color.Lime
+        Me.VectorsSampleColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.VectorsSampleColor.ImeMode = System.Windows.Forms.ImeMode.NoControl
+        Me.VectorsSampleColor.Location = New System.Drawing.Point(124, 46)
+        Me.VectorsSampleColor.Name = "VectorsSampleColor"
+        Me.VectorsSampleColor.Size = New System.Drawing.Size(27, 26)
+        Me.VectorsSampleColor.TabIndex = 121
+        Me.VectorsSampleColor.TabStop = False
         '
         'Formato
         '
@@ -248,6 +235,39 @@ Partial Class VelocityControl
         Me.Label12.TabIndex = 118
         Me.Label12.Text = "Scale:"
         '
+        'rdInducedVelocity
+        '
+        Me.rdInducedVelocity.AutoSize = True
+        Me.rdInducedVelocity.Location = New System.Drawing.Point(11, 205)
+        Me.rdInducedVelocity.Name = "rdInducedVelocity"
+        Me.rdInducedVelocity.Size = New System.Drawing.Size(67, 17)
+        Me.rdInducedVelocity.TabIndex = 131
+        Me.rdInducedVelocity.TabStop = True
+        Me.rdInducedVelocity.Text = "Induced"
+        Me.rdInducedVelocity.UseVisualStyleBackColor = True
+        '
+        'rdTotalVelocity
+        '
+        Me.rdTotalVelocity.AutoSize = True
+        Me.rdTotalVelocity.Location = New System.Drawing.Point(11, 186)
+        Me.rdTotalVelocity.Name = "rdTotalVelocity"
+        Me.rdTotalVelocity.Size = New System.Drawing.Size(49, 17)
+        Me.rdTotalVelocity.TabIndex = 130
+        Me.rdTotalVelocity.TabStop = True
+        Me.rdTotalVelocity.Text = "Total"
+        Me.rdTotalVelocity.UseVisualStyleBackColor = True
+        '
+        'VisualizarPlano
+        '
+        Me.VisualizarPlano.AutoSize = True
+        Me.VisualizarPlano.ImeMode = System.Windows.Forms.ImeMode.NoControl
+        Me.VisualizarPlano.Location = New System.Drawing.Point(152, 187)
+        Me.VisualizarPlano.Name = "VisualizarPlano"
+        Me.VisualizarPlano.Size = New System.Drawing.Size(60, 17)
+        Me.VisualizarPlano.TabIndex = 116
+        Me.VisualizarPlano.Text = "Visible"
+        Me.VisualizarPlano.UseVisualStyleBackColor = True
+        '
         'Calcular
         '
         Me.Calcular.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
@@ -258,7 +278,7 @@ Partial Class VelocityControl
         Me.Calcular.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Calcular.ForeColor = System.Drawing.Color.Black
         Me.Calcular.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.Calcular.Location = New System.Drawing.Point(150, 368)
+        Me.Calcular.Location = New System.Drawing.Point(150, 367)
         Me.Calcular.Name = "Calcular"
         Me.Calcular.Size = New System.Drawing.Size(65, 23)
         Me.Calcular.TabIndex = 124
@@ -301,21 +321,21 @@ Partial Class VelocityControl
         '
         Me.Label9.AutoSize = True
         Me.Label9.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.Label9.Location = New System.Drawing.Point(125, 131)
+        Me.Label9.Location = New System.Drawing.Point(123, 131)
         Me.Label9.Name = "Label9"
-        Me.Label9.Size = New System.Drawing.Size(12, 13)
+        Me.Label9.Size = New System.Drawing.Size(15, 13)
         Me.Label9.TabIndex = 115
-        Me.Label9.Text = "y"
+        Me.Label9.Text = "H"
         '
         'Label10
         '
         Me.Label10.AutoSize = True
         Me.Label10.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.Label10.Location = New System.Drawing.Point(125, 110)
+        Me.Label10.Location = New System.Drawing.Point(121, 110)
         Me.Label10.Name = "Label10"
-        Me.Label10.Size = New System.Drawing.Size(12, 13)
+        Me.Label10.Size = New System.Drawing.Size(18, 13)
         Me.Label10.TabIndex = 114
-        Me.Label10.Text = "x"
+        Me.Label10.Text = "W"
         '
         'Label11
         '
@@ -351,31 +371,31 @@ Partial Class VelocityControl
         '
         Me.Label6.AutoSize = True
         Me.Label6.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.Label6.Location = New System.Drawing.Point(125, 62)
+        Me.Label6.Location = New System.Drawing.Point(123, 64)
         Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(12, 13)
+        Me.Label6.Size = New System.Drawing.Size(15, 13)
         Me.Label6.TabIndex = 110
-        Me.Label6.Text = "y"
+        Me.Label6.Text = "H"
         '
         'Label7
         '
         Me.Label7.AutoSize = True
         Me.Label7.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.Label7.Location = New System.Drawing.Point(125, 41)
+        Me.Label7.Location = New System.Drawing.Point(121, 42)
         Me.Label7.Name = "Label7"
-        Me.Label7.Size = New System.Drawing.Size(12, 13)
+        Me.Label7.Size = New System.Drawing.Size(18, 13)
         Me.Label7.TabIndex = 109
-        Me.Label7.Text = "x"
+        Me.Label7.Text = "W"
         '
         'Label8
         '
         Me.Label8.AutoSize = True
         Me.Label8.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.Label8.Location = New System.Drawing.Point(115, 20)
+        Me.Label8.Location = New System.Drawing.Point(108, 20)
         Me.Label8.Name = "Label8"
-        Me.Label8.Size = New System.Drawing.Size(93, 13)
+        Me.Label8.Size = New System.Drawing.Size(60, 13)
         Me.Label8.TabIndex = 108
-        Me.Label8.Text = "Extension (local):"
+        Me.Label8.Text = "Extension:"
         '
         'ExtensionY
         '
@@ -403,11 +423,11 @@ Partial Class VelocityControl
         '
         Me.Label19.AutoSize = True
         Me.Label19.BackColor = System.Drawing.Color.Transparent
-        Me.Label19.Font = New System.Drawing.Font("Symbol", 9.75!)
+        Me.Label19.Font = New System.Drawing.Font("Symbol", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(2, Byte))
         Me.Label19.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.Label19.Location = New System.Drawing.Point(19, 61)
+        Me.Label19.Location = New System.Drawing.Point(19, 64)
         Me.Label19.Name = "Label19"
-        Me.Label19.Size = New System.Drawing.Size(15, 16)
+        Me.Label19.Size = New System.Drawing.Size(13, 13)
         Me.Label19.TabIndex = 104
         Me.Label19.Text = "q"
         '
@@ -415,11 +435,11 @@ Partial Class VelocityControl
         '
         Me.Label18.AutoSize = True
         Me.Label18.BackColor = System.Drawing.Color.Transparent
-        Me.Label18.Font = New System.Drawing.Font("Symbol", 9.75!)
+        Me.Label18.Font = New System.Drawing.Font("Symbol", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(2, Byte))
         Me.Label18.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.Label18.Location = New System.Drawing.Point(18, 40)
+        Me.Label18.Location = New System.Drawing.Point(18, 42)
         Me.Label18.Name = "Label18"
-        Me.Label18.Size = New System.Drawing.Size(17, 16)
+        Me.Label18.Size = New System.Drawing.Size(14, 13)
         Me.Label18.TabIndex = 105
         Me.Label18.Text = "y"
         '
@@ -427,37 +447,37 @@ Partial Class VelocityControl
         '
         Me.Label5.AutoSize = True
         Me.Label5.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.Label5.Location = New System.Drawing.Point(22, 153)
+        Me.Label5.Location = New System.Drawing.Point(19, 153)
         Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(12, 13)
+        Me.Label5.Size = New System.Drawing.Size(13, 13)
         Me.Label5.TabIndex = 9
-        Me.Label5.Text = "z"
+        Me.Label5.Text = "Z"
         '
         'Label4
         '
         Me.Label4.AutoSize = True
         Me.Label4.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.Label4.Location = New System.Drawing.Point(22, 132)
+        Me.Label4.Location = New System.Drawing.Point(19, 132)
         Me.Label4.Name = "Label4"
         Me.Label4.Size = New System.Drawing.Size(12, 13)
         Me.Label4.TabIndex = 8
-        Me.Label4.Text = "y"
+        Me.Label4.Text = "Y"
         '
         'Label3
         '
         Me.Label3.AutoSize = True
         Me.Label3.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.Label3.Location = New System.Drawing.Point(22, 111)
+        Me.Label3.Location = New System.Drawing.Point(19, 111)
         Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(12, 13)
+        Me.Label3.Size = New System.Drawing.Size(13, 13)
         Me.Label3.TabIndex = 7
-        Me.Label3.Text = "x"
+        Me.Label3.Text = "X"
         '
         'OrigenZ
         '
         Me.OrigenZ.DecimalPlaces = 2
         Me.OrigenZ.Increment = New Decimal(New Integer() {1, 0, 0, 65536})
-        Me.OrigenZ.Location = New System.Drawing.Point(40, 151)
+        Me.OrigenZ.Location = New System.Drawing.Point(37, 151)
         Me.OrigenZ.Maximum = New Decimal(New Integer() {1000, 0, 0, 0})
         Me.OrigenZ.Minimum = New Decimal(New Integer() {1000, 0, 0, -2147483648})
         Me.OrigenZ.Name = "OrigenZ"
@@ -469,17 +489,17 @@ Partial Class VelocityControl
         '
         Me.Label2.AutoSize = True
         Me.Label2.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.Label2.Location = New System.Drawing.Point(8, 89)
+        Me.Label2.Location = New System.Drawing.Point(9, 89)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(85, 13)
+        Me.Label2.Size = New System.Drawing.Size(44, 13)
         Me.Label2.TabIndex = 5
-        Me.Label2.Text = "Origin (global):"
+        Me.Label2.Text = "Center:"
         '
         'Label1
         '
         Me.Label1.AutoSize = True
         Me.Label1.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.Label1.Location = New System.Drawing.Point(12, 20)
+        Me.Label1.Location = New System.Drawing.Point(9, 20)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(70, 13)
         Me.Label1.TabIndex = 4
@@ -489,7 +509,7 @@ Partial Class VelocityControl
         '
         Me.OrigenY.DecimalPlaces = 2
         Me.OrigenY.Increment = New Decimal(New Integer() {1, 0, 0, 65536})
-        Me.OrigenY.Location = New System.Drawing.Point(40, 130)
+        Me.OrigenY.Location = New System.Drawing.Point(37, 130)
         Me.OrigenY.Maximum = New Decimal(New Integer() {1000, 0, 0, 0})
         Me.OrigenY.Minimum = New Decimal(New Integer() {1000, 0, 0, -2147483648})
         Me.OrigenY.Name = "OrigenY"
@@ -501,7 +521,7 @@ Partial Class VelocityControl
         '
         Me.OrigenX.DecimalPlaces = 2
         Me.OrigenX.Increment = New Decimal(New Integer() {1, 0, 0, 65536})
-        Me.OrigenX.Location = New System.Drawing.Point(40, 109)
+        Me.OrigenX.Location = New System.Drawing.Point(37, 109)
         Me.OrigenX.Maximum = New Decimal(New Integer() {1000, 0, 0, 0})
         Me.OrigenX.Minimum = New Decimal(New Integer() {1000, 0, 0, -2147483648})
         Me.OrigenX.Name = "OrigenX"
@@ -511,7 +531,7 @@ Partial Class VelocityControl
         '
         'TitaBox
         '
-        Me.TitaBox.Location = New System.Drawing.Point(40, 61)
+        Me.TitaBox.Location = New System.Drawing.Point(37, 61)
         Me.TitaBox.Maximum = New Decimal(New Integer() {360, 0, 0, 0})
         Me.TitaBox.Name = "TitaBox"
         Me.TitaBox.Size = New System.Drawing.Size(61, 22)
@@ -520,7 +540,7 @@ Partial Class VelocityControl
         '
         'PsiBox
         '
-        Me.PsiBox.Location = New System.Drawing.Point(40, 40)
+        Me.PsiBox.Location = New System.Drawing.Point(37, 40)
         Me.PsiBox.Maximum = New Decimal(New Integer() {360, 0, 0, 0})
         Me.PsiBox.Name = "PsiBox"
         Me.PsiBox.Size = New System.Drawing.Size(61, 22)
@@ -537,38 +557,19 @@ Partial Class VelocityControl
         Me.btnOk.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DeepSkyBlue
         Me.btnOk.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.btnOk.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnOk.Location = New System.Drawing.Point(3, 368)
+        Me.btnOk.Location = New System.Drawing.Point(3, 367)
         Me.btnOk.Name = "btnOk"
         Me.btnOk.Size = New System.Drawing.Size(65, 23)
         Me.btnOk.TabIndex = 128
-        Me.btnOk.Text = "&Ok"
+        Me.btnOk.Text = "Close"
         Me.btnOk.UseVisualStyleBackColor = False
-        '
-        'Label13
-        '
-        Me.Label13.AutoSize = True
-        Me.Label13.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.Label13.Location = New System.Drawing.Point(12, 52)
-        Me.Label13.Name = "Label13"
-        Me.Label13.Size = New System.Drawing.Size(48, 13)
-        Me.Label13.TabIndex = 128
-        Me.Label13.Text = "Vectors:"
-        '
-        'Label14
-        '
-        Me.Label14.AutoSize = True
-        Me.Label14.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.Label14.Location = New System.Drawing.Point(12, 80)
-        Me.Label14.Name = "Label14"
-        Me.Label14.Size = New System.Drawing.Size(42, 13)
-        Me.Label14.TabIndex = 129
-        Me.Label14.Text = "Points:"
         '
         'VelocityControl
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.AutoSize = True
+        Me.BackColor = System.Drawing.Color.White
         Me.Controls.Add(Me.rdInducedVelocity)
         Me.Controls.Add(Me.btnOk)
         Me.Controls.Add(Me.BarraDeEstado)
@@ -579,13 +580,13 @@ Partial Class VelocityControl
         Me.Controls.Add(Me.VisualizarPlano)
         Me.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Name = "VelocityControl"
-        Me.Size = New System.Drawing.Size(218, 397)
+        Me.Size = New System.Drawing.Size(218, 396)
         Me.gbViewOptions.ResumeLayout(False)
         Me.gbViewOptions.PerformLayout()
-        CType(Me.NodoSampleColor, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.NodeSampleColor, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.NodeSize, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.LineSize, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.VectoresSampleColor, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.VectorsSampleColor, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.EscalaBox, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupBox1.ResumeLayout(False)
         Me.GroupBox1.PerformLayout()
@@ -604,12 +605,12 @@ Partial Class VelocityControl
     End Sub
     Friend WithEvents BarraDeEstado As System.Windows.Forms.ProgressBar
     Friend WithEvents gbViewOptions As System.Windows.Forms.GroupBox
-    Friend WithEvents NodoSampleColor As System.Windows.Forms.PictureBox
+    Friend WithEvents NodeSampleColor As System.Windows.Forms.PictureBox
     Friend WithEvents ColorNodo As System.Windows.Forms.Button
     Friend WithEvents NodeSize As System.Windows.Forms.NumericUpDown
     Friend WithEvents VisualizarPlano As System.Windows.Forms.CheckBox
     Friend WithEvents LineSize As System.Windows.Forms.NumericUpDown
-    Friend WithEvents VectoresSampleColor As System.Windows.Forms.PictureBox
+    Friend WithEvents VectorsSampleColor As System.Windows.Forms.PictureBox
     Friend WithEvents Formato As System.Windows.Forms.Button
     Friend WithEvents EscalaBox As System.Windows.Forms.NumericUpDown
     Friend WithEvents Label12 As System.Windows.Forms.Label
@@ -637,7 +638,7 @@ Partial Class VelocityControl
     Friend WithEvents OrigenX As System.Windows.Forms.NumericUpDown
     Friend WithEvents TitaBox As System.Windows.Forms.NumericUpDown
     Friend WithEvents PsiBox As System.Windows.Forms.NumericUpDown
-    Friend WithEvents Colores As System.Windows.Forms.ColorDialog
+    Friend WithEvents ColorsDialog As System.Windows.Forms.ColorDialog
     Friend WithEvents rdTotalVelocity As System.Windows.Forms.RadioButton
     Friend WithEvents rdInducedVelocity As System.Windows.Forms.RadioButton
     Friend WithEvents btnOk As System.Windows.Forms.Button

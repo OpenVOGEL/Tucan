@@ -560,10 +560,10 @@
     <value>2</value>
   </data>
   <data name="lblStatus.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Courier New, 9.75pt</value>
+    <value>Consolas, 9.75pt</value>
   </data>
   <data name="lblStatus.Size" type="System.Drawing.Size, System.Drawing">
-    <value>56, 17</value>
+    <value>49, 17</value>
   </data>
   <data name="lblStatus.Text" xml:space="preserve">
     <value>Status</value>

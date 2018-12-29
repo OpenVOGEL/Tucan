@@ -27,7 +27,7 @@ Public Class MainForm
 
 #Region " Initialize program "
 
-    Public FormCargado As Boolean = False
+    Public FormLoaded As Boolean = False
     Public PostProcesoCargado As Boolean = False
 
     Private Sub Main_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
@@ -48,7 +48,7 @@ Public Class MainForm
 
         SwitchToDesignMode()
 
-        FormCargado = True
+        FormLoaded = True
 
         AddHandler mrRibbon.PushMessage, AddressOf PushMessage
         AddHandler mrRibbon.EditSurface, AddressOf ShowEditor
@@ -520,7 +520,7 @@ Public Class MainForm
 
     Private Sub ControlOpenGL_OpenGLDraw(ByVal sender As System.Object, ByVal e As System.Windows.Forms.PaintEventArgs) Handles ControlOpenGL.OpenGLDraw
 
-        If FormCargado Then ProjectRoot.RepresentOnGL()
+        If FormLoaded Then ProjectRoot.RepresentOnGL()
 
     End Sub
 

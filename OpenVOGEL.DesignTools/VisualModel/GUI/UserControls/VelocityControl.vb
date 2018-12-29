@@ -60,8 +60,8 @@ Public Class VelocityControl
 
         Me.EscalaBox.Value = Plane.Scale
 
-        Me.VectoresSampleColor.BackColor = Plane.ColorVectors
-        Me.NodoSampleColor.BackColor = Plane.ColorNodes
+        Me.VectorsSampleColor.BackColor = Plane.ColorVectors
+        Me.NodeSampleColor.BackColor = Plane.ColorNodes
         Me.NodeSize.Value = Plane.NodeSize
         Me.LineSize.Value = Plane.VectorThickness
 
@@ -72,7 +72,7 @@ Public Class VelocityControl
 
     End Sub
 
-    Public Sub AdquirirDatosDelForm()
+    Public Sub AquireDataFromDialog()
 
         If Not Ready Then Exit Sub
 
@@ -115,7 +115,7 @@ Public Class VelocityControl
 
         If Not Ready Then Exit Sub
 
-        AdquirirDatosDelForm()
+        AquireDataFromDialog()
         Plane.GenerateMesh()
         Dim CantidadDeNodos As Integer = Plane.NumberOfNodes
         Dim RefVelocity As New EVector3
@@ -143,7 +143,7 @@ Public Class VelocityControl
     Private Sub Calcular_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Calcular.Click
 
         CalculateVelocity()
-        'CalculateTreftzIntegral()
+        RaiseEvent RefreshGL()
 
     End Sub
 
@@ -151,10 +151,11 @@ Public Class VelocityControl
 
         If Not Ready Then Exit Sub
 
-        Dim Respuesta As MsgBoxResult = Colores.ShowDialog()
-        If Respuesta = MsgBoxResult.Ok Then
-            VectoresSampleColor.BackColor = Colores.Color
-            Plane.ColorVectors = Colores.Color
+        Dim Result As MsgBoxResult = ColorsDialog.ShowDialog()
+        If Result = MsgBoxResult.Ok Then
+            VectorsSampleColor.BackColor = ColorsDialog.Color
+            Plane.ColorVectors = ColorsDialog.Color
+            RaiseEvent RefreshGL()
         End If
 
     End Sub
@@ -171,17 +172,18 @@ Public Class VelocityControl
 
     Private Sub ColorNodo_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ColorNodo.Click
         If Not Ready Then Exit Sub
-        Dim Respuesta As MsgBoxResult = Colores.ShowDialog()
-        If Respuesta = MsgBoxResult.Ok Then
-            NodoSampleColor.BackColor = Colores.Color
-            Plane.ColorNodes = Colores.Color
+        Dim Result As MsgBoxResult = ColorsDialog.ShowDialog()
+        If Result = MsgBoxResult.Ok Then
+            NodeSampleColor.BackColor = ColorsDialog.Color
+            Plane.ColorNodes = ColorsDialog.Color
+            RaiseEvent RefreshGL()
         End If
     End Sub
 
     Private Sub EscalaBox_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles EscalaBox.ValueChanged
         If Not Ready Then Exit Sub
         Plane.Scale = Me.EscalaBox.Value
-        ProjectRoot.RepresentOnGL()
+        RaiseEvent RefreshGL()
     End Sub
 
     Private Sub ControlDePlano_VisibleChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.VisibleChanged
@@ -190,56 +192,56 @@ Public Class VelocityControl
     End Sub
 
     Private Sub VisualizarPlano_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles VisualizarPlano.CheckedChanged
-        If Not ModyfingData Then AdquirirDatosDelForm()
+        If Not ModyfingData Then AquireDataFromDialog()
     End Sub
 
     Private Sub PsiBox_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles PsiBox.ValueChanged
-        If Not ModyfingData Then AdquirirDatosDelForm()
+        If Not ModyfingData Then AquireDataFromDialog()
     End Sub
 
     Private Sub TitaBox_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TitaBox.ValueChanged
-        If Not ModyfingData Then AdquirirDatosDelForm()
+        If Not ModyfingData Then AquireDataFromDialog()
     End Sub
 
     Private Sub OrigenX_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles OrigenX.ValueChanged
-        If Not ModyfingData Then AdquirirDatosDelForm()
+        If Not ModyfingData Then AquireDataFromDialog()
     End Sub
 
     Private Sub OrigenY_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles OrigenY.ValueChanged
-        If Not ModyfingData Then AdquirirDatosDelForm()
+        If Not ModyfingData Then AquireDataFromDialog()
     End Sub
 
     Private Sub OrigenZ_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles OrigenZ.ValueChanged
-        If Not ModyfingData Then AdquirirDatosDelForm()
+        If Not ModyfingData Then AquireDataFromDialog()
     End Sub
 
     Private Sub ExtensionX_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ExtensionX.ValueChanged
-        If Not ModyfingData Then AdquirirDatosDelForm()
+        If Not ModyfingData Then AquireDataFromDialog()
     End Sub
 
     Private Sub ExtensionY_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ExtensionY.ValueChanged
-        If Not ModyfingData Then AdquirirDatosDelForm()
+        If Not ModyfingData Then AquireDataFromDialog()
     End Sub
 
     Private Sub NxBox_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles NxBox.ValueChanged
-        If Not ModyfingData Then AdquirirDatosDelForm()
+        If Not ModyfingData Then AquireDataFromDialog()
     End Sub
 
     Private Sub NyBox_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles NyBox.ValueChanged
-        If Not ModyfingData Then AdquirirDatosDelForm()
+        If Not ModyfingData Then AquireDataFromDialog()
     End Sub
 
     Private Sub cbParallelComputing_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
-        If Not ModyfingData Then AdquirirDatosDelForm()
+        If Not ModyfingData Then AquireDataFromDialog()
     End Sub
 
     Private Sub rdTotalVelocity_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles rdTotalVelocity.CheckedChanged
-        If Not ModyfingData Then AdquirirDatosDelForm()
+        If Not ModyfingData Then AquireDataFromDialog()
         CalculateVelocity()
     End Sub
 
     Private Sub rdInducedVelocity_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles rdInducedVelocity.CheckedChanged
-        If Not ModyfingData Then AdquirirDatosDelForm()
+        If Not ModyfingData Then AquireDataFromDialog()
         CalculateVelocity()
     End Sub
 
