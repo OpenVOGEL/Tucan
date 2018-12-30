@@ -1701,7 +1701,7 @@ ErrSub:
 
     End Sub
 
-    Private Sub btnMove_Click(sender As Object, e As EventArgs) Handles btnMove.Click
+    Private Sub btnMove_Click(sender As Object, e As EventArgs)
 
         ProjectRoot.Model.OperationsTool.CancelOperation()
         ProjectRoot.Model.OperationsTool.Operation = Operations.Translate
@@ -1709,7 +1709,7 @@ ErrSub:
 
     End Sub
 
-    Private Sub bntAlign_Click(sender As Object, e As EventArgs) Handles bntAlign.Click
+    Private Sub bntAlign_Click(sender As Object, e As EventArgs)
 
         ProjectRoot.Model.OperationsTool.CancelOperation()
         ProjectRoot.Model.OperationsTool.Operation = Operations.Align

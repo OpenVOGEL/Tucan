@@ -20,7 +20,8 @@ Imports OpenVOGEL.DesignTools.VisualModel.Models.Components
 Public Class FormJetEngine
 
     Private _JetEngine As JetEngine
-    Private AllowEvents As Boolean = False
+
+    Public Event UpdateModel()
 
     Public Sub New(ByRef JetEngine As JetEngine)
 
@@ -30,7 +31,20 @@ Public Class FormJetEngine
 
         SetUpControls()
 
-        AllowEvents = True
+        AddHandler nudX.ValueChanged, AddressOf RequestUpdate
+        AddHandler nudY.ValueChanged, AddressOf RequestUpdate
+        AddHandler nudZ.ValueChanged, AddressOf RequestUpdate
+        AddHandler nudFrontD.ValueChanged, AddressOf RequestUpdate
+        AddHandler nudRearD.ValueChanged, AddressOf RequestUpdate
+        AddHandler nudFrontL.ValueChanged, AddressOf RequestUpdate
+        AddHandler nudRearL.ValueChanged, AddressOf RequestUpdate
+        AddHandler nudTotalL.ValueChanged, AddressOf RequestUpdate
+        AddHandler nudPsi.ValueChanged, AddressOf RequestUpdate
+        AddHandler nudTita.ValueChanged, AddressOf RequestUpdate
+        AddHandler nudPhi.ValueChanged, AddressOf RequestUpdate
+        AddHandler tbxName.TextChanged, AddressOf RequestUpdate
+        AddHandler nudResolution.ValueChanged, AddressOf RequestUpdate
+        AddHandler nudCuttingStep.ValueChanged, AddressOf RequestUpdate
 
     End Sub
 
@@ -89,78 +103,30 @@ Public Class FormJetEngine
 
     End Sub
 
-    Private Sub nudX_ValueChanged(sender As Object, e As EventArgs) Handles nudX.ValueChanged
-        _JetEngine.Position.X = nudX.Value
-        RaiseEvent UpdateModel()
-    End Sub
+    Private Sub RequestUpdate()
 
-    Private Sub nudY_ValueChanged(sender As Object, e As EventArgs) Handles nudY.ValueChanged
-        _JetEngine.Position.Y = nudY.Value
-        RaiseEvent UpdateModel()
-    End Sub
-
-    Private Sub nudZ_ValueChanged(sender As Object, e As EventArgs) Handles nudZ.ValueChanged
-        _JetEngine.Position.Z = nudZ.Value
-        RaiseEvent UpdateModel()
-    End Sub
-
-    Private Sub nudFrontD_ValueChanged(sender As Object, e As EventArgs) Handles nudFrontD.ValueChanged
-        _JetEngine.FrontDiameter = nudFrontD.Value
-        RaiseEvent UpdateModel()
-    End Sub
-
-    Private Sub nudRearD_ValueChanged(sender As Object, e As EventArgs) Handles nudRearD.ValueChanged
-        _JetEngine.BackDiameter = nudRearD.Value
-        RaiseEvent UpdateModel()
-    End Sub
-
-    Private Sub nudFrontL_ValueChanged(sender As Object, e As EventArgs) Handles nudFrontL.ValueChanged
-        _JetEngine.FrontLength = nudFrontL.Value
-        RaiseEvent UpdateModel()
-    End Sub
-
-    Private Sub nudRearL_ValueChanged(sender As Object, e As EventArgs) Handles nudRearL.ValueChanged
-        _JetEngine.BackLength = nudRearL.Value
-        RaiseEvent UpdateModel()
-    End Sub
-
-    Private Sub nudTotalL_ValueChanged(sender As Object, e As EventArgs) Handles nudTotalL.ValueChanged
-        _JetEngine.Length = nudTotalL.Value
-        RaiseEvent UpdateModel()
-    End Sub
-
-    Public Event UpdateModel()
-
-    Private Sub nudPsi_ValueChanged(sender As Object, e As EventArgs) Handles nudPsi.ValueChanged
-        _JetEngine.Orientation.Psi = nudPsi.Value * Math.PI / 180
-        RaiseEvent UpdateModel()
-    End Sub
-
-    Private Sub nudTita_ValueChanged(sender As Object, e As EventArgs) Handles nudTita.ValueChanged
-        _JetEngine.Orientation.Tita = nudTita.Value * Math.PI / 180
-        RaiseEvent UpdateModel()
-    End Sub
-
-    Private Sub nudPhi_ValueChanged(sender As Object, e As EventArgs) Handles nudPhi.ValueChanged
-        _JetEngine.Orientation.Fi = nudPhi.Value * Math.PI / 180
-        RaiseEvent UpdateModel()
-    End Sub
-
-    Private Sub tbxName_TextChanged(sender As Object, e As EventArgs) Handles tbxName.TextChanged
-        _JetEngine.Name = tbxName.Text
-        RaiseEvent UpdateModel()
-    End Sub
-
-    Private Sub nudResolution_ValueChanged(sender As Object, e As EventArgs) Handles nudResolution.ValueChanged
         If _JetEngine IsNot Nothing Then
+
+            _JetEngine.Position.X = nudX.Value
+            _JetEngine.Position.Y = nudY.Value
+            _JetEngine.Position.Z = nudZ.Value
+            _JetEngine.FrontDiameter = nudFrontD.Value
+            _JetEngine.BackDiameter = nudRearD.Value
+            _JetEngine.FrontLength = nudFrontL.Value
+            _JetEngine.BackLength = nudRearL.Value
+            _JetEngine.Length = nudTotalL.Value
+            _JetEngine.Orientation.Psi = nudPsi.Value ' * Math.PI / 180
+            _JetEngine.Orientation.Tita = nudTita.Value ' * Math.PI / 180
+            _JetEngine.Orientation.Fi = nudPhi.Value ' * Math.PI / 180
+            _JetEngine.Name = tbxName.Text
             _JetEngine.Resolution = nudResolution.Value
+            _JetEngine.CuttingStep = nudCuttingStep.Value
+
+            _JetEngine.GenerateMesh()
             RaiseEvent UpdateModel()
+
         End If
+
     End Sub
 
-    Private Sub nudCuttingStep_ValueChanged(sender As Object, e As EventArgs) Handles nudCuttingStep.ValueChanged
-        If _JetEngine IsNot Nothing Then
-            _JetEngine.CuttingStep = nudCuttingStep.Value
-        End If
-    End Sub
 End Class

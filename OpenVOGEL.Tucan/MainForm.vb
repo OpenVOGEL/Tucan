@@ -218,7 +218,7 @@ Public Class MainForm
 
     Private Sub SetUpLiftingSurfaceEditor()
 
-        If IsNothing(WingControlPanel) Then
+        If WingControlPanel Is Nothing Then
             WingControlPanel = New WingControl
             AddHandler WingControlPanel.RefreshGL, AddressOf ProjectRoot.RefreshOnGL
             AddHandler WingControlPanel.OnClose, AddressOf ContractLeftPanel
@@ -228,7 +228,7 @@ Public Class MainForm
 
     Private Sub SetUpVelocityPlaneFrame()
 
-        If IsNothing(VelocityControlPanel) Then
+        If VelocityControlPanel Is Nothing Then
             VelocityControlPanel = New VelocityControl
             AddHandler VelocityControlPanel.RefreshGL, AddressOf ProjectRoot.RefreshOnGL
             AddHandler VelocityControlPanel.OnClose, AddressOf ContractLeftPanel
@@ -279,7 +279,7 @@ Public Class MainForm
     Public Sub ShowJetEngineEditor(JetEngine As JetEngine)
 
         Dim JetEngineForm As New FormJetEngine(JetEngine)
-        AddHandler JetEngineForm.UpdateModel, AddressOf ProjectRoot.RepresentOnGL
+        AddHandler JetEngineForm.UpdateModel, AddressOf RefreshOnGL
         JetEngineForm.ShowDialog()
         JetEngine.GenerateMesh()
 

@@ -46,8 +46,6 @@ Partial Class MainRibbon
         Me.nudPz = New System.Windows.Forms.NumericUpDown()
         Me.nudPy = New System.Windows.Forms.NumericUpDown()
         Me.nudPx = New System.Windows.Forms.NumericUpDown()
-        Me.bntAlign = New System.Windows.Forms.Button()
-        Me.btnMove = New System.Windows.Forms.Button()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
         Me.cbxInclude = New System.Windows.Forms.CheckBox()
         Me.btnClone = New System.Windows.Forms.Button()
@@ -283,8 +281,6 @@ Partial Class MainRibbon
         Me.GroupBox2.Controls.Add(Me.nudPz)
         Me.GroupBox2.Controls.Add(Me.nudPy)
         Me.GroupBox2.Controls.Add(Me.nudPx)
-        Me.GroupBox2.Controls.Add(Me.bntAlign)
-        Me.GroupBox2.Controls.Add(Me.btnMove)
         Me.GroupBox2.Dock = System.Windows.Forms.DockStyle.Fill
         Me.GroupBox2.Font = New System.Drawing.Font("Segoe UI", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.GroupBox2.Location = New System.Drawing.Point(504, 3)
@@ -299,11 +295,11 @@ Partial Class MainRibbon
         '
         Me.Label2.AutoSize = True
         Me.Label2.ForeColor = System.Drawing.SystemColors.ControlDarkDark
-        Me.Label2.Location = New System.Drawing.Point(133, 76)
+        Me.Label2.Location = New System.Drawing.Point(237, 19)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(44, 12)
+        Me.Label2.Size = New System.Drawing.Size(46, 12)
         Me.Label2.TabIndex = 107
-        Me.Label2.Text = "Sequence"
+        Me.Label2.Text = "Sequence:"
         Me.Label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'cbSecuence
@@ -311,7 +307,7 @@ Partial Class MainRibbon
         Me.cbSecuence.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cbSecuence.FormattingEnabled = True
         Me.cbSecuence.Items.AddRange(New Object() {"ZYX", "XYZ"})
-        Me.cbSecuence.Location = New System.Drawing.Point(181, 73)
+        Me.cbSecuence.Location = New System.Drawing.Point(237, 34)
         Me.cbSecuence.Name = "cbSecuence"
         Me.cbSecuence.Size = New System.Drawing.Size(50, 20)
         Me.cbSecuence.TabIndex = 106
@@ -522,40 +518,6 @@ Partial Class MainRibbon
         Me.nudPx.Size = New System.Drawing.Size(50, 19)
         Me.nudPx.TabIndex = 84
         Me.nudPx.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        '
-        'bntAlign
-        '
-        Me.bntAlign.BackColor = System.Drawing.Color.White
-        Me.bntAlign.FlatAppearance.BorderColor = System.Drawing.Color.Gray
-        Me.bntAlign.FlatAppearance.CheckedBackColor = System.Drawing.SystemColors.ButtonFace
-        Me.bntAlign.FlatAppearance.MouseDownBackColor = System.Drawing.Color.PaleGreen
-        Me.bntAlign.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DeepSkyBlue
-        Me.bntAlign.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.bntAlign.Font = New System.Drawing.Font("Segoe UI", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.bntAlign.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.bntAlign.Location = New System.Drawing.Point(240, 41)
-        Me.bntAlign.Name = "bntAlign"
-        Me.bntAlign.Size = New System.Drawing.Size(60, 22)
-        Me.bntAlign.TabIndex = 75
-        Me.bntAlign.Text = "Align"
-        Me.bntAlign.UseVisualStyleBackColor = False
-        '
-        'btnMove
-        '
-        Me.btnMove.BackColor = System.Drawing.Color.White
-        Me.btnMove.FlatAppearance.BorderColor = System.Drawing.Color.Gray
-        Me.btnMove.FlatAppearance.CheckedBackColor = System.Drawing.SystemColors.ButtonFace
-        Me.btnMove.FlatAppearance.MouseDownBackColor = System.Drawing.Color.PaleGreen
-        Me.btnMove.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DeepSkyBlue
-        Me.btnMove.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btnMove.Font = New System.Drawing.Font("Segoe UI", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnMove.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.btnMove.Location = New System.Drawing.Point(240, 18)
-        Me.btnMove.Name = "btnMove"
-        Me.btnMove.Size = New System.Drawing.Size(60, 22)
-        Me.btnMove.TabIndex = 74
-        Me.btnMove.Text = "Move"
-        Me.btnMove.UseVisualStyleBackColor = False
         '
         'GroupBox1
         '
@@ -2180,8 +2142,6 @@ Partial Class MainRibbon
     Friend WithEvents nudPz As System.Windows.Forms.NumericUpDown
     Friend WithEvents nudPy As System.Windows.Forms.NumericUpDown
     Friend WithEvents nudPx As System.Windows.Forms.NumericUpDown
-    Friend WithEvents bntAlign As System.Windows.Forms.Button
-    Friend WithEvents btnMove As System.Windows.Forms.Button
     Friend WithEvents GroupBox1 As System.Windows.Forms.GroupBox
     Friend WithEvents btnClone As System.Windows.Forms.Button
     Friend WithEvents btnAddObject As System.Windows.Forms.Button

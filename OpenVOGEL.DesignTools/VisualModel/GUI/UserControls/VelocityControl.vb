@@ -33,11 +33,11 @@ Public Class VelocityControl
         Me.Plane = ProjectRoot.VelocityPlane
         Me.Ready = True And (Not Plane Is Nothing) And (ProjectRoot.Initialized)
 
-        If Ready Then Me.AcomodarDatosAlForm()
+        If Ready Then Me.LoadDataToControl()
 
     End Sub
 
-    Private Sub AcomodarDatosAlForm()
+    Private Sub LoadDataToControl()
 
         If Not Ready Then Exit Sub
 
@@ -72,7 +72,7 @@ Public Class VelocityControl
 
     End Sub
 
-    Public Sub AquireDataFromDialog()
+    Public Sub AquireDataFromControl()
 
         If Not Ready Then Exit Sub
 
@@ -115,7 +115,7 @@ Public Class VelocityControl
 
         If Not Ready Then Exit Sub
 
-        AquireDataFromDialog()
+        AquireDataFromControl()
         Plane.GenerateMesh()
         Dim CantidadDeNodos As Integer = Plane.NumberOfNodes
         Dim RefVelocity As New EVector3
@@ -188,60 +188,60 @@ Public Class VelocityControl
 
     Private Sub ControlDePlano_VisibleChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.VisibleChanged
         If Not Ready Then Exit Sub
-        If Visible Then Me.AcomodarDatosAlForm()
+        If Visible Then Me.LoadDataToControl()
     End Sub
 
     Private Sub VisualizarPlano_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles VisualizarPlano.CheckedChanged
-        If Not ModyfingData Then AquireDataFromDialog()
+        If Not ModyfingData Then AquireDataFromControl()
     End Sub
 
     Private Sub PsiBox_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles PsiBox.ValueChanged
-        If Not ModyfingData Then AquireDataFromDialog()
+        If Not ModyfingData Then AquireDataFromControl()
     End Sub
 
     Private Sub TitaBox_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TitaBox.ValueChanged
-        If Not ModyfingData Then AquireDataFromDialog()
+        If Not ModyfingData Then AquireDataFromControl()
     End Sub
 
     Private Sub OrigenX_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles OrigenX.ValueChanged
-        If Not ModyfingData Then AquireDataFromDialog()
+        If Not ModyfingData Then AquireDataFromControl()
     End Sub
 
     Private Sub OrigenY_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles OrigenY.ValueChanged
-        If Not ModyfingData Then AquireDataFromDialog()
+        If Not ModyfingData Then AquireDataFromControl()
     End Sub
 
     Private Sub OrigenZ_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles OrigenZ.ValueChanged
-        If Not ModyfingData Then AquireDataFromDialog()
+        If Not ModyfingData Then AquireDataFromControl()
     End Sub
 
     Private Sub ExtensionX_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ExtensionX.ValueChanged
-        If Not ModyfingData Then AquireDataFromDialog()
+        If Not ModyfingData Then AquireDataFromControl()
     End Sub
 
     Private Sub ExtensionY_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ExtensionY.ValueChanged
-        If Not ModyfingData Then AquireDataFromDialog()
+        If Not ModyfingData Then AquireDataFromControl()
     End Sub
 
     Private Sub NxBox_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles NxBox.ValueChanged
-        If Not ModyfingData Then AquireDataFromDialog()
+        If Not ModyfingData Then AquireDataFromControl()
     End Sub
 
     Private Sub NyBox_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles NyBox.ValueChanged
-        If Not ModyfingData Then AquireDataFromDialog()
+        If Not ModyfingData Then AquireDataFromControl()
     End Sub
 
     Private Sub cbParallelComputing_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
-        If Not ModyfingData Then AquireDataFromDialog()
+        If Not ModyfingData Then AquireDataFromControl()
     End Sub
 
     Private Sub rdTotalVelocity_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles rdTotalVelocity.CheckedChanged
-        If Not ModyfingData Then AquireDataFromDialog()
+        If Not ModyfingData Then AquireDataFromControl()
         CalculateVelocity()
     End Sub
 
     Private Sub rdInducedVelocity_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles rdInducedVelocity.CheckedChanged
-        If Not ModyfingData Then AquireDataFromDialog()
+        If Not ModyfingData Then AquireDataFromControl()
         CalculateVelocity()
     End Sub
 
