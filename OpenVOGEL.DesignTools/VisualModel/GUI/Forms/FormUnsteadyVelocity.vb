@@ -16,7 +16,6 @@
 'along with this program.  If Not, see < http:  //www.gnu.org/licenses/>.
 
 Imports System.Windows.Forms.DataVisualization.Charting
-Imports OpenVOGEL.AeroTools.CalculationModel.Perturbations
 Imports OpenVOGEL.AeroTools.CalculationModel.Settings
 
 Public Class FormUnsteadyVelocity

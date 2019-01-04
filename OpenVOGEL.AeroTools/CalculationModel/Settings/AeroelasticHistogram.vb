@@ -19,14 +19,7 @@ Imports OpenVOGEL.MathTools.Algebra.EuclideanSpace
 Imports OpenVOGEL.AeroTools.IoHelper
 Imports System.Xml
 
-Namespace CalculationModel.Perturbations
-
-    Public Enum HistogramType As Byte
-
-        FlutterTest = 0
-        SteadyTest = 1
-
-    End Enum
+Namespace CalculationModel.Settings
 
     Public Class StepData
 
@@ -36,47 +29,7 @@ Namespace CalculationModel.Perturbations
 
     End Class
 
-    Public Interface IAeroelasticHistogram
-
-        ReadOnly Property Type As HistogramType
-        ReadOnly Property State(TimeStep As Integer) As StepData
-
-        Sub Generate(Velocity As EVector3, TimeStep As Double, Steps As Integer)
-        Function Clone() As IAeroelasticHistogram
-
-        Sub SaveToXML(ByRef writer As XmlWriter)
-        Sub ReadFromXML(ByRef reader As XmlReader)
-
-        Event ValueChanged()
-
-    End Interface
-
-    Public Class HistogramTools
-
-        Public Shared Function GetInstance(Type As HistogramType) As IAeroelasticHistogram
-
-            Select Case Type
-
-                Case HistogramType.FlutterTest
-                    Return New FlutterTestHistogram
-                Case Else
-                    Return Nothing
-
-            End Select
-
-        End Function
-
-    End Class
-
-    Public Class FlutterTestHistogram
-
-        Implements IAeroelasticHistogram
-
-        Public ReadOnly Property Type As HistogramType Implements IAeroelasticHistogram.Type
-            Get
-                Return HistogramType.FlutterTest
-            End Get
-        End Property
+    Public Class AeroelasticHistogram
 
         Private _HyperDamping As Double
 
@@ -164,15 +117,15 @@ Namespace CalculationModel.Perturbations
 
         Private _Steps As New List(Of StepData)
 
-        Public Event ValueChanged() Implements IAeroelasticHistogram.ValueChanged
+        Public Event ValueChanged()
 
-        Public ReadOnly Property State(TimeStep As Integer) As StepData Implements IAeroelasticHistogram.State
+        Public ReadOnly Property State(TimeStep As Integer) As StepData
             Get
                 Return _Steps(TimeStep)
             End Get
         End Property
 
-        Public Sub Generate(Velocity As EVector3, TimeStep As Double, Steps As Integer) Implements IAeroelasticHistogram.Generate
+        Public Sub Generate(Velocity As EVector3, TimeStep As Double, Steps As Integer)
 
             _Steps.Clear()
 
@@ -236,18 +189,18 @@ Namespace CalculationModel.Perturbations
 
         End Sub
 
-        Public Function Clone() As IAeroelasticHistogram Implements IAeroelasticHistogram.Clone
+        Public Function Clone()
 
-            Dim clonedHistogram As FlutterTestHistogram = New FlutterTestHistogram
-            clonedHistogram.GustX = GustX
-            clonedHistogram.GustY = GustY
-            clonedHistogram.GustZ = GustZ
-            clonedHistogram.GustSpan = GustSpan
-            clonedHistogram.HyperDamping = HyperDamping
-            clonedHistogram.HyperDampingSpan = HyperDampingSpan
-            clonedHistogram.NormalDamping = NormalDamping
+            Dim ClonedHistogram As AeroelasticHistogram = New AeroelasticHistogram
+            ClonedHistogram.GustX = GustX
+            ClonedHistogram.GustY = GustY
+            ClonedHistogram.GustZ = GustZ
+            ClonedHistogram.GustSpan = GustSpan
+            ClonedHistogram.HyperDamping = HyperDamping
+            ClonedHistogram.HyperDampingSpan = HyperDampingSpan
+            ClonedHistogram.NormalDamping = NormalDamping
 
-            Return clonedHistogram
+            Return ClonedHistogram
 
         End Function
 
@@ -263,7 +216,7 @@ Namespace CalculationModel.Perturbations
 
         End Sub
 
-        Sub SaveToXML(ByRef writer As XmlWriter) Implements IAeroelasticHistogram.SaveToXML
+        Sub SaveToXML(ByRef writer As XmlWriter)
 
             writer.WriteStartElement("FlutterTestHistogram")
             writer.WriteAttributeString("HyperDamping", String.Format("{0}", HyperDamping))
@@ -277,7 +230,7 @@ Namespace CalculationModel.Perturbations
 
         End Sub
 
-        Public Sub ReadFromXML(ByRef reader As XmlReader) Implements IAeroelasticHistogram.ReadFromXML
+        Public Sub ReadFromXML(ByRef reader As XmlReader)
 
             While reader.Read
 

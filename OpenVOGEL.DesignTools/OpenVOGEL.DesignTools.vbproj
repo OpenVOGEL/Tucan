@@ -172,12 +172,6 @@
     <Compile Include="VisualModel\GUI\UserControls\ForcesPanel.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="VisualModel\GUI\UserControls\Histograms\FlutterTestControl.Designer.vb">
-      <DependentUpon>FlutterTestControl.vb</DependentUpon>
-    </Compile>
-    <Compile Include="VisualModel\GUI\UserControls\Histograms\FlutterTestControl.vb">
-      <SubType>UserControl</SubType>
-    </Compile>
     <Compile Include="VisualModel\GUI\UserControls\MiniComponents\ResultBox.Designer.vb">
       <DependentUpon>ResultBox.vb</DependentUpon>
     </Compile>
@@ -298,9 +292,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="VisualModel\GUI\UserControls\ForcesPanel.resx">
       <DependentUpon>ForcesPanel.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="VisualModel\GUI\UserControls\Histograms\FlutterTestControl.resx">
-      <DependentUpon>FlutterTestControl.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="VisualModel\GUI\UserControls\MiniComponents\ResultBox.resx">
       <DependentUpon>ResultBox.vb</DependentUpon>

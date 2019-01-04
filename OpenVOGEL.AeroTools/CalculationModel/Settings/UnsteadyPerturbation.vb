@@ -19,9 +19,9 @@ Imports OpenVOGEL.MathTools.Algebra.EuclideanSpace
 Imports OpenVOGEL.AeroTools.IoHelper
 Imports System.Xml
 
-Namespace CalculationModel.Perturbations
+Namespace CalculationModel.Settings
 
-    Public Class Perturbation
+    Public Class UnsteadyPerturbation
 
         Private _Start As Integer
         Private _ElapsedTime As Integer
@@ -79,7 +79,7 @@ Namespace CalculationModel.Perturbations
             End Get
         End Property
 
-        Public Sub Assign(ByRef Perturbacion As Perturbation)
+        Public Sub Assign(ByRef Perturbacion As UnsteadyPerturbation)
 
             _Start = Perturbacion.Start
             _PeakInstant = Perturbacion.PeakInstant
@@ -167,12 +167,12 @@ Namespace CalculationModel.Perturbations
         ''' <remarks></remarks>
         Public Property Type As ProfileType = ProfileType.Impulsive
 
-        Private _Perturbation(2) As Perturbation ' Representa una perturbación en cada eje de coordenadas.
+        Private _Perturbation(2) As UnsteadyPerturbation ' Representa una perturbación en cada eje de coordenadas.
 
         Public Sub New()
-            _Perturbation(Axes.X) = New Perturbation
-            _Perturbation(Axes.Y) = New Perturbation
-            _Perturbation(Axes.Z) = New Perturbation
+            _Perturbation(Axes.X) = New UnsteadyPerturbation
+            _Perturbation(Axes.Y) = New UnsteadyPerturbation
+            _Perturbation(Axes.Z) = New UnsteadyPerturbation
         End Sub
 
         ''' <summary>
@@ -201,8 +201,8 @@ Namespace CalculationModel.Perturbations
             End Get
         End Property
 
-        Public Property Perturbation(ByVal Eje As Axes) As Perturbation
-            Set(ByVal value As Perturbation)
+        Public Property Perturbation(ByVal Eje As Axes) As UnsteadyPerturbation
+            Set(ByVal value As UnsteadyPerturbation)
                 _Perturbation(Eje) = value
             End Set
             Get

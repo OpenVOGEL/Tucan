@@ -1,6 +1,4 @@
-﻿
-Imports System.Drawing
-Imports OpenVOGEL.AeroTools.DataStore
+﻿Imports System.Drawing
 Imports OpenVOGEL.DesignTools.DataStore
 Imports OpenVOGEL.DesignTools.VisualModel.Models.Components.Basics
 Imports OpenVOGEL.MathTools.Algebra.EuclideanSpace

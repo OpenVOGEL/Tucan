@@ -505,7 +505,7 @@ ErrSub:
 
     End Sub
 
-    Private _LockSettingsEvents As Boolean = True
+    Private _LockSettingsEvents As Boolean = False
 
     Private Sub LoadSettings()
 
@@ -1729,7 +1729,7 @@ ErrSub:
 
         ElseIf cbxSimulationMode.SelectedIndex = 2 Then
 
-            Dim Dialog As New FormHistogram(ProjectRoot.SimulationSettings)
+            Dim Dialog As New FormHistogram
 
             Dialog.StartPosition = FormStartPosition.CenterParent
 

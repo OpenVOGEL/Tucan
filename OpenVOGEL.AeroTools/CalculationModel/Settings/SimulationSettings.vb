@@ -16,7 +16,6 @@
 'along with this program.  If Not, see < http:  //www.gnu.org/licenses/>.
 
 Imports OpenVOGEL.MathTools.Algebra.EuclideanSpace
-Imports OpenVOGEL.AeroTools.CalculationModel.Perturbations
 Imports OpenVOGEL.AeroTools.IoHelper
 Imports System.Xml
 
@@ -157,7 +156,7 @@ Namespace CalculationModel.Settings
         ''' Contains information about how the simulation parameters vary during an aeroelastic analysis.
         ''' </summary>
         ''' <remarks></remarks>
-        Public Property AeroelasticHistogram As IAeroelasticHistogram
+        Public Property AeroelasticHistogram As New AeroelasticHistogram
 
         ''' <summary>
         ''' The type of analysis to be performed.
@@ -350,7 +349,6 @@ Namespace CalculationModel.Settings
 
             If Not IsNothing(AeroelasticHistogram) Then
                 writer.WriteStartElement("AeroelasticHistogram")
-                writer.WriteAttributeString("Type", String.Format("{0}", AeroelasticHistogram.Type))
                 AeroelasticHistogram.SaveToXML(writer)
                 writer.WriteEndElement()
             End If
@@ -400,8 +398,6 @@ Namespace CalculationModel.Settings
                             UnsteadyVelocity.ReadFromXML(reader.ReadSubtree)
 
                         Case "AeroelasticHistogram"
-                            Dim type As HistogramType = IOXML.ReadInteger(reader, "Type", HistogramType.FlutterTest)
-                            AeroelasticHistogram = HistogramTools.GetInstance(type)
                             AeroelasticHistogram.ReadFromXML(reader.ReadSubtree)
 
                     End Select

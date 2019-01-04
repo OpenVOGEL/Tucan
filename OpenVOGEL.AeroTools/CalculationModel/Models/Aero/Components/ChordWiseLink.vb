@@ -16,7 +16,6 @@
 'along with this program.  If Not, see < http:  //www.gnu.org/licenses/>.
 
 Imports System.IO
-Imports OpenVOGEL.DesignTools.DataStore
 Imports OpenVOGEL.MathTools.Algebra.EuclideanSpace
 
 Namespace CalculationModel.Models.Aero.Components

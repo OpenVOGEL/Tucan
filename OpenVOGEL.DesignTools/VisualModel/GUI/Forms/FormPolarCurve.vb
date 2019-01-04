@@ -16,7 +16,6 @@
 'along with this program.  If Not, see < http:  //www.gnu.org/licenses/>.
 
 Imports OpenVOGEL.AeroTools.CalculationModel.Models.Aero.Components
-Imports OpenVOGEL.AeroTools.DataStore
 
 Public Class FormPolarCurve
 

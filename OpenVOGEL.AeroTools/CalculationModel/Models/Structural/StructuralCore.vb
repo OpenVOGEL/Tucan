@@ -120,8 +120,6 @@ Namespace CalculationModel.Models.Structural
 
                 Dim BaseIndexA As Integer = 6 * Element.NodeA.Index
                 Dim BaseIndexB As Integer = 6 * Element.NodeB.Index
-                Dim r As Integer
-                Dim c As Integer
 
                 For i = 0 To 5
 

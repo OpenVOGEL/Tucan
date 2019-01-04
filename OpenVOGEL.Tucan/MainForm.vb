@@ -621,7 +621,7 @@ Public Class MainForm
 
             Case InterfaceModes.Design
 
-                Dim Dialog As New FormHistogram(ProjectRoot.SimulationSettings)
+                Dim Dialog As New FormHistogram
 
                 Dialog.StartPosition = FormStartPosition.CenterParent
 
