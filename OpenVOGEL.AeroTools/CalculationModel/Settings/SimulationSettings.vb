@@ -318,6 +318,7 @@ Namespace CalculationModel.Settings
             writer.WriteEndElement()
 
             writer.WriteStartElement("Parameters")
+            writer.WriteAttributeString("Analysis", String.Format("{0:D}", AnalysisType))
             writer.WriteAttributeString("Interval", String.Format("{0}", Interval))
             writer.WriteAttributeString("Steps", String.Format("{0}", SimulationSteps))
             writer.WriteAttributeString("MaxSteps", String.Format("{0}", ClippingStep))
@@ -374,6 +375,7 @@ Namespace CalculationModel.Settings
                             Omega.Z = IOXML.ReadDouble(reader, "Z", 0.0)
 
                         Case "Parameters"
+                            AnalysisType = IOXML.ReadInteger(reader, "Analysis", CalculationType.ctSteady)
                             Interval = IOXML.ReadDouble(reader, "Interval", 0.1)
                             SimulationSteps = IOXML.ReadInteger(reader, "Steps", 15)
                             ClippingStep = IOXML.ReadInteger(reader, "MaxSteps", 15)

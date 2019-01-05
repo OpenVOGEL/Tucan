@@ -1,4 +1,20 @@
-﻿
+﻿'Open VOGEL (https://en.wikibooks.org/wiki/Open_VOGEL)
+'Open source software for aerodynamics
+'Copyright (C) 2018 Guillermo Hazebrouck (gahazebrouck@gmail.com)
+
+'This program Is free software: you can redistribute it And/Or modify
+'it under the terms Of the GNU General Public License As published by
+'the Free Software Foundation, either version 3 Of the License, Or
+'(at your option) any later version.
+
+'This program Is distributed In the hope that it will be useful,
+'but WITHOUT ANY WARRANTY; without even the implied warranty Of
+'MERCHANTABILITY Or FITNESS FOR A PARTICULAR PURPOSE.  See the
+'GNU General Public License For more details.
+
+'You should have received a copy Of the GNU General Public License
+'along with this program.  If Not, see < http:  //www.gnu.org/licenses/>.
+
 Imports System.Windows.Forms
 Imports OpenVOGEL.AeroTools.CalculationModel.Settings
 Imports OpenVOGEL.DesignTools.VisualModel.Interface
@@ -513,6 +529,7 @@ ErrSub:
 
             _LockSettingsEvents = True
 
+            cbxSimulationMode.SelectedIndex = ProjectRoot.SimulationSettings.AnalysisType
             nudVx.Value = ProjectRoot.SimulationSettings.StreamVelocity.X
             nudVy.Value = ProjectRoot.SimulationSettings.StreamVelocity.Y
             nudVz.Value = ProjectRoot.SimulationSettings.StreamVelocity.Z
@@ -648,6 +665,16 @@ ErrSub:
         If ProjectRoot.Initialized AndAlso Not _LockSettingsEvents Then
 
             ProjectRoot.SimulationSettings.Cutoff = nudCutoff.Value
+
+        End If
+
+    End Sub
+
+    Private Sub cbxSimulationMode_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbxSimulationMode.SelectedIndexChanged
+
+        If ProjectRoot.Initialized AndAlso Not _LockSettingsEvents Then
+
+            ProjectRoot.SimulationSettings.AnalysisType = cbxSimulationMode.SelectedIndex
 
         End If
 
