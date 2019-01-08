@@ -27,9 +27,7 @@ Partial Class CustomPolarControl
         Me.btnAddPoint = New System.Windows.Forms.Button()
         Me.dgvNodes = New System.Windows.Forms.DataGridView()
         Me.cmsIO = New System.Windows.Forms.ContextMenuStrip(Me.components)
-        Me.btnGetFromExcel = New System.Windows.Forms.ToolStripMenuItem()
-        Me.btnSave = New System.Windows.Forms.ToolStripMenuItem()
-        Me.btnLoad = New System.Windows.Forms.ToolStripMenuItem()
+        Me.btnGetFromClipboard = New System.Windows.Forms.ToolStripMenuItem()
         Me.Label5 = New System.Windows.Forms.Label()
         Me.nudReynolds = New System.Windows.Forms.NumericUpDown()
         Me.tbPolarName = New System.Windows.Forms.TextBox()
@@ -74,27 +72,15 @@ Partial Class CustomPolarControl
         '
         'cmsIO
         '
-        Me.cmsIO.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.btnGetFromExcel, Me.btnSave, Me.btnLoad})
+        Me.cmsIO.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.btnGetFromClipboard})
         Me.cmsIO.Name = "cmsIO"
-        Me.cmsIO.Size = New System.Drawing.Size(151, 70)
+        Me.cmsIO.Size = New System.Drawing.Size(175, 26)
         '
-        'btnGetFromExcel
+        'btnGetFromClipboard
         '
-        Me.btnGetFromExcel.Name = "btnGetFromExcel"
-        Me.btnGetFromExcel.Size = New System.Drawing.Size(150, 22)
-        Me.btnGetFromExcel.Text = "Get from Excel"
-        '
-        'btnSave
-        '
-        Me.btnSave.Name = "btnSave"
-        Me.btnSave.Size = New System.Drawing.Size(150, 22)
-        Me.btnSave.Text = "Save"
-        '
-        'btnLoad
-        '
-        Me.btnLoad.Name = "btnLoad"
-        Me.btnLoad.Size = New System.Drawing.Size(150, 22)
-        Me.btnLoad.Text = "Load"
+        Me.btnGetFromClipboard.Name = "btnGetFromClipboard"
+        Me.btnGetFromClipboard.Size = New System.Drawing.Size(174, 22)
+        Me.btnGetFromClipboard.Text = "Get from clipboard"
         '
         'Label5
         '
@@ -153,8 +139,6 @@ Partial Class CustomPolarControl
     Friend WithEvents nudReynolds As System.Windows.Forms.NumericUpDown
     Friend WithEvents tbPolarName As System.Windows.Forms.TextBox
     Friend WithEvents cmsIO As System.Windows.Forms.ContextMenuStrip
-    Friend WithEvents btnGetFromExcel As System.Windows.Forms.ToolStripMenuItem
-    Friend WithEvents btnSave As System.Windows.Forms.ToolStripMenuItem
-    Friend WithEvents btnLoad As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents btnGetFromClipboard As System.Windows.Forms.ToolStripMenuItem
 
 End Class

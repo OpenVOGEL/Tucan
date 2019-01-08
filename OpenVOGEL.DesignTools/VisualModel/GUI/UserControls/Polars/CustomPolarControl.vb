@@ -23,12 +23,51 @@ Public Class CustomPolarControl
 
     Private _Polar As CustomPolar
 
+    Public Event OnNodeChanged()
+    Public Event OnNameChanged()
+    Public Event OnReynoldsChanged()
+
+    Private AllowEvents As Boolean = True
+
+    Public Sub New()
+
+        InitializeComponent()
+
+        AddHandler tbPolarName.TextChanged, AddressOf GetPolarName
+        AddHandler nudReynolds.ValueChanged, AddressOf GetReynolds
+
+    End Sub
+
+    Private Sub GetPolarName()
+
+        If Polar IsNot Nothing And AllowEvents Then
+
+            Polar.Name = tbPolarName.Text
+
+            RaiseEvent OnNameChanged()
+
+        End If
+
+    End Sub
+
+    Private Sub GetReynolds()
+
+        If _Polar IsNot Nothing And AllowEvents Then
+
+            _Polar.Reynolds = nudReynolds.Value
+
+            RaiseEvent OnReynoldsChanged()
+
+        End If
+
+    End Sub
+
     Public Property Polar As CustomPolar
         Set(value As CustomPolar)
             _Polar = value
             If _Polar IsNot Nothing Then
                 SetUpTable()
-                SetBindings()
+                RefreshPolarData()
             End If
         End Set
         Get
@@ -36,13 +75,14 @@ Public Class CustomPolarControl
         End Get
     End Property
 
-    Private Sub SetBindings()
+    Private Sub RefreshPolarData()
 
-        nudReynolds.DataBindings.Clear()
-        nudReynolds.DataBindings.Add("Value", _Polar, "Reynolds", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged)
-
-        tbPolarName.DataBindings.Clear()
-        tbPolarName.DataBindings.Add("Text", _Polar, "Name", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged)
+        If Polar IsNot Nothing Then
+            AllowEvents = False
+            nudReynolds.Value = Polar.Reynolds
+            tbPolarName.Text = Polar.Name
+            AllowEvents = True
+        End If
 
     End Sub
 
@@ -176,7 +216,7 @@ Public Class CustomPolarControl
 
     End Sub
 
-    Private Sub GetFromExcell() Handles btnGetFromExcel.Click
+    Private Sub GetFromClipboard() Handles btnGetFromClipboard.Click
 
         If Clipboard.ContainsText Then
 
@@ -198,10 +238,22 @@ Public Class CustomPolarControl
 
             RefreshTable()
 
+            RaiseEvent OnNodeChanged()
+
         End If
 
     End Sub
 
-    Public Event OnNodeChanged()
+    Private Sub UpdateReynolds(sender As Object, e As EventArgs) Handles nudReynolds.ValueChanged
+
+        If _Polar IsNot Nothing Then
+
+            _Polar.Reynolds = nudReynolds.Value
+
+            RaiseEvent OnReynoldsChanged()
+
+        End If
+
+    End Sub
 
 End Class

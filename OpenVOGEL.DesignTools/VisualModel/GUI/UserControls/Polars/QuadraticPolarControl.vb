@@ -21,33 +21,84 @@ Public Class QuadraticPolarControl
 
     Private _Polar As QuadraticPolar
 
-    Private Sub SetBindings()
+    Public Event OnCurveChanged()
+    Public Event OnNameChanged()
+    Public Event OnReynoldsChanged()
 
-        nudCD0.DataBindings.Clear()
-        nudCD0.DataBindings.Add("Value", _Polar, "Cd0", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged)
+    Private AllowEvents As Boolean = True
 
-        nudA.DataBindings.Clear()
-        nudA.DataBindings.Add("Value", _Polar, "Cd1", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged)
+    Public Sub New()
 
-        nudB.DataBindings.Clear()
-        nudB.DataBindings.Add("Value", _Polar, "Cd2", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged)
+        InitializeComponent()
 
-        nudReynolds.DataBindings.Clear()
-        nudReynolds.DataBindings.Add("Value", _Polar, "Reynolds", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged)
+        AddHandler nudCD0.ValueChanged, AddressOf GetPolarData
+        AddHandler nudA.ValueChanged, AddressOf GetPolarData
+        AddHandler nudB.ValueChanged, AddressOf GetPolarData
+        AddHandler tbPolarName.TextChanged, AddressOf GetPolarName
+        AddHandler nudReynolds.ValueChanged, AddressOf GetReynolds
 
-        tbPolarName.DataBindings.Clear()
-        tbPolarName.DataBindings.Add("Text", _Polar, "Name", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged)
+    End Sub
+
+    Private Sub RefreshPolarData()
+
+        If Polar IsNot Nothing Then
+            AllowEvents = False
+            nudCD0.Value = Polar.Cd0
+            nudA.Value = Polar.Cd1
+            nudB.Value = Polar.Cd2
+            nudReynolds.Value = Polar.Reynolds
+            tbPolarName.Text = Polar.Name
+            AllowEvents = True
+        End If
 
     End Sub
 
     Public Property Polar As QuadraticPolar
         Set(value As QuadraticPolar)
             _Polar = value
-            SetBindings()
+            RefreshPolarData()
         End Set
         Get
             Return _Polar
         End Get
     End Property
+
+    Private Sub GetPolarData()
+
+        If Polar IsNot Nothing And AllowEvents Then
+
+            Polar.Cd0 = nudCD0.Value
+            Polar.Cd1 = nudA.Value
+            Polar.Cd2 = nudB.Value
+
+            RaiseEvent OnCurveChanged()
+
+        End If
+
+    End Sub
+
+    Private Sub GetPolarName()
+
+        If Polar IsNot Nothing And AllowEvents Then
+
+            Polar.Name = tbPolarName.Text
+
+            RaiseEvent OnNameChanged()
+
+        End If
+
+    End Sub
+
+    Private Sub GetReynolds()
+
+        If _Polar IsNot Nothing And AllowEvents Then
+
+            _Polar.Reynolds = nudReynolds.Value
+
+            RaiseEvent OnReynoldsChanged()
+
+        End If
+
+    End Sub
 
 End Class

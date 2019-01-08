@@ -20,13 +20,35 @@ Imports System.Drawing
 
 Public Class PolarPlotter
 
+    Private _Family As PolarFamily
     Private _Polar As IPolarCurve
 
-    Public Property Polar As IPolarCurve
-        Set(value As IPolarCurve)
-            _Polar = value
+    Public Sub SetPolars(Family As PolarFamily, Curve As IPolarCurve)
+
+        If Family.Polars.Contains(Curve) Then
+            _Family = Family
+            _Polar = Curve
             Refresh()
-        End Set
+        End If
+
+    End Sub
+
+    Public Sub ClearPlotter()
+
+        _Family = Nothing
+        _Polar = Nothing
+        Refresh()
+
+    End Sub
+
+    Public Sub ClearPolar()
+
+        _Polar = Nothing
+        Refresh()
+
+    End Sub
+
+    Public ReadOnly Property Polar As IPolarCurve
         Get
             Return _Polar
         End Get
@@ -34,196 +56,200 @@ Public Class PolarPlotter
 
     Private AxisPen As New Pen(Color.DarkGray, 2)
     Private GridPen As New Pen(Color.Gainsboro, 1)
-    Private CurvePen As New Pen(Color.Blue, 2)
+    Private OtherCurvePen As New Pen(Color.Gray, 2)
+    Private ActiveCurvePen As New Pen(Color.Blue, 2)
     Private MarkerPen As New Pen(Color.Black, 1)
     Private FontLabel As New Font("Segoe UI", 6.5)
-    Private mX As Integer = 10
-    Private mY As Integer = 10
+    Private MarginX As Integer = 10
+    Private MarginY As Integer = 10
 
     Private HighlightedPointIndex As Integer
     Private DragPoint As Boolean = False
 
+    Private Ymax As Double = 0.1#
+    Private Xmin As Double = -1.5#
+    Private Xmax As Double = 1.5#
+
     Private Sub DrawCurve(sender As Object, e As System.Windows.Forms.PaintEventArgs) Handles MyBase.Paint
 
-        If Polar IsNot Nothing Then
+        ' Gridlines and axes
 
-            Dim g As Graphics = e.Graphics
+        DrawGrid(e.Graphics)
 
-            g.DrawRectangle(Pens.DarkGray, 0, 0, e.ClipRectangle.Width - 1, e.ClipRectangle.Height - 1)
+        ' All curves of the family in the background 
 
-            g.SmoothingMode = Drawing2D.SmoothingMode.AntiAlias
+        If _Family IsNot Nothing Then
 
-            Dim gW As Integer = Width - 2 * mX
-            Dim gH As Integer = Height - 2 * mY
+            For Each OtherPolar In _Family.Polars
 
-            ' Gridlines:
-
-            Dim ny As Integer = 10
-
-            For i = 1 To ny - 1
-
-                Dim y As Single = mY + i * gH / ny
-                g.DrawLine(GridPen, mX, y, mX + gW, y)
+                If OtherPolar IsNot _Polar Then
+                    DrawCurve(OtherPolar, OtherCurvePen, False, e.Graphics, e.ClipRectangle.Width, e.ClipRectangle.Height)
+                End If
 
             Next
 
-            g.DrawLine(AxisPen, mX, mY + gH, mX + gW, mY + gH)
-            g.DrawLine(AxisPen, mX, mY, mX, mY + gH)
-            g.DrawLine(AxisPen, mX + gW, mY, mX + gW, mY + gH)
+        End If
+
+        ' Selected polar
+
+        DrawCurve(_Polar, ActiveCurvePen, True, e.Graphics, e.ClipRectangle.Width, e.ClipRectangle.Height)
+
+    End Sub
+
+    Private Sub DrawGrid(g As Graphics)
+
+        Dim nx As Integer = 10
+        Dim x As Single
+        Dim dx As Double = Xmax - Xmin
+        Dim gW As Integer = Width - 2 * MarginX
+        Dim gH As Integer = Height - 2 * MarginY
+
+        Dim ny As Integer = 10
+
+        For i = 1 To ny - 1
+
+            Dim y As Single = MarginY + i * gH / ny
+            g.DrawLine(GridPen, MarginX, y, MarginX + gW, y)
+
+        Next
+
+        g.DrawLine(AxisPen, MarginX, MarginY + gH, MarginX + gW, MarginY + gH)
+        g.DrawLine(AxisPen, MarginX, MarginY, MarginX, MarginY + gH)
+        g.DrawLine(AxisPen, MarginX + gW, MarginY, MarginX + gW, MarginY + gH)
+
+        For i = 1 To nx - 1
+
+            x = MarginX + ((i + Math.Round(Xmin / dx * nx)) / nx - Xmin / dx) * gW
+            g.DrawLine(GridPen, x, MarginY, x, MarginY + gH)
+
+        Next
+
+        x = CSng(MarginX + gW * Math.Abs(Xmin) / dx)
+        g.DrawLine(AxisPen, x, MarginY, x, MarginY + gH)
+        g.DrawLine(AxisPen, MarginX, MarginY, MarginX + gW, MarginY)
+
+    End Sub
+
+    Private Sub DrawCurve(Curve As IPolarCurve, CurvePen As Pen, WithNodes As Boolean, g As Graphics, W As Integer, H As Integer)
+
+        If Curve IsNot Nothing Then
+
+            g.DrawRectangle(Pens.DarkGray, 0, 0, W - 1, H - 1)
+
+            g.SmoothingMode = Drawing2D.SmoothingMode.AntiAlias
+
+            Dim gW As Integer = Width - 2 * MarginX
+            Dim gH As Integer = Height - 2 * MarginY
 
             ' Function:
 
-            Dim np As Integer = 30
-            Dim ymax As Double = 0
-            Dim xmin As Double = -1
-            Dim xmax As Double = 1
+            If TypeOf Curve Is CustomPolar Then
 
-            If TypeOf Polar Is CustomPolar Then
+                Dim Custom As CustomPolar = Curve
 
-                Dim cPolar As CustomPolar = Polar
+                If Custom.Nodes.Count > 0 Then
 
-                If cPolar.Nodes.Count > 0 Then
+                    Dim dx As Double = Xmax - Xmin
 
-                    ymax = cPolar.Nodes(0).Y
-                    xmin = cPolar.Nodes(0).X
-                    xmax = cPolar.Nodes(0).X
-
-                    For i = 0 To cPolar.Nodes.Count - 1
-
-                        ymax = Math.Max(ymax, cPolar.Nodes(i).Y)
-                        xmin = Math.Min(xmin, cPolar.Nodes(i).X)
-                        xmax = Math.Max(xmax, cPolar.Nodes(i).X)
-
-                    Next
-
-                    Dim dx As Double = xmax - xmin
-
-                    If dx > 0 And ymax > 0 Then
+                    If dx > 0 And Ymax > 0 Then
 
                         ' update position of selected point:
 
-                        If DragPoint AndAlso HighlightedPointIndex >= 0 AndAlso HighlightedPointIndex < cPolar.Nodes.Count Then
+                        If WithNodes Then
 
-                            cPolar.Nodes(HighlightedPointIndex).X = (MousePoint.X - mX) / gW * dx + xmin
-                            cPolar.Nodes(HighlightedPointIndex).Y = (1 - (MousePoint.Y - mY) / gH) * ymax
+                            If DragPoint AndAlso HighlightedPointIndex >= 0 AndAlso HighlightedPointIndex < Custom.Nodes.Count Then
 
-                        End If
-
-                        ' draw grid:
-
-                        Dim nx As Integer = 10
-                        Dim x As Single
-
-                        For i = 1 To nx - 1
-
-                            x = mX + ((i + Math.Round(xmin / dx * nx)) / nx - xmin / dx) * gW
-                            g.DrawLine(GridPen, x, mY, x, mY + gH)
-
-                        Next
-
-                        x = CSng(mX + gW * Math.Abs(xmin) / dx)
-                        g.DrawLine(AxisPen, x, mY, x, mY + gH)
-                        g.DrawLine(AxisPen, mX, mY, mX + gW, mY)
-
-                        Dim pnts(cPolar.Nodes.Count) As Point
-
-                        ' convert to screen coordinates
-
-                        For i = 0 To cPolar.Nodes.Count - 1
-
-                            pnts(i).X = mX + gW * (cPolar.Nodes(i).X - xmin) / dx
-                            pnts(i).Y = mY + gH * (1 - cPolar.Nodes(i).Y / ymax)
-
-                        Next
-
-                        ' draw lines:
-
-                        For i = 1 To cPolar.Nodes.Count - 1
-
-                            g.DrawLine(CurvePen, pnts(i - 1), pnts(i))
-
-                        Next
-
-                        ' draw points:
-
-                        HighlightedPointIndex = -1
-                        Dim pnt As Point
-
-                        For i = 0 To cPolar.Nodes.Count - 1
-
-                            pnt = pnts(i)
-
-                            Dim dmx As Single = pnt.X - MousePoint.X
-                            Dim dmy As Single = pnt.Y - MousePoint.Y
-
-                            ' draw marker:
-
-                            If dmx * dmx + dmy * dmy < 9 Then
-
-                                HighlightedPointIndex = i
-
-                                g.FillEllipse(Brushes.Orange, pnt.X - 3, pnt.Y - 3, 6, 6)
-                                g.DrawEllipse(MarkerPen, pnt.X - 3, pnt.Y - 3, 6, 6)
-
-                            Else
-
-                                g.FillEllipse(Brushes.White, pnt.X - 3, pnt.Y - 3, 6, 6)
-                                g.DrawEllipse(MarkerPen, pnt.X - 3, pnt.Y - 3, 6, 6)
+                                Custom.Nodes(HighlightedPointIndex).X = (MousePoint.X - MarginX) / gW * dx + Xmin
+                                Custom.Nodes(HighlightedPointIndex).Y = (1 - (MousePoint.Y - MarginY) / gH) * Ymax
 
                             End If
 
-                        Next
+                        End If
 
-                        ' draw label on selected point:
+                        Dim pnts(Custom.Nodes.Count) As Point
 
-                        If HighlightedPointIndex >= 0 Then
+                            ' convert to screen coordinates
 
-                            pnt = pnts(HighlightedPointIndex)
+                            For i = 0 To Custom.Nodes.Count - 1
 
-                            Dim lblPoint As String = String.Format("CL = {0:F3} / CD = {1:F4}", cPolar.Nodes(HighlightedPointIndex).X, cPolar.Nodes(HighlightedPointIndex).Y)
+                                pnts(i).X = MarginX + gW * (Custom.Nodes(i).X - Xmin) / dx
+                                pnts(i).Y = MarginY + gH * (1 - Custom.Nodes(i).Y / Ymax)
 
-                            DrawLabel(g, lblPoint, pnt, FontLabel)
+                            Next
+
+                            ' draw lines:
+
+                            For i = 1 To Custom.Nodes.Count - 1
+
+                                g.DrawLine(CurvePen, pnts(i - 1), pnts(i))
+
+                            Next
+
+                            ' draw points:
+
+                            If WithNodes Then
+
+                                HighlightedPointIndex = -1
+                                Dim pnt As Point
+
+                                For i = 0 To Custom.Nodes.Count - 1
+
+                                    pnt = pnts(i)
+
+                                    Dim dmx As Single = pnt.X - MousePoint.X
+                                    Dim dmy As Single = pnt.Y - MousePoint.Y
+
+                                    ' draw marker:
+
+                                    If dmx * dmx + dmy * dmy < 9 Then
+
+                                        HighlightedPointIndex = i
+
+                                        g.FillEllipse(Brushes.Orange, pnt.X - 3, pnt.Y - 3, 6, 6)
+                                        g.DrawEllipse(MarkerPen, pnt.X - 3, pnt.Y - 3, 6, 6)
+
+                                    Else
+
+                                        g.FillEllipse(Brushes.White, pnt.X - 3, pnt.Y - 3, 6, 6)
+                                        g.DrawEllipse(MarkerPen, pnt.X - 3, pnt.Y - 3, 6, 6)
+
+                                    End If
+
+                                Next
+
+                                ' draw label on selected point:
+
+                                If HighlightedPointIndex >= 0 Then
+
+                                    pnt = pnts(HighlightedPointIndex)
+
+                                    Dim lblPoint As String = String.Format("CL = {0:F3} / CD = {1:F4}", Custom.Nodes(HighlightedPointIndex).X, Custom.Nodes(HighlightedPointIndex).Y)
+
+                                    DrawLabel(g, lblPoint, pnt, FontLabel)
+
+                                End If
+
+                            End If
 
                         End If
 
                     End If
 
-                End If
+            ElseIf TypeOf Curve Is QuadraticPolar Then
 
-            ElseIf TypeOf Polar Is QuadraticPolar Then
-
-                xmin = -1
-
-                Dim nx As Integer = 10
-
-                For i = 1 To nx - 1
-
-                    Dim x As Single = mX + i / nx * gW
-                    g.DrawLine(GridPen, x, 0, x, gH)
-
-                Next
-
-                g.DrawLine(AxisPen, mX, mY + gH, mX + gW, mY + gH)
-                g.DrawLine(AxisPen, mX, mY, mX + gW, mY)
-
-                Dim dx As Double = xmax - xmin
-
-                For i = 0 To np
-
-                    ymax = Math.Max(ymax, Polar.SkinDrag(xmin + dx * i / np))
-
-                Next
+                Dim np As Integer = 30
+                Dim dx As Double = Xmax - Xmin
 
                 Dim pnts(np) As Point
                 Dim vals(np) As PointF
 
                 For i = 0 To np
 
-                    vals(i).X = xmin + dx * i / np
-                    vals(i).Y = Polar.SkinDrag(vals(i).X)
+                    vals(i).X = Xmin + dx * i / np
+                    vals(i).Y = Curve.SkinDrag(vals(i).X)
 
-                    pnts(i).X = mX + i / np * gW
-                    pnts(i).Y = mY + gH * (1 - vals(i).Y / ymax)
+                    pnts(i).X = MarginX + i / np * gW
+                    pnts(i).Y = MarginY + gH * (1 - vals(i).Y / Ymax)
 
                     If i > 0 Then g.DrawLine(CurvePen, pnts(i - 1), pnts(i))
 
@@ -231,43 +257,47 @@ Public Class PolarPlotter
 
                 ' draw points:
 
-                HighlightedPointIndex = -1
-                Dim pnt As Point
+                If WithNodes Then
 
-                For i = 0 To np
+                    HighlightedPointIndex = -1
+                    Dim pnt As Point
 
-                    pnt = pnts(i)
+                    For i = 0 To np
 
-                    Dim dmx As Single = pnt.X - MousePoint.X
-                    Dim dmy As Single = pnt.Y - MousePoint.Y
+                        pnt = pnts(i)
 
-                    ' draw marker:
+                        Dim dmx As Single = pnt.X - MousePoint.X
+                        Dim dmy As Single = pnt.Y - MousePoint.Y
 
-                    If dmx * dmx + dmy * dmy < 9 Then
+                        ' draw marker:
 
-                        HighlightedPointIndex = i
+                        If dmx * dmx + dmy * dmy < 9 Then
 
-                        g.FillEllipse(Brushes.Orange, pnt.X - 3, pnt.Y - 3, 6, 6)
-                        g.DrawEllipse(MarkerPen, pnt.X - 3, pnt.Y - 3, 6, 6)
+                            HighlightedPointIndex = i
 
-                    Else
+                            g.FillEllipse(Brushes.Orange, pnt.X - 3, pnt.Y - 3, 6, 6)
+                            g.DrawEllipse(MarkerPen, pnt.X - 3, pnt.Y - 3, 6, 6)
 
-                        g.FillEllipse(Brushes.White, pnt.X - 3, pnt.Y - 3, 6, 6)
-                        g.DrawEllipse(MarkerPen, pnt.X - 3, pnt.Y - 3, 6, 6)
+                        Else
+
+                            g.FillEllipse(Brushes.White, pnt.X - 3, pnt.Y - 3, 6, 6)
+                            g.DrawEllipse(MarkerPen, pnt.X - 3, pnt.Y - 3, 6, 6)
+
+                        End If
+
+                    Next
+
+                    ' draw label on selected point:
+
+                    If HighlightedPointIndex >= 0 Then
+
+                        pnt = pnts(HighlightedPointIndex)
+
+                        Dim lblPoint As String = String.Format("CL = {0:F3} / CD = {1:F4}", vals(HighlightedPointIndex).X, vals(HighlightedPointIndex).Y)
+
+                        DrawLabel(g, lblPoint, pnt, FontLabel)
 
                     End If
-
-                Next
-
-                ' draw label on selected point:
-
-                If HighlightedPointIndex >= 0 Then
-
-                    pnt = pnts(HighlightedPointIndex)
-
-                    Dim lblPoint As String = String.Format("CL = {0:F3} / CD = {1:F4}", vals(HighlightedPointIndex).X, vals(HighlightedPointIndex).Y)
-
-                    DrawLabel(g, lblPoint, pnt, FontLabel)
 
                 End If
 
@@ -348,9 +378,5 @@ Public Class PolarPlotter
     End Sub
 
     Public Event PointChanged()
-
-    Private Sub PolarPlotter_MouseClick(sender As Object, e As System.Windows.Forms.MouseEventArgs) Handles MyBase.MouseClick
-
-    End Sub
 
 End Class

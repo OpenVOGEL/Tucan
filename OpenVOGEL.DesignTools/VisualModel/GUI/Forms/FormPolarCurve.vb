@@ -23,6 +23,12 @@ Public Class FormPolarCurve
     Private CurrentFamily As PolarFamily
     Private CurrentPolar As IPolarCurve
 
+    Private QuadraticFrame As New QuadraticPolarControl
+    Private CustomFrame As New CustomPolarControl
+    Private PolarPlotter As PolarPlotter
+
+    Private LockEvents As Boolean = False
+
     Public Sub New(PolarDataBase As PolarDatabase, SelectedFamiyID As Guid)
 
         InitializeComponent()
@@ -33,6 +39,7 @@ Public Class FormPolarCurve
 
         QuadraticFrame.Hide()
         QuadraticFrame.Parent = Me
+
         CustomFrame.Hide()
         CustomFrame.Parent = Me
 
@@ -52,6 +59,12 @@ Public Class FormPolarCurve
         If lbPolars.Items.Count > 0 Then lbPolars.SelectedIndex = 0
 
         AddHandler CustomFrame.OnNodeChanged, AddressOf PolarPlotter.Refresh
+        AddHandler CustomFrame.OnReynoldsChanged, AddressOf RefreshPolarsList
+        AddHandler CustomFrame.OnNameChanged, AddressOf RefreshPolarsList
+
+        AddHandler QuadraticFrame.OnCurveChanged, AddressOf PolarPlotter.Refresh
+        AddHandler QuadraticFrame.OnReynoldsChanged, AddressOf RefreshPolarsList
+        AddHandler QuadraticFrame.OnNameChanged, AddressOf RefreshPolarsList
 
     End Sub
 
@@ -75,12 +88,6 @@ Public Class FormPolarCurve
             End If
         End Get
     End Property
-
-    Private QuadraticFrame As New QuadraticPolarControl
-    Private CustomFrame As New CustomPolarControl
-    Private PolarPlotter As PolarPlotter
-
-    Private LockEvents As Boolean = False
 
     Private Sub RefreshFamilyList()
 
@@ -120,9 +127,17 @@ Public Class FormPolarCurve
 
         End If
 
-        QuadraticFrame.Hide()
+        If CurrentPolar IsNot Nothing AndAlso CurrentFamily.Polars.Contains(CurrentPolar) Then
 
-        CustomFrame.Hide()
+            lbPolars.SelectedIndex = CurrentFamily.Polars.IndexOf(CurrentPolar)
+
+        Else
+
+            QuadraticFrame.Hide()
+
+            CustomFrame.Hide()
+
+        End If
 
         If CurrentFamily IsNot Nothing Then
 
@@ -198,11 +213,11 @@ Public Class FormPolarCurve
                     Case Else
 
                         PolarPlotter.Visible = False
-                        PolarPlotter.Polar = Nothing
+                        PolarPlotter.ClearPlotter()
 
                 End Select
 
-                PolarPlotter.Polar = CurrentPolar
+                PolarPlotter.SetPolars(CurrentFamily, CurrentPolar)
                 PolarPlotter.Refresh()
 
             End If
@@ -245,7 +260,7 @@ Public Class FormPolarCurve
 
             CurrentPolar = Nothing
 
-            PolarPlotter.Polar = Nothing
+            PolarPlotter.SetPolars(CurrentFamily, CurrentPolar)
 
             RefreshFamilyList()
 
@@ -263,7 +278,7 @@ Public Class FormPolarCurve
 
                 CurrentFamily.Polars.RemoveAt(lbPolars.SelectedIndex)
 
-                PolarPlotter.Polar = Nothing
+                PolarPlotter.ClearPolar()
 
                 RefreshPolarsList()
 
