@@ -23,12 +23,37 @@ Public Class PolarPlotter
     Private _Family As PolarFamily
     Private _Polar As IPolarCurve
 
+    Private AxisPen As New Pen(Color.DarkGray, 2)
+    Private GridPen As New Pen(Color.Gainsboro, 1)
+    Private OtherCurvePen As New Pen(Color.Gray, 2)
+    Private ActiveCurvePen As New Pen(Color.Blue, 2)
+    Private MarkerPen As New Pen(Color.Black, 1)
+    Private FontLabel As New Font("Segoe UI", 6.5)
+    Private MarginX As Integer = 10
+    Private MarginY As Integer = 10
+
+    Private HighlightedPointIndex As Integer
+    Private DragPoint As Boolean = False
+    Private DragOrigin As Boolean = False
+
+    Private Xrange = 3.0
+    Private Ymax As Double = 0.1#
+    Private Xmin As Double = -0.5 * Xrange
+    Private Xmax As Double = 0.5 * Xrange
+
+    Private MousePoint As New PointF(Single.MinValue, Single.MinValue)
+    Private DownPoint As New PointF(Single.MinValue, Single.MinValue)
+    Private XminDown As Double = Xmin
+    Private XmaxDown As Double = Xmax
+
     Public Sub SetPolars(Family As PolarFamily, Curve As IPolarCurve)
 
-        If Family.Polars.Contains(Curve) Then
+        If Curve IsNot Nothing AndAlso Family.Polars.Contains(Curve) Then
             _Family = Family
             _Polar = Curve
             Refresh()
+        Else
+            ClearPlotter()
         End If
 
     End Sub
@@ -53,22 +78,6 @@ Public Class PolarPlotter
             Return _Polar
         End Get
     End Property
-
-    Private AxisPen As New Pen(Color.DarkGray, 2)
-    Private GridPen As New Pen(Color.Gainsboro, 1)
-    Private OtherCurvePen As New Pen(Color.Gray, 2)
-    Private ActiveCurvePen As New Pen(Color.Blue, 2)
-    Private MarkerPen As New Pen(Color.Black, 1)
-    Private FontLabel As New Font("Segoe UI", 6.5)
-    Private MarginX As Integer = 10
-    Private MarginY As Integer = 10
-
-    Private HighlightedPointIndex As Integer
-    Private DragPoint As Boolean = False
-
-    Private Ymax As Double = 0.1#
-    Private Xmin As Double = -1.5#
-    Private Xmax As Double = 1.5#
 
     Private Sub DrawCurve(sender As Object, e As System.Windows.Forms.PaintEventArgs) Handles MyBase.Paint
 
@@ -101,32 +110,41 @@ Public Class PolarPlotter
         Dim nx As Integer = 10
         Dim x As Single
         Dim dx As Double = Xmax - Xmin
-        Dim gW As Integer = Width - 2 * MarginX
-        Dim gH As Integer = Height - 2 * MarginY
+        Dim GraphW As Integer = Width - 2 * MarginX
+        Dim GraphH As Integer = Height - 2 * MarginY
+        Dim LimitXmax = MarginX + GraphW
+        Dim LimitXmin = MarginX
+        Dim LimitYmax = MarginY + GraphH
+        Dim LimitYmin = MarginY
 
         Dim ny As Integer = 10
 
         For i = 1 To ny - 1
 
-            Dim y As Single = MarginY + i * gH / ny
-            g.DrawLine(GridPen, MarginX, y, MarginX + gW, y)
+            Dim y As Single = MarginY + i * GraphH / ny
+            g.DrawLine(GridPen, LimitXmin, y, LimitXmax, y)
 
         Next
 
-        g.DrawLine(AxisPen, MarginX, MarginY + gH, MarginX + gW, MarginY + gH)
-        g.DrawLine(AxisPen, MarginX, MarginY, MarginX, MarginY + gH)
-        g.DrawLine(AxisPen, MarginX + gW, MarginY, MarginX + gW, MarginY + gH)
+        g.DrawLine(AxisPen, LimitXmin, LimitYmin, LimitXmin, LimitYmax)
+        g.DrawLine(AxisPen, LimitXmin, LimitYmin, LimitXmax, LimitYmin)
+        g.DrawLine(AxisPen, LimitXmax, LimitYmin, LimitXmax, LimitYmax)
+        g.DrawLine(AxisPen, LimitXmax, LimitYmax, LimitXmin, LimitYmax)
 
-        For i = 1 To nx - 1
+        For i = 0 To nx
 
-            x = MarginX + ((i + Math.Round(Xmin / dx * nx)) / nx - Xmin / dx) * gW
-            g.DrawLine(GridPen, x, MarginY, x, MarginY + gH)
+            x = MarginX + ((i + Math.Round(Xmin / dx * nx)) / nx - Xmin / dx) * GraphW
+
+            If x > LimitXmin And x < LimitXmax Then
+                g.DrawLine(GridPen, x, LimitYmin, x, LimitYmax)
+            End If
 
         Next
 
-        x = CSng(MarginX + gW * Math.Abs(Xmin) / dx)
-        g.DrawLine(AxisPen, x, MarginY, x, MarginY + gH)
-        g.DrawLine(AxisPen, MarginX, MarginY, MarginX + gW, MarginY)
+        If Xmax > 0 And Xmin < 0 Then
+            x = CSng(MarginX - GraphW * Xmin / dx)
+            g.DrawLine(AxisPen, x, MarginY, x, MarginY + GraphH)
+        End If
 
     End Sub
 
@@ -347,16 +365,31 @@ Public Class PolarPlotter
 
     End Sub
 
-    Private MousePoint As New PointF(Single.MinValue, Single.MinValue)
-
     Private Sub PolarPlotter_MouseDown(sender As Object, e As System.Windows.Forms.MouseEventArgs) Handles MyBase.MouseDown
 
-        DragPoint = True
+        Select Case e.Button
 
-        MousePoint.X = e.X
-        MousePoint.Y = e.Y
+            Case Windows.Forms.MouseButtons.Left
 
-        Refresh()
+                DragPoint = True
+
+                MousePoint.X = e.X
+                MousePoint.Y = e.Y
+
+                Refresh()
+
+            Case Windows.Forms.MouseButtons.Middle
+
+                DragOrigin = True
+
+                DownPoint.X = e.X
+                DownPoint.Y = e.Y
+                XminDown = Xmin
+                XmaxDown = Xmax
+
+                Refresh()
+
+        End Select
 
     End Sub
 
@@ -365,6 +398,16 @@ Public Class PolarPlotter
         MousePoint.X = e.X
         MousePoint.Y = e.Y
 
+        If DragOrigin Then
+
+            Dim DeltaX As Double = Xrange * (DownPoint.X - e.X) / (Width - 2.0 * MarginX)
+            Dim DeltaY As Double = Ymax * (DownPoint.Y - e.Y) / (Height - 2.0 * MarginY)
+
+            Xmax = XmaxDown + DeltaX
+            Xmin = XminDown + DeltaX
+
+        End If
+
         Refresh()
 
     End Sub
@@ -372,8 +415,17 @@ Public Class PolarPlotter
     Private Sub PolarPlotter_MouseUp(sender As Object, e As System.Windows.Forms.MouseEventArgs) Handles MyBase.MouseUp
 
         DragPoint = False
+        DragOrigin = False
 
         RaiseEvent PointChanged()
+
+    End Sub
+
+    Private Sub PolarPlotter_MouseWheel(sender As Object, e As System.Windows.Forms.MouseEventArgs) Handles MyBase.MouseWheel
+
+        Ymax = Math.Min(0.2, Math.Max(0.01, Ymax - 0.01 * e.Delta / Windows.Forms.SystemInformation.MouseWheelScrollDelta))
+
+        Refresh()
 
     End Sub
 

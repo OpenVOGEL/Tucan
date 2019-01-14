@@ -58,7 +58,7 @@ Partial Class FormPolarCurve
         Me.btnOK.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DeepSkyBlue
         Me.btnOK.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.btnOK.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.btnOK.Location = New System.Drawing.Point(738, 328)
+        Me.btnOK.Location = New System.Drawing.Point(745, 329)
         Me.btnOK.Name = "btnOK"
         Me.btnOK.Size = New System.Drawing.Size(78, 23)
         Me.btnOK.TabIndex = 8
@@ -112,7 +112,7 @@ Partial Class FormPolarCurve
         'lblFamilies
         '
         Me.lblFamilies.AutoSize = True
-        Me.lblFamilies.Location = New System.Drawing.Point(1, 2)
+        Me.lblFamilies.Location = New System.Drawing.Point(2, 4)
         Me.lblFamilies.Name = "lblFamilies"
         Me.lblFamilies.Size = New System.Drawing.Size(51, 13)
         Me.lblFamilies.TabIndex = 13
@@ -150,7 +150,7 @@ Partial Class FormPolarCurve
         'lblPolars
         '
         Me.lblPolars.AutoSize = True
-        Me.lblPolars.Location = New System.Drawing.Point(169, 2)
+        Me.lblPolars.Location = New System.Drawing.Point(169, 4)
         Me.lblPolars.Name = "lblPolars"
         Me.lblPolars.Size = New System.Drawing.Size(41, 13)
         Me.lblPolars.TabIndex = 17

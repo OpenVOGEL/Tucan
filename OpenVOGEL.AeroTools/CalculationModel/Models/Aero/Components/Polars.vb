@@ -102,6 +102,7 @@ Namespace CalculationModel.Models.Aero.Components
         Sub ReadBinary(ByRef r As BinaryReader) Implements IPolarCurve.ReadBinary
             Try
                 _ID = New Guid(r.ReadString)
+                _Name = r.ReadString
                 _Reynolds = r.ReadDouble
                 Cd0 = r.ReadDouble
                 Cd1 = r.ReadDouble
@@ -117,6 +118,7 @@ Namespace CalculationModel.Models.Aero.Components
         Sub WriteBinary(ByRef w As BinaryWriter) Implements IPolarCurve.WriteBinary
             w.Write(Type)
             w.Write(_ID.ToString)
+            w.Write(_Name)
             w.Write(_Reynolds)
             w.Write(Cd0)
             w.Write(Cd1)
@@ -210,6 +212,7 @@ Namespace CalculationModel.Models.Aero.Components
             Try
 
                 _ID = New Guid(r.ReadString)
+                _Name = r.ReadString
                 _Reynolds = r.ReadDouble
 
                 Nodes.Clear()
@@ -230,6 +233,7 @@ Namespace CalculationModel.Models.Aero.Components
 
             w.Write(Type)
             w.Write(_ID.ToString)
+            w.Write(_Name)
             w.Write(_Reynolds)
 
             w.Write(Nodes.Count)
@@ -402,6 +406,7 @@ Namespace CalculationModel.Models.Aero.Components
         Public Overloads Sub ReadBinary(ByRef r As BinaryReader)
             Try
                 ID = New Guid(r.ReadString)
+                Name = r.ReadString
                 For i = 1 To r.ReadInt32
                     Dim type As Short = r.ReadInt16
                     Select Case type
@@ -423,7 +428,7 @@ Namespace CalculationModel.Models.Aero.Components
         Public Overloads Sub WriteBinary(ByRef w As BinaryWriter)
 
             w.Write(ID.ToString)
-
+            w.Write(Name)
             w.Write(Polars.Count)
 
             Dim i As Integer = 0
