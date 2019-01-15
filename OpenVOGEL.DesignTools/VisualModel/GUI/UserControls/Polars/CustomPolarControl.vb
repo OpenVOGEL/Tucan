@@ -97,17 +97,23 @@ Public Class CustomPolarControl
             dgvNodes.ScrollBars = ScrollBars.Vertical
             dgvNodes.RowHeadersVisible = False
 
+            Dim dvgNodesFont As New Drawing.Font("Consolas", 8)
+            dgvNodes.DefaultCellStyle.Font = dvgNodesFont
+            dgvNodes.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+
             dgvNodes.Columns.Add("n", "#")
             dgvNodes.Columns(0).ReadOnly = True
             dgvNodes.Columns(0).Width = 25
             dgvNodes.Columns(0).SortMode = DataGridViewColumnSortMode.NotSortable
 
+            Dim ColumnWidth As Integer = (dgvNodes.Width - 28 - SystemInformation.VerticalScrollBarWidth) / 2
+
             dgvNodes.Columns.Add("X", "CL")
-            dgvNodes.Columns(1).Width = 55
+            dgvNodes.Columns(1).Width = ColumnWidth
             dgvNodes.Columns(1).SortMode = DataGridViewColumnSortMode.NotSortable
 
             dgvNodes.Columns.Add("Y", "CDi")
-            dgvNodes.Columns(2).Width = 55
+            dgvNodes.Columns(2).Width = ColumnWidth
             dgvNodes.Columns(2).SortMode = DataGridViewColumnSortMode.NotSortable
 
             _setupready = True
@@ -124,16 +130,29 @@ Public Class CustomPolarControl
 
             If Not _setupready Then SetUpTable()
 
+            Dim c As Integer = -1
+            Dim r As Integer = -1
+
+            If dgvNodes.CurrentCell IsNot Nothing Then
+                c = dgvNodes.CurrentCell.ColumnIndex
+                r = dgvNodes.CurrentCell.RowIndex
+            End If
+
             dgvNodes.Rows.Clear()
 
-            For i = 0 To _Polar.Nodes.Count - 1
+                For i = 0 To _Polar.Nodes.Count - 1
 
-                Dim row As Object() = {i, _Polar.Nodes(i).X, _Polar.Nodes(i).Y}
+                    Dim row As Object() = {i, _Polar.Nodes(i).X, _Polar.Nodes(i).Y}
+
                 dgvNodes.Rows.Add(row)
+
+                If i = r Then
+                    dgvNodes.CurrentCell = dgvNodes.Rows(r).Cells(c)
+                End If
 
             Next
 
-        End If
+            End If
 
     End Sub
 
@@ -145,9 +164,17 @@ Public Class CustomPolarControl
 
                 _Polar.Nodes.Add(New EVector2(0, 0))
 
+                RefreshTable()
+
+                RaiseEvent OnNodeChanged()
+
             ElseIf _Polar.Nodes.Count = 1 Then
 
                 _Polar.Nodes.Add(New EVector2(_Polar.Nodes(0).X + 1, _Polar.Nodes(0).Y))
+
+                RefreshTable()
+
+                RaiseEvent OnNodeChanged()
 
             ElseIf dgvNodes.CurrentRow.Index >= 0 And dgvNodes.CurrentRow.Index < _Polar.Nodes.Count - 1 Then
 
@@ -156,11 +183,11 @@ Public Class CustomPolarControl
 
                 _Polar.Nodes.Insert(dgvNodes.CurrentRow.Index + 1, New EVector2(0.5 * (p1.X + p2.X), 0.5 * (p1.Y + p2.Y)))
 
+                RefreshTable()
+
+                RaiseEvent OnNodeChanged()
+
             End If
-
-            RefreshTable()
-
-            RaiseEvent OnNodeChanged()
 
         End If
 
@@ -170,7 +197,7 @@ Public Class CustomPolarControl
 
         Dim n As Integer = dgvNodes.CurrentRow.Index
 
-        If _Polar.Nodes.Count > 1 And n > 0 And n < _Polar.Nodes.Count Then
+        If _Polar.Nodes.Count > 1 And n >= 0 And n < _Polar.Nodes.Count Then
 
             _Polar.Nodes.RemoveAt(n)
 
