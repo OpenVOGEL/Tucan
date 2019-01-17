@@ -142,7 +142,9 @@ Public Class CustomPolarControl
 
                 For i = 0 To _Polar.Nodes.Count - 1
 
-                    Dim row As Object() = {i, _Polar.Nodes(i).X, _Polar.Nodes(i).Y}
+                Dim row As Object() = {i,
+                    Math.Round(100000 * _Polar.Nodes(i).X) / 100000,
+                    Math.Round(100000 * _Polar.Nodes(i).Y) / 100000}
 
                 dgvNodes.Rows.Add(row)
 
