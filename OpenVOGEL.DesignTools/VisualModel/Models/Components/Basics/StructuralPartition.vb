@@ -30,7 +30,7 @@ Namespace VisualModel.Models.Components.Basics
         ''' Position of this partition
         ''' </summary>
         ''' <remarks></remarks>
-        Public p As EVector3
+        Public P As EVector3
 
         Public Basis As EBase3
 
@@ -44,7 +44,7 @@ Namespace VisualModel.Models.Components.Basics
 
         Public Sub New(ByVal p As EVector3, ByVal section As Section)
 
-            Me.p = New EVector3(p.X, p.Y, p.Z)
+            Me.P = New EVector3(p.X, p.Y, p.Z)
             LocalSection = New Section
             LocalSection.Assign(section)
 
@@ -52,7 +52,7 @@ Namespace VisualModel.Models.Components.Basics
 
         Public Sub New()
 
-            p = New EVector3()
+            P = New EVector3()
             LocalSection = New Section
             Basis = New EBase3()
 

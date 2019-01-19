@@ -250,7 +250,7 @@ Namespace VisualModel.Models
                 StrElementCount = -1
                 StructuralLink.StructuralCore.StructuralSettings.Assign(This.Settings.StructuralSettings)
                 StructuralLink.StructuralCore.Nodes.Add(New StructuralNode(StrNodeCount))
-                StructuralLink.StructuralCore.Nodes(StrNodeCount).Position.Assign(Surface.StructuralPartition(0).p)
+                StructuralLink.StructuralCore.Nodes(StrNodeCount).Position.Assign(Surface.StructuralPartition(0).P)
                 If (Mirror) Then StructuralLink.StructuralCore.Nodes(StrNodeCount).Position.Y *= -1
                 StructuralLink.StructuralCore.Nodes(StrNodeCount).Contrains.Clamped()
 
@@ -275,7 +275,7 @@ Namespace VisualModel.Models
                     StrNodeCount += 1
 
                     StructuralLink.StructuralCore.Nodes.Add(New StructuralNode(StrNodeCount))
-                    StructuralLink.StructuralCore.Nodes(StrNodeCount).Position.Assign(Surface.StructuralPartition(PartitionNodeIndex).p)
+                    StructuralLink.StructuralCore.Nodes(StrNodeCount).Position.Assign(Surface.StructuralPartition(PartitionNodeIndex).P)
                     If (Mirror) Then StructuralLink.StructuralCore.Nodes(StrNodeCount).Position.Y *= -1
 
                     ' Add element:

@@ -50,7 +50,7 @@ Public Class WingControl
         Surface = SuperficieDeReferencia
         ShowSurfaceState()
 
-        LoadSuperficieToForm()
+        LoadSurfaceToForm()
         LoadRegionToForm()
 
     End Sub
@@ -62,7 +62,7 @@ Public Class WingControl
         Ready = False
 
         ShowSurfaceState()
-        LoadSuperficieToForm()
+        LoadSurfaceToForm()
         LoadRegionToForm()
 
     End Sub
@@ -74,7 +74,7 @@ Public Class WingControl
         Ready = False
 
         Me.ShowSurfaceState()
-        Me.LoadSuperficieToForm()
+        Me.LoadSurfaceToForm()
         Me.LoadRegionToForm()
 
     End Sub
@@ -85,13 +85,16 @@ Public Class WingControl
 
     End Sub
 
-    Private Sub GetGeometry(Optional ByVal replot As Boolean = True)
+    Private Sub CollectSurfaceData(Optional ByVal Replot As Boolean = True)
 
         If Not Assigned Then Exit Sub
 
         If Not Ready Then Exit Sub
 
         PointToCurrentRegion()
+
+        Surface.Name = tbSurfaceName.Text
+        Surface.NumberOfChordPanels = nudChordwisePanels.Value
 
         Surface.CurrentRegion.SpanPanelsCount = nudSpanwiseRings.Value
         Surface.CurrentRegion.TipChord = nudTipChord.Value
@@ -115,34 +118,45 @@ Public Class WingControl
         Surface.CurrentRegion.FlapDeflection = nudFlapDeflection.Value * Math.PI / 180
         Surface.CurrentRegion.Flapped = cbFlapped.Checked
 
-        Surface.CurrentRegion.TipSection.AE = nudArea.Value * 1000 ' kNm to Nm
-        Surface.CurrentRegion.TipSection.GJ = nudIu.Value
-        Surface.CurrentRegion.TipSection.EIy = nudIv.Value
-        Surface.CurrentRegion.TipSection.EIz = nudIw.Value
-        Surface.CurrentRegion.TipSection.rIp = nud_J.Value
-        Surface.CurrentRegion.TipSection.m = nud_m.Value
-        Surface.CurrentRegion.TipSection.CMy = nudCMy.Value
-        Surface.CurrentRegion.TipSection.CMz = nudCMz.Value
+        If rbTipSection.Checked Then
+
+            Surface.CurrentRegion.TipSection.AE = nudArea.Value * 1000 ' kNm to Nm
+            Surface.CurrentRegion.TipSection.GJ = nudIu.Value
+            Surface.CurrentRegion.TipSection.EIy = nudIv.Value
+            Surface.CurrentRegion.TipSection.EIz = nudIw.Value
+            Surface.CurrentRegion.TipSection.rIp = nudJ.Value
+            Surface.CurrentRegion.TipSection.m = nudM.Value
+            Surface.CurrentRegion.TipSection.CMy = nudCMy.Value
+            Surface.CurrentRegion.TipSection.CMz = nudCMz.Value
+
+        Else
+
+            If nudSelectRegion.Value = 1 Then
+
+                Surface.RootSection.AE = nudArea.Value * 1000 ' kNm to Nm
+                Surface.RootSection.GJ = nudIu.Value
+                Surface.RootSection.EIy = nudIv.Value
+                Surface.RootSection.EIz = nudIw.Value
+                Surface.RootSection.rIp = nudJ.Value
+                Surface.RootSection.m = nudM.Value
+                Surface.RootSection.CMy = nudCMy.Value
+                Surface.RootSection.CMz = nudCMz.Value
+
+            End If
+
+        End If
+
         Surface.CurrentRegion.CenterOfShear = nudCS.Value
 
-        Surface.RootSection.AE = nudRootArea.Value * 1000 ' kNm to Nm
-        Surface.RootSection.GJ = nudRootIu.Value
-        Surface.RootSection.EIy = nudRootIv.Value
-        Surface.RootSection.EIz = nudRootIw.Value
-        Surface.RootSection.rIp = nud_Root_J.Value
-        Surface.RootSection.m = nud_Root_m.Value
-        Surface.RootSection.CMy = nudCMyRoot.Value
-        Surface.RootSection.CMz = nudCMzRoot.Value
+        If nudSelectRegion.Value = 1 Then
+            Surface.RootChord = nudRootChord.Value
+        End If
 
-        Surface.Name = SurfaceNameText.Text
-        Surface.NumberOfChordPanels = NPCuerda_Box.Value
-        Surface.RootChord = CuerdaRaiz_box.Value
-
-        Surface.ConvectWake = ConvectarEstela.Checked
+        Surface.ConvectWake = cbConvectWake.Checked
         Surface.TrailingEdgeConvection = cbTrailingEdge.Checked
-        Surface.VisualProperties.ShowPrimitives = MostrarPrimitivas.Checked
+        Surface.VisualProperties.ShowPrimitives = cbShowPriitives.Checked
 
-        Surface.Symmetric = SimetriaEnXZ.Checked
+        Surface.Symmetric = cbSymetricWing.Checked
 
         Surface.CuttingStep = nudCuttingStep.Value
 
@@ -150,56 +164,63 @@ Public Class WingControl
 
         WithChanges = True
 
-        If replot Then RaiseEvent RefreshGL()
+        If Replot Then RaiseEvent RefreshGL()
 
     End Sub
 
-    Private Sub LoadSuperficieToForm()
+    Private Sub LoadSurfaceToForm()
 
         If Not Assigned Then Exit Sub
 
-        ' Asigna todas las propiedades de la superficie activa
-
         Ready = False
 
-        SurfaceNameText.Text = Surface.Name
-
+        tbSurfaceName.Text = Surface.Name
         nudSelectRegion.Maximum = Surface.WingRegions.Count
         nudSelectRegion.Minimum = 1
         nudSelectRegion.Value = Surface.CurrentRegionID
-
-        CuerdaRaiz_box.Value = Surface.RootChord
+        nudRootChord.Value = Surface.RootChord
         nudRootFlap.Value = Surface.RootFlap
         nudFlapPanels.Value = Surface.FlapPanels
-        NPCuerda_Box.Value = Surface.NumberOfChordPanels
-        NSectores_box.Value = Surface.WingRegions.Count
-
-        SimetriaEnXZ.Checked = Surface.Symmetric
-
-        LimitarPrimitivas()
-
-        SegmentoPrimitivo2.Value = Surface.LastPrimitiveSegment
-        SegmentoPrimitivo1.Value = Surface.FirstPrimitiveSegment
-        ConvectarEstela.Checked = Surface.ConvectWake
+        nudChordwisePanels.Value = Surface.NumberOfChordPanels
+        cbSymetricWing.Checked = Surface.Symmetric
+        SetPrimitiveBounds()
+        nudLastPrimitive.Value = Surface.LastPrimitiveSegment
+        nudFirstPrimitive.Value = Surface.FirstPrimitiveSegment
+        cbConvectWake.Checked = Surface.ConvectWake
         cbTrailingEdge.Checked = Surface.TrailingEdgeConvection
-
-        MostrarPrimitivas.Checked = Surface.VisualProperties.ShowPrimitives
-
+        cbShowPriitives.Checked = Surface.VisualProperties.ShowPrimitives
         nudCuttingStep.Value = Surface.CuttingStep
-
-        nudRootArea.Value = Surface.RootSection.AE / 1000 ' Nm to kNm
-        nudRootIu.Value = Surface.RootSection.GJ
-        nudRootIv.Value = Surface.RootSection.EIy
-        nudRootIw.Value = Surface.RootSection.EIz
-        nud_Root_J.Value = Surface.RootSection.rIp
-        nud_Root_m.Value = Surface.RootSection.m
-        nudCS.Value = Surface.CurrentRegion.CenterOfShear
-        nudCMyRoot.Value = Surface.RootSection.CMy
-        nudCMzRoot.Value = Surface.RootSection.CMz
 
         LoadRegionToForm()
 
     End Sub
+
+    Private Sub SwitchSectionEdition(Enabled As Boolean)
+        nudArea.Enabled = Enabled
+        nudIu.Enabled = Enabled
+        nudIv.Enabled = Enabled
+        nudIw.Enabled = Enabled
+        nudJ.Enabled = Enabled
+        nudM.Enabled = Enabled
+        nudCMy.Enabled = Enabled
+        nudCMz.Enabled = Enabled
+    End Sub
+
+    Function ThereIsPreviousRegion() As Boolean
+
+        Return nudSelectRegion.Value > 1 And nudSelectRegion.Value <= Surface.WingRegions.Count
+
+    End Function
+
+    Function GetPreviousRegion() As WingRegion
+
+        If ThereIsPreviousRegion() Then
+            Return Surface.WingRegions(nudSelectRegion.Value - 2)
+        Else
+            Return Nothing
+        End If
+
+    End Function
 
     Private Sub LoadRegionToForm()
 
@@ -230,12 +251,53 @@ Public Class WingControl
         nudFlapChord.Value = Surface.CurrentRegion.FlapChord
         nudFlapDeflection.Value = Math.Max(-90, Math.Min(Surface.CurrentRegion.FlapDeflection / Math.PI * 180, 90))
 
-        nudArea.Value = Surface.CurrentRegion.TipSection.AE / 1000 ' Nm to kNm
-        nudIu.Value = Surface.CurrentRegion.TipSection.GJ
-        nudIv.Value = Surface.CurrentRegion.TipSection.EIy
-        nudIw.Value = Surface.CurrentRegion.TipSection.EIz
-        nud_J.Value = Surface.CurrentRegion.TipSection.rIp
-        nud_m.Value = Surface.CurrentRegion.TipSection.m
+        nudRootChord.Enabled = nudSelectRegion.Value = 1
+        If ThereIsPreviousRegion() Then
+            Dim PreviousRegion As WingRegion = GetPreviousRegion()
+            nudRootChord.Value = PreviousRegion.TipChord
+        Else
+            nudRootChord.Value = Surface.RootChord
+        End If
+
+        If rbRootSection.Checked Then
+
+            If nudSelectRegion.Value = 1 Then
+
+                SwitchSectionEdition(True)
+                nudArea.Value = Surface.RootSection.AE / 1000 ' Nm to kNm
+                nudIu.Value = Surface.RootSection.GJ
+                nudIv.Value = Surface.RootSection.EIy
+                nudIw.Value = Surface.RootSection.EIz
+                nudJ.Value = Surface.RootSection.rIp
+                nudM.Value = Surface.RootSection.m
+
+            Else
+
+                SwitchSectionEdition(False)
+                If ThereIsPreviousRegion() Then
+                    Dim PreviousRegion As WingRegion = GetPreviousRegion()
+                    nudArea.Value = PreviousRegion.TipSection.AE / 1000 ' Nm to kNm
+                    nudIu.Value = PreviousRegion.TipSection.GJ
+                    nudIv.Value = PreviousRegion.TipSection.EIy
+                    nudIw.Value = PreviousRegion.TipSection.EIz
+                    nudJ.Value = PreviousRegion.TipSection.rIp
+                    nudM.Value = PreviousRegion.TipSection.m
+                End If
+
+            End If
+
+        Else
+
+            SwitchSectionEdition(True)
+            nudArea.Value = Surface.CurrentRegion.TipSection.AE / 1000 ' Nm to kNm
+            nudIu.Value = Surface.CurrentRegion.TipSection.GJ
+            nudIv.Value = Surface.CurrentRegion.TipSection.EIy
+            nudIw.Value = Surface.CurrentRegion.TipSection.EIz
+            nudJ.Value = Surface.CurrentRegion.TipSection.rIp
+            nudM.Value = Surface.CurrentRegion.TipSection.m
+
+        End If
+
         nudCS.Value = Surface.CurrentRegion.CenterOfShear
         nudCMy.Value = Surface.CurrentRegion.TipSection.CMy
         nudCMz.Value = Surface.CurrentRegion.TipSection.CMz
@@ -270,7 +332,7 @@ Public Class WingControl
 
     End Sub
 
-    Private Sub AgregarMacroPanel_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnAddPanel.Click
+    Private Sub btnAddPanel_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnAddPanel.Click
 
         If Not Ready Then Exit Sub
 
@@ -282,7 +344,6 @@ Public Class WingControl
         nudSelectRegion.Maximum = Surface.WingRegions.Count
         nudSelectRegion.Minimum = 1
         nudSelectRegion.Value = Surface.CurrentRegionID
-        NSectores_box.Value = Surface.WingRegions.Count
         Ready = True
 
         LoadRegionToForm()
@@ -293,7 +354,7 @@ Public Class WingControl
 
     End Sub
 
-    Private Sub InsertarMacroPanel_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnInsertPanel.Click
+    Private Sub btnInsertPanel_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnInsertPanel.Click
 
         If Not Ready Then Exit Sub
 
@@ -321,14 +382,14 @@ Public Class WingControl
         PointToCurrentRegion()
 
         Surface.RemoveCurrentRegion()
-        LoadSuperficieToForm()
+        LoadSurfaceToForm()
         Surface.GenerateMesh()
 
         RaiseEvent RefreshGL()
 
     End Sub
 
-    Private Sub LimitarPrimitivas()
+    Private Sub SetPrimitiveBounds()
 
         If Surface.FirstPrimitiveSegment < 1 Then
             Surface.FirstPrimitiveSegment = 1
@@ -337,10 +398,10 @@ Public Class WingControl
             Surface.LastPrimitiveSegment = 1
         End If
 
-        SegmentoPrimitivo2.Minimum = Surface.FirstPrimitiveSegment
-        SegmentoPrimitivo2.Maximum = Surface.nBoundarySegments
-        SegmentoPrimitivo1.Minimum = 1
-        SegmentoPrimitivo1.Maximum = Surface.LastPrimitiveSegment
+        nudLastPrimitive.Minimum = Surface.FirstPrimitiveSegment
+        nudLastPrimitive.Maximum = Surface.nBoundarySegments
+        nudFirstPrimitive.Minimum = 1
+        nudFirstPrimitive.Maximum = Surface.LastPrimitiveSegment
 
     End Sub
 
@@ -482,149 +543,149 @@ Public Class WingControl
 
 #Region " GUI Events "
 
-    Private Sub SurfaceNameText_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles SurfaceNameText.TextChanged
-        Me.GetGeometry()
+    Private Sub SurfaceNameText_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles tbSurfaceName.TextChanged
+        Me.CollectSurfaceData()
     End Sub
 
-    Private Sub CambiarPanelesEnLaCuerda(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles NPCuerda_Box.ValueChanged
-        Me.GetGeometry()
+    Private Sub CambiarPanelesEnLaCuerda(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles nudChordwisePanels.ValueChanged
+        Me.CollectSurfaceData()
     End Sub
 
-    Private Sub CambiarCuerdaRaiz(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CuerdaRaiz_box.ValueChanged
-        Me.GetGeometry()
+    Private Sub CambiarCuerdaRaiz(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles nudRootChord.ValueChanged
+        Me.CollectSurfaceData()
     End Sub
 
     Private Sub CambiarPanelesEnLaEnvergadura(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles nudSpanwiseRings.ValueChanged
-        Me.GetGeometry()
+        Me.CollectSurfaceData()
     End Sub
 
     Private Sub CambiarCuerdaExterna(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles nudTipChord.ValueChanged
-        Me.GetGeometry()
+        Me.CollectSurfaceData()
     End Sub
 
     Private Sub CambiarLongitud(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles nudLength.ValueChanged
-        Me.GetGeometry()
+        Me.CollectSurfaceData()
     End Sub
 
     Private Sub CambiarSweepBack(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles nudSweepback.ValueChanged
-        Me.GetGeometry()
+        Me.CollectSurfaceData()
     End Sub
 
     Private Sub CambiarDihedro(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles nudDihedral.ValueChanged
-        Me.GetGeometry()
+        Me.CollectSurfaceData()
     End Sub
 
     Private Sub CambiarTorsionTotal(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles nudTwist.ValueChanged
-        Me.GetGeometry()
+        Me.CollectSurfaceData()
     End Sub
 
     Private Sub CambiarEjeDeTorsion(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles nudTwistingAxis.ValueChanged
-        Me.GetGeometry()
+        Me.CollectSurfaceData()
     End Sub
 
-    Private Sub CambiarSimetria(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles SimetriaEnXZ.CheckedChanged
-        Me.GetGeometry()
+    Private Sub CambiarSimetria(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cbSymetricWing.CheckedChanged
+        Me.CollectSurfaceData()
     End Sub
 
     Private Sub CambiarEspaciamientoConstante(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles rbConstantSpacement.CheckedChanged
-        GetGeometry()
+        CollectSurfaceData()
     End Sub
 
     Private Sub CambiarEspaciamientoCuadratico(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles rbCuadraticSpacement.CheckedChanged
-        GetGeometry()
+        CollectSurfaceData()
     End Sub
 
     Private Sub CambiarCombaduraMaxima(ByVal sender As System.Object, ByVal e As System.EventArgs)
-        GetGeometry()
+        CollectSurfaceData()
         pbProfileSketch.Refresh()
     End Sub
 
     Private Sub CambiarPosicionDeCombaduraMaxima(ByVal sender As System.Object, ByVal e As System.EventArgs)
-        GetGeometry()
+        CollectSurfaceData()
         pbProfileSketch.Refresh()
     End Sub
 
     Private Sub nudCuttingStep_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles nudCuttingStep.ValueChanged
-        GetGeometry()
+        CollectSurfaceData()
     End Sub
 
-    Private Sub CambiarSegmentoPrimitivo1(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles SegmentoPrimitivo1.ValueChanged
+    Private Sub CambiarSegmentoPrimitivo1(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles nudFirstPrimitive.ValueChanged
 
         ModifyingSegment1 = True
 
         If Not ModifyingSegment2 And Ready Then
 
-            Surface.FirstPrimitiveSegment = SegmentoPrimitivo1.Value
+            Surface.FirstPrimitiveSegment = nudFirstPrimitive.Value
 
-            SegmentoPrimitivo2.Minimum = Surface.FirstPrimitiveSegment
-            SegmentoPrimitivo2.Maximum = Surface.nBoundarySegments
+            nudLastPrimitive.Minimum = Surface.FirstPrimitiveSegment
+            nudLastPrimitive.Maximum = Surface.nBoundarySegments
 
         End If
 
         ModifyingSegment1 = False
 
-        Me.GetGeometry()
+        Me.CollectSurfaceData()
 
     End Sub
 
-    Private Sub CambiarSegmentoPrimitivo2(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles SegmentoPrimitivo2.ValueChanged
+    Private Sub CambiarSegmentoPrimitivo2(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles nudLastPrimitive.ValueChanged
         If Not ModifyingSegment1 And Ready Then
 
-            Surface.LastPrimitiveSegment = SegmentoPrimitivo2.Value
+            Surface.LastPrimitiveSegment = nudLastPrimitive.Value
 
-            SegmentoPrimitivo1.Minimum = 1
-            SegmentoPrimitivo1.Maximum = Surface.LastPrimitiveSegment
+            nudFirstPrimitive.Minimum = 1
+            nudFirstPrimitive.Maximum = Surface.LastPrimitiveSegment
 
         End If
 
         ModifyingSegment2 = False
 
-        Me.GetGeometry()
+        Me.CollectSurfaceData()
 
     End Sub
 
-    Private Sub CambiarConvectarEstela(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ConvectarEstela.CheckedChanged
-        Me.GetGeometry(False)
+    Private Sub CambiarConvectarEstela(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cbConvectWake.CheckedChanged
+        Me.CollectSurfaceData(False)
     End Sub
 
-    Private Sub CambiarMostrarPrimitivas(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MostrarPrimitivas.CheckedChanged
-        Me.GetGeometry()
+    Private Sub CambiarMostrarPrimitivas(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cbShowPriitives.CheckedChanged
+        Me.CollectSurfaceData()
     End Sub
 
     Private Sub CambiarOrigenX(ByVal sender As System.Object, ByVal e As System.EventArgs)
-        Me.GetGeometry()
+        Me.CollectSurfaceData()
     End Sub
 
     Private Sub CambiarOrigenY(ByVal sender As System.Object, ByVal e As System.EventArgs)
-        Me.GetGeometry()
+        Me.CollectSurfaceData()
     End Sub
 
     Private Sub CambiarOrigenZ(ByVal sender As System.Object, ByVal e As System.EventArgs)
-        Me.GetGeometry()
+        Me.CollectSurfaceData()
     End Sub
 
     Private Sub CambiarCentroX(ByVal sender As System.Object, ByVal e As System.EventArgs)
-        Me.GetGeometry()
+        Me.CollectSurfaceData()
     End Sub
 
     Private Sub CambiarCentroY(ByVal sender As System.Object, ByVal e As System.EventArgs)
-        Me.GetGeometry()
+        Me.CollectSurfaceData()
     End Sub
 
     Private Sub CambiarCentroZ(ByVal sender As System.Object, ByVal e As System.EventArgs)
-        Me.GetGeometry()
+        Me.CollectSurfaceData()
     End Sub
 
     Private Sub CambiarPsi(ByVal sender As System.Object, ByVal e As System.EventArgs)
-        Me.GetGeometry()
+        Me.CollectSurfaceData()
     End Sub
 
     Private Sub CambiarTita(ByVal sender As System.Object, ByVal e As System.EventArgs)
-        Me.GetGeometry()
+        Me.CollectSurfaceData()
     End Sub
 
     Private Sub CambiarPhi(ByVal sender As System.Object, ByVal e As System.EventArgs)
-        Me.GetGeometry()
+        Me.CollectSurfaceData()
     End Sub
 
     Private Sub MostrarSuperficie(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnHideSurface.Click
@@ -642,111 +703,111 @@ Public Class WingControl
     End Sub
 
     Private Sub nudArea_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles nudArea.ValueChanged
-        Me.GetGeometry(False)
+        Me.CollectSurfaceData(False)
     End Sub
 
     Private Sub nudIu_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles nudIu.ValueChanged
-        Me.GetGeometry(False)
+        Me.CollectSurfaceData(False)
     End Sub
 
     Private Sub nudIv_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles nudIv.ValueChanged
-        Me.GetGeometry(False)
+        Me.CollectSurfaceData(False)
     End Sub
 
     Private Sub nudIw_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles nudIw.ValueChanged
-        Me.GetGeometry(False)
+        Me.CollectSurfaceData(False)
     End Sub
 
     Private Sub nudE_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
-        Me.GetGeometry()
+        Me.CollectSurfaceData()
     End Sub
 
     Private Sub nudNu_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
-        Me.GetGeometry(False)
+        Me.CollectSurfaceData(False)
     End Sub
 
     Private Sub nudRho_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
-        Me.GetGeometry(False)
+        Me.CollectSurfaceData(False)
     End Sub
 
-    Private Sub nudRootArea_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles nudRootArea.ValueChanged
-        Me.GetGeometry(False)
+    Private Sub nudRootArea_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
+        Me.CollectSurfaceData(False)
     End Sub
 
-    Private Sub nudRootIu_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles nudRootIu.ValueChanged
-        Me.GetGeometry(False)
+    Private Sub nudRootIu_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
+        Me.CollectSurfaceData(False)
     End Sub
 
-    Private Sub nudRootIv_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles nudRootIv.ValueChanged
-        Me.GetGeometry(False)
+    Private Sub nudRootIv_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
+        Me.CollectSurfaceData(False)
     End Sub
 
-    Private Sub nudRootIw_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles nudRootIw.ValueChanged
-        Me.GetGeometry(False)
+    Private Sub nudRootIw_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
+        Me.CollectSurfaceData(False)
     End Sub
 
     Private Sub btSurfaceData_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btSurfaceData.Click
         tbSurfaceData.Text = Surface.RetriveStringData()
     End Sub
 
-    Private Sub nud_Root_J_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles nud_Root_J.ValueChanged
-        Me.GetGeometry(False)
+    Private Sub nud_Root_J_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
+        Me.CollectSurfaceData(False)
     End Sub
 
-    Private Sub nud_Root_m_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles nud_Root_m.ValueChanged
-        Me.GetGeometry(False)
+    Private Sub nud_Root_m_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
+        Me.CollectSurfaceData(False)
     End Sub
 
-    Private Sub nud_J_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles nud_J.ValueChanged
-        Me.GetGeometry(False)
+    Private Sub nud_J_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles nudJ.ValueChanged
+        Me.CollectSurfaceData(False)
     End Sub
 
-    Private Sub nud_m_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles nud_m.ValueChanged
-        Me.GetGeometry(False)
+    Private Sub nud_m_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles nudM.ValueChanged
+        Me.CollectSurfaceData(False)
     End Sub
 
     Private Sub cbFlapped_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cbFlapped.CheckedChanged
-        Me.GetGeometry()
+        Me.CollectSurfaceData()
     End Sub
 
     Private Sub nudFlapChord_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles nudFlapChord.ValueChanged
-        Me.GetGeometry()
+        Me.CollectSurfaceData()
     End Sub
 
     Private Sub nudFlapDeflection_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles nudFlapDeflection.ValueChanged
-        Me.GetGeometry()
+        Me.CollectSurfaceData()
     End Sub
 
     Private Sub nudRootFlap_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles nudRootFlap.ValueChanged
-        Me.GetGeometry()
+        Me.CollectSurfaceData()
     End Sub
 
     Private Sub nudFlapPanels_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles nudFlapPanels.ValueChanged
-        Me.GetGeometry()
+        Me.CollectSurfaceData()
     End Sub
 
     Private Sub nudExcentricity_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles nudCS.ValueChanged
-        Me.GetGeometry()
+        Me.CollectSurfaceData()
     End Sub
 
     Private Sub nudCMy_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles nudCMy.ValueChanged
-        Me.GetGeometry(False)
+        Me.CollectSurfaceData(False)
     End Sub
 
     Private Sub nudCMz_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles nudCMz.ValueChanged
-        Me.GetGeometry(False)
+        Me.CollectSurfaceData(False)
     End Sub
 
-    Private Sub nudCMyRoot_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles nudCMyRoot.ValueChanged
-        Me.GetGeometry(False)
+    Private Sub nudCMyRoot_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
+        Me.CollectSurfaceData(False)
     End Sub
 
-    Private Sub nudCMzRoot_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles nudCMzRoot.ValueChanged
-        Me.GetGeometry(False)
+    Private Sub nudCMzRoot_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
+        Me.CollectSurfaceData(False)
     End Sub
 
     Private Sub cbSecuence_SelectedIndexChanged(sender As Object, e As EventArgs)
-        GetGeometry()
+        CollectSurfaceData()
     End Sub
 
 #End Region
@@ -785,7 +846,7 @@ Public Class WingControl
 
         Dim g As Graphics = e.Graphics
 
-        DrawCamberLine(GetCamberLineFromID(Surface.CurrentRegion.CamberLineID), NPCuerda_Box.Value, pbProfileSketch.Width, pbProfileSketch.Height, g)
+        DrawCamberLine(GetCamberLineFromID(Surface.CurrentRegion.CamberLineID), nudChordwisePanels.Value, pbProfileSketch.Width, pbProfileSketch.Height, g)
 
     End Sub
 
@@ -830,9 +891,9 @@ Public Class WingControl
     End Sub
 
     Private Sub cbTrailingEdge_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cbTrailingEdge.CheckedChanged
-        GetGeometry()
-        SegmentoPrimitivo1.Enabled = Not cbTrailingEdge.Checked
-        SegmentoPrimitivo2.Enabled = Not cbTrailingEdge.Checked
+        CollectSurfaceData()
+        nudFirstPrimitive.Enabled = Not cbTrailingEdge.Checked
+        nudLastPrimitive.Enabled = Not cbTrailingEdge.Checked
     End Sub
 
     Private Sub btnCamberLines_Click(sender As Object, e As EventArgs) Handles btnCamberLines.Click
@@ -854,4 +915,11 @@ Public Class WingControl
 
     End Sub
 
+    Private Sub rbTipSection_CheckedChanged(sender As Object, e As EventArgs) Handles rbTipSection.CheckedChanged
+        LoadRegionToForm()
+    End Sub
+
+    Private Sub rbRootSection_CheckedChanged(sender As Object, e As EventArgs) Handles rbRootSection.CheckedChanged
+        LoadRegionToForm()
+    End Sub
 End Class

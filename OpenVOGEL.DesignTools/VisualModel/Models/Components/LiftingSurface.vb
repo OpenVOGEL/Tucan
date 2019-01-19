@@ -1539,7 +1539,7 @@ Namespace VisualModel.Models.Components
 
                 For i = 0 To _StructuralPartition.Count - 1
 
-                    Nodo2 = _StructuralPartition(i).p
+                    Nodo2 = _StructuralPartition(i).P
 
                     If (i > 0) Then
 
@@ -1548,7 +1548,7 @@ Namespace VisualModel.Models.Components
                         gl.PushName(Code)
                         Code += 1
                         gl.Begin(OpenGL.GL_LINES)
-                        Nodo1 = _StructuralPartition(i - 1).p
+                        Nodo1 = _StructuralPartition(i - 1).P
                         gl.Vertex(Nodo1.X, Nodo1.Y, Nodo1.Z)
                         gl.Vertex(Nodo2.X, Nodo2.Y, Nodo2.Z)
                         gl.End()
@@ -1597,9 +1597,9 @@ Namespace VisualModel.Models.Components
                         Dim l As Double
 
                         If (i = 0) Then
-                            l = 0.5 * _StructuralPartition(0).p.DistanceTo(_StructuralPartition(1).p)
+                            l = 0.5 * _StructuralPartition(0).P.DistanceTo(_StructuralPartition(1).P)
                         Else
-                            l = 0.5 * _StructuralPartition(i - 1).p.DistanceTo(_StructuralPartition(i).p)
+                            l = 0.5 * _StructuralPartition(i - 1).P.DistanceTo(_StructuralPartition(i).P)
                         End If
 
                         gl.LineWidth(2.0)
@@ -1734,11 +1734,9 @@ Namespace VisualModel.Models.Components
 
             _StructuralPartition.Clear()
 
-            Dim lePoint As EVector3
-            Dim tePoint As EVector3
-
-            Dim sp As Integer = 0 ' Starting position
-
+            Dim LeadingEdgePoint As EVector3
+            Dim TrailingEdgePoint As EVector3
+            Dim NodalStripIndex As Integer = 0
             Dim RootSection As Section = Me.RootSection
             Dim RootChord As Double = _RootChord
 
@@ -1752,25 +1750,25 @@ Namespace VisualModel.Models.Components
 
                 For i = i0 To Panel.SpanPanelsCount
 
-                    lePoint = Mesh.Nodes(sp * _nChordNodes).Position
+                    LeadingEdgePoint = Mesh.Nodes(NodalStripIndex * _nChordNodes).Position
 
                     If Panel.Flapped Then
-                        tePoint = Mesh.Nodes((sp + 1) * _nChordNodes - 1 - FlapPanels).Position
+                        TrailingEdgePoint = Mesh.Nodes((NodalStripIndex + 1) * _nChordNodes - 1 - FlapPanels).Position
                     Else
-                        tePoint = Mesh.Nodes((sp + 1) * _nChordNodes - 1).Position
+                        TrailingEdgePoint = Mesh.Nodes((NodalStripIndex + 1) * _nChordNodes - 1).Position
                     End If
 
-                    Dim pStructural As New EVector3
+                    Dim StructuralNode As New EVector3
 
-                    pStructural.X = lePoint.X + Panel.CenterOfShear * (tePoint.X - lePoint.X)
-                    pStructural.Y = lePoint.Y + Panel.CenterOfShear * (tePoint.Y - lePoint.Y)
-                    pStructural.Z = lePoint.Z + Panel.CenterOfShear * (tePoint.Z - lePoint.Z)
+                    StructuralNode.X = LeadingEdgePoint.X + Panel.CenterOfShear * (TrailingEdgePoint.X - LeadingEdgePoint.X)
+                    StructuralNode.Y = LeadingEdgePoint.Y + Panel.CenterOfShear * (TrailingEdgePoint.Y - LeadingEdgePoint.Y)
+                    StructuralNode.Z = LeadingEdgePoint.Z + Panel.CenterOfShear * (TrailingEdgePoint.Z - LeadingEdgePoint.Z)
 
                     Dim LocalPartition = New StructuralPartition
 
-                    LocalPartition.p.X = pStructural.X
-                    LocalPartition.p.Y = pStructural.Y
-                    LocalPartition.p.Z = pStructural.Z
+                    LocalPartition.P.X = StructuralNode.X
+                    LocalPartition.P.Y = StructuralNode.Y
+                    LocalPartition.P.Z = StructuralNode.Z
 
                     Dim coord As Double = i / (Panel.SpanPanelsCount - i0)
 
@@ -1784,20 +1782,20 @@ Namespace VisualModel.Models.Components
                     LocalPartition.LocalSection.CMz = RootSection.CMz + coord * (Panel.TipSection.CMz - RootSection.CMz)
                     LocalPartition.LocalChord = RootChord + coord * (Panel.TipChord - RootSection.m)
 
-                    If (sp > 0) Then
+                    If (NodalStripIndex > 0) Then
 
-                        Dim oldP As EVector3 = StructuralPartition(StructuralPartition.Count - 1).p
+                        Dim PreviousP As EVector3 = StructuralPartition(StructuralPartition.Count - 1).P
 
-                        LocalPartition.Basis.U.X = pStructural.X - oldP.X
-                        LocalPartition.Basis.U.Y = pStructural.Y - oldP.Y
-                        LocalPartition.Basis.U.Z = pStructural.Z - oldP.Z
+                        LocalPartition.Basis.U.X = StructuralNode.X - PreviousP.X
+                        LocalPartition.Basis.U.Y = StructuralNode.Y - PreviousP.Y
+                        LocalPartition.Basis.U.Z = StructuralNode.Z - PreviousP.Z
                         LocalPartition.Basis.U.Normalize()
 
-                        If (sp = 1) Then
+                        If (NodalStripIndex = 1) Then
 
-                            StructuralPartition(0).Basis.U.X = pStructural.X - oldP.X
-                            StructuralPartition(0).Basis.U.Y = pStructural.Y - oldP.Y
-                            StructuralPartition(0).Basis.U.Z = pStructural.Z - oldP.Z
+                            StructuralPartition(0).Basis.U.X = StructuralNode.X - PreviousP.X
+                            StructuralPartition(0).Basis.U.Y = StructuralNode.Y - PreviousP.Y
+                            StructuralPartition(0).Basis.U.Z = StructuralNode.Z - PreviousP.Z
                             StructuralPartition(0).Basis.U.Normalize()
 
                             StructuralPartition(0).Basis.W.FromVectorProduct(StructuralPartition(0).Basis.V, StructuralPartition(0).Basis.U)
@@ -1807,19 +1805,19 @@ Namespace VisualModel.Models.Components
 
                     End If
 
-                    LocalPartition.Basis.V.X = tePoint.X - lePoint.X
-                    LocalPartition.Basis.V.Y = tePoint.Y - lePoint.Y
-                    LocalPartition.Basis.V.Z = tePoint.Z - lePoint.Z
+                    LocalPartition.Basis.V.X = TrailingEdgePoint.X - LeadingEdgePoint.X
+                    LocalPartition.Basis.V.Y = TrailingEdgePoint.Y - LeadingEdgePoint.Y
+                    LocalPartition.Basis.V.Z = TrailingEdgePoint.Z - LeadingEdgePoint.Z
                     LocalPartition.Basis.V.Normalize()
 
-                    If (sp > 0) Then
+                    If (NodalStripIndex > 0) Then
                         LocalPartition.Basis.W.FromVectorProduct(LocalPartition.Basis.V, LocalPartition.Basis.U)
                         LocalPartition.Basis.V.FromVectorProduct(LocalPartition.Basis.U, LocalPartition.Basis.W)
                     End If
 
                     _StructuralPartition.Add(LocalPartition)
 
-                    sp += 1
+                    NodalStripIndex += 1
 
                 Next
 
@@ -2181,10 +2179,16 @@ Namespace VisualModel.Models.Components
 
             Dim Data As String = ""
 
-            Data += "Surface data:" & vbNewLine
-            Data += String.Format("Total number of nodal points: {0}", Mesh.Nodes.Count) & vbNewLine
-            Data += String.Format("Total number of vortex rings: {0}", Mesh.Panels.Count) & vbNewLine
-            Data += String.Format("Total number of vortex segments: {0}", Mesh.Lattice.Count) & vbNewLine
+            Dim Factor As Integer = 1
+            If Symmetric Then
+                Factor = 2
+            End If
+
+            Data += "Mesh data:" & vbNewLine
+            Data += String.Format("Total number of nodal points: {0}", Factor * Mesh.Nodes.Count) & vbNewLine
+            Data += String.Format("Total number of vortex rings: {0}", Factor * Mesh.Panels.Count) & vbNewLine
+            Data += String.Format("Total number of vortex segments: {0}", Factor * Mesh.Lattice.Count) & vbNewLine
+            Data += vbNewLine
 
             Me.CalculateControlPointsAndNormals()
 
@@ -2198,6 +2202,9 @@ Namespace VisualModel.Models.Components
 
             Next
 
+            TotalArea *= Factor
+
+            Data += "Surface data:" & vbNewLine
             Data += String.Format("Total area: {0:F6}m²", TotalArea) & vbNewLine
 
             ' Calculate surface length:
@@ -2211,6 +2218,9 @@ Namespace VisualModel.Models.Components
                 ProjectedWingspan += Panel.Length * Math.Abs(Math.Cos(Math.PI * Panel.Dihedral / 180))
 
             Next
+
+            TotalWingspan *= Factor
+            ProjectedWingspan *= Factor
 
             Data += String.Format("Wingspan: {0:F6}m", TotalWingspan) & vbNewLine
             Data += String.Format("Projected wingspan: {0:F6}m", ProjectedWingspan) & vbNewLine
