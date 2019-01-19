@@ -28,6 +28,7 @@ Public Class MainRibbon
     Public Event PushMessage(msg As String)
     Public Event EditSurface(ByRef Surface As Surface)
     Public Event EditVelocityPlane()
+    Public Event ProjectCleared()
 
     Private CalculationBussy As Boolean = False
     Private FormReport As New FormReport
@@ -190,6 +191,8 @@ Public Class MainRibbon
 
         End Select
 
+        RaiseEvent ProjectCleared()
+
         Try
 
             Dim dlgOpenFile As New OpenFileDialog()
@@ -233,8 +236,8 @@ Public Class MainRibbon
 
         Catch ex As Exception
 
-            Dim GuardarConOtroNombre As MsgBoxResult = MsgBox("An exception was raised while saving the project! Do you wish to save it under a different name?", MsgBoxStyle.OkCancel, "Error!")
-            If GuardarConOtroNombre = MsgBoxResult.Ok Then SaveProjectAs()
+            Dim SaveUnderDifferentName As MsgBoxResult = MsgBox("An exception was raised while saving the project! Do you wish to save it under a different name?", MsgBoxStyle.OkCancel, "Error!")
+            If SaveUnderDifferentName = MsgBoxResult.Ok Then SaveProjectAs()
 
         End Try
 
@@ -245,13 +248,13 @@ Public Class MainRibbon
         Dim Result As Boolean = False
 
         Try
-            Dim Respuesta As DialogResult
+            Dim Response As DialogResult
 
             Dim dlgSaveFile As New SaveFileDialog()
 
             dlgSaveFile.Filter = "Vogel proyect files (*.vog)|*.vog"
-            Respuesta = dlgSaveFile.ShowDialog()
-            If Respuesta = DialogResult.OK Then
+            Response = dlgSaveFile.ShowDialog()
+            If Response = DialogResult.OK Then
                 ProjectRoot.FilePath = dlgSaveFile.FileName
                 ProjectRoot.WriteToXML()
                 Result = True
@@ -279,12 +282,14 @@ Public Class MainRibbon
                 SaveProject()
                 ProjectRoot.RestartProject()
                 RefreshListOfObjects()
+                RaiseEvent ProjectCleared()
                 RaiseEvent SwitchToDesignMode()
 
             Case MsgBoxResult.No
 
                 ProjectRoot.RestartProject()
                 RefreshListOfObjects()
+                RaiseEvent ProjectCleared()
                 RaiseEvent SwitchToDesignMode()
 
             Case MsgBoxResult.Cancel

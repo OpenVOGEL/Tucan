@@ -55,6 +55,7 @@ Public Class MainForm
         AddHandler mrRibbon.EditVelocityPlane, AddressOf ShowVelocityPlaneFrame
         AddHandler mrRibbon.SwitchToDesignMode, AddressOf SwitchToDesignMode
         AddHandler mrRibbon.SwitchToResultsMode, AddressOf SwitchToPostprocessMode
+        AddHandler mrRibbon.ProjectCleared, AddressOf CloseEditors
         AddHandler ProjectRoot.PathChanged, AddressOf ChangeTitle
 
         ' Read command line arguments:
@@ -305,6 +306,10 @@ Public Class MainForm
 
         End If
 
+    End Sub
+
+    Public Sub CloseEditors()
+        ContractLeftPanel()
     End Sub
 
     Private Sub ContractLeftPanel()
