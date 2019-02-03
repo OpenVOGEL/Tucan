@@ -106,8 +106,8 @@ Public Class WingControl
 
         If rbConstantSpacement.Checked Then
             Surface.CurrentRegion.SpacementType = WingRegion.Spacements.Constant
-        ElseIf rbCuadraticSpacement.Checked Then
-            Surface.CurrentRegion.SpacementType = WingRegion.Spacements.Cuadratic
+        ElseIf rbLinearSpacement.Checked Then
+            Surface.CurrentRegion.SpacementType = WingRegion.Spacements.Linear
         Else
             Surface.CurrentRegion.SpacementType = WingRegion.Spacements.Constant
         End If
@@ -239,12 +239,10 @@ Public Class WingControl
         nudTwistingAxis.Value = Surface.CurrentRegion.TwistAxis
 
         Select Case Surface.CurrentRegion.SpacementType
-            Case 1
+            Case WingRegion.Spacements.Constant
                 rbConstantSpacement.Checked = True
-            Case 2
-                rbCuadraticSpacement.Checked = True
-            Case 3
-                rbCubicSpacement.Checked = True
+            Case WingRegion.Spacements.Linear
+                rbLinearSpacement.Checked = True
         End Select
 
         cbFlapped.Checked = Surface.CurrentRegion.Flapped
@@ -591,7 +589,7 @@ Public Class WingControl
         CollectSurfaceData()
     End Sub
 
-    Private Sub CambiarEspaciamientoCuadratico(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles rbCuadraticSpacement.CheckedChanged
+    Private Sub CambiarEspaciamientoCuadratico(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles rbLinearSpacement.CheckedChanged
         CollectSurfaceData()
     End Sub
 
@@ -696,10 +694,6 @@ Public Class WingControl
     Private Sub BloquearContenido(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnLockSurface.Click
         Surface.Lock = Not Surface.Lock
         Me.ShowSurfaceState()
-    End Sub
-
-    Private Sub EcultarPE_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles EcultarPE.Click
-        PanelEspaciamiento.Hide()
     End Sub
 
     Private Sub nudArea_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles nudArea.ValueChanged
@@ -814,12 +808,10 @@ Public Class WingControl
 
 #Region " Others "
 
-    Private Sub Espaciamiento_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnSpacement.Click
+    Private Sub Espaciamiento_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
         Dim Posicion As System.Drawing.Point
         Posicion.X = 22
         Posicion.Y = 40
-        Me.PanelEspaciamiento.Location = Posicion
-        Me.PanelEspaciamiento.Show()
     End Sub
 
     Private Sub ShowSurfaceState()

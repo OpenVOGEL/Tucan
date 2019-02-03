@@ -38,9 +38,7 @@ Namespace VisualModel.Models.Components
         Public Enum Spacements As Integer
 
             Constant = 1
-            Cuadratic = 2
-            Qubic = 3
-            Sinus = 4
+            Linear = 2
 
         End Enum
 
@@ -1118,13 +1116,9 @@ Namespace VisualModel.Models.Components
 
                             Y_stripe = Stramo * Y
 
-                        Case WingRegion.Spacements.Cuadratic
+                        Case WingRegion.Spacements.Linear
 
                             Y_stripe = B1 * Y + C1 * Y ^ 2
-
-                        Case WingRegion.Spacements.Qubic
-
-                            Y_stripe = B2 * Y + C2 * Y ^ 2 + D2 * Y ^ 3
 
                     End Select
 
