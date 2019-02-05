@@ -29,20 +29,20 @@ Namespace VisualModel.Models.Components
     ''' </summary>
     Public Class VelocityPlane
 
-        Private XYZVP(0) As EVector3
-        Private XYZVI(0) As EVector3
+        Private XYZVP(0) As Vector3
+        Private XYZVI(0) As Vector3
 
-        Public Origin As New EVector3
+        Public Origin As New Vector3
 
-        Private Direction1 As New EVector3
-        Private Direction2 As New EVector3
+        Private Direction1 As New Vector3
+        Private Direction2 As New Vector3
 
-        Private Corner1 As New EVector3
-        Private Corner2 As New EVector3
-        Private Corner3 As New EVector3
-        Private Corner4 As New EVector3
+        Private Corner1 As New Vector3
+        Private Corner2 As New Vector3
+        Private Corner3 As New Vector3
+        Private Corner4 As New Vector3
 
-        Public NormalVector As New EVector3
+        Public NormalVector As New Vector3
 
         Public Extension1 As Double = 1.0F
         Public Extension2 As Double = 1.0F
@@ -86,25 +86,25 @@ Namespace VisualModel.Models.Components
             End Get
         End Property
 
-        Public ReadOnly Property GetNode(ByVal Node As Integer) As EVector3
+        Public ReadOnly Property GetNode(ByVal Node As Integer) As Vector3
             Get
                 If 0 < Node <= XYZVP.Length Then
                     Return XYZVP(Node)
                 Else
-                    Return New EVector3
+                    Return New Vector3
                 End If
             End Get
         End Property
 
-        Public Property GetInducedVelocity(ByVal Node As Integer) As EVector3
+        Public Property GetInducedVelocity(ByVal Node As Integer) As Vector3
             Get
                 If 0 < Node <= XYZVI.Length Then
                     Return XYZVI(Node)
                 Else
-                    Return New EVector3
+                    Return New Vector3
                 End If
             End Get
-            Set(ByVal value As EVector3)
+            Set(ByVal value As Vector3)
                 If 0 < Node <= XYZVI.Length Then
                     XYZVI(Node) = value
                 End If
@@ -152,25 +152,25 @@ Namespace VisualModel.Models.Components
             ReDim Preserve Me.XYZVP(Dimension)
             ReDim Preserve Me.XYZVI(Dimension)
 
-            Me.XYZVI(Dimension) = New EVector3
+            Me.XYZVI(Dimension) = New Vector3
 
-            Me.XYZVP(Dimension) = New EVector3
+            Me.XYZVP(Dimension) = New Vector3
             Me.XYZVP(Dimension).X = X
             Me.XYZVP(Dimension).Y = Y
             Me.XYZVP(Dimension).Z = Z
 
         End Sub
 
-        Private Sub AddControlPoint(ByVal Point As EVector3)
+        Private Sub AddControlPoint(ByVal Point As Vector3)
 
             Dim Dimension As Integer = XYZVP.Length
 
             ReDim Preserve Me.XYZVP(Dimension)
             ReDim Preserve Me.XYZVI(Dimension)
 
-            Me.XYZVI(Dimension) = New EVector3
+            Me.XYZVI(Dimension) = New Vector3
 
-            Me.XYZVP(Dimension) = New EVector3
+            Me.XYZVP(Dimension) = New Vector3
             Me.XYZVP(Dimension).X = Point.X
             Me.XYZVP(Dimension).Y = Point.Y
             Me.XYZVP(Dimension).Z = Point.Z
@@ -191,7 +191,7 @@ Namespace VisualModel.Models.Components
 
             Dim Coordinate1 As Double
             Dim Coordinate2 As Double
-            Dim Punto As New EVector3
+            Dim Punto As New Vector3
 
             Direction1.Normalize()
             Direction2.Normalize()
@@ -295,9 +295,9 @@ Namespace VisualModel.Models.Components
 
         End Sub
 
-        Public Sub RepresentVelocityVector(ByVal gl As OpenGL, ByVal StreamVelocity As EVector3, ByVal Position As EVector3)
+        Public Sub RepresentVelocityVector(ByVal gl As OpenGL, ByVal StreamVelocity As Vector3, ByVal Position As Vector3)
 
-            Dim Velocity As New EVector3
+            Dim Velocity As New Vector3
 
             Velocity.Assign(StreamVelocity)
 

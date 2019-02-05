@@ -59,7 +59,7 @@ Namespace CalculationModel.Models.Aero
         ''' <summary>
         ''' Reasigns velocity at each control point.
         ''' </summary>
-        Public Overloads Overrides Sub ClearVelocity(ByVal Velocity As EVector3)
+        Public Overloads Overrides Sub ClearVelocity(ByVal Velocity As Vector3)
 
             For Each VortexRing In VortexRings
                 VortexRing.VelocityW.Assign(Velocity)
@@ -90,7 +90,7 @@ Namespace CalculationModel.Models.Aero
         Public Sub PopulateWakeRings(Dt As Double,
                                      TimeStep As Integer,
                                      ExtendWakes As Boolean,
-                                     Extension As EVector3)
+                                     Extension As Vector3)
 
             Dim N1 As Integer
             Dim N2 As Integer
@@ -167,7 +167,7 @@ Namespace CalculationModel.Models.Aero
         Public Sub PopulateWakeRingsAndVortices(Dt As Double,
                                                 TimeStep As Integer,
                                                 ExtendWakes As Boolean,
-                                                Extension As EVector3)
+                                                Extension As Vector3)
 
             Dim N1 As Integer
             Dim N2 As Integer
@@ -324,7 +324,7 @@ Namespace CalculationModel.Models.Aero
         Public Sub PopulateWakeVortices(Dt As Double,
                                         TimeStep As Integer,
                                         ExtendWakes As Boolean,
-                                        Extension As EVector3)
+                                        Extension As Vector3)
 
             For Each Wake As Wake In Wakes
 

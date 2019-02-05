@@ -429,7 +429,7 @@ Public Class FormCamberLine
                 Dim x As Double = 0.5 * (selectedCamber.Nodes(SelectedPointIndex).X + selectedCamber.Nodes(SelectedPointIndex + 1).X)
                 Dim y As Double = 0.5 * (selectedCamber.Nodes(SelectedPointIndex).Y + selectedCamber.Nodes(SelectedPointIndex + 1).Y)
 
-                Dim newNode As New EVector2(x, y)
+                Dim newNode As New Vector2(x, y)
 
                 selectedCamber.Nodes.Insert(SelectedPointIndex, newNode)
 

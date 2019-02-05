@@ -108,7 +108,7 @@ Namespace VisualModel.Models.Components
 
                     Dim angle As Double = 2 * Math.PI * j / (Resolution + 1)
 
-                    Dim p As New EVector3(x, r * Math.Cos(angle), r * Math.Sin(angle))
+                    Dim p As New Vector3(x, r * Math.Cos(angle), r * Math.Sin(angle))
 
                     Mesh.Nodes.Add(New NodalPoint(p))
 
@@ -172,7 +172,7 @@ Namespace VisualModel.Models.Components
 
             If VisualProperties.ShowSurface Then
 
-                Dim SurfaceColor As New EVector3
+                Dim SurfaceColor As New Vector3
 
                 If Not Active Then
                     SurfaceColor.X = VisualProperties.ColorSurface.R / 255
@@ -252,8 +252,8 @@ Namespace VisualModel.Models.Components
 
                 gl.LineWidth(VisualProperties.ThicknessMesh)
 
-                Dim Node1 As EVector3
-                Dim Node2 As EVector3
+                Dim Node1 As Vector3
+                Dim Node2 As Vector3
 
                 gl.Color(VisualProperties.ColorMesh.R / 255, VisualProperties.ColorMesh.G / 255, VisualProperties.ColorMesh.B / 255)
 

@@ -44,7 +44,7 @@ Namespace CalculationModel.Models.Aero.Components
         ''' <param name="p2">Point 2</param>
         ''' <returns>The unit doublets distribution</returns>
         ''' <remarks></remarks>
-        Public Shared Function GetTriangularUnitSourcePotential(ByVal p As EVector3, ByVal p0 As EVector3, ByVal p1 As EVector3, ByVal p2 As EVector3, Optional ByVal WithDiagonal As Boolean = True) As Double
+        Public Shared Function GetTriangularUnitSourcePotential(ByVal p As Vector3, ByVal p0 As Vector3, ByVal p1 As Vector3, ByVal p2 As Vector3, Optional ByVal WithDiagonal As Boolean = True) As Double
 
             ' Directional versors:
 
@@ -174,7 +174,7 @@ Namespace CalculationModel.Models.Aero.Components
         ''' <param name="p2">Point 2</param>
         ''' <returns>The unit doublets distribution</returns>
         ''' <remarks></remarks>
-        Public Shared Function GetTriangularUnitDoubletPotential(ByVal p As EVector3, ByVal p0 As EVector3, ByVal p1 As EVector3, ByVal p2 As EVector3, _
+        Public Shared Function GetTriangularUnitDoubletPotential(ByVal p As Vector3, ByVal p0 As Vector3, ByVal p1 As Vector3, ByVal p2 As Vector3, _
                                                                  Optional ByVal WithDiagonal20 As Boolean = True, _
                                                                  Optional ByVal WithDiagonal12 As Boolean = True) As Double
 
@@ -302,7 +302,7 @@ Namespace CalculationModel.Models.Aero.Components
         ''' <param name="Velocity"></param>
         ''' <param name="factor"></param>
         ''' <remarks></remarks>
-        Public Shared Sub AddTriangularSourceVelocity(ByVal p As EVector3, ByVal p0 As EVector3, ByVal p1 As EVector3, ByVal p2 As EVector3, ByRef Velocity As EVector3, ByVal factor As Double, Optional ByVal WithDiagonal As Boolean = True)
+        Public Shared Sub AddTriangularSourceVelocity(ByVal p As Vector3, ByVal p0 As Vector3, ByVal p1 As Vector3, ByVal p2 As Vector3, ByRef Velocity As Vector3, ByVal factor As Double, Optional ByVal WithDiagonal As Boolean = True)
 
             ' Directional versors:
 
@@ -457,7 +457,7 @@ Namespace CalculationModel.Models.Aero.Components
         ''' <param name="reversed">Indicates if the normal has been reversed</param>
         ''' <returns>The unit doublets distribution</returns>
         ''' <remarks></remarks>
-        Public Shared Function GetQuadUnitSourcePotential_MeanPlane(p As EVector3, p0 As EVector3, p1 As EVector3, p2 As EVector3, p3 As EVector3, n As EVector3, reversed As Boolean) As Double
+        Public Shared Function GetQuadUnitSourcePotential_MeanPlane(p As Vector3, p0 As Vector3, p1 As Vector3, p2 As Vector3, p3 As Vector3, n As Vector3, reversed As Boolean) As Double
 
             Dim cX As Double = 0.25 * (p0.X + p1.X + p2.X + p3.X)
             Dim cY As Double = 0.25 * (p0.Y + p1.Y + p2.Y + p3.Y)
@@ -615,7 +615,7 @@ Namespace CalculationModel.Models.Aero.Components
         ''' <param name="reversed">Indicates if the normal has been reversed</param>
         ''' <returns>The unit doublets distribution</returns>
         ''' <remarks></remarks>
-        Public Shared Function GetQuadUnitDoubletPotential_MeanPlane(p As EVector3, p0 As EVector3, p1 As EVector3, p2 As EVector3, p3 As EVector3, n As EVector3, reversed As Boolean) As Double
+        Public Shared Function GetQuadUnitDoubletPotential_MeanPlane(p As Vector3, p0 As Vector3, p1 As Vector3, p2 As Vector3, p3 As Vector3, n As Vector3, reversed As Boolean) As Double
 
             Dim cX As Double = 0.25 * (p0.X + p1.X + p2.X + p3.X)
             Dim cY As Double = 0.25 * (p0.Y + p1.Y + p2.Y + p3.Y)
@@ -768,7 +768,7 @@ Namespace CalculationModel.Models.Aero.Components
         ''' <param name="factor"></param>
         ''' <param name="reversed"></param>
         ''' <remarks></remarks>
-        Public Shared Sub AddQuadSourceVelocity_MeanPlane(p As EVector3, p0 As EVector3, p1 As EVector3, p2 As EVector3, p3 As EVector3, n As EVector3, ByRef Velocity As EVector3, factor As Double, reversed As Boolean)
+        Public Shared Sub AddQuadSourceVelocity_MeanPlane(p As Vector3, p0 As Vector3, p1 As Vector3, p2 As Vector3, p3 As Vector3, n As Vector3, ByRef Velocity As Vector3, factor As Double, reversed As Boolean)
 
             Dim cX As Double = 0.25 * (p0.X + p1.X + p2.X + p3.X)
             Dim cY As Double = 0.25 * (p0.Y + p1.Y + p2.Y + p3.Y)

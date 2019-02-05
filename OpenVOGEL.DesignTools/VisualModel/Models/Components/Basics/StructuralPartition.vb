@@ -30,7 +30,7 @@ Namespace VisualModel.Models.Components.Basics
         ''' Position of this partition
         ''' </summary>
         ''' <remarks></remarks>
-        Public P As EVector3
+        Public P As Vector3
 
         Public Basis As EBase3
 
@@ -42,9 +42,9 @@ Namespace VisualModel.Models.Components.Basics
 
         Public LocalChord As Double
 
-        Public Sub New(ByVal p As EVector3, ByVal section As Section)
+        Public Sub New(ByVal p As Vector3, ByVal section As Section)
 
-            Me.P = New EVector3(p.X, p.Y, p.Z)
+            Me.P = New Vector3(p.X, p.Y, p.Z)
             LocalSection = New Section
             LocalSection.Assign(section)
 
@@ -52,7 +52,7 @@ Namespace VisualModel.Models.Components.Basics
 
         Public Sub New()
 
-            P = New EVector3()
+            P = New Vector3()
             LocalSection = New Section
             Basis = New EBase3()
 

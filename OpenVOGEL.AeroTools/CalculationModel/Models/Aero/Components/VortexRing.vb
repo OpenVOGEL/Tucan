@@ -37,18 +37,18 @@ Namespace CalculationModel.Models.Aero.Components
         ''' <summary>
         ''' Total velocity at the control point.
         ''' </summary>
-        Property VelocityT As EVector3
+        Property VelocityT As Vector3
 
         ''' <summary>
         ''' This is the velocity induced by the wakes. 
         ''' </summary>
-        Property VelocityW As EVector3
+        Property VelocityW As Vector3
 
         ''' <summary>
         ''' Surface velocity at the control point.
         ''' </summary>
         ''' <remarks></remarks>
-        Property VelocityS As EVector3
+        Property VelocityS As Vector3
 
         ''' <summary>
         ''' Potential induced by wake doublets.
@@ -102,7 +102,7 @@ Namespace CalculationModel.Models.Aero.Components
         ''' <value></value>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        ReadOnly Property Normal As EVector3
+        ReadOnly Property Normal As Vector3
 
         ''' <summary>
         ''' Control point used to impose local boundary conditions.
@@ -110,7 +110,7 @@ Namespace CalculationModel.Models.Aero.Components
         ''' <value></value>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        ReadOnly Property ControlPoint As EVector3
+        ReadOnly Property ControlPoint As Vector3
 
         ''' <summary>
         ''' Control point used to impose local boundary conditions.
@@ -118,7 +118,7 @@ Namespace CalculationModel.Models.Aero.Components
         ''' <value></value>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        ReadOnly Property OuterControlPoint As EVector3
+        ReadOnly Property OuterControlPoint As Vector3
 
         ''' <summary>
         ''' Ring area.
@@ -155,7 +155,7 @@ Namespace CalculationModel.Models.Aero.Components
         ''' Calculation has been optimized by replacing object subs by local code.
         ''' Value types are used on internal calculations (other versions used reference type EVector3).
         ''' </remarks>
-        Function GiveDoubletVelocityInfluence(ByVal Point As EVector3, Optional ByVal CutOff As Double = 0.0001, Optional ByVal WithG As Boolean = True) As EVector3
+        Function GiveDoubletVelocityInfluence(ByVal Point As Vector3, Optional ByVal CutOff As Double = 0.0001, Optional ByVal WithG As Boolean = True) As Vector3
 
         ''' <summary>
         ''' Calculates BiotSavart vector at a given point. If WidthG is true vector is scaled by G.
@@ -164,13 +164,18 @@ Namespace CalculationModel.Models.Aero.Components
         ''' Calculation has been optimized by replacing object subs by local code.
         ''' Value types are used on internal calculations (other versions used reference type EVector3).
         ''' </remarks>
-        Sub AddDoubletVelocityInfluence(ByRef Vector As EVector3, ByVal Point As EVector3, Optional ByVal CutOff As Double = 0.0001, Optional ByVal WithG As Boolean = True)
+        Sub AddDoubletVelocityInfluence(ByRef Vector As Vector3,
+                                        ByVal Point As Vector3,
+                                        Optional ByVal CutOff As Double = 0.0001,
+                                        Optional ByVal WithG As Boolean = True)
 
         ''' <summary>
         ''' Adds the influence of the source distribution in the velocity.
         ''' </summary>
         ''' <remarks></remarks>
-        Sub AddSourceVelocityInfluence(ByRef Vector As EVector3, ByVal Point As EVector3, Optional ByVal CutOff As Double = 0.0001, Optional ByVal WithS As Boolean = True)
+        Sub AddSourceVelocityInfluence(ByRef Vector As Vector3,
+                                       ByVal Point As Vector3,
+                                       Optional ByVal WithS As Boolean = True)
 
         ''' <summary>
         ''' Returns the influence of the velocity in the potential.
@@ -178,7 +183,7 @@ Namespace CalculationModel.Models.Aero.Components
         ''' <param name="Point">Point influence wants to be calculated.</param>
         ''' <returns>The velocity potential influence coefficient.</returns>
         ''' <remarks></remarks>
-        Function GiveDoubletPotentialInfluence(ByVal Point As EVector3, Optional ByVal WithG As Boolean = True) As Double
+        Function GiveDoubletPotentialInfluence(ByVal Point As Vector3, Optional ByVal WithG As Boolean = True) As Double
 
         ''' <summary>
         ''' Returns the influence coefficient of the velocity potential.
@@ -186,7 +191,7 @@ Namespace CalculationModel.Models.Aero.Components
         ''' <param name="Point">Point influence wants to be calculated.</param>
         ''' <returns>The velocity potential influence coefficient.</returns>
         ''' <remarks></remarks>
-        Function GiveSourcePotentialInfluence(ByVal Point As EVector3, Optional ByVal WithS As Boolean = True) As Double
+        Function GiveSourcePotentialInfluence(ByVal Point As Vector3, Optional ByVal WithS As Boolean = True) As Double
 
         ''' <summary>
         ''' Computes the induced velocity at a given point by counting only the streamwise vortices.
@@ -196,7 +201,7 @@ Namespace CalculationModel.Models.Aero.Components
         ''' <param name="N2">Second streamwise segment</param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Function StreamwiseInfluence(ByVal Point As EVector3, ByVal N1 As Integer, ByVal N2 As Integer, Optional ByVal CutOff As Double = 0.0001) As EVector3
+        Function StreamwiseInfluence(ByVal Point As Vector3, ByVal N1 As Integer, ByVal N2 As Integer, Optional ByVal CutOff As Double = 0.0001) As Vector3
 
         ''' <summary>
         ''' Calculates the jump of pressure through the vortex ring.

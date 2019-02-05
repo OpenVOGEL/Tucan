@@ -23,8 +23,8 @@ Namespace Algebra.EuclideanSpace
     ''' <remarks></remarks>
     Public Class Algebra
 
-        Public Overloads Shared Function VectorProduct(ByVal Vector1 As EVector3, ByVal Vector2 As EVector3) As EVector3
-            Dim Producto As New EVector3
+        Public Overloads Shared Function VectorProduct(ByVal Vector1 As Vector3, ByVal Vector2 As Vector3) As Vector3
+            Dim Producto As New Vector3
 
             Producto.X = Vector1.Y * Vector2.Z - Vector1.Z * Vector2.Y
             Producto.Y = -Vector1.X * Vector2.Z + Vector2.X * Vector1.Z
@@ -34,7 +34,7 @@ Namespace Algebra.EuclideanSpace
 
         End Function
 
-        Public Overloads Shared Function InnerProduct(ByVal Vector1 As EVector3, ByVal Vector2 As EVector3) As Double
+        Public Overloads Shared Function InnerProduct(ByVal Vector1 As Vector3, ByVal Vector2 As Vector3) As Double
 
             Dim Producto As Double
 
@@ -44,9 +44,9 @@ Namespace Algebra.EuclideanSpace
 
         End Function
 
-        Public Overloads Shared Function SubstractVectors(ByVal Vector1 As EVector3, ByVal Vector2 As EVector3) As EVector3
+        Public Overloads Shared Function SubstractVectors(ByVal Vector1 As Vector3, ByVal Vector2 As Vector3) As Vector3
 
-            Dim Resta As New EVector3
+            Dim Resta As New Vector3
 
             Resta.X = Vector1.X - Vector2.X
             Resta.Y = Vector1.Y - Vector2.Y
@@ -56,9 +56,9 @@ Namespace Algebra.EuclideanSpace
 
         End Function
 
-        Public Overloads Shared Function AddVectors(ByVal Vector1 As EVector3, ByVal Vector2 As EVector3) As EVector3
+        Public Overloads Shared Function AddVectors(ByVal Vector1 As Vector3, ByVal Vector2 As Vector3) As Vector3
 
-            Dim Resta As New EVector3
+            Dim Resta As New Vector3
 
             Resta.X = Vector1.X + Vector2.X
             Resta.Y = Vector1.Y + Vector2.Y
@@ -68,9 +68,9 @@ Namespace Algebra.EuclideanSpace
 
         End Function
 
-        Public Overloads Shared Function ScalarProduct(ByVal Escalar As Double, ByVal Vector As EVector3) As EVector3
+        Public Overloads Shared Function ScalarProduct(ByVal Escalar As Double, ByVal Vector As Vector3) As Vector3
 
-            Dim Resultado As New EVector3
+            Dim Resultado As New Vector3
 
             Resultado.X = Escalar * Vector.X
             Resultado.Y = Escalar * Vector.Y

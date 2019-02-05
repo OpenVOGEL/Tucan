@@ -111,13 +111,13 @@ Namespace VisualModel.Models.Components.Basics
         ''' Position of the surface in the global coordinates system.
         ''' </summary>
         ''' <returns></returns>
-        Public Property Position As New EVector3
+        Public Property Position As New Vector3
 
         ''' <summary>
         ''' Center of rotation of the surface in the local coordinates system.
         ''' </summary>
         ''' <returns></returns>
-        Public Property CenterOfRotation As New EVector3
+        Public Property CenterOfRotation As New Vector3
 
         ''' <summary>
         ''' Orientation of the surface.
@@ -143,7 +143,7 @@ Namespace VisualModel.Models.Components.Basics
         ''' Moves the origin of the local coordinates to a given point.
         ''' </summary>
         ''' <param name="Vector"></param>
-        Public Overridable Sub MoveTo(ByVal Vector As EVector3) Implements IOperational.MoveTo
+        Public Overridable Sub MoveTo(ByVal Vector As Vector3) Implements IOperational.MoveTo
 
             Position.X = Vector.X
             Position.Y = Vector.Y
@@ -158,7 +158,7 @@ Namespace VisualModel.Models.Components.Basics
         ''' </summary>
         ''' <param name="Point"></param>
         ''' <param name="Ori"></param>
-        Public Overridable Sub Orientate(ByVal Point As EVector3, ByVal Ori As EulerAngles) Implements IOperational.Orientate
+        Public Overridable Sub Orientate(ByVal Point As Vector3, ByVal Ori As EulerAngles) Implements IOperational.Orientate
 
             Orientation.Psi = Ori.Psi
             Orientation.Tita = Ori.Tita
@@ -191,7 +191,7 @@ Namespace VisualModel.Models.Components.Basics
         ''' <param name="P2"></param>
         ''' <param name="P3"></param>
         ''' <param name="P4"></param>
-        Public Overridable Sub Align(ByVal P1 As EVector3, ByVal P2 As EVector3, ByVal P3 As EVector3, ByVal P4 As EVector3) Implements IOperational.Align
+        Public Overridable Sub Align(ByVal P1 As Vector3, ByVal P2 As Vector3, ByVal P3 As Vector3, ByVal P4 As Vector3) Implements IOperational.Align
 
             Mesh.Align()
 

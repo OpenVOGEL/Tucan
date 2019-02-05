@@ -26,7 +26,7 @@ Namespace VisualModel.Tools.Properties
     Public Class VisualizationParameters
 
         Public Property CameraOrientation As EulerAngles
-        Public Property CameraPosition As EVector3
+        Public Property CameraPosition As Vector3
         Public Property Proximity As Double = 1
         Public Property OrthoProjection As Boolean
         Public Property ReferenceFrame As New ReferenceFrame
@@ -34,7 +34,7 @@ Namespace VisualModel.Tools.Properties
         Public Property ScreenColor As Color = Color.FromArgb(50, 50, 50)
         Public Property AllowLineSmoothing As Boolean = True
         Public Property AllowAlphaBlending As Boolean = True
-        Public Property MouseStartPosition As EVector2
+        Public Property MouseStartPosition As Vector2
         Public Property Panning As Boolean = False
         Public Property Rotating As Boolean = False
 
@@ -45,7 +45,7 @@ Namespace VisualModel.Tools.Properties
             CameraOrientation.Tita = 0.0
             CameraOrientation.Fi = 0.0
 
-            CameraPosition = New EVector3
+            CameraPosition = New Vector3
             CameraPosition.X = 0
             CameraPosition.Y = 0
             CameraPosition.Z = 0

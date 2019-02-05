@@ -35,9 +35,9 @@ Namespace CalculationModel.Models.Aero.Components
         ''' </summary>
         Public Sub New(ByVal N1 As Node, ByVal N2 As Node, ByVal N3 As Node, ByVal N4 As Node, ByVal IndexL As Integer, ByVal Reversed As Boolean, IsSlender As Boolean)
 
-            VelocityW = New EVector3
-            VelocityT = New EVector3
-            VelocityS = New EVector3
+            VelocityW = New Vector3
+            VelocityT = New Vector3
+            VelocityS = New Vector3
 
             _Nodes(0) = N1
             _Nodes(1) = N2
@@ -58,9 +58,9 @@ Namespace CalculationModel.Models.Aero.Components
         ''' </summary>
         Public Sub New(ByVal N1 As Node, ByVal N2 As Node, ByVal N3 As Node, ByVal N4 As Node, ByVal G As Double, ByVal IndexL As Integer, ByVal Reversed As Boolean, ByVal IsSlender As Boolean)
 
-            VelocityW = New EVector3
-            VelocityT = New EVector3
-            VelocityS = New EVector3
+            VelocityW = New Vector3
+            VelocityT = New Vector3
+            VelocityS = New Vector3
 
             _Nodes(0) = N1
             _Nodes(1) = N2
@@ -86,25 +86,25 @@ Namespace CalculationModel.Models.Aero.Components
         End Property
 
         Private _Nodes(3) As Node ' Contains refference to existing corner nodes. Four nodes always available.
-        Private _Normal As New EVector3
-        Private _ControlPoint As New EVector3
-        Private _OuterControlPoint As EVector3
+        Private _Normal As New Vector3
+        Private _ControlPoint As New Vector3
+        Private _OuterControlPoint As Vector3
         Private _Area As New Double
 
         ''' <summary>
         ''' This is the velocity induced by the wakes plus the stream velocity.
         ''' </summary>
-        Public Property VelocityW As EVector3 Implements VortexRing.VelocityW
+        Public Property VelocityW As Vector3 Implements VortexRing.VelocityW
 
         ''' <summary>
         ''' Total velocity at the control point.
         ''' </summary>
-        Public Property VelocityT As EVector3 Implements VortexRing.VelocityT
+        Public Property VelocityT As Vector3 Implements VortexRing.VelocityT
 
         ''' <summary>
         ''' Surface velocity at the control point
         ''' </summary>
-        Public Property VelocityS As EVector3 Implements VortexRing.VelocityS
+        Public Property VelocityS As Vector3 Implements VortexRing.VelocityS
 
         ''' <summary>
         ''' Local circulation.
@@ -219,7 +219,7 @@ Namespace CalculationModel.Models.Aero.Components
         ''' <value></value>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public ReadOnly Property Normal As EVector3 Implements VortexRing.Normal
+        Public ReadOnly Property Normal As Vector3 Implements VortexRing.Normal
             Get
                 Return _Normal
             End Get
@@ -231,7 +231,7 @@ Namespace CalculationModel.Models.Aero.Components
         ''' <value></value>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public ReadOnly Property ControlPoint As EVector3 Implements VortexRing.ControlPoint
+        Public ReadOnly Property ControlPoint As Vector3 Implements VortexRing.ControlPoint
             Get
                 Return _ControlPoint
             End Get
@@ -243,7 +243,7 @@ Namespace CalculationModel.Models.Aero.Components
         ''' <value></value>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        ReadOnly Property OuterControlPoint As EVector3 Implements VortexRing.OuterControlPoint
+        ReadOnly Property OuterControlPoint As Vector3 Implements VortexRing.OuterControlPoint
             Get
                 Return _OuterControlPoint
             End Get
@@ -283,7 +283,7 @@ Namespace CalculationModel.Models.Aero.Components
 
             If Not IsSlender Then
 
-                _OuterControlPoint = New EVector3
+                _OuterControlPoint = New Vector3
                 _OuterControlPoint.X = _ControlPoint.X
                 _OuterControlPoint.Y = _ControlPoint.Y
                 _OuterControlPoint.Z = _ControlPoint.Z
@@ -394,9 +394,11 @@ Namespace CalculationModel.Models.Aero.Components
         ''' Calculation has been optimized by replacing object subs by local code.
         ''' Value types are used on internal calculations (other versions used reference type EVector3).
         ''' </remarks>
-        Public Function GiveDoubletVelocityInfluence(ByVal Point As EVector3, Optional ByVal CutOff As Double = 0.0001, Optional ByVal WithG As Boolean = True) As EVector3 Implements VortexRing.GiveDoubletVelocityInfluence
+        Public Function GiveDoubletVelocityInfluence(ByVal Point As Vector3,
+                                                     Optional ByVal CutOff As Double = 0.0001,
+                                                     Optional ByVal WithG As Boolean = True) As Vector3 Implements VortexRing.GiveDoubletVelocityInfluence
 
-            Dim Vector As New EVector3
+            Dim Vector As New Vector3
 
             AddDoubletVelocityInfluence(Vector, Point, CutOff, WithG)
 
@@ -411,18 +413,21 @@ Namespace CalculationModel.Models.Aero.Components
         ''' Calculation has been optimized by replacing object subs by local code.
         ''' Value types are used on internal calculations (other versions used reference type EVector3).
         ''' </remarks>
-        Public Sub AddDoubletVelocityInfluence(ByRef Vector As EVector3, ByVal Point As EVector3, Optional ByVal CutOff As Double = 0.0001, Optional ByVal WithG As Boolean = True) Implements VortexRing.AddDoubletVelocityInfluence
+        Public Sub AddDoubletVelocityInfluence(ByRef Vector As Vector3,
+                                               ByVal Point As Vector3,
+                                               Optional ByVal CutOff As Double = 0.0001,
+                                               Optional ByVal WithG As Boolean = True) Implements VortexRing.AddDoubletVelocityInfluence
 
             Dim Den As Double
             Dim Num As Double
 
-            Dim Node1 As EVector3 = Nothing
-            Dim Node2 As EVector3 = Nothing
+            Dim Node1 As Vector3 = Nothing
+            Dim Node2 As Vector3 = Nothing
 
             Dim Lx, Ly, Lz As Double
             Dim R1x, R1y, R1z, R2x, R2y, R2z As Double
-            Dim vx, vy, vz As Double
-            Dim dx, dy, dz As Double
+            Dim Vx, Vy, Vz As Double
+            Dim Dx, Dy, Dz As Double
 
             Dim NR1 As Double
             Dim NR2 As Double
@@ -453,11 +458,11 @@ Namespace CalculationModel.Models.Aero.Components
                 R1y = Point.Y - Node1.Y
                 R1z = Point.Z - Node1.Z
 
-                vx = Ly * R1z - Lz * R1y
-                vy = Lz * R1x - Lx * R1z
-                vz = Lx * R1y - Ly * R1x
+                Vx = Ly * R1z - Lz * R1y
+                Vy = Lz * R1x - Lx * R1z
+                Vz = Lx * R1y - Ly * R1x
 
-                Den = FourPi * (vx * vx + vy * vy + vz * vz)
+                Den = FourPi * (Vx * Vx + Vy * Vy + Vz * Vz)
 
                 If Den > CutOff Then
 
@@ -470,23 +475,23 @@ Namespace CalculationModel.Models.Aero.Components
                     NR1 = 1 / Math.Sqrt(R1x * R1x + R1y * R1y + R1z * R1z)
                     NR2 = 1 / Math.Sqrt(R2x * R2x + R2y * R2y + R2z * R2z)
 
-                    dx = NR1 * R1x - NR2 * R2x
-                    dy = NR1 * R1y - NR2 * R2y
-                    dz = NR1 * R1z - NR2 * R2z
+                    Dx = NR1 * R1x - NR2 * R2x
+                    Dy = NR1 * R1y - NR2 * R2y
+                    Dz = NR1 * R1z - NR2 * R2z
 
                     If WithG Then
-                        Num = G * (Lx * dx + Ly * dy + Lz * dz)
+                        Num = G * (Lx * Dx + Ly * Dy + Lz * Dz)
                     Else
-                        Num = (Lx * dx + Ly * dy + Lz * dz)
+                        Num = (Lx * Dx + Ly * Dy + Lz * Dz)
                     End If
 
                     Factor = Num / Den
 
                     If Reversed Then Factor *= -1
 
-                    Vector.X += Factor * vx
-                    Vector.Y += Factor * vy
-                    Vector.Z += Factor * vz
+                    Vector.X += Factor * Vx
+                    Vector.Y += Factor * Vy
+                    Vector.Z += Factor * Vz
 
                 End If
 
@@ -498,7 +503,9 @@ Namespace CalculationModel.Models.Aero.Components
         ''' Adds the influence of the source distribution in the velocity.
         ''' </summary>
         ''' <remarks></remarks>
-        Sub AddSourceVelocityInfluence(ByRef Vector As EVector3, ByVal Point As EVector3, Optional ByVal CutOff As Double = 0.0001, Optional ByVal WithS As Boolean = True) Implements VortexRing.AddSourceVelocityInfluence
+        Sub AddSourceVelocityInfluence(ByRef Vector As Vector3,
+                                       ByVal Point As Vector3,
+                                       Optional ByVal WithS As Boolean = True) Implements VortexRing.AddSourceVelocityInfluence
 
             Dim factor As Double = 1.0#
 
@@ -506,7 +513,9 @@ Namespace CalculationModel.Models.Aero.Components
                 factor = S
             End If
 
-            PotentialFunctions.AddQuadSourceVelocity_MeanPlane(Point, _Nodes(0).Position, _Nodes(1).Position, _Nodes(2).Position, _Nodes(3).Position, Normal, Vector, factor, Reversed)
+            PotentialFunctions.AddQuadSourceVelocity_MeanPlane(Point,
+                                                               _Nodes(0).Position,
+                                                               _Nodes(1).Position, _Nodes(2).Position, _Nodes(3).Position, Normal, Vector, factor, Reversed)
 
         End Sub
 
@@ -519,24 +528,26 @@ Namespace CalculationModel.Models.Aero.Components
         ''' Calculation has been optimized by replacing object subs by local code.
         ''' Value types are used on internal calculations (other versions used reference type EVector3).
         ''' </remarks>
-        Public Function BiotSavart_ViscousCore(ByVal Point As EVector3, Optional ByVal SquareCoreRadius As Double = 0.0001, Optional ByVal WithG As Boolean = True) As EVector3
+        Public Function BiotSavart_ViscousCore(ByVal Point As Vector3,
+                                               Optional ByVal SquareCoreRadius As Double = 0.0001,
+                                               Optional ByVal WithG As Boolean = True) As Vector3
 
-            Dim BSVector As New EVector3
+            Dim BSVector As New Vector3
 
-            Dim sqr_normLxR1 As Double
-            Dim normL As Double
+            Dim SqrNormLxR1 As Double
+            Dim NormL As Double
             Dim Num As Double
 
-            Dim Node1 As EVector3 = Nothing
-            Dim Node2 As EVector3 = Nothing
+            Dim Node1 As Vector3 = Nothing
+            Dim Node2 As Vector3 = Nothing
 
             Dim Lx, Ly, Lz As Double
             Dim R1x, R1y, R1z, R2x, R2y, R2z As Double
             Dim LxR1x, LxR1y, LxR1z As Double
-            Dim dx, dy, dz As Double
+            Dim Dx, Dy, Dz As Double
 
-            Dim normR1inv As Double
-            Dim normR2inv As Double
+            Dim NormR1inv As Double
+            Dim NormR2inv As Double
             Dim Factor As Double
 
             For i = 1 To 4
@@ -560,11 +571,11 @@ Namespace CalculationModel.Models.Aero.Components
                 Ly = Node2.Y - Node1.Y
                 Lz = Node2.Z - Node1.Z
 
-                normL = Math.Sqrt(Lx * Lx + Ly * Ly + Lz * Lz)
+                NormL = Math.Sqrt(Lx * Lx + Ly * Ly + Lz * Lz)
 
-                Lx /= normL
-                Ly /= normL
-                Lz /= normL
+                Lx /= NormL
+                Ly /= NormL
+                Lz /= NormL
 
                 R1x = Point.X - Node1.X
                 R1y = Point.Y - Node1.Y
@@ -574,9 +585,9 @@ Namespace CalculationModel.Models.Aero.Components
                 LxR1y = Lz * R1x - Lx * R1z
                 LxR1z = Lx * R1y - Ly * R1x
 
-                sqr_normLxR1 = LxR1x * LxR1x + LxR1y * LxR1y + LxR1z * LxR1z ' this is the square of the radius.
+                SqrNormLxR1 = LxR1x * LxR1x + LxR1y * LxR1y + LxR1z * LxR1z ' this is the square of the radius.
 
-                If sqr_normLxR1 < VortexRing4.Epsilon Then ' when vortex and point are aligned, don't do anything.
+                If SqrNormLxR1 < VortexRing4.Epsilon Then ' when vortex and point are aligned, don't do anything.
 
                     Continue For
 
@@ -588,22 +599,22 @@ Namespace CalculationModel.Models.Aero.Components
                     R2y = Point.Y - Node2.Y
                     R2z = Point.Z - Node2.Z
 
-                    normR1inv = 1 / Math.Sqrt(R1x * R1x + R1y * R1y + R1z * R1z)
-                    normR2inv = 1 / Math.Sqrt(R2x * R2x + R2y * R2y + R2z * R2z)
+                    NormR1inv = 1 / Math.Sqrt(R1x * R1x + R1y * R1y + R1z * R1z)
+                    NormR2inv = 1 / Math.Sqrt(R2x * R2x + R2y * R2y + R2z * R2z)
 
-                    dx = normR1inv * R1x - normR2inv * R2x
-                    dy = normR1inv * R1y - normR2inv * R2y
-                    dz = normR1inv * R1z - normR2inv * R2z
+                    Dx = NormR1inv * R1x - NormR2inv * R2x
+                    Dy = NormR1inv * R1y - NormR2inv * R2y
+                    Dz = NormR1inv * R1z - NormR2inv * R2z
 
                     If WithG Then
-                        Num = G * (Lx * dx + Ly * dy + Lz * dz)
+                        Num = G * (Lx * Dx + Ly * Dy + Lz * Dz)
                     Else
-                        Num = (Lx * dx + Ly * dy + Lz * dz)
+                        Num = (Lx * Dx + Ly * Dy + Lz * Dz)
                     End If
 
-                    If sqr_normLxR1 > SquareCoreRadius Then ' when point is outside the viscous core, apply the Biot & Savart law
+                    If SqrNormLxR1 > SquareCoreRadius Then ' when point is outside the viscous core, apply the Biot & Savart law
 
-                        Factor = Num / (VortexRing4.FourPi * sqr_normLxR1)
+                        Factor = Num / (VortexRing4.FourPi * SqrNormLxR1)
 
                         BSVector.X += Factor * LxR1x
                         BSVector.Y += Factor * LxR1y
@@ -634,14 +645,14 @@ Namespace CalculationModel.Models.Aero.Components
         ''' Calculation has been optimized by replacing object subs by local code.
         ''' Value types are used on internal calculations (other versions used reference type EVector3).
         ''' </remarks>
-        Public Sub AddBiotSavartVector_ViscousCore(ByRef Vector As EVector3, ByVal Point As EVector3, Optional ByVal SquareCoreRadius As Double = 0.0001, Optional ByVal WithG As Boolean = True)
+        Public Sub AddBiotSavartVector_ViscousCore(ByRef Vector As Vector3, ByVal Point As Vector3, Optional ByVal SquareCoreRadius As Double = 0.0001, Optional ByVal WithG As Boolean = True)
 
             Dim sqr_normLxR1 As Double
             Dim normL As Double
             Dim Num As Double
 
-            Dim Node1 As EVector3 = Nothing
-            Dim Node2 As EVector3 = Nothing
+            Dim Node1 As Vector3 = Nothing
+            Dim Node2 As Vector3 = Nothing
 
             Dim Lx, Ly, Lz As Double
             Dim R1x, R1y, R1z, R2x, R2y, R2z As Double
@@ -746,15 +757,15 @@ Namespace CalculationModel.Models.Aero.Components
         ''' <param name="N2">Second streamwise segment</param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Function StreamwiseInfluence(ByVal Point As EVector3, ByVal N1 As Integer, ByVal N2 As Integer, Optional ByVal CutOff As Double = 0.0001) As EVector3 Implements VortexRing.StreamwiseInfluence
+        Public Function StreamwiseInfluence(ByVal Point As Vector3, ByVal N1 As Integer, ByVal N2 As Integer, Optional ByVal CutOff As Double = 0.0001) As Vector3 Implements VortexRing.StreamwiseInfluence
 
-            Dim BSVector As New EVector3
+            Dim BSVector As New Vector3
 
             Dim Den As Double
             Dim Num As Double
 
-            Dim Node1 As EVector3 = Nothing
-            Dim Node2 As EVector3 = Nothing
+            Dim Node1 As Vector3 = Nothing
+            Dim Node2 As Vector3 = Nothing
 
             Dim Lx, Ly, Lz As Double
             Dim R1x, R1y, R1z, R2x, R2y, R2z As Double
@@ -837,7 +848,7 @@ Namespace CalculationModel.Models.Aero.Components
         ''' <param name="Point">Point influence wants to be calculated.</param>
         ''' <returns>The velocity potential influence coefficient.</returns>
         ''' <remarks></remarks>
-        Function GiveDoubletPotentialInfluence(ByVal Point As EVector3, Optional ByVal WithG As Boolean = True) As Double Implements VortexRing.GiveDoubletPotentialInfluence
+        Function GiveDoubletPotentialInfluence(ByVal Point As Vector3, Optional ByVal WithG As Boolean = True) As Double Implements VortexRing.GiveDoubletPotentialInfluence
 
             Dim Potential As Double = PotentialFunctions.GetQuadUnitDoubletPotential_MeanPlane(Point, _Nodes(0).Position, _Nodes(1).Position, _Nodes(2).Position, _Nodes(3).Position, Normal, Reversed)
 
@@ -853,7 +864,7 @@ Namespace CalculationModel.Models.Aero.Components
         ''' <param name="Point">Point influence wants to be calculated.</param>
         ''' <returns>The velocity potential influence coefficient.</returns>
         ''' <remarks></remarks>
-        Public Function GiveSourcePotentialInfluence(ByVal Point As EVector3, Optional ByVal WithS As Boolean = True) As Double Implements VortexRing.GiveSourcePotentialInfluence
+        Public Function GiveSourcePotentialInfluence(ByVal Point As Vector3, Optional ByVal WithS As Boolean = True) As Double Implements VortexRing.GiveSourcePotentialInfluence
 
             Dim Potential As Double = PotentialFunctions.GetQuadUnitSourcePotential_MeanPlane(Point, _Nodes(0).Position, _Nodes(1).Position, _Nodes(2).Position, _Nodes(3).Position, Normal, Reversed)
 

@@ -70,10 +70,8 @@ Partial Class MainRibbon
         Me.GroupBox12 = New System.Windows.Forms.GroupBox()
         Me.Label28 = New System.Windows.Forms.Label()
         Me.nudIncrement = New System.Windows.Forms.NumericUpDown()
-        Me.Label33 = New System.Windows.Forms.Label()
         Me.Label34 = New System.Windows.Forms.Label()
         Me.Label35 = New System.Windows.Forms.Label()
-        Me.nudCutoff = New System.Windows.Forms.NumericUpDown()
         Me.nudCuttingStep = New System.Windows.Forms.NumericUpDown()
         Me.nudSteps = New System.Windows.Forms.NumericUpDown()
         Me.GroupBox11 = New System.Windows.Forms.GroupBox()
@@ -180,7 +178,6 @@ Partial Class MainRibbon
         Me.TableLayoutPanel2.SuspendLayout()
         Me.GroupBox12.SuspendLayout()
         CType(Me.nudIncrement, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.nudCutoff, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.nudCuttingStep, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.nudSteps, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupBox11.SuspendLayout()
@@ -823,10 +820,8 @@ Partial Class MainRibbon
         '
         Me.GroupBox12.Controls.Add(Me.Label28)
         Me.GroupBox12.Controls.Add(Me.nudIncrement)
-        Me.GroupBox12.Controls.Add(Me.Label33)
         Me.GroupBox12.Controls.Add(Me.Label34)
         Me.GroupBox12.Controls.Add(Me.Label35)
-        Me.GroupBox12.Controls.Add(Me.nudCutoff)
         Me.GroupBox12.Controls.Add(Me.nudCuttingStep)
         Me.GroupBox12.Controls.Add(Me.nudSteps)
         Me.GroupBox12.Dock = System.Windows.Forms.DockStyle.Left
@@ -861,17 +856,6 @@ Partial Class MainRibbon
         Me.nudIncrement.TabIndex = 96
         Me.nudIncrement.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
-        'Label33
-        '
-        Me.Label33.AutoSize = True
-        Me.Label33.ForeColor = System.Drawing.SystemColors.ControlDarkDark
-        Me.Label33.Location = New System.Drawing.Point(7, 71)
-        Me.Label33.Name = "Label33"
-        Me.Label33.Size = New System.Drawing.Size(30, 12)
-        Me.Label33.TabIndex = 95
-        Me.Label33.Text = "Cutoff"
-        Me.Label33.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        '
         'Label34
         '
         Me.Label34.AutoSize = True
@@ -893,17 +877,6 @@ Partial Class MainRibbon
         Me.Label35.TabIndex = 93
         Me.Label35.Text = "Steps"
         Me.Label35.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        '
-        'nudCutoff
-        '
-        Me.nudCutoff.DecimalPlaces = 5
-        Me.nudCutoff.Increment = New Decimal(New Integer() {1, 0, 0, 262144})
-        Me.nudCutoff.Location = New System.Drawing.Point(66, 68)
-        Me.nudCutoff.Maximum = New Decimal(New Integer() {10000, 0, 0, 0})
-        Me.nudCutoff.Name = "nudCutoff"
-        Me.nudCutoff.Size = New System.Drawing.Size(64, 19)
-        Me.nudCutoff.TabIndex = 92
-        Me.nudCutoff.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'nudCuttingStep
         '
@@ -2054,7 +2027,6 @@ Partial Class MainRibbon
         Me.GroupBox12.ResumeLayout(False)
         Me.GroupBox12.PerformLayout()
         CType(Me.nudIncrement, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.nudCutoff, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.nudCuttingStep, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.nudSteps, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupBox11.ResumeLayout(False)
@@ -2164,10 +2136,8 @@ Partial Class MainRibbon
     Friend WithEvents GroupBox12 As System.Windows.Forms.GroupBox
     Friend WithEvents Label28 As System.Windows.Forms.Label
     Friend WithEvents nudIncrement As System.Windows.Forms.NumericUpDown
-    Friend WithEvents Label33 As System.Windows.Forms.Label
     Friend WithEvents Label34 As System.Windows.Forms.Label
     Friend WithEvents Label35 As System.Windows.Forms.Label
-    Friend WithEvents nudCutoff As System.Windows.Forms.NumericUpDown
     Friend WithEvents nudCuttingStep As System.Windows.Forms.NumericUpDown
     Friend WithEvents nudSteps As System.Windows.Forms.NumericUpDown
     Friend WithEvents GroupBox11 As System.Windows.Forms.GroupBox

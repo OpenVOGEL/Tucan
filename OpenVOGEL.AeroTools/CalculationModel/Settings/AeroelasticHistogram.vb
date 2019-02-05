@@ -25,7 +25,7 @@ Namespace CalculationModel.Settings
 
         Public Property Time As Double
         Public Property Damping As Double
-        Public Property Velocity As New EVector3
+        Public Property Velocity As New Vector3
 
     End Class
 
@@ -125,7 +125,7 @@ Namespace CalculationModel.Settings
             End Get
         End Property
 
-        Public Sub Generate(Velocity As EVector3, TimeStep As Double, Steps As Integer)
+        Public Sub Generate(Velocity As Vector3, TimeStep As Double, Steps As Integer)
 
             _Steps.Clear()
 

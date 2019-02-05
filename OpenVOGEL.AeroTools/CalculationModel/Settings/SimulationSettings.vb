@@ -50,13 +50,13 @@ Namespace CalculationModel.Settings
         ''' Free stream velocity amplitude vector (components are scaled by an amplitude factor in unsteady problems).
         ''' </summary>
         ''' <remarks></remarks>
-        Public Property StreamVelocity As New EVector3
+        Public Property StreamVelocity As New Vector3
 
         ''' <summary>
         ''' Angular velocity of aircraft reference frame (not implemented yet).
         ''' </summary>
         ''' <remarks></remarks>
-        Public Property Omega As New EVector3
+        Public Property Omega As New Vector3
 
         ''' <summary>
         ''' Free stream density in kg/m³
@@ -211,12 +211,12 @@ Namespace CalculationModel.Settings
         ''' <remarks></remarks>
         Public Sub InitializaParameters()
 
-            StreamVelocity = New EVector3
+            StreamVelocity = New Vector3
             StreamVelocity.X = 10.0
             StreamVelocity.Y = 0
             StreamVelocity.Z = 0
 
-            Omega = New EVector3
+            Omega = New Vector3
             Omega.X = 0
             Omega.Y = 0
             Omega.Z = 0

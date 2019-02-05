@@ -29,25 +29,25 @@ Namespace CalculationModel.Models.Aero.Components
         ''' Position used as reference for translating or rotating (not always used)
         ''' </summary>
         ''' <remarks></remarks>
-        Public OriginalPosition As EVector3
+        Public OriginalPosition As Vector3
 
         ''' <summary>
         ''' Current position
         ''' </summary>
         ''' <remarks></remarks>
-        Public Position As EVector3
+        Public Position As Vector3
 
         ''' <summary>
         ''' Represents a displacement (used on aeroelastic calculation)
         ''' </summary>
         ''' <remarks></remarks>
-        Public Displacement As EVector3
+        Public Displacement As Vector3
 
         ''' <summary>
         ''' Absolute velocity
         ''' </summary>
         ''' <remarks></remarks>
-        Public Velocity As EVector3
+        Public Velocity As Vector3
 
         ''' <summary>
         ''' Local index.
@@ -60,19 +60,19 @@ Namespace CalculationModel.Models.Aero.Components
         Public IndexG As Integer
 
         Public Sub New()
-            Position = New EVector3
-            Velocity = New EVector3
+            Position = New Vector3
+            Velocity = New Vector3
         End Sub
 
-        Public Sub New(ByVal IndexL As Integer, ByVal Position As EVector3)
-            Me.Position = New EVector3(Position)
-            Velocity = New EVector3
+        Public Sub New(ByVal IndexL As Integer, ByVal Position As Vector3)
+            Me.Position = New Vector3(Position)
+            Velocity = New Vector3
             Me.IndexL = IndexL
         End Sub
 
         Public Sub New(ByVal NodeToCopy As Node)
-            Position = New EVector3
-            Velocity = New EVector3
+            Position = New Vector3
+            Velocity = New Vector3
             Me.Assign(NodeToCopy)
         End Sub
 

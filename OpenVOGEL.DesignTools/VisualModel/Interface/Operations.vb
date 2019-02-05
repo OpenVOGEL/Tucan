@@ -26,10 +26,10 @@ Namespace VisualModel.Interface
     ''' <remarks></remarks>
     Public Interface IOperational
 
-        Sub MoveTo(ByVal Vector As EVector3)
-        Sub Orientate(ByVal Point As EVector3, ByVal Ori As EulerAngles)
+        Sub MoveTo(ByVal Vector As Vector3)
+        Sub Orientate(ByVal Point As Vector3, ByVal Ori As EulerAngles)
         Sub Scale(ByVal Scale As Double)
-        Sub Align(ByVal P1 As EVector3, ByVal P2 As EVector3, ByVal P3 As EVector3, ByVal P4 As EVector3)
+        Sub Align(ByVal P1 As Vector3, ByVal P2 As Vector3, ByVal P3 As Vector3, ByVal P4 As Vector3)
 
     End Interface
 
@@ -56,7 +56,7 @@ Namespace VisualModel.Interface
         Public Event OnTaskReady()
 
         Private _Scalars As New List(Of Double)
-        Private _Points As New List(Of EVector3)
+        Private _Points As New List(Of Vector3)
         Private _Orientations As New List(Of EulerAngles)
         Private _DestinationObject As IOperational
         Private _StatusFlag As String
@@ -111,7 +111,7 @@ Namespace VisualModel.Interface
 
             If _Operation = Operations.NoOperation Or Not _SurfaceLoaded Then Return
 
-            If TypeOf Entity Is EVector3 Then
+            If TypeOf Entity Is Vector3 Then
                 _Points.Add(Entity)
             End If
 

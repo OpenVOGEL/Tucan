@@ -27,13 +27,13 @@ Namespace CalculationModel.Solver
 
         Public Class TrefftzSegment
 
-            Public Point1 As EVector3
-            Public Point2 As EVector3
+            Public Point1 As Vector3
+            Public Point2 As Vector3
             Public G As Double = 0.0#
-            Public Velocity As EVector3
-            Public PA As EVector2
-            Public PB As EVector2
-            Public PC As EVector2
+            Public Velocity As Vector3
+            Public PA As Vector2
+            Public PB As Vector2
+            Public PC As Vector2
 
         End Class
 
@@ -43,7 +43,7 @@ Namespace CalculationModel.Solver
         ''' <param name="Normal"></param>
         ''' <param name="RPoint"></param>
         ''' <remarks></remarks>
-        Public Sub ComputeTrefftzIntegral(ByVal Normal As EVector3, ByVal RPoint As EVector3, ByRef TrefftzSegments As List(Of TrefftzSegment), Optional ByVal S As Double = 1.0)
+        Public Sub ComputeTrefftzIntegral(ByVal Normal As Vector3, ByVal RPoint As Vector3, ByRef TrefftzSegments As List(Of TrefftzSegment), Optional ByVal S As Double = 1.0)
 
             Dim Basis As New EBase3
             Basis.U.Assign(_StreamVelocity)
@@ -53,8 +53,8 @@ Namespace CalculationModel.Solver
             Basis.V.Normalize()
             Basis.W.FromVectorProduct(Basis.U, Basis.V)
 
-            Dim V1 As New EVector3
-            Dim V2 As New EVector3
+            Dim V1 As New Vector3
+            Dim V2 As New Vector3
             Dim D1 As Double
             Dim D2 As Double
             Dim nA As Integer
@@ -109,8 +109,8 @@ Namespace CalculationModel.Solver
 
                                 If Found1 Then Found2 = True
 
-                                Dim mPoint As New EVector3
-                                Dim mVelocity As New EVector3
+                                Dim mPoint As New Vector3
+                                Dim mVelocity As New Vector3
                                 Dim Dist As Double = Math.Abs(D1) + Math.Abs(D2)
                                 Dim ScaA As Double = (Math.Abs(D2) / Dist)
                                 Dim ScaB As Double = (Math.Abs(D1) / Dist)
@@ -125,14 +125,14 @@ Namespace CalculationModel.Solver
 
                                 If Not Found1 Then
                                     Segment.Point1 = mPoint
-                                    Segment.PA = New EVector2
+                                    Segment.PA = New Vector2
                                     Segment.PA.X = mPoint.InnerProduct(Basis.V)
                                     Segment.PA.Y = mPoint.InnerProduct(Basis.W)
                                     Segment.Velocity = mVelocity
                                     Segment.G = Ring.G
                                 Else
                                     Segment.Point2 = mPoint
-                                    Segment.PB = New EVector2
+                                    Segment.PB = New Vector2
                                     Segment.PB.X = mPoint.InnerProduct(Basis.V)
                                     Segment.PB.Y = mPoint.InnerProduct(Basis.W)
                                     Segment.Velocity.Add(mVelocity)
@@ -158,8 +158,8 @@ Namespace CalculationModel.Solver
             ' Now that vortex stripes have been found, calculate the induced drag as a 2D problem
 
             Dim nV As Double
-            Dim n As New EVector2
-            Dim V As New EVector2
+            Dim n As New Vector2
+            Dim V As New Vector2
             Dim dL As Double
             Dim CDi As Double = 0.0#
 
@@ -178,7 +178,7 @@ Namespace CalculationModel.Solver
 
                 ' Calculate PC:
 
-                Segment.PC = New EVector2
+                Segment.PC = New Vector2
                 Segment.PC.X = 0.5 * (Segment.PA.X + Segment.PB.X)
                 Segment.PC.Y = 0.5 * (Segment.PA.Y + Segment.PB.Y)
 
@@ -251,10 +251,10 @@ Namespace CalculationModel.Solver
         ''' <remarks></remarks>
         Private Sub ComputeInducedDrag()
 
-            Dim StreamDirection As New EVector3
+            Dim StreamDirection As New Vector3
             StreamDirection.Assign(_StreamVelocity)
             StreamDirection.Normalize()
-            Dim Projection As New EVector3
+            Dim Projection As New Vector3
             Dim V As Double = _StreamVelocity.EuclideanNorm
             Dim CutOff As Double = Settings.Cutoff
 
@@ -264,8 +264,8 @@ Namespace CalculationModel.Solver
 
                     If Not VortexRing.IsSlender Then Continue For
 
-                    Dim Point As EVector3 = VortexRing.ControlPoint
-                    Dim iVelocity As New EVector3
+                    Dim Point As Vector3 = VortexRing.ControlPoint
+                    Dim iVelocity As New Vector3
 
                     ' Calculate the total induced velocity at the control point by streamwise segments only:
 
@@ -330,7 +330,7 @@ Namespace CalculationModel.Solver
         ''' <remarks></remarks>
         Private Sub ComputeForcesAndMoments()
 
-            Dim StreamDirection As New EVector3
+            Dim StreamDirection As New Vector3
             StreamDirection.Assign(_StreamVelocity)
             StreamDirection.Normalize()
 
@@ -353,8 +353,8 @@ Namespace CalculationModel.Solver
                 Lattice.AirLoads.BodyForce.SetToCero()
                 Lattice.AirLoads.BodyMoment.SetToCero()
 
-                Dim FreeForce As New EVector3
-                Dim StreamForce As New EVector3
+                Dim FreeForce As New Vector3
+                Dim StreamForce As New Vector3
 
                 For Each Ring In Lattice.VortexRings
 
@@ -378,7 +378,7 @@ Namespace CalculationModel.Solver
 
                 Next
 
-                Dim FreeForceDirection As New EVector3(FreeForce)
+                Dim FreeForceDirection As New Vector3(FreeForce)
 
                 If FreeForce.EuclideanNorm > 0 Then
                     FreeForceDirection.Normalize()

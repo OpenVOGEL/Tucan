@@ -32,7 +32,7 @@ Public Class FormAskVelocity
 
         Result = ""
 
-        Dim Punto As New EVector3
+        Dim Punto As New Vector3
 
         If EnPuntoGeneral.Checked Then
             Punto.X = XBox.Value

@@ -205,7 +205,7 @@ Namespace CalculationModel.Models.Aero.Components
             End Get
         End Property
 
-        Public Property Nodes As New List(Of EVector2)
+        Public Property Nodes As New List(Of Vector2)
 
         Sub ReadBinary(ByRef r As BinaryReader) Implements IPolarCurve.ReadBinary
 
@@ -219,7 +219,7 @@ Namespace CalculationModel.Models.Aero.Components
                 Dim n As Integer = r.ReadInt32
 
                 For i = 1 To n
-                    Nodes.Add(New EVector2(r.ReadDouble, r.ReadDouble))
+                    Nodes.Add(New Vector2(r.ReadDouble, r.ReadDouble))
                 Next
 
             Catch ex As Exception
@@ -249,7 +249,7 @@ Namespace CalculationModel.Models.Aero.Components
 
             Dim Polar As New CustomPolar
             For Each p In Nodes
-                Polar.Nodes.Add(New EVector2(p.X, p.Y))
+                Polar.Nodes.Add(New Vector2(p.X, p.Y))
             Next
             Polar._Reynolds = _Reynolds
             Polar.Name = _Name
@@ -280,7 +280,7 @@ Namespace CalculationModel.Models.Aero.Components
             Dim n As Integer = IOXML.ReadInteger(reader, "N", 0)
 
             For i = 0 To n - 1
-                Nodes.Add(New EVector2)
+                Nodes.Add(New Vector2)
                 Nodes(i).X = IOXML.ReadDouble(reader, "X" + i.ToString, 0.0)
                 Nodes(i).Y = IOXML.ReadDouble(reader, "Y" + i.ToString, 0.0)
             Next

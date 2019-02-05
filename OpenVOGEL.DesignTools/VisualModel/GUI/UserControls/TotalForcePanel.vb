@@ -59,8 +59,8 @@ Public Class TotalForcePanel
     Private rbCY As New ResultBox(UserMagnitudes(Magnitudes.Dimensionless))
 
     Private TotalAirloads As New TotalAirLoads
-    Private TotalForce As New EVector3
-    Private TotalMoment As New EVector3
+    Private TotalForce As New Vector3
+    Private TotalMoment As New Vector3
 
     Public Sub New()
 
@@ -283,7 +283,7 @@ Public Class TotalForcePanel
             If cbBodyForces.Checked Then TotalMoment.Add(TotalAirloads.BodyMoment)
             TotalMoment.Scale(q)
 
-            Dim R As New EVector3
+            Dim R As New Vector3
             R.X = nudRx.Value
             R.Y = nudRy.Value
             R.Z = nudRz.Value

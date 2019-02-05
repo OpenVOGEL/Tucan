@@ -26,7 +26,7 @@ Namespace VisualModel.Models.Components.Basics
         Public Panels As New List(Of Panel)
         Public Lattice As New List(Of LatticeSegment) ' Matriz de conexion de vórcies
 
-        Public Sub Translate(ByVal Vector As EVector3)
+        Public Sub Translate(ByVal Vector As Vector3)
 
             For Each Point In Nodes
 
@@ -36,7 +36,7 @@ Namespace VisualModel.Models.Components.Basics
 
         End Sub
 
-        Public Sub Rotate(ByVal ReferencePoint As EVector3, ByVal Ori As EulerAngles)
+        Public Sub Rotate(ByVal ReferencePoint As Vector3, ByVal Ori As EulerAngles)
 
             Dim M As New RotationMatrix
             M.Generate(Ori)
@@ -51,7 +51,7 @@ Namespace VisualModel.Models.Components.Basics
 
         End Sub
 
-        Public Sub Rotate(ByVal ReferencePoint As EVector3, ByVal M As RotationMatrix)
+        Public Sub Rotate(ByVal ReferencePoint As Vector3, ByVal M As RotationMatrix)
 
             For Each Point In Nodes
 

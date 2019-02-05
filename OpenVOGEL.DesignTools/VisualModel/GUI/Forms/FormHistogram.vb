@@ -26,7 +26,7 @@ Public Class FormHistogram
     Private _SimSteps As Integer
     Private _SimStep As Double
     Private _SimSpan As Double
-    Private _Velocity As EVector3
+    Private _Velocity As Vector3
 
     Public Sub New()
 

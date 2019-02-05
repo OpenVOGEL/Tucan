@@ -53,7 +53,7 @@ Namespace VisualModel.Tools.Frames
                 gl.Vertex(Xmin, Ymax, Z)
                 gl.Vertex(Xmin, Ymin, Z)
 
-                Dim Punto As New EVector3
+                Dim Punto As New Vector3
                 Dim Xm As Double = 0.0
                 Dim Ym As Double = 0.0
                 Dim Zm As Double = 0.0

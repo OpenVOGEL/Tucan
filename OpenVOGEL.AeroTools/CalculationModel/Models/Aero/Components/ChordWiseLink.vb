@@ -86,73 +86,73 @@ Namespace CalculationModel.Models.Aero.Components
             End Get
         End Property
 
-        Public _L As EVector3
+        Public _L As Vector3
 
         ''' <summary>
         ''' Total stripe lift
         ''' </summary>
         ''' <remarks></remarks>
-        Public ReadOnly Property L As EVector3
+        Public ReadOnly Property L As Vector3
             Get
                 Return _L
             End Get
         End Property
 
-        Public _Di As EVector3
+        Public _Di As Vector3
 
         ''' <summary>
         ''' Total stripe induced drag
         ''' </summary>
         ''' <remarks></remarks>
-        Public ReadOnly Property Di As EVector3
+        Public ReadOnly Property Di As Vector3
             Get
                 Return _Di
             End Get
         End Property
 
-        Public _Dp As EVector3
+        Public _Dp As Vector3
 
         ''' <summary>
         ''' Total stripe induced drag
         ''' </summary>
         ''' <remarks></remarks>
-        Public ReadOnly Property Dp As EVector3
+        Public ReadOnly Property Dp As Vector3
             Get
                 Return _Dp
             End Get
         End Property
 
-        Public _ML As EVector3
+        Public _ML As Vector3
 
         ''' <summary>
         ''' Total stripe moment (with respect to the origin).
         ''' </summary>
         ''' <remarks></remarks>
-        Public ReadOnly Property ML As EVector3
+        Public ReadOnly Property ML As Vector3
             Get
                 Return _ML
             End Get
         End Property
 
-        Public _MDi As EVector3
+        Public _MDi As Vector3
 
         ''' <summary>
         ''' Total stripe moment (with respect to the origin).
         ''' </summary>
         ''' <remarks></remarks>
-        Public ReadOnly Property MDi As EVector3
+        Public ReadOnly Property MDi As Vector3
             Get
                 Return _MDi
             End Get
         End Property
 
-        Public _MDp As EVector3
+        Public _MDp As Vector3
 
         ''' <summary>
         ''' Total stripe moment (with respect to the origin).
         ''' </summary>
         ''' <remarks></remarks>
-        Public ReadOnly Property MDp As EVector3
+        Public ReadOnly Property MDp As Vector3
             Get
                 Return _MDp
             End Get
@@ -172,7 +172,7 @@ Namespace CalculationModel.Models.Aero.Components
             End Get
         End Property
 
-        Private _ChordWiseVector As New EVector3
+        Private _ChordWiseVector As New Vector3
 
         ''' <summary>
         ''' Vector having the direction of the chord
@@ -186,7 +186,7 @@ Namespace CalculationModel.Models.Aero.Components
             End Get
         End Property
 
-        Private _CenterPoint As New EVector3
+        Private _CenterPoint As New Vector3
 
         ''' <summary>
         ''' Point located at the geometric center of the chordwise stripe
@@ -194,7 +194,7 @@ Namespace CalculationModel.Models.Aero.Components
         ''' <value></value>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public ReadOnly Property CenterPoint As EVector3
+        Public ReadOnly Property CenterPoint As Vector3
             Get
                 Return _CenterPoint
             End Get
@@ -204,7 +204,7 @@ Namespace CalculationModel.Models.Aero.Components
         ''' Calculate stripe lift, drag and area. Cp should be calculated before calling this sub.
         ''' </summary>
         ''' <remarks></remarks>
-        Public Sub Compute(ByVal StreamDirection As EVector3, ByVal V As Double, Rho As Double, Mu As Double) ' the stream direction should be an argument...
+        Public Sub Compute(ByVal StreamDirection As Vector3, ByVal V As Double, Rho As Double, Mu As Double) ' the stream direction should be an argument...
 
             ' Calculate local chordwise direction and chord:
 
@@ -230,18 +230,18 @@ Namespace CalculationModel.Models.Aero.Components
             Dim Force As Double
             Dim InducedDrag As Double = 0
 
-            Dim LocalL = New EVector3
-            Dim LocalDi = New EVector3
-            Dim LocalML As New EVector3
-            Dim LocalMDi As New EVector3
-            Dim LocalMDp As New EVector3
+            Dim LocalL = New Vector3
+            Dim LocalDi = New Vector3
+            Dim LocalML As New Vector3
+            Dim LocalMDi As New Vector3
+            Dim LocalMDp As New Vector3
 
-            _L = New EVector3
-            _Di = New EVector3
-            _Dp = New EVector3
-            _ML = New EVector3
-            _MDi = New EVector3
-            _MDp = New EVector3
+            _L = New Vector3
+            _Di = New Vector3
+            _Dp = New Vector3
+            _ML = New Vector3
+            _MDi = New Vector3
+            _MDp = New Vector3
 
             ' Sum contributions to CL and CDi:
 

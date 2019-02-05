@@ -72,7 +72,7 @@ Namespace CalculationModel.Models.Aero
         ''' Extends the trailing part of the wake
         ''' </summary>
         ''' <param name="Vector">The vector used to extend the wake</param>
-        Public Sub Extend(ByVal Vector As EVector3)
+        Public Sub Extend(ByVal Vector As Vector3)
 
             For i = 0 To Primitive.Nodes.Count - 1
                 Nodes(i).Position.X += Vector.X

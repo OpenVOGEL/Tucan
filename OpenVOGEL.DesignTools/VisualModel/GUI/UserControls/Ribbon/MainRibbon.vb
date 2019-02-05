@@ -665,16 +665,6 @@ ErrSub:
 
     End Sub
 
-    Private Sub nudCutoff_ValueChanged(sender As Object, e As EventArgs) Handles nudCutoff.ValueChanged
-
-        If ProjectRoot.Initialized AndAlso Not _LockSettingsEvents Then
-
-            ProjectRoot.SimulationSettings.Cutoff = nudCutoff.Value
-
-        End If
-
-    End Sub
-
     Private Sub cbxSimulationMode_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbxSimulationMode.SelectedIndexChanged
 
         If ProjectRoot.Initialized AndAlso Not _LockSettingsEvents Then

@@ -118,7 +118,7 @@ Public Class VelocityControl
         AquireDataFromControl()
         Plane.GenerateMesh()
         Dim CantidadDeNodos As Integer = Plane.NumberOfNodes
-        Dim RefVelocity As New EVector3
+        Dim RefVelocity As New Vector3
 
         If ProjectRoot.CalculationCore Is Nothing Then Exit Sub
 

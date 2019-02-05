@@ -23,7 +23,7 @@ Namespace Algebra.EuclideanSpace
     ''' Represents an euclidean vector of two coordinates.
     ''' </summary>
     ''' <remarks></remarks>
-    Public Class EVector2
+    Public Class Vector2
 
         Public Property X As Double
         Public Property Y As Double
@@ -39,33 +39,33 @@ Namespace Algebra.EuclideanSpace
 
 #Region " Operaciones aritméticos "
 
-        Public Shared Operator +(ByVal V1 As EVector2, ByVal V2 As EVector2) As EVector2
-            Dim Suma As New EVector2
+        Public Shared Operator +(ByVal V1 As Vector2, ByVal V2 As Vector2) As Vector2
+            Dim Suma As New Vector2
             Suma.X = V1.X + V2.X
             Suma.Y = V1.Y + V2.Y
             Return Suma
         End Operator
 
-        Public Shared Operator -(ByVal V1 As EVector2, ByVal V2 As EVector2) As EVector2
-            Dim Resta As New EVector2
+        Public Shared Operator -(ByVal V1 As Vector2, ByVal V2 As Vector2) As Vector2
+            Dim Resta As New Vector2
             Resta.X = V1.X - V2.X
             Resta.Y = V1.Y - V2.Y
             Return Resta
         End Operator
 
-        Public Shared Operator -(ByVal V As EVector2) As EVector2
-            Dim Opuesto As New EVector2
+        Public Shared Operator -(ByVal V As Vector2) As Vector2
+            Dim Opuesto As New Vector2
             Opuesto.X = -V.X
             Opuesto.Y = -V.Y
             Return Opuesto
         End Operator
 
-        Public Overloads Shared Operator *(ByVal V1 As EVector2, ByVal V2 As EVector2) As Double
+        Public Overloads Shared Operator *(ByVal V1 As Vector2, ByVal V2 As Vector2) As Double
             Return V1.X * V2.X + V1.Y * V2.Y
         End Operator
 
-        Public Overloads Shared Operator *(ByVal Escalar As Double, ByVal V As EVector2) As EVector2
-            Dim Producto As New EVector2
+        Public Overloads Shared Operator *(ByVal Escalar As Double, ByVal V As Vector2) As Vector2
+            Dim Producto As New Vector2
 
             Producto.X = Escalar * V.X
             Producto.Y = Escalar * V.Y
@@ -73,7 +73,7 @@ Namespace Algebra.EuclideanSpace
             Return Producto
         End Operator
 
-        Public Shared Operator ^(ByVal V1 As EVector2, ByVal V2 As EVector2) As Double
+        Public Shared Operator ^(ByVal V1 As Vector2, ByVal V2 As Vector2) As Double
 
             Return V1.X * V2.Y - V1.Y * V2.X
 
@@ -89,7 +89,7 @@ Namespace Algebra.EuclideanSpace
             Me.Y = Scalar * Me.Y
         End Sub
 
-        Public Function PinCrossProduct(ByVal V1 As EVector2, ByVal V2 As EVector2) As Double
+        Public Function PinCrossProduct(ByVal V1 As Vector2, ByVal V2 As Vector2) As Double
 
             Dim x1 As Double = V1.X - X
             Dim y1 As Double = V1.Y - Y
@@ -117,23 +117,23 @@ Namespace Algebra.EuclideanSpace
             End Get
         End Property
 
-        Public Function RelativePosition(ByVal Punto As EVector2) As EVector2
-            Return New EVector2(Punto.X - X, Punto.Y - Y)
+        Public Function RelativePosition(ByVal Punto As Vector2) As Vector2
+            Return New Vector2(Punto.X - X, Punto.Y - Y)
         End Function
 
-        Public Function DistanceTo(ByVal Punto As EVector2) As Double
+        Public Function DistanceTo(ByVal Punto As Vector2) As Double
             Dim dx As Double = X - Punto.X
             Dim dy As Double = Y - Punto.Y
             Return Math.Sqrt(dx * dx + dy * dy)
         End Function
 
-        Public ReadOnly Property ProjectionVector(ByVal Vector As EVector2) As EVector2
+        Public ReadOnly Property ProjectionVector(ByVal Vector As Vector2) As Vector2
             Get
                 Return (Me * Vector) / (Vector * Vector) * Vector
             End Get
         End Property
 
-        Public ReadOnly Property OrthogonalVector(ByVal Vector As EVector2) As EVector2
+        Public ReadOnly Property OrthogonalVector(ByVal Vector As Vector2) As Vector2
             Get
                 Return Me - Me.ProjectionVector(Vector)
             End Get
@@ -154,7 +154,7 @@ Namespace Algebra.EuclideanSpace
             Me.Y = Me.Y / Norm
         End Sub
 
-        Public Function DotProduct(ByVal v As EVector2) As Double
+        Public Function DotProduct(ByVal v As Vector2) As Double
             Return X * v.X + Y * v.Y
         End Function
 
@@ -205,13 +205,13 @@ Namespace Algebra.EuclideanSpace
             Me.Y = rotY + y
         End Sub
 
-        Public Shared Function ParametricIntersection(ByVal p1 As EVector2, ByVal v1 As EVector2, ByVal p2 As EVector2, ByVal v2 As EVector2) As EVector2
+        Public Shared Function ParametricIntersection(ByVal p1 As Vector2, ByVal v1 As Vector2, ByVal p2 As Vector2, ByVal v2 As Vector2) As Vector2
 
             Dim det As Double = v2.X * v1.Y - v1.X * v2.Y
 
             If det <> 0 Then
 
-                Dim intersection As New EVector2
+                Dim intersection As New Vector2
                 Dim bx As Double = p2.X - p1.X
                 Dim by As Double = p2.Y - p1.Y
 
@@ -237,10 +237,10 @@ Namespace Algebra.EuclideanSpace
         ''' <param name="b"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Shared Function IntersectionCoordinate(ByVal p As EVector2, ByVal v As EVector2, ByVal a As EVector2, ByVal b As EVector2) As Double
+        Public Shared Function IntersectionCoordinate(ByVal p As Vector2, ByVal v As Vector2, ByVal a As Vector2, ByVal b As Vector2) As Double
 
-            Dim u As New EVector2(b.X - a.X, b.Y - a.Y)
-            Dim coordinates As EVector2 = ParametricIntersection(p, v, a, u)
+            Dim u As New Vector2(b.X - a.X, b.Y - a.Y)
+            Dim coordinates As Vector2 = ParametricIntersection(p, v, a, u)
 
             If IsNothing(coordinates) Then
 
@@ -266,7 +266,7 @@ Namespace Algebra.EuclideanSpace
     ''' Represents an euclidean vector of three coordinates.
     ''' </summary>
     ''' <remarks></remarks>
-    Public Class EVector3
+    Public Class Vector3
 
         Public X As Double
         Public Y As Double
@@ -277,13 +277,13 @@ Namespace Algebra.EuclideanSpace
 
         End Sub
 
-        Public Sub New(ByVal Vector As EVector3)
+        Public Sub New(ByVal Vector As Vector3)
             Me.X = Vector.X
             Me.Y = Vector.Y
             Me.Z = Vector.Z
         End Sub
 
-        Public Sub New(ByVal Vector As EVector3, ByVal Factor As Double)
+        Public Sub New(ByVal Vector As Vector3, ByVal Factor As Double)
             Me.X = Factor * Vector.X
             Me.Y = Factor * Vector.Y
             Me.Z = Factor * Vector.Z
@@ -302,7 +302,7 @@ Namespace Algebra.EuclideanSpace
         ''' </summary>
         ''' <param name="Vector"></param>
         ''' <remarks></remarks>
-        Public Sub Add(ByVal Vector As EVector3)
+        Public Sub Add(ByVal Vector As Vector3)
             Me.X += Vector.X
             Me.Y += Vector.Y
             Me.Z += Vector.Z
@@ -314,7 +314,7 @@ Namespace Algebra.EuclideanSpace
         ''' <param name="Vector"></param>
         ''' <param name="Scalar"></param>
         ''' <remarks></remarks>
-        Public Sub Add(ByVal Vector As EVector3, ByVal Scalar As Double)
+        Public Sub Add(ByVal Vector As Vector3, ByVal Scalar As Double)
 
             Me.X += Vector.X * Scalar
             Me.Y += Vector.Y * Scalar
@@ -337,7 +337,7 @@ Namespace Algebra.EuclideanSpace
         ''' </summary>
         ''' <param name="Vector"></param>
         ''' <remarks></remarks>
-        Public Sub Substract(ByVal Vector As EVector3)
+        Public Sub Substract(ByVal Vector As Vector3)
 
             Me.X -= Vector.X
             Me.Y -= Vector.Y
@@ -351,42 +351,42 @@ Namespace Algebra.EuclideanSpace
         ''' <param name="V1"></param>
         ''' <param name="V2"></param>
         ''' <remarks></remarks>
-        Public Sub AddCrossProduct(ByVal V1 As EVector3, ByVal V2 As EVector3)
+        Public Sub AddCrossProduct(ByVal V1 As Vector3, ByVal V2 As Vector3)
             X += V1.Y * V2.Z - V1.Z * V2.Y
             Y += V1.Z * V2.X - V1.X * V2.Z
             Z += V1.X * V2.Y - V1.Y * V2.X
         End Sub
 
-        Public Shared Operator +(ByVal V1 As EVector3, ByVal V2 As EVector3) As EVector3
-            Dim Suma As New EVector3
+        Public Shared Operator +(ByVal V1 As Vector3, ByVal V2 As Vector3) As Vector3
+            Dim Suma As New Vector3
             Suma.X = V1.X + V2.X
             Suma.Y = V1.Y + V2.Y
             Suma.Z = V1.Z + V2.Z
             Return Suma
         End Operator
 
-        Public Shared Operator -(ByVal V1 As EVector3, ByVal V2 As EVector3) As EVector3
-            Dim Resta As New EVector3
+        Public Shared Operator -(ByVal V1 As Vector3, ByVal V2 As Vector3) As Vector3
+            Dim Resta As New Vector3
             Resta.X = V1.X - V2.X
             Resta.Y = V1.Y - V2.Y
             Resta.Z = V1.Z - V2.Z
             Return Resta
         End Operator
 
-        Public Shared Operator -(ByVal V As EVector3) As EVector3
-            Dim Opuesto As New EVector3
+        Public Shared Operator -(ByVal V As Vector3) As Vector3
+            Dim Opuesto As New Vector3
             Opuesto.X = -V.X
             Opuesto.Y = -V.Y
             Opuesto.Z = -V.Z
             Return Opuesto
         End Operator
 
-        Public Overloads Shared Operator *(ByVal V1 As EVector3, ByVal V2 As EVector3) As Double
+        Public Overloads Shared Operator *(ByVal V1 As Vector3, ByVal V2 As Vector3) As Double
             Return V1.X * V2.X + V1.Y * V2.Y + V1.Z * V2.Z
         End Operator
 
-        Public Overloads Shared Operator *(ByVal Escalar As Double, ByVal V As EVector3) As EVector3
-            Dim Producto As New EVector3
+        Public Overloads Shared Operator *(ByVal Escalar As Double, ByVal V As Vector3) As Vector3
+            Dim Producto As New Vector3
 
             Producto.X = Escalar * V.X
             Producto.Y = Escalar * V.Y
@@ -395,8 +395,8 @@ Namespace Algebra.EuclideanSpace
             Return Producto
         End Operator
 
-        Public Shared Operator ^(ByVal V1 As EVector3, ByVal V2 As EVector3) As EVector3
-            Dim Producto As New EVector3
+        Public Shared Operator ^(ByVal V1 As Vector3, ByVal V2 As Vector3) As Vector3
+            Dim Producto As New Vector3
 
             Producto.X = V1.Y * V2.Z - V1.Z * V2.Y
             Producto.Y = V1.Z * V2.X - V1.X * V2.Z
@@ -415,7 +415,7 @@ Namespace Algebra.EuclideanSpace
 
 #Region " Operaciones métricas "
 
-        Public Function InnerProduct(ByVal Punto As EVector3) As Double
+        Public Function InnerProduct(ByVal Punto As Vector3) As Double
             Return X * Punto.X + Y * Punto.Y + Z * Punto.Z
         End Function
 
@@ -436,17 +436,17 @@ Namespace Algebra.EuclideanSpace
 
         ' Review these properties. They might work much slower than they should!!
 
-        Public Function RelativePosition(ByVal Punto As EVector3) As EVector3
-            Dim Posicion As New EVector3(Punto)
+        Public Function RelativePosition(ByVal Punto As Vector3) As Vector3
+            Dim Posicion As New Vector3(Punto)
             Posicion.Substract(Me)
             Return Posicion
         End Function
 
-        Public Function DistanceTo(ByVal Punto As EVector3) As Double
+        Public Function DistanceTo(ByVal Punto As Vector3) As Double
             Return Me.RelativePosition(Punto).EuclideanNorm
         End Function
 
-        Public ReadOnly Property ProjectedVector(ByVal Vector As EVector3) As EVector3
+        Public ReadOnly Property ProjectedVector(ByVal Vector As Vector3) As Vector3
             Get
                 Dim Projection As Double = Algebra.InnerProduct(Me, Vector)
                 Dim SqrNorm As Double = Vector.SquareEuclideanNorm
@@ -454,17 +454,17 @@ Namespace Algebra.EuclideanSpace
             End Get
         End Property
 
-        Public ReadOnly Property OrthogonalVector(ByVal Vector As EVector3) As EVector3
+        Public ReadOnly Property OrthogonalVector(ByVal Vector As Vector3) As Vector3
             Get
-                Dim Projection As EVector3 = ProjectedVector(Vector)
+                Dim Projection As Vector3 = ProjectedVector(Vector)
                 Return Algebra.SubstractVectors(Me, Projection)
             End Get
         End Property
 
-        Public ReadOnly Property NormalizedDirection As EVector3
+        Public ReadOnly Property NormalizedDirection As Vector3
             Get
                 Dim Norma As Double = Me.EuclideanNorm
-                Dim VectorEscalado As New EVector3(Me, 1 / Norma)
+                Dim VectorEscalado As New Vector3(Me, 1 / Norma)
                 'VectorEscalado.Escalar(1 / Norma)
                 Return VectorEscalado
                 'Dim Nm1 As Double = 1 / Me.NormaEuclidea
@@ -541,7 +541,7 @@ Namespace Algebra.EuclideanSpace
 
         End Sub
 
-        Public Sub Rotate(ByVal ReferencePoint As EVector3, ByVal RotM As RotationMatrix)
+        Public Sub Rotate(ByVal ReferencePoint As Vector3, ByVal RotM As RotationMatrix)
             Substract(ReferencePoint)
             Rotate(RotM)
             Add(ReferencePoint)
@@ -552,7 +552,7 @@ Namespace Algebra.EuclideanSpace
         ''' </summary>
         ''' <param name="Direction"></param>
         ''' <remarks></remarks>
-        Public Sub ProjectOnVector(ByVal Direction As EVector3)
+        Public Sub ProjectOnVector(ByVal Direction As Vector3)
             Dim Proyección As Double = InnerProduct(Direction)
             Me.Assign(Direction, Proyección)
         End Sub
@@ -562,8 +562,8 @@ Namespace Algebra.EuclideanSpace
         ''' </summary>
         ''' <param name="NormalDirection"></param>
         ''' <remarks></remarks>
-        Public Sub ProjectOnPlane(ByVal NormalDirection As EVector3)
-            Dim Proyección As New EVector3
+        Public Sub ProjectOnPlane(ByVal NormalDirection As Vector3)
+            Dim Proyección As New Vector3
             Dim dp As Double = Me.X * NormalDirection.X + Me.Y * NormalDirection.Y + Me.Z * NormalDirection.Z
             Proyección.X = dp * NormalDirection.X
             Proyección.Y = dp * NormalDirection.Y
@@ -579,8 +579,8 @@ Namespace Algebra.EuclideanSpace
         ''' <param name="Direction"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Function GetProjection(ByVal Direction As EVector3) As EVector3
-            Dim NuevoVector As New EVector3
+        Public Function GetProjection(ByVal Direction As Vector3) As Vector3
+            Dim NuevoVector As New Vector3
             Direction.Normalize()
             NuevoVector.X = Direction.X * InnerProduct(Direction)
             NuevoVector.Y = Direction.Y * InnerProduct(Direction)
@@ -593,16 +593,16 @@ Namespace Algebra.EuclideanSpace
 
 #Region " Operaciones vectoriales "
 
-        Public Function VectorProduct(ByVal Vector As EVector3) As EVector3
-            Dim Producto As New EVector3
+        Public Function VectorProduct(ByVal Vector As Vector3) As Vector3
+            Dim Producto As New Vector3
             Producto.X = Y * Vector.Z - Z * Vector.Y
             Producto.Y = Z * Vector.X - X * Vector.Z
             Producto.Z = X * Vector.Y - Y * Vector.X
             Return Producto
         End Function
 
-        Public Sub VectorMultiplication(ByVal Vector As EVector3)
-            Dim Producto As New EVector3(Me)
+        Public Sub VectorMultiplication(ByVal Vector As Vector3)
+            Dim Producto As New Vector3(Me)
             Dim Xo As Double = X
             Dim Yo As Double = Y
             Dim Zo As Double = Z
@@ -611,20 +611,20 @@ Namespace Algebra.EuclideanSpace
             Z = Xo * Vector.Y - Yo * Vector.X
         End Sub
 
-        Public Sub FromVectorProduct(ByVal V1 As EVector3, ByVal V2 As EVector3)
+        Public Sub FromVectorProduct(ByVal V1 As Vector3, ByVal V2 As Vector3)
             X = V1.Y * V2.Z - V1.Z * V2.Y
             Y = V1.Z * V2.X - V1.X * V2.Z
             Z = V1.X * V2.Y - V1.Y * V2.X
         End Sub
 
-        Public Sub FromSubstraction(ByVal V1 As EVector3, ByVal V2 As EVector3)
+        Public Sub FromSubstraction(ByVal V1 As Vector3, ByVal V2 As Vector3)
             X = V1.X - V2.X
             Y = V1.Y - V2.Y
             Z = V1.Z - V2.Z
         End Sub
 
-        Public Function GetVectorToPoint(ByVal Punto As EVector3) As EVector3
-            Dim Diferencia As New EVector3
+        Public Function GetVectorToPoint(ByVal Punto As Vector3) As Vector3
+            Dim Diferencia As New Vector3
             Diferencia.X = Punto.X - Me.X
             Diferencia.Y = Punto.Y - Me.Y
             Diferencia.Z = Punto.Z - Me.Z
@@ -641,13 +641,13 @@ Namespace Algebra.EuclideanSpace
             Z = 0
         End Sub
 
-        Public Overloads Sub Assign(ByVal Vector As EVector3)
+        Public Overloads Sub Assign(ByVal Vector As Vector3)
             X = Vector.X
             Y = Vector.Y
             Z = Vector.Z
         End Sub
 
-        Public Overloads Sub Assign(ByVal Vector As EVector3, ByVal Factor As Double)
+        Public Overloads Sub Assign(ByVal Vector As Vector3, ByVal Factor As Double)
             X = Factor * Vector.X
             Y = Factor * Vector.Y
             Z = Factor * Vector.Z
@@ -659,8 +659,8 @@ Namespace Algebra.EuclideanSpace
             Z = CDbl(Right(Line, 25))
         End Sub
 
-        Public Function Clone() As EVector3
-            Return New EVector3(Me)
+        Public Function Clone() As Vector3
+            Return New Vector3(Me)
         End Function
 
 #End Region
@@ -673,9 +673,9 @@ Namespace Algebra.EuclideanSpace
     ''' <remarks></remarks>
     Public Class EBase3
 
-        Public U As New EVector3
-        Public V As New EVector3
-        Public W As New EVector3
+        Public U As New Vector3
+        Public V As New Vector3
+        Public W As New Vector3
 
     End Class
 
@@ -685,8 +685,8 @@ Namespace Algebra.EuclideanSpace
     ''' <remarks></remarks>
     Public Class ELine3
 
-        Public Property Point As New EVector3
-        Public Property Direction As New EVector3
+        Public Property Point As New Vector3
+        Public Property Direction As New Vector3
 
     End Class
 

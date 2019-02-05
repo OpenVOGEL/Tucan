@@ -156,10 +156,10 @@ Namespace CalculationModel.Settings
         ''' <value></value>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Property BaseVelocity As New EVector3(0, 0, 0)
+        Public Property BaseVelocity As New Vector3(0, 0, 0)
 
-        Private _Velocity As New List(Of EVector3)
-        Private _Intensity As New List(Of EVector3)
+        Private _Velocity As New List(Of Vector3)
+        Private _Intensity As New List(Of Vector3)
 
         ''' <summary>
         ''' Profile type.
@@ -182,7 +182,7 @@ Namespace CalculationModel.Settings
         ''' <value></value>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public ReadOnly Property Velocity(ByVal TimeStep As Integer) As EVector3
+        Public ReadOnly Property Velocity(ByVal TimeStep As Integer) As Vector3
             Get
                 Return _Velocity(TimeStep - 1)
             End Get
@@ -195,7 +195,7 @@ Namespace CalculationModel.Settings
         ''' <value></value>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public ReadOnly Property Intensity(ByVal TimeStep As Integer) As EVector3
+        Public ReadOnly Property Intensity(ByVal TimeStep As Integer) As Vector3
             Get
                 Return _Intensity(TimeStep - 1)
             End Get
@@ -242,8 +242,8 @@ Namespace CalculationModel.Settings
 
                 For i = 0 To NumberOfSteps - 1
 
-                    _Velocity.Add(New EVector3)
-                    _Intensity.Add(New EVector3)
+                    _Velocity.Add(New Vector3)
+                    _Intensity.Add(New Vector3)
 
                     LIntensity = 0
                     If i >= Perturbation(Axes.X).Start And i <= Perturbation(Axes.X).PeakInstant Then
@@ -297,8 +297,8 @@ Namespace CalculationModel.Settings
                 _Intensity.Capacity = NumberOfSteps - 1
 
                 For i = 0 To NumberOfSteps - 1
-                    _Velocity.Add(New EVector3(BaseVelocity))
-                    _Intensity.Add(New EVector3)
+                    _Velocity.Add(New Vector3(BaseVelocity))
+                    _Intensity.Add(New Vector3)
                 Next
 
             End If

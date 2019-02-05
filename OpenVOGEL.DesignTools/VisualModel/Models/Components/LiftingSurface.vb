@@ -326,7 +326,7 @@ Namespace VisualModel.Models.Components
         ''' Position of the local origin in global coordinates.
         ''' </summary>
         ''' <remarks></remarks>
-        Public Property LocalOrigin As New EVector3
+        Public Property LocalOrigin As New Vector3
 
         Private _DirectionPoints As New EBase3
 
@@ -660,12 +660,12 @@ Namespace VisualModel.Models.Components
         ''' <value></value>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public ReadOnly Property GetPrimitiveNodePosition(ByVal Nodo As Integer) As EVector3
+        Public ReadOnly Property GetPrimitiveNodePosition(ByVal Nodo As Integer) As Vector3
             Get
                 If Nodo >= 1 And Nodo <= Me._nBoundaryNodes Then
                     Return Mesh.Nodes(_BoundaryNodes(Nodo)).Position
                 Else
-                    Return New EVector3
+                    Return New Vector3
                 End If
             End Get
         End Property
@@ -831,7 +831,7 @@ Namespace VisualModel.Models.Components
             Dim E As Double
             Dim Ttwist As Double
             Dim MrotA(3, 3) As Double
-            Dim Pij As New EVector3
+            Dim Pij As New Vector3
             Dim Phi As Double
             Dim XBp As Double
             Dim YBp As Double
@@ -996,7 +996,7 @@ Namespace VisualModel.Models.Components
 
                 End If
 
-                Dim pLoc As New EVector2
+                Dim pLoc As New Vector2
 
                 Dim deflection As Single = WingRegions(0).FlapDeflection
 
@@ -1030,7 +1030,7 @@ Namespace VisualModel.Models.Components
 
             ' Start building the geometry of each wing region
 
-            Dim leadingEdge As New EVector3
+            Dim leadingEdge As New Vector3
 
             For mpIndex = 0 To WingRegions.Count - 1
 
@@ -1190,7 +1190,7 @@ Namespace VisualModel.Models.Components
 
                         ' Evaluate the point in the camber line
 
-                        Dim pLoc As New EVector2
+                        Dim pLoc As New Vector2
 
                         LocalCamber.EvaluatePoint(pLoc, X, WingRegions(mpIndex).Flapped, WingRegions(mpIndex).FlapChord, WingRegions(mpIndex).FlapDeflection)
 
@@ -1325,18 +1325,18 @@ Namespace VisualModel.Models.Components
 
             If VisualProperties.VisualizationMode = VisualizationMode.Lattice Then
 
-                Dim Nodo As EVector3
+                Dim Nodo As Vector3
 
                 gl.InitNames()
                 Code = Selection.GetSelectionCode(ComponentTypes.etLiftingSurface, ElementIndex, EntityTypes.etPanel, 0)
                 Dim p As Integer = 0
 
-                Dim PrimitiveColor As New EVector3
+                Dim PrimitiveColor As New Vector3
                 PrimitiveColor.X = VisualProperties.ColorPrimitives.R / 255
                 PrimitiveColor.Y = VisualProperties.ColorPrimitives.G / 255
                 PrimitiveColor.Z = VisualProperties.ColorPrimitives.B / 255
 
-                Dim SelectedColor As New EVector3
+                Dim SelectedColor As New Vector3
                 If Not Active Then
                     SelectedColor.X = VisualProperties.ColorSurface.R / 255
                     SelectedColor.Y = VisualProperties.ColorSurface.G / 255
@@ -1464,7 +1464,7 @@ Namespace VisualModel.Models.Components
                 VisualProperties.VisualizationMode = VisualizationMode.Lattice Or
                 VisualProperties.VisualizationMode = VisualizationMode.Structural Then
 
-                Dim SColor As New EVector3
+                Dim SColor As New Vector3
                 SColor.X = 0.75
                 SColor.Y = 0.75
                 SColor.Z = 0.75
@@ -1481,8 +1481,8 @@ Namespace VisualModel.Models.Components
 
                     gl.InitNames()
 
-                    Dim Nodo1 As EVector3
-                    Dim Nodo2 As EVector3
+                    Dim Nodo1 As Vector3
+                    Dim Nodo2 As Vector3
 
                     gl.LineWidth(Thickness)
                     gl.Color(SColor.X, SColor.Y, SColor.Z)
@@ -1525,8 +1525,8 @@ Namespace VisualModel.Models.Components
 
                 gl.Color(0, 0, 0)
 
-                Dim Nodo1 As EVector3
-                Dim Nodo2 As EVector3
+                Dim Nodo1 As Vector3
+                Dim Nodo2 As Vector3
 
                 Code = Selection.GetSelectionCode(ComponentTypes.etLiftingSurface, ElementIndex, EntityTypes.etStructuralElement, 0)
                 Dim Code2 As Integer = Selection.GetSelectionCode(ComponentTypes.etLiftingSurface, ElementIndex, EntityTypes.etStructuralNode, 0)
@@ -1728,8 +1728,8 @@ Namespace VisualModel.Models.Components
 
             _StructuralPartition.Clear()
 
-            Dim LeadingEdgePoint As EVector3
-            Dim TrailingEdgePoint As EVector3
+            Dim LeadingEdgePoint As Vector3
+            Dim TrailingEdgePoint As Vector3
             Dim NodalStripIndex As Integer = 0
             Dim RootSection As Section = Me.RootSection
             Dim RootChord As Double = _RootChord
@@ -1752,7 +1752,7 @@ Namespace VisualModel.Models.Components
                         TrailingEdgePoint = Mesh.Nodes((NodalStripIndex + 1) * _nChordNodes - 1).Position
                     End If
 
-                    Dim StructuralNode As New EVector3
+                    Dim StructuralNode As New Vector3
 
                     StructuralNode.X = LeadingEdgePoint.X + Panel.CenterOfShear * (TrailingEdgePoint.X - LeadingEdgePoint.X)
                     StructuralNode.Y = LeadingEdgePoint.Y + Panel.CenterOfShear * (TrailingEdgePoint.Y - LeadingEdgePoint.Y)
@@ -1778,7 +1778,7 @@ Namespace VisualModel.Models.Components
 
                     If (NodalStripIndex > 0) Then
 
-                        Dim PreviousP As EVector3 = StructuralPartition(StructuralPartition.Count - 1).P
+                        Dim PreviousP As Vector3 = StructuralPartition(StructuralPartition.Count - 1).P
 
                         LocalPartition.Basis.U.X = StructuralNode.X - PreviousP.X
                         LocalPartition.Basis.U.Y = StructuralNode.Y - PreviousP.Y
@@ -1835,18 +1835,18 @@ Namespace VisualModel.Models.Components
 
             Try
 
-                Dim Nodo1 As New EVector3
-                Dim Nodo2 As New EVector3
-                Dim Nodo3 As New EVector3
-                Dim Nodo4 As New EVector3
+                Dim Nodo1 As New Vector3
+                Dim Nodo2 As New Vector3
+                Dim Nodo3 As New Vector3
+                Dim Nodo4 As New Vector3
 
-                Dim Vector1 As EVector3
-                Dim Vector2 As EVector3
-                Dim Vector3 As EVector3
-                Dim Vector4 As EVector3
+                Dim Vector1 As Vector3
+                Dim Vector2 As Vector3
+                Dim Vector3 As Vector3
+                Dim Vector4 As Vector3
 
-                Dim Diagonal1 As New EVector3
-                Dim Diagonal2 As New EVector3
+                Dim Diagonal1 As New Vector3
+                Dim Diagonal2 As New Vector3
 
                 For i = 0 To NumberOfPanels - 1
 
@@ -1958,7 +1958,7 @@ Namespace VisualModel.Models.Components
         ''' <param name="Point3"></param>
         ''' <param name="Point4"></param>
         ''' <remarks></remarks>
-        Public Overrides Sub Align(ByVal Point1 As EVector3, ByVal Point2 As EVector3, ByVal Point3 As EVector3, ByVal Point4 As EVector3)
+        Public Overrides Sub Align(ByVal Point1 As Vector3, ByVal Point2 As Vector3, ByVal Point3 As Vector3, ByVal Point4 As Vector3)
 
             ' Rotate arround P1 in order to align segments:
 
@@ -1966,22 +1966,22 @@ Namespace VisualModel.Models.Components
             Me.CenterOfRotation.Y = Point2.Y
             Me.CenterOfRotation.Z = Point2.Z
 
-            Dim V1 As EVector3 = Point1 - Point3
-            Dim V2 As EVector3 = Point2 - Point4
+            Dim V1 As Vector3 = Point1 - Point3
+            Dim V2 As Vector3 = Point2 - Point4
 
-            Dim V1h As New EVector2
+            Dim V1h As New Vector2
 
             V1h.X = V1.X
             V1h.Y = V1.Y
             V1h.Normalize()
 
-            Dim V2h As New EVector2
+            Dim V2h As New Vector2
             V2h.X = V2.X
             V2h.Y = V2.Y
             V2h.Normalize()
 
-            Dim V2ho As EVector2 = V2h.OrthogonalVector(V1h)
-            Dim V1ho As New EVector2
+            Dim V2ho As Vector2 = V2h.OrthogonalVector(V1h)
+            Dim V1ho As New Vector2
             V1ho.Y = V1h.X
             V1ho.X = -V1h.Y
 

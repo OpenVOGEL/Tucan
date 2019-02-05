@@ -227,8 +227,8 @@ Namespace DataStore
 
             If Visualization.AllowLineSmoothing Then ControlGL.Enable(OpenGL.GL_LINE_SMOOTH) Else ControlGL.Disable(OpenGL.GL_LINE_SMOOTH)
 
-            Dim Origen As New EVector3
-            Dim Punto As EVector3 = Visualization.CameraPosition
+            Dim Origen As New Vector3
+            Dim Punto As Vector3 = Visualization.CameraPosition
             Dim Orientacion As EulerAngles = Visualization.CameraOrientation
 
             ControlGL.RenderMode(OpenGL.GL_RENDER)
@@ -291,8 +291,8 @@ Namespace DataStore
 
             If Visualization.AllowLineSmoothing Then ControlGL.Enable(OpenGL.GL_LINE_SMOOTH) Else ControlGL.Disable(OpenGL.GL_LINE_SMOOTH)
 
-            Dim Origen As New EVector3
-            Dim Punto As EVector3 = Visualization.CameraPosition
+            Dim Origen As New Vector3
+            Dim Punto As Vector3 = Visualization.CameraPosition
             Dim Orientacion As EulerAngles = Visualization.CameraOrientation
 
             ControlGL.RenderMode(OpenGL.GL_RENDER)
@@ -508,8 +508,8 @@ Namespace DataStore
 
             If Visualization.AllowLineSmoothing Then ControlGL.Enable(OpenGL.GL_LINE_SMOOTH) Else ControlGL.Disable(OpenGL.GL_LINE_SMOOTH)
 
-            Dim Origin As New EVector3
-            Dim Punto As EVector3 = Visualization.CameraPosition
+            Dim Origin As New Vector3
+            Dim Punto As Vector3 = Visualization.CameraPosition
             Dim Orientacion As EulerAngles = Visualization.CameraOrientation
 
             ControlGL.RenderMode(OpenGL.GL_RENDER)
@@ -553,8 +553,8 @@ Namespace DataStore
 
             ControlGL.Ortho(-0.5 * ControlGLWidth, 0.5 * ControlGLWidth, -0.5 * ControlGLHeight, 0.5 * ControlGLHeight, -100000, 100000)
 
-            Dim Origin As New EVector3
-            Dim Point As EVector3 = Visualization.CameraPosition
+            Dim Origin As New Vector3
+            Dim Point As Vector3 = Visualization.CameraPosition
             Dim Orientation As EulerAngles = Visualization.CameraOrientation
 
             ControlGL.Translate(Visualization.CameraPosition.X, Visualization.CameraPosition.Y, 0)
@@ -615,15 +615,15 @@ Namespace DataStore
                 Dim SelectedItem As SelectionRecord
                 Dim LocalList As New List(Of SelectionRecord)
                 Dim Mesh As Basics.Mesh
-                Dim R1 As EVector3
-                Dim R2 As EVector3
-                Dim R3 As EVector3
-                Dim R4 As EVector3
+                Dim R1 As Vector3
+                Dim R2 As Vector3
+                Dim R3 As Vector3
+                Dim R4 As Vector3
                 Dim N1 As Integer
                 Dim N2 As Integer
                 Dim N3 As Integer
                 Dim N4 As Integer
-                Dim EyeVector As New EVector3
+                Dim EyeVector As New Vector3
 
                 EyeVector.Z = 1.0
                 EyeVector.Rotate(-Orientation.Psi, -Orientation.Tita, -Orientation.Fi)

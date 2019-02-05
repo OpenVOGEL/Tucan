@@ -137,7 +137,7 @@ Namespace VisualModel.Models.Components
 
             Dim NodalPoint As New NodalPoint
 
-            NodalPoint.ReferencePosition = New EVector3(X, Y, Z)
+            NodalPoint.ReferencePosition = New Vector3(X, Y, Z)
             NodalPoint.Position.X = X
             NodalPoint.Position.Y = Y
             NodalPoint.Position.Z = Z
@@ -146,13 +146,13 @@ Namespace VisualModel.Models.Components
 
         End Sub
 
-        Public Overloads Sub AddNodalPoint(ByVal Punto As EVector3, Optional ByVal Displacement As EVector3 = Nothing)
+        Public Overloads Sub AddNodalPoint(ByVal Punto As Vector3, Optional ByVal Displacement As Vector3 = Nothing)
 
             Dim NodalPoint As New NodalPoint
-            NodalPoint.ReferencePosition = New EVector3(Punto.X, Punto.Y, Punto.Z)
+            NodalPoint.ReferencePosition = New Vector3(Punto.X, Punto.Y, Punto.Z)
             NodalPoint.Position.Assign(Punto)
             If Not IsNothing(Displacement) Then
-                NodalPoint.Displacement = New EVector3(Displacement)
+                NodalPoint.Displacement = New Vector3(Displacement)
                 NodalPoint.Position.Add(Displacement)
             End If
 
@@ -411,8 +411,8 @@ Namespace VisualModel.Models.Components
 
                 gl.LineWidth(VisualProperties.ThicknessMesh)
 
-                Dim Node1 As EVector3
-                Dim Node2 As EVector3
+                Dim Node1 As Vector3
+                Dim Node2 As Vector3
 
                 gl.InitNames()
                 Dim Code As Integer = Selection.GetSelectionCode(ComponentTypes.etResultContainer, ElementIndex, EntityTypes.etSegment, 0)
@@ -464,7 +464,7 @@ Namespace VisualModel.Models.Components
 
             If VisualProperties.ShowLoadVectors Then
 
-                Dim Load As New EVector3
+                Dim Load As New Vector3
 
                 For Each Panel In Mesh.Panels
 
@@ -535,18 +535,18 @@ Namespace VisualModel.Models.Components
         ''' </summary>
         Public Sub GenerateControlPointsAndNormalVectors()
 
-            Dim Nodo1 As EVector3
-            Dim Nodo2 As EVector3
-            Dim Nodo3 As EVector3
-            Dim Nodo4 As EVector3
+            Dim Nodo1 As Vector3
+            Dim Nodo2 As Vector3
+            Dim Nodo3 As Vector3
+            Dim Nodo4 As Vector3
 
-            Dim Vector1 As EVector3
-            Dim Vector2 As EVector3
-            Dim Vector3 As EVector3
-            Dim Vector4 As EVector3
+            Dim Vector1 As Vector3
+            Dim Vector2 As Vector3
+            Dim Vector3 As Vector3
+            Dim Vector4 As Vector3
 
-            Dim Diagonal1 As New EVector3
-            Dim Diagonal2 As New EVector3
+            Dim Diagonal1 As New Vector3
+            Dim Diagonal2 As New Vector3
 
             For i = 0 To NumberOfPanels - 1
 

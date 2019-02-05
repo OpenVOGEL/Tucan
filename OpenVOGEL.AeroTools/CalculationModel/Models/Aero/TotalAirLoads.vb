@@ -27,8 +27,8 @@ Namespace CalculationModel.Models.Aero
 
         Public Property Area As Double
 
-        Public Property Force As New EVector3
-        Public Property Moment As New EVector3
+        Public Property Force As New Vector3
+        Public Property Moment As New Vector3
 
         Public Property CL As Double
         Public Property CDi As Double
@@ -36,17 +36,17 @@ Namespace CalculationModel.Models.Aero
 
         ' old:
 
-        Public Property SlenderForce As New EVector3
-        Public Property SlenderMoment As New EVector3
+        Public Property SlenderForce As New Vector3
+        Public Property SlenderMoment As New Vector3
 
-        Public Property InducedDrag As New EVector3
-        Public Property InducedMoment As New EVector3
+        Public Property InducedDrag As New Vector3
+        Public Property InducedMoment As New Vector3
 
-        Public Property SkinDrag As New EVector3
-        Public Property SkinMoment As New EVector3
+        Public Property SkinDrag As New Vector3
+        Public Property SkinMoment As New Vector3
 
-        Public Property BodyForce As New EVector3
-        Public Property BodyMoment As New EVector3
+        Public Property BodyForce As New Vector3
+        Public Property BodyMoment As New Vector3
 
         ''' <summary>
         ''' Adds the given total load scaled by the surface.

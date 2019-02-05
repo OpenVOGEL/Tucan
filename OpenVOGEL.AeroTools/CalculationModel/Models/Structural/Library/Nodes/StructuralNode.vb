@@ -25,7 +25,7 @@ Namespace CalculationModel.Models.Structural.Library.Nodes
     ''' <remarks></remarks>
     Public Class StructuralNode
 
-        Public Position As EVector3
+        Public Position As Vector3
 
         Public Contrains As Constrains
         Public Load As NodalLoad
@@ -53,7 +53,7 @@ Namespace CalculationModel.Models.Structural.Library.Nodes
         ''' <remarks></remarks>
         Public Sub New(ByVal Index As Integer)
             _Index = Index
-            Position = New EVector3
+            Position = New Vector3
             Displacement = New NodalDisplacement
             Velocity = New NodalDisplacement
             Contrains = New Constrains

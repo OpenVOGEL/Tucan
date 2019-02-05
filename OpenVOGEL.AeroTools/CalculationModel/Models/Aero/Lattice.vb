@@ -34,7 +34,7 @@ Namespace CalculationModel.Models.Aero
         ''' Adds a node to the lattice with an specific local index
         ''' </summary>
         ''' <param name="Position"></param>
-        Public Overloads Sub AddNode(ByVal Position As EVector3, ByVal LocalIndex As Integer)
+        Public Overloads Sub AddNode(ByVal Position As Vector3, ByVal LocalIndex As Integer)
             Dim NodeToAdd As New Node(LocalIndex, Position) ' < Solucionar! si la estela se corta el numero cambia! (controlar si esta bien)
             Nodes.Add(NodeToAdd)
         End Sub
@@ -43,7 +43,7 @@ Namespace CalculationModel.Models.Aero
         ''' Adds a node to the lattice with a local index equal to the current number of nodes
         ''' </summary>
         ''' <param name="Position"></param>
-        Public Overloads Sub AddNode(ByVal Position As EVector3)
+        Public Overloads Sub AddNode(ByVal Position As Vector3)
             Dim NodeToAdd As New Node(Nodes.Count, Position) ' < Solucionar! si la estela se corta el numero cambia! (controlar si esta bien)
             Nodes.Add(NodeToAdd)
         End Sub
@@ -73,7 +73,7 @@ Namespace CalculationModel.Models.Aero
         ''' <summary>
         ''' Reasigns velocity at each nodal point.
         ''' </summary>
-        Public Overridable Overloads Sub ClearVelocity(ByVal Velocity As EVector3)
+        Public Overridable Overloads Sub ClearVelocity(ByVal Velocity As Vector3)
 
             For Each Node In Nodes
 
@@ -123,7 +123,7 @@ Namespace CalculationModel.Models.Aero
         ''' </summary>
         ''' <param name="Point"></param>
         ''' <remarks></remarks>
-        Public Sub AddInducedVelocity(ByRef Velocity As EVector3, ByVal Point As EVector3, ByVal CutOff As Double)
+        Public Sub AddInducedVelocity(ByRef Velocity As Vector3, ByVal Point As Vector3, ByVal CutOff As Double)
 
             ' Add velocity associated to doublets
 
@@ -351,7 +351,7 @@ Namespace CalculationModel.Models.Aero
         ''' <param name="Orientation"></param>
         ''' <param name="Point"></param>
         ''' <remarks></remarks>
-        Public Sub RotateAbout(ByVal Orientation As EulerAngles, ByVal Point As EVector3)
+        Public Sub RotateAbout(ByVal Orientation As EulerAngles, ByVal Point As Vector3)
 
             Dim m As New MathTools.Algebra.CustomMatrices.RotationMatrix
             m.Generate(Orientation)
@@ -484,7 +484,7 @@ Namespace CalculationModel.Models.Aero
             Nodes.Clear()
             VortexRings.Clear()
 
-            Dim Position As New EVector3
+            Dim Position As New Vector3
 
             Dim NodalVelocity As Boolean = r.ReadBoolean
             Dim ReferenceAndDisplacement As Boolean = r.ReadBoolean
@@ -510,9 +510,9 @@ Namespace CalculationModel.Models.Aero
 
                 If ReferenceAndDisplacement Then
 
-                    Nodes(i).OriginalPosition = New EVector3(r.ReadDouble(), r.ReadDouble(), r.ReadDouble())
+                    Nodes(i).OriginalPosition = New Vector3(r.ReadDouble(), r.ReadDouble(), r.ReadDouble())
 
-                    Nodes(i).Displacement = New EVector3(r.ReadDouble(), r.ReadDouble(), r.ReadDouble())
+                    Nodes(i).Displacement = New Vector3(r.ReadDouble(), r.ReadDouble(), r.ReadDouble())
 
                 End If
 

@@ -325,7 +325,7 @@ Public Class MainForm
 #Region " Control GL "
 
     Private MouseDownPosition As New Drawing.Point
-    Private CameraStartPosition As New EVector3
+    Private CameraStartPosition As New Vector3
     Private CameraOrientation As New EulerAngles
 
     Private Sub ControlOpenGL_MouseMove(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles ControlOpenGL.MouseMove

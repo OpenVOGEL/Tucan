@@ -316,7 +316,7 @@ Namespace VisualModel.Models
 
                     ' Find chordwise vector
 
-                    Dim ChordVector As New EVector3
+                    Dim ChordVector As New Vector3
                     ChordVector.X = Lattice.Nodes(TrailingEdgeNodeIndex).Position.X - Lattice.Nodes(LeadingEdgeNodeIndex).Position.X
                     ChordVector.Y = Lattice.Nodes(TrailingEdgeNodeIndex).Position.Y - Lattice.Nodes(LeadingEdgeNodeIndex).Position.Y
                     ChordVector.Z = Lattice.Nodes(TrailingEdgeNodeIndex).Position.Z - Lattice.Nodes(LeadingEdgeNodeIndex).Position.Z
@@ -633,7 +633,7 @@ Namespace VisualModel.Models
 
                 Results.TransitLattices.Clear()
 
-                Dim NodalDisplacement As New EVector3
+                Dim NodalDisplacement As New Vector3
                 Dim nTimeSteps = 0
 
                 If This.Settings.StructuralSettings.SubSteps < 1 Then This.Settings.StructuralSettings.SubSteps = 1

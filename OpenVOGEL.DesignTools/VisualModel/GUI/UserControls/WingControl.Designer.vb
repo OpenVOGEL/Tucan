@@ -1,9 +1,9 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class WingControl
     Inherits System.Windows.Forms.UserControl
 
     'UserControl reemplaza a Dispose para limpiar la lista de componentes.
-    <System.Diagnostics.DebuggerNonUserCode()> _
+    <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
             If disposing AndAlso components IsNot Nothing Then
@@ -20,7 +20,7 @@ Partial Class WingControl
     'NOTA: el Diseñador de Windows Forms necesita el siguiente procedimiento
     'Se puede modificar usando el Diseñador de Windows Forms.  
     'No lo modifique con el editor de código.
-    <System.Diagnostics.DebuggerStepThrough()> _
+    <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.btnLockSurface = New System.Windows.Forms.Button()
         Me.btnHideSurface = New System.Windows.Forms.Button()
@@ -34,11 +34,13 @@ Partial Class WingControl
         Me.btnInsertPanel = New System.Windows.Forms.Button()
         Me.tcMacroPanelProperties = New System.Windows.Forms.TabControl()
         Me.TabPage6 = New System.Windows.Forms.TabPage()
+        Me.Label14 = New System.Windows.Forms.Label()
+        Me.Label13 = New System.Windows.Forms.Label()
         Me.nudChordwisePanels = New System.Windows.Forms.NumericUpDown()
         Me.Label2 = New System.Windows.Forms.Label()
-        Me.cbSymetricWing = New System.Windows.Forms.CheckBox()
-        Me.rbConstantSpacement = New System.Windows.Forms.RadioButton()
         Me.rbLinearSpacement = New System.Windows.Forms.RadioButton()
+        Me.rbConstantSpacement = New System.Windows.Forms.RadioButton()
+        Me.cbSymetricWing = New System.Windows.Forms.CheckBox()
         Me.Label40 = New System.Windows.Forms.Label()
         Me.Label39 = New System.Windows.Forms.Label()
         Me.nudTwistingAxis = New System.Windows.Forms.NumericUpDown()
@@ -131,8 +133,6 @@ Partial Class WingControl
         Me.tbSurfaceName = New System.Windows.Forms.TextBox()
         Me.btnOk = New System.Windows.Forms.Button()
         Me.Label1 = New System.Windows.Forms.Label()
-        Me.Label13 = New System.Windows.Forms.Label()
-        Me.Label14 = New System.Windows.Forms.Label()
         Me.PanelDeEdicion.SuspendLayout()
         Me.tbDesign.SuspendLayout()
         Me.Panel1.SuspendLayout()
@@ -341,7 +341,6 @@ Partial Class WingControl
         Me.TabPage6.BackColor = System.Drawing.Color.White
         Me.TabPage6.Controls.Add(Me.Label14)
         Me.TabPage6.Controls.Add(Me.Label13)
-        Me.TabPage6.Controls.Add(Me.Label1)
         Me.TabPage6.Controls.Add(Me.nudChordwisePanels)
         Me.TabPage6.Controls.Add(Me.Label2)
         Me.TabPage6.Controls.Add(Me.rbLinearSpacement)
@@ -379,6 +378,30 @@ Partial Class WingControl
         Me.TabPage6.TabIndex = 0
         Me.TabPage6.Text = "Geometry"
         '
+        'Label14
+        '
+        Me.Label14.AutoSize = True
+        Me.Label14.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label14.ImeMode = System.Windows.Forms.ImeMode.NoControl
+        Me.Label14.Location = New System.Drawing.Point(4, 76)
+        Me.Label14.Name = "Label14"
+        Me.Label14.Size = New System.Drawing.Size(71, 13)
+        Me.Label14.TabIndex = 62
+        Me.Label14.Text = "Dimensions:"
+        Me.Label14.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'Label13
+        '
+        Me.Label13.AutoSize = True
+        Me.Label13.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label13.ImeMode = System.Windows.Forms.ImeMode.NoControl
+        Me.Label13.Location = New System.Drawing.Point(4, 8)
+        Me.Label13.Name = "Label13"
+        Me.Label13.Size = New System.Drawing.Size(39, 13)
+        Me.Label13.TabIndex = 61
+        Me.Label13.Text = "Mesh:"
+        Me.Label13.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
         'nudChordwisePanels
         '
         Me.nudChordwisePanels.Font = New System.Drawing.Font("Segoe UI", 8.25!)
@@ -397,11 +420,33 @@ Partial Class WingControl
         Me.Label2.Font = New System.Drawing.Font("Segoe UI", 8.25!)
         Me.Label2.ForeColor = System.Drawing.Color.Black
         Me.Label2.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.Label2.Location = New System.Drawing.Point(4, 28)
+        Me.Label2.Location = New System.Drawing.Point(1, 28)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(102, 13)
         Me.Label2.TabIndex = 42
         Me.Label2.Text = "Chordwise panels:"
+        '
+        'rbLinearSpacement
+        '
+        Me.rbLinearSpacement.AutoSize = True
+        Me.rbLinearSpacement.ImeMode = System.Windows.Forms.ImeMode.NoControl
+        Me.rbLinearSpacement.Location = New System.Drawing.Point(199, 49)
+        Me.rbLinearSpacement.Name = "rbLinearSpacement"
+        Me.rbLinearSpacement.Size = New System.Drawing.Size(56, 17)
+        Me.rbLinearSpacement.TabIndex = 53
+        Me.rbLinearSpacement.Text = "Linear"
+        Me.rbLinearSpacement.UseVisualStyleBackColor = True
+        '
+        'rbConstantSpacement
+        '
+        Me.rbConstantSpacement.AutoSize = True
+        Me.rbConstantSpacement.ImeMode = System.Windows.Forms.ImeMode.NoControl
+        Me.rbConstantSpacement.Location = New System.Drawing.Point(199, 29)
+        Me.rbConstantSpacement.Name = "rbConstantSpacement"
+        Me.rbConstantSpacement.Size = New System.Drawing.Size(72, 17)
+        Me.rbConstantSpacement.TabIndex = 52
+        Me.rbConstantSpacement.Text = "Constant"
+        Me.rbConstantSpacement.UseVisualStyleBackColor = True
         '
         'cbSymetricWing
         '
@@ -413,28 +458,6 @@ Partial Class WingControl
         Me.cbSymetricWing.TabIndex = 59
         Me.cbSymetricWing.Text = "Symmetric about [ Y = 0 ] plane"
         Me.cbSymetricWing.UseVisualStyleBackColor = True
-        '
-        'rbConstantSpacement
-        '
-        Me.rbConstantSpacement.AutoSize = True
-        Me.rbConstantSpacement.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.rbConstantSpacement.Location = New System.Drawing.Point(201, 44)
-        Me.rbConstantSpacement.Name = "rbConstantSpacement"
-        Me.rbConstantSpacement.Size = New System.Drawing.Size(72, 17)
-        Me.rbConstantSpacement.TabIndex = 52
-        Me.rbConstantSpacement.Text = "Constant"
-        Me.rbConstantSpacement.UseVisualStyleBackColor = True
-        '
-        'rbCuadraticSpacement
-        '
-        Me.rbLinearSpacement.AutoSize = True
-        Me.rbLinearSpacement.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.rbLinearSpacement.Location = New System.Drawing.Point(201, 60)
-        Me.rbLinearSpacement.Name = "rbCuadraticSpacement"
-        Me.rbLinearSpacement.Size = New System.Drawing.Size(56, 17)
-        Me.rbLinearSpacement.TabIndex = 53
-        Me.rbLinearSpacement.Text = "Linear"
-        Me.rbLinearSpacement.UseVisualStyleBackColor = True
         '
         'Label40
         '
@@ -530,7 +553,7 @@ Partial Class WingControl
         '
         Me.Label5.AutoSize = True
         Me.Label5.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.Label5.Location = New System.Drawing.Point(7, 49)
+        Me.Label5.Location = New System.Drawing.Point(6, 49)
         Me.Label5.Name = "Label5"
         Me.Label5.Size = New System.Drawing.Size(96, 13)
         Me.Label5.TabIndex = 6
@@ -673,7 +696,7 @@ Partial Class WingControl
         Me.Label6.Font = New System.Drawing.Font("Segoe UI", 8.25!)
         Me.Label6.ForeColor = System.Drawing.Color.Black
         Me.Label6.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.Label6.Location = New System.Drawing.Point(34, 97)
+        Me.Label6.Location = New System.Drawing.Point(35, 97)
         Me.Label6.Name = "Label6"
         Me.Label6.Size = New System.Drawing.Size(68, 13)
         Me.Label6.TabIndex = 43
@@ -1088,6 +1111,7 @@ Partial Class WingControl
         'TabPage3
         '
         Me.TabPage3.BackColor = System.Drawing.Color.White
+        Me.TabPage3.Controls.Add(Me.Label1)
         Me.TabPage3.Controls.Add(Me.rbTipSection)
         Me.TabPage3.Controls.Add(Me.rbRootSection)
         Me.TabPage3.Controls.Add(Me.Label38)
@@ -1127,9 +1151,10 @@ Partial Class WingControl
         'rbTipSection
         '
         Me.rbTipSection.AutoSize = True
+        Me.rbTipSection.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.rbTipSection.Location = New System.Drawing.Point(99, 5)
         Me.rbTipSection.Name = "rbTipSection"
-        Me.rbTipSection.Size = New System.Drawing.Size(80, 17)
+        Me.rbTipSection.Size = New System.Drawing.Size(81, 17)
         Me.rbTipSection.TabIndex = 84
         Me.rbTipSection.Text = "Tip section"
         Me.rbTipSection.UseVisualStyleBackColor = True
@@ -1138,6 +1163,7 @@ Partial Class WingControl
         '
         Me.rbRootSection.AutoSize = True
         Me.rbRootSection.Checked = True
+        Me.rbRootSection.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.rbRootSection.Location = New System.Drawing.Point(5, 5)
         Me.rbRootSection.Name = "rbRootSection"
         Me.rbRootSection.Size = New System.Drawing.Size(90, 17)
@@ -1317,10 +1343,10 @@ Partial Class WingControl
         '
         Me.nudCS.DecimalPlaces = 2
         Me.nudCS.Increment = New Decimal(New Integer() {1, 0, 0, 131072})
-        Me.nudCS.Location = New System.Drawing.Point(128, 255)
+        Me.nudCS.Location = New System.Drawing.Point(133, 255)
         Me.nudCS.Minimum = New Decimal(New Integer() {100, 0, 0, -2147483648})
         Me.nudCS.Name = "nudCS"
-        Me.nudCS.Size = New System.Drawing.Size(58, 22)
+        Me.nudCS.Size = New System.Drawing.Size(53, 22)
         Me.nudCS.TabIndex = 67
         Me.nudCS.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         Me.nudCS.Value = New Decimal(New Integer() {3, 0, 0, 65536})
@@ -1330,11 +1356,11 @@ Partial Class WingControl
         Me.Label75.AutoSize = True
         Me.Label75.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label75.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.Label75.Location = New System.Drawing.Point(83, 257)
+        Me.Label75.Location = New System.Drawing.Point(38, 257)
         Me.Label75.Name = "Label75"
-        Me.Label75.Size = New System.Drawing.Size(39, 13)
+        Me.Label75.Size = New System.Drawing.Size(89, 13)
         Me.Label75.TabIndex = 66
-        Me.Label75.Text = "CSy/C:"
+        Me.Label75.Text = "Center of shear:"
         Me.Label75.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         '
         'Label54
@@ -1528,36 +1554,11 @@ Partial Class WingControl
         '
         Me.Label1.AutoSize = True
         Me.Label1.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.Label1.Location = New System.Drawing.Point(199, 28)
+        Me.Label1.Location = New System.Drawing.Point(192, 257)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(66, 13)
-        Me.Label1.TabIndex = 60
-        Me.Label1.Text = "Spacement:"
-        Me.Label1.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        '
-        'Label13
-        '
-        Me.Label13.AutoSize = True
-        Me.Label13.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label13.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.Label13.Location = New System.Drawing.Point(4, 8)
-        Me.Label13.Name = "Label13"
-        Me.Label13.Size = New System.Drawing.Size(39, 13)
-        Me.Label13.TabIndex = 61
-        Me.Label13.Text = "Mesh:"
-        Me.Label13.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        '
-        'Label14
-        '
-        Me.Label14.AutoSize = True
-        Me.Label14.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label14.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.Label14.Location = New System.Drawing.Point(4, 76)
-        Me.Label14.Name = "Label14"
-        Me.Label14.Size = New System.Drawing.Size(71, 13)
-        Me.Label14.TabIndex = 62
-        Me.Label14.Text = "Dimensions:"
-        Me.Label14.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.Label1.Size = New System.Drawing.Size(49, 13)
+        Me.Label1.TabIndex = 85
+        Me.Label1.Text = "% chord"
         '
         'WingControl
         '

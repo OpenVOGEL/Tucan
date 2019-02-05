@@ -21,8 +21,8 @@ Namespace MathLibrary.ODEs
 
     Public Class TEstado
 
-        Private Z1 As New EVector3
-        Private Z2 As New EVector3
+        Private Z1 As New Vector3
+        Private Z2 As New Vector3
 
     End Class
 

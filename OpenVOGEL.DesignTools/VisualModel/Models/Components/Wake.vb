@@ -27,7 +27,7 @@ Namespace VisualModel.Models.Components
         Public Nombre As String
         Public RutaDeAcceso As String
 
-        Private NodalPoints As New List(Of EVector3)
+        Private NodalPoints As New List(Of Vector3)
         Private QuadPanels As New List(Of Panel)
         Private Vortices As New List(Of LatticeSegment) ' Matriz de conexion de vórcies
 
@@ -48,7 +48,7 @@ Namespace VisualModel.Models.Components
 
         Private FGeometriaCargada As Boolean = False
 
-        Private FXYZVI As New List(Of EVector3) ' Velocidad inducida en los puntos nodales
+        Private FXYZVI As New List(Of Vector3) ' Velocidad inducida en los puntos nodales
 
 #Region " Propiedades geométricas: "
 
@@ -82,10 +82,10 @@ Namespace VisualModel.Models.Components
 
 #Region " Punto nodal: "
 
-        Public ReadOnly Property EvaluarPuntoNodal(ByVal Node As Integer) As EVector3
+        Public ReadOnly Property EvaluarPuntoNodal(ByVal Node As Integer) As Vector3
             'Esta propiedad solo pasa el valor
             Get
-                Dim Punto As New EVector3
+                Dim Punto As New Vector3
                 If Node <= NN And Node > 0 Then
                     Punto.X = Me.NodalPoints.Item(Node - 1).X
                     Punto.Y = Me.NodalPoints.Item(Node - 1).Y
@@ -95,10 +95,10 @@ Namespace VisualModel.Models.Components
             End Get
         End Property
 
-        Public ReadOnly Property EvaluarVelocidadEnPuntoNodal(ByVal Node As Integer) As EVector3
+        Public ReadOnly Property EvaluarVelocidadEnPuntoNodal(ByVal Node As Integer) As Vector3
             'Esta propiedad solo pasa el valor
             Get
-                Dim Vector As New EVector3
+                Dim Vector As New Vector3
                 If Node <= NN And Node > 0 Then
                     Vector.X = Me.FXYZVI.Item(Node - 1).X
                     Vector.Y = Me.FXYZVI.Item(Node - 1).Y
@@ -108,32 +108,32 @@ Namespace VisualModel.Models.Components
             End Get
         End Property
 
-        Public Property ObtenerPuntoNodal(ByVal Node As Integer) As EVector3
+        Public Property ObtenerPuntoNodal(ByVal Node As Integer) As Vector3
             'Esta propiedad hace referencia completa al macro panel
             Get
                 If Node <= NN And Node > 0 Then
                     Return Me.NodalPoints.Item(Node - 1) 'Recordar que el nodo 1 corresponde al indice 0 en la matriz
                 Else
-                    Return New EVector3
+                    Return New Vector3
                 End If
             End Get
-            Set(ByVal value As EVector3)
+            Set(ByVal value As Vector3)
                 If Node <= NN Then
                     Me.NodalPoints.Item(Node - 1) = value
                 End If
             End Set
         End Property
 
-        Public Property ObtenerVelocidadEnPuntoNodal(ByVal Node As Integer) As EVector3
+        Public Property ObtenerVelocidadEnPuntoNodal(ByVal Node As Integer) As Vector3
             'Esta propiedad hace referencia completa a la velocidad en el punto nodal.
             Get
                 If Node <= NN And Node > 0 Then
                     Return Me.FXYZVI.Item(Node - 1)
                 Else
-                    Return New EVector3
+                    Return New Vector3
                 End If
             End Get
-            Set(ByVal Value As EVector3)
+            Set(ByVal Value As Vector3)
                 If Node <= NN And Node > 0 Then
                     Me.FXYZVI.Item(Node - 1).Assign(Value)
                 End If
@@ -142,17 +142,17 @@ Namespace VisualModel.Models.Components
 
         Public Overloads Sub AgregarPuntoNodal(ByVal X As Double, ByVal Y As Double, ByVal Z As Double)
 
-            Dim PuntoNodal As New EVector3(X, Y, Z)
+            Dim PuntoNodal As New Vector3(X, Y, Z)
 
             Me.NodalPoints.Add(PuntoNodal)
-            Me.FXYZVI.Add(New EVector3)
+            Me.FXYZVI.Add(New Vector3)
 
         End Sub
 
-        Public Overloads Sub AgregarPuntoNodal(ByVal Punto As EVector3)
+        Public Overloads Sub AgregarPuntoNodal(ByVal Punto As Vector3)
 
             Me.NodalPoints.Add(Punto)
-            Me.FXYZVI.Add(New EVector3)
+            Me.FXYZVI.Add(New Vector3)
 
         End Sub
 
@@ -306,7 +306,7 @@ Namespace VisualModel.Models.Components
 
             ' Agrega los triangulos:
 
-            Dim Nodo As EVector3
+            Dim Nodo As Vector3
 
             If Me.MostrarSuperficie Then
 
@@ -370,8 +370,8 @@ Namespace VisualModel.Models.Components
                 gl.LineWidth(0.2F)
                 gl.Begin(OpenGL.GL_LINES)
 
-                Dim Nodo1 As New EVector3
-                Dim Nodo2 As New EVector3
+                Dim Nodo1 As New Vector3
+                Dim Nodo2 As New Vector3
 
                 gl.Color(Me.ColorDeMallado.R / 255, 1.0 * Me.ColorDeMallado.G / 255, 1.0 * Me.ColorDeMallado.B / 255)
 
@@ -528,13 +528,13 @@ Namespace VisualModel.Models.Components
 
         Public Sub CalcularPuntosDeControlYVectoresNormales()
 
-            Dim Nodo1 As New EVector3
-            Dim Nodo2 As New EVector3
-            Dim Nodo3 As New EVector3
-            Dim Nodo4 As New EVector3
+            Dim Nodo1 As New Vector3
+            Dim Nodo2 As New Vector3
+            Dim Nodo3 As New Vector3
+            Dim Nodo4 As New Vector3
 
-            Dim Diagonal1 As New EVector3
-            Dim Diagonal2 As New EVector3
+            Dim Diagonal1 As New Vector3
+            Dim Diagonal2 As New Vector3
 
             For i = 1 To Me.NP
 

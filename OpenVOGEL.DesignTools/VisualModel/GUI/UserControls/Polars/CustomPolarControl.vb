@@ -164,7 +164,7 @@ Public Class CustomPolarControl
 
             If _Polar.Nodes.Count = 0 Then
 
-                _Polar.Nodes.Add(New EVector2(0, 0))
+                _Polar.Nodes.Add(New Vector2(0, 0))
 
                 RefreshTable()
 
@@ -172,7 +172,7 @@ Public Class CustomPolarControl
 
             ElseIf _Polar.Nodes.Count = 1 Then
 
-                _Polar.Nodes.Add(New EVector2(_Polar.Nodes(0).X + 1, _Polar.Nodes(0).Y))
+                _Polar.Nodes.Add(New Vector2(_Polar.Nodes(0).X + 1, _Polar.Nodes(0).Y))
 
                 RefreshTable()
 
@@ -180,10 +180,10 @@ Public Class CustomPolarControl
 
             ElseIf dgvNodes.CurrentRow.Index >= 0 And dgvNodes.CurrentRow.Index < _Polar.Nodes.Count - 1 Then
 
-                Dim p1 As EVector2 = _Polar.Nodes(dgvNodes.CurrentRow.Index)
-                Dim p2 As EVector2 = _Polar.Nodes(dgvNodes.CurrentRow.Index + 1)
+                Dim p1 As Vector2 = _Polar.Nodes(dgvNodes.CurrentRow.Index)
+                Dim p2 As Vector2 = _Polar.Nodes(dgvNodes.CurrentRow.Index + 1)
 
-                _Polar.Nodes.Insert(dgvNodes.CurrentRow.Index + 1, New EVector2(0.5 * (p1.X + p2.X), 0.5 * (p1.Y + p2.Y)))
+                _Polar.Nodes.Insert(dgvNodes.CurrentRow.Index + 1, New Vector2(0.5 * (p1.X + p2.X), 0.5 * (p1.Y + p2.Y)))
 
                 RefreshTable()
 
@@ -259,7 +259,7 @@ Public Class CustomPolarControl
 
                 If points IsNot Nothing AndAlso points.Length = 2 Then
 
-                    _Polar.Nodes.Add(New EVector2(CDbl(points(0)), CDbl(points(1))))
+                    _Polar.Nodes.Add(New Vector2(CDbl(points(0)), CDbl(points(1))))
 
                 End If
 

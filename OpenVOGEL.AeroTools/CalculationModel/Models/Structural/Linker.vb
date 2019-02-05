@@ -87,11 +87,11 @@ Namespace CalculationModel.Models.Structural
 
             ' Save the current position as reference position:
 
-            Node.OriginalPosition = New EVector3(Node.Position)
+            Node.OriginalPosition = New Vector3(Node.Position)
 
             ' Initialize nodal displacement
 
-            Node.Displacement = New EVector3
+            Node.Displacement = New Vector3
 
         End Sub
 
@@ -199,7 +199,7 @@ Namespace CalculationModel.Models.Structural
         ''' </summary>
         ''' <param name="Velocity">Reference velocity</param>
         ''' <remarks></remarks>
-        Public Sub TransferLoads(ByVal Velocity As EVector3, ByVal Density As Double)
+        Public Sub TransferLoads(ByVal Velocity As Vector3, ByVal Density As Double)
 
             'Dim L As New EVector3 ' Local lift
             'Dim D As New EVector3 ' Local drag (only parasitic currently included)
@@ -386,7 +386,7 @@ Namespace CalculationModel.Models.Structural
         ''' </summary>
         ''' <param name="Velocity">Reference velocity used to calculate aerodinamic loads</param>
         ''' <remarks>This method integrates the uncoupled ecuations of motion</remarks>
-        Public Function Integrate(ByVal Velocity As EVector3, ByVal Density As Double) As Boolean
+        Public Function Integrate(ByVal Velocity As Vector3, ByVal Density As Double) As Boolean
 
             If Not Initialized Then Throw New Exception("Attempting to integrate with non initialized link")
 
@@ -477,7 +477,7 @@ Namespace CalculationModel.Models.Structural
         ''' <param name="Velocity">Reference velocity used to calculate aerodinamic loads</param>
         ''' <remarks>This method integrates the uncoupled ecuations of motion</remarks>
         ''' <returns>True when the relative increment of the new prediction in all modal displacements is less than e.</returns>
-        Public Function Integrate(ByVal Velocity As EVector3, ByVal Density As Double, k As Integer, Optional e As Double = 0.01) As Boolean
+        Public Function Integrate(ByVal Velocity As Vector3, ByVal Density As Double, k As Integer, Optional e As Double = 0.01) As Boolean
 
             If Not Initialized Then Throw New Exception("Attempting to integrate with non initialized link")
 

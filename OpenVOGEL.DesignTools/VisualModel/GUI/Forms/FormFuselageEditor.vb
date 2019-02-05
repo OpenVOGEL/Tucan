@@ -107,7 +107,7 @@ Public Class FormFuselageEditor
     End Enum
 
     Private _scale As Single
-    Private _mcenter As New EVector2
+    Private _mcenter As New Vector2
     Private _gcenter As PointF
 
     Private Sub UpdateGeometricParameters()
@@ -131,15 +131,15 @@ Public Class FormFuselageEditor
         Return p
     End Function
 
-    Private Function GetPoint(ByVal v As EVector2) As PointF
+    Private Function GetPoint(ByVal v As Vector2) As PointF
         Dim p As PointF
         p.X = _scale * (v.X - _mcenter.X) + _gcenter.X + panningDisplacement.X
         p.Y = -_scale * (v.Y - _mcenter.Y) + _gcenter.Y + panningDisplacement.Y
         Return p
     End Function
 
-    Private _URg As New EVector2
-    Private _BLg As New EVector2
+    Private _URg As New Vector2
+    Private _BLg As New Vector2
     Private _Zlimits As New LimitValues
 
     Public Sub ObtainGlobalExtremeCoordinates()
@@ -184,8 +184,8 @@ Public Class FormFuselageEditor
 
     End Sub
 
-    Private _URl As New EVector2
-    Private _BLl As New EVector2
+    Private _URl As New Vector2
+    Private _BLl As New Vector2
 
     Public Sub ObtainExtremeCoordinates(ByVal Section As CrossSection)
 
@@ -478,7 +478,7 @@ Public Class FormFuselageEditor
     Private movingVertex As Boolean = False
     Private vertexDrawingAnkor As PointF
     Private vertexDisplacement As PointF
-    Private vertexModelAnkor As New EVector2
+    Private vertexModelAnkor As New Vector2
 
     Private Sub MoveSelectedVertex(ByVal s As Object, ByVal e As MouseEventArgs) Handles pbSections.MouseMove
 
@@ -517,7 +517,7 @@ Public Class FormFuselageEditor
 
         If _SelectedVertexIndex >= 0 And _SelectedVertexIndex < CurrentSection.Vertices.Count - 1 Then
 
-            Dim newVertex As New EVector2
+            Dim newVertex As New Vector2
             newVertex.X = 0.5 * (CurrentSection.Vertices(_SelectedVertexIndex).X + CurrentSection.Vertices(_SelectedVertexIndex + 1).X)
             newVertex.Y = 0.5 * (CurrentSection.Vertices(_SelectedVertexIndex).Y + CurrentSection.Vertices(_SelectedVertexIndex + 1).Y)
 
@@ -527,7 +527,7 @@ Public Class FormFuselageEditor
 
         Else
 
-            Dim newVertex As New EVector2
+            Dim newVertex As New Vector2
 
             If CurrentSection.Vertices.Count > 0 Then
                 newVertex.Y = 0.1
@@ -601,14 +601,14 @@ Public Class FormFuselageEditor
 
             Dim c As Double = i / 10
 
-            Dim p1 As EVector2 = Nothing
+            Dim p1 As Vector2 = Nothing
             If Not IsNothing(SectionA) Then p1 = SectionA.GetPoint(c)
 
-            Dim p2 As EVector2 = Nothing
+            Dim p2 As Vector2 = Nothing
             If Not IsNothing(SectionB) Then p2 = SectionB.GetPoint(c)
 
             If (Not IsNothing(p1)) And (Not IsNothing(p2)) Then
-                Dim p As New EVector2
+                Dim p As New Vector2
                 p.X = 0.5 * (p1.X + p2.X)
                 p.Y = 0.5 * (p1.Y + p2.Y)
                 Section.Vertices.Add(p)
@@ -734,8 +734,8 @@ Public Class FormFuselageEditor
                     Line.Point.Y = _LiftingSurfaces(i).Mesh.Nodes(j).Position.Z
                     Line.Point.X = _LiftingSurfaces(i).Mesh.Nodes(j).Position.Y
 
-                    Dim pa As EVector3 = _LiftingSurfaces(i).Mesh.Nodes(j).Position
-                    Dim pb As EVector3 = _LiftingSurfaces(i).Mesh.Nodes(j + n + 1).Position
+                    Dim pa As Vector3 = _LiftingSurfaces(i).Mesh.Nodes(j).Position
+                    Dim pb As Vector3 = _LiftingSurfaces(i).Mesh.Nodes(j + n + 1).Position
 
                     Line.Direction.X = pa.Y - pb.Y
                     Line.Direction.Y = pa.Z - pb.Z

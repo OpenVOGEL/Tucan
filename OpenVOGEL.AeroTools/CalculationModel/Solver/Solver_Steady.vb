@@ -60,7 +60,7 @@ Namespace CalculationModel.Solver
 
             Dim WithStreamOmega As Boolean = _StreamOmega.EuclideanNorm > 0
 
-            Dim WakeExtension As New EVector3(Settings.StreamVelocity)
+            Dim WakeExtension As New Vector3(Settings.StreamVelocity)
             WakeExtension.Normalize()
             WakeExtension.Scale(100.0)
 

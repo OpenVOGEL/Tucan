@@ -95,11 +95,11 @@ Namespace CalculationModel.Solver
 
             For Each Lattice In Lattices
 
-                Dim Pi As EVector3
-                Dim Pj As EVector3
+                Dim Pi As Vector3
+                Dim Pj As Vector3
 
-                Dim Pm As EVector3
-                Dim Pn As EVector3
+                Dim Pm As Vector3
+                Dim Pn As Vector3
 
                 For Each Ring In Lattice.VortexRings
 
@@ -272,8 +272,8 @@ Namespace CalculationModel.Solver
 
                 For Each VortexRing As VortexRing In Lattice.VortexRings
 
-                    Dim Point As EVector3 = VortexRing.ControlPoint
-                    Dim Normal As EVector3 = VortexRing.Normal
+                    Dim Point As Vector3 = VortexRing.ControlPoint
+                    Dim Normal As Vector3 = VortexRing.Normal
                     Dim Row As Integer = VortexRing.IndexG
 
                     For Each OtherLattice As Lattice In Lattices
@@ -284,7 +284,7 @@ Namespace CalculationModel.Solver
 
                             Parallel.ForEach(OtherLattice.VortexRings, Sub(OtherVortexRing As VortexRing)
 
-                                                                           Dim Induced As EVector3 = OtherVortexRing.GiveDoubletVelocityInfluence(Point, CutOff, False)
+                                                                           Dim Induced As Vector3 = OtherVortexRing.GiveDoubletVelocityInfluence(Point, CutOff, False)
 
                                                                            MatrixDoublets(Row, OtherVortexRing.IndexG) = Induced.X * Normal.X + Induced.Y * Normal.Y + Induced.Z * Normal.Z
 
@@ -354,8 +354,8 @@ Namespace CalculationModel.Solver
 
                 For Each VortexRing As VortexRing In Lattice.VortexRings
 
-                    Dim Point As EVector3 = VortexRing.ControlPoint
-                    Dim Normal As EVector3 = VortexRing.Normal
+                    Dim Point As Vector3 = VortexRing.ControlPoint
+                    Dim Normal As Vector3 = VortexRing.Normal
                     Dim Row As Integer = VortexRing.IndexG
 
                     For Each OtherLattice As Lattice In Lattices
@@ -370,7 +370,7 @@ Namespace CalculationModel.Solver
 
                                     n += 1
 
-                                    Dim Induced As New EVector3
+                                    Dim Induced As New Vector3
 
                                     OtherVortexRing.AddSourceVelocityInfluence(Point, Induced, False)
 
@@ -894,10 +894,10 @@ Namespace CalculationModel.Solver
         ''' <summary>
         ''' Returns the total induced velocity at the given point (serial computation).
         ''' </summary>
-        Public Function CalculateVelocityAtPoint(ByVal Point As EVector3, ByVal Total As Boolean, ByVal WithStreamOmega As Boolean) As EVector3
+        Public Function CalculateVelocityAtPoint(ByVal Point As Vector3, ByVal Total As Boolean, ByVal WithStreamOmega As Boolean) As Vector3
 
             Dim CutOff As Double = Settings.Cutoff
-            Dim Velocity As New EVector3
+            Dim Velocity As New Vector3
 
             If Total Then
 

@@ -35,7 +35,7 @@ Namespace VisualModel.Models.Components.Basics
         ''' The nodes if this camber line.
         ''' </summary>
         ''' <returns></returns>
-        Public Property Nodes As New List(Of EVector2)
+        Public Property Nodes As New List(Of Vector2)
 
         ''' <summary>
         ''' Returns a NACA chamber point provided the position as fraction of the chord.
@@ -69,7 +69,7 @@ Namespace VisualModel.Models.Components.Basics
 
         End Function
 
-        Public Sub EvaluatePoint(ByRef point As EVector2, ByVal x As Double, Optional Flapped As Boolean = False, Optional FlapChord As Single = 0.2, Optional FlapDeflection As Single = 0.0)
+        Public Sub EvaluatePoint(ByRef point As Vector2, ByVal x As Double, Optional Flapped As Boolean = False, Optional FlapChord As Single = 0.2, Optional FlapDeflection As Single = 0.0)
 
             point.X = x
             point.Y = Y(x)
@@ -89,7 +89,7 @@ Namespace VisualModel.Models.Components.Basics
 
             For i = 0 To Camber.Nodes.Count - 1
 
-                Nodes.Add(New EVector2(Camber.Nodes(i).X, Camber.Nodes(i).Y))
+                Nodes.Add(New Vector2(Camber.Nodes(i).X, Camber.Nodes(i).Y))
 
             Next
 
@@ -128,7 +128,7 @@ Namespace VisualModel.Models.Components.Basics
 
                     End If
 
-                    Nodes.Add(New EVector2(_x, _y))
+                    Nodes.Add(New Vector2(_x, _y))
 
                 Next
 
@@ -176,7 +176,7 @@ Namespace VisualModel.Models.Components.Basics
                         Dim x As Double = IOXML.ReadDouble(reader, "X", 0.0)
                         Dim y As Double = IOXML.ReadDouble(reader, "Y", 0.0)
 
-                        Nodes.Add(New EVector2(x, y))
+                        Nodes.Add(New Vector2(x, y))
 
                 End Select
 

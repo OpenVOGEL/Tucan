@@ -31,9 +31,9 @@ Namespace VisualModel.Models.Components.Basics
         '''  Creates a new panel
         ''' </summary>
         Public Sub New()
-            ControlPoint = New EVector3
-            NormalVector = New EVector3
-            LocalVelocity = New EVector3
+            ControlPoint = New Vector3
+            NormalVector = New Vector3
+            LocalVelocity = New Vector3
             Area = 0.0#
             Circulation = 0.0#
             Cp = 0.0#
@@ -76,13 +76,13 @@ Namespace VisualModel.Models.Components.Basics
         ''' The control point
         ''' </summary>
         ''' <returns></returns>
-        Public Property ControlPoint As EVector3
+        Public Property ControlPoint As Vector3
 
         ''' <summary>
         ''' The normal vector
         ''' </summary>
         ''' <returns></returns>
-        Public Property NormalVector As EVector3
+        Public Property NormalVector As Vector3
 
         ''' <summary>
         ''' The area of the panel
@@ -100,7 +100,7 @@ Namespace VisualModel.Models.Components.Basics
         ''' The local velocity vector at the control point
         ''' </summary>
         ''' <returns></returns>
-        Public Property LocalVelocity As EVector3
+        Public Property LocalVelocity As Vector3
 
         ''' <summary>
         ''' The local circulation
@@ -153,7 +153,7 @@ Namespace VisualModel.Models.Components.Basics
         ''' <summary>
         ''' The velocity induced on this panel
         ''' </summary>
-        Private _InducedVelocity As New EVector3
+        Private _InducedVelocity As New Vector3
 
         ''' <summary>
         ''' Generates a quadrilateral element
@@ -194,7 +194,7 @@ Namespace VisualModel.Models.Components.Basics
         ''' The velocity induced at the control point of this panel
         ''' </summary>
         ''' <returns></returns>
-        Public ReadOnly Property InducedVelocity As EVector3
+        Public ReadOnly Property InducedVelocity As Vector3
             Get
                 Return _InducedVelocity
             End Get
@@ -247,19 +247,19 @@ Namespace VisualModel.Models.Components.Basics
         ''' The original position of this node (used to represent the undeformed state)
         ''' </summary>
         ''' <returns></returns>
-        Public Property ReferencePosition As EVector3
+        Public Property ReferencePosition As Vector3
 
         ''' <summary>
         ''' The position of this node
         ''' </summary>
         ''' <returns></returns>
-        Public Property Position As EVector3
+        Public Property Position As Vector3
 
         ''' <summary>
         ''' The displacement (for modes or aeroelastic results)
         ''' </summary>
         ''' <returns></returns>
-        Public Property Displacement As EVector3
+        Public Property Displacement As Vector3
 
         ''' <summary>
         ''' The color of the displacement
@@ -295,7 +295,7 @@ Namespace VisualModel.Models.Components.Basics
         ''' Creates a new node with coordinates (0,0,0)
         ''' </summary>
         Public Sub New()
-            Position = New EVector3
+            Position = New Vector3
         End Sub
 
         ''' <summary>
@@ -305,15 +305,15 @@ Namespace VisualModel.Models.Components.Basics
         ''' <param name="Y"></param>
         ''' <param name="Z"></param>
         Public Sub New(ByVal X As Double, ByVal Y As Double, ByVal Z As Double)
-            Position = New EVector3(X, Y, Z)
+            Position = New Vector3(X, Y, Z)
         End Sub
 
         ''' <summary>
         ''' Creates a new node at the position of point P
         ''' </summary>
         ''' <param name="P"></param>
-        Public Sub New(ByRef P As EVector3)
-            Position = New EVector3(P)
+        Public Sub New(ByRef P As Vector3)
+            Position = New Vector3(P)
         End Sub
 
     End Class

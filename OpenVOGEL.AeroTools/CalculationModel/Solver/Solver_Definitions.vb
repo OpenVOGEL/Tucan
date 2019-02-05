@@ -65,10 +65,10 @@ Namespace CalculationModel.Solver
         Private RHS As Vector
         Private Dimension As Integer
 
-        Private _StreamVelocity As New EVector3
+        Private _StreamVelocity As New Vector3
         Private _StreamDensity As Double
         Private _StreamDynamicPressure As Double
-        Private _StreamOmega As New EVector3
+        Private _StreamOmega As New Vector3
 
         ' Public properties:
 
@@ -78,7 +78,7 @@ Namespace CalculationModel.Solver
         ''' <value></value>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public ReadOnly Property StreamVelocity As EVector3
+        Public ReadOnly Property StreamVelocity As Vector3
             Get
                 Return _StreamVelocity
             End Get

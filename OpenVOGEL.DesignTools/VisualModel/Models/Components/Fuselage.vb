@@ -223,7 +223,7 @@ Namespace VisualModel.Models.Components
 
         Public zf As Double
 
-        Public Nodes As New List(Of EVector2)
+        Public Nodes As New List(Of Vector2)
 
         Public ParentAnchor As AnchorLine
 
@@ -241,7 +241,7 @@ Namespace VisualModel.Models.Components
 
         Public Property Z As Double = 0.0#
 
-        Public Property Vertices As New List(Of EVector2)
+        Public Property Vertices As New List(Of Vector2)
 
         Private _Perimeter As Double
 
@@ -283,7 +283,7 @@ Namespace VisualModel.Models.Components
         ''' <param name="s">Curvilinear coordinate from 0 to 1</param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Function GetPoint(ByVal s As Double) As EVector2
+        Public Function GetPoint(ByVal s As Double) As Vector2
 
             If Vertices.Count > 1 Then
 
@@ -319,7 +319,7 @@ Namespace VisualModel.Models.Components
 
                 Dim f As Double = (s_f - s) / (s_f - s_i) ' 0 if s = s_f; 1 if s = s_o
 
-                Dim point As EVector2 = New EVector2()
+                Dim point As Vector2 = New Vector2()
 
                 point.X = f * Vertices(i_i).X + (1 - f) * Vertices(i_i + 1).X
                 point.Y = f * Vertices(i_i).Y + (1 - f) * Vertices(i_i + 1).Y
@@ -328,7 +328,7 @@ Namespace VisualModel.Models.Components
 
             ElseIf Vertices.Count = 1 Then
 
-                Dim point As EVector2 = New EVector2()
+                Dim point As Vector2 = New Vector2()
 
                 point.X = Vertices(0).X
                 point.Y = Vertices(0).Y
@@ -394,7 +394,7 @@ Namespace VisualModel.Models.Components
 
             While subtree.ReadToFollowing("Vertex")
 
-                Dim Vertex As New EVector2
+                Dim Vertex As New Vector2
                 Vertex.X = IOXML.ReadDouble(reader, "X", 0.0)
                 Vertex.Y = IOXML.ReadDouble(reader, "Y", 0.0)
                 Vertices.Add(Vertex)
@@ -502,9 +502,9 @@ Namespace VisualModel.Models.Components
         ''' List containing cross sections used to extrude the surface.
         ''' </summary>
         ''' <remarks></remarks>
-        Private _CrossSectionsToDisplay(0)() As EVector3
+        Private _CrossSectionsToDisplay(0)() As Vector3
 
-        Private Function GetPoint(ByVal z As Double, ByVal s As Double) As EVector3
+        Private Function GetPoint(ByVal z As Double, ByVal s As Double) As Vector3
 
             Dim i_f As Integer = 1
             Dim _z As Double = z
@@ -529,7 +529,7 @@ Namespace VisualModel.Models.Components
 
             Dim f As Double = (CrossSections(i_f).Z - _z) / (CrossSections(i_f).Z - CrossSections(i_f - 1).Z)
 
-            Return New EVector3((1 - f) * point_i.X + f * point_f.X, (1 - f) * point_i.Y + f * point_f.Y, _z)
+            Return New Vector3((1 - f) * point_i.X + f * point_f.X, (1 - f) * point_i.Y + f * point_f.Y, _z)
 
         End Function
 
@@ -704,7 +704,7 @@ Namespace VisualModel.Models.Components
 
                             If j = nps Then s = 1
 
-                            Grid.Nodes.Add(New EVector2(z, s))
+                            Grid.Nodes.Add(New Vector2(z, s))
 
                         Next
 
@@ -1135,7 +1135,7 @@ Namespace VisualModel.Models.Components
 
                     For Each Vertex In CrossSection.Vertices
 
-                        _CrossSectionsToDisplay(csIndex)(vIndex) = New EVector3(CrossSection.Z, Vertex.X, Vertex.Y)
+                        _CrossSectionsToDisplay(csIndex)(vIndex) = New Vector3(CrossSection.Z, Vertex.X, Vertex.Y)
 
                         vIndex += 1
 
@@ -1145,7 +1145,7 @@ Namespace VisualModel.Models.Components
 
                     For Each Vertex In CrossSection.Vertices
 
-                        _CrossSectionsToDisplay(csIndex)(vIndex) = New EVector3(CrossSection.Z, -Vertex.X, Vertex.Y)
+                        _CrossSectionsToDisplay(csIndex)(vIndex) = New Vector3(CrossSection.Z, -Vertex.X, Vertex.Y)
 
                         vIndex -= 1
 
@@ -1180,7 +1180,7 @@ Namespace VisualModel.Models.Components
 
                 ' Load homogeneous color:
 
-                Dim SurfaceColor As New EVector3
+                Dim SurfaceColor As New Vector3
 
                 If Not Active Then
                     SurfaceColor.X = VisualProperties.ColorSurface.R / 255
@@ -1267,8 +1267,8 @@ Namespace VisualModel.Models.Components
 
                 gl.LineWidth(VisualProperties.ThicknessMesh)
 
-                Dim Node1 As EVector3
-                Dim Node2 As EVector3
+                Dim Node1 As Vector3
+                Dim Node2 As Vector3
 
                 gl.Color(VisualProperties.ColorMesh.R / 255, VisualProperties.ColorMesh.G / 255, VisualProperties.ColorMesh.B / 255)
 
@@ -1333,13 +1333,13 @@ Namespace VisualModel.Models.Components
 
                 For Each Line In Anchor.Lines
 
-                    Dim Point As EVector3 = Line.Point
+                    Dim Point As Vector3 = Line.Point
 
                     Dim currentZ As Double = Point.Z
 
-                    Dim currentP As EVector2 = Nothing
+                    Dim currentP As Vector2 = Nothing
 
-                    Dim lastP As New EVector2(Point.X, Point.Y)
+                    Dim lastP As New Vector2(Point.X, Point.Y)
 
                     ' Find intersection iteratively:
 
@@ -1397,10 +1397,10 @@ Namespace VisualModel.Models.Components
 
                                 s = i / Resolution
 
-                                Dim bPoint As EVector2 = CrossSections(bIndex).GetPoint(s)
-                                Dim ePoint As EVector2 = CrossSections(eIndex).GetPoint(s)
+                                Dim bPoint As Vector2 = CrossSections(bIndex).GetPoint(s)
+                                Dim ePoint As Vector2 = CrossSections(eIndex).GetPoint(s)
 
-                                Dim iPoint As New EVector2((1 - z) * bPoint.X + z * ePoint.X, (1 - z) * bPoint.Y + z * ePoint.Y)
+                                Dim iPoint As New Vector2((1 - z) * bPoint.X + z * ePoint.X, (1 - z) * bPoint.Y + z * ePoint.Y)
 
                                 InterSection.Vertices.Add(iPoint)
 
@@ -1410,22 +1410,22 @@ Namespace VisualModel.Models.Components
 
                             ' search the crossing point on the intermediate section:
 
-                            Dim inPlanePoint As New EVector2(Point.X, Point.Y)
-                            Dim inPlaneDirection As New EVector2(Line.Direction.X, Line.Direction.Y)
+                            Dim inPlanePoint As New Vector2(Point.X, Point.Y)
+                            Dim inPlaneDirection As New Vector2(Line.Direction.X, Line.Direction.Y)
                             Dim intersectionCoordinates As New List(Of Double)
-                            Dim intersectionPoints As New List(Of EVector2)
+                            Dim intersectionPoints As New List(Of Vector2)
                             Dim indices As New List(Of Integer)
                             s = 0
 
                             For i = 0 To InterSection.Vertices.Count - 2
 
-                                Dim coordinate As Double = EVector2.IntersectionCoordinate(inPlanePoint, inPlaneDirection, InterSection.Vertices(i), InterSection.Vertices(i + 1))
+                                Dim coordinate As Double = Vector2.IntersectionCoordinate(inPlanePoint, inPlaneDirection, InterSection.Vertices(i), InterSection.Vertices(i + 1))
                                 Dim increment As Double = InterSection.Vertices(i).DistanceTo(InterSection.Vertices(i + 1))
 
                                 If Not Double.IsNaN(coordinate) Then
 
                                     intersectionCoordinates.Add(s + coordinate * increment)
-                                    intersectionPoints.Add(New EVector2(InterSection.Vertices(i).X + coordinate * (InterSection.Vertices(i + 1).X - InterSection.Vertices(i).X),
+                                    intersectionPoints.Add(New Vector2(InterSection.Vertices(i).X + coordinate * (InterSection.Vertices(i + 1).X - InterSection.Vertices(i).X),
                                                                         InterSection.Vertices(i).Y + coordinate * (InterSection.Vertices(i + 1).Y - InterSection.Vertices(i).Y)))
                                     indices.Add(i)
 
@@ -1636,7 +1636,7 @@ Namespace VisualModel.Models.Components
             For i = 0 To nSegments
 
                 Dim angle As Double = i / nSegments * Math.PI
-                Section0.Vertices.Add(New EVector2(0.1 * Math.Sin(angle), 0.1 * Math.Cos(angle)))
+                Section0.Vertices.Add(New Vector2(0.1 * Math.Sin(angle), 0.1 * Math.Cos(angle)))
 
             Next
 
@@ -1653,7 +1653,7 @@ Namespace VisualModel.Models.Components
             For i = 0 To nSegments
 
                 Dim angle As Double = i / nSegments * Math.PI
-                Section1.Vertices.Add(New EVector2(1.0 * Math.Sin(angle), 1.0 * Math.Cos(angle)))
+                Section1.Vertices.Add(New Vector2(1.0 * Math.Sin(angle), 1.0 * Math.Cos(angle)))
 
             Next
 
@@ -1670,7 +1670,7 @@ Namespace VisualModel.Models.Components
             For i = 0 To nSegments
 
                 Dim angle As Double = i / nSegments * Math.PI
-                Section2.Vertices.Add(New EVector2(1.0 * Math.Sin(angle), 1.0 * Math.Cos(angle)))
+                Section2.Vertices.Add(New Vector2(1.0 * Math.Sin(angle), 1.0 * Math.Cos(angle)))
 
             Next
 
@@ -1687,7 +1687,7 @@ Namespace VisualModel.Models.Components
             For i = 0 To nSegments
 
                 Dim angle As Double = i / nSegments * Math.PI
-                Section3.Vertices.Add(New EVector2(0.1 * Math.Sin(angle), 0.1 * Math.Cos(angle)))
+                Section3.Vertices.Add(New Vector2(0.1 * Math.Sin(angle), 0.1 * Math.Cos(angle)))
 
             Next
 
