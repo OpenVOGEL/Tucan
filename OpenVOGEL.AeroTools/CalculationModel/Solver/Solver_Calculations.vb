@@ -372,7 +372,7 @@ Namespace CalculationModel.Solver
 
                                     Dim Induced As New Vector3
 
-                                    OtherVortexRing.AddSourceVelocityInfluence(Point, Induced, False)
+                                    OtherVortexRing.AddSourceVelocityInfluence(Induced, Point, False)
 
                                     MatrixSources(Row, n) = Induced.X * Normal.X + Induced.Y * Normal.Y + Induced.Z * Normal.Z
 
