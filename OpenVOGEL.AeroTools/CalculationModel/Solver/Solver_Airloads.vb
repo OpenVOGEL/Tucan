@@ -15,6 +15,7 @@
 'You should have received a copy Of the GNU General Public License
 'along with this program.  If Not, see < http:  //www.gnu.org/licenses/>.
 
+Imports OpenVOGEL.AeroTools.CalculationModel.Models.Aero.Components
 Imports OpenVOGEL.MathTools.Algebra.EuclideanSpace
 
 Namespace CalculationModel.Solver
@@ -353,8 +354,39 @@ Namespace CalculationModel.Solver
                 Lattice.AirLoads.BodyForce.SetToCero()
                 Lattice.AirLoads.BodyMoment.SetToCero()
 
-                Dim FreeForce As New Vector3
-                Dim StreamForce As New Vector3
+                'Dim FreeForce As New Vector3
+                'Dim StreamForce As New Vector3
+
+                'For Each Ring In Lattice.VortexRings
+
+                '    Lattice.AirLoads.Area += Ring.Area
+
+                '    If Not Ring.IsSlender Then
+
+                '        Dim f As Double = -Ring.Area
+
+                '        FreeForce.X += f * Ring.Normal.X
+                '        FreeForce.Y += f * Ring.Normal.Y
+                '        FreeForce.Z += f * Ring.Normal.Z
+
+                '        f *= Ring.Cp
+
+                '        StreamForce.X += f * Ring.Normal.X
+                '        StreamForce.Y += f * Ring.Normal.Y
+                '        StreamForce.Z += f * Ring.Normal.Z
+
+                '    End If
+
+                'Next
+
+                'Dim FreeForceDirection As New Vector3(FreeForce)
+
+                'If FreeForce.EuclideanNorm > 0 Then
+                '    FreeForceDirection.Normalize()
+                'End If
+
+                'Dim FreePressure As Double = -StreamForce.InnerProduct(FreeForceDirection)
+                Dim FirstNode As Node = Lattice.Nodes.First
 
                 For Each Ring In Lattice.VortexRings
 
@@ -362,43 +394,38 @@ Namespace CalculationModel.Solver
 
                     If Not Ring.IsSlender Then
 
-                        Dim f As Double = -Ring.Area
+                        'Dim Cf As Double = -(Ring.Cp + FreePressure) * Ring.Area
 
-                        FreeForce.X += f * Ring.Normal.X
-                        FreeForce.Y += f * Ring.Normal.Y
-                        FreeForce.Z += f * Ring.Normal.Z
+                        Dim Cf As Double = Ring.Cp * Ring.Area
 
-                        f *= Ring.Cp
+                        Lattice.AirLoads.BodyForce.X += Cf * Ring.Normal.X
+                        Lattice.AirLoads.BodyForce.Y += Cf * Ring.Normal.Y
+                        Lattice.AirLoads.BodyForce.Z += Cf * Ring.Normal.Z
 
-                        StreamForce.X += f * Ring.Normal.X
-                        StreamForce.Y += f * Ring.Normal.Y
-                        StreamForce.Z += f * Ring.Normal.Z
+                        Lattice.AirLoads.BodyMoment.X += Cf * (Ring.ControlPoint.Y * Ring.Normal.Z - Ring.ControlPoint.Z * Ring.Normal.Y)
+                        Lattice.AirLoads.BodyMoment.Y += Cf * (Ring.ControlPoint.Z * Ring.Normal.X - Ring.ControlPoint.X * Ring.Normal.Z)
+                        Lattice.AirLoads.BodyMoment.Z += Cf * (Ring.ControlPoint.X * Ring.Normal.Y - Ring.ControlPoint.Y * Ring.Normal.X)
 
-                    End If
-
-                Next
-
-                Dim FreeForceDirection As New Vector3(FreeForce)
-
-                If FreeForce.EuclideanNorm > 0 Then
-                    FreeForceDirection.Normalize()
-                End If
-
-                Dim FreePressure As Double = -StreamForce.InnerProduct(FreeForceDirection)
-
-                For Each Ring In Lattice.VortexRings
-
-                    If Not Ring.IsSlender Then
-
-                        Dim f As Double = -(Ring.Cp + FreePressure) * Ring.Area
-
-                        Lattice.AirLoads.BodyForce.X += f * Ring.Normal.X
-                        Lattice.AirLoads.BodyForce.Y += f * Ring.Normal.Y
-                        Lattice.AirLoads.BodyForce.Z += f * Ring.Normal.Z
-
-                        Lattice.AirLoads.BodyMoment.X += f * (Ring.ControlPoint.Y * Ring.Normal.Z - Ring.ControlPoint.Z * Ring.Normal.Y)
-                        Lattice.AirLoads.BodyMoment.Y += f * (Ring.ControlPoint.Z * Ring.Normal.X - Ring.ControlPoint.X * Ring.Normal.Z)
-                        Lattice.AirLoads.BodyMoment.Z += f * (Ring.ControlPoint.X * Ring.Normal.Y - Ring.ControlPoint.Y * Ring.Normal.X)
+                        'NOTE:
+                        'We estimate the local friction using a flat plate analogy.
+                        'This is simplified method has the next restrictions:
+                        '> It does not take into account the pressure gradient.
+                        '> It assumes everywhere a turbulent layer
+                        '> It approaches the reynolds number using a diagonal (which only wokrs for low incidence angle)
+                        Dim Direction As New Vector3(Ring.VelocityT)
+                        Direction.ProjectOnPlane(Ring.Normal)
+                        Dim SurfaceVelocity As Double = Direction.EuclideanNorm
+                        Direction.Normalize()
+                        Dim Distance As Double = Ring.ControlPoint.DistanceTo(FirstNode.Position)
+                        Dim LocalReynolds As Double = SurfaceVelocity * Distance * Settings.Density / Settings.Viscocity
+                        Dim Stress As Double = 0.0576 * 0.5 * SurfaceVelocity ^ 2.0 * Settings.Density / Math.Pow(LocalReynolds, 0.2)
+                        Cf = Ring.Area * Stress / Settings.DynamicPressure
+                        Lattice.AirLoads.SkinDrag.X += Direction.X * Cf
+                        Lattice.AirLoads.SkinDrag.Y += Direction.Y * Cf
+                        Lattice.AirLoads.SkinDrag.Z += Direction.Z * Cf
+                        Lattice.AirLoads.SkinMoment.X += Cf * (Ring.ControlPoint.Y * Direction.Z - Ring.ControlPoint.Z * Direction.Y)
+                        Lattice.AirLoads.SkinMoment.Y += Cf * (Ring.ControlPoint.Z * Direction.X - Ring.ControlPoint.X * Direction.Z)
+                        Lattice.AirLoads.SkinMoment.Z += Cf * (Ring.ControlPoint.X * Direction.Y - Ring.ControlPoint.Y * Direction.X)
 
                     End If
 

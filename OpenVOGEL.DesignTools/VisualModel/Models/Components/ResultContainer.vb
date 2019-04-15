@@ -21,7 +21,6 @@ Imports OpenVOGEL.DesignTools.VisualModel.Models.Components.Basics
 Imports OpenVOGEL.AeroTools.CalculationModel.Models.Aero
 Imports OpenVOGEL.MathTools.Algebra.EuclideanSpace
 Imports System.IO
-Imports OpenVOGEL.AeroTools.CalculationModel.Settings
 Imports System.Xml
 Imports OpenVOGEL.DesignTools.VisualModel.Tools.Colormaping
 Imports OpenVOGEL.MathTools
@@ -53,11 +52,6 @@ Namespace VisualModel.Models.Components
             ''' The velocity computed at the panel control point
             ''' </summary>
             PanelVelocity
-
-            ''' <summary>
-            ''' The pressure interpolated over the nodes
-            ''' </summary>
-            NodalPressure
 
             ''' <summary>
             ''' The nodal displacements (for dynamic modes and aeroelasticity)
@@ -311,38 +305,6 @@ Namespace VisualModel.Models.Components
                                 Node = Mesh.Nodes(Panel.N1)
                                 gl.Color(Node.DisplacementColor.R, Node.DisplacementColor.G, Node.DisplacementColor.B)
                                 gl.Vertex(Node.Position.X, Node.Position.Y, Node.Position.Z)
-
-                            Case ResultKinds.NodalPressure
-
-                                If Panel.IsSlender Then
-
-                                Else
-
-                                    Node = Mesh.Nodes(Panel.N1)
-                                    gl.Color(Node.DisplacementColor.R, Node.DisplacementColor.G, Node.DisplacementColor.B)
-                                    gl.Vertex(Node.Position.X, Node.Position.Y, Node.Position.Z)
-
-                                    Node = Mesh.Nodes(Panel.N2)
-                                    gl.Color(Node.DisplacementColor.R, Node.DisplacementColor.G, Node.DisplacementColor.B)
-                                    gl.Vertex(Node.Position.X, Node.Position.Y, Node.Position.Z)
-
-                                    Node = Mesh.Nodes(Panel.N3)
-                                    gl.Color(Node.DisplacementColor.R, Node.DisplacementColor.G, Node.DisplacementColor.B)
-                                    gl.Vertex(Node.Position.X, Node.Position.Y, Node.Position.Z)
-
-                                    Node = Mesh.Nodes(Panel.N3)
-                                    gl.Color(Node.DisplacementColor.R, Node.DisplacementColor.G, Node.DisplacementColor.B)
-                                    gl.Vertex(Node.Position.X, Node.Position.Y, Node.Position.Z)
-
-                                    Node = Mesh.Nodes(Panel.N4)
-                                    gl.Color(Node.DisplacementColor.R, Node.DisplacementColor.G, Node.DisplacementColor.B)
-                                    gl.Vertex(Node.Position.X, Node.Position.Y, Node.Position.Z)
-
-                                    Node = Mesh.Nodes(Panel.N1)
-                                    gl.Color(Node.DisplacementColor.R, Node.DisplacementColor.G, Node.DisplacementColor.B)
-                                    gl.Vertex(Node.Position.X, Node.Position.Y, Node.Position.Z)
-
-                                End If
 
                         End Select
 

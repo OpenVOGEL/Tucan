@@ -283,6 +283,13 @@ Namespace CalculationModel.Settings
         End Property
 
         ''' <summary>
+        ''' The Reynods number that marks the transition from laminar to turbulent
+        ''' boundary layers in fuselages.
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property TransitionReynods As Double = 2000000
+
+        ''' <summary>
         ''' Generates a vector containing the velocity at each time step.
         ''' </summary>
         ''' <remarks></remarks>
