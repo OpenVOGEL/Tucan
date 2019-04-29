@@ -64,7 +64,7 @@ Namespace DataStore
 
             ControlGL = New OpenGL
 
-            Model = New VisualModel.Models.DesignModel
+            Model = New DesignModel
 
             SimulationSettings.InitializaParameters()
 

@@ -235,6 +235,7 @@
     <Compile Include="VisualModel\Models\Components\Basics\StructuralPartition.vb" />
     <Compile Include="VisualModel\Models\Components\Basics\Surface.vb" />
     <Compile Include="VisualModel\Models\Components\Fuselage.vb" />
+    <Compile Include="VisualModel\Models\Components\ImportedSurface.vb" />
     <Compile Include="VisualModel\Models\Components\JetEngine.vb" />
     <Compile Include="VisualModel\Models\Components\LiftingSurface.vb" />
     <Compile Include="VisualModel\Models\Components\ResultContainer.vb" />

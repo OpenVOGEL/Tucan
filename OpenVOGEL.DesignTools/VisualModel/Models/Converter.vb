@@ -64,11 +64,11 @@ Namespace VisualModel.Models
 
             Dim count As Integer = 0
 
-            For i = 0 To Model.Objects.Count - 1
+            For ObjectIndex = 0 To Model.Objects.Count - 1
 
-                If TypeOf Model.Objects(i) Is LiftingSurface AndAlso Model.Objects(i).IncludeInCalculation Then
+                If TypeOf Model.Objects(ObjectIndex) Is LiftingSurface AndAlso Model.Objects(ObjectIndex).IncludeInCalculation Then
 
-                    Dim Wing As LiftingSurface = Model.Objects(i)
+                    Dim Wing As LiftingSurface = Model.Objects(ObjectIndex)
 
                     count += 1
 
@@ -136,6 +136,51 @@ Namespace VisualModel.Models
                     Dim Nacelle As JetEngine = Model.Objects(ObjectIndex)
 
                     This.AddJetEngine(Nacelle)
+
+                End If
+
+            Next
+
+            ' Add imported surfaces:
+
+            For ObjectIndex = 0 To Model.Objects.Count - 1
+
+                If TypeOf Model.Objects(ObjectIndex) Is ImportedSurface AndAlso Model.Objects(ObjectIndex).IncludeInCalculation Then
+
+                    Dim Body As ImportedSurface = Model.Objects(ObjectIndex)
+
+                    Dim Lattice As New BoundedLattice
+
+                    This.Lattices.Add(Lattice)
+
+                    For NodeIndex = 0 To Body.NumberOfNodes - 1
+
+                        Lattice.AddNode(Body.Mesh.Nodes(NodeIndex).Position)
+
+                    Next
+
+                    For PanelIndex = 0 To Body.NumberOfPanels - 1
+
+                        Dim Node1 As Integer = Body.Mesh.Panels(PanelIndex).N1
+                        Dim Node2 As Integer = Body.Mesh.Panels(PanelIndex).N2
+                        Dim Node3 As Integer = Body.Mesh.Panels(PanelIndex).N3
+                        Dim Node4 As Integer = Body.Mesh.Panels(PanelIndex).N4
+                        Dim Reversed As Boolean = Body.Mesh.Panels(PanelIndex).Reversed
+                        Dim Slender As Boolean = Body.Mesh.Panels(PanelIndex).IsSlender
+
+                        If Body.Mesh.Panels(PanelIndex).IsTriangular Then
+
+                            Lattice.AddVortexRing3(Node1, Node2, Node3, Reversed, Slender)
+
+                        Else
+
+                            Lattice.AddVortexRing4(Node1, Node2, Node3, Node4, Reversed, Slender)
+
+                        End If
+
+                        Lattice.VortexRings(PanelIndex).IsPrimitive = Body.Mesh.Panels(PanelIndex).IsPrimitive
+
+                    Next
 
                 End If
 
@@ -518,12 +563,14 @@ Namespace VisualModel.Models
                     Next
 
                     For Each VortexRing In Wake.VortexRings
+
                         GlobalIndexRings += 1
                         Results.Wakes.AddPanel(VortexRing.Node(1).IndexG,
                                                VortexRing.Node(2).IndexG,
                                                VortexRing.Node(3).IndexG,
                                                VortexRing.Node(4).IndexG)
                         Results.Wakes.Mesh.Panels(GlobalIndexRings).Circulation = VortexRing.G
+                        Results.Wakes.Mesh.Panels(GlobalIndexRings).SourceStrength = VortexRing.S
 
                     Next
 

@@ -109,6 +109,12 @@ Namespace VisualModel.Models.Components.Basics
         Public Property Circulation As Double
 
         ''' <summary>
+        ''' The local sink/source strenght
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property SourceStrength As Double
+
+        ''' <summary>
         ''' The panel pressure coefficient
         ''' </summary>
         ''' <returns></returns>

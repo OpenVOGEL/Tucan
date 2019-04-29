@@ -286,6 +286,15 @@ Public Class MainForm
 
     End Sub
 
+    Public Sub ShowSurfaceLoader(Surface As ImportedSurface)
+
+        Dim Dialog As New OpenFileDialog()
+        If Dialog.ShowDialog = DialogResult.OK Then
+            Surface.Load(Dialog.FileName)
+        End If
+
+    End Sub
+
     Public Sub ShowEditor(ByRef Surface As Surface)
 
         If Surface IsNot Nothing Then
@@ -301,6 +310,10 @@ Public Class MainForm
             ElseIf TypeOf Surface Is JetEngine
 
                 ShowJetEngineEditor(Surface)
+
+            ElseIf TypeOf Surface Is ImportedSurface
+
+                ShowSurfaceLoader(Surface)
 
             End If
 
@@ -490,11 +503,26 @@ Public Class MainForm
 
                                 ' Show associated surface info
 
-                                lblStatus.Text = String.Format("Panel {0}: Cp={1:F5}; V={2:F5}; G={3:F5}; A={4:F5}", SelectedItem.EntityIndex,
-                                                               Results.Model.Mesh.Panels(SelectedItem.EntityIndex).Cp,
-                                                               Results.Model.Mesh.Panels(SelectedItem.EntityIndex).LocalVelocity.EuclideanNorm,
-                                                               Results.Model.Mesh.Panels(SelectedItem.EntityIndex).Circulation,
-                                                               Results.Model.Mesh.Panels(SelectedItem.EntityIndex).Area)
+                                Dim Panel As Panel = Results.Model.Mesh.Panels(SelectedItem.EntityIndex)
+
+                                If Panel.IsSlender Then
+
+                                    lblStatus.Text = String.Format("Panel {0}: ΔCp={1:F5}; V={2:F5}m/s; G={3:F5}; A={4:F5}m²", SelectedItem.EntityIndex,
+                                                               Panel.Cp,
+                                                               Panel.LocalVelocity.EuclideanNorm,
+                                                               Panel.Circulation,
+                                                               Panel.Area)
+
+                                Else
+
+                                    lblStatus.Text = String.Format("Panel {0}: Cp={1:F5}; V={2:F5}m/s; G={3:F5}; S={3:F5}; A={4:F5}m²", SelectedItem.EntityIndex,
+                                                               Panel.Cp,
+                                                               Panel.LocalVelocity.EuclideanNorm,
+                                                               Panel.Circulation,
+                                                               Panel.SourceStrength,
+                                                               Panel.Area)
+
+                                End If
 
                                 Exit For
 

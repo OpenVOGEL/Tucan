@@ -111,6 +111,18 @@ Namespace VisualModel.Models
         End Sub
 
         ''' <summary>
+        ''' Adds an imported surface and sets it as current.
+        ''' </summary>
+        ''' <remarks></remarks>
+        Public Sub AddImportedSurface()
+
+            Dim NewImportedSurface = New ImportedSurface
+            NewImportedSurface.Name = "Imported mesh"
+            Objects.Add(NewImportedSurface)
+
+        End Sub
+
+        ''' <summary>
         ''' Generates a copy of the current lifting surface with the option symmetric in true
         ''' </summary>
         ''' <remarks></remarks>
@@ -193,6 +205,14 @@ Namespace VisualModel.Models
 
                                     Objects.Add(JetEngine)
 
+                                ElseIf SubReader.Name = "ImportedSurface" Then
+
+                                    Dim Import As New ImportedSurface
+
+                                    Import.ReadFromXML(reader.ReadSubtree)
+
+                                    Objects.Add(Import)
+
                                 End If
 
                             End If
@@ -249,6 +269,16 @@ Namespace VisualModel.Models
                 If TypeOf Objects(i) Is JetEngine Then
 
                     writer.WriteStartElement("JetEngine")
+
+                    Objects(i).WriteToXML(writer)
+
+                    writer.WriteEndElement()
+
+                End If
+
+                If TypeOf Objects(i) Is ImportedSurface Then
+
+                    writer.WriteStartElement("ImportedSurface")
 
                     Objects(i).WriteToXML(writer)
 
