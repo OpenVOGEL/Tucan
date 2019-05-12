@@ -100,7 +100,6 @@
     <Compile Include="CalculationModel\Models\Aero\Components\ChordWiseLink.vb" />
     <Compile Include="CalculationModel\Models\Aero\Components\Node.vb" />
     <Compile Include="CalculationModel\Models\Aero\Components\Polars.vb" />
-    <Compile Include="CalculationModel\Models\Aero\Components\PotentialFunctions.vb" />
     <Compile Include="CalculationModel\Models\Aero\Components\Primitives.vb" />
     <Compile Include="CalculationModel\Models\Aero\Components\Vortex.vb" />
     <Compile Include="CalculationModel\Models\Aero\Components\VortexRing.vb" />
