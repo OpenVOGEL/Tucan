@@ -119,7 +119,7 @@ Namespace CalculationModel.Models.Structural.Library.Elements
         End Property
 
         Public Property Section As Section
-        Public Property Basis As EBase3
+        Public Property Basis As Base3
         Public Property Index As Integer
 
         Public Property M As SymmetricMatrix Implements IFiniteElement.M
@@ -150,7 +150,7 @@ Namespace CalculationModel.Models.Structural.Library.Elements
             M = New SymmetricMatrix(12)
             K = New SymmetricMatrix(12)
             Section = New Section()
-            Basis = New EBase3()
+            Basis = New Base3()
         End Sub
 
         ''' <summary>

@@ -318,7 +318,7 @@ Public Class TotalForcePanel
 
             ' Components in aerodynamic coordinates
 
-            Dim Basis As New EBase3
+            Dim Basis As New Base3
 
             Basis.U.X = _CalculationCore.StreamVelocity.X
             Basis.U.Y = _CalculationCore.StreamVelocity.Y

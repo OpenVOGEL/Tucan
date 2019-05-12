@@ -571,6 +571,7 @@ Namespace VisualModel.Models
                                                VortexRing.Node(4).IndexG)
                         Results.Wakes.Mesh.Panels(GlobalIndexRings).Circulation = VortexRing.G
                         Results.Wakes.Mesh.Panels(GlobalIndexRings).SourceStrength = VortexRing.S
+                        Results.Wakes.Mesh.Panels(GlobalIndexRings).IsSlender = VortexRing.IsSlender
 
                     Next
 

@@ -358,9 +358,12 @@ Namespace VisualModel.Models.Components
                             If Vertices.Length = 3 Then
 
                                 Dim Panel As New Panel()
+
                                 Panel = New Panel(Vertices(0),
                                                   Vertices(1),
                                                   Vertices(2))
+
+                                Panel.IsSlender = False
 
                                 Mesh.Panels.Add(Panel)
 
@@ -371,6 +374,8 @@ Namespace VisualModel.Models.Components
                                                   Vertices(1),
                                                   Vertices(2),
                                                   Vertices(3))
+
+                                Panel.IsSlender = False
 
                                 Mesh.Panels.Add(Panel)
 

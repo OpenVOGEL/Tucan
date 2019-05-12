@@ -137,7 +137,7 @@ Namespace VisualModel.Models.Components.Basics
         ''' Local directions.
         ''' </summary>
         ''' <remarks></remarks>
-        Public Property LocalDirections As New EBase3
+        Public Property LocalDirections As New Base3
 
         ''' <summary>
         ''' Moves the origin of the local coordinates to a given point.

@@ -92,7 +92,7 @@ Namespace CalculationModel.Models.Aero.Components
         Property IndexG As Integer
 
         ''' <summary>
-        ''' Sets or gets a corner node. This property is 1-based.
+        ''' Sets or gets the i-th corner node. This property is 1-based.
         ''' </summary>
         Property Node(ByVal Index As Integer) As Node
 
@@ -129,7 +129,7 @@ Namespace CalculationModel.Models.Aero.Components
         ReadOnly Property Area As Double
 
         ''' <summary>
-        ''' Indicates if the send of the ring is reversed.
+        ''' Indicates if the sense of the ring is reversed.
         ''' </summary>
         ''' <value></value>
         ''' <returns></returns>
@@ -143,27 +143,27 @@ Namespace CalculationModel.Models.Aero.Components
         Sub CalculateGeometricEntities()
 
         ''' <summary>
+        ''' Forces the recalculation of the local coordinates.
+        ''' </summary>
+        ''' <remarks></remarks>
+        Sub RecalculateLocalCoordinates()
+
+        ''' <summary>
         ''' Forces the recalculation of the normal.
         ''' </summary>
         ''' <remarks></remarks>
-        Sub RecalculateNormal()
+        Sub RecalculateBasis()
 
         ''' <summary>
-        ''' Calculates BiotSavart vector at a given point. If WidthG is true vector is scaled by G.
+        ''' Returns the influence of the doublet distribution in the velocity.
+        ''' If WidthG is true vector is scaled by G.
         ''' </summary>
-        ''' <remarks>
-        ''' Calculation has been optimized by replacing object subs by local code.
-        ''' Value types are used on internal calculations (other versions used reference type EVector3).
-        ''' </remarks>
-        Function GiveDoubletVelocityInfluence(ByVal Point As Vector3, Optional ByVal CutOff As Double = 0.0001, Optional ByVal WithG As Boolean = True) As Vector3
+        Function GetDoubletVelocityInfluence(ByVal Point As Vector3, Optional ByVal CutOff As Double = 0.0001, Optional ByVal WithG As Boolean = True) As Vector3
 
         ''' <summary>
-        ''' Calculates BiotSavart vector at a given point. If WidthG is true vector is scaled by G.
+        ''' Adds the influence of the doublet distribution in the velocity.
+        ''' If WidthG is true vector is scaled by G.
         ''' </summary>
-        ''' <remarks>
-        ''' Calculation has been optimized by replacing object subs by local code.
-        ''' Value types are used on internal calculations (other versions used reference type EVector3).
-        ''' </remarks>
         Sub AddDoubletVelocityInfluence(ByRef Vector As Vector3,
                                         ByVal Point As Vector3,
                                         Optional ByVal CutOff As Double = 0.0001,
@@ -172,26 +172,19 @@ Namespace CalculationModel.Models.Aero.Components
         ''' <summary>
         ''' Adds the influence of the source distribution in the velocity.
         ''' </summary>
-        ''' <remarks></remarks>
         Sub AddSourceVelocityInfluence(ByRef Vector As Vector3,
                                        ByVal Point As Vector3,
                                        Optional ByVal WithS As Boolean = True)
 
         ''' <summary>
-        ''' Returns the influence of the velocity in the potential.
+        ''' Returns the influence of the doublet distribution in the velocity potential.
         ''' </summary>
-        ''' <param name="Point">Point influence wants to be calculated.</param>
-        ''' <returns>The velocity potential influence coefficient.</returns>
-        ''' <remarks></remarks>
-        Function GiveDoubletPotentialInfluence(ByVal Point As Vector3, Optional ByVal WithG As Boolean = True) As Double
+        Function GetDoubletPotentialInfluence(ByVal Point As Vector3, Optional ByVal WithG As Boolean = True) As Double
 
         ''' <summary>
-        ''' Returns the influence coefficient of the velocity potential.
+        ''' Returns the influence of the source distribution in the velocity potential.
         ''' </summary>
-        ''' <param name="Point">Point influence wants to be calculated.</param>
-        ''' <returns>The velocity potential influence coefficient.</returns>
-        ''' <remarks></remarks>
-        Function GiveSourcePotentialInfluence(ByVal Point As Vector3, Optional ByVal WithS As Boolean = True) As Double
+        Function GetSourcePotentialInfluence(ByVal Point As Vector3, Optional ByVal WithS As Boolean = True) As Double
 
         ''' <summary>
         ''' Computes the induced velocity at a given point by counting only the streamwise vortices.

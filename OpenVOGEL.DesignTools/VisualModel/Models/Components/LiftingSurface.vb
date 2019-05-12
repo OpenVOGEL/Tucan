@@ -328,7 +328,7 @@ Namespace VisualModel.Models.Components
         ''' <remarks></remarks>
         Public Property LocalOrigin As New Vector3
 
-        Private _DirectionPoints As New EBase3
+        Private _DirectionPoints As New Base3
 
         ''' <summary>
         ''' Indicates if the mesh has to be symmetric about the plane y = 0.
@@ -1587,7 +1587,7 @@ Namespace VisualModel.Models.Components
 
                     If VisualProperties.ShowLocalCoordinates Then
 
-                        Dim base As EBase3 = _StructuralPartition(i).Basis
+                        Dim base As Base3 = _StructuralPartition(i).Basis
                         Dim l As Double
 
                         If (i = 0) Then

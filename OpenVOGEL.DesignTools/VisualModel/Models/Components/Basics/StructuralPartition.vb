@@ -32,7 +32,7 @@ Namespace VisualModel.Models.Components.Basics
         ''' <remarks></remarks>
         Public P As Vector3
 
-        Public Basis As EBase3
+        Public Basis As Base3
 
         ''' <summary>
         ''' Section associated to this partition
@@ -54,7 +54,7 @@ Namespace VisualModel.Models.Components.Basics
 
             P = New Vector3()
             LocalSection = New Section
-            Basis = New EBase3()
+            Basis = New Base3()
 
         End Sub
 

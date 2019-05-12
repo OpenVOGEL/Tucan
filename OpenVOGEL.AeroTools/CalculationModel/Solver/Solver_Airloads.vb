@@ -46,7 +46,7 @@ Namespace CalculationModel.Solver
         ''' <remarks></remarks>
         Public Sub ComputeTrefftzIntegral(ByVal Normal As Vector3, ByVal RPoint As Vector3, ByRef TrefftzSegments As List(Of TrefftzSegment), Optional ByVal S As Double = 1.0)
 
-            Dim Basis As New EBase3
+            Dim Basis As New Base3
             Basis.U.Assign(_StreamVelocity)
             Basis.U.Normalize()
             Basis.V.X = -Basis.U.Y

@@ -284,7 +284,7 @@ Namespace CalculationModel.Solver
 
                             Parallel.ForEach(OtherLattice.VortexRings, Sub(OtherVortexRing As VortexRing)
 
-                                                                           Dim Induced As Vector3 = OtherVortexRing.GiveDoubletVelocityInfluence(Point, CutOff, False)
+                                                                           Dim Induced As Vector3 = OtherVortexRing.GetDoubletVelocityInfluence(Point, CutOff, False)
 
                                                                            MatrixDoublets(Row, OtherVortexRing.IndexG) = Induced.X * Normal.X + Induced.Y * Normal.Y + Induced.Z * Normal.Z
 
@@ -304,7 +304,7 @@ Namespace CalculationModel.Solver
 
                                 Else
 
-                                    MatrixDoublets(Row, OtherVortexRing.IndexG) = OtherVortexRing.GiveDoubletPotentialInfluence(Point, False)
+                                    MatrixDoublets(Row, OtherVortexRing.IndexG) = OtherVortexRing.GetDoubletPotentialInfluence(Point, False)
 
                                 End If
 
@@ -390,7 +390,7 @@ Namespace CalculationModel.Solver
 
                                     n += 1
 
-                                    MatrixSources(Row, n) = OtherVortexRing.GiveSourcePotentialInfluence(Point, False)
+                                    MatrixSources(Row, n) = OtherVortexRing.GetSourcePotentialInfluence(Point, False)
 
                                 End If
 
@@ -622,7 +622,7 @@ Namespace CalculationModel.Solver
                             Vz += _StreamOmega.X * VortexRing.ControlPoint.Y - _StreamOmega.Y * VortexRing.ControlPoint.X
                         End If
 
-                        VortexRing.S = -VortexRing.Normal.X * Vx - VortexRing.Normal.Y * Vy - VortexRing.Normal.Z * Vz
+                        VortexRing.S = VortexRing.Normal.X * Vx + VortexRing.Normal.Y * Vy + VortexRing.Normal.Z * Vz
 
                         S(i) = VortexRing.S
 
@@ -722,7 +722,7 @@ Namespace CalculationModel.Solver
 
                         'This needs to be fixed
 
-                        VortexRing.RecalculateNormal()
+                        VortexRing.RecalculateBasis()
 
                     Next
 
@@ -744,7 +744,7 @@ Namespace CalculationModel.Solver
 
                                 For Each WakeVortexRing In Wake.VortexRings
 
-                                    VortexRing.PotentialW += WakeVortexRing.GiveDoubletPotentialInfluence(VortexRing.ControlPoint, True)
+                                    VortexRing.PotentialW += WakeVortexRing.GetDoubletPotentialInfluence(VortexRing.ControlPoint, True)
 
                                 Next
 

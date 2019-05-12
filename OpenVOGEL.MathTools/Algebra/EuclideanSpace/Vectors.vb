@@ -295,6 +295,12 @@ Namespace Algebra.EuclideanSpace
             Me.Z = Z
         End Sub
 
+        Public Overrides Function ToString() As String
+
+            Return String.Format("{0:F14}, {1:F14}, {2:F14}", X, Y, Z)
+
+        End Function
+
 #Region " Operaciones aritméticas "
 
         ''' <summary>
@@ -671,7 +677,7 @@ Namespace Algebra.EuclideanSpace
     ''' Represents a basis of orthonormal vectors on the euclidean space.
     ''' </summary>
     ''' <remarks></remarks>
-    Public Class EBase3
+    Public Class Base3
 
         Public U As New Vector3
         Public V As New Vector3

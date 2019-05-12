@@ -303,7 +303,7 @@ Namespace CalculationModel.Models.Structural
         ''' <summary>
         ''' Autotest that runs a couple of well known eigen-value examples.
         ''' </summary>
-        Private Sub TestEigenValues()
+        Public Shared Sub TestEigenValues()
 
             '-----------------------------------------------------------
             ' Test the Jacobi solver using a simple problem as reference

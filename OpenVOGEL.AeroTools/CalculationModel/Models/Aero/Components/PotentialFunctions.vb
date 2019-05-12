@@ -1,52 +1,52 @@
-﻿'Open VOGEL (https://en.wikibooks.org/wiki/Open_VOGEL)
-'Open source software for aerodynamics
-'Copyright (C) 2018 Guillermo Hazebrouck (gahazebrouck@gmail.com)
+﻿'open vogel (https://en.wikibooks.org/wiki/open_vogel)
+'open source software for aerodynamics
+'copyright (c) 2018 guillermo hazebrouck (gahazebrouck@gmail.com)
 
-'This program Is free software: you can redistribute it And/Or modify
-'it under the terms Of the GNU General Public License As published by
-'the Free Software Foundation, either version 3 Of the License, Or
+'this program is free software: you can redistribute it and/or modify
+'it under the terms of the gnu general public license as published by
+'the free software foundation, either version 3 of the license, or
 '(at your option) any later version.
 
-'This program Is distributed In the hope that it will be useful,
-'but WITHOUT ANY WARRANTY; without even the implied warranty Of
-'MERCHANTABILITY Or FITNESS FOR A PARTICULAR PURPOSE.  See the
-'GNU General Public License For more details.
+'this program is distributed in the hope that it will be useful,
+'but without any warranty; without even the implied warranty of
+'merchantability or fitness for a particular purpose.  see the
+'gnu general public license for more details.
 
-'You should have received a copy Of the GNU General Public License
-'along with this program.  If Not, see < http:  //www.gnu.org/licenses/>.
+'you should have received a copy of the gnu general public license
+'along with this program.  if not, see < http:  //www.gnu.org/licenses/>.
 
 Imports OpenVOGEL.MathTools.Algebra.EuclideanSpace
 
 Namespace CalculationModel.Models.Aero.Components
 
-    Public Class PotentialFunctions
+    Public Class potentialfunctions
 
         ''' <summary>
-        ''' Four times PI
+        ''' four times pi
         ''' </summary>
         ''' <remarks></remarks>
-        Const FourPi As Double = 4 * Math.PI
+        Const fourpi As Double = 4 * Math.PI
 
         ''' <summary>
-        ''' Minimum value of the Biot-Savart denominator
+        ''' minimum value of the biot-savart denominator
         ''' </summary>
         ''' <remarks></remarks>
-        Const Epsilon As Double = 0.00000001
+        Const epsilon As Double = 0.00000001
 
-        ' Triangle functions:
+        ' triangle functions:
 
         ''' <summary>
-        ''' Returns the potential associated to a uniform unit distribution of sources.
+        ''' returns the potential associated to a uniform unit distribution of sources.
         ''' </summary>
-        ''' <param name="p">Evaluation point</param>
-        ''' <param name="p0">Point 0</param>
-        ''' <param name="p1">Point 1</param>
-        ''' <param name="p2">Point 2</param>
-        ''' <returns>The unit doublets distribution</returns>
+        ''' <param name="p">evaluation point</param>
+        ''' <param name="p0">point 0</param>
+        ''' <param name="p1">point 1</param>
+        ''' <param name="p2">point 2</param>
+        ''' <returns>the unit doublets distribution</returns>
         ''' <remarks></remarks>
-        Public Shared Function GetTriangularUnitSourcePotential(ByVal p As Vector3, ByVal p0 As Vector3, ByVal p1 As Vector3, ByVal p2 As Vector3, Optional ByVal WithDiagonal As Boolean = True) As Double
+        Public Shared Function gettriangularunitsourcepotential(ByVal p As Vector3, ByVal p0 As Vector3, ByVal p1 As Vector3, ByVal p2 As Vector3, Optional ByVal withdiagonal As Boolean = True) As Double
 
-            ' Directional versors:
+            ' directional versors:
 
             Dim ux, uy, uz As Double
             Dim vx, vy, vz As Double
@@ -119,8 +119,8 @@ Namespace CalculationModel.Models.Aero.Components
 
             ' projected segments:
 
-            Dim d01u As Double = d01  ' (p1.X - p0.X) * ux + (p1.Y - p0.Y) * uy + (p1.Z - p0.Z) * uz
-            Dim d01v As Double = 0.0# ' (p1.X - p0.X) * vx + (p1.Y - p0.Y) * vy + (p1.Z - p0.Z) * vz
+            Dim d01u As Double = d01  ' (p1.x - p0.x) * ux + (p1.y - p0.y) * uy + (p1.z - p0.z) * uz
+            Dim d01v As Double = 0.0# ' (p1.x - p0.x) * vx + (p1.y - p0.y) * vy + (p1.z - p0.z) * vz
 
             Dim d12u As Double = (p2.X - p1.X) * ux + (p2.Y - p1.Y) * uy + (p2.Z - p1.Z) * uz
             Dim d12v As Double = (p2.X - p1.X) * vx + (p2.Y - p1.Y) * vy + (p2.Z - p1.Z) * vz
@@ -139,7 +139,7 @@ Namespace CalculationModel.Models.Aero.Components
             Dim ln12 As Double = (d1pu * d12v - d1pv * d12u) / d12 * Math.Log((r1p + r2p + d12) / (r1p + r2p - d12))
             Dim ln20 As Double = 0.0
 
-            If WithDiagonal Then ln20 = (d2pu * d20v - d2pv * d20u) / d20 * Math.Log((r2p + r0p + d20) / (r2p + r0p - d20))
+            If withdiagonal Then ln20 = (d2pu * d20v - d2pv * d20u) / d20 * Math.Log((r2p + r0p + d20) / (r2p + r0p - d20))
 
             ' entities for evaluation of arctangents:
 
@@ -159,26 +159,26 @@ Namespace CalculationModel.Models.Aero.Components
             Dim tn12 As Double = Math.Atan((m12 * e1 - h1) / (pw * r1p)) - Math.Atan((m12 * e2 - h2) / (pw * r2p))
             Dim tn20 As Double = 0.0
 
-            If WithDiagonal Then tn20 = Math.Atan((m20 * e2 - h2) / (pw * r2p)) - Math.Atan((m20 * e0 - h0) / (pw * r0p))
+            If withdiagonal Then tn20 = Math.Atan((m20 * e2 - h2) / (pw * r2p)) - Math.Atan((m20 * e0 - h0) / (pw * r0p))
 
-            Return -(ln01 + ln12 + ln20 - pw * (tn01 + tn12 + tn20)) / FourPi
+            Return -(ln01 + ln12 + ln20 - pw * (tn01 + tn12 + tn20)) / fourpi
 
         End Function
 
         ''' <summary>
-        ''' Returns the potential associated to a uniform unit distribution of doublets.
+        ''' returns the potential associated to a uniform unit distribution of doublets.
         ''' </summary>
-        ''' <param name="p">Evaluation point</param>
-        ''' <param name="p0">Point 0</param>
-        ''' <param name="p1">Point 1</param>
-        ''' <param name="p2">Point 2</param>
-        ''' <returns>The unit doublets distribution</returns>
+        ''' <param name="p">evaluation point</param>
+        ''' <param name="p0">point 0</param>
+        ''' <param name="p1">point 1</param>
+        ''' <param name="p2">point 2</param>
+        ''' <returns>the unit doublets distribution</returns>
         ''' <remarks></remarks>
-        Public Shared Function GetTriangularUnitDoubletPotential(ByVal p As Vector3, ByVal p0 As Vector3, ByVal p1 As Vector3, ByVal p2 As Vector3, _
-                                                                 Optional ByVal WithDiagonal20 As Boolean = True, _
-                                                                 Optional ByVal WithDiagonal12 As Boolean = True) As Double
+        Public Shared Function gettriangularunitdoubletpotential(ByVal p As Vector3, ByVal p0 As Vector3, ByVal p1 As Vector3, ByVal p2 As Vector3,
+                                                                 Optional ByVal withdiagonal20 As Boolean = True,
+                                                                 Optional ByVal withdiagonal12 As Boolean = True) As Double
 
-            ' Directional versors:
+            ' directional versors:
 
             Dim ux, uy, uz As Double
             Dim vx, vy, vz As Double
@@ -246,8 +246,8 @@ Namespace CalculationModel.Models.Aero.Components
             ' all points have the same w coordinate since they lay in plane {(u, v), p}:
 
             Dim pw As Double = (p.X - p0.X) * wx + (p.Y - p0.Y) * wy + (p.Z - p0.Z) * wz
-            'pw = (p.X - p1.X) * wx + (p.Y - p1.Y) * wy + (p.Z - p1.Z) * wz
-            'pw = (p.X - p2.X) * wx + (p.Y - p2.Y) * wy + (p.Z - p2.Z) * wz
+            'pw = (p.x - p1.x) * wx + (p.y - p1.y) * wy + (p.z - p1.z) * wz
+            'pw = (p.x - p2.x) * wx + (p.y - p2.y) * wy + (p.z - p2.z) * wz
 
             Dim s As Double = Math.Sign(pw)
 
@@ -255,8 +255,8 @@ Namespace CalculationModel.Models.Aero.Components
 
             ' projected segments:
 
-            Dim d01u As Double = d01  ' (p1.X - p0.X) * ux + (p1.Y - p0.Y) * uy + (p1.Z - p0.Z) * uz
-            Dim d01v As Double = 0.0# ' (p1.X - p0.X) * vx + (p1.Y - p0.Y) * vy + (p1.Z - p0.Z) * vz
+            Dim d01u As Double = d01  ' (p1.x - p0.x) * ux + (p1.y - p0.y) * uy + (p1.z - p0.z) * uz
+            Dim d01v As Double = 0.0# ' (p1.x - p0.x) * vx + (p1.y - p0.y) * vy + (p1.z - p0.z) * vz
 
             Dim d12u As Double = (p2.X - p1.X) * ux + (p2.Y - p1.Y) * uy + (p2.Z - p1.Z) * uz
             Dim d12v As Double = (p2.X - p1.X) * vx + (p2.Y - p1.Y) * vy + (p2.Z - p1.Z) * vz
@@ -285,26 +285,26 @@ Namespace CalculationModel.Models.Aero.Components
             Dim tn12 As Double = 0.0
             Dim tn20 As Double = 0.0
 
-            If WithDiagonal12 Then tn12 = Math.Atan((m12 * e1 - h1) / (pw * r1p)) - Math.Atan((m12 * e2 - h2) / (pw * r2p))
-            If WithDiagonal20 Then tn20 = Math.Atan((m20 * e2 - h2) / (pw * r2p)) - Math.Atan((m20 * e0 - h0) / (pw * r0p))
+            If withdiagonal12 Then tn12 = Math.Atan((m12 * e1 - h1) / (pw * r1p)) - Math.Atan((m12 * e2 - h2) / (pw * r2p))
+            If withdiagonal20 Then tn20 = Math.Atan((m20 * e2 - h2) / (pw * r2p)) - Math.Atan((m20 * e0 - h0) / (pw * r0p))
 
-            Return s * (tn01 + tn12 + tn20) / FourPi
+            Return s * (tn01 + tn12 + tn20) / fourpi
 
         End Function
 
         ''' <summary>
-        ''' Adds the velocity associated to a unifor distribution of sources.
+        ''' adds the velocity associated to a unifor distribution of sources.
         ''' </summary>
         ''' <param name="p"></param>
         ''' <param name="p0"></param>
         ''' <param name="p1"></param>
         ''' <param name="p2"></param>
-        ''' <param name="Velocity"></param>
+        ''' <param name="velocity"></param>
         ''' <param name="factor"></param>
         ''' <remarks></remarks>
-        Public Shared Sub AddTriangularSourceVelocity(ByVal p As Vector3, ByVal p0 As Vector3, ByVal p1 As Vector3, ByVal p2 As Vector3, ByRef Velocity As Vector3, ByVal factor As Double, Optional ByVal WithDiagonal As Boolean = True)
+        Public Shared Sub addtriangularsourcevelocity(ByVal p As Vector3, ByVal p0 As Vector3, ByVal p1 As Vector3, ByVal p2 As Vector3, ByRef velocity As Vector3, ByVal factor As Double, Optional ByVal withdiagonal As Boolean = True)
 
-            ' Directional versors:
+            ' directional versors:
 
             Dim ux, uy, uz As Double
             Dim vx, vy, vz As Double
@@ -375,8 +375,8 @@ Namespace CalculationModel.Models.Aero.Components
 
             ' projected segments:
 
-            Dim d01u As Double = d01  ' (p1.X - p0.X) * ux + (p1.Y - p0.Y) * uy + (p1.Z - p0.Z) * uz
-            Dim d01v As Double = 0.0# ' (p1.X - p0.X) * vx + (p1.Y - p0.Y) * vy + (p1.Z - p0.Z) * vz
+            Dim d01u As Double = d01  ' (p1.x - p0.x) * ux + (p1.y - p0.y) * uy + (p1.z - p0.z) * uz
+            Dim d01v As Double = 0.0# ' (p1.x - p0.x) * vx + (p1.y - p0.y) * vy + (p1.z - p0.z) * vz
 
             Dim d12u As Double = (p2.X - p1.X) * ux + (p2.Y - p1.Y) * uy + (p2.Z - p1.Z) * uz
             Dim d12v As Double = (p2.X - p1.X) * vx + (p2.Y - p1.Y) * vy + (p2.Z - p1.Z) * vz
@@ -395,11 +395,11 @@ Namespace CalculationModel.Models.Aero.Components
             Dim ln12 As Double = Math.Log((r1p + r2p - d12) / (r1p + r2p + d12))
             Dim ln20 As Double = 0.0
 
-            If WithDiagonal Then ln20 = Math.Log((r2p + r0p - d20) / (r2p + r0p + d20))
+            If withdiagonal Then ln20 = Math.Log((r2p + r0p - d20) / (r2p + r0p + d20))
 
-            Dim Vu As Double = d01v / d01 * ln01 + d12v / d12 * ln12 + d20v / d20 * ln20
+            Dim vu As Double = d01v / d01 * ln01 + d12v / d12 * ln12 + d20v / d20 * ln20
 
-            Dim Vv As Double = -d01u / d01 * ln01 - d12u / d12 * ln12 - d20u / d20 * ln20
+            Dim vv As Double = -d01u / d01 * ln01 - d12u / d12 * ln12 - d20u / d20 * ln20
 
             ' entities for evaluation of arctangents:
 
@@ -419,61 +419,61 @@ Namespace CalculationModel.Models.Aero.Components
             Dim tn12 As Double = Math.Atan((m12 * e1 - h1) / (pw * r1p)) - Math.Atan((m12 * e2 - h2) / (pw * r2p))
             Dim tn20 As Double = 0.0
 
-            If WithDiagonal Then tn20 = Math.Atan((m20 * e2 - h2) / (pw * r2p)) - Math.Atan((m20 * e0 - h0) / (pw * r0p))
+            If withdiagonal Then tn20 = Math.Atan((m20 * e2 - h2) / (pw * r2p)) - Math.Atan((m20 * e0 - h0) / (pw * r0p))
 
-            Dim Vw As Double = tn01 + tn12 + tn20
+            Dim vw As Double = tn01 + tn12 + tn20
 
-            Vu *= -factor / FourPi
-            Vv *= -factor / FourPi
-            Vw *= -factor / FourPi
+            vu *= -factor / fourpi
+            vv *= -factor / fourpi
+            vw *= -factor / fourpi
 
 #If DEBUG Then
-            Dim v_x As Double = ux * Vu + vx * Vv + wx * Vw
-            Dim v_y As Double = uy * Vu + vy * Vv + wy * Vw
-            Dim v_z As Double = uz * Vu + vz * Vv + wz * Vw
+            Dim v_x As Double = ux * vu + vx * vv + wx * vw
+            Dim v_y As Double = uy * vu + vy * vv + wy * vw
+            Dim v_z As Double = uz * vu + vz * vv + wz * vw
 
-            Velocity.X += v_x
-            Velocity.Y += v_y
-            Velocity.Z += v_z
+            velocity.X += v_x
+            velocity.Y += v_y
+            velocity.Z += v_z
 #Else
-            Velocity.X += ux * Vu + vx * Vv + wx * Vw
-            Velocity.Y += uy * Vu + vy * Vv + wy * Vw
-            Velocity.Z += uz * Vu + vz * Vv + wz * Vw
+            velocity.x += ux * vu + vx * vv + wx * vw
+            velocity.y += uy * vu + vy * vv + wy * vw
+            velocity.z += uz * vu + vz * vv + wz * vw
 #End If
 
         End Sub
 
-        ' Quad functions:
+        ' quad functions:
 
         ''' <summary>
-        ''' Returns the potential associated to a uniform unit distribution of sources.
+        ''' returns the potential associated to a uniform unit distribution of sources.
         ''' </summary>
-        ''' <param name="p">Evaluation point</param>
-        ''' <param name="p0">Point 0</param>
-        ''' <param name="p1">Point 1</param>
-        ''' <param name="p2">Point 2</param>
-        ''' <param name="p3">Point 3</param>
-        ''' <param name="n">Normal</param>
-        ''' <param name="reversed">Indicates if the normal has been reversed</param>
-        ''' <returns>The unit doublets distribution</returns>
+        ''' <param name="p">evaluation point</param>
+        ''' <param name="p0">point 0</param>
+        ''' <param name="p1">point 1</param>
+        ''' <param name="p2">point 2</param>
+        ''' <param name="p3">point 3</param>
+        ''' <param name="n">normal</param>
+        ''' <param name="reversed">indicates if the normal has been reversed</param>
+        ''' <returns>the unit doublets distribution</returns>
         ''' <remarks></remarks>
-        Public Shared Function GetQuadUnitSourcePotential_MeanPlane(p As Vector3, p0 As Vector3, p1 As Vector3, p2 As Vector3, p3 As Vector3, n As Vector3, reversed As Boolean) As Double
+        Public Shared Function getquadunitsourcepotential_meanplane(p As Vector3, p0 As Vector3, p1 As Vector3, p2 As Vector3, p3 As Vector3, n As Vector3, reversed As Boolean) As Double
 
-            Dim cX As Double = 0.25 * (p0.X + p1.X + p2.X + p3.X)
-            Dim cY As Double = 0.25 * (p0.Y + p1.Y + p2.Y + p3.Y)
-            Dim cZ As Double = 0.25 * (p0.Z + p1.Z + p2.Z + p3.Z)
+            Dim cx As Double = 0.25 * (p0.X + p1.X + p2.X + p3.X)
+            Dim cy As Double = 0.25 * (p0.Y + p1.Y + p2.Y + p3.Y)
+            Dim cz As Double = 0.25 * (p0.Z + p1.Z + p2.Z + p3.Z)
 
-            ' Directional unit vectors:
+            ' directional unit vectors:
 
-            ' Vector u points from the center to node 0
-            ' Vector w points in the direction of the normal
-            ' Vector v is orthogonal to u and w
+            ' vector u points from the center to node 0
+            ' vector w points in the direction of the normal
+            ' vector v is orthogonal to u and w
 
             Dim c0x, c0y, c0z As Double
 
-            c0x = p0.X - cX
-            c0y = p0.Y - cY
-            c0z = p0.Z - cZ
+            c0x = p0.X - cx
+            c0y = p0.Y - cy
+            c0z = p0.Z - cz
 
             Dim ux, uy, uz As Double
             Dim vx, vy, vz As Double
@@ -545,7 +545,7 @@ Namespace CalculationModel.Models.Aero.Components
 
             ' all points have the same w coordinate since they lay in plane {(u, v), p}:
 
-            Dim pw As Double = (p.X - cX) * wx + (p.Y - cY) * wy + (p.Z - cZ) * wz
+            Dim pw As Double = (p.X - cx) * wx + (p.Y - cy) * wy + (p.Z - cz) * wz
 
             pw = Math.Abs(pw)
 
@@ -599,39 +599,39 @@ Namespace CalculationModel.Models.Aero.Components
             Dim tn23 As Double = Math.Atan((m23 * e2 - h2) / (pw * r2p)) - Math.Atan((m23 * e3 - h3) / (pw * r3p))
             Dim tn30 As Double = Math.Atan((m30 * e3 - h3) / (pw * r3p)) - Math.Atan((m30 * e0 - h0) / (pw * r0p))
 
-            Return -(ln01 + ln12 + ln23 + ln30 - pw * (tn01 + tn12 + tn23 + tn30)) / FourPi
+            Return -(ln01 + ln12 + ln23 + ln30 - pw * (tn01 + tn12 + tn23 + tn30)) / fourpi
 
         End Function
 
         ''' <summary>
-        ''' Returns the potential associated to a uniform unit distribution of doublets.
+        ''' returns the potential associated to a uniform unit distribution of doublets.
         ''' </summary>
-        ''' <param name="p">Evaluation point</param>
-        ''' <param name="p0">Point 0</param>
-        ''' <param name="p1">Point 1</param>
-        ''' <param name="p2">Point 2</param>
-        ''' <param name="p3">Point 3</param>
-        ''' <param name="n">Normal</param>
-        ''' <param name="reversed">Indicates if the normal has been reversed</param>
-        ''' <returns>The unit doublets distribution</returns>
+        ''' <param name="p">evaluation point</param>
+        ''' <param name="p0">point 0</param>
+        ''' <param name="p1">point 1</param>
+        ''' <param name="p2">point 2</param>
+        ''' <param name="p3">point 3</param>
+        ''' <param name="n">normal</param>
+        ''' <param name="reversed">indicates if the normal has been reversed</param>
+        ''' <returns>the unit doublets distribution</returns>
         ''' <remarks></remarks>
-        Public Shared Function GetQuadUnitDoubletPotential_MeanPlane(p As Vector3, p0 As Vector3, p1 As Vector3, p2 As Vector3, p3 As Vector3, n As Vector3, reversed As Boolean) As Double
+        Public Shared Function getquadunitdoubletpotential_meanplane(p As Vector3, p0 As Vector3, p1 As Vector3, p2 As Vector3, p3 As Vector3, n As Vector3, reversed As Boolean) As Double
 
-            Dim cX As Double = 0.25 * (p0.X + p1.X + p2.X + p3.X)
-            Dim cY As Double = 0.25 * (p0.Y + p1.Y + p2.Y + p3.Y)
-            Dim cZ As Double = 0.25 * (p0.Z + p1.Z + p2.Z + p3.Z)
+            Dim cx As Double = 0.25 * (p0.X + p1.X + p2.X + p3.X)
+            Dim cy As Double = 0.25 * (p0.Y + p1.Y + p2.Y + p3.Y)
+            Dim cz As Double = 0.25 * (p0.Z + p1.Z + p2.Z + p3.Z)
 
-            ' Directional versors:
+            ' directional versors:
 
-            ' Vector u points from the center to node 0
-            ' Vector w points in the direction of the normal
-            ' Vector v is orthogonal to u and w
+            ' vector u points from the center to node 0
+            ' vector w points in the direction of the normal
+            ' vector v is orthogonal to u and w
 
             Dim c0x, c0y, c0z As Double
 
-            c0x = p0.X - cX
-            c0y = p0.Y - cY
-            c0z = p0.Z - cZ
+            c0x = p0.X - cx
+            c0y = p0.Y - cy
+            c0z = p0.Z - cz
 
             Dim ux, uy, uz As Double
             Dim vx, vy, vz As Double
@@ -707,7 +707,7 @@ Namespace CalculationModel.Models.Aero.Components
 
             ' use center point as referece to compute the altitude:
 
-            Dim pw As Double = (p.X - cX) * wx + (p.Y - cY) * wy + (p.Z - cZ) * wz
+            Dim pw As Double = (p.X - cx) * wx + (p.Y - cy) * wy + (p.Z - cz) * wz
 
             Dim s As Double = Math.Sign(pw)
 
@@ -751,12 +751,12 @@ Namespace CalculationModel.Models.Aero.Components
 
             If reversed Then s *= -1
 
-            Return s * (tn01 + tn12 + tn23 + tn30) / FourPi
+            Return s * (tn01 + tn12 + tn23 + tn30) / fourpi
 
         End Function
 
         ''' <summary>
-        ''' Adds the velocity associated to a unifor distribution of sources.
+        ''' adds the velocity associated to a unifor distribution of sources.
         ''' </summary>
         ''' <param name="p"></param>
         ''' <param name="p0"></param>
@@ -764,35 +764,35 @@ Namespace CalculationModel.Models.Aero.Components
         ''' <param name="p2"></param>
         ''' <param name="p3"></param>
         ''' <param name="n"></param>
-        ''' <param name="Velocity"></param>
+        ''' <param name="velocity"></param>
         ''' <param name="factor"></param>
         ''' <param name="reversed"></param>
         ''' <remarks></remarks>
-        Public Shared Sub AddQuadSourceVelocity_MeanPlane(p As Vector3, p0 As Vector3, p1 As Vector3, p2 As Vector3, p3 As Vector3, n As Vector3, ByRef Velocity As Vector3, factor As Double, reversed As Boolean)
+        Public Shared Sub addquadsourcevelocity_meanplane(p As Vector3, p0 As Vector3, p1 As Vector3, p2 As Vector3, p3 As Vector3, n As Vector3, ByRef velocity As Vector3, factor As Double, reversed As Boolean)
 
-            Dim cX As Double = 0.25 * (p0.X + p1.X + p2.X + p3.X)
-            Dim cY As Double = 0.25 * (p0.Y + p1.Y + p2.Y + p3.Y)
-            Dim cZ As Double = 0.25 * (p0.Z + p1.Z + p2.Z + p3.Z)
+            Dim cx As Double = 0.25 * (p0.X + p1.X + p2.X + p3.X)
+            Dim cy As Double = 0.25 * (p0.Y + p1.Y + p2.Y + p3.Y)
+            Dim cz As Double = 0.25 * (p0.Z + p1.Z + p2.Z + p3.Z)
 
-            ' Calculate distance:
+            ' calculate distance:
 
-            'Dim dx As Double = (p.X - cX)
-            'Dim dy As Double = (p.Y - cY)
-            'Dim dz As Double = (p.Z - cZ)
+            'dim dx as double = (p.x - cx)
+            'dim dy as double = (p.y - cy)
+            'dim dz as double = (p.z - cz)
 
-            'Dim d_sqr = dx * dx + dy * dy + dz * dz
+            'dim d_sqr = dx * dx + dy * dy + dz * dz
 
-            ' Directional versors:
+            ' directional versors:
 
-            ' Vector u points from the center to node 0
-            ' Vector w points in the direction of the normal
-            ' Vector v is orthogonal to u and w
+            ' vector u points from the center to node 0
+            ' vector w points in the direction of the normal
+            ' vector v is orthogonal to u and w
 
             Dim c0x, c0y, c0z As Double
 
-            c0x = p0.X - cX
-            c0y = p0.Y - cY
-            c0z = p0.Z - cZ
+            c0x = p0.X - cx
+            c0y = p0.Y - cy
+            c0z = p0.Z - cz
 
             Dim ux, uy, uz As Double
             Dim vx, vy, vz As Double
@@ -868,7 +868,7 @@ Namespace CalculationModel.Models.Aero.Components
 
             ' all points have the same w coordinate since they lay in plane {(u, v), p}:
 
-            Dim pw As Double = (p.X - cX) * wx + (p.Y - cY) * wy + (p.Z - cZ) * wz
+            Dim pw As Double = (p.X - cx) * wx + (p.Y - cy) * wy + (p.Z - cz) * wz
 
             ' projected segments:
 
@@ -900,9 +900,9 @@ Namespace CalculationModel.Models.Aero.Components
 
             ' planar velocity componets:
 
-            Dim Vu As Double = d01v / d01 * ln01 + d12v / d12 * ln12 + d23v / d23 * ln23 + d30v / d30 * ln30
+            Dim vu As Double = d01v / d01 * ln01 + d12v / d12 * ln12 + d23v / d23 * ln23 + d30v / d30 * ln30
 
-            Dim Vv As Double = -d01u / d01 * ln01 - d12u / d12 * ln12 - d23u / d23 * ln23 - d30u / d30 * ln30
+            Dim vv As Double = -d01u / d01 * ln01 - d12u / d12 * ln12 - d23u / d23 * ln23 - d30u / d30 * ln30
 
             ' entities for evaluation of arctangents:
 
@@ -926,30 +926,30 @@ Namespace CalculationModel.Models.Aero.Components
             Dim tn23 As Double = Math.Atan((m23 * e2 - h2) / (pw * r2p)) - Math.Atan((m23 * e3 - h3) / (pw * r3p))
             Dim tn30 As Double = Math.Atan((m30 * e3 - h3) / (pw * r3p)) - Math.Atan((m30 * e0 - h0) / (pw * r0p))
 
-            Dim Vw As Double = tn01 + tn12 + tn23 + tn30
+            Dim vw As Double = tn01 + tn12 + tn23 + tn30
 
             If reversed Then
-                Vu *= factor / FourPi
-                Vv *= factor / FourPi
-                Vw *= factor / FourPi
+                vu *= factor / fourpi
+                vv *= factor / fourpi
+                vw *= factor / fourpi
             Else
-                Vu *= -factor / FourPi
-                Vv *= -factor / FourPi
-                Vw *= -factor / FourPi
+                vu *= -factor / fourpi
+                vv *= -factor / fourpi
+                vw *= -factor / fourpi
             End If
 
 #If DEBUG Then
-            Dim v_x As Double = ux * Vu + vx * Vv + wx * Vw
-            Dim v_y As Double = uy * Vu + vy * Vv + wy * Vw
-            Dim v_z As Double = uz * Vu + vz * Vv + wz * Vw
+            Dim v_x As Double = ux * vu + vx * vv + wx * vw
+            Dim v_y As Double = uy * vu + vy * vv + wy * vw
+            Dim v_z As Double = uz * vu + vz * vv + wz * vw
 
-            Velocity.X += v_x
-            Velocity.Y += v_y
-            Velocity.Z += v_z
+            velocity.X += v_x
+            velocity.Y += v_y
+            velocity.Z += v_z
 #Else
-            Velocity.X += ux * Vu + vx * Vv + wx * Vw
-            Velocity.Y += uy * Vu + vy * Vv + wy * Vw
-            Velocity.Z += uz * Vu + vz * Vv + wz * Vw
+            velocity.x += ux * vu + vx * vv + wx * vw
+            velocity.y += uy * vu + vy * vv + wy * vw
+            velocity.z += uz * vu + vz * vv + wz * vw
 #End If
 
         End Sub
