@@ -308,9 +308,15 @@ Namespace CalculationModel.Models.Aero.Components
             _OuterControlPoint.Y = _MidleControlPoint.Y + 0.0001 * _Basis.W.Y
             _OuterControlPoint.Z = _MidleControlPoint.Z + 0.0001 * _Basis.W.Z
 
-            _InnerControlPoint.X = _MidleControlPoint.X - 0.0001 * _Basis.W.X
-            _InnerControlPoint.Y = _MidleControlPoint.Y - 0.0001 * _Basis.W.Y
-            _InnerControlPoint.Z = _MidleControlPoint.Z - 0.0001 * _Basis.W.Z
+            _InnerControlPoint.X = _MidleControlPoint.X
+            _InnerControlPoint.Y = _MidleControlPoint.Y
+            _InnerControlPoint.Z = _MidleControlPoint.Z
+
+            If Not _IsSlender Then
+                _InnerControlPoint.X -= 0.0001 * _Basis.W.X
+                _InnerControlPoint.Y -= 0.0001 * _Basis.W.Y
+                _InnerControlPoint.Z -= 0.0001 * _Basis.W.Z
+            End If
 
             ' Surface velocity:
 

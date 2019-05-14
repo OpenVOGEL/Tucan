@@ -200,10 +200,6 @@ Namespace VisualModel.Models
 
             This.FindSurroundingRingsGlobally()
 
-            ' Check if sources must be included (thick bodies are present)
-
-            This.WithSources = This.CheckIfThereAreSources()
-
             ' Populate wakes with vortices
 
             For Each Lattice In This.Lattices

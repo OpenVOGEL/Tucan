@@ -23,15 +23,11 @@ Namespace CalculationModel.Solver
     Partial Public Class Solver
 
         ''' <summary>
-        ''' Indicates if source panels are included
-        ''' </summary>
-        ''' <returns></returns>
-        Public Property WithSources As Boolean = False
-
-        ''' <summary>
         ''' Convect wakes and calculates loads at the last time step.
         ''' </summary>
         Public Sub SteadyState(ByVal DataBasePath As String)
+
+            CheckForSources()
 
             TestOpenCL()
 

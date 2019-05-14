@@ -34,6 +34,16 @@ Namespace CalculationModel.Solver
         ' Public fields:
 
         ''' <summary>
+        ''' Indicates if source panels are included
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property WithSources As Boolean
+            Get
+                Return _WithSources
+            End Get
+        End Property
+
+        ''' <summary>
         ''' Contains all parameters required to run a complete simulation
         ''' </summary>
         Public Property Settings As New SimulationSettings
@@ -65,6 +75,7 @@ Namespace CalculationModel.Solver
         Private RHS As Vector
         Private Dimension As Integer
 
+        Private _WithSources As Boolean = False
         Private _StreamVelocity As New Vector3
         Private _StreamDensity As Double
         Private _StreamDynamicPressure As Double
@@ -122,6 +133,11 @@ Namespace CalculationModel.Solver
         ''' <param name="Title"></param>
         ''' <remarks></remarks>
         Public Event PushMessage(ByVal Title As String)
+
+        ''' <summary>
+        ''' Writes a result line
+        ''' </summary>
+        Public Event PushResultLine(ByVal Line As String)
 
         ''' <summary>
         ''' Occurs when the calculation finishes.

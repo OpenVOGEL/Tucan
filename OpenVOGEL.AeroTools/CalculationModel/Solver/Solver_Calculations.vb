@@ -38,6 +38,23 @@ Namespace CalculationModel.Solver
 #Region " General calculations "
 
         ''' <summary>
+        ''' Checks if the model contains sources
+        ''' </summary>
+        Public Sub CheckForSources()
+
+            _WithSources = False
+            For Each Lattice In Lattices
+                For Each Ring In Lattice.VortexRings
+                    If Not Ring.IsSlender Then
+                        _WithSources = True
+                        Return
+                    End If
+                Next
+            Next
+
+        End Sub
+
+        ''' <summary>
         ''' Gives to each vortex its corresponding global index on vectors and matrices and returns the number of bounded vortex rings.
         ''' </summary>
         Public Function IndexateLattices() As Integer
@@ -633,31 +650,6 @@ Namespace CalculationModel.Solver
             Next
 
         End Sub
-
-        ''' <summary>
-        ''' Checks if there are bounded vortex rings defined as non-slender.
-        ''' </summary>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
-        Public Function CheckIfThereAreSources() As Boolean
-
-            For Each Lattice In Lattices
-
-                For Each VortexRing In Lattice.VortexRings
-
-                    If Not VortexRing.IsSlender Then
-
-                        Return True
-
-                    End If
-
-                Next
-
-            Next
-
-            Return False
-
-        End Function
 
 #End Region
 
