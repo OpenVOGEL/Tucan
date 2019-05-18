@@ -18,6 +18,7 @@
 Imports OpenVOGEL.AeroTools.CalculationModel.Models.Aero.Components
 Imports OpenVOGEL.MathTools.Algebra.CustomMatrices
 Imports OpenVOGEL.MathTools.Algebra.EuclideanSpace
+Imports OpenVOGEL.DesignTools
 
 Module MainModule
 
@@ -32,13 +33,32 @@ Module MainModule
             Dim Line As String = System.Console.ReadLine()
 
             Select Case Line
+
                 Case "quit"
                     Quit = True
+
                 Case "test"
                     TestAerodynamicSolver()
-                Case "steady"
+
+                Case "load"
                     System.Console.WriteLine("enter file name:")
-                    RunSteady(System.Console.ReadLine)
+                    DataStore.FilePath = System.Console.ReadLine
+                    DataStore.ProjectRoot.ReadFromXML()
+
+                Case "steady"
+                    AddHandler DataStore.PushMessage, AddressOf OutputMessage
+                    AddHandler DataStore.PushProgress, AddressOf OutputProgress
+                    DataStore.StartCalculation(AeroTools.CalculationModel.Settings.CalculationType.ctSteady)
+
+                Case "report"
+
+                    If DataStore.ProjectRoot.CalculationCore IsNot Nothing Then
+
+                        AddHandler DataStore.ProjectRoot.CalculationCore.PushResultLine, AddressOf OutputMessage
+                        DataStore.ProjectRoot.CalculationCore.ReportResults()
+
+                    End If
+
             End Select
 
         End While
@@ -46,26 +66,12 @@ Module MainModule
 
     End Sub
 
-    Private Sub RunSteady(Path As String)
-
-        Dim Core As New AeroTools.CalculationModel.Solver.Solver
-        AddHandler Core.PushMessage, AddressOf OutputMessage
-        AddHandler Core.PushProgress, AddressOf OutputProgress
-        AddHandler Core.PushResultLine, AddressOf OutputMessage
-        Core.ReadFromXML(Path)
-        If Core.Lattices.Count > 0 Then
-            Core.SteadyState(Path)
-            Core.ReportResutls()
-        End If
-
-    End Sub
-
     Private Sub OutputMessage(Message As String)
         System.Console.WriteLine(Message)
     End Sub
 
-    Private Sub OutputProgress(Message As String, Progress As Integer)
-        System.Console.WriteLine(String.Format("{0}: {1}", Progress, Message))
+    Private Sub OutputProgress(Progress As Integer)
+        System.Console.WriteLine(String.Format("Step {0}", Progress))
     End Sub
 
 End Module

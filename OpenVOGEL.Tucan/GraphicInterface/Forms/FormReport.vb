@@ -67,7 +67,7 @@ Public Class FormReport
         If Not IsNothing(CalculationCore) Then
 
             AddHandler CalculationCore.PushResultLine, AddressOf RawResults.AppendLine
-            CalculationCore.ReportResutls()
+            CalculationCore.ReportResults()
 
         Else
 

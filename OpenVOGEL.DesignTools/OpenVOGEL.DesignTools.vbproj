@@ -56,13 +56,10 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
-    <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Windows.Forms.DataVisualization" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.Net.Http" />
   </ItemGroup>
   <ItemGroup>
     <Import Include="Microsoft.VisualBasic" />
@@ -94,138 +91,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="VisualModel\GUI\Forms\FormAnchors.Designer.vb">
-      <DependentUpon>FormAnchors.vb</DependentUpon>
-    </Compile>
-    <Compile Include="VisualModel\GUI\Forms\FormAnchors.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="VisualModel\GUI\Forms\FormAskVelocity.Designer.vb">
-      <DependentUpon>FormAskVelocity.vb</DependentUpon>
-    </Compile>
-    <Compile Include="VisualModel\GUI\Forms\FormAskVelocity.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="VisualModel\GUI\Forms\FormCamberLine.Designer.vb">
-      <DependentUpon>FormCamberLine.vb</DependentUpon>
-    </Compile>
-    <Compile Include="VisualModel\GUI\Forms\FormCamberLine.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="VisualModel\GUI\Forms\FormFuselageEditor.Designer.vb">
-      <DependentUpon>FormFuselageEditor.vb</DependentUpon>
-    </Compile>
-    <Compile Include="VisualModel\GUI\Forms\FormFuselageEditor.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="VisualModel\GUI\Forms\FormHistogram.Designer.vb">
-      <DependentUpon>FormHistogram.vb</DependentUpon>
-    </Compile>
-    <Compile Include="VisualModel\GUI\Forms\FormHistogram.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="VisualModel\GUI\Forms\FormJetEngine.Designer.vb">
-      <DependentUpon>FormJetEngine.vb</DependentUpon>
-    </Compile>
-    <Compile Include="VisualModel\GUI\Forms\FormJetEngine.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="VisualModel\GUI\Forms\FormPolarCurve.Designer.vb">
-      <DependentUpon>FormPolarCurve.vb</DependentUpon>
-    </Compile>
-    <Compile Include="VisualModel\GUI\Forms\FormPolarCurve.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="VisualModel\GUI\Forms\FormProgress.Designer.vb">
-      <DependentUpon>FormProgress.vb</DependentUpon>
-    </Compile>
-    <Compile Include="VisualModel\GUI\Forms\FormProgress.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="VisualModel\GUI\Forms\FormReport.Designer.vb">
-      <DependentUpon>FormReport.vb</DependentUpon>
-    </Compile>
-    <Compile Include="VisualModel\GUI\Forms\FormReport.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="VisualModel\GUI\Forms\FormResults.Designer.vb">
-      <DependentUpon>FormResults.vb</DependentUpon>
-    </Compile>
-    <Compile Include="VisualModel\GUI\Forms\FormResults.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="VisualModel\GUI\Forms\FormSettings.Designer.vb">
-      <DependentUpon>FormSettings.vb</DependentUpon>
-    </Compile>
-    <Compile Include="VisualModel\GUI\Forms\FormSettings.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="VisualModel\GUI\Forms\FormUnsteadyVelocity.Designer.vb">
-      <DependentUpon>FormUnsteadyVelocity.vb</DependentUpon>
-    </Compile>
-    <Compile Include="VisualModel\GUI\Forms\FormUnsteadyVelocity.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="VisualModel\GUI\UserControls\ForcesPanel.Designer.vb">
-      <DependentUpon>ForcesPanel.vb</DependentUpon>
-    </Compile>
-    <Compile Include="VisualModel\GUI\UserControls\ForcesPanel.vb">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="VisualModel\GUI\UserControls\MiniComponents\ResultBox.Designer.vb">
-      <DependentUpon>ResultBox.vb</DependentUpon>
-    </Compile>
-    <Compile Include="VisualModel\GUI\UserControls\MiniComponents\ResultBox.vb">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="VisualModel\GUI\UserControls\Polars\CustomPolarControl.Designer.vb">
-      <DependentUpon>CustomPolarControl.vb</DependentUpon>
-    </Compile>
-    <Compile Include="VisualModel\GUI\UserControls\Polars\CustomPolarControl.vb">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="VisualModel\GUI\UserControls\Polars\PolarPlotter.Designer.vb">
-      <DependentUpon>PolarPlotter.vb</DependentUpon>
-    </Compile>
-    <Compile Include="VisualModel\GUI\UserControls\Polars\PolarPlotter.vb">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="VisualModel\GUI\UserControls\Polars\QuadraticPolarControl.Designer.vb">
-      <DependentUpon>QuadraticPolarControl.vb</DependentUpon>
-    </Compile>
-    <Compile Include="VisualModel\GUI\UserControls\Polars\QuadraticPolarControl.vb">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="VisualModel\GUI\UserControls\Ribbon\FormSelectObject.Designer.vb">
-      <DependentUpon>FormSelectObject.vb</DependentUpon>
-    </Compile>
-    <Compile Include="VisualModel\GUI\UserControls\Ribbon\FormSelectObject.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="VisualModel\GUI\UserControls\Ribbon\MainRibbon.Designer.vb">
-      <DependentUpon>MainRibbon.vb</DependentUpon>
-    </Compile>
-    <Compile Include="VisualModel\GUI\UserControls\Ribbon\MainRibbon.vb">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="VisualModel\GUI\UserControls\TotalForcePanel.Designer.vb">
-      <DependentUpon>TotalForcePanel.vb</DependentUpon>
-    </Compile>
-    <Compile Include="VisualModel\GUI\UserControls\TotalForcePanel.vb">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="VisualModel\GUI\UserControls\VelocityControl.Designer.vb">
-      <DependentUpon>VelocityControl.vb</DependentUpon>
-    </Compile>
-    <Compile Include="VisualModel\GUI\UserControls\VelocityControl.vb">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="VisualModel\GUI\UserControls\WingControl.Designer.vb">
-      <DependentUpon>WingControl.vb</DependentUpon>
-    </Compile>
-    <Compile Include="VisualModel\GUI\UserControls\WingControl.vb">
-      <SubType>UserControl</SubType>
-    </Compile>
     <Compile Include="VisualModel\Interface\Operations.vb" />
     <Compile Include="VisualModel\Interface\Selection.vb" />
     <Compile Include="VisualModel\Interface\VisualProperties.vb" />
@@ -245,8 +110,6 @@
     <Compile Include="VisualModel\Models\DesignModel.vb" />
     <Compile Include="VisualModel\Models\ResultModel.vb" />
     <Compile Include="VisualModel\Tools\Colormaping.vb" />
-    <Compile Include="VisualModel\Tools\Frames.vb" />
-    <Compile Include="VisualModel\Tools\Properties.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
@@ -254,72 +117,6 @@
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="VisualModel\GUI\Forms\FormAnchors.resx">
-      <DependentUpon>FormAnchors.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="VisualModel\GUI\Forms\FormAskVelocity.resx">
-      <DependentUpon>FormAskVelocity.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="VisualModel\GUI\Forms\FormCamberLine.resx">
-      <DependentUpon>FormCamberLine.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="VisualModel\GUI\Forms\FormFuselageEditor.resx">
-      <DependentUpon>FormFuselageEditor.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="VisualModel\GUI\Forms\FormHistogram.resx">
-      <DependentUpon>FormHistogram.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="VisualModel\GUI\Forms\FormJetEngine.resx">
-      <DependentUpon>FormJetEngine.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="VisualModel\GUI\Forms\FormPolarCurve.resx">
-      <DependentUpon>FormPolarCurve.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="VisualModel\GUI\Forms\FormProgress.resx">
-      <DependentUpon>FormProgress.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="VisualModel\GUI\Forms\FormReport.resx">
-      <DependentUpon>FormReport.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="VisualModel\GUI\Forms\FormResults.resx">
-      <DependentUpon>FormResults.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="VisualModel\GUI\Forms\FormSettings.resx">
-      <DependentUpon>FormSettings.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="VisualModel\GUI\Forms\FormUnsteadyVelocity.resx">
-      <DependentUpon>FormUnsteadyVelocity.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="VisualModel\GUI\UserControls\ForcesPanel.resx">
-      <DependentUpon>ForcesPanel.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="VisualModel\GUI\UserControls\MiniComponents\ResultBox.resx">
-      <DependentUpon>ResultBox.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="VisualModel\GUI\UserControls\Polars\CustomPolarControl.resx">
-      <DependentUpon>CustomPolarControl.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="VisualModel\GUI\UserControls\Polars\PolarPlotter.resx">
-      <DependentUpon>PolarPlotter.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="VisualModel\GUI\UserControls\Polars\QuadraticPolarControl.resx">
-      <DependentUpon>QuadraticPolarControl.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="VisualModel\GUI\UserControls\Ribbon\FormSelectObject.resx">
-      <DependentUpon>FormSelectObject.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="VisualModel\GUI\UserControls\Ribbon\MainRibbon.resx">
-      <DependentUpon>MainRibbon.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="VisualModel\GUI\UserControls\TotalForcePanel.resx">
-      <DependentUpon>TotalForcePanel.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="VisualModel\GUI\UserControls\VelocityControl.resx">
-      <DependentUpon>VelocityControl.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="VisualModel\GUI\UserControls\WingControl.resx">
-      <DependentUpon>WingControl.vb</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

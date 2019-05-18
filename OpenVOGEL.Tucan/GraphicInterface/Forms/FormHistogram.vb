@@ -17,8 +17,7 @@
 
 Imports OpenVOGEL.AeroTools.CalculationModel.Settings
 Imports OpenVOGEL.MathTools.Algebra.EuclideanSpace
-Imports System.Windows.Forms
-Imports System.Drawing
+Imports OpenVOGEL.DesignTools
 
 Public Class FormHistogram
 

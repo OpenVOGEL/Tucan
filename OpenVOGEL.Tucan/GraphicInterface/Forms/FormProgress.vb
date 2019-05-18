@@ -70,19 +70,6 @@ Public Class FormProgress
     End Sub
 
     ''' <summary>
-    ''' Publishes a state on the status label.
-    ''' </summary>
-    ''' <param name="State"></param>
-    ''' <remarks></remarks>
-    Public Sub PushState(ByVal State As String)
-        If InvokeRequired Then
-            BeginInvoke(New Action(Of String)(AddressOf PushState), State)
-        Else
-            lbState.Text = State
-        End If
-    End Sub
-
-    ''' <summary>
     ''' Removes all messages.
     ''' </summary>
     ''' <remarks></remarks>

@@ -18,7 +18,7 @@
 Imports SharpGL
 Imports OpenVOGEL.MathTools.Algebra.EuclideanSpace
 
-Namespace VisualModel.Tools.Frames
+Namespace Tucan.Utility
 
     Public Class ReferenceFrame
 

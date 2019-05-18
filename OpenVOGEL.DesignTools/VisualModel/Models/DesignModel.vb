@@ -141,27 +141,27 @@ Namespace VisualModel.Models
 
 #Region " IO "
 
-        Public Sub ReadFromXML(ByRef reader As XmlReader)
+        Public Sub ReadFromXML(ByRef Reader As XmlReader)
 
-            reader.Read()
+            Reader.Read()
 
-            Name = reader("Name")
+            Name = Reader("Name")
 
-            While reader.Read()
+            While Reader.Read()
 
-                Select Case reader.Name
+                Select Case Reader.Name
 
                     Case "PolarDataBase"
 
-                        PolarDataBase.ReadFromXML(reader.ReadSubtree())
+                        PolarDataBase.ReadFromXML(Reader.ReadSubtree())
 
                     Case "CamberLinesDatabase"
 
-                        CamberLinesDatabase.ReadFromXML(reader.ReadSubtree())
+                        CamberLinesDatabase.ReadFromXML(Reader.ReadSubtree())
 
                     Case "ModelProperties"
 
-                        Dim SubReader As XmlReader = reader.ReadSubtree()
+                        Dim SubReader As XmlReader = Reader.ReadSubtree()
 
                         SubReader.Read()
 
@@ -193,7 +193,7 @@ Namespace VisualModel.Models
 
                                     Dim ExtrudedSurface As New Fuselage
 
-                                    ExtrudedSurface.ReadFromXML(reader.ReadSubtree)
+                                    ExtrudedSurface.ReadFromXML(Reader.ReadSubtree)
 
                                     Objects.Add(ExtrudedSurface)
 
@@ -201,7 +201,7 @@ Namespace VisualModel.Models
 
                                     Dim JetEngine As New JetEngine
 
-                                    JetEngine.ReadFromXML(reader.ReadSubtree)
+                                    JetEngine.ReadFromXML(Reader.ReadSubtree)
 
                                     Objects.Add(JetEngine)
 
@@ -209,7 +209,7 @@ Namespace VisualModel.Models
 
                                     Dim Import As New ImportedSurface
 
-                                    Import.ReadFromXML(reader.ReadSubtree)
+                                    Import.ReadFromXML(Reader.ReadSubtree)
 
                                     Objects.Add(Import)
 
@@ -226,69 +226,69 @@ Namespace VisualModel.Models
 
             End While
 
-            reader.Close()
+            Reader.Close()
 
         End Sub
 
-        Public Sub WriteToXML(ByRef writer As XmlWriter)
+        Public Sub WriteToXML(ByRef Writer As XmlWriter)
 
-            writer.WriteAttributeString("Name", Name)
+            Writer.WriteAttributeString("Name", Name)
 
-            writer.WriteStartElement("PolarDataBase")
-            PolarDataBase.WriteToXML(writer)
-            writer.WriteEndElement()
+            Writer.WriteStartElement("PolarDataBase")
+            PolarDataBase.WriteToXML(Writer)
+            Writer.WriteEndElement()
 
-            writer.WriteStartElement("CamberLinesDatabase")
-            CamberLinesDatabase.WriteToXML(writer)
-            writer.WriteEndElement()
+            Writer.WriteStartElement("CamberLinesDatabase")
+            CamberLinesDatabase.WriteToXML(Writer)
+            Writer.WriteEndElement()
 
-            writer.WriteStartElement("ModelProperties")
+            Writer.WriteStartElement("ModelProperties")
 
             For i = 0 To Objects.Count - 1
 
                 If TypeOf Objects(i) Is LiftingSurface Then
 
-                    writer.WriteStartElement("LiftingSurface")
+                    Writer.WriteStartElement("LiftingSurface")
 
-                    Objects(i).WriteToXML(writer)
+                    Objects(i).WriteToXML(Writer)
 
-                    writer.WriteEndElement()
+                    Writer.WriteEndElement()
 
                 End If
 
                 If TypeOf Objects(i) Is Fuselage Then
 
-                    writer.WriteStartElement("ExtrudedSurface")
+                    Writer.WriteStartElement("ExtrudedSurface")
 
-                    Objects(i).WriteToXML(writer)
+                    Objects(i).WriteToXML(Writer)
 
-                    writer.WriteEndElement()
+                    Writer.WriteEndElement()
 
                 End If
 
                 If TypeOf Objects(i) Is JetEngine Then
 
-                    writer.WriteStartElement("JetEngine")
+                    Writer.WriteStartElement("JetEngine")
 
-                    Objects(i).WriteToXML(writer)
+                    Objects(i).WriteToXML(Writer)
 
-                    writer.WriteEndElement()
+                    Writer.WriteEndElement()
 
                 End If
 
                 If TypeOf Objects(i) Is ImportedSurface Then
 
-                    writer.WriteStartElement("ImportedSurface")
+                    Writer.WriteStartElement("ImportedSurface")
 
-                    Objects(i).WriteToXML(writer)
+                    Objects(i).WriteToXML(Writer)
 
-                    writer.WriteEndElement()
+                    Writer.WriteEndElement()
 
                 End If
 
             Next
 
-            writer.WriteEndElement()
+            Writer.WriteEndElement()
 
         End Sub
 

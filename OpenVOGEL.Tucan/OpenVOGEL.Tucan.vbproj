@@ -99,6 +99,7 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Management" />
     <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Forms.DataVisualization" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -119,22 +120,154 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationEvents.vb" />
-    <Compile Include="Dialogos\FormAbout.Designer.vb">
+    <Compile Include="GraphicInterface\Forms\FormAbout.Designer.vb">
       <DependentUpon>FormAbout.vb</DependentUpon>
     </Compile>
-    <Compile Include="Dialogos\FormAbout.vb">
+    <Compile Include="GraphicInterface\Forms\FormAbout.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Dialogos\StartupScreen.designer.vb">
+    <Compile Include="GraphicInterface\Forms\StartupScreen.designer.vb">
       <DependentUpon>StartupScreen.vb</DependentUpon>
     </Compile>
-    <Compile Include="Dialogos\StartupScreen.vb">
+    <Compile Include="GraphicInterface\Forms\StartupScreen.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MainForm.Designer.vb">
+    <Compile Include="GraphicInterface\Forms\FormAnchors.Designer.vb">
+      <DependentUpon>FormAnchors.vb</DependentUpon>
+    </Compile>
+    <Compile Include="GraphicInterface\Forms\FormAnchors.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GraphicInterface\Forms\FormAskVelocity.Designer.vb">
+      <DependentUpon>FormAskVelocity.vb</DependentUpon>
+    </Compile>
+    <Compile Include="GraphicInterface\Forms\FormAskVelocity.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GraphicInterface\Forms\FormCamberLine.Designer.vb">
+      <DependentUpon>FormCamberLine.vb</DependentUpon>
+    </Compile>
+    <Compile Include="GraphicInterface\Forms\FormCamberLine.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GraphicInterface\Forms\FormFuselageEditor.Designer.vb">
+      <DependentUpon>FormFuselageEditor.vb</DependentUpon>
+    </Compile>
+    <Compile Include="GraphicInterface\Forms\FormFuselageEditor.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GraphicInterface\Forms\FormHistogram.Designer.vb">
+      <DependentUpon>FormHistogram.vb</DependentUpon>
+    </Compile>
+    <Compile Include="GraphicInterface\Forms\FormHistogram.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GraphicInterface\Forms\FormJetEngine.Designer.vb">
+      <DependentUpon>FormJetEngine.vb</DependentUpon>
+    </Compile>
+    <Compile Include="GraphicInterface\Forms\FormJetEngine.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GraphicInterface\Forms\FormPolarCurve.Designer.vb">
+      <DependentUpon>FormPolarCurve.vb</DependentUpon>
+    </Compile>
+    <Compile Include="GraphicInterface\Forms\FormPolarCurve.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GraphicInterface\Forms\FormProgress.Designer.vb">
+      <DependentUpon>FormProgress.vb</DependentUpon>
+    </Compile>
+    <Compile Include="GraphicInterface\Forms\FormProgress.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GraphicInterface\Forms\FormReport.Designer.vb">
+      <DependentUpon>FormReport.vb</DependentUpon>
+    </Compile>
+    <Compile Include="GraphicInterface\Forms\FormReport.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GraphicInterface\Forms\FormResults.Designer.vb">
+      <DependentUpon>FormResults.vb</DependentUpon>
+    </Compile>
+    <Compile Include="GraphicInterface\Forms\FormResults.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GraphicInterface\Forms\FormSettings.Designer.vb">
+      <DependentUpon>FormSettings.vb</DependentUpon>
+    </Compile>
+    <Compile Include="GraphicInterface\Forms\FormSettings.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GraphicInterface\Forms\FormUnsteadyVelocity.Designer.vb">
+      <DependentUpon>FormUnsteadyVelocity.vb</DependentUpon>
+    </Compile>
+    <Compile Include="GraphicInterface\Forms\FormUnsteadyVelocity.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GraphicInterface\UserControls\ForcesPanel.Designer.vb">
+      <DependentUpon>ForcesPanel.vb</DependentUpon>
+    </Compile>
+    <Compile Include="GraphicInterface\UserControls\ForcesPanel.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GraphicInterface\UserControls\MiniComponents\ResultBox.Designer.vb">
+      <DependentUpon>ResultBox.vb</DependentUpon>
+    </Compile>
+    <Compile Include="GraphicInterface\UserControls\MiniComponents\ResultBox.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GraphicInterface\UserControls\Polars\CustomPolarControl.Designer.vb">
+      <DependentUpon>CustomPolarControl.vb</DependentUpon>
+    </Compile>
+    <Compile Include="GraphicInterface\UserControls\Polars\CustomPolarControl.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GraphicInterface\UserControls\Polars\PolarPlotter.Designer.vb">
+      <DependentUpon>PolarPlotter.vb</DependentUpon>
+    </Compile>
+    <Compile Include="GraphicInterface\UserControls\Polars\PolarPlotter.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GraphicInterface\UserControls\Polars\QuadraticPolarControl.Designer.vb">
+      <DependentUpon>QuadraticPolarControl.vb</DependentUpon>
+    </Compile>
+    <Compile Include="GraphicInterface\UserControls\Polars\QuadraticPolarControl.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GraphicInterface\UserControls\Ribbon\FormSelectObject.Designer.vb">
+      <DependentUpon>FormSelectObject.vb</DependentUpon>
+    </Compile>
+    <Compile Include="GraphicInterface\UserControls\Ribbon\FormSelectObject.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GraphicInterface\UserControls\Ribbon\MainRibbon.Designer.vb">
+      <DependentUpon>MainRibbon.vb</DependentUpon>
+    </Compile>
+    <Compile Include="GraphicInterface\UserControls\Ribbon\MainRibbon.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GraphicInterface\UserControls\TotalForcePanel.Designer.vb">
+      <DependentUpon>TotalForcePanel.vb</DependentUpon>
+    </Compile>
+    <Compile Include="GraphicInterface\UserControls\TotalForcePanel.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GraphicInterface\UserControls\VelocityControl.Designer.vb">
+      <DependentUpon>VelocityControl.vb</DependentUpon>
+    </Compile>
+    <Compile Include="GraphicInterface\UserControls\VelocityControl.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GraphicInterface\UserControls\WingControl.Designer.vb">
+      <DependentUpon>WingControl.vb</DependentUpon>
+    </Compile>
+    <Compile Include="GraphicInterface\UserControls\WingControl.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GraphicInterface\MainForm.Designer.vb">
       <DependentUpon>MainForm.vb</DependentUpon>
     </Compile>
-    <Compile Include="MainForm.vb">
+    <Compile Include="GraphicInterface\MainForm.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="My Project\AssemblyInfo.vb" />
@@ -152,18 +285,89 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="Utility\CalculationManager.vb" />
+    <Compile Include="Utility\ReferenceFrame.vb" />
+    <Compile Include="Utility\ModelInterface.vb" />
+    <Compile Include="Utility\ModelRendering.vb" />
+    <Compile Include="Utility\Visualization.vb" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Dialogos\FormAbout.resx">
+    <EmbeddedResource Include="GraphicInterface\Forms\FormAbout.resx">
       <DependentUpon>FormAbout.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Dialogos\StartupScreen.ig.resx">
+    <EmbeddedResource Include="GraphicInterface\Forms\StartupScreen.ig.resx">
       <DependentUpon>StartupScreen.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Dialogos\StartupScreen.resx">
+    <EmbeddedResource Include="GraphicInterface\Forms\StartupScreen.resx">
       <DependentUpon>StartupScreen.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MainForm.resx">
+    <EmbeddedResource Include="GraphicInterface\Forms\FormAnchors.resx">
+      <DependentUpon>FormAnchors.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GraphicInterface\Forms\FormAskVelocity.resx">
+      <DependentUpon>FormAskVelocity.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GraphicInterface\Forms\FormCamberLine.resx">
+      <DependentUpon>FormCamberLine.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GraphicInterface\Forms\FormFuselageEditor.resx">
+      <DependentUpon>FormFuselageEditor.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GraphicInterface\Forms\FormHistogram.resx">
+      <DependentUpon>FormHistogram.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GraphicInterface\Forms\FormJetEngine.resx">
+      <DependentUpon>FormJetEngine.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GraphicInterface\Forms\FormPolarCurve.resx">
+      <DependentUpon>FormPolarCurve.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GraphicInterface\Forms\FormProgress.resx">
+      <DependentUpon>FormProgress.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GraphicInterface\Forms\FormReport.resx">
+      <DependentUpon>FormReport.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GraphicInterface\Forms\FormResults.resx">
+      <DependentUpon>FormResults.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GraphicInterface\Forms\FormSettings.resx">
+      <DependentUpon>FormSettings.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GraphicInterface\Forms\FormUnsteadyVelocity.resx">
+      <DependentUpon>FormUnsteadyVelocity.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GraphicInterface\UserControls\ForcesPanel.resx">
+      <DependentUpon>ForcesPanel.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GraphicInterface\UserControls\MiniComponents\ResultBox.resx">
+      <DependentUpon>ResultBox.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GraphicInterface\UserControls\Polars\CustomPolarControl.resx">
+      <DependentUpon>CustomPolarControl.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GraphicInterface\UserControls\Polars\PolarPlotter.resx">
+      <DependentUpon>PolarPlotter.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GraphicInterface\UserControls\Polars\QuadraticPolarControl.resx">
+      <DependentUpon>QuadraticPolarControl.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GraphicInterface\UserControls\Ribbon\FormSelectObject.resx">
+      <DependentUpon>FormSelectObject.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GraphicInterface\UserControls\Ribbon\MainRibbon.resx">
+      <DependentUpon>MainRibbon.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GraphicInterface\UserControls\TotalForcePanel.resx">
+      <DependentUpon>TotalForcePanel.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GraphicInterface\UserControls\VelocityControl.resx">
+      <DependentUpon>VelocityControl.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GraphicInterface\UserControls\WingControl.resx">
+      <DependentUpon>WingControl.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GraphicInterface\MainForm.resx">
       <DependentUpon>MainForm.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">

@@ -18,6 +18,7 @@
 Imports OpenVOGEL.MathTools.Algebra.EuclideanSpace
 Imports OpenVOGEL.DesignTools.DataStore
 Imports OpenVOGEL.DesignTools.VisualModel.Models.Components
+Imports OpenVOGEL.Tucan.Utility
 
 Public Class VelocityControl
 
@@ -95,7 +96,7 @@ Public Class VelocityControl
         Plane.InducedVelocity = Me.rdInducedVelocity.Checked
 
         Me.Plane.GenerateMesh()
-        ProjectRoot.RepresentOnGL()
+        ModelInterface.RepresentOnGL()
 
         RaiseEvent RefreshGL()
 
@@ -130,7 +131,7 @@ Public Class VelocityControl
                                                  Plane.GetInducedVelocity(i).Assign(ProjectRoot.CalculationCore.CalculateVelocityAtPoint(Plane.GetNode(i), Total, WithStreamOmega))
                                                  Plane.GetInducedVelocity(i).ProjectOnPlane(Plane.NormalVector)
                                              End Sub)
-        ProjectRoot.RepresentOnGL()
+        ModelInterface.RepresentOnGL()
 
     End Sub
 

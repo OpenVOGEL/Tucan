@@ -16,12 +16,10 @@
 'along with this program.  If Not, see < http:  //www.gnu.org/licenses/>.
 
 Imports OpenVOGEL.MathTools.Algebra.EuclideanSpace
-Imports OpenVOGEL.DesignTools.VisualModel.Tools.Frames
 Imports OpenVOGEL.AeroTools.IoHelper
-Imports System.Drawing
 Imports System.Xml
 
-Namespace VisualModel.Tools.Properties
+Namespace Tucan.Utility
 
     Public Class VisualizationParameters
 

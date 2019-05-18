@@ -21,6 +21,7 @@ Imports OpenVOGEL.AeroTools.CalculationModel.Models.Aero.Components
 Imports OpenVOGEL.DesignTools.VisualModel.Models.Components.Basics
 Imports OpenVOGEL.DesignTools.VisualModel.Models.Components
 Imports OpenVOGEL.DesignTools.DataStore
+Imports OpenVOGEL.DesignTools
 
 Public Class WingControl
 

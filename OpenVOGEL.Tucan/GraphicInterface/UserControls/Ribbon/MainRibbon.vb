@@ -15,11 +15,11 @@
 'You should have received a copy Of the GNU General Public License
 'along with this program.  If Not, see < http:  //www.gnu.org/licenses/>.
 
-Imports System.Windows.Forms
 Imports OpenVOGEL.AeroTools.CalculationModel.Settings
 Imports OpenVOGEL.DesignTools.VisualModel.Interface
 Imports OpenVOGEL.DesignTools.VisualModel.Models.Components.Basics
 Imports OpenVOGEL.DesignTools.DataStore
+Imports OpenVOGEL.Tucan.Utility
 
 Public Class MainRibbon
 
@@ -54,9 +54,9 @@ Public Class MainRibbon
 
         If tcRibbon.SelectedIndex = 0 Or tcRibbon.SelectedIndex = 1 Then
 
-            If ProjectRoot.Initialized Then
+            If ModelInterface.Initialized Then
 
-                ProjectRoot.DesignMode()
+                ModelInterface.DesignMode()
 
                 StopTransit()
 
@@ -68,9 +68,9 @@ Public Class MainRibbon
 
         ElseIf tcRibbon.SelectedIndex = 2
 
-            If ProjectRoot.Initialized Then
+            If ModelInterface.Initialized Then
 
-                ProjectRoot.PostprocessMode()
+                ModelInterface.PostprocessMode()
 
                 RaiseEvent SwitchToResultsMode()
 
@@ -112,7 +112,7 @@ Public Class MainRibbon
 
     Public Sub RefreshListOfObjects()
 
-        If ProjectRoot.Initialized Then
+        If ModelInterface.Initialized Then
 
             Dim index As Integer = cbxSurfaces.SelectedIndex
 
@@ -130,7 +130,7 @@ Public Class MainRibbon
 
             End If
 
-            ProjectRoot.RefreshOnGL()
+            ModelInterface.RefreshOnGL()
 
         End If
 
@@ -183,7 +183,7 @@ Public Class MainRibbon
                 End If
 
                 If Saved Then
-                    ProjectRoot.RestartProject()
+                    ModelInterface.RestartProject()
                 Else
                     Exit Sub
                 End If
@@ -207,9 +207,9 @@ Public Class MainRibbon
 
             If AcceptFile = MsgBoxResult.Ok Then
 
-                ProjectRoot.RestartProject()
+                ModelInterface.RestartProject()
                 ProjectRoot.FilePath = dlgOpenFile.FileName
-                ProjectRoot.ReadFromXML()
+                ModelInterface.ReadFromXML()
 
                 LoadVisualization()
                 LoadSettings()
@@ -221,7 +221,7 @@ Public Class MainRibbon
             FileClose(200)
         End Try
 
-        ProjectRoot.RefreshOnGL()
+        ModelInterface.RefreshOnGL()
         RefreshListOfObjects()
 
     End Sub
@@ -231,14 +231,14 @@ Public Class MainRibbon
         Try
 
             If ProjectRoot.ExistsOnDatabase Then
-                ProjectRoot.WriteToXML()
+                ModelInterface.WriteToXML()
             Else
                 SaveProjectAs()
             End If
 
             RaiseEvent PushMessage("The proyect has been saved")
 
-        Catch ex As Exception
+        Catch E As Exception
 
             Dim SaveUnderDifferentName As MsgBoxResult = MsgBox("An exception was raised while saving the project! Do you wish to save it under a different name?", MsgBoxStyle.OkCancel, "Error!")
             If SaveUnderDifferentName = MsgBoxResult.Ok Then SaveProjectAs()
@@ -260,7 +260,7 @@ Public Class MainRibbon
             Response = dlgSaveFile.ShowDialog()
             If Response = DialogResult.OK Then
                 ProjectRoot.FilePath = dlgSaveFile.FileName
-                ProjectRoot.WriteToXML()
+                ModelInterface.WriteToXML()
                 Result = True
                 RaiseEvent PushMessage("The proyect has been saved")
             End If
@@ -348,12 +348,12 @@ ErrSub:
 
         _LockScreenPropEvents = True
 
-        pnlScreenColor.BackColor = ProjectRoot.Visualization.ScreenColor
-        cbxShowRulers.Checked = ProjectRoot.Visualization.ReferenceFrame.Visible
-        nudXmax.Value = ProjectRoot.Visualization.ReferenceFrame.Xmax
-        nudXmin.Value = ProjectRoot.Visualization.ReferenceFrame.Xmin
-        nudYmax.Value = ProjectRoot.Visualization.ReferenceFrame.Ymax
-        nudYmin.Value = ProjectRoot.Visualization.ReferenceFrame.Ymin
+        pnlScreenColor.BackColor = ModelInterface.Visualization.ScreenColor
+        cbxShowRulers.Checked = ModelInterface.Visualization.ReferenceFrame.Visible
+        nudXmax.Value = ModelInterface.Visualization.ReferenceFrame.Xmax
+        nudXmin.Value = ModelInterface.Visualization.ReferenceFrame.Xmin
+        nudYmax.Value = ModelInterface.Visualization.ReferenceFrame.Ymax
+        nudYmin.Value = ModelInterface.Visualization.ReferenceFrame.Ymin
 
         _LockScreenPropEvents = False
 
@@ -361,7 +361,7 @@ ErrSub:
 
     Private Sub pnlScreenColor_Click(sender As Object, e As EventArgs) Handles pnlScreenColor.Click
 
-        If ProjectRoot.Initialized AndAlso Not _LockScreenPropEvents Then
+        If ModelInterface.Initialized AndAlso Not _LockScreenPropEvents Then
 
             Dim dialog As New ColorDialog
 
@@ -369,7 +369,7 @@ ErrSub:
 
             Dim colors(0) As Integer
 
-            Dim color As Drawing.Color = ProjectRoot.Visualization.ScreenColor
+            Dim color As Drawing.Color = ModelInterface.Visualization.ScreenColor
 
             colors(0) = (CInt(color.B) << 16) + (CInt(color.G) << 8) + color.R
 
@@ -379,13 +379,13 @@ ErrSub:
 
             If dialog.ShowDialog = DialogResult.OK Then
 
-                ProjectRoot.Visualization.ScreenColor = dialog.Color
+                ModelInterface.Visualization.ScreenColor = dialog.Color
 
                 pnlScreenColor.BackColor = dialog.Color
 
             End If
 
-            ProjectRoot.RefreshOnGL()
+            ModelInterface.RefreshOnGL()
 
         End If
 
@@ -393,11 +393,11 @@ ErrSub:
 
     Private Sub cbxShowRulers_CheckedChanged(sender As Object, e As EventArgs) Handles cbxShowRulers.CheckedChanged
 
-        If ProjectRoot.Initialized AndAlso Not _LockScreenPropEvents Then
+        If ModelInterface.Initialized AndAlso Not _LockScreenPropEvents Then
 
-            ProjectRoot.Visualization.ReferenceFrame.Visible = cbxShowRulers.Checked
+            ModelInterface.Visualization.ReferenceFrame.Visible = cbxShowRulers.Checked
 
-            ProjectRoot.RefreshOnGL()
+            ModelInterface.RefreshOnGL()
 
         End If
 
@@ -407,9 +407,9 @@ ErrSub:
 
         If ProjectRoot.Initialized AndAlso Not _LockScreenPropEvents Then
 
-            ProjectRoot.Visualization.ReferenceFrame.Xmax = nudXmax.Value
+            ModelInterface.Visualization.ReferenceFrame.Xmax = nudXmax.Value
 
-            ProjectRoot.RefreshOnGL()
+            ModelInterface.RefreshOnGL()
 
         End If
 
@@ -417,11 +417,11 @@ ErrSub:
 
     Private Sub nudXmin_ValueChanged(sender As Object, e As EventArgs) Handles nudXmin.ValueChanged
 
-        If ProjectRoot.Initialized AndAlso Not _LockScreenPropEvents Then
+        If ModelInterface.Initialized AndAlso Not _LockScreenPropEvents Then
 
-            ProjectRoot.Visualization.ReferenceFrame.Xmin = nudXmin.Value
+            ModelInterface.Visualization.ReferenceFrame.Xmin = nudXmin.Value
 
-            ProjectRoot.RefreshOnGL()
+            ModelInterface.RefreshOnGL()
 
         End If
 
@@ -429,11 +429,11 @@ ErrSub:
 
     Private Sub nudYmax_ValueChanged(sender As Object, e As EventArgs) Handles nudYmax.ValueChanged
 
-        If ProjectRoot.Initialized AndAlso Not _LockScreenPropEvents Then
+        If ModelInterface.Initialized AndAlso Not _LockScreenPropEvents Then
 
-            ProjectRoot.Visualization.ReferenceFrame.Ymax = nudYmax.Value
+            ModelInterface.Visualization.ReferenceFrame.Ymax = nudYmax.Value
 
-            ProjectRoot.RefreshOnGL()
+            ModelInterface.RefreshOnGL()
 
         End If
 
@@ -443,9 +443,9 @@ ErrSub:
 
         If ProjectRoot.Initialized AndAlso Not _LockScreenPropEvents Then
 
-            ProjectRoot.Visualization.ReferenceFrame.Ymin = nudYmin.Value
+            ModelInterface.Visualization.ReferenceFrame.Ymin = nudYmin.Value
 
-            ProjectRoot.RefreshOnGL()
+            ModelInterface.RefreshOnGL()
 
         End If
 
@@ -491,9 +491,9 @@ ErrSub:
 
             End Select
 
-            AddHandler ProjectRoot.CalculationDone, AddressOf PostCalculationActions
+            AddHandler CalculationManager.CalculationDone, AddressOf PostCalculationActions
 
-            ProjectRoot.StartCalculation(CalculationType, Parent)
+            CalculationManager.StartCalculation(CalculationType, Me.Parent)
 
         End If
 
@@ -716,7 +716,7 @@ ErrSub:
 
         Next
 
-        ProjectRoot.RefreshOnGL()
+        ModelInterface.RefreshOnGL()
 
     End Sub
 
@@ -791,7 +791,7 @@ ErrSub:
 
             _SelectedSurface.VisualProperties.ShowSurface = cbxShowSurface.Checked
 
-            ProjectRoot.RefreshOnGL()
+            ModelInterface.RefreshOnGL()
 
         End If
 
@@ -803,7 +803,7 @@ ErrSub:
 
             _SelectedSurface.VisualProperties.ShowMesh = cbxShowMesh.Checked
 
-            ProjectRoot.RefreshOnGL()
+            ModelInterface.RefreshOnGL()
 
         End If
 
@@ -841,7 +841,7 @@ ErrSub:
 
             End If
 
-            ProjectRoot.RefreshOnGL()
+            ModelInterface.RefreshOnGL()
 
         End If
 
@@ -879,7 +879,7 @@ ErrSub:
 
             End If
 
-            ProjectRoot.RefreshOnGL()
+            ModelInterface.RefreshOnGL()
 
         End If
     End Sub
@@ -892,7 +892,7 @@ ErrSub:
 
             _SelectedSurface.MoveTo(_SelectedSurface.Position)
 
-            ProjectRoot.RefreshOnGL()
+            ModelInterface.RefreshOnGL()
 
         End If
 
@@ -906,7 +906,7 @@ ErrSub:
 
             _SelectedSurface.MoveTo(_SelectedSurface.Position)
 
-            ProjectRoot.RefreshOnGL()
+            ModelInterface.RefreshOnGL()
 
         End If
 
@@ -920,7 +920,7 @@ ErrSub:
 
             _SelectedSurface.MoveTo(_SelectedSurface.Position)
 
-            ProjectRoot.RefreshOnGL()
+            ModelInterface.RefreshOnGL()
 
         End If
 
@@ -934,7 +934,7 @@ ErrSub:
 
             _SelectedSurface.Orientate(_SelectedSurface.CenterOfRotation, _SelectedSurface.Orientation)
 
-            ProjectRoot.RefreshOnGL()
+            ModelInterface.RefreshOnGL()
 
         End If
 
@@ -948,7 +948,7 @@ ErrSub:
 
             _SelectedSurface.Orientate(_SelectedSurface.CenterOfRotation, _SelectedSurface.Orientation)
 
-            ProjectRoot.RefreshOnGL()
+            ModelInterface.RefreshOnGL()
 
         End If
 
@@ -962,7 +962,7 @@ ErrSub:
 
             _SelectedSurface.Orientate(_SelectedSurface.CenterOfRotation, _SelectedSurface.Orientation)
 
-            ProjectRoot.RefreshOnGL()
+            ModelInterface.RefreshOnGL()
 
         End If
 
@@ -976,7 +976,7 @@ ErrSub:
 
             _SelectedSurface.Orientate(_SelectedSurface.CenterOfRotation, _SelectedSurface.Orientation)
 
-            ProjectRoot.RefreshOnGL()
+            ModelInterface.RefreshOnGL()
 
         End If
 
@@ -990,7 +990,7 @@ ErrSub:
 
             _SelectedSurface.Orientate(_SelectedSurface.CenterOfRotation, _SelectedSurface.Orientation)
 
-            ProjectRoot.RefreshOnGL()
+            ModelInterface.RefreshOnGL()
 
         End If
 
@@ -1004,7 +1004,7 @@ ErrSub:
 
             _SelectedSurface.Orientate(_SelectedSurface.CenterOfRotation, _SelectedSurface.Orientation)
 
-            ProjectRoot.RefreshOnGL()
+            ModelInterface.RefreshOnGL()
 
         End If
 
@@ -1018,7 +1018,7 @@ ErrSub:
 
             _SelectedSurface.Orientate(_SelectedSurface.CenterOfRotation, _SelectedSurface.Orientation)
 
-            ProjectRoot.RefreshOnGL()
+            ModelInterface.RefreshOnGL()
 
         End If
 
@@ -1052,7 +1052,7 @@ ErrSub:
 
                 ProjectRoot.ReadResults(dlgOpenFile.FileName)
 
-                ProjectRoot.PostprocessMode()
+                ModelInterface.PostprocessMode()
 
                 FormReport.ReportResults(ProjectRoot.CalculationCore)
 
@@ -1062,7 +1062,7 @@ ErrSub:
 
             End If
 
-            ProjectRoot.RefreshOnGL()
+            ModelInterface.RefreshOnGL()
 
         Catch
 
@@ -1129,7 +1129,7 @@ ErrSub:
                         ProjectRoot.Results.SelectedMode.UpdateDisplacement(nudModeScale.Value)
                     End If
 
-                    ProjectRoot.RefreshOnGL()
+                    ModelInterface.RefreshOnGL()
 
                 End If
 
@@ -1149,7 +1149,7 @@ ErrSub:
 
                     ProjectRoot.Results.SelectedMode.UpdateDisplacement(nudModeScale.Value)
 
-                    ProjectRoot.RefreshOnGL()
+                    ModelInterface.RefreshOnGL()
 
                 End If
 
@@ -1165,18 +1165,18 @@ ErrSub:
 
     Private Sub btnPlayStop_Click(sender As Object, e As EventArgs) Handles btnPlayStop.Click
 
-        If ProjectRoot.Initialized Then
+        If ModelInterface.Initialized Then
 
             If ProjectRoot.Results.TransitLoaded Then
 
-                If Not ProjectRoot.Simulating Then
+                If Not ModelInterface.Simulating Then
                     _timer.Interval = ProjectRoot.Results.SimulationSettings.Interval * 1000 / ProjectRoot.Results.SimulationSettings.StructuralSettings.SubSteps
-                    ProjectRoot.Simulating = True
+                    ModelInterface.Simulating = True
                     _timer.Start()
                     btnPlayStop.Text = "Stop"
                     RaiseEvent PushMessage(String.Format("Simulating. Rate {0}f/{1}s", ProjectRoot.Results.SimulationSettings.StructuralSettings.SubSteps, ProjectRoot.Results.SimulationSettings.Interval))
                 Else
-                    ProjectRoot.Simulating = False
+                    ModelInterface.Simulating = False
                     _timer.Stop()
                     btnPlayStop.Text = "Play"
                     RaiseEvent PushMessage("Simulation stopped")
@@ -1184,7 +1184,7 @@ ErrSub:
 
             Else
 
-                ProjectRoot.Simulating = False
+                ModelInterface.Simulating = False
 
             End If
 
@@ -1194,9 +1194,9 @@ ErrSub:
 
     Private Sub _timer_Tick(ByVal sender As System.Object, ByVal e As System.EventArgs)
 
-        If ProjectRoot.Initialized Then
+        If ModelInterface.Initialized Then
             If _CurrentFrame > ProjectRoot.Results.TransitStages Then _CurrentFrame = 0
-            ProjectRoot.RepresentResultsTransitWithOpenGL(_CurrentFrame)
+            ModelInterface.RepresentResultsTransitWithOpenGL(_CurrentFrame)
             _CurrentFrame += 1
         End If
 
@@ -1204,8 +1204,8 @@ ErrSub:
 
     Private Sub StopTransit()
 
-        If ProjectRoot.Initialized Then
-            ProjectRoot.Simulating = False
+        If ModelInterface.Initialized Then
+            ModelInterface.Simulating = False
             _timer.Stop()
         End If
 
@@ -1266,7 +1266,7 @@ ErrSub:
 
             ProjectRoot.Results.Model.VisualProperties.ShowColormap = cbxShowColormap.Checked
 
-            ProjectRoot.RefreshOnGL()
+            ModelInterface.RefreshOnGL()
 
         End If
 
@@ -1276,21 +1276,21 @@ ErrSub:
 
         If (Not _LockResultPropsEvents) And ProjectRoot.Initialized Then
 
-            Dim dialog As New ColorDialog
+            Dim Dialog As New ColorDialog
 
-            dialog.Color = ProjectRoot.Results.Model.VisualProperties.ColorSurface
+            Dialog.Color = ProjectRoot.Results.Model.VisualProperties.ColorSurface
 
             ' show dialog:
 
-            If dialog.ShowDialog = DialogResult.OK Then
+            If Dialog.ShowDialog = DialogResult.OK Then
 
-                ProjectRoot.Results.Model.VisualProperties.ColorSurface = dialog.Color
+                ProjectRoot.Results.Model.VisualProperties.ColorSurface = Dialog.Color
 
-                pnlResultSurfaceColor.BackColor = dialog.Color
+                pnlResultSurfaceColor.BackColor = Dialog.Color
 
             End If
 
-            ProjectRoot.RefreshOnGL()
+            ModelInterface.RefreshOnGL()
 
         End If
 
@@ -1300,21 +1300,21 @@ ErrSub:
 
         If (Not _LockResultPropsEvents) And ProjectRoot.Initialized Then
 
-            Dim dialog As New ColorDialog
+            Dim Dialog As New ColorDialog
 
-            dialog.Color = ProjectRoot.Results.Model.VisualProperties.ColorMesh
+            Dialog.Color = ProjectRoot.Results.Model.VisualProperties.ColorMesh
 
             ' show dialog:
 
-            If dialog.ShowDialog = DialogResult.OK Then
+            If Dialog.ShowDialog = DialogResult.OK Then
 
-                ProjectRoot.Results.Model.VisualProperties.ColorMesh = dialog.Color
+                ProjectRoot.Results.Model.VisualProperties.ColorMesh = Dialog.Color
 
-                pnlResultMeshColor.BackColor = dialog.Color
+                pnlResultMeshColor.BackColor = Dialog.Color
 
             End If
 
-            ProjectRoot.RefreshOnGL()
+            ModelInterface.RefreshOnGL()
 
         End If
 
@@ -1324,21 +1324,21 @@ ErrSub:
 
         If (Not _LockResultPropsEvents) And ProjectRoot.Initialized Then
 
-            Dim dialog As New ColorDialog
+            Dim Dialog As New ColorDialog
 
-            dialog.Color = ProjectRoot.Results.Model.VisualProperties.ColorVelocity
+            Dialog.Color = ProjectRoot.Results.Model.VisualProperties.ColorVelocity
 
             ' show dialog:
 
-            If dialog.ShowDialog = DialogResult.OK Then
+            If Dialog.ShowDialog = DialogResult.OK Then
 
-                ProjectRoot.Results.Model.VisualProperties.ColorVelocity = dialog.Color
+                ProjectRoot.Results.Model.VisualProperties.ColorVelocity = Dialog.Color
 
-                pnlVelocityColor.BackColor = dialog.Color
+                pnlVelocityColor.BackColor = Dialog.Color
 
             End If
 
-            ProjectRoot.RefreshOnGL()
+            ModelInterface.RefreshOnGL()
 
         End If
 
@@ -1348,21 +1348,21 @@ ErrSub:
 
         If (Not _LockResultPropsEvents) And ProjectRoot.Initialized Then
 
-            Dim dialog As New ColorDialog
+            Dim Dialog As New ColorDialog
 
-            dialog.Color = ProjectRoot.Results.Model.VisualProperties.ColorPositiveLoad
+            Dialog.Color = ProjectRoot.Results.Model.VisualProperties.ColorPositiveLoad
 
             ' show dialog:
 
-            If dialog.ShowDialog = DialogResult.OK Then
+            If Dialog.ShowDialog = DialogResult.OK Then
 
-                ProjectRoot.Results.Model.VisualProperties.ColorPositiveLoad = dialog.Color
+                ProjectRoot.Results.Model.VisualProperties.ColorPositiveLoad = Dialog.Color
 
-                pnlForceColor.BackColor = dialog.Color
+                pnlForceColor.BackColor = Dialog.Color
 
             End If
 
-            ProjectRoot.RefreshOnGL()
+            ModelInterface.RefreshOnGL()
 
         End If
 
@@ -1374,7 +1374,7 @@ ErrSub:
 
             ProjectRoot.Results.Model.VisualProperties.ScaleVelocity = nudScaleVelocity.Value
 
-            ProjectRoot.RefreshOnGL()
+            ModelInterface.RefreshOnGL()
 
         End If
 
@@ -1386,7 +1386,7 @@ ErrSub:
 
             ProjectRoot.Results.Model.VisualProperties.ScalePressure = nudScaleForce.Value
 
-            ProjectRoot.RefreshOnGL()
+            ModelInterface.RefreshOnGL()
 
         End If
 
@@ -1398,7 +1398,7 @@ ErrSub:
 
             ProjectRoot.Results.Wakes.VisualProperties.ShowSurface = cbxShowWakeSurface.Checked
 
-            ProjectRoot.RefreshOnGL()
+            ModelInterface.RefreshOnGL()
 
         End If
 
@@ -1410,7 +1410,7 @@ ErrSub:
 
             ProjectRoot.Results.Wakes.VisualProperties.ShowMesh = cbxShowWakeMesh.Checked
 
-            ProjectRoot.RefreshOnGL()
+            ModelInterface.RefreshOnGL()
 
         End If
 
@@ -1422,7 +1422,7 @@ ErrSub:
 
             ProjectRoot.Results.Wakes.VisualProperties.ShowNodes = cbxShowWakeNodes.Checked
 
-            ProjectRoot.RefreshOnGL()
+            ModelInterface.RefreshOnGL()
 
         End If
 
@@ -1446,7 +1446,7 @@ ErrSub:
 
             End If
 
-            ProjectRoot.RefreshOnGL()
+            ModelInterface.RefreshOnGL()
 
         End If
 
@@ -1470,7 +1470,7 @@ ErrSub:
 
             End If
 
-            ProjectRoot.RefreshOnGL()
+            ModelInterface.RefreshOnGL()
 
         End If
 
@@ -1494,7 +1494,7 @@ ErrSub:
 
             End If
 
-            ProjectRoot.RefreshOnGL()
+            ModelInterface.RefreshOnGL()
 
         End If
 
@@ -1506,7 +1506,7 @@ ErrSub:
 
             ProjectRoot.Results.Model.VisualProperties.ShowSurface = cbxShowResSurface.Checked
 
-            ProjectRoot.RefreshOnGL()
+            ModelInterface.RefreshOnGL()
 
         End If
 
@@ -1518,7 +1518,7 @@ ErrSub:
 
             ProjectRoot.Results.Model.VisualProperties.ShowMesh = cbxShowResMesh.Checked
 
-            ProjectRoot.RefreshOnGL()
+            ModelInterface.RefreshOnGL()
 
         End If
 
@@ -1530,7 +1530,7 @@ ErrSub:
 
             ProjectRoot.Results.Model.VisualProperties.ShowVelocityVectors = cbxShowVelocity.Checked
 
-            ProjectRoot.RefreshOnGL()
+            ModelInterface.RefreshOnGL()
 
         End If
 
@@ -1542,7 +1542,7 @@ ErrSub:
 
             ProjectRoot.Results.Model.VisualProperties.ShowLoadVectors = cbxShowForce.Checked
 
-            ProjectRoot.RefreshOnGL()
+            ModelInterface.RefreshOnGL()
 
         End If
 
@@ -1554,7 +1554,7 @@ ErrSub:
 
             ProjectRoot.VelocityPlane.Visible = cbxShowVelocityPlane.Checked
 
-            ProjectRoot.RefreshOnGL()
+            ModelInterface.RefreshOnGL()
 
         End If
 
@@ -1594,7 +1594,7 @@ ErrSub:
 
             ProjectRoot.Results.Model.UpdatePressureColormap()
 
-            ProjectRoot.RefreshOnGL()
+            ModelInterface.RefreshOnGL()
 
         End If
 
@@ -1608,7 +1608,7 @@ ErrSub:
 
             ProjectRoot.Results.Model.UpdatePressureColormap()
 
-            ProjectRoot.RefreshOnGL()
+            ModelInterface.RefreshOnGL()
 
         End If
 
@@ -1622,7 +1622,7 @@ ErrSub:
 
             ProjectRoot.Results.Model.UpdatePressureColormap()
 
-            ProjectRoot.RefreshOnGL()
+            ModelInterface.RefreshOnGL()
 
         End If
 
@@ -1636,7 +1636,7 @@ ErrSub:
 
             ProjectRoot.Results.Model.UpdatePressureColormap()
 
-            ProjectRoot.RefreshOnGL()
+            ModelInterface.RefreshOnGL()
 
         End If
 
@@ -1660,7 +1660,7 @@ ErrSub:
 
             _LockResultPropsEvents = False
 
-            ProjectRoot.RefreshOnGL()
+            ModelInterface.RefreshOnGL()
 
         End If
 
@@ -1677,33 +1677,33 @@ ErrSub:
             Select Case Vista
 
                 Case "XY"
-                    ProjectRoot.Visualization.CameraOrientation.Psi = 0
-                    ProjectRoot.Visualization.CameraOrientation.Fi = 0
+                    ModelInterface.Visualization.CameraOrientation.Psi = 0
+                    ModelInterface.Visualization.CameraOrientation.Fi = 0
                     RaiseEvent PushMessage("XY view")
 
                 Case "ZY"
-                    ProjectRoot.Visualization.CameraOrientation.Psi = 90
-                    ProjectRoot.Visualization.CameraOrientation.Fi = -90
+                    ModelInterface.Visualization.CameraOrientation.Psi = 90
+                    ModelInterface.Visualization.CameraOrientation.Fi = -90
                     RaiseEvent PushMessage("ZY view")
 
                 Case "ZX"
-                    ProjectRoot.Visualization.CameraOrientation.Psi = 0
-                    ProjectRoot.Visualization.CameraOrientation.Fi = -90
+                    ModelInterface.Visualization.CameraOrientation.Psi = 0
+                    ModelInterface.Visualization.CameraOrientation.Fi = -90
                     RaiseEvent PushMessage("ZX view")
 
                 Case "Isometrica"
-                    ProjectRoot.Visualization.CameraOrientation.Psi = 30
-                    ProjectRoot.Visualization.CameraOrientation.Fi = -60
+                    ModelInterface.Visualization.CameraOrientation.Psi = 30
+                    ModelInterface.Visualization.CameraOrientation.Fi = -60
                     RaiseEvent PushMessage("Free view")
 
                 Case "Center"
-                    ProjectRoot.Visualization.CameraPosition.X = 0
-                    ProjectRoot.Visualization.CameraPosition.Y = 0
-                    ProjectRoot.Visualization.CameraPosition.Z = 0
+                    ModelInterface.Visualization.CameraPosition.X = 0
+                    ModelInterface.Visualization.CameraPosition.Y = 0
+                    ModelInterface.Visualization.CameraPosition.Z = 0
 
             End Select
 
-            ProjectRoot.RefreshOnGL()
+            ModelInterface.RefreshOnGL()
 
         End If
 
@@ -1767,25 +1767,25 @@ ErrSub:
 
     Private Sub rbNode_CheckedChanged(sender As Object, e As EventArgs) Handles rbNode.CheckedChanged
 
-        ProjectRoot.Selection.EntityToSelect = EntityTypes.etNode
+        ModelInterface.Selection.EntityToSelect = EntityTypes.etNode
 
     End Sub
 
     Private Sub rnPanel_CheckedChanged(sender As Object, e As EventArgs) Handles rnPanel.CheckedChanged
 
-        ProjectRoot.Selection.EntityToSelect = EntityTypes.etPanel
+        ModelInterface.Selection.EntityToSelect = EntityTypes.etPanel
 
     End Sub
 
     Private Sub cbMultiselect_CheckedChanged(sender As Object, e As EventArgs) Handles cbMultiselect.CheckedChanged
 
-        ProjectRoot.Selection.MultipleSelection = cbMultiselect.Checked
+        ModelInterface.Selection.MultipleSelection = cbMultiselect.Checked
 
     End Sub
 
     Private Sub rbStructure_CheckedChanged(sender As Object, e As EventArgs) Handles rbStructure.CheckedChanged
 
-        ProjectRoot.Selection.EntityToSelect = EntityTypes.etStructuralElement
+        ModelInterface.Selection.EntityToSelect = EntityTypes.etStructuralElement
 
     End Sub
 

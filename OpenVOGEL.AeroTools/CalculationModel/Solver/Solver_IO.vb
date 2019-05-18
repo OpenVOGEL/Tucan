@@ -196,7 +196,7 @@ Namespace CalculationModel.Solver
 
             If DataBasePath IsNot Nothing AndAlso DataBasePath <> "" Then
 
-                Dim Base_Path As String = Path.GetDirectoryName(DataBasePath) + "\" + Path.GetFileNameWithoutExtension(DataBasePath)
+                Dim Base_Path As String = Path.Combine(Path.GetDirectoryName(DataBasePath), Path.GetFileNameWithoutExtension(DataBasePath))
 
                 Structure_Path = Base_Path + DB_File_Structure
                 Aeroelastic_Path = Base_Path + DB_File_Aeroelastic
@@ -284,7 +284,7 @@ Namespace CalculationModel.Solver
 
 #End Region
 
-        Public Sub ReportResutls()
+        Public Sub ReportResults()
 
             RaiseEvent PushResultLine("RESULS OF THE AERODYNAMIC ANALYSIS:")
             RaiseEvent PushResultLine("")

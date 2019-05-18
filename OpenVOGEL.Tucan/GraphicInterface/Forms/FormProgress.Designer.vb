@@ -25,7 +25,6 @@ Partial Class FormProgress
         Me.pgCalculationProgress = New System.Windows.Forms.ProgressBar()
         Me.lblStatusLabel = New System.Windows.Forms.Label()
         Me.BarraDeProgresoµ = New System.Windows.Forms.ProgressBar()
-        Me.lbState = New System.Windows.Forms.Label()
         Me.tbOperationsList = New System.Windows.Forms.TextBox()
         Me.btnCancel = New System.Windows.Forms.Button()
         Me.SuspendLayout()
@@ -34,10 +33,10 @@ Partial Class FormProgress
         '
         Me.pgCalculationProgress.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.pgCalculationProgress.Location = New System.Drawing.Point(12, 286)
+        Me.pgCalculationProgress.Location = New System.Drawing.Point(12, 272)
         Me.pgCalculationProgress.MarqueeAnimationSpeed = 1000
         Me.pgCalculationProgress.Name = "pgCalculationProgress"
-        Me.pgCalculationProgress.Size = New System.Drawing.Size(411, 18)
+        Me.pgCalculationProgress.Size = New System.Drawing.Size(410, 18)
         Me.pgCalculationProgress.TabIndex = 0
         '
         'lblStatusLabel
@@ -56,15 +55,6 @@ Partial Class FormProgress
         Me.BarraDeProgresoµ.Size = New System.Drawing.Size(326, 23)
         Me.BarraDeProgresoµ.TabIndex = 0
         '
-        'lbState
-        '
-        Me.lbState.AutoSize = True
-        Me.lbState.Location = New System.Drawing.Point(9, 270)
-        Me.lbState.Name = "lbState"
-        Me.lbState.Size = New System.Drawing.Size(43, 13)
-        Me.lbState.TabIndex = 3
-        Me.lbState.Text = "lbState"
-        '
         'tbOperationsList
         '
         Me.tbOperationsList.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -77,7 +67,8 @@ Partial Class FormProgress
         '
         'btnCancel
         '
-        Me.btnCancel.Location = New System.Drawing.Point(348, 310)
+        Me.btnCancel.ImageAlign = System.Drawing.ContentAlignment.BottomRight
+        Me.btnCancel.Location = New System.Drawing.Point(348, 297)
         Me.btnCancel.Name = "btnCancel"
         Me.btnCancel.Size = New System.Drawing.Size(75, 23)
         Me.btnCancel.TabIndex = 5
@@ -88,11 +79,10 @@ Partial Class FormProgress
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(435, 338)
+        Me.ClientSize = New System.Drawing.Size(434, 325)
         Me.ControlBox = False
         Me.Controls.Add(Me.btnCancel)
         Me.Controls.Add(Me.tbOperationsList)
-        Me.Controls.Add(Me.lbState)
         Me.Controls.Add(Me.lblStatusLabel)
         Me.Controls.Add(Me.pgCalculationProgress)
         Me.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -108,7 +98,6 @@ Partial Class FormProgress
     Friend WithEvents pgCalculationProgress As System.Windows.Forms.ProgressBar
     Friend WithEvents lblStatusLabel As System.Windows.Forms.Label
     Friend WithEvents BarraDeProgresoµ As System.Windows.Forms.ProgressBar
-    Friend WithEvents lbState As System.Windows.Forms.Label
     Friend WithEvents tbOperationsList As System.Windows.Forms.TextBox
     Friend WithEvents btnCancel As System.Windows.Forms.Button
 End Class

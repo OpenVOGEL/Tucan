@@ -40,7 +40,7 @@ Partial Class MainForm
         Me.sbHorizontal = New System.Windows.Forms.HScrollBar()
         Me.lblStatus = New System.Windows.Forms.ToolStripStatusLabel()
         Me.ssStatus = New System.Windows.Forms.StatusStrip()
-        Me.mrRibbon = New OpenVOGEL.DesignTools.MainRibbon()
+        Me.mrRibbon = New MainRibbon()
         CType(Me.ControlOpenGL, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.scMain, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.scMain.Panel2.SuspendLayout()
@@ -187,7 +187,7 @@ Partial Class MainForm
     Friend WithEvents miniToolStrip As System.Windows.Forms.ToolStrip
     Friend WithEvents ContenedorDeBarras As System.Windows.Forms.ToolStripPanel
     Friend WithEvents ControlOpenGL As SharpGL.OpenGLControl
-    Friend WithEvents mrRibbon As DesignTools.MainRibbon
+    Friend WithEvents mrRibbon As MainRibbon
     Friend WithEvents sbVertical As VScrollBar
     Friend WithEvents scMain As SplitContainer
     Friend WithEvents BottomToolStripPanel As ToolStripPanel
