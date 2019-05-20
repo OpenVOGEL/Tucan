@@ -19,7 +19,6 @@ Imports OpenVOGEL.MathTools.Algebra.EuclideanSpace
 Imports OpenVOGEL.DesignTools.VisualModel.Models.Components.Basics
 Imports OpenVOGEL.DesignTools.VisualModel.Interface
 Imports OpenVOGEL.AeroTools.IoHelper
-Imports SharpGL
 Imports System.Xml
 
 Namespace VisualModel.Models.Components
@@ -211,6 +210,9 @@ Namespace VisualModel.Models.Components
 
     End Class
 
+    ''' <summary>
+    ''' The grid of a mesh feature
+    ''' </summary>
     Public Class FeatureGrid
 
         Public e As Integer

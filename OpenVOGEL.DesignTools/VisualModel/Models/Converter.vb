@@ -253,7 +253,7 @@ Namespace VisualModel.Models
 
             If Surface.ConvectWake Then
 
-                Dim Wake As New Wake
+                Dim Wake As New AeroTools.CalculationModel.Models.Aero.Wake
 
                 For PrimitiveIndex = Surface.FirstPrimitiveNode To Surface.LastPrimitiveNode
                     Wake.Primitive.Nodes.Add(Surface.GetPrimitiveNodeIndex(PrimitiveIndex) - 1)
@@ -448,7 +448,7 @@ Namespace VisualModel.Models
 
             If Nacelle.ConvectWake And Nacelle.CuttingStep > 0 Then
 
-                Dim Wake As New Wake
+                Dim Wake As New AeroTools.CalculationModel.Models.Aero.Wake
 
                 Wake.SupressInnerCircuation = False
 

@@ -223,20 +223,13 @@ Namespace VisualModel.Models.Components.Basics
 
         End Sub
 
+        ''' <summary>
+        ''' Clones the surface
+        ''' </summary>
+        ''' <returns></returns>
         Public MustOverride Function Clone() As Surface
 
 #Region " Meshing "
-
-        '''' <summary>
-        '''' Refresh the 3D model on a OpenGL control.
-        '''' </summary>
-        '''' <param name="gl"></param>
-        '''' <param name="ForSelection">Refresh for selection</param>
-        '''' <param name="ElementIndex"></param>
-        '''' <remarks></remarks>
-        'Public MustOverride Sub Refresh3DModel(ByRef gl As OpenGL,
-        '                                       Optional ByVal ForSelection As Boolean = False,
-        '                                       Optional ByVal ElementIndex As Integer = 0)
 
         ''' <summary>
         ''' Generates the mesh.

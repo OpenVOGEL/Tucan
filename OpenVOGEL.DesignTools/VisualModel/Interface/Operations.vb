@@ -56,12 +56,13 @@ Namespace VisualModel.Interface
         Public Event OnTaskReady()
 
         Private _Scalars As New List(Of Double)
-        Private _Points As New List(Of Vector3)
         Private _Orientations As New List(Of EulerAngles)
         Private _DestinationObject As IOperational
         Private _StatusFlag As String
         Private _Operation As Operations = Operations.NoOperation
         Private _SurfaceLoaded As Boolean = False
+
+        Public Points As New List(Of Vector3)
 
         ''' <summary>
         ''' Specifies the desired geometric operation.
@@ -112,7 +113,7 @@ Namespace VisualModel.Interface
             If _Operation = Operations.NoOperation Or Not _SurfaceLoaded Then Return
 
             If TypeOf Entity Is Vector3 Then
-                _Points.Add(Entity)
+                Points.Add(Entity)
             End If
 
             If TypeOf Entity Is EulerAngles Then
@@ -135,7 +136,7 @@ Namespace VisualModel.Interface
 
             _Operation = Operations.NoOperation
             _SurfaceLoaded = False
-            _Points.Clear()
+            Points.Clear()
             _Orientations.Clear()
             _Scalars.Clear()
             _StatusFlag = String.Format("Operation ""{0}"" has been cancelled", _Operation.ToString)
@@ -156,15 +157,15 @@ Namespace VisualModel.Interface
 
                     Case Operations.Translate
 
-                        If _Points.Count >= 2 Then
-                            _DestinationObject.MoveTo(_Points(1) - _Points(0))
+                        If Points.Count >= 2 Then
+                            _DestinationObject.MoveTo(Points(1) - Points(0))
                             RaiseTaskReady()
                         End If
 
                     Case Operations.Rotate
 
-                        If _Orientations.Count >= 1 And _Points.Count > 1 Then
-                            _DestinationObject.Orientate(_Points(0), _Orientations(0))
+                        If _Orientations.Count >= 1 And Points.Count > 1 Then
+                            _DestinationObject.Orientate(Points(0), _Orientations(0))
                             RaiseTaskReady()
                         End If
 
@@ -177,8 +178,8 @@ Namespace VisualModel.Interface
 
                     Case Operations.Align
 
-                        If _Points.Count >= 4 Then
-                            _DestinationObject.Align(_Points(0), _Points(1), _Points(2), _Points(3))
+                        If Points.Count >= 4 Then
+                            _DestinationObject.Align(Points(0), Points(1), Points(2), Points(3))
                             RaiseTaskReady()
                         End If
 
@@ -198,92 +199,6 @@ Namespace VisualModel.Interface
             CancelOperation()
             RaiseEvent OnTaskReady()
             _StatusFlag = "Ready"
-
-        End Sub
-
-        Public Sub RepresentTaskOnGL(ByRef gl As OpenGL)
-
-            Select Case _Operation
-
-                Case Operations.NoOperation
-                    Return
-
-                Case Operations.Translate
-
-                    gl.Color(0, 0, 0)
-
-                    For Each Point In _Points
-
-                        If IsNothing(Point) Then Continue For
-
-                        gl.Begin(OpenGL.GL_LINES)
-
-                        gl.Vertex(Point.X - 0.1, Point.Y, Point.Z)
-                        gl.Vertex(Point.X + 0.1, Point.Y, Point.Z)
-
-                        gl.Vertex(Point.X, Point.Y - 0.1, Point.Z)
-                        gl.Vertex(Point.X, Point.Y + 0.1, Point.Z)
-
-                        gl.Vertex(Point.X, Point.Y, Point.Z - 0.1)
-                        gl.Vertex(Point.X, Point.Y, Point.Z + 0.1)
-
-                        gl.End()
-
-                        gl.PointSize(4.0)
-
-                        gl.Begin(OpenGL.GL_POINTS)
-                        gl.Vertex(Point.X, Point.Y, Point.Z)
-                        gl.End()
-
-                    Next
-
-                Case Operations.Align
-
-                    gl.Color(0, 0, 0)
-
-                    For Each Point In _Points
-
-                        If IsNothing(Point) Then Continue For
-
-                        gl.Begin(OpenGL.GL_LINES)
-
-                        gl.Vertex(Point.X - 0.1, Point.Y, Point.Z)
-                        gl.Vertex(Point.X + 0.1, Point.Y, Point.Z)
-
-                        gl.Vertex(Point.X, Point.Y - 0.1, Point.Z)
-                        gl.Vertex(Point.X, Point.Y + 0.1, Point.Z)
-
-                        gl.Vertex(Point.X, Point.Y, Point.Z - 0.1)
-                        gl.Vertex(Point.X, Point.Y, Point.Z + 0.1)
-
-                        gl.End()
-
-                        gl.PointSize(4.0)
-
-                        gl.Begin(OpenGL.GL_POINTS)
-                        gl.Vertex(Point.X, Point.Y, Point.Z)
-                        gl.End()
-
-                    Next
-
-                    gl.Color(0.5, 0.5, 0.5)
-
-                    If _Points.Count > 1 Then
-
-                        gl.LineWidth(3.0)
-
-                        gl.Begin(OpenGL.GL_LINES)
-
-                        gl.Vertex(_Points(0).X, _Points(0).Y, _Points(0).Z)
-                        gl.Vertex(_Points(1).X, _Points(1).Y, _Points(1).Z)
-
-                        gl.End()
-
-                        gl.PointSize(4.0)
-
-                    End If
-
-            End Select
 
         End Sub
 

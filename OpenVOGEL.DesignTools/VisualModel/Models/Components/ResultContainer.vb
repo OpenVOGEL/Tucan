@@ -15,7 +15,6 @@
 'You should have received a copy Of the GNU General Public License
 'along with this program.  If Not, see < http:  //www.gnu.org/licenses/>.
 
-Imports SharpGL
 Imports OpenVOGEL.DesignTools.VisualModel.Interface
 Imports OpenVOGEL.DesignTools.VisualModel.Models.Components.Basics
 Imports OpenVOGEL.AeroTools.CalculationModel.Models.Aero

@@ -37,10 +37,10 @@ Namespace VisualModel.Models.Components
         Private Direction1 As New Vector3
         Private Direction2 As New Vector3
 
-        Private Corner1 As New Vector3
-        Private Corner2 As New Vector3
-        Private Corner3 As New Vector3
-        Private Corner4 As New Vector3
+        Public ReadOnly Corner1 As New Vector3
+        Public ReadOnly Corner2 As New Vector3
+        Public ReadOnly Corner3 As New Vector3
+        Public ReadOnly Corner4 As New Vector3
 
         Public NormalVector As New Vector3
 
@@ -231,87 +231,6 @@ Namespace VisualModel.Models.Components
             Corner4.Z = -0.5 * Extension1 * Direction1.Z + 0.5 * Extension2 * Direction2.Z + Origin.Z
 
             NormalVector = Direction1.VectorProduct(Direction2)
-
-        End Sub
-
-        Public Sub Updte3DModel(ByRef gl As OpenGL)
-
-            If Me.Visible Then
-
-                gl.PointSize(Me.NodeSize)
-
-                gl.Begin(OpenGL.GL_POINTS)
-                gl.Color(ColorNodes.R / 255, ColorNodes.G / 255, ColorNodes.B / 255, 1)
-
-                For i = 1 To NodesInDirection1 * NodesInDirection2
-                    gl.Vertex(Me.GetNode(i).X, Me.GetNode(i).Y, Me.GetNode(i).Z)
-                Next
-
-                gl.End()
-
-                gl.LineWidth(Me.VectorThickness)
-
-                gl.Begin(OpenGL.GL_LINES)
-                gl.Color(ColorVectors.R / 255, ColorVectors.G / 255, ColorVectors.B / 255, 1)
-
-                For i = 1 To NodesInDirection1 * NodesInDirection2
-                    gl.Vertex(Me.GetNode(i).X, Me.GetNode(i).Y, Me.GetNode(i).Z)
-                    gl.Vertex(Me.GetNode(i).X + Me.Scale * Me.GetInducedVelocity(i).X, Me.GetNode(i).Y + Me.Scale * Me.GetInducedVelocity(i).Y, Me.GetNode(i).Z + Me.Scale * Me.GetInducedVelocity(i).Z)
-                Next
-
-                gl.End()
-
-                gl.Color(ColorSurface.R / 255, ColorSurface.G / 255, ColorSurface.B / 255, 0.3)
-
-                gl.Begin(OpenGL.GL_QUADS)
-
-                gl.Vertex(Corner1.X, Corner1.Y, Corner1.Z)
-                gl.Vertex(Corner2.X, Corner2.Y, Corner2.Z)
-                gl.Vertex(Corner3.X, Corner3.Y, Corner3.Z)
-                gl.Vertex(Corner4.X, Corner4.Y, Corner4.Z)
-
-                gl.End()
-
-                If TreftSegments.Count > 0 Then
-
-                    gl.Begin(OpenGL.GL_LINES)
-                    gl.Color(ColorVectors.R / 255, ColorVectors.G / 255, ColorVectors.B / 255, 1)
-
-                    For i = 0 To TreftSegments.Count - 1
-
-                        gl.Vertex(TreftSegments(i).Point1.X, TreftSegments(i).Point1.Y, TreftSegments(i).Point1.Z)
-                        gl.Vertex(TreftSegments(i).Point2.X, TreftSegments(i).Point2.Y, TreftSegments(i).Point2.Z)
-
-                        gl.Vertex(TreftSegments(i).Point1.X, TreftSegments(i).Point1.Y, TreftSegments(i).Point1.Z)
-                        gl.Vertex(TreftSegments(i).Point1.X + Scale * TreftSegments(i).Velocity.X, TreftSegments(i).Point1.Y + Scale * TreftSegments(i).Velocity.Y, TreftSegments(i).Point1.Z + Scale * TreftSegments(i).Velocity.Z)
-
-                    Next
-
-                    gl.End()
-
-                End If
-
-            End If
-
-        End Sub
-
-        Public Sub RepresentVelocityVector(ByVal gl As OpenGL, ByVal StreamVelocity As Vector3, ByVal Position As Vector3)
-
-            Dim Velocity As New Vector3
-
-            Velocity.Assign(StreamVelocity)
-
-            Velocity.Normalize()
-
-            gl.LineWidth(1.0F)
-            gl.Begin(OpenGL.GL_LINES)
-
-            gl.Color(0.1, 0.1, 0.8)
-
-            gl.Vertex(Position.X, Position.Y, Position.Z)
-            gl.Vertex(Position.X - Velocity.X, Position.Y - Velocity.Y, Position.Z - Velocity.Z)
-
-            gl.End()
 
         End Sub
 

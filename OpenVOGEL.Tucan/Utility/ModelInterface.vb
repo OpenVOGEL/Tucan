@@ -481,7 +481,7 @@ Namespace Tucan.Utility
             Visualization.Axes.GenerateWireFrame(ControlGL)
             Visualization.ReferenceFrame.GenerateWireFrame(ControlGL)
 
-            ProjectRoot.VelocityPlane.RepresentVelocityVector(ControlGL, ProjectRoot.SimulationSettings.StreamVelocity, Origin)
+            RepresentVelocityVector(ControlGL, ProjectRoot.SimulationSettings.StreamVelocity, Origin)
 
             Results.RepresentTransitState(ControlGL, TimeStep)
 

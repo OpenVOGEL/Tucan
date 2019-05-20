@@ -17,6 +17,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports OpenVOGEL.DesignTools.VisualModel.Interface
+Imports OpenVOGEL.DesignTools.VisualModel.Models
 Imports OpenVOGEL.DesignTools.VisualModel.Models.Components
 Imports OpenVOGEL.DesignTools.VisualModel.Models.Components.Basics
 Imports OpenVOGEL.DesignTools.VisualModel.Models.Components.ResultContainer
@@ -26,7 +27,8 @@ Imports SharpGL
 Namespace Tucan.Utility
 
     ''' <summary>
-    ''' Implements the rendering of the surface declared in OpenVOGEL.DesignTools.VisualModel.Models.Components
+    ''' Implements the rendering of the surfaces declared in 
+    ''' OpenVOGEL.DesignTools.VisualModel.Models.Components
     ''' </summary>
     Module ModelRendering
 
@@ -1147,6 +1149,268 @@ Namespace Tucan.Utility
                     Next
 
                 End If
+
+            End With
+
+        End Sub
+
+        ''' <summary>
+        ''' Represents the active operation
+        ''' </summary>
+        ''' <param name="This"></param>
+        ''' <param name="gl"></param>
+        <Extension()>
+        Public Sub RepresentTaskOnGL(This As OperationsTool, ByRef gl As OpenGL)
+
+            With This
+
+                Select Case .Operation
+
+                    Case Operations.NoOperation
+                        Return
+
+                    Case Operations.Translate
+
+                        gl.Color(0, 0, 0)
+
+                        For Each Point In .Points
+
+                            If IsNothing(Point) Then Continue For
+
+                            gl.Begin(OpenGL.GL_LINES)
+
+                            gl.Vertex(Point.X - 0.1, Point.Y, Point.Z)
+                            gl.Vertex(Point.X + 0.1, Point.Y, Point.Z)
+
+                            gl.Vertex(Point.X, Point.Y - 0.1, Point.Z)
+                            gl.Vertex(Point.X, Point.Y + 0.1, Point.Z)
+
+                            gl.Vertex(Point.X, Point.Y, Point.Z - 0.1)
+                            gl.Vertex(Point.X, Point.Y, Point.Z + 0.1)
+
+                            gl.End()
+
+                            gl.PointSize(4.0)
+
+                            gl.Begin(OpenGL.GL_POINTS)
+                            gl.Vertex(Point.X, Point.Y, Point.Z)
+                            gl.End()
+
+                        Next
+
+                    Case Operations.Align
+
+                        gl.Color(0, 0, 0)
+
+                        For Each Point In .Points
+
+                            If IsNothing(Point) Then Continue For
+
+                            gl.Begin(OpenGL.GL_LINES)
+
+                            gl.Vertex(Point.X - 0.1, Point.Y, Point.Z)
+                            gl.Vertex(Point.X + 0.1, Point.Y, Point.Z)
+
+                            gl.Vertex(Point.X, Point.Y - 0.1, Point.Z)
+                            gl.Vertex(Point.X, Point.Y + 0.1, Point.Z)
+
+                            gl.Vertex(Point.X, Point.Y, Point.Z - 0.1)
+                            gl.Vertex(Point.X, Point.Y, Point.Z + 0.1)
+
+                            gl.End()
+
+                            gl.PointSize(4.0)
+
+                            gl.Begin(OpenGL.GL_POINTS)
+                            gl.Vertex(Point.X, Point.Y, Point.Z)
+                            gl.End()
+
+                        Next
+
+                        gl.Color(0.5, 0.5, 0.5)
+
+                        If .Points.Count > 1 Then
+
+                            gl.LineWidth(3.0)
+
+                            gl.Begin(OpenGL.GL_LINES)
+
+                            gl.Vertex(.Points(0).X, .Points(0).Y, .Points(0).Z)
+                            gl.Vertex(.Points(1).X, .Points(1).Y, .Points(1).Z)
+
+                            gl.End()
+
+                            gl.PointSize(4.0)
+
+                        End If
+
+                End Select
+
+            End With
+
+        End Sub
+
+        ''' <summary>
+        ''' Represents the velocity plane
+        ''' </summary>
+        <Extension()>
+        Public Sub Updte3DModel(This As VelocityPlane, ByRef gl As OpenGL)
+
+            With This
+
+                If .Visible Then
+
+                    gl.PointSize(.NodeSize)
+
+                    gl.Begin(OpenGL.GL_POINTS)
+                    gl.Color(.ColorNodes.R / 255,
+                             .ColorNodes.G / 255,
+                             .ColorNodes.B / 255, 1)
+
+                    For i = 1 To .NodesInDirection1 * .NodesInDirection2
+                        gl.Vertex(.GetNode(i).X, .GetNode(i).Y, .GetNode(i).Z)
+                    Next
+
+                    gl.End()
+
+                    gl.LineWidth(.VectorThickness)
+
+                    gl.Begin(OpenGL.GL_LINES)
+                    gl.Color(.ColorVectors.R / 255,
+                             .ColorVectors.G / 255,
+                             .ColorVectors.B / 255, 1)
+
+                    For i = 1 To .NodesInDirection1 * .NodesInDirection2
+                        gl.Vertex(.GetNode(i).X, .GetNode(i).Y, .GetNode(i).Z)
+                        gl.Vertex(.GetNode(i).X + .Scale * .GetInducedVelocity(i).X,
+                                  .GetNode(i).Y + .Scale * .GetInducedVelocity(i).Y,
+                                  .GetNode(i).Z + .Scale * .GetInducedVelocity(i).Z)
+                    Next
+
+                    gl.End()
+
+                    gl.Color(.ColorSurface.R / 255,
+                             .ColorSurface.G / 255,
+                             .ColorSurface.B / 255, 0.3)
+
+                    gl.Begin(OpenGL.GL_QUADS)
+
+                    gl.Vertex(.Corner1.X, .Corner1.Y, .Corner1.Z)
+                    gl.Vertex(.Corner2.X, .Corner2.Y, .Corner2.Z)
+                    gl.Vertex(.Corner3.X, .Corner3.Y, .Corner3.Z)
+                    gl.Vertex(.Corner4.X, .Corner4.Y, .Corner4.Z)
+
+                    gl.End()
+
+                    If .TreftSegments.Count > 0 Then
+
+                        gl.Begin(OpenGL.GL_LINES)
+                        gl.Color(.ColorVectors.R / 255,
+                                 .ColorVectors.G / 255,
+                                 .ColorVectors.B / 255, 1)
+
+                        For i = 0 To .TreftSegments.Count - 1
+
+                            gl.Vertex(.TreftSegments(i).Point1.X, .TreftSegments(i).Point1.Y, .TreftSegments(i).Point1.Z)
+                            gl.Vertex(.TreftSegments(i).Point2.X, .TreftSegments(i).Point2.Y, .TreftSegments(i).Point2.Z)
+
+                            gl.Vertex(.TreftSegments(i).Point1.X, .TreftSegments(i).Point1.Y, .TreftSegments(i).Point1.Z)
+                            gl.Vertex(.TreftSegments(i).Point1.X + .Scale * .TreftSegments(i).Velocity.X,
+                                      .TreftSegments(i).Point1.Y + .Scale * .TreftSegments(i).Velocity.Y,
+                                      .TreftSegments(i).Point1.Z + .Scale * .TreftSegments(i).Velocity.Z)
+
+                        Next
+
+                        gl.End()
+
+                    End If
+
+                End If
+
+            End With
+
+        End Sub
+
+        ''' <summary>
+        ''' Represents the velocity vector
+        ''' </summary>
+        ''' <param name="gl"></param>
+        ''' <param name="StreamVelocity"></param>
+        ''' <param name="Position"></param>
+        Public Sub RepresentVelocityVector(ByVal gl As OpenGL, ByVal StreamVelocity As Vector3, ByVal Position As Vector3)
+
+            Dim Velocity As New Vector3
+
+            Velocity.Assign(StreamVelocity)
+
+            Velocity.Normalize()
+
+            gl.LineWidth(1.0F)
+            gl.Begin(OpenGL.GL_LINES)
+
+            gl.Color(0.1, 0.1, 0.8)
+
+            gl.Vertex(Position.X, Position.Y, Position.Z)
+            gl.Vertex(Position.X - Velocity.X, Position.Y - Velocity.Y, Position.Z - Velocity.Z)
+
+            gl.End()
+
+        End Sub
+
+        ''' <summary>
+        ''' Represents the transit state of the result model
+        ''' </summary>
+        <Extension()>
+        Public Sub RepresentTransitState(This As ResultModel, ByRef GL As SharpGL.OpenGL, ByVal TimeStep As Integer)
+
+            With This
+
+                If (Not .TransitLoaded) Or (TimeStep >= .TransitLattices.Count) Then Exit Sub
+
+                GL.Color(0, 1.0#, 0)
+                GL.Begin(SharpGL.OpenGL.GL_TRIANGLES)
+
+                For Each Ring In .TransitLattices(TimeStep).Mesh.Panels
+
+                    GL.Vertex(.TransitLattices(TimeStep).Mesh.Nodes(Ring.N1).Position.X,
+                              .TransitLattices(TimeStep).Mesh.Nodes(Ring.N1).Position.Y,
+                              .TransitLattices(TimeStep).Mesh.Nodes(Ring.N1).Position.Z)
+                    GL.Vertex(.TransitLattices(TimeStep).Mesh.Nodes(Ring.N2).Position.X,
+                              .TransitLattices(TimeStep).Mesh.Nodes(Ring.N2).Position.Y,
+                              .TransitLattices(TimeStep).Mesh.Nodes(Ring.N2).Position.Z)
+                    GL.Vertex(.TransitLattices(TimeStep).Mesh.Nodes(Ring.N3).Position.X,
+                              .TransitLattices(TimeStep).Mesh.Nodes(Ring.N3).Position.Y,
+                              .TransitLattices(TimeStep).Mesh.Nodes(Ring.N3).Position.Z)
+
+                    GL.Vertex(.TransitLattices(TimeStep).Mesh.Nodes(Ring.N3).Position.X,
+                              .TransitLattices(TimeStep).Mesh.Nodes(Ring.N3).Position.Y,
+                              .TransitLattices(TimeStep).Mesh.Nodes(Ring.N3).Position.Z)
+                    GL.Vertex(.TransitLattices(TimeStep).Mesh.Nodes(Ring.N4).Position.X,
+                              .TransitLattices(TimeStep).Mesh.Nodes(Ring.N4).Position.Y,
+                              .TransitLattices(TimeStep).Mesh.Nodes(Ring.N4).Position.Z)
+                    GL.Vertex(.TransitLattices(TimeStep).Mesh.Nodes(Ring.N1).Position.X,
+                              .TransitLattices(TimeStep).Mesh.Nodes(Ring.N1).Position.Y,
+                              .TransitLattices(TimeStep).Mesh.Nodes(Ring.N1).Position.Z)
+
+                Next
+
+                GL.End()
+
+                GL.Color(0.0#, 0.0#, 0.0#)
+                GL.Begin(SharpGL.OpenGL.GL_LINES)
+
+                For Each Vortex In .TransitLattices(TimeStep).Mesh.Lattice
+
+                    GL.Vertex(.TransitLattices(TimeStep).Mesh.Nodes(Vortex.N1).Position.X,
+                              .TransitLattices(TimeStep).Mesh.Nodes(Vortex.N1).Position.Y,
+                              .TransitLattices(TimeStep).Mesh.Nodes(Vortex.N1).Position.Z)
+                    GL.Vertex(.TransitLattices(TimeStep).Mesh.Nodes(Vortex.N2).Position.X,
+                              .TransitLattices(TimeStep).Mesh.Nodes(Vortex.N2).Position.Y,
+                              .TransitLattices(TimeStep).Mesh.Nodes(Vortex.N2).Position.Z)
+
+                Next
+
+                GL.End()
 
             End With
 
