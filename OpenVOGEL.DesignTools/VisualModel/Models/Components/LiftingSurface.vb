@@ -328,7 +328,10 @@ Namespace VisualModel.Models.Components
         ''' <remarks></remarks>
         Public Property LocalOrigin As New Vector3
 
-        Private _DirectionPoints As New Base3
+        ''' <summary>
+        ''' Cached points used to represent the directions of the local axes.
+        ''' </summary>
+        Public Property DirectionPoints As New Base3
 
         ''' <summary>
         ''' Indicates if the mesh has to be symmetric about the plane y = 0.
@@ -1275,29 +1278,29 @@ Namespace VisualModel.Models.Components
 
             ' Direction points:
 
-            _DirectionPoints.U.X = 0.5
-            _DirectionPoints.U.Y = 0.0
-            _DirectionPoints.U.Z = 0.0
-            _DirectionPoints.U.Substract(CenterOfRotation)
-            _DirectionPoints.U.Rotate(LocalRotationMatrix)
-            _DirectionPoints.U.Add(CenterOfRotation)
-            _DirectionPoints.U.Add(Position)
+            DirectionPoints.U.X = 0.5
+            DirectionPoints.U.Y = 0.0
+            DirectionPoints.U.Z = 0.0
+            DirectionPoints.U.Substract(CenterOfRotation)
+            DirectionPoints.U.Rotate(LocalRotationMatrix)
+            DirectionPoints.U.Add(CenterOfRotation)
+            DirectionPoints.U.Add(Position)
 
-            _DirectionPoints.V.X = 0.0
-            _DirectionPoints.V.Y = 0.5
-            _DirectionPoints.V.Z = 0.0
-            _DirectionPoints.V.Substract(CenterOfRotation)
-            _DirectionPoints.V.Rotate(LocalRotationMatrix)
-            _DirectionPoints.V.Add(CenterOfRotation)
-            _DirectionPoints.V.Add(Position)
+            DirectionPoints.V.X = 0.0
+            DirectionPoints.V.Y = 0.5
+            DirectionPoints.V.Z = 0.0
+            DirectionPoints.V.Substract(CenterOfRotation)
+            DirectionPoints.V.Rotate(LocalRotationMatrix)
+            DirectionPoints.V.Add(CenterOfRotation)
+            DirectionPoints.V.Add(Position)
 
-            _DirectionPoints.W.X = 0.0
-            _DirectionPoints.W.Y = 0.0
-            _DirectionPoints.W.Z = 0.5
-            _DirectionPoints.W.Substract(CenterOfRotation)
-            _DirectionPoints.W.Rotate(LocalRotationMatrix)
-            _DirectionPoints.W.Add(CenterOfRotation)
-            _DirectionPoints.W.Add(Position)
+            DirectionPoints.W.X = 0.0
+            DirectionPoints.W.Y = 0.0
+            DirectionPoints.W.Z = 0.5
+            DirectionPoints.W.Substract(CenterOfRotation)
+            DirectionPoints.W.Rotate(LocalRotationMatrix)
+            DirectionPoints.W.Add(CenterOfRotation)
+            DirectionPoints.W.Add(Position)
 
             ' Local origin²
 
@@ -1312,355 +1315,6 @@ Namespace VisualModel.Models.Components
             ' Launch base sub to raise update event.
 
             MyBase.GenerateMesh()
-
-        End Sub
-
-        Public Overrides Sub Refresh3DModel(ByRef gl As OpenGL,
-                                            Optional ByVal ForSelection As Boolean = False,
-                                            Optional ByVal ElementIndex As Integer = 0)
-
-            Dim Code As Integer = 0
-
-            ' Panels:
-
-            If VisualProperties.VisualizationMode = VisualizationMode.Lattice Then
-
-                Dim Nodo As Vector3
-
-                gl.InitNames()
-                Code = Selection.GetSelectionCode(ComponentTypes.etLiftingSurface, ElementIndex, EntityTypes.etPanel, 0)
-                Dim p As Integer = 0
-
-                Dim PrimitiveColor As New Vector3
-                PrimitiveColor.X = VisualProperties.ColorPrimitives.R / 255
-                PrimitiveColor.Y = VisualProperties.ColorPrimitives.G / 255
-                PrimitiveColor.Z = VisualProperties.ColorPrimitives.B / 255
-
-                Dim SelectedColor As New Vector3
-                If Not Active Then
-                    SelectedColor.X = VisualProperties.ColorSurface.R / 255
-                    SelectedColor.Y = VisualProperties.ColorSurface.G / 255
-                    SelectedColor.Z = VisualProperties.ColorSurface.B / 255
-                Else
-                    SelectedColor.X = 1.0
-                    SelectedColor.Y = 0.8
-                    SelectedColor.Z = 0.0
-                End If
-
-                Dim Transparency As Double
-                If VisualProperties.VisualizationMode = VisualizationMode.Lattice Then
-                    Transparency = VisualProperties.Transparency
-                ElseIf VisualProperties.VisualizationMode = VisualizationMode.Structural Then
-                    Transparency = 0.4
-                End If
-
-                For Each Panel In Mesh.Panels
-
-                    gl.PushName(Code)
-                    Code += 1
-
-                    gl.Begin(OpenGL.GL_TRIANGLES)
-
-                    If Panel.Active Then
-                        gl.Color(1.0, 0.0, 0.5)
-                    ElseIf Panel.IsPrimitive And VisualProperties.ShowPrimitives Then
-                        gl.Color(PrimitiveColor.X, PrimitiveColor.Y, PrimitiveColor.Z, Transparency)
-                    Else
-                        gl.Color(SelectedColor.X, SelectedColor.Y, SelectedColor.Z, Transparency)
-                    End If
-
-                    ' First triangle:
-
-                    Nodo = Mesh.Nodes(Panel.N1).Position
-                    gl.Vertex(Nodo.X, Nodo.Y, Nodo.Z)
-
-                    Nodo = Mesh.Nodes(Panel.N2).Position
-                    gl.Vertex(Nodo.X, Nodo.Y, Nodo.Z)
-
-                    Nodo = Mesh.Nodes(Panel.N3).Position
-                    gl.Vertex(Nodo.X, Nodo.Y, Nodo.Z)
-
-                    ' Second triangle:
-
-                    If Not Panel.IsTriangular Then
-
-                        Nodo = Mesh.Nodes(Panel.N3).Position
-                        gl.Vertex(Nodo.X, Nodo.Y, Nodo.Z)
-
-                        Nodo = Mesh.Nodes(Panel.N4).Position
-                        gl.Vertex(Nodo.X, Nodo.Y, Nodo.Z)
-
-                        Nodo = Mesh.Nodes(Panel.N1).Position
-                        gl.Vertex(Nodo.X, Nodo.Y, Nodo.Z)
-
-                    End If
-
-                    If Symmetric Then
-
-                        ' First triangle:
-
-                        Nodo = Mesh.Nodes(Panel.N1).Position
-                        gl.Vertex(Nodo.X, -Nodo.Y, Nodo.Z)
-
-                        Nodo = Mesh.Nodes(Panel.N2).Position
-                        gl.Vertex(Nodo.X, -Nodo.Y, Nodo.Z)
-
-                        Nodo = Mesh.Nodes(Panel.N3).Position
-                        gl.Vertex(Nodo.X, -Nodo.Y, Nodo.Z)
-
-                        ' Second triangle:
-
-                        If Not Panel.IsTriangular Then
-
-                            Nodo = Mesh.Nodes(Panel.N3).Position
-                            gl.Vertex(Nodo.X, -Nodo.Y, Nodo.Z)
-
-                            Nodo = Mesh.Nodes(Panel.N4).Position
-                            gl.Vertex(Nodo.X, -Nodo.Y, Nodo.Z)
-
-                            Nodo = Mesh.Nodes(Panel.N1).Position
-                            gl.Vertex(Nodo.X, -Nodo.Y, Nodo.Z)
-
-                        End If
-
-                    End If
-
-                    gl.End()
-                    gl.PopName()
-
-                Next
-
-            End If
-
-            ' Nodes:
-
-            gl.InitNames()
-            Code = Selection.GetSelectionCode(ComponentTypes.etLiftingSurface, ElementIndex, EntityTypes.etNode, 0)
-
-            gl.PointSize(VisualProperties.SizeNodes)
-            gl.Color(VisualProperties.ColorNodes.R / 255, VisualProperties.ColorNodes.G / 255, VisualProperties.ColorNodes.B / 255)
-
-            For Each Node In Mesh.Nodes
-
-                If ForSelection Or Node.Active Then
-
-                    gl.PushName(Code)
-                    Code += 1
-                    gl.Begin(OpenGL.GL_POINTS)
-                    gl.Vertex(Node.Position.X, Node.Position.Y, Node.Position.Z)
-                    If Symmetric Then
-                        gl.Vertex(Node.Position.X, -Node.Position.Y, Node.Position.Z)
-                    End If
-                    gl.End()
-                    gl.PopName()
-
-                End If
-
-            Next
-
-            ' Genera el mallado:
-
-            If ForSelection Or
-                VisualProperties.VisualizationMode = VisualizationMode.Lattice Or
-                VisualProperties.VisualizationMode = VisualizationMode.Structural Then
-
-                Dim SColor As New Vector3
-                SColor.X = 0.75
-                SColor.Y = 0.75
-                SColor.Z = 0.75
-                Dim Thickness As Double = 1.0
-
-                If (VisualProperties.VisualizationMode = VisualizationMode.Lattice) Then
-                    SColor.X = VisualProperties.ColorMesh.R / 255
-                    SColor.Y = VisualProperties.ColorMesh.G / 255
-                    SColor.Z = VisualProperties.ColorMesh.B / 255
-                    Thickness = VisualProperties.ThicknessMesh
-                End If
-
-                If ForSelection Or VisualProperties.ShowMesh Then
-
-                    gl.InitNames()
-
-                    Dim Nodo1 As Vector3
-                    Dim Nodo2 As Vector3
-
-                    gl.LineWidth(Thickness)
-                    gl.Color(SColor.X, SColor.Y, SColor.Z)
-
-                    Code = Selection.GetSelectionCode(ComponentTypes.etLiftingSurface, ElementIndex, EntityTypes.etSegment, 0)
-
-                    For Each Segment In Mesh.Lattice
-
-                        gl.PushName(Code)
-                        Code += 1
-
-                        gl.Begin(OpenGL.GL_LINES)
-                        Nodo1 = Mesh.Nodes(Segment.N1).Position
-                        Nodo2 = Mesh.Nodes(Segment.N2).Position
-
-                        gl.Vertex(Nodo1.X, Nodo1.Y, Nodo1.Z)
-                        gl.Vertex(Nodo2.X, Nodo2.Y, Nodo2.Z)
-
-                        If Symmetric Then
-
-                            gl.Begin(OpenGL.GL_LINES)
-                            Nodo1 = Mesh.Nodes(Segment.N1).Position
-                            Nodo2 = Mesh.Nodes(Segment.N2).Position
-
-                            gl.Vertex(Nodo1.X, -Nodo1.Y, Nodo1.Z)
-                            gl.Vertex(Nodo2.X, -Nodo2.Y, Nodo2.Z)
-
-                        End If
-
-                        gl.End()
-                        gl.PopName()
-
-                    Next
-
-                End If
-
-            End If
-
-            If VisualProperties.VisualizationMode = VisualizationMode.Structural Then
-
-                gl.Color(0, 0, 0)
-
-                Dim Nodo1 As Vector3
-                Dim Nodo2 As Vector3
-
-                Code = Selection.GetSelectionCode(ComponentTypes.etLiftingSurface, ElementIndex, EntityTypes.etStructuralElement, 0)
-                Dim Code2 As Integer = Selection.GetSelectionCode(ComponentTypes.etLiftingSurface, ElementIndex, EntityTypes.etStructuralNode, 0)
-
-                For i = 0 To _StructuralPartition.Count - 1
-
-                    Nodo2 = _StructuralPartition(i).P
-
-                    If (i > 0) Then
-
-                        gl.LineWidth(3.0)
-                        gl.Color(0.5, 0.5, 0.5, 1.0)
-                        gl.PushName(Code)
-                        Code += 1
-                        gl.Begin(OpenGL.GL_LINES)
-                        Nodo1 = _StructuralPartition(i - 1).P
-                        gl.Vertex(Nodo1.X, Nodo1.Y, Nodo1.Z)
-                        gl.Vertex(Nodo2.X, Nodo2.Y, Nodo2.Z)
-                        gl.End()
-                        gl.PopName()
-
-                        gl.LineWidth(1.0)
-                        gl.Enable(OpenGL.GL_LINE_STIPPLE)
-                        gl.LineStipple(2, &HC0F)
-                        gl.Begin(OpenGL.GL_LINES)
-                        gl.Vertex(
-                            Nodo1.X + _StructuralPartition(i - 1).Basis.V.X * _StructuralPartition(i - 1).LocalSection.CMy,
-                            Nodo1.Y + _StructuralPartition(i - 1).Basis.V.Y * _StructuralPartition(i - 1).LocalSection.CMy,
-                            Nodo1.Z + _StructuralPartition(i - 1).Basis.V.Z * _StructuralPartition(i - 1).LocalSection.CMy)
-                        gl.Vertex(
-                            Nodo2.X + _StructuralPartition(i).Basis.V.X * _StructuralPartition(i).LocalSection.CMy,
-                            Nodo2.Y + _StructuralPartition(i).Basis.V.Y * _StructuralPartition(i).LocalSection.CMy,
-                            Nodo2.Z + _StructuralPartition(i).Basis.V.Z * _StructuralPartition(i).LocalSection.CMy)
-                        gl.End()
-                        gl.Disable(OpenGL.GL_LINE_STIPPLE)
-
-                    End If
-
-                    gl.PointSize(4.0)
-                    gl.Color(0.0, 0.0, 0.0, 1.0)
-
-                    gl.Begin(OpenGL.GL_POINTS)
-
-                    ' Structural node:
-
-                    gl.PushName(Code2 + i + 1)
-                    gl.Vertex(Nodo2.X, Nodo2.Y, Nodo2.Z)
-                    gl.PopName()
-
-                    ' Mass node:
-
-                    gl.Color(0.0, 0.0, 0.0, 1.0)
-                    gl.Vertex(
-                        Nodo2.X + _StructuralPartition(i).Basis.V.X * _StructuralPartition(i).LocalSection.CMy,
-                        Nodo2.Y + _StructuralPartition(i).Basis.V.Y * _StructuralPartition(i).LocalSection.CMy,
-                        Nodo2.Z + _StructuralPartition(i).Basis.V.Z * _StructuralPartition(i).LocalSection.CMy)
-                    gl.End()
-
-                    If VisualProperties.ShowLocalCoordinates Then
-
-                        Dim base As Base3 = _StructuralPartition(i).Basis
-                        Dim l As Double
-
-                        If (i = 0) Then
-                            l = 0.5 * _StructuralPartition(0).P.DistanceTo(_StructuralPartition(1).P)
-                        Else
-                            l = 0.5 * _StructuralPartition(i - 1).P.DistanceTo(_StructuralPartition(i).P)
-                        End If
-
-                        gl.LineWidth(2.0)
-                        gl.Begin(OpenGL.GL_LINES)
-
-                        gl.Color(0.0, 1.0, 0.0, 1.0)
-                        gl.Vertex(Nodo2.X, Nodo2.Y, Nodo2.Z)
-                        gl.Vertex(Nodo2.X + l * base.U.X, Nodo2.Y + l * base.U.Y, Nodo2.Z + l * base.U.Z)
-
-                        gl.Color(1.0, 0.0, 0.0, 1.0)
-                        gl.Vertex(Nodo2.X, Nodo2.Y, Nodo2.Z)
-                        gl.Vertex(Nodo2.X + l * base.V.X, Nodo2.Y + l * base.V.Y, Nodo2.Z + l * base.V.Z)
-
-                        gl.Color(0.0, 0.0, 1.0, 1.0)
-                        gl.Vertex(Nodo2.X, Nodo2.Y, Nodo2.Z)
-                        gl.Vertex(Nodo2.X + l * base.W.X, Nodo2.Y + l * base.W.Y, Nodo2.Z + l * base.W.Z)
-
-                        gl.End()
-
-                    End If
-
-                Next
-
-            End If
-
-            ' Show local coordinates:
-
-            If VisualProperties.ShowLocalCoordinates Then
-
-                gl.LineWidth(2.0)
-                gl.Begin(OpenGL.GL_LINES)
-
-                gl.Color(0.0, 1.0, 0.0)
-                gl.Vertex(LocalOrigin.X, LocalOrigin.Y, LocalOrigin.Z)
-                gl.Vertex(_DirectionPoints.U.X, _DirectionPoints.U.Y, _DirectionPoints.U.Z)
-
-                gl.Color(1.0, 0.0, 0.0)
-                gl.Vertex(LocalOrigin.X, LocalOrigin.Y, LocalOrigin.Z)
-                gl.Vertex(_DirectionPoints.V.X, _DirectionPoints.V.Y, _DirectionPoints.V.Z)
-
-                gl.Color(0.0, 0.0, 1.0)
-                gl.Vertex(LocalOrigin.X, LocalOrigin.Y, LocalOrigin.Z)
-                gl.Vertex(_DirectionPoints.W.X, _DirectionPoints.W.Y, _DirectionPoints.W.Z)
-
-                gl.End()
-
-            End If
-
-            ' Normals:
-
-            If VisualProperties.ShowNormalVectors Then
-
-                gl.Begin(OpenGL.GL_LINES)
-
-                gl.Color(VisualProperties.ColorPositiveLoad.R / 255, VisualProperties.ColorPositiveLoad.G / 255, VisualProperties.ColorPositiveLoad.B / 255)
-
-                For Each Panel In Mesh.Panels
-                    gl.Vertex(Panel.ControlPoint.X, Panel.ControlPoint.Y, Panel.ControlPoint.Z)
-                    gl.Vertex(Panel.ControlPoint.X + Panel.NormalVector.X,
-                              Panel.ControlPoint.Y + Panel.NormalVector.Y,
-                              Panel.ControlPoint.Z + Panel.NormalVector.Z)
-
-                Next
-
-                gl.End()
-
-            End If
 
         End Sub
 

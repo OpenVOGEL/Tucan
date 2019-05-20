@@ -15,8 +15,6 @@
 'You should have received a copy Of the GNU General Public License
 'along with this program.  If Not, see < http:  //www.gnu.org/licenses/>.
 
-Imports System.IO
-Imports OpenVOGEL.MathTools.Algebra.EuclideanSpace
 Imports OpenVOGEL.AeroTools.CalculationModel
 Imports OpenVOGEL.AeroTools.CalculationModel.Solver
 Imports OpenVOGEL.AeroTools.CalculationModel.Models.Aero
@@ -25,11 +23,11 @@ Imports OpenVOGEL.AeroTools.CalculationModel.Models.Structural
 Imports OpenVOGEL.AeroTools.CalculationModel.Models.Structural.Library
 Imports OpenVOGEL.AeroTools.CalculationModel.Models.Structural.Library.Nodes
 Imports OpenVOGEL.AeroTools.CalculationModel.Models.Structural.Library.Elements
+Imports OpenVOGEL.AeroTools.CalculationModel.Settings
+Imports OpenVOGEL.MathTools.Algebra.EuclideanSpace
 Imports OpenVOGEL.DesignTools.VisualModel.Models
 Imports OpenVOGEL.DesignTools.VisualModel.Models.Components
-Imports System.Xml
 Imports System.Runtime.CompilerServices
-Imports OpenVOGEL.AeroTools.CalculationModel.Settings
 
 Namespace VisualModel.Models
 

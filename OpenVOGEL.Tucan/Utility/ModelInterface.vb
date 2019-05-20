@@ -15,12 +15,12 @@
 'You should have received a copy Of the GNU General Public License
 'along with this program.  If Not, see < http:  //www.gnu.org/licenses/>.
 
-Imports SharpGL
 Imports OpenVOGEL.MathTools.Algebra.EuclideanSpace
-Imports System.Xml
 Imports OpenVOGEL.DesignTools.VisualModel.Interface
 Imports OpenVOGEL.DesignTools.VisualModel.Models.Components
 Imports OpenVOGEL.DesignTools.DataStore
+Imports System.Xml
+Imports SharpGL
 
 Namespace Tucan.Utility
 
