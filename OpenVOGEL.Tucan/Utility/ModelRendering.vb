@@ -1267,7 +1267,7 @@ Namespace Tucan.Utility
                              .ColorNodes.G / 255,
                              .ColorNodes.B / 255, 1)
 
-                    For i = 1 To .NodesInDirection1 * .NodesInDirection2
+                    For i = 1 To .NumberOfNodes
                         gl.Vertex(.GetNode(i).X, .GetNode(i).Y, .GetNode(i).Z)
                     Next
 
@@ -1280,7 +1280,7 @@ Namespace Tucan.Utility
                              .ColorVectors.G / 255,
                              .ColorVectors.B / 255, 1)
 
-                    For i = 1 To .NodesInDirection1 * .NodesInDirection2
+                    For i = 1 To .NumberOfNodes
                         gl.Vertex(.GetNode(i).X, .GetNode(i).Y, .GetNode(i).Z)
                         gl.Vertex(.GetNode(i).X + .Scale * .GetInducedVelocity(i).X,
                                   .GetNode(i).Y + .Scale * .GetInducedVelocity(i).Y,

@@ -35,17 +35,21 @@ Module MainModule
             Select Case Line
 
                 Case "quit"
+
                     Quit = True
 
                 Case "test"
+
                     TestAerodynamicSolver()
 
                 Case "load"
+
                     System.Console.WriteLine("enter file name:")
                     DataStore.FilePath = System.Console.ReadLine
                     DataStore.ProjectRoot.ReadFromXML()
 
                 Case "steady"
+
                     AddHandler DataStore.PushMessage, AddressOf OutputMessage
                     AddHandler DataStore.PushProgress, AddressOf OutputProgress
                     DataStore.StartCalculation(AeroTools.CalculationModel.Settings.CalculationType.ctSteady)

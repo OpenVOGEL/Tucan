@@ -30,9 +30,9 @@ Public Class VelocityControl
 
     Public Sub Initialize()
 
-        Me.Ready = False
-        Me.Plane = ProjectRoot.VelocityPlane
-        Me.Ready = True And (Not Plane Is Nothing) And (ProjectRoot.Initialized)
+        Ready = False
+        Plane = ProjectRoot.VelocityPlane
+        Ready = True And (Not Plane Is Nothing) And (ProjectRoot.Initialized)
 
         If Ready Then Me.LoadDataToControl()
 
@@ -44,30 +44,30 @@ Public Class VelocityControl
 
         ModyfingData = True
 
-        Me.PsiBox.Value = MathTools.Conversion.RadToDeg(Plane.Psi)
-        Me.TitaBox.Value = MathTools.Conversion.RadToDeg(Plane.Tita)
+        PsiBox.Value = MathTools.Conversion.RadToDeg(Plane.Psi)
+        TitaBox.Value = MathTools.Conversion.RadToDeg(Plane.Tita)
 
-        Me.NxBox.Value = Plane.NodesInDirection1
-        Me.NyBox.Value = Plane.NodesInDirection2
+        NxBox.Value = Plane.NodesInDirection1
+        NyBox.Value = Plane.NodesInDirection2
 
-        Me.ExtensionX.Value = Plane.Extension1
-        Me.ExtensionY.Value = Plane.Extension2
+        ExtensionX.Value = Plane.Extension1
+        ExtensionY.Value = Plane.Extension2
 
-        Me.OrigenX.Value = Plane.Origin.X
-        Me.OrigenY.Value = Plane.Origin.Y
-        Me.OrigenZ.Value = Plane.Origin.Z
+        OrigenX.Value = Plane.Origin.X
+        OrigenY.Value = Plane.Origin.Y
+        OrigenZ.Value = Plane.Origin.Z
 
-        Me.VisualizarPlano.Checked = Plane.Visible
+        cbxVisible.Checked = Plane.Visible
 
-        Me.EscalaBox.Value = Plane.Scale
+        nudScale.Value = Plane.Scale
 
-        Me.VectorsSampleColor.BackColor = Plane.ColorVectors
-        Me.NodeSampleColor.BackColor = Plane.ColorNodes
-        Me.NodeSize.Value = Plane.NodeSize
-        Me.LineSize.Value = Plane.VectorThickness
+        VectorsSampleColor.BackColor = Plane.ColorVectors
+        NodeSampleColor.BackColor = Plane.ColorNodes
+        nudNodeSize.Value = Plane.NodeSize
+        nudLineSize.Value = Plane.VectorThickness
 
-        Me.rdInducedVelocity.Checked = Plane.InducedVelocity
-        Me.rdTotalVelocity.Checked = Not Plane.InducedVelocity
+        rdInducedVelocity.Checked = Plane.InducedVelocity
+        rdTotalVelocity.Checked = Not Plane.InducedVelocity
 
         ModyfingData = False
 
@@ -77,25 +77,25 @@ Public Class VelocityControl
 
         If Not Ready Then Exit Sub
 
-        Plane.Psi = MathTools.Conversion.DegToRad(Me.PsiBox.Value)
-        Plane.Tita = MathTools.Conversion.DegToRad(Me.TitaBox.Value)
+        Plane.Psi = MathTools.Conversion.DegToRad(PsiBox.Value)
+        Plane.Tita = MathTools.Conversion.DegToRad(TitaBox.Value)
 
-        Plane.NodesInDirection1 = Me.NxBox.Value
-        Plane.NodesInDirection2 = Me.NyBox.Value
+        Plane.NodesInDirection1 = NxBox.Value
+        Plane.NodesInDirection2 = NyBox.Value
 
-        Plane.Extension1 = Me.ExtensionX.Value
-        Plane.Extension2 = Me.ExtensionY.Value
+        Plane.Extension1 = ExtensionX.Value
+        Plane.Extension2 = ExtensionY.Value
 
-        Plane.Origin.X = Me.OrigenX.Value
-        Plane.Origin.Y = Me.OrigenY.Value
-        Plane.Origin.Z = Me.OrigenZ.Value
+        Plane.Origin.X = OrigenX.Value
+        Plane.Origin.Y = OrigenY.Value
+        Plane.Origin.Z = OrigenZ.Value
 
-        Plane.Scale = Me.EscalaBox.Value
+        Plane.Scale = nudScale.Value
 
-        Plane.Visible = Me.VisualizarPlano.Checked
-        Plane.InducedVelocity = Me.rdInducedVelocity.Checked
+        Plane.Visible = cbxVisible.Checked
+        Plane.InducedVelocity = rdInducedVelocity.Checked
 
-        Me.Plane.GenerateMesh()
+        Plane.GenerateMesh()
         ModelInterface.RepresentOnGL()
 
         RaiseEvent RefreshGL()
@@ -118,20 +118,27 @@ Public Class VelocityControl
 
         AquireDataFromControl()
         Plane.GenerateMesh()
-        Dim CantidadDeNodos As Integer = Plane.NumberOfNodes
-        Dim RefVelocity As New Vector3
 
-        If ProjectRoot.CalculationCore Is Nothing Then Exit Sub
+        If Plane.NumberOfNodes > 0 Then
 
-        Dim WithStreamOmega As Boolean = ProjectRoot.CalculationCore.Settings.Omega.EuclideanNorm > 0.0
+            Dim Count As Integer = Plane.NumberOfNodes
+            Dim RefVelocity As New Vector3
 
-        Dim Total As Boolean = Not Plane.InducedVelocity
+            If ProjectRoot.CalculationCore Is Nothing Then Exit Sub
 
-        Parallel.For(1, CantidadDeNodos + 1, Sub(i As Integer)
-                                                 Plane.GetInducedVelocity(i).Assign(ProjectRoot.CalculationCore.CalculateVelocityAtPoint(Plane.GetNode(i), Total, WithStreamOmega))
-                                                 Plane.GetInducedVelocity(i).ProjectOnPlane(Plane.NormalVector)
-                                             End Sub)
-        ModelInterface.RepresentOnGL()
+            Dim WithStreamOmega As Boolean = ProjectRoot.CalculationCore.Settings.Omega.EuclideanNorm > 0.0
+
+            Dim Total As Boolean = Not Plane.InducedVelocity
+
+            Parallel.For(1, Count + 1, Sub(i As Integer)
+                                           Plane.GetInducedVelocity(i).Assign(ProjectRoot.CalculationCore.CalculateVelocityAtPoint(Plane.GetNode(i),
+                                                                                                                                   Total,
+                                                                                                                                   WithStreamOmega))
+                                           Plane.GetInducedVelocity(i).ProjectOnPlane(Plane.NormalVector)
+                                       End Sub)
+            ModelInterface.RepresentOnGL()
+
+        End If
 
     End Sub
 
@@ -141,14 +148,14 @@ Public Class VelocityControl
 
     End Sub
 
-    Private Sub Calcular_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Calcular.Click
+    Private Sub btnCalculate_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnCalculate.Click
 
         CalculateVelocity()
         RaiseEvent RefreshGL()
 
     End Sub
 
-    Private Sub Formato_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Formato.Click
+    Private Sub btnFormat_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnFormat.Click
 
         If Not Ready Then Exit Sub
 
@@ -161,17 +168,17 @@ Public Class VelocityControl
 
     End Sub
 
-    Private Sub LineSize_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles LineSize.ValueChanged
+    Private Sub nudLineSize_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles nudLineSize.ValueChanged
         If Not Ready Then Exit Sub
-        Plane.VectorThickness = Me.LineSize.Value
+        Plane.VectorThickness = Me.nudLineSize.Value
     End Sub
 
-    Private Sub NodeSize_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles NodeSize.ValueChanged
+    Private Sub nudNodeSize_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles nudNodeSize.ValueChanged
         If Not Ready Then Exit Sub
-        Plane.NodeSize = Me.NodeSize.Value
+        Plane.NodeSize = Me.nudNodeSize.Value
     End Sub
 
-    Private Sub ColorNodo_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ColorNodo.Click
+    Private Sub nudNodeColor_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles nudNodeColor.Click
         If Not Ready Then Exit Sub
         Dim Result As MsgBoxResult = ColorsDialog.ShowDialog()
         If Result = MsgBoxResult.Ok Then
@@ -181,9 +188,9 @@ Public Class VelocityControl
         End If
     End Sub
 
-    Private Sub EscalaBox_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles EscalaBox.ValueChanged
+    Private Sub nudScale_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles nudScale.ValueChanged
         If Not Ready Then Exit Sub
-        Plane.Scale = Me.EscalaBox.Value
+        Plane.Scale = Me.nudScale.Value
         RaiseEvent RefreshGL()
     End Sub
 
@@ -192,7 +199,7 @@ Public Class VelocityControl
         If Visible Then Me.LoadDataToControl()
     End Sub
 
-    Private Sub VisualizarPlano_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles VisualizarPlano.CheckedChanged
+    Private Sub cbxVisible_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cbxVisible.CheckedChanged
         If Not ModyfingData Then AquireDataFromControl()
     End Sub
 

@@ -29,8 +29,8 @@ Namespace VisualModel.Models.Components
     ''' </summary>
     Public Class VelocityPlane
 
-        Private XYZVP(0) As Vector3
-        Private XYZVI(0) As Vector3
+        Private Points As New List(Of Vector3)
+        Private Vectors As New List(Of Vector3)
 
         Public Origin As New Vector3
 
@@ -88,26 +88,16 @@ Namespace VisualModel.Models.Components
 
         Public ReadOnly Property GetNode(ByVal Node As Integer) As Vector3
             Get
-                If 0 < Node <= XYZVP.Length Then
-                    Return XYZVP(Node)
-                Else
-                    Return New Vector3
-                End If
+                Return Points(Node - 1)
             End Get
         End Property
 
         Public Property GetInducedVelocity(ByVal Node As Integer) As Vector3
             Get
-                If 0 < Node <= XYZVI.Length Then
-                    Return XYZVI(Node)
-                Else
-                    Return New Vector3
-                End If
+                Return Vectors(Node - 1)
             End Get
             Set(ByVal value As Vector3)
-                If 0 < Node <= XYZVI.Length Then
-                    XYZVI(Node) = value
-                End If
+                Vectors(Node - 1) = value
             End Set
         End Property
 
@@ -137,49 +127,34 @@ Namespace VisualModel.Models.Components
 
         Public ReadOnly Property NumberOfNodes As Integer
             Get
-                If Not IsNothing(XYZVP) Then
-                    Return XYZVP.Length - 1
-                Else
-                    Return 0
-                End If
+                Return Points.Count
             End Get
         End Property
 
         Private Sub AddControlPoint(ByVal X As Double, ByVal Y As Double, ByVal Z As Double)
 
-            Dim Dimension As Integer = XYZVP.Length
+            Dim Point As New Vector3(X, Y, Z)
+            Points.Add(Point)
 
-            ReDim Preserve Me.XYZVP(Dimension)
-            ReDim Preserve Me.XYZVI(Dimension)
-
-            Me.XYZVI(Dimension) = New Vector3
-
-            Me.XYZVP(Dimension) = New Vector3
-            Me.XYZVP(Dimension).X = X
-            Me.XYZVP(Dimension).Y = Y
-            Me.XYZVP(Dimension).Z = Z
+            Dim Vector As New Vector3
+            Vectors.Add(Vector)
 
         End Sub
 
         Private Sub AddControlPoint(ByVal Point As Vector3)
 
-            Dim Dimension As Integer = XYZVP.Length
+            Dim NewPoint As New Vector3(Point)
+            Points.Add(NewPoint)
 
-            ReDim Preserve Me.XYZVP(Dimension)
-            ReDim Preserve Me.XYZVI(Dimension)
-
-            Me.XYZVI(Dimension) = New Vector3
-
-            Me.XYZVP(Dimension) = New Vector3
-            Me.XYZVP(Dimension).X = Point.X
-            Me.XYZVP(Dimension).Y = Point.Y
-            Me.XYZVP(Dimension).Z = Point.Z
+            Dim Vector As New Vector3
+            Vectors.Add(Vector)
 
         End Sub
 
         Public Sub GenerateMesh()
 
-            ReDim Preserve Me.XYZVP(0)
+            Points.Clear()
+            Vectors.Clear()
 
             Direction1.X = Math.Cos(Psi)
             Direction1.Y = Math.Sin(Psi)
@@ -191,24 +166,24 @@ Namespace VisualModel.Models.Components
 
             Dim Coordinate1 As Double
             Dim Coordinate2 As Double
-            Dim Punto As New Vector3
+            Dim Point As New Vector3
 
             Direction1.Normalize()
             Direction2.Normalize()
 
             For i = 1 To NodesInDirection1
 
-                Coordinate1 = Extension1 * ((i - 1) / (NodesInDirection1 - 1) - 0.5) 'De 0.5 a -0.5
+                Coordinate1 = Extension1 * ((i - 1) / (NodesInDirection1 - 1) - 0.5) 'from 0.5 to -0.5
 
                 For j = 1 To NodesInDirection2
 
-                    Coordinate2 = Extension2 * ((j - 1) / (NodesInDirection2 - 1) - 0.5) 'De 0.5 a -0.5
+                    Coordinate2 = Extension2 * ((j - 1) / (NodesInDirection2 - 1) - 0.5) 'from 0.5 to -0.5
 
-                    Punto.X = Coordinate1 * Direction1.X + Coordinate2 * Direction2.X + Origin.X
-                    Punto.Y = Coordinate1 * Direction1.Y + Coordinate2 * Direction2.Y + Origin.Y
-                    Punto.Z = Coordinate1 * Direction1.Z + Coordinate2 * Direction2.Z + Origin.Z
+                    Point.X = Coordinate1 * Direction1.X + Coordinate2 * Direction2.X + Origin.X
+                    Point.Y = Coordinate1 * Direction1.Y + Coordinate2 * Direction2.Y + Origin.Y
+                    Point.Z = Coordinate1 * Direction1.Z + Coordinate2 * Direction2.Z + Origin.Z
 
-                    Me.AddControlPoint(Punto)
+                    AddControlPoint(Point)
 
                 Next
 
@@ -242,7 +217,7 @@ Namespace VisualModel.Models.Components
             writer.WriteAttributeString("Z", String.Format("{0}", Origin.Z))
             writer.WriteEndElement()
 
-            writer.WriteStartElement("Exstension")
+            writer.WriteStartElement("Extension")
             writer.WriteAttributeString("Extension1", String.Format("{0}", Extension1))
             writer.WriteAttributeString("Extension2", String.Format("{0}", Extension2))
             writer.WriteAttributeString("Nodes1", String.Format("{0}", _NodesInDirection1))

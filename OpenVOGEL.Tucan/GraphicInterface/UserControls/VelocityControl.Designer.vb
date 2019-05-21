@@ -27,17 +27,17 @@ Partial Class VelocityControl
         Me.Label14 = New System.Windows.Forms.Label()
         Me.Label13 = New System.Windows.Forms.Label()
         Me.NodeSampleColor = New System.Windows.Forms.PictureBox()
-        Me.ColorNodo = New System.Windows.Forms.Button()
-        Me.NodeSize = New System.Windows.Forms.NumericUpDown()
-        Me.LineSize = New System.Windows.Forms.NumericUpDown()
+        Me.nudNodeColor = New System.Windows.Forms.Button()
+        Me.nudNodeSize = New System.Windows.Forms.NumericUpDown()
+        Me.nudLineSize = New System.Windows.Forms.NumericUpDown()
         Me.VectorsSampleColor = New System.Windows.Forms.PictureBox()
-        Me.Formato = New System.Windows.Forms.Button()
-        Me.EscalaBox = New System.Windows.Forms.NumericUpDown()
+        Me.btnFormat = New System.Windows.Forms.Button()
+        Me.nudScale = New System.Windows.Forms.NumericUpDown()
         Me.Label12 = New System.Windows.Forms.Label()
         Me.rdInducedVelocity = New System.Windows.Forms.RadioButton()
         Me.rdTotalVelocity = New System.Windows.Forms.RadioButton()
-        Me.VisualizarPlano = New System.Windows.Forms.CheckBox()
-        Me.Calcular = New System.Windows.Forms.Button()
+        Me.cbxVisible = New System.Windows.Forms.CheckBox()
+        Me.btnCalculate = New System.Windows.Forms.Button()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
         Me.Label9 = New System.Windows.Forms.Label()
         Me.Label10 = New System.Windows.Forms.Label()
@@ -65,10 +65,10 @@ Partial Class VelocityControl
         Me.btnOk = New System.Windows.Forms.Button()
         Me.gbViewOptions.SuspendLayout()
         CType(Me.NodeSampleColor, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.NodeSize, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.LineSize, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.nudNodeSize, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.nudLineSize, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.VectorsSampleColor, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.EscalaBox, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.nudScale, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupBox1.SuspendLayout()
         CType(Me.NyBox, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.NxBox, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -99,12 +99,12 @@ Partial Class VelocityControl
         Me.gbViewOptions.Controls.Add(Me.Label14)
         Me.gbViewOptions.Controls.Add(Me.Label13)
         Me.gbViewOptions.Controls.Add(Me.NodeSampleColor)
-        Me.gbViewOptions.Controls.Add(Me.ColorNodo)
-        Me.gbViewOptions.Controls.Add(Me.NodeSize)
-        Me.gbViewOptions.Controls.Add(Me.LineSize)
+        Me.gbViewOptions.Controls.Add(Me.nudNodeColor)
+        Me.gbViewOptions.Controls.Add(Me.nudNodeSize)
+        Me.gbViewOptions.Controls.Add(Me.nudLineSize)
         Me.gbViewOptions.Controls.Add(Me.VectorsSampleColor)
-        Me.gbViewOptions.Controls.Add(Me.Formato)
-        Me.gbViewOptions.Controls.Add(Me.EscalaBox)
+        Me.gbViewOptions.Controls.Add(Me.btnFormat)
+        Me.gbViewOptions.Controls.Add(Me.nudScale)
         Me.gbViewOptions.Controls.Add(Me.Label12)
         Me.gbViewOptions.Location = New System.Drawing.Point(0, 230)
         Me.gbViewOptions.Name = "gbViewOptions"
@@ -146,44 +146,44 @@ Partial Class VelocityControl
         '
         'ColorNodo
         '
-        Me.ColorNodo.BackColor = System.Drawing.Color.White
-        Me.ColorNodo.FlatAppearance.BorderColor = System.Drawing.Color.Gray
-        Me.ColorNodo.FlatAppearance.MouseDownBackColor = System.Drawing.Color.PaleGreen
-        Me.ColorNodo.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DeepSkyBlue
-        Me.ColorNodo.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.ColorNodo.Font = New System.Drawing.Font("Segoe UI", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.ColorNodo.ForeColor = System.Drawing.Color.Black
-        Me.ColorNodo.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.ColorNodo.Location = New System.Drawing.Point(159, 76)
-        Me.ColorNodo.Name = "ColorNodo"
-        Me.ColorNodo.Size = New System.Drawing.Size(39, 22)
-        Me.ColorNodo.TabIndex = 126
-        Me.ColorNodo.Text = "Color"
-        Me.ColorNodo.UseVisualStyleBackColor = False
+        Me.nudNodeColor.BackColor = System.Drawing.Color.White
+        Me.nudNodeColor.FlatAppearance.BorderColor = System.Drawing.Color.Gray
+        Me.nudNodeColor.FlatAppearance.MouseDownBackColor = System.Drawing.Color.PaleGreen
+        Me.nudNodeColor.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DeepSkyBlue
+        Me.nudNodeColor.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.nudNodeColor.Font = New System.Drawing.Font("Segoe UI", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.nudNodeColor.ForeColor = System.Drawing.Color.Black
+        Me.nudNodeColor.ImeMode = System.Windows.Forms.ImeMode.NoControl
+        Me.nudNodeColor.Location = New System.Drawing.Point(159, 76)
+        Me.nudNodeColor.Name = "ColorNodo"
+        Me.nudNodeColor.Size = New System.Drawing.Size(39, 22)
+        Me.nudNodeColor.TabIndex = 126
+        Me.nudNodeColor.Text = "Color"
+        Me.nudNodeColor.UseVisualStyleBackColor = False
         '
         'NodeSize
         '
-        Me.NodeSize.DecimalPlaces = 2
-        Me.NodeSize.Increment = New Decimal(New Integer() {5, 0, 0, 131072})
-        Me.NodeSize.Location = New System.Drawing.Point(68, 76)
-        Me.NodeSize.Maximum = New Decimal(New Integer() {5, 0, 0, 0})
-        Me.NodeSize.Name = "NodeSize"
-        Me.NodeSize.Size = New System.Drawing.Size(44, 22)
-        Me.NodeSize.TabIndex = 124
-        Me.NodeSize.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        Me.NodeSize.Value = New Decimal(New Integer() {25, 0, 0, 65536})
+        Me.nudNodeSize.DecimalPlaces = 2
+        Me.nudNodeSize.Increment = New Decimal(New Integer() {5, 0, 0, 131072})
+        Me.nudNodeSize.Location = New System.Drawing.Point(68, 76)
+        Me.nudNodeSize.Maximum = New Decimal(New Integer() {5, 0, 0, 0})
+        Me.nudNodeSize.Name = "NodeSize"
+        Me.nudNodeSize.Size = New System.Drawing.Size(44, 22)
+        Me.nudNodeSize.TabIndex = 124
+        Me.nudNodeSize.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.nudNodeSize.Value = New Decimal(New Integer() {25, 0, 0, 65536})
         '
         'LineSize
         '
-        Me.LineSize.DecimalPlaces = 2
-        Me.LineSize.Increment = New Decimal(New Integer() {5, 0, 0, 131072})
-        Me.LineSize.Location = New System.Drawing.Point(68, 48)
-        Me.LineSize.Maximum = New Decimal(New Integer() {5, 0, 0, 0})
-        Me.LineSize.Name = "LineSize"
-        Me.LineSize.Size = New System.Drawing.Size(44, 22)
-        Me.LineSize.TabIndex = 122
-        Me.LineSize.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        Me.LineSize.Value = New Decimal(New Integer() {2, 0, 0, 65536})
+        Me.nudLineSize.DecimalPlaces = 2
+        Me.nudLineSize.Increment = New Decimal(New Integer() {5, 0, 0, 131072})
+        Me.nudLineSize.Location = New System.Drawing.Point(68, 48)
+        Me.nudLineSize.Maximum = New Decimal(New Integer() {5, 0, 0, 0})
+        Me.nudLineSize.Name = "LineSize"
+        Me.nudLineSize.Size = New System.Drawing.Size(44, 22)
+        Me.nudLineSize.TabIndex = 122
+        Me.nudLineSize.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.nudLineSize.Value = New Decimal(New Integer() {2, 0, 0, 65536})
         '
         'VectorsSampleColor
         '
@@ -198,32 +198,32 @@ Partial Class VelocityControl
         '
         'Formato
         '
-        Me.Formato.BackColor = System.Drawing.Color.White
-        Me.Formato.FlatAppearance.BorderColor = System.Drawing.Color.Gray
-        Me.Formato.FlatAppearance.MouseDownBackColor = System.Drawing.Color.PaleGreen
-        Me.Formato.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DeepSkyBlue
-        Me.Formato.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Formato.Font = New System.Drawing.Font("Segoe UI", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Formato.ForeColor = System.Drawing.Color.Black
-        Me.Formato.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.Formato.Location = New System.Drawing.Point(159, 48)
-        Me.Formato.Name = "Formato"
-        Me.Formato.Size = New System.Drawing.Size(39, 22)
-        Me.Formato.TabIndex = 120
-        Me.Formato.Text = "Color"
-        Me.Formato.UseVisualStyleBackColor = False
+        Me.btnFormat.BackColor = System.Drawing.Color.White
+        Me.btnFormat.FlatAppearance.BorderColor = System.Drawing.Color.Gray
+        Me.btnFormat.FlatAppearance.MouseDownBackColor = System.Drawing.Color.PaleGreen
+        Me.btnFormat.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DeepSkyBlue
+        Me.btnFormat.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnFormat.Font = New System.Drawing.Font("Segoe UI", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnFormat.ForeColor = System.Drawing.Color.Black
+        Me.btnFormat.ImeMode = System.Windows.Forms.ImeMode.NoControl
+        Me.btnFormat.Location = New System.Drawing.Point(159, 48)
+        Me.btnFormat.Name = "Formato"
+        Me.btnFormat.Size = New System.Drawing.Size(39, 22)
+        Me.btnFormat.TabIndex = 120
+        Me.btnFormat.Text = "Color"
+        Me.btnFormat.UseVisualStyleBackColor = False
         '
         'EscalaBox
         '
-        Me.EscalaBox.DecimalPlaces = 3
-        Me.EscalaBox.Increment = New Decimal(New Integer() {1, 0, 0, 65536})
-        Me.EscalaBox.Location = New System.Drawing.Point(52, 18)
-        Me.EscalaBox.Maximum = New Decimal(New Integer() {1000, 0, 0, 0})
-        Me.EscalaBox.Minimum = New Decimal(New Integer() {1000, 0, 0, -2147483648})
-        Me.EscalaBox.Name = "EscalaBox"
-        Me.EscalaBox.Size = New System.Drawing.Size(61, 22)
-        Me.EscalaBox.TabIndex = 117
-        Me.EscalaBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.nudScale.DecimalPlaces = 3
+        Me.nudScale.Increment = New Decimal(New Integer() {1, 0, 0, 65536})
+        Me.nudScale.Location = New System.Drawing.Point(52, 18)
+        Me.nudScale.Maximum = New Decimal(New Integer() {1000, 0, 0, 0})
+        Me.nudScale.Minimum = New Decimal(New Integer() {1000, 0, 0, -2147483648})
+        Me.nudScale.Name = "EscalaBox"
+        Me.nudScale.Size = New System.Drawing.Size(61, 22)
+        Me.nudScale.TabIndex = 117
+        Me.nudScale.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'Label12
         '
@@ -259,31 +259,31 @@ Partial Class VelocityControl
         '
         'VisualizarPlano
         '
-        Me.VisualizarPlano.AutoSize = True
-        Me.VisualizarPlano.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.VisualizarPlano.Location = New System.Drawing.Point(152, 187)
-        Me.VisualizarPlano.Name = "VisualizarPlano"
-        Me.VisualizarPlano.Size = New System.Drawing.Size(60, 17)
-        Me.VisualizarPlano.TabIndex = 116
-        Me.VisualizarPlano.Text = "Visible"
-        Me.VisualizarPlano.UseVisualStyleBackColor = True
+        Me.cbxVisible.AutoSize = True
+        Me.cbxVisible.ImeMode = System.Windows.Forms.ImeMode.NoControl
+        Me.cbxVisible.Location = New System.Drawing.Point(152, 187)
+        Me.cbxVisible.Name = "VisualizarPlano"
+        Me.cbxVisible.Size = New System.Drawing.Size(60, 17)
+        Me.cbxVisible.TabIndex = 116
+        Me.cbxVisible.Text = "Visible"
+        Me.cbxVisible.UseVisualStyleBackColor = True
         '
         'Calcular
         '
-        Me.Calcular.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Calcular.BackColor = System.Drawing.Color.White
-        Me.Calcular.FlatAppearance.BorderColor = System.Drawing.Color.Gray
-        Me.Calcular.FlatAppearance.MouseDownBackColor = System.Drawing.Color.PaleGreen
-        Me.Calcular.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DeepSkyBlue
-        Me.Calcular.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Calcular.ForeColor = System.Drawing.Color.Black
-        Me.Calcular.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.Calcular.Location = New System.Drawing.Point(150, 501)
-        Me.Calcular.Name = "Calcular"
-        Me.Calcular.Size = New System.Drawing.Size(65, 23)
-        Me.Calcular.TabIndex = 124
-        Me.Calcular.Text = "Calculate"
-        Me.Calcular.UseVisualStyleBackColor = False
+        Me.btnCalculate.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.btnCalculate.BackColor = System.Drawing.Color.White
+        Me.btnCalculate.FlatAppearance.BorderColor = System.Drawing.Color.Gray
+        Me.btnCalculate.FlatAppearance.MouseDownBackColor = System.Drawing.Color.PaleGreen
+        Me.btnCalculate.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DeepSkyBlue
+        Me.btnCalculate.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnCalculate.ForeColor = System.Drawing.Color.Black
+        Me.btnCalculate.ImeMode = System.Windows.Forms.ImeMode.NoControl
+        Me.btnCalculate.Location = New System.Drawing.Point(150, 501)
+        Me.btnCalculate.Name = "Calcular"
+        Me.btnCalculate.Size = New System.Drawing.Size(65, 23)
+        Me.btnCalculate.TabIndex = 124
+        Me.btnCalculate.Text = "Calculate"
+        Me.btnCalculate.UseVisualStyleBackColor = False
         '
         'GroupBox1
         '
@@ -582,19 +582,19 @@ Partial Class VelocityControl
         Me.Controls.Add(Me.BarraDeEstado)
         Me.Controls.Add(Me.rdTotalVelocity)
         Me.Controls.Add(Me.gbViewOptions)
-        Me.Controls.Add(Me.Calcular)
+        Me.Controls.Add(Me.btnCalculate)
         Me.Controls.Add(Me.GroupBox1)
-        Me.Controls.Add(Me.VisualizarPlano)
+        Me.Controls.Add(Me.cbxVisible)
         Me.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Name = "VelocityControl"
         Me.Size = New System.Drawing.Size(218, 530)
         Me.gbViewOptions.ResumeLayout(False)
         Me.gbViewOptions.PerformLayout()
         CType(Me.NodeSampleColor, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.NodeSize, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.LineSize, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.nudNodeSize, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.nudLineSize, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.VectorsSampleColor, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.EscalaBox, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.nudScale, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupBox1.ResumeLayout(False)
         Me.GroupBox1.PerformLayout()
         CType(Me.NyBox, System.ComponentModel.ISupportInitialize).EndInit()
@@ -613,15 +613,15 @@ Partial Class VelocityControl
     Friend WithEvents BarraDeEstado As System.Windows.Forms.ProgressBar
     Friend WithEvents gbViewOptions As System.Windows.Forms.GroupBox
     Friend WithEvents NodeSampleColor As System.Windows.Forms.PictureBox
-    Friend WithEvents ColorNodo As System.Windows.Forms.Button
-    Friend WithEvents NodeSize As System.Windows.Forms.NumericUpDown
-    Friend WithEvents VisualizarPlano As System.Windows.Forms.CheckBox
-    Friend WithEvents LineSize As System.Windows.Forms.NumericUpDown
+    Friend WithEvents nudNodeColor As System.Windows.Forms.Button
+    Friend WithEvents nudNodeSize As System.Windows.Forms.NumericUpDown
+    Friend WithEvents cbxVisible As System.Windows.Forms.CheckBox
+    Friend WithEvents nudLineSize As System.Windows.Forms.NumericUpDown
     Friend WithEvents VectorsSampleColor As System.Windows.Forms.PictureBox
-    Friend WithEvents Formato As System.Windows.Forms.Button
-    Friend WithEvents EscalaBox As System.Windows.Forms.NumericUpDown
+    Friend WithEvents btnFormat As System.Windows.Forms.Button
+    Friend WithEvents nudScale As System.Windows.Forms.NumericUpDown
     Friend WithEvents Label12 As System.Windows.Forms.Label
-    Friend WithEvents Calcular As System.Windows.Forms.Button
+    Friend WithEvents btnCalculate As System.Windows.Forms.Button
     Friend WithEvents GroupBox1 As System.Windows.Forms.GroupBox
     Friend WithEvents Label9 As System.Windows.Forms.Label
     Friend WithEvents Label10 As System.Windows.Forms.Label
