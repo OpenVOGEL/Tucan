@@ -74,8 +74,8 @@ Module MainModule
         System.Console.WriteLine(Message)
     End Sub
 
-    Private Sub OutputProgress(Progress As Integer)
-        System.Console.WriteLine(String.Format("Step {0}", Progress))
+    Private Sub OutputProgress(Title As String, Value As Integer)
+        System.Console.WriteLine(Title)
     End Sub
 
 End Module

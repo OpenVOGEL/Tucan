@@ -216,7 +216,7 @@ Namespace DataStore
         ''' Occurs when the calculation finishes.
         ''' </summary>
         ''' <remarks></remarks>
-        Public Event PushProgress(Progress As Integer)
+        Public Event PushProgress(Title As String, Value As Integer)
 
         ''' <summary>
         ''' Occurs when the calculation finishes.
@@ -229,9 +229,9 @@ Namespace DataStore
         ''' </summary>
         ''' <param name="Progress"></param>
         ''' <param name="Message"></param>
-        Public Sub HandleProgress(Progress As Integer, Message As String)
+        Public Sub HandleProgress(Title As String, Value As Integer)
 
-            RaiseEvent PushProgress(Progress)
+            RaiseEvent PushProgress(Title, Value)
 
         End Sub
 
