@@ -23,7 +23,7 @@ Module MainModule
 
     Sub Main()
 
-        System.Console.WriteLine("** OpenVOGEL console **")
+        System.Console.WriteLine("** OpenVOGEL console Version 1.0 **")
 
         ProjectRoot.Initialize()
 
