@@ -15,16 +15,17 @@
 'You should have received a copy Of the GNU General Public License
 'along with this program.  If Not, see < http:  //www.gnu.org/licenses/>.
 
-Imports OpenVOGEL.AeroTools.CalculationModel.Models.Aero.Components
-Imports OpenVOGEL.MathTools.Algebra.CustomMatrices
-Imports OpenVOGEL.MathTools.Algebra.EuclideanSpace
+Imports System.IO
 Imports OpenVOGEL.DesignTools
+Imports OpenVOGEL.DesignTools.DataStore
 
 Module MainModule
 
     Sub Main()
 
         System.Console.WriteLine("** OpenVOGEL console **")
+
+        ProjectRoot.Initialize()
 
         Dim Quit As Boolean = False
 
@@ -54,12 +55,36 @@ Module MainModule
                     AddHandler DataStore.PushProgress, AddressOf OutputProgress
                     DataStore.StartCalculation(AeroTools.CalculationModel.Settings.CalculationType.ctSteady)
 
-                Case "report"
+                Case "print report"
 
                     If DataStore.ProjectRoot.CalculationCore IsNot Nothing Then
 
                         AddHandler DataStore.ProjectRoot.CalculationCore.PushResultLine, AddressOf OutputMessage
                         DataStore.ProjectRoot.CalculationCore.ReportResults()
+
+                    End If
+
+                Case "save report"
+
+                    If DataStore.ProjectRoot.CalculationCore IsNot Nothing Then
+
+                        System.Console.WriteLine("enter destination file:")
+                        Dim FileName As String = System.Console.ReadLine
+                        Dim Append As Boolean = True
+                        If File.Exists(FileName) Then
+                            System.Console.WriteLine("the file already exists, append?")
+                            If System.Console.ReadLine = "n" Then
+                                Append = False
+                            End If
+                        End If
+                        System.Console.WriteLine("Writing results to file")
+                        OutputFile = My.Computer.FileSystem.OpenTextFileWriter(FileName, Append)
+                        OutputFile.WriteLine("----------------------------------------------")
+                        OutputFile.WriteLine("|            OpenVOGEL results               |")
+                        OutputFile.WriteLine("----------------------------------------------")
+                        AddHandler DataStore.ProjectRoot.CalculationCore.PushResultLine, AddressOf WriteToFile
+                        DataStore.ProjectRoot.CalculationCore.ReportResults()
+                        System.Console.WriteLine("Done")
 
                     End If
 
@@ -76,6 +101,14 @@ Module MainModule
 
     Private Sub OutputProgress(Title As String, Value As Integer)
         System.Console.WriteLine(Title)
+    End Sub
+
+    Private OutputFile As StreamWriter
+
+    Private Sub WriteToFile(Line As String)
+        If OutputFile IsNot Nothing Then
+            OutputFile.WriteLine(Line)
+        End If
     End Sub
 
 End Module
