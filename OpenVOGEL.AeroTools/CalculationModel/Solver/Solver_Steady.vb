@@ -27,6 +27,9 @@ Namespace CalculationModel.Solver
         ''' </summary>
         Public Sub SteadyState(ByVal DataBasePath As String)
 
+            RaiseEvent PushMessage("Starting steady analysis")
+            RaiseEvent PushMessage("Solver version: " & Version)
+
             CheckForSources()
 
             TestOpenCL()

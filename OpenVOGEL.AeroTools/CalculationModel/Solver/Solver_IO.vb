@@ -27,6 +27,11 @@ Namespace CalculationModel.Solver
     Partial Public Class Solver
 
         ''' <summary>
+        ''' The version of the solver
+        ''' </summary>
+        Public Const Version As String = "1.1-2019.05"
+
+        ''' <summary>
         ''' Read a written step
         ''' </summary>
         ''' <param name="FilePath"></param>
@@ -128,7 +133,9 @@ Namespace CalculationModel.Solver
 
             Dim writer As XmlWriter = XmlWriter.Create(FilePath)
 
-            writer.WriteStartElement("Solver", "UVLMSolver")
+            writer.WriteStartElement("Solver")
+
+            writer.WriteAttributeString("Version", Version)
 
             writer.WriteAttributeString("VX", _StreamVelocity.X)
             writer.WriteAttributeString("VY", _StreamVelocity.Y)
@@ -153,7 +160,7 @@ Namespace CalculationModel.Solver
                 Next
             End If
 
-            writer.WriteStartElement("Simulacion", "TSimulacion")
+            writer.WriteStartElement("Simulacion")
             Settings.SaveToXML(writer)
             writer.WriteEndElement()
 

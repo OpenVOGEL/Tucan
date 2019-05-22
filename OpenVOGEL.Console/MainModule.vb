@@ -23,7 +23,9 @@ Module MainModule
 
     Sub Main()
 
-        System.Console.WriteLine("** OpenVOGEL console Version 1.0 **")
+        System.Console.WriteLine("** OpenVOGEL **")
+        System.Console.WriteLine("Console version: 1.0")
+        System.Console.WriteLine("Solver  version: " & AeroTools.CalculationModel.Solver.Solver.Version)
 
         ProjectRoot.Initialize()
 
