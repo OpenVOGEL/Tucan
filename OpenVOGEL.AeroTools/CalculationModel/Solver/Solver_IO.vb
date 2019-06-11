@@ -29,7 +29,7 @@ Namespace CalculationModel.Solver
         ''' <summary>
         ''' The version of the solver
         ''' </summary>
-        Public Const Version As String = "1.1-2019.05"
+        Public Const Version As String = "1.1-2019.06"
 
         ''' <summary>
         ''' Read a written step
@@ -39,15 +39,15 @@ Namespace CalculationModel.Solver
         Public Sub ReadFromXML(ByVal FilePath As String)
 
             If Not File.Exists(FilePath) Then
-                RaiseEvent PushMessage("results file not found")
+                RaiseEvent PushMessage("Results file not found!")
                 Exit Sub
             End If
 
             Dim reader As XmlReader = XmlReader.Create(FilePath)
 
-            If reader.ReadToFollowing("Solver", "UVLMSolver") Then
+            If reader.ReadToFollowing("Solver") Then
 
-                Dim nBLattices As Integer = reader.GetAttribute("BLattices")
+                Dim nLattices As Integer = reader.GetAttribute("Lattices")
                 Dim nLinks As Integer = reader.GetAttribute("Links")
 
                 _StreamVelocity.X = IOXML.ReadDouble(reader, "VX", 1.0)
@@ -73,7 +73,7 @@ Namespace CalculationModel.Solver
                     PolarDataBase = Nothing
                 End Try
 
-                For i = 1 To nBLattices
+                For i = 1 To nLattices
                     Lattices.Add(New BoundedLattice())
                     Lattices(i - 1).ReadBinary(FilePath & String.Format(".lat_{0}.bin", i), PolarDataBase)
                 Next
@@ -108,10 +108,10 @@ Namespace CalculationModel.Solver
 
                 End If
 
-                If reader.ReadToFollowing("Simulacion", "TSimulacion") Then
+                If reader.ReadToFollowing("Settings") Then
                     Settings.ReadFromXML(reader.ReadSubtree)
                 Else
-                    MsgBox("Warning! Unable to read simulation parameters.")
+                    RaiseEvent PushMessage("Warning: unable to read settings")
                 End If
 
             End If
@@ -145,7 +145,7 @@ Namespace CalculationModel.Solver
             writer.WriteAttributeString("OZ", _StreamOmega.Z)
             writer.WriteAttributeString("Rho", _StreamDensity)
 
-            writer.WriteAttributeString("BLattices", Lattices.Count)
+            writer.WriteAttributeString("Lattices", Lattices.Count)
 
             For i = 1 To Lattices.Count
                 Lattices(i - 1).WriteBinary(FilePath & String.Format(".lat_{0}.bin", i), WakesNodalVelocity)
@@ -160,7 +160,7 @@ Namespace CalculationModel.Solver
                 Next
             End If
 
-            writer.WriteStartElement("Simulacion")
+            writer.WriteStartElement("Settings")
             Settings.SaveToXML(writer)
             writer.WriteEndElement()
 
