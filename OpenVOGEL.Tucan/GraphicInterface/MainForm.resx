@@ -617,7 +617,7 @@
     <value>mrRibbon</value>
   </data>
   <data name="&gt;&gt;mrRibbon.Type" xml:space="preserve">
-    <value>OpenVOGEL.DesignTools.MainRibbon, OpenVOGEL.DesignTools, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>OpenVOGEL.MainRibbon, Tucan, Version=2019.0.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;mrRibbon.Parent" xml:space="preserve">
     <value>$this</value>

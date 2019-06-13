@@ -40,7 +40,7 @@ Partial Class MainForm
         Me.sbHorizontal = New System.Windows.Forms.HScrollBar()
         Me.lblStatus = New System.Windows.Forms.ToolStripStatusLabel()
         Me.ssStatus = New System.Windows.Forms.StatusStrip()
-        Me.mrRibbon = New MainRibbon()
+        Me.mrRibbon = New OpenVOGEL.MainRibbon()
         CType(Me.ControlOpenGL, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.scMain, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.scMain.Panel2.SuspendLayout()
