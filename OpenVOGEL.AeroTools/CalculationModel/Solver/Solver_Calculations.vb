@@ -315,7 +315,7 @@ Namespace CalculationModel.Solver
 
                                 If OtherVortexRing.IndexG = VortexRing.IndexG Then
 
-                                    'principal value:
+                                    ' Force autoinfluence to 1/2 (exact solution)
 
                                     MatrixDoublets(Row, OtherVortexRing.IndexG) = 0.5#
 

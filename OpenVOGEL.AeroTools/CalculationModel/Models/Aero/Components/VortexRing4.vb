@@ -204,15 +204,16 @@ Namespace CalculationModel.Models.Aero.Components
         Const FourPi As Double = 4 * Math.PI
 
         ''' <summary>
+        ''' Collocation point delta
+        ''' </summary>
+        ''' <remarks></remarks>
+        Const Delta As Double = 0.0001
+
+        ''' <summary>
         ''' Minimum value of the Biot-Savart denominator
         ''' </summary>
         ''' <remarks></remarks>
         Const Epsilon As Double = 0.00000001
-
-        ''' <summary>
-        ''' Pi divided by 2
-        ''' </summary>
-        Const PI_div_2 As Double = 0.5 * Math.PI
 
 #End Region
 
@@ -292,11 +293,11 @@ Namespace CalculationModel.Models.Aero.Components
         ''' <remarks></remarks>
         Public Sub CalculateGeometricEntities() Implements VortexRing.CalculateGeometricEntities
 
-            ' Middle control points:
+            ' Middle control point:
 
-            _MidleControlPoint.X = 0.25 * (Node(1).Position.X + Node(2).Position.X + Node(3).Position.X + Node(4).Position.X)
-            _MidleControlPoint.Y = 0.25 * (Node(1).Position.Y + Node(2).Position.Y + Node(3).Position.Y + Node(4).Position.Y)
-            _MidleControlPoint.Z = 0.25 * (Node(1).Position.Z + Node(2).Position.Z + Node(3).Position.Z + Node(4).Position.Z)
+            _MidleControlPoint.X = (_Nodes(0).Position.X + _Nodes(1).Position.X + _Nodes(2).Position.X + _Nodes(3).Position.X) * 0.25#
+            _MidleControlPoint.Y = (_Nodes(0).Position.Y + _Nodes(1).Position.Y + _Nodes(2).Position.Y + _Nodes(3).Position.Y) * 0.25#
+            _MidleControlPoint.Z = (_Nodes(0).Position.Z + _Nodes(1).Position.Z + _Nodes(2).Position.Z + _Nodes(3).Position.Z) * 0.25#
 
             ' Local basis:
 
@@ -304,25 +305,25 @@ Namespace CalculationModel.Models.Aero.Components
 
             ' Inner and outer control points
 
-            _OuterControlPoint.X = _MidleControlPoint.X + 0.0001 * _Basis.W.X
-            _OuterControlPoint.Y = _MidleControlPoint.Y + 0.0001 * _Basis.W.Y
-            _OuterControlPoint.Z = _MidleControlPoint.Z + 0.0001 * _Basis.W.Z
+            _OuterControlPoint.X = _MidleControlPoint.X + Delta * _Basis.W.X
+            _OuterControlPoint.Y = _MidleControlPoint.Y + Delta * _Basis.W.Y
+            _OuterControlPoint.Z = _MidleControlPoint.Z + Delta * _Basis.W.Z
 
             _InnerControlPoint.X = _MidleControlPoint.X
             _InnerControlPoint.Y = _MidleControlPoint.Y
             _InnerControlPoint.Z = _MidleControlPoint.Z
 
             If Not _IsSlender Then
-                _InnerControlPoint.X -= 0.0001 * _Basis.W.X
-                _InnerControlPoint.Y -= 0.0001 * _Basis.W.Y
-                _InnerControlPoint.Z -= 0.0001 * _Basis.W.Z
+                _InnerControlPoint.X -= Delta * _Basis.W.X
+                _InnerControlPoint.Y -= Delta * _Basis.W.Y
+                _InnerControlPoint.Z -= Delta * _Basis.W.Z
             End If
 
             ' Surface velocity:
 
-            VelocityS.X = 0.25 * (Node(1).Velocity.X + Node(2).Velocity.X + Node(3).Velocity.X + Node(4).Velocity.X)
-            VelocityS.Y = 0.25 * (Node(1).Velocity.Y + Node(2).Velocity.Y + Node(3).Velocity.Y + Node(4).Velocity.Y)
-            VelocityS.Z = 0.25 * (Node(1).Velocity.Z + Node(2).Velocity.Z + Node(3).Velocity.Z + Node(4).Velocity.Z)
+            VelocityS.X = (_Nodes(0).Velocity.X + _Nodes(1).Velocity.X + _Nodes(2).Velocity.X + _Nodes(3).Velocity.X) * 0.25#
+            VelocityS.Y = (_Nodes(0).Velocity.Y + _Nodes(1).Velocity.Y + _Nodes(2).Velocity.Y + _Nodes(3).Velocity.Y) * 0.25#
+            VelocityS.Z = (_Nodes(0).Velocity.Z + _Nodes(1).Velocity.Z + _Nodes(2).Velocity.Z + _Nodes(3).Velocity.Z) * 0.25#
 
         End Sub
 
@@ -371,13 +372,13 @@ Namespace CalculationModel.Models.Aero.Components
         ''' <remarks></remarks>
         Public Sub RecalculateBasis() Implements VortexRing.RecalculateBasis
 
-            _Basis.U.X = Node(3).Position.X - Node(1).Position.X
-            _Basis.U.Y = Node(3).Position.Y - Node(1).Position.Y
-            _Basis.U.Z = Node(3).Position.Z - Node(1).Position.Z
+            _Basis.U.X = _Nodes(2).Position.X - _Nodes(0).Position.X
+            _Basis.U.Y = _Nodes(2).Position.Y - _Nodes(0).Position.Y
+            _Basis.U.Z = _Nodes(2).Position.Z - _Nodes(0).Position.Z
 
-            Dim V2X = Node(4).Position.X - Node(2).Position.X
-            Dim V2Y = Node(4).Position.Y - Node(2).Position.Y
-            Dim V2Z = Node(4).Position.Z - Node(2).Position.Z
+            Dim V2X = _Nodes(3).Position.X - _Nodes(1).Position.X
+            Dim V2Y = _Nodes(3).Position.Y - _Nodes(1).Position.Y
+            Dim V2Z = _Nodes(3).Position.Z - _Nodes(1).Position.Z
 
             _Basis.W.X = _Basis.U.Y * V2Z - _Basis.U.Z * V2Y
             _Basis.W.Y = _Basis.U.Z * V2X - _Basis.U.X * V2Z
@@ -737,7 +738,8 @@ Namespace CalculationModel.Models.Aero.Components
         ''' <summary>
         ''' Returns the influence of the doublet distribution in the velocity potential.
         ''' </summary>
-        Function GetDoubletPotentialInfluence(ByVal Point As Vector3, Optional ByVal WithG As Boolean = True) As Double Implements VortexRing.GetDoubletPotentialInfluence
+        Public Function GetDoubletPotentialInfluence(ByVal Point As Vector3,
+                                                     Optional ByVal WithG As Boolean = True) As Double Implements VortexRing.GetDoubletPotentialInfluence
 
             ' Convert the point to local coordinates (center on the control point and using the local basis)
 
@@ -749,33 +751,31 @@ Namespace CalculationModel.Models.Aero.Components
                                  dx * _Basis.V.X + dy * _Basis.V.Y + dz * _Basis.V.Z,
                                  dx * _Basis.W.X + dy * _Basis.W.Y + dz * _Basis.W.Z)
 
+            Dim pzsq = p.Z * p.Z
+
             ' Distances:
 
             Dim r0px = p.X - _LocalNodes(0).X
             Dim r0py = p.Y - _LocalNodes(0).Y
-            Dim r0pz = p.Z
-            Dim r0p As Double = Math.Sqrt(r0px * r0px + r0py * r0py + r0pz * r0pz)
+            Dim r0p As Double = Math.Sqrt(r0px * r0px + r0py * r0py + pzsq)
 
             Dim r1px = p.X - _LocalNodes(1).X
             Dim r1py = p.Y - _LocalNodes(1).Y
-            Dim r1pz = p.Z
-            Dim r1p As Double = Math.Sqrt(r1px * r1px + r1py * r1py + r1pz * r1pz)
+            Dim r1p As Double = Math.Sqrt(r1px * r1px + r1py * r1py + pzsq)
 
             Dim r2px = p.X - _LocalNodes(2).X
             Dim r2py = p.Y - _LocalNodes(2).Y
-            Dim r2pz = p.Z
-            Dim r2p As Double = Math.Sqrt(r2px * r2px + r2py * r2py + r2pz * r2pz)
+            Dim r2p As Double = Math.Sqrt(r2px * r2px + r2py * r2py + pzsq)
 
             Dim r3px = p.X - _LocalNodes(3).X
             Dim r3py = p.Y - _LocalNodes(3).Y
-            Dim r3pz = p.Z
-            Dim r3p As Double = Math.Sqrt(r3px * r3px + r3py * r3py + r3pz * r3pz)
+            Dim r3p As Double = Math.Sqrt(r3px * r3px + r3py * r3py + pzsq)
 
             ' Use center point as referece to compute the altitude:
 
             Dim z As Double = p.Z
 
-            ' projected segments:
+            ' Projected segments:
 
             Dim d01x As Double = _LocalEdges(0).X
             Dim d01y As Double = _LocalEdges(0).Y
@@ -803,7 +803,7 @@ Namespace CalculationModel.Models.Aero.Components
             Dim h2 As Double = r2px * r2py
             Dim h3 As Double = r3px * r3py
 
-            ' These are the Katz-Plotkin fotran formulas, which are based in only one Atan2 instead of two
+            ' These are the Katz-Plotkin fortran formulas, which are based in only one Atan2 instead of two
 
             Dim f0 As Double = d01y * e0 - d01x * h0
             Dim g0 As Double = d01y * e1 - d01x * h1
@@ -821,7 +821,7 @@ Namespace CalculationModel.Models.Aero.Components
             Dim g3 As Double = d30y * e0 - d30x * h0
             Dim tn30 As Double = Math.Atan2(z * d30x * (f3 * r0p - g3 * r3p), z2 * d30x * d30x * r3p * r0p + f3 * g3)
 
-            Dim Potential As Double = (tn01 + tn12 + tn23 + tn30) / (4.0# * Math.PI)
+            Dim Potential As Double = (tn01 + tn12 + tn23 + tn30) / FourPi
 
             If WithG Then Potential *= G
 
@@ -844,27 +844,25 @@ Namespace CalculationModel.Models.Aero.Components
                                  dx * _Basis.V.X + dy * _Basis.V.Y + dz * _Basis.V.Z,
                                  dx * _Basis.W.X + dy * _Basis.W.Y + dz * _Basis.W.Z)
 
+            Dim pzsq = p.Z * p.Z
+
             ' Distances:
 
             Dim r0px = p.X - _LocalNodes(0).X
             Dim r0py = p.Y - _LocalNodes(0).Y
-            Dim r0pz = p.Z
-            Dim r0p As Double = Math.Sqrt(r0px * r0px + r0py * r0py + r0pz * r0pz)
+            Dim r0p As Double = Math.Sqrt(r0px * r0px + r0py * r0py + pzsq)
 
             Dim r1px = p.X - _LocalNodes(1).X
             Dim r1py = p.Y - _LocalNodes(1).Y
-            Dim r1pz = p.Z
-            Dim r1p As Double = Math.Sqrt(r1px * r1px + r1py * r1py + r1pz * r1pz)
+            Dim r1p As Double = Math.Sqrt(r1px * r1px + r1py * r1py + pzsq)
 
             Dim r2px = p.X - _LocalNodes(2).X
             Dim r2py = p.Y - _LocalNodes(2).Y
-            Dim r2pz = p.Z
-            Dim r2p As Double = Math.Sqrt(r2px * r2px + r2py * r2py + r2pz * r2pz)
+            Dim r2p As Double = Math.Sqrt(r2px * r2px + r2py * r2py + pzsq)
 
             Dim r3px = p.X - _LocalNodes(3).X
             Dim r3py = p.Y - _LocalNodes(3).Y
-            Dim r3pz = p.Z
-            Dim r3p As Double = Math.Sqrt(r3px * r3px + r3py * r3py + r3pz * r3pz)
+            Dim r3p As Double = Math.Sqrt(r3px * r3px + r3py * r3py + pzsq)
 
             ' Use center point as referece to compute the altitude:
 
@@ -912,7 +910,7 @@ Namespace CalculationModel.Models.Aero.Components
             Dim h2 As Double = r2px * r2py
             Dim h3 As Double = r3px * r3py
 
-            ' These are the Katz-Plotkin fotran formulas, which are based in only one Atan2 instead of two
+            ' These are the Katz-Plotkin fortran formulas, which are based in only one Atan2 instead of two
 
             Dim f0 As Double = d01y * e0 - d01x * h0
             Dim g0 As Double = d01y * e1 - d01x * h1

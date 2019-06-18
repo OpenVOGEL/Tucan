@@ -521,6 +521,7 @@ Namespace VisualModel.Models
                     End If
 
                     Results.Model.Mesh.Panels(GlobalIndexRings).Circulation = VortexRing.G
+                    Results.Model.Mesh.Panels(GlobalIndexRings).SourceStrength = VortexRing.S
                     Results.Model.Mesh.Panels(GlobalIndexRings).Cp = VortexRing.Cp
                     Results.Model.Mesh.Panels(GlobalIndexRings).Area = VortexRing.Area
                     Results.Model.Mesh.Panels(GlobalIndexRings).NormalVector.Assign(VortexRing.Normal)

@@ -29,7 +29,7 @@ Namespace CalculationModel.Solver
         ''' <summary>
         ''' The version of the solver
         ''' </summary>
-        Public Const Version As String = "1.1-2019.06"
+        Public Const Version As String = "1.2-2019.06"
 
         ''' <summary>
         ''' Read a written step

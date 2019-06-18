@@ -450,20 +450,22 @@ Public Class MainForm
 
                                 If Panel.IsSlender Then
 
-                                    lblStatus.Text = String.Format("Panel {0}: ΔCp={1:F5}; V={2:F5}m/s; G={3:F5}; A={4:F5}m²", SelectedItem.EntityIndex,
-                                                               Panel.Cp,
-                                                               Panel.LocalVelocity.EuclideanNorm,
-                                                               Panel.Circulation,
-                                                               Panel.Area)
+                                    lblStatus.Text = String.Format("Panel {0}: ΔCp={1:F5}; V={2:F5}m/s; G={3:F5}; A={4:F5}m²",
+                                                                   SelectedItem.EntityIndex,
+                                                                   Panel.Cp,
+                                                                   Panel.LocalVelocity.EuclideanNorm,
+                                                                   Panel.Circulation,
+                                                                   Panel.Area)
 
                                 Else
 
-                                    lblStatus.Text = String.Format("Panel {0}: Cp={1:F5}; V={2:F5}m/s; G={3:F5}; S={3:F5}; A={4:F5}m²", SelectedItem.EntityIndex,
-                                                               Panel.Cp,
-                                                               Panel.LocalVelocity.EuclideanNorm,
-                                                               Panel.Circulation,
-                                                               Panel.SourceStrength,
-                                                               Panel.Area)
+                                    lblStatus.Text = String.Format("Panel {0}: Cp={1:F5}; V={2:F5}m/s; G={3:F5}; S={4:F5}; A={5:F5}m²",
+                                                                   SelectedItem.EntityIndex,
+                                                                   Panel.Cp,
+                                                                   Panel.LocalVelocity.EuclideanNorm,
+                                                                   Panel.Circulation,
+                                                                   Panel.SourceStrength,
+                                                                   Panel.Area)
 
                                 End If
 
