@@ -133,7 +133,7 @@ Namespace CalculationModel.Solver
 
             ' Start inegration:
 
-            Dim LE As New LinearEquations
+            Dim AerodynamicEquations As New LinearEquations
 
             For TimeStep = 1 To Settings.SimulationSteps
 
@@ -156,17 +156,17 @@ Namespace CalculationModel.Solver
 
                 For Each StructuralLink As StructuralLink In StructuralLinks
 
-                    Dim dampingChanged As Boolean = False
+                    Dim DampingChanged As Boolean = False
 
                     For Each Mode In StructuralLink.StructuralCore.Modes
 
                         Mode.C = Settings.AeroelasticHistogram.State(TimeStep).Damping * Mode.Cc
 
-                        dampingChanged = dampingChanged Or (Settings.AeroelasticHistogram.State(TimeStep - 1).Damping <> Settings.AeroelasticHistogram.State(TimeStep).Damping)
+                        DampingChanged = DampingChanged Or (Settings.AeroelasticHistogram.State(TimeStep - 1).Damping <> Settings.AeroelasticHistogram.State(TimeStep).Damping)
 
                     Next
 
-                    If dampingChanged Then
+                    If DampingChanged Then
                         StructuralLink.UpdateIntegrators()
                     End If
 
@@ -182,7 +182,7 @@ Namespace CalculationModel.Solver
 
                 '  Calculate new circulation and its time derivative:
 
-                G = LE.Solve(MatrixDoublets, RHS)
+                G = AerodynamicEquations.Solve(MatrixDoublets, RHS)
 
                 AssignDoublets()
 

@@ -58,13 +58,23 @@ Public Class FormSettings
 
         ' Structural:
 
+        If LocalSettings.AnalysisType = CalculationType.ctAeroelastic Then
+
+            nudStructureStart.Enabled = True
+            nudnModes.Enabled = True
+            nudDamping.Enabled = True
+
+        Else
+
+            nudStructureStart.Enabled = False
+            nudnModes.Enabled = False
+            nudDamping.Enabled = False
+
+        End If
+
         nudStructureStart.Value = LocalSettings.StructuralSettings.StructuralLinkingStep
         nudnModes.Value = LocalSettings.StructuralSettings.NumberOfModes
         nudDamping.Value = LocalSettings.StructuralSettings.ModalDamping
-
-        nudStructureStart.Enabled = _AllowStructuralSettings
-        nudnModes.Enabled = _AllowStructuralSettings
-        nudDamping.Enabled = _AllowStructuralSettings
 
         Made = True
 
@@ -120,14 +130,6 @@ Public Class FormSettings
     Public WriteOnly Property AllowFlowRotation As Boolean
         Set(ByVal value As Boolean)
             _AllowFlowRotation = value
-        End Set
-    End Property
-
-    Private _AllowStructuralSettings As Boolean = False
-
-    Public WriteOnly Property AllowStructuralSettings As Boolean
-        Set(ByVal value As Boolean)
-            _AllowStructuralSettings = value
         End Set
     End Property
 
