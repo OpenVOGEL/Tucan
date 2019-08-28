@@ -197,6 +197,9 @@ Namespace Tucan.Utility
                 ControlGL.Disable(OpenGL.GL_BLEND)
             End If
 
+            ControlGL.Enable(OpenGL.GL_POLYGON_OFFSET_FILL)
+            ControlGL.PolygonOffset(1.0, 1.0)
+
             If Visualization.AllowLineSmoothing Then ControlGL.Enable(OpenGL.GL_LINE_SMOOTH) Else ControlGL.Disable(OpenGL.GL_LINE_SMOOTH)
 
             Dim Origen As New Vector3

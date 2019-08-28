@@ -434,6 +434,7 @@ Namespace Tucan.Utility
                                   ByRef gl As OpenGL,
                                   Optional ByVal ForSelection As Boolean = False,
                                   Optional ByVal ElementIndex As Integer = 0)
+
             With This
 
                 Dim Code As Integer = 0
