@@ -29,8 +29,8 @@
     <ProductName>Tucan</ProductName>
     <PublisherName>OpenVOGEL</PublisherName>
     <SuiteName>OpenVOGEL Tucan</SuiteName>
-    <ApplicationRevision>25</ApplicationRevision>
-    <ApplicationVersion>1.2.0.%2a</ApplicationVersion>
+    <ApplicationRevision>26</ApplicationRevision>
+    <ApplicationVersion>1.3.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>

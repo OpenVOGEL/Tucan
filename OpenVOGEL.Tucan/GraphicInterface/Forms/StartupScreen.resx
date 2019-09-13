@@ -174,7 +174,7 @@ Original author: Guillermo Hazebrouck</value>
     <value>4</value>
   </data>
   <data name="LabelLicense.Text" xml:space="preserve">
-    <value>Compilation 1.2</value>
+    <value>Compilation 1.3</value>
   </data>
   <data name="LabelLicense.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
     <value>MiddleRight</value>
