@@ -736,8 +736,18 @@ Namespace Tucan.Utility
                                         'TODO: mark as active
 
                                     Case EntityTypes.etPanel
-                                        Model.Objects(ClosestItem.ComponentIndex).Active = True
-                                        Mesh.Panels(ClosestItem.EntityIndex).Active = True
+
+                                        If Selection.MultipleSelection Then
+
+                                            If Not Model.Objects(ClosestItem.ComponentIndex).Active And Not Mesh.Panels(ClosestItem.EntityIndex).Active Then
+                                                Model.Objects(ClosestItem.ComponentIndex).Active = True
+                                            End If
+
+                                        Else
+                                            Model.Objects(ClosestItem.ComponentIndex).Active = Not Mesh.Panels(ClosestItem.EntityIndex).Active
+                                        End If
+
+                                        Mesh.Panels(ClosestItem.EntityIndex).Active = Not Mesh.Panels(ClosestItem.EntityIndex).Active
 
                                     Case EntityTypes.etStructuralElement
                                         'TODO: mark as active
@@ -756,10 +766,10 @@ Namespace Tucan.Utility
                                     Select Case ClosestItem.EntityType
 
                                         Case EntityTypes.etNode
-                                            Mesh.Nodes(ClosestItem.EntityIndex).Active = True
+                                            Mesh.Nodes(ClosestItem.EntityIndex).Active = Not Mesh.Nodes(ClosestItem.EntityIndex).Active
 
                                         Case EntityTypes.etPanel
-                                            Mesh.Panels(ClosestItem.EntityIndex).Active = True
+                                            Mesh.Panels(ClosestItem.EntityIndex).Active = Not Mesh.Panels(ClosestItem.EntityIndex).Active
 
                                     End Select
 

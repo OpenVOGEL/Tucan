@@ -17,11 +17,6 @@
 
 Imports OpenVOGEL.AeroTools.CalculationModel.Settings
 Imports OpenVOGEL.DesignTools.VisualModel.Models.Components
-Imports OpenVOGEL.MathTools.Algebra.EuclideanSpace
-Imports OpenVOGEL.AeroTools.IoHelper
-Imports System.IO
-Imports System.Xml
-Imports OpenVOGEL.DesignTools.VisualModel.Interface
 
 Namespace VisualModel.Models
 
@@ -84,11 +79,11 @@ Namespace VisualModel.Models
             _DynamicModes = New List(Of ResultContainer)
 
             _Model.Name = "Full_Model"
-            _Model.VisualProperties.ColorMesh = System.Drawing.Color.Maroon
+            _Model.VisualProperties.ColorMesh = System.Drawing.Color.DimGray
             _Model.VisualProperties.ColorSurface = System.Drawing.Color.Orange
             _Model.VisualProperties.Transparency = 1.0
             _Model.VisualProperties.ShowSurface = True
-            _Model.VisualProperties.ShowMesh = False
+            _Model.VisualProperties.ShowMesh = True
             _Model.VisualProperties.ShowNodes = False
             _Model.VisualProperties.ThicknessMesh = 0.8
             _Model.VisualProperties.ShowNodes = False

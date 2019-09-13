@@ -537,7 +537,8 @@ Namespace VisualModel.Models
             Results.Model.UpdatePressureColormap()
             Results.Model.VisualProperties.ShowColormap = True
             Results.Model.VisualProperties.ShowVelocityVectors = True
-            Results.Model.VisualProperties.ShowMesh = False
+            Results.Model.VisualProperties.ShowMesh = True
+            Results.Model.FindBestVelocityScale
 
             Results.Model.Mesh.GenerateLattice()
 
@@ -648,9 +649,9 @@ Namespace VisualModel.Models
                                     GlobalIndexRings += 1
 
                                     ModalShapeModel.AddPanel(VortexRing.Node(1).IndexG + 1,
-                                                            VortexRing.Node(2).IndexG + 1,
-                                                            VortexRing.Node(3).IndexG + 1,
-                                                            VortexRing.Node(4).IndexG + 1)
+                                                             VortexRing.Node(2).IndexG + 1,
+                                                             VortexRing.Node(3).IndexG + 1,
+                                                             VortexRing.Node(4).IndexG + 1)
 
                                     ModalShapeModel.Mesh.Panels(GlobalIndexRings).Circulation = 0.0
                                     ModalShapeModel.Mesh.Panels(GlobalIndexRings).Cp = 0.0
@@ -733,9 +734,9 @@ Namespace VisualModel.Models
                             GlobalIndexRings += 1
 
                             _TransitLattice.AddPanel(VortexRing.Node(1).IndexG + 1,
-                                                         VortexRing.Node(2).IndexG + 1,
-                                                         VortexRing.Node(3).IndexG + 1,
-                                                         VortexRing.Node(4).IndexG + 1)
+                                                     VortexRing.Node(2).IndexG + 1,
+                                                     VortexRing.Node(3).IndexG + 1,
+                                                     VortexRing.Node(4).IndexG + 1)
                             _TransitLattice.Mesh.Panels(GlobalIndexRings).Circulation = 0.0
                             _TransitLattice.Mesh.Panels(GlobalIndexRings).Cp = 0.0
                             _TransitLattice.Mesh.Panels(GlobalIndexRings).IsSlender = True

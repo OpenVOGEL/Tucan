@@ -413,6 +413,25 @@ Namespace VisualModel.Models.Components
 
         End Sub
 
+        Public Sub FindBestVelocityScale()
+
+            ' Find max diagonal / velocity ratio
+
+            VisualProperties.ScaleVelocity = 0.0#
+
+            For Each Panel In Mesh.Panels
+
+                Dim Diagonal = Mesh.Nodes(Panel.N1).Position.DistanceTo(Mesh.Nodes(Panel.N3).Position)
+                Diagonal = Math.Min(Diagonal, Mesh.Nodes(Panel.N2).Position.DistanceTo(Mesh.Nodes(Panel.N4).Position))
+                Dim Velocity As Double = Panel.LocalVelocity.EuclideanNorm
+                If Velocity > 0.0# Then
+                    VisualProperties.ScaleVelocity = Math.Max(VisualProperties.ScaleVelocity, 0.2 * Diagonal / Velocity)
+                End If
+
+            Next
+
+        End Sub
+
 #End Region
 
 #Region " IO "

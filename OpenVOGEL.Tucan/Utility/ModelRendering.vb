@@ -996,6 +996,8 @@ Namespace Tucan.Utility
 
                         Else
 
+                            gl.Color(R, G, B, .VisualProperties.Transparency)
+
                             Node = .Mesh.Nodes(Panel.N1)
                             gl.Vertex(Node.Position.X, Node.Position.Y, Node.Position.Z)
 
