@@ -58,18 +58,18 @@ Partial Class FormSettings
         Me.Label15 = New System.Windows.Forms.Label()
         Me.cbExtendWakes = New System.Windows.Forms.CheckBox()
         Me.Label5 = New System.Windows.Forms.Label()
-        Me.CSTEPSBox = New System.Windows.Forms.NumericUpDown()
+        Me.nudClippingStep = New System.Windows.Forms.NumericUpDown()
         Me.Label38 = New System.Windows.Forms.Label()
         Me.Label7 = New System.Windows.Forms.Label()
         Me.nudAdjacencyTolerance = New System.Windows.Forms.NumericUpDown()
         Me.Label9 = New System.Windows.Forms.Label()
-        Me.DTBox = New System.Windows.Forms.NumericUpDown()
+        Me.nudInterval = New System.Windows.Forms.NumericUpDown()
         Me.Label8 = New System.Windows.Forms.Label()
         Me.Label10 = New System.Windows.Forms.Label()
-        Me.CUTOFFBox = New System.Windows.Forms.NumericUpDown()
+        Me.nudCutoff = New System.Windows.Forms.NumericUpDown()
         Me.Label11 = New System.Windows.Forms.Label()
         Me.Label6 = New System.Windows.Forms.Label()
-        Me.STEPSBox = New System.Windows.Forms.NumericUpDown()
+        Me.nudSimulationSteps = New System.Windows.Forms.NumericUpDown()
         Me.Label4 = New System.Windows.Forms.Label()
         Me.tpStructural = New System.Windows.Forms.TabPage()
         Me.nudDamping = New System.Windows.Forms.NumericUpDown()
@@ -102,11 +102,11 @@ Partial Class FormSettings
         CType(Me.nudOmegax, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.tpAero.SuspendLayout()
         Me.gbParameters.SuspendLayout()
-        CType(Me.CSTEPSBox, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.nudClippingStep, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.nudAdjacencyTolerance, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.DTBox, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.CUTOFFBox, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.STEPSBox, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.nudInterval, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.nudCutoff, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.nudSimulationSteps, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.tpStructural.SuspendLayout()
         CType(Me.nudDamping, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.nudnModes, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -503,18 +503,18 @@ Partial Class FormSettings
         Me.gbParameters.Controls.Add(Me.Label15)
         Me.gbParameters.Controls.Add(Me.cbExtendWakes)
         Me.gbParameters.Controls.Add(Me.Label5)
-        Me.gbParameters.Controls.Add(Me.CSTEPSBox)
+        Me.gbParameters.Controls.Add(Me.nudClippingStep)
         Me.gbParameters.Controls.Add(Me.Label38)
         Me.gbParameters.Controls.Add(Me.Label7)
         Me.gbParameters.Controls.Add(Me.nudAdjacencyTolerance)
         Me.gbParameters.Controls.Add(Me.Label9)
-        Me.gbParameters.Controls.Add(Me.DTBox)
+        Me.gbParameters.Controls.Add(Me.nudInterval)
         Me.gbParameters.Controls.Add(Me.Label8)
         Me.gbParameters.Controls.Add(Me.Label10)
-        Me.gbParameters.Controls.Add(Me.CUTOFFBox)
+        Me.gbParameters.Controls.Add(Me.nudCutoff)
         Me.gbParameters.Controls.Add(Me.Label11)
         Me.gbParameters.Controls.Add(Me.Label6)
-        Me.gbParameters.Controls.Add(Me.STEPSBox)
+        Me.gbParameters.Controls.Add(Me.nudSimulationSteps)
         Me.gbParameters.Controls.Add(Me.Label4)
         Me.gbParameters.Dock = System.Windows.Forms.DockStyle.Top
         Me.gbParameters.Location = New System.Drawing.Point(3, 3)
@@ -556,15 +556,15 @@ Partial Class FormSettings
         '
         'CSTEPSBox
         '
-        Me.CSTEPSBox.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.CSTEPSBox.Location = New System.Drawing.Point(143, 115)
-        Me.CSTEPSBox.Maximum = New Decimal(New Integer() {99999, 0, 0, 0})
-        Me.CSTEPSBox.Minimum = New Decimal(New Integer() {1, 0, 0, 0})
-        Me.CSTEPSBox.Name = "CSTEPSBox"
-        Me.CSTEPSBox.Size = New System.Drawing.Size(99, 22)
-        Me.CSTEPSBox.TabIndex = 102
-        Me.CSTEPSBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        Me.CSTEPSBox.Value = New Decimal(New Integer() {5, 0, 0, 0})
+        Me.nudClippingStep.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.nudClippingStep.Location = New System.Drawing.Point(143, 115)
+        Me.nudClippingStep.Maximum = New Decimal(New Integer() {99999, 0, 0, 0})
+        Me.nudClippingStep.Minimum = New Decimal(New Integer() {1, 0, 0, 0})
+        Me.nudClippingStep.Name = "CSTEPSBox"
+        Me.nudClippingStep.Size = New System.Drawing.Size(99, 22)
+        Me.nudClippingStep.TabIndex = 102
+        Me.nudClippingStep.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.nudClippingStep.Value = New Decimal(New Integer() {5, 0, 0, 0})
         '
         'Label38
         '
@@ -611,16 +611,16 @@ Partial Class FormSettings
         '
         'DTBox
         '
-        Me.DTBox.DecimalPlaces = 7
-        Me.DTBox.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.DTBox.Increment = New Decimal(New Integer() {1, 0, 0, 196608})
-        Me.DTBox.Location = New System.Drawing.Point(143, 43)
-        Me.DTBox.Maximum = New Decimal(New Integer() {99999, 0, 0, 0})
-        Me.DTBox.Name = "DTBox"
-        Me.DTBox.Size = New System.Drawing.Size(99, 22)
-        Me.DTBox.TabIndex = 106
-        Me.DTBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        Me.DTBox.Value = New Decimal(New Integer() {52, 0, 0, 262144})
+        Me.nudInterval.DecimalPlaces = 7
+        Me.nudInterval.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.nudInterval.Increment = New Decimal(New Integer() {1, 0, 0, 196608})
+        Me.nudInterval.Location = New System.Drawing.Point(143, 43)
+        Me.nudInterval.Maximum = New Decimal(New Integer() {99999, 0, 0, 0})
+        Me.nudInterval.Name = "DTBox"
+        Me.nudInterval.Size = New System.Drawing.Size(99, 22)
+        Me.nudInterval.TabIndex = 106
+        Me.nudInterval.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.nudInterval.Value = New Decimal(New Integer() {52, 0, 0, 262144})
         '
         'Label8
         '
@@ -644,16 +644,16 @@ Partial Class FormSettings
         '
         'CUTOFFBox
         '
-        Me.CUTOFFBox.DecimalPlaces = 10
-        Me.CUTOFFBox.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.CUTOFFBox.Increment = New Decimal(New Integer() {1, 0, 0, 196608})
-        Me.CUTOFFBox.Location = New System.Drawing.Point(143, 67)
-        Me.CUTOFFBox.Maximum = New Decimal(New Integer() {99999, 0, 0, 0})
-        Me.CUTOFFBox.Name = "CUTOFFBox"
-        Me.CUTOFFBox.Size = New System.Drawing.Size(99, 22)
-        Me.CUTOFFBox.TabIndex = 110
-        Me.CUTOFFBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        Me.CUTOFFBox.Value = New Decimal(New Integer() {1, 0, 0, 196608})
+        Me.nudCutoff.DecimalPlaces = 10
+        Me.nudCutoff.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.nudCutoff.Increment = New Decimal(New Integer() {1, 0, 0, 196608})
+        Me.nudCutoff.Location = New System.Drawing.Point(143, 67)
+        Me.nudCutoff.Maximum = New Decimal(New Integer() {99999, 0, 0, 0})
+        Me.nudCutoff.Name = "CUTOFFBox"
+        Me.nudCutoff.Size = New System.Drawing.Size(99, 22)
+        Me.nudCutoff.TabIndex = 110
+        Me.nudCutoff.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.nudCutoff.Value = New Decimal(New Integer() {1, 0, 0, 196608})
         '
         'Label11
         '
@@ -677,15 +677,15 @@ Partial Class FormSettings
         '
         'STEPSBox
         '
-        Me.STEPSBox.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.STEPSBox.Location = New System.Drawing.Point(143, 19)
-        Me.STEPSBox.Maximum = New Decimal(New Integer() {99999, 0, 0, 0})
-        Me.STEPSBox.Minimum = New Decimal(New Integer() {1, 0, 0, 0})
-        Me.STEPSBox.Name = "STEPSBox"
-        Me.STEPSBox.Size = New System.Drawing.Size(99, 22)
-        Me.STEPSBox.TabIndex = 100
-        Me.STEPSBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        Me.STEPSBox.Value = New Decimal(New Integer() {5, 0, 0, 0})
+        Me.nudSimulationSteps.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.nudSimulationSteps.Location = New System.Drawing.Point(143, 19)
+        Me.nudSimulationSteps.Maximum = New Decimal(New Integer() {99999, 0, 0, 0})
+        Me.nudSimulationSteps.Minimum = New Decimal(New Integer() {1, 0, 0, 0})
+        Me.nudSimulationSteps.Name = "STEPSBox"
+        Me.nudSimulationSteps.Size = New System.Drawing.Size(99, 22)
+        Me.nudSimulationSteps.TabIndex = 100
+        Me.nudSimulationSteps.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.nudSimulationSteps.Value = New Decimal(New Integer() {5, 0, 0, 0})
         '
         'Label4
         '
@@ -917,11 +917,11 @@ Partial Class FormSettings
         Me.tpAero.ResumeLayout(False)
         Me.gbParameters.ResumeLayout(False)
         Me.gbParameters.PerformLayout()
-        CType(Me.CSTEPSBox, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.nudClippingStep, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.nudAdjacencyTolerance, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.DTBox, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.CUTOFFBox, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.STEPSBox, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.nudInterval, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.nudCutoff, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.nudSimulationSteps, System.ComponentModel.ISupportInitialize).EndInit()
         Me.tpStructural.ResumeLayout(False)
         Me.tpStructural.PerformLayout()
         CType(Me.nudDamping, System.ComponentModel.ISupportInitialize).EndInit()
@@ -965,16 +965,16 @@ Partial Class FormSettings
     Friend WithEvents gbParameters As System.Windows.Forms.GroupBox
     Friend WithEvents nudAdjacencyTolerance As System.Windows.Forms.NumericUpDown
     Friend WithEvents Label10 As System.Windows.Forms.Label
-    Friend WithEvents CUTOFFBox As System.Windows.Forms.NumericUpDown
+    Friend WithEvents nudCutoff As System.Windows.Forms.NumericUpDown
     Friend WithEvents Label11 As System.Windows.Forms.Label
     Friend WithEvents Label8 As System.Windows.Forms.Label
-    Friend WithEvents DTBox As System.Windows.Forms.NumericUpDown
+    Friend WithEvents nudInterval As System.Windows.Forms.NumericUpDown
     Friend WithEvents Label9 As System.Windows.Forms.Label
     Friend WithEvents Label7 As System.Windows.Forms.Label
     Friend WithEvents Label6 As System.Windows.Forms.Label
-    Friend WithEvents CSTEPSBox As System.Windows.Forms.NumericUpDown
+    Friend WithEvents nudClippingStep As System.Windows.Forms.NumericUpDown
     Friend WithEvents Label5 As System.Windows.Forms.Label
-    Friend WithEvents STEPSBox As System.Windows.Forms.NumericUpDown
+    Friend WithEvents nudSimulationSteps As System.Windows.Forms.NumericUpDown
     Friend WithEvents Label4 As System.Windows.Forms.Label
     Friend WithEvents tpStructural As System.Windows.Forms.TabPage
     Friend WithEvents btOK As System.Windows.Forms.Button

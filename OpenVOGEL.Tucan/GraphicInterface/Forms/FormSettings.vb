@@ -32,10 +32,9 @@ Public Class FormSettings
         nudDensity.Value = LocalSettings.Density
         nudViscosity.Value = LocalSettings.Viscocity
         nudStaticPressure.Value = LocalSettings.StaticPressure
-        STEPSBox.Value = LocalSettings.SimulationSteps
-        CSTEPSBox.Value = LocalSettings.ClippingStep
-        DTBox.Value = LocalSettings.Interval
-        CUTOFFBox.Value = LocalSettings.Cutoff
+        nudSimulationSteps.Value = LocalSettings.SimulationSteps
+        nudInterval.Value = LocalSettings.Interval
+        nudCutoff.Value = LocalSettings.Cutoff
         nudAdjacencyTolerance.Value = LocalSettings.SurveyTolerance
 
         If Not _AllowFlowRotation Then
@@ -90,10 +89,9 @@ Public Class FormSettings
         LocalSettings.Density = nudDensity.Value
         LocalSettings.Viscocity = nudViscosity.Value
         LocalSettings.StaticPressure = nudStaticPressure.Value
-        LocalSettings.SimulationSteps = STEPSBox.Value
-        LocalSettings.ClippingStep = CSTEPSBox.Value
-        LocalSettings.Interval = DTBox.Value
-        LocalSettings.Cutoff = CUTOFFBox.Value
+        LocalSettings.SimulationSteps = nudSimulationSteps.Value
+        LocalSettings.Interval = nudInterval.Value
+        LocalSettings.Cutoff = nudCutoff.Value
         LocalSettings.SurveyTolerance = nudAdjacencyTolerance.Value
         If _AllowFlowRotation Then
             LocalSettings.Omega.X = nudOmegax.Value

@@ -550,7 +550,6 @@ ErrSub:
             nudDensity.Value = ProjectRoot.SimulationSettings.Density
             nudViscosity.Value = ProjectRoot.SimulationSettings.Viscocity
             nudSteps.Value = ProjectRoot.SimulationSettings.SimulationSteps
-            nudCuttingStep.Value = ProjectRoot.SimulationSettings.ClippingStep
             nudIncrement.Value = ProjectRoot.SimulationSettings.Interval
 
             _LockSettingsEvents = False
@@ -654,16 +653,6 @@ ErrSub:
         If ProjectRoot.Initialized AndAlso Not _LockSettingsEvents Then
 
             ProjectRoot.SimulationSettings.Interval = nudIncrement.Value
-
-        End If
-
-    End Sub
-
-    Private Sub nudCuttingStep_ValueChanged(sender As Object, e As EventArgs) Handles nudCuttingStep.ValueChanged
-
-        If ProjectRoot.Initialized AndAlso Not _LockSettingsEvents Then
-
-            ProjectRoot.SimulationSettings.ClippingStep = nudCuttingStep.Value
 
         End If
 

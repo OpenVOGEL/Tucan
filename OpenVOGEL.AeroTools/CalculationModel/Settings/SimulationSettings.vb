@@ -76,20 +76,6 @@ Namespace CalculationModel.Settings
         ''' <remarks></remarks>
         Public Property Viscocity As Double = 0.0000178#
 
-        Private _ClippingStep As Integer = 1
-
-        ''' <summary>
-        ''' Specifies the global cutting step
-        ''' </summary>
-        Public Property ClippingStep As Integer
-            Set(ByVal value As Integer)
-                If value > 0 Then _ClippingStep = value
-            End Set
-            Get
-                Return _ClippingStep
-            End Get
-        End Property
-
         Private _SimulationSteps As Integer = 1
 
         ''' <summary>
@@ -225,7 +211,6 @@ Namespace CalculationModel.Settings
             Viscocity = 0.0000178
 
             SimulationSteps = 25
-            ClippingStep = 25
             StructuralSettings.StructuralLinkingStep = 5
             UseGpu = False
             GpuDeviceId = 0
@@ -250,7 +235,6 @@ Namespace CalculationModel.Settings
             StreamVelocity.Assign(SimuData.StreamVelocity)
             Omega.Assign(SimuData.Omega)
             SimulationSteps = SimuData.SimulationSteps
-            ClippingStep = SimuData.ClippingStep
             Interval = SimuData.Interval
             Viscocity = SimuData.Viscocity
             Density = SimuData.Density
@@ -328,7 +312,6 @@ Namespace CalculationModel.Settings
             writer.WriteAttributeString("Analysis", String.Format("{0:D}", AnalysisType))
             writer.WriteAttributeString("Interval", String.Format("{0}", Interval))
             writer.WriteAttributeString("Steps", String.Format("{0}", SimulationSteps))
-            writer.WriteAttributeString("MaxSteps", String.Format("{0}", ClippingStep))
             writer.WriteAttributeString("Cutoff", String.Format("{0}", Cutoff))
             writer.WriteAttributeString("SurveyTolerance", String.Format("{0}", SurveyTolerance))
             writer.WriteAttributeString("ExtendWakes", String.Format("{0}", ExtendWakes))
@@ -385,7 +368,6 @@ Namespace CalculationModel.Settings
                             AnalysisType = IOXML.ReadInteger(reader, "Analysis", CalculationType.ctSteady)
                             Interval = IOXML.ReadDouble(reader, "Interval", 0.1)
                             SimulationSteps = IOXML.ReadInteger(reader, "Steps", 15)
-                            ClippingStep = IOXML.ReadInteger(reader, "MaxSteps", 15)
                             Cutoff = IOXML.ReadDouble(reader, "Cutoff", 0.0001)
                             SurveyTolerance = IOXML.ReadDouble(reader, "SurveyTolerance", 0.001)
                             ExtendWakes = IOXML.ReadBoolean(reader, "ExtendWakes", False)
