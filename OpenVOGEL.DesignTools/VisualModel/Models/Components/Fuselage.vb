@@ -903,14 +903,14 @@ Namespace VisualModel.Models.Components
                             lz = CrossSections(CrossSections.Count - 1).Z - zo
 
                             Dim nz As Integer = Math.Ceiling(lz / dz)
-                            Dim nn As Integer = Grids(i).Nodes.Count - nps - 1
+                            Dim o As Integer = Grids(i).Nodes.Count - nps - 1
 
                             For k = 1 To nz
 
                                 For j = 0 To nps
 
                                     Dim z As Double = k / nz * lz + zo
-                                    Dim s As Double = Grids(i).Nodes(nn + j).Y + (j / nps - Grids(i).Nodes(nn + j).Y) * k / nz
+                                    Dim s As Double = Grids(i).Nodes(o + j).Y + (j / nps - Grids(i).Nodes(o + j).Y) * k / nz
 
                                     Mesh.Nodes.Add(New NodalPoint(GetPoint(z, s)))
 

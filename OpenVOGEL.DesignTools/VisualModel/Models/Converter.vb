@@ -119,6 +119,18 @@ Namespace VisualModel.Models
 
                         Lattice.VortexRings(PanelIndex).IsPrimitive = Body.Mesh.Panels(PanelIndex).IsPrimitive
 
+                        ' Add the Kutta vortex at the trailing edge of the anchor
+                        ' NOTE: no convection recommended from here due to high chance of spurious velocities
+
+                        If Lattice.VortexRings(PanelIndex).IsPrimitive Then
+                            Dim KuttaVortex As New Wake
+                            KuttaVortex.Primitive.Nodes.Add(Node2)
+                            KuttaVortex.Primitive.Nodes.Add(Node3)
+                            KuttaVortex.Primitive.Rings.Add(Lattice.VortexRings.Count - 1)
+                            KuttaVortex.CuttingStep = 0
+                            Lattice.Wakes.Add(KuttaVortex)
+                        End If
+
                     Next
 
                 End If

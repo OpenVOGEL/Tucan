@@ -415,8 +415,11 @@ Public Class MainForm
 
                             mrRibbon.ChangeSurfaceIndex(SelectedItem.ComponentIndex)
 
-                            lblStatus.Text = String.Format("{1}: Panel {0}", SelectedItem.EntityIndex,
-                                                                              ProjectRoot.Model.Objects(SelectedItem.ComponentIndex).Name)
+                            lblStatus.Text = String.Format("{1}: Panel {0} -> Slender={2}; Primitive={3}",
+                                                           SelectedItem.EntityIndex,
+                                                           ProjectRoot.Model.Objects(SelectedItem.ComponentIndex).Name,
+                                                           ProjectRoot.Model.Objects(SelectedItem.ComponentIndex).Mesh.Panels(SelectedItem.EntityIndex).IsSlender,
+                                                           ProjectRoot.Model.Objects(SelectedItem.ComponentIndex).Mesh.Panels(SelectedItem.EntityIndex).IsPrimitive)
 
                             Exit For
 
