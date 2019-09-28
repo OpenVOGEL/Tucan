@@ -760,7 +760,7 @@ Namespace VisualModel.Models.Components
 
                     For i = 0 To g
 
-                        ' Add panels between first section and first grid
+                        ' Add panels between first the section and the first grid
 
                         Dim zo As Double
                         Dim lz As Double
@@ -806,7 +806,7 @@ Namespace VisualModel.Models.Components
 
                         End If
 
-                        ' Add the grid:
+                        ' Add this grid:
 
                         Dim q As Integer = 0
 
@@ -848,7 +848,7 @@ Namespace VisualModel.Models.Components
 
                         Next
 
-                        ' Add region between two grids:
+                        ' Add region between this grid and the next one:
 
                         If i < g Then
 
@@ -859,10 +859,15 @@ Namespace VisualModel.Models.Components
 
                             For k = 1 To nz - 1
 
+                                ' Make a linear interpolation between the last grid line of 
+                                ' the previous grid, and the first grid line of the next grid
+
+                                Dim z As Double = k / nz * lz + zo
+                                Dim o As Integer = Grids(i).Nodes.Count - nps - 1
+
                                 For j = 0 To nps
 
-                                    Dim z As Double = k / nz * lz + zo
-                                    Dim s As Double = Grids(i).Nodes(j).Y + (Grids(i + 1).Nodes(j).Y - Grids(i).Nodes(j).Y) * j / nps
+                                    Dim s As Double = Grids(i).Nodes(o + j).Y + (Grids(i + 1).Nodes(j).Y - Grids(i).Nodes(o + j).Y) * j / nps
 
                                     Mesh.Nodes.Add(New NodalPoint(GetPoint(z, s)))
 
