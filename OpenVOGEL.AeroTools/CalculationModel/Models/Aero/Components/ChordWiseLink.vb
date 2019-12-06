@@ -21,19 +21,19 @@ Imports OpenVOGEL.MathTools.Algebra.EuclideanSpace
 Namespace CalculationModel.Models.Aero.Components
 
     ''' <summary>
-    ''' Represents a vortex ring stripe where lift and drag can be locally computed
+    ''' Represents a vortex ring stripe where lift and drag can be locally computed.
     ''' </summary>
     ''' <remarks></remarks>
     Public Class ChorwiseStripe
 
         ''' <summary>
-        ''' Chordwise stripe of vortex rings (from the L.E. to the T.E)
+        ''' Chordwise stripe of vortex rings (from the leading edge to the trailing edge).
         ''' </summary>
         ''' <remarks></remarks>
         Public Rings As List(Of VortexRing)
 
         ''' <summary>
-        ''' Polar curve used to compute the local drag
+        ''' Polar curve used to compute the local drag.
         ''' </summary>
         ''' <remarks></remarks>
         Public Polars As PolarFamily
@@ -44,6 +44,10 @@ Namespace CalculationModel.Models.Aero.Components
 
         Private _Area As Double
 
+        ''' <summary>
+        ''' Returns the area of this portion of wing in m².
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property Area As Double
             Get
                 Return _Area
@@ -53,7 +57,7 @@ Namespace CalculationModel.Models.Aero.Components
         Private _CL As Double
 
         ''' <summary>
-        ''' Stripe lift coefficient
+        ''' Local lift coefficient in this portion of wing.
         ''' </summary>
         ''' <remarks></remarks>
         Public ReadOnly Property CL As Double
@@ -65,7 +69,7 @@ Namespace CalculationModel.Models.Aero.Components
         Private _CDi As Double
 
         ''' <summary>
-        ''' Stripe induced drag coefficient
+        ''' Local induced drag coefficient in this portion of wing.
         ''' </summary>
         ''' <remarks></remarks>
         Public ReadOnly Property CDi As Double
@@ -77,7 +81,7 @@ Namespace CalculationModel.Models.Aero.Components
         Private _CDp As Double
 
         ''' <summary>
-        ''' Stripe parasitic drag coefficient
+        ''' Skin drag coefficient in this portion of wing.
         ''' </summary>
         ''' <remarks></remarks>
         Public ReadOnly Property CDp As Double
@@ -89,7 +93,7 @@ Namespace CalculationModel.Models.Aero.Components
         Public _L As Vector3
 
         ''' <summary>
-        ''' Total stripe lift
+        ''' Total stripe lift in N.
         ''' </summary>
         ''' <remarks></remarks>
         Public ReadOnly Property L As Vector3
@@ -101,7 +105,7 @@ Namespace CalculationModel.Models.Aero.Components
         Public _Di As Vector3
 
         ''' <summary>
-        ''' Total stripe induced drag
+        ''' Total stripe induced drag in N.
         ''' </summary>
         ''' <remarks></remarks>
         Public ReadOnly Property Di As Vector3
@@ -113,7 +117,7 @@ Namespace CalculationModel.Models.Aero.Components
         Public _Dp As Vector3
 
         ''' <summary>
-        ''' Total stripe induced drag
+        ''' Total stripe induced drag in N.
         ''' </summary>
         ''' <remarks></remarks>
         Public ReadOnly Property Dp As Vector3
@@ -125,7 +129,7 @@ Namespace CalculationModel.Models.Aero.Components
         Public _ML As Vector3
 
         ''' <summary>
-        ''' Total stripe moment (with respect to the origin).
+        ''' Total stripe moment (with respect to the origin) in N.m.
         ''' </summary>
         ''' <remarks></remarks>
         Public ReadOnly Property ML As Vector3
@@ -137,7 +141,7 @@ Namespace CalculationModel.Models.Aero.Components
         Public _MDi As Vector3
 
         ''' <summary>
-        ''' Total stripe moment (with respect to the origin).
+        ''' Total stripe moment (with respect to the origin) in N.m.
         ''' </summary>
         ''' <remarks></remarks>
         Public ReadOnly Property MDi As Vector3
@@ -149,7 +153,7 @@ Namespace CalculationModel.Models.Aero.Components
         Public _MDp As Vector3
 
         ''' <summary>
-        ''' Total stripe moment (with respect to the origin).
+        ''' Total stripe moment (with respect to the origin) in N.m.
         ''' </summary>
         ''' <remarks></remarks>
         Public ReadOnly Property MDp As Vector3
@@ -161,7 +165,7 @@ Namespace CalculationModel.Models.Aero.Components
         Private _Chord As Double
 
         ''' <summary>
-        ''' Stripe chord
+        ''' Stripe chord in meters.
         ''' </summary>
         ''' <value></value>
         ''' <returns></returns>
@@ -175,7 +179,7 @@ Namespace CalculationModel.Models.Aero.Components
         Private _ChordWiseVector As New Vector3
 
         ''' <summary>
-        ''' Vector having the direction of the chord
+        ''' Vector having the direction of the chord.
         ''' </summary>
         ''' <value></value>
         ''' <returns></returns>
@@ -189,11 +193,11 @@ Namespace CalculationModel.Models.Aero.Components
         Private _CenterPoint As New Vector3
 
         ''' <summary>
-        ''' Point located at the geometric center of the chordwise stripe
+        ''' Point located at the geometric center of the chordwise stripe.
         ''' </summary>
         ''' <value></value>
         ''' <returns></returns>
-        ''' <remarks></remarks>
+        ''' <remarks>Coordinates are always in meters.</remarks>
         Public ReadOnly Property CenterPoint As Vector3
             Get
                 Return _CenterPoint
@@ -201,7 +205,7 @@ Namespace CalculationModel.Models.Aero.Components
         End Property
 
         ''' <summary>
-        ''' Calculate stripe lift, drag and area. Cp should be calculated before calling this sub.
+        ''' Calculates the stripe lift, drag and area. The Cp (pressure coefficient) should be calculated before calling this sub.
         ''' </summary>
         ''' <remarks></remarks>
         Public Sub Compute(ByVal StreamDirection As Vector3, ByVal V As Double, Rho As Double, Mu As Double) ' the stream direction should be an argument...
@@ -317,6 +321,12 @@ Namespace CalculationModel.Models.Aero.Components
 
         End Sub
 
+        ''' <summary>
+        ''' Reads the chordwise link data from a binary stream.
+        ''' </summary>
+        ''' <param name="r"></param>
+        ''' <param name="Rings"></param>
+        ''' <param name="PolarDB"></param>
         Sub ReadBinary(ByRef r As BinaryReader, ByRef Rings As List(Of VortexRing), ByRef PolarDB As PolarDatabase)
             Try
                 For i = 1 To r.ReadInt32
@@ -329,6 +339,10 @@ Namespace CalculationModel.Models.Aero.Components
             End Try
         End Sub
 
+        ''' <summary>
+        ''' Writes the chordwise link data to a binary stream.
+        ''' </summary>
+        ''' <param name="w"></param>
         Sub WriteBinary(ByRef w As BinaryWriter)
 
             w.Write(Rings.Count)

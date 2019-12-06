@@ -29,12 +29,12 @@ Namespace Tucan.Utility
     Module CalculationManager
 
         ''' <summary>
-        ''' The background working performing the calculation
+        ''' The background procedure performing the calculation in a different thread.
         ''' </summary>
         Private CalculationWorker As BackgroundWorker
 
         ''' <summary>
-        ''' Starts a special asynchronous calculation process for Tucan (GUI compatible)
+        ''' Starts a special asynchronous calculation process for Tucan (GUI compatible).
         ''' </summary>
         ''' <param name="Type"></param>
         ''' <param name="Parent"></param>
@@ -102,6 +102,9 @@ Namespace Tucan.Utility
 
         End Sub
 
+        ''' <summary>
+        ''' Callback for when the calculation is done.
+        ''' </summary>
         Private Sub CalculationFinished()
 
             FormProgress.PushMessage("Loading results")
@@ -111,6 +114,9 @@ Namespace Tucan.Utility
 
         End Sub
 
+        ''' <summary>
+        ''' Callback for when the calculation is aborted.
+        ''' </summary>
         Private Sub CalculationAborted()
 
             FormProgress.PushMessage("Calculation aborted")
@@ -125,18 +131,27 @@ Namespace Tucan.Utility
         ''' <remarks></remarks>
         Public Event CalculationDone()
 
+        ''' <summary>
+        ''' Callback to start the steady state analysis.
+        ''' </summary>
         Private Sub StartWakeConvection(ByVal sender As Object, ByVal e As DoWorkEventArgs)
 
             CalculationCore.SteadyState(FilePath)
 
         End Sub
 
+        ''' <summary>
+        ''' Callback to start the unsteady analysis.
+        ''' </summary>
         Private Sub StartUnsteadyTransit(ByVal sender As Object, ByVal e As DoWorkEventArgs)
 
             CalculationCore.UnsteadyTransit(FilePath)
 
         End Sub
 
+        ''' <summary>
+        ''' Callback to start the aeroelastic analysis.
+        ''' </summary>
         Private Sub StartAeroelsaticTransit(ByVal sender As Object, ByVal e As DoWorkEventArgs)
 
             CalculationCore.AeroelasticUnsteadyTransit(FilePath)

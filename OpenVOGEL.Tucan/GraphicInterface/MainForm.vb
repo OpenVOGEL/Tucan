@@ -27,7 +27,7 @@ Public Class MainForm
 #Region " Initialize program "
 
     Public FormLoaded As Boolean = False
-    Public PostProcesoCargado As Boolean = False
+    Public ResultsLoaded As Boolean = False
 
     Private Sub Main_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
 

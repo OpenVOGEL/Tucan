@@ -31,13 +31,17 @@ Imports System.Runtime.CompilerServices
 
 Namespace VisualModel.Models
 
+    ''' <summary>
+    ''' The converter module provides a group of extesions to the Solver to automatically
+    ''' load the different kinds of standard surfaces from the design model. 
+    ''' </summary>
     Public Module Converter
 
         ''' <summary>
         ''' Transfers a geometric model to the calculation cell
         ''' </summary>
         ''' <param name="Model">Model to be transferred</param>
-        ''' <param name="GenerateStructure">Indicates if a structural link should be created</param>
+        ''' <param name="GenerateStructure">Indicates if a structural link that should be created</param>
         ''' <remarks></remarks>
         <Extension()>
         Public Sub GenerateFromExistingModel(This As Solver,

@@ -21,16 +21,25 @@ Imports System.Xml
 
 Namespace CalculationModel.Settings
 
+    ''' <summary>
+    ''' A sence bit.
+    ''' </summary>
     Public Enum Sence As Integer
         Positive = 1
         Negative = -1
     End Enum
 
+    ''' <summary>
+    ''' The different options to solve the linear equations.
+    ''' </summary>
     Public Enum MatrixSolverType As Byte
         LU = 0
         QR = 1
     End Enum
 
+    ''' <summary>
+    ''' Enumerates the adjacent rings on a given ring.
+    ''' </summary>
     Public Enum AdjacentRing As Byte
         Panel1 = 0
         Panel2 = 1
@@ -38,28 +47,36 @@ Namespace CalculationModel.Settings
         Panel4 = 3
     End Enum
 
+    ''' <summary>
+    ''' The possible kind of simulation.
+    ''' </summary>
     Public Enum CalculationType As Byte
         ctSteady = 0
         ctUnsteady = 1
         ctAeroelastic = 2
     End Enum
 
+    ''' <summary>
+    ''' Gathers all settings necessary for the calculation.
+    ''' </summary>
     Public Class SimulationSettings
 
         ''' <summary>
-        ''' Free stream velocity amplitude vector (components are scaled by an amplitude factor in unsteady problems).
+        ''' Free stream velocity vector in m/s.
         ''' </summary>
-        ''' <remarks></remarks>
+        ''' <remarks>
+        ''' The velocity components are scaled by an amplitude factor in unsteady problems.
+        ''' </remarks>
         Public Property StreamVelocity As New Vector3
 
         ''' <summary>
-        ''' Angular velocity of aircraft reference frame (not implemented yet).
+        ''' Angular velocity of the aircraft reference frame in rad/s.
         ''' </summary>
         ''' <remarks></remarks>
         Public Property Omega As New Vector3
 
         ''' <summary>
-        ''' Free stream density in kg/m³
+        ''' Free stream density in kg/m³.
         ''' </summary>
         ''' <remarks></remarks>
         Public Property Density As Double = 1.225#
@@ -71,7 +88,7 @@ Namespace CalculationModel.Settings
         Public Property StaticPressure As Double = 101300.0#
 
         ''' <summary>
-        ''' Free stream viscosity
+        ''' Free stream viscosity in kg/(m.s).
         ''' </summary>
         ''' <remarks></remarks>
         Public Property Viscocity As Double = 0.0000178#
@@ -79,7 +96,7 @@ Namespace CalculationModel.Settings
         Private _SimulationSteps As Integer = 1
 
         ''' <summary>
-        ''' Specifies the number of integration steps
+        ''' Specifies the number of integration steps.
         ''' </summary>
         ''' <remarks></remarks>
         Public Property SimulationSteps As Integer
@@ -94,7 +111,7 @@ Namespace CalculationModel.Settings
         Private _Interval As Double = 0.1
 
         ''' <summary>
-        ''' Specifies the size of the instegration step
+        ''' Specifies the size of the instegration step in seconds.
         ''' </summary>
         ''' <remarks></remarks>
         Public Property Interval As Double
@@ -108,7 +125,7 @@ Namespace CalculationModel.Settings
 
         Private _Cutoff As Double = 0.0001
         ''' <summary>
-        ''' Specifies the radius of the region around vortices where the velocity is null
+        ''' Specifies the radius of the region around vortices where the velocity is null in meters.
         ''' </summary>
         ''' <remarks></remarks>
         Public Property Cutoff As Double
@@ -121,19 +138,19 @@ Namespace CalculationModel.Settings
         End Property
 
         ''' <summary>
-        ''' Specifies whether the cutoff has to be automatically estimated
+        ''' Specifies whether the cutoff has to be automatically estimated based on the mesh.
         ''' </summary>
         ''' <remarks></remarks>
         Public Property CalculateCutoff As Boolean
 
         ''' <summary>
-        ''' 'Contains structural settings
+        ''' Contains the necessary structural settings.
         ''' </summary>
         ''' <remarks></remarks>
         Public Property StructuralSettings As New Models.Structural.Library.StructuralSettings
 
         ''' <summary>
-        ''' Amplitude of free stream velocity components in time.
+        ''' Amplitude of the free stream velocity components for every time step in m/s.
         ''' </summary>
         ''' <remarks></remarks>
         Public Property UnsteadyVelocity As New UnsteadyVelocity
@@ -153,7 +170,7 @@ Namespace CalculationModel.Settings
         Private _SurveyTolerance As Double = 0.001
 
         ''' <summary>
-        ''' Maximum distance between rings to be considered as adjacent.
+        ''' Maximum distance between two rings to be considered as adjacent, in meters.
         ''' </summary>
         ''' <remarks></remarks>
         Public Property SurveyTolerance As Double
@@ -166,7 +183,7 @@ Namespace CalculationModel.Settings
         End Property
 
         ''' <summary>
-        ''' Indicates if the influence of the wake in the fuselage should be included.
+        ''' Indicates if the influence of the wakes on the fuselage should be included.
         ''' </summary>
         ''' <value></value>
         ''' <returns></returns>
@@ -174,27 +191,31 @@ Namespace CalculationModel.Settings
         Public Property StrongWakeInfluence As Boolean = False
 
         ''' <summary>
-        ''' Indicates if the GPU can be used to accelerate the computation.
+        ''' Indicates if the GPU should be used for some of the computations.
         ''' </summary>
         ''' <returns></returns>
         Public Property UseGpu As Boolean = False
 
         ''' <summary>
-        ''' The id of the Gpu device to use.
+        ''' The id of the Gpu device to use (in case the UseGpu is true).
         ''' </summary>
         ''' <returns></returns>
         Public Property GpuDeviceId As Integer = 0
 
         ''' <summary>
-        ''' Indicates if the wakes must be prefixed.
+        ''' Indicates if the wakes must be extended in the stream direction after the trimming step.
         ''' </summary>
-        ''' <returns></returns>
+        ''' <returns>
+        ''' The current extension is 100m, and cannot be adapted.
+        ''' </returns>
         Public Property ExtendWakes As Boolean = False
 
         ''' <summary>
-        ''' Sets default values.
+        ''' Sets the default values.
         ''' </summary>
-        ''' <remarks></remarks>
+        ''' <remarks>
+        ''' The default values correspond to the standard atmosphere at sea level.
+        ''' </remarks>
         Public Sub InitializaParameters()
 
             StreamVelocity = New Vector3
@@ -224,7 +245,7 @@ Namespace CalculationModel.Settings
         End Sub
 
         ''' <summary>
-        ''' Copies the object content into another one.
+        ''' Copies the object content into another one (deep copy).
         ''' </summary>
         ''' <param name="SimuData"></param>
         ''' <remarks></remarks>
@@ -254,15 +275,23 @@ Namespace CalculationModel.Settings
 
         End Sub
 
+        ''' <summary>
+        ''' The current value of the dynamic pressure in Pa.
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property DynamicPressure As Double
             Get
-                Return 0.5 * Me.StreamVelocity.SquareEuclideanNorm * Me.Density
+                Return 0.5 * StreamVelocity.SquareEuclideanNorm * Me.Density
             End Get
         End Property
 
+        ''' <summary>
+        ''' The current Reynolds number for a lenght of 1m.
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property UnitReynoldsNumber
             Get
-                Return Me.StreamVelocity.EuclideanNorm * Me.Density / Me.Viscocity
+                Return StreamVelocity.EuclideanNorm * Density / Viscocity
             End Get
         End Property
 
@@ -270,13 +299,17 @@ Namespace CalculationModel.Settings
         ''' The Reynods number that marks the transition from laminar to turbulent
         ''' boundary layers in fuselages.
         ''' </summary>
-        ''' <returns></returns>
+        ''' <returns>
+        ''' OpenVOGEL is based in a very basic approach for skin drag computation in fuselages.
+        ''' </returns>
         Public Property TransitionReynods As Double = 2000000
 
         ''' <summary>
         ''' Generates a vector containing the velocity at each time step.
         ''' </summary>
-        ''' <remarks></remarks>
+        ''' <remarks>
+        ''' This is only intended for unsteady or aeroelastic problems.
+        ''' </remarks>
         Public Sub GenerateVelocityProfile()
 
             Select Case AnalysisType
@@ -294,6 +327,10 @@ Namespace CalculationModel.Settings
 
         End Sub
 
+        ''' <summary>
+        ''' Writes the simulation settings in an XML node.
+        ''' </summary>
+        ''' <param name="writer"></param>
         Public Sub SaveToXML(ByRef writer As XmlWriter)
 
             writer.WriteStartElement("StreamVelocity")
@@ -346,6 +383,10 @@ Namespace CalculationModel.Settings
 
         End Sub
 
+        ''' <summary>
+        ''' Reads the simulation settings from an XML node.
+        ''' </summary>
+        ''' <param name="reader"></param>
         Public Sub ReadFromXML(ByRef reader As XmlReader)
 
             While reader.Read

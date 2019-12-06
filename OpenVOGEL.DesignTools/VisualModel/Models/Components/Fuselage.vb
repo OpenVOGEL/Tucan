@@ -425,11 +425,17 @@ Namespace VisualModel.Models.Components
     ''' <summary>
     ''' Represents a surface defined by parallel planar cross sections.
     ''' </summary>
-    ''' <remarks></remarks>
+    ''' <remarks>
+    ''' Fuselages can be attached to one or more lifting surface, as long as these do
+    ''' not supperpose in the direction of the longitudinal axis.
+    ''' </remarks>
     Public Class Fuselage
 
         Inherits Surface
 
+        ''' <summary>
+        ''' Generates a new surface using default initial values.
+        ''' </summary>
         Public Sub New()
 
             Mesh = New Mesh()
@@ -555,7 +561,7 @@ Namespace VisualModel.Models.Components
         End Sub
 
         ''' <summary>
-        ''' Creates a mesh of triangular panels.
+        ''' Creates a mesh of triangular panels (not implemented).
         ''' </summary>
         ''' <remarks></remarks>
         Public Sub GenerateTriangularMesh()
@@ -565,7 +571,8 @@ Namespace VisualModel.Models.Components
         End Sub
 
         ''' <summary>
-        ''' Generates a structured mesh of quadrilaterals.
+        ''' Generates a structured mesh of quadrilaterals using the provided cross sections and wing anchors.
+        ''' Visit the wikibook pages for informaton about how fuselages are generated.
         ''' </summary>
         ''' <remarks>Cannot handle "Z supperposed" anchors.</remarks>
         Public Sub GenerateQuadrilateralMesh()
@@ -615,11 +622,11 @@ Namespace VisualModel.Models.Components
 
                 ' Second check: remove supperposed anchors
 
-                Dim supperposed As Boolean = True
+                Dim Supperposed As Boolean = True
 
-                While supperposed
+                While Supperposed
 
-                    supperposed = False
+                    Supperposed = False
 
                     For i = 0 To ValidAnchors.Count - 1
 
@@ -634,7 +641,7 @@ Namespace VisualModel.Models.Components
                                 Dim Zjn As Integer = ValidAnchors(j).Projections(ValidAnchors(j).Projections.Count - 1).Z
 
                                 If (Zi0 >= Zj0 And Zi0 <= Zjn) Or (Zin >= Zj0 And Zin <= Zjn) Then
-                                    supperposed = True
+                                    Supperposed = True
                                     ValidAnchors.RemoveAt(j)
                                     Exit For
                                 End If
@@ -643,7 +650,7 @@ Namespace VisualModel.Models.Components
 
                         Next
 
-                        If supperposed Then Exit For
+                        If Supperposed Then Exit For
 
                     Next
 
@@ -1045,7 +1052,7 @@ Namespace VisualModel.Models.Components
 
                 For i = 0 To r
 
-                    Dim pnl As Panel
+                    Dim NewPanel As Panel
 
                     Dim index As Integer = 2 * i
 
@@ -1059,7 +1066,7 @@ Namespace VisualModel.Models.Components
                         Mesh.Panels(index).N2 = N2
                         Mesh.Panels(index).N3 = N3
 
-                        pnl = New Panel(N1 + n + 1, N2 + n + 1, N3 + n + 1)
+                        NewPanel = New Panel(N1 + n + 1, N2 + n + 1, N3 + n + 1)
 
                     Else
 
@@ -1073,18 +1080,18 @@ Namespace VisualModel.Models.Components
                         Mesh.Panels(index).N3 = N3
                         Mesh.Panels(index).N4 = N4
 
-                        pnl = New Panel(N1 + n + 1, N2 + n + 1, N3 + n + 1, N4 + n + 1)
+                        NewPanel = New Panel(N1 + n + 1, N2 + n + 1, N3 + n + 1, N4 + n + 1)
 
                     End If
 
-                    pnl.IsSlender = Mesh.Panels(index).IsSlender
-                    pnl.IsPrimitive = Mesh.Panels(index).IsPrimitive
+                    NewPanel.IsSlender = Mesh.Panels(index).IsSlender
+                    NewPanel.IsPrimitive = Mesh.Panels(index).IsPrimitive
 
                     ' We don't reverse slender panels (because the same is done in wings, and this simplifies the canvection):
 
-                    pnl.Reversed = Not pnl.IsSlender
+                    NewPanel.Reversed = Not NewPanel.IsSlender
 
-                    Mesh.Panels.Insert(2 * i + 1, pnl)
+                    Mesh.Panels.Insert(2 * i + 1, NewPanel)
 
                 Next
 
@@ -1171,6 +1178,10 @@ Namespace VisualModel.Models.Components
 
         End Sub
 
+        ''' <summary>
+        ''' Returns a clone of the fuselage (not implemented).
+        ''' </summary>
+        ''' <returns></returns>
         Public Overrides Function Clone() As Surface
 
             Return Nothing
@@ -1179,6 +1190,10 @@ Namespace VisualModel.Models.Components
 
 #Region " Anchors "
 
+        ''' <summary>
+        ''' For each anchor line, this procedure updates the projection of the associated
+        ''' wing root nodes on the fuselage surface.
+        ''' </summary>
         Private Sub UpdateAnchors()
 
             For Each Anchor In AnchorLines
@@ -1479,6 +1494,9 @@ Namespace VisualModel.Models.Components
 
 #Region " Examples "
 
+        ''' <summary>
+        ''' Generates a simple example.
+        ''' </summary>
         Public Sub GenerateExample()
 
             CrossSections.Clear()
@@ -1553,6 +1571,9 @@ Namespace VisualModel.Models.Components
 
         End Sub
 
+        ''' <summary>
+        ''' Generates a simple model for testing and quality check.
+        ''' </summary>
         Public Sub GenerateModelForTesting_1()
 
             Mesh.Nodes.Clear()
@@ -1582,6 +1603,9 @@ Namespace VisualModel.Models.Components
 
         End Sub
 
+        ''' <summary>
+        ''' Generates a simple model for testing and quality check.
+        ''' </summary>
         Public Sub GenerateModelForTesting_2()
 
             Mesh.Nodes.Clear()
@@ -1624,6 +1648,9 @@ Namespace VisualModel.Models.Components
 
         End Sub
 
+        ''' <summary>
+        ''' Generates a simple model for testing and quality check.
+        ''' </summary>
         Public Sub GenerateModelForTesting_3()
 
             Mesh.Nodes.Clear()
