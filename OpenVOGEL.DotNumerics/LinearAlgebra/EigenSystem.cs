@@ -373,9 +373,9 @@ namespace DotNumerics.LinearAlgebra
         /// This is why this method can be succesfully implemented on the subspace iteration method (where projected matrices tend to diagonal form).
         /// If a lumped matrix is applied, this method will work even faster.
         /// This method has been brought here as a complement to the OpenVOGEL project publisehd on GPLv3.
-        /// Open VOGEL (https://en.wikibooks.org/wiki/Open_VOGEL)
+        /// Open VOGEL (openvogel.org)
         /// Open source software for aerodynamics
-        /// Copyright (C) 2018 Guillermo Hazebrouck (gahazebrouck@gmail.com)
+        /// Copyright (C) 2020 Guillermo Hazebrouck (guillermo.hazebrouck@openvogel.org)
         /// <http://www.gnu.org/licenses/>.
         /// This algorithm is a .NET interpretation of the original method published in "J. Bathe, Finite elements procedures",
         /// which was written in FORTRAN.
@@ -617,9 +617,9 @@ namespace DotNumerics.LinearAlgebra
         /// convergence is much easier to control and checked.
         /// Gram-smith KM-ortogonalization occurs simultaneously for all vectors through a Ritz transformation. This is why  the method is very stable and less round-off errors sensitive.
         /// This method has been brought here as a complement to the OpenVOGEL project publisehd on GPLv3.
-        /// Open VOGEL (https://en.wikibooks.org/wiki/Open_VOGEL)
+        /// Open VOGEL (openvogel.org)
         /// Open source software for aerodynamics
-        /// Copyright (C) 2018 Guillermo Hazebrouck (gahazebrouck@gmail.com)
+        /// Copyright (C) 2020 Guillermo Hazebrouck (guillermo.hazebrouck@openvogel.org)
         /// <http://www.gnu.org/licenses/>.
         /// </remarks>
         public void SubspaceIteration(SymmetricMatrix M, 

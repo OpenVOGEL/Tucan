@@ -1,6 +1,6 @@
-﻿'Open VOGEL (https://en.wikibooks.org/wiki/Open_VOGEL)
+﻿'Open VOGEL (openvogel.org)
 'Open source software for aerodynamics
-'Copyright (C) 2018 Guillermo Hazebrouck (gahazebrouck@gmail.com)
+'Copyright (C) 2020 Guillermo Hazebrouck (guillermo.hazebrouck@openvogel.org)
 
 'This program Is free software: you can redistribute it And/Or modify
 'it under the terms Of the GNU General Public License As published by
@@ -81,10 +81,10 @@ Namespace CalculationModel.Models.Aero.Components
                                    Optional ByVal CutOff As Double = 0.0001,
                                    Optional ByVal WithG As Boolean = True) As Vector3
 
-            Dim BSVector As New Vector3
+            Dim Vector As New Vector3
 
-            Dim Den As Double
-            Dim Num As Double
+            Dim D As Double
+            Dim F As Double
 
             Dim Lx, Ly, Lz As Double
             Dim R1x, R1y, R1z, R2x, R2y, R2z As Double
@@ -93,7 +93,6 @@ Namespace CalculationModel.Models.Aero.Components
 
             Dim NR1 As Double
             Dim NR2 As Double
-            Dim Factor As Double
 
             Lx = Node2.Position.X - Node1.Position.X
             Ly = Node2.Position.Y - Node1.Position.Y
@@ -107,9 +106,9 @@ Namespace CalculationModel.Models.Aero.Components
             vy = Lz * R1x - Lx * R1z
             vz = Lx * R1y - Ly * R1x
 
-            Den = FourPi * (vx * vx + vy * vy + vz * vz)
+            D = FourPi * (vx * vx + vy * vy + vz * vz)
 
-            If Den > CutOff Then
+            If D > CutOff Then
 
                 ' Calculate the rest of the geometrical parameters:
 
@@ -125,26 +124,24 @@ Namespace CalculationModel.Models.Aero.Components
                 dz = NR1 * R1z - NR2 * R2z
 
                 If WithG Then
-                    Num = G * (Lx * dx + Ly * dy + Lz * dz)
+                    F = G * (Lx * dx + Ly * dy + Lz * dz) / D
                 Else
-                    Num = (Lx * dx + Ly * dy + Lz * dz)
+                    F = (Lx * dx + Ly * dy + Lz * dz) / D
                 End If
 
-                Factor = Num / Den
-
-                BSVector.X += Factor * vx
-                BSVector.Y += Factor * vy
-                BSVector.Z += Factor * vz
+                Vector.X += F * vx
+                Vector.Y += F * vy
+                Vector.Z += F * vz
 
             Else
 
-                BSVector.X += 0
-                BSVector.Y += 0
-                BSVector.Z += 0
+                Vector.X += 0
+                Vector.Y += 0
+                Vector.Z += 0
 
             End If
 
-            Return BSVector
+            Return Vector
 
         End Function
 
@@ -160,8 +157,8 @@ Namespace CalculationModel.Models.Aero.Components
                                        CutOff As Double,
                                        WithG As Boolean)
 
-            Dim Den As Double
-            Dim Num As Double
+            Dim D As Double
+            Dim F As Double
 
             Dim Lx, Ly, Lz As Double
             Dim R1x, R1y, R1z, R2x, R2y, R2z As Double
@@ -170,7 +167,6 @@ Namespace CalculationModel.Models.Aero.Components
 
             Dim NR1 As Double
             Dim NR2 As Double
-            Dim Factor As Double
 
             Lx = Node2.Position.X - Node1.Position.X
             Ly = Node2.Position.Y - Node1.Position.Y
@@ -184,9 +180,9 @@ Namespace CalculationModel.Models.Aero.Components
             vy = Lz * R1x - Lx * R1z
             vz = Lx * R1y - Ly * R1x
 
-            Den = FourPi * (vx * vx + vy * vy + vz * vz)
+            D = FourPi * (vx * vx + vy * vy + vz * vz)
 
-            If Den > CutOff Then
+            If D > CutOff Then
 
                 ' Calculate the rest of the geometrical parameters:
 
@@ -202,16 +198,14 @@ Namespace CalculationModel.Models.Aero.Components
                 dz = NR1 * R1z - NR2 * R2z
 
                 If WithG Then
-                    Num = G * (Lx * dx + Ly * dy + Lz * dz)
+                    F = G * (Lx * dx + Ly * dy + Lz * dz) / D
                 Else
-                    Num = (Lx * dx + Ly * dy + Lz * dz)
+                    F = (Lx * dx + Ly * dy + Lz * dz) / D
                 End If
 
-                Factor = Num / Den
-
-                Vector.X += Factor * vx
-                Vector.Y += Factor * vy
-                Vector.Z += Factor * vz
+                Vector.X += F * vx
+                Vector.Y += F * vy
+                Vector.Z += F * vz
 
             End If
 

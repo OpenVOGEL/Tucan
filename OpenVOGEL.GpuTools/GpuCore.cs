@@ -56,11 +56,9 @@ namespace OpenVOGEL.GpuTools
             CudafyModule km = CudafyTranslator.Cudafy();
             Gpu = CudafyHost.GetDevice(eGPUType.OpenCL, DeviceId);
             Gpu.LoadModule(km);
+            Initialized = true;
         }
-
-
-        const double FourPi = 4 * Math.PI;
-
+        
         /// <summary>
         /// Calculates the velocity at the given control points induced by the given vortex segments.
         /// </summary>
@@ -96,7 +94,7 @@ namespace OpenVOGEL.GpuTools
             C[0] = Cutoff;
             double[] C_D = Gpu.Allocate<double>(C);
             Gpu.CopyToDevice(C, C_D);
-
+            
             // Circulation
 
             double[] G_D = Gpu.Allocate<double>(G);
@@ -146,7 +144,7 @@ namespace OpenVOGEL.GpuTools
             double[] Vz_D = Gpu.Allocate<double>(Vz);
             Gpu.CopyToDevice(Vz, Vz_D);
 
-            int nThreads = Vx.GetLength(0); 
+            int nThreads = Vx.GetLength(0);
             int nBlocks = 1;
 
             Gpu.Launch(nBlocks, nThreads).CalculateVelocities(
@@ -189,7 +187,7 @@ namespace OpenVOGEL.GpuTools
             double[] Px, double[] Py, double[] Pz,
             double[] Vx, double[] Vy, double[] Vz)
         {
-            int i = thread.blockIdx.x;
+            int i = thread.threadIdx.x;
             
             Vx[i] = 0d;
             Vy[i] = 0d;
@@ -211,9 +209,9 @@ namespace OpenVOGEL.GpuTools
                 double vy = Lz * R1x - Lx * R1z;
                 double vz = Lx * R1y - Ly * R1x;
 
-                double Den = 12.566370614359d * (vx * vx + vy * vy + vz * vz);
-
-                if (Den > C[0])
+                double D = 12.566370614359d * (vx * vx + vy * vy + vz * vz);
+                
+                if (D > C[0])
                 {
                     double R2x = Px[i] - Bx[j];
                     double R2y = Py[i] - By[j];
@@ -226,11 +224,11 @@ namespace OpenVOGEL.GpuTools
                     double dy = NR1 * R1y - NR2 * R2y;
                     double dz = NR1 * R1z - NR2 * R2z;
 
-                    double Factor = G[j] * (Lx * dx + Ly * dy + Lz * dz) / Den;
+                    double F = G[j] * (Lx * dx + Ly * dy + Lz * dz) / D;
 
-                    Vx[i] = Vx[i] + Factor * vx;
-                    Vy[i] = Vy[i] + Factor * vy;
-                    Vz[i] = Vz[i] + Factor * vz;
+                    Vx[i] = Vx[i] + F * vx;
+                    Vy[i] = Vy[i] + F * vy;
+                    Vz[i] = Vz[i] + F * vz;
                 }
             }
         }

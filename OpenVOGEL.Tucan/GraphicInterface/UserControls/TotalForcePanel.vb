@@ -1,6 +1,6 @@
-﻿'Open VOGEL (https://en.wikibooks.org/wiki/Open_VOGEL)
+﻿'Open VOGEL (openvogel.org)
 'Open source software for aerodynamics
-'Copyright (C) 2017 Guillermo Hazebrouck (gahazebrouck@gmail.com)
+'Copyright (C) 2017 Guillermo Hazebrouck (guillermo.hazebrouck@openvogel.org)
 
 'This program Is free software: you can redistribute it And/Or modify
 'it under the terms Of the GNU General Public License As published by
