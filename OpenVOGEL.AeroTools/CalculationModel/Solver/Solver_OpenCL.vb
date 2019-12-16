@@ -54,6 +54,8 @@ Namespace CalculationModel.Solver
         ''' </summary>
         Private Sub CalculateVelocityInducedByTheWakesOnBoundedLatticesWithOpenCL()
 
+            Dim Start As DateTime = Now
+
             ' Count number of vortices in the wakes
 
             Dim nVortices As Integer = 0
@@ -146,6 +148,8 @@ Namespace CalculationModel.Solver
 
             Next
 
+            RaiseEvent PushMessage(String.Format("{0} -> GPU assignments", (Now - Start).ToString))
+
             GpuVortexSolver.CalculateVelocity(G,
                                               Ax, Ay, Az,
                                               Bx, By, Bz,
@@ -153,7 +157,11 @@ Namespace CalculationModel.Solver
                                               Vx, Vx, Vz,
                                               Settings.Cutoff)
 
+            RaiseEvent PushMessage(String.Format("{0} -> actual GPU task", (Now - Start).ToString))
+
             ' Set information to lattice:
+
+            Start = Now
 
             i = 0
 
@@ -171,9 +179,13 @@ Namespace CalculationModel.Solver
 
             Next
 
+            RaiseEvent PushMessage(String.Format("{0} -> retriving GPU data", (Now - Start).ToString))
+
         End Sub
 
         Private Sub CalculateTotalVelocityOnBoundedLatticesWithOpenCL(ByVal WithStreamOmega As Boolean)
+
+            Dim Start As DateTime = Now
 
             ' Count number of vortices
 
@@ -277,6 +289,10 @@ Namespace CalculationModel.Solver
 
             Next
 
+            RaiseEvent PushMessage(String.Format("{0} -> GPU assignments", (Now - Start).ToString))
+
+            Start = Now
+
             Dim VortexSolver As New GpuTools.VortexSolver
 
             VortexSolver.CalculateVelocity(G,
@@ -286,7 +302,11 @@ Namespace CalculationModel.Solver
                                            Vx, Vx, Vz,
                                            Settings.Cutoff)
 
+            RaiseEvent PushMessage(String.Format("{0} -> actual GPU task", (Now - Start).ToString))
+
             ' Set information to lattice:
+
+            Start = Now
 
             i = 0
 
@@ -317,6 +337,8 @@ Namespace CalculationModel.Solver
                 Next
 
             Next
+
+            RaiseEvent PushMessage(String.Format("{0} -> retriving GPU data", (Now - Start).ToString))
 
         End Sub
 

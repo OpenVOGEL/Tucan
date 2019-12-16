@@ -24,9 +24,9 @@ Namespace CalculationModel.Models.Aero.Components
     ''' </summary>
     Public Class Vortex
 
-        ' Comment regarding this class:
-        ' Vortices might be useful to replace the complete wake lattice, but not to work together with vortex rings.
-
+        ''' <summary>
+        ''' Four times Pi
+        ''' </summary>
         Const FourPi As Double = 4 * Math.PI
 
         ''' <summary>
@@ -67,6 +67,25 @@ Namespace CalculationModel.Models.Aero.Components
         ''' </summary>
         ''' <remarks></remarks>
         Public Streamwise As Boolean = False
+
+        '' Possible optimization: compute the L vector only once every time step
+
+        ''' <summary>
+        ''' The vortex segment
+        ''' </summary>
+        'Public L As New Vector3
+
+        ''' <summary>
+        ''' Calculates the L vector as Node2 - Node1.
+        ''' This procedure could be used to lower the calculation time
+        ''' </summary>
+        'Public Sub Refresh()
+
+        '    L.X = Node2.Position.X - Node1.Position.X
+        '    L.Y = Node2.Position.Y - Node1.Position.Y
+        '    L.Z = Node2.Position.Z - Node1.Position.Z
+
+        'End Sub
 
 #Region "Field evaluation"
 
@@ -123,10 +142,10 @@ Namespace CalculationModel.Models.Aero.Components
                 dy = NR1 * R1y - NR2 * R2y
                 dz = NR1 * R1z - NR2 * R2z
 
+                F = (Lx * dx + Ly * dy + Lz * dz) / D
+
                 If WithG Then
-                    F = G * (Lx * dx + Ly * dy + Lz * dz) / D
-                Else
-                    F = (Lx * dx + Ly * dy + Lz * dz) / D
+                    F *= G
                 End If
 
                 Vector.X += F * vx

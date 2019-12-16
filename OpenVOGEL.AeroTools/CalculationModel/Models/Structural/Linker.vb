@@ -475,9 +475,10 @@ Namespace CalculationModel.Models.Structural
         ''' Completes one itaration in the aeroelastic coupling with the Newmark implicity time integration scheme.
         ''' </summary>
         ''' <param name="Velocity">Reference velocity used to calculate aerodinamic loads</param>
+        ''' <param name="Level">Keeps track on the worst level of convergence</param>
         ''' <remarks>This method integrates the uncoupled ecuations of motion</remarks>
         ''' <returns>True when the relative increment of the new prediction in all modal displacements is less than e.</returns>
-        Public Function Integrate(ByVal Velocity As Vector3, ByVal Density As Double, k As Integer, Optional e As Double = 0.01) As Boolean
+        Public Function Integrate(ByVal Velocity As Vector3, ByVal Density As Double, ByRef Level As Double, k As Integer, Optional e As Double = 0.01) As Boolean
 
             If Not Initialized Then Throw New Exception("Attempting to integrate with non initialized link")
 
@@ -533,7 +534,11 @@ Namespace CalculationModel.Models.Structural
                 ModalResponse(t)(m).v = ni._A(1, 0) * a0 + ni._A(1, 1) * v0 + ni._A(1, 2) * p0 + ni._L(1) * P
                 ModalResponse(t)(m).p = ni._A(2, 0) * a0 + ni._A(2, 1) * v0 + ni._A(2, 2) * p0 + ni._L(2) * P
 
-                If pp <> 0 Then Converged = Converged And (ModalResponse(t)(m).p - pp) / pp < e
+                If pp <> 0 Then
+                    Dim c As Double = (ModalResponse(t)(m).p - pp) / pp
+                    Converged = Converged And c < e
+                    Level = Math.Max(Level, c)
+                End If
 
                 ' 2) Calculate nodal displacements by modal superposition:
 

@@ -368,7 +368,6 @@ Namespace CalculationModel.Models.Aero
 
                     TransverseVortex.Node1 = Wake.Nodes(nn + i - 1)
                     TransverseVortex.Node2 = Wake.Nodes(nn + i)
-
                     Wake.Vortices.Add(TransverseVortex)
 
                 Next

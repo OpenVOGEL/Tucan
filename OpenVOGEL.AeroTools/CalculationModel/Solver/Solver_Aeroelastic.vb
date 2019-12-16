@@ -25,243 +25,13 @@ Namespace CalculationModel.Solver
 
         ''' <summary>
         ''' Calculates the unsteady aeroelastic transit provided a velocity profile and a structural model.
-        ''' The explicit Newmark algorithm is used.
-        ''' </summary>
-        Public Sub AeroelasticUnsteadyTransit_(ByVal DataBasePath As String)
-
-            If _WithSources Then
-
-                RaiseEvent PushMessage("Cannot run aeroelastic analysis with thick bodies. Calculation stopped.")
-                RaiseEvent CalculationDone()
-                Exit Sub
-
-            End If
-
-            If Settings.UseGpu Then
-
-                RaiseEvent PushMessage("Cannot run transit analysis with OpenCL")
-                RaiseEvent CalculationAborted()
-                Exit Sub
-
-            End If
-
-            ' Create database:
-
-            RaiseEvent PushMessage("Creating database structure")
-
-            CreateSubFoldersNames(DataBasePath)
-            CreateSubFolder(DataBaseSection.Aeroelastic)
-            CleanDirectory(DataBaseSection.Aeroelastic)
-            CreateSubFolder(DataBaseSection.Structural)
-            CleanDirectory(DataBaseSection.Structural)
-
-            RaiseEvent PushMessage("Generating stream velocity")
-
-            Settings.GenerateVelocityProfile()
-
-            If IsNothing(Settings.AeroelasticHistogram) Then
-                RaiseEvent PushMessage("Unable to generate aeroelastic histogram!")
-                Return
-            End If
-
-            ' Initialize aerodynamic model
-
-            RaiseEvent PushMessage("Building matrix")
-
-            ' Build starting matrix and RHS:
-
-            Dim WithStreamOmega As Boolean = _StreamOmega.EuclideanNorm > 0.00001
-
-            BuildMatrixForDoublets(True)
-            BuildRHS_I(WithStreamOmega)
-            InitializeWakes()
-
-            ' Initialize structural link:
-
-            Dim l As Integer = 0
-
-            Dim sDt As Double = Double.MaxValue
-
-            For Each StructuralLink As StructuralLink In StructuralLinks ' This should be in parallel
-
-                If CancellationPending Then
-                    CancelProcess()
-                    Return
-                End If
-
-                l += 1
-
-                RaiseEvent PushMessage(String.Format("Creating structural link {0}", l))
-
-                RaiseEvent PushMessage("Creating mass and stiffness matrices...")
-                StructuralLink.StructuralCore.CreateMatrices(Structure_Path, True)
-
-                RaiseEvent PushMessage("Finding modes...")
-                StructuralLink.StructuralCore.FindModes(Structure_Path, l)
-
-                ' Update the minimum modal period:
-
-                For Each Mode In StructuralLink.StructuralCore.Modes
-
-                    Mode.C = Settings.AeroelasticHistogram.State(0).Damping * Mode.Cc
-                    sDt = Math.Min(sDt, 2 * Math.PI / Mode.w)
-
-                Next
-
-            Next
-
-            ' Calculate the structural step interval:
-
-            Dim StructuralSteps As Integer = Math.Max(1, Math.Round(Settings.Interval / sDt) * 10)
-
-            sDt = Settings.Interval / StructuralSteps
-
-            RaiseEvent PushMessage(String.Format("Structural step: {0:F4}s (x{1})", sDt, StructuralSteps))
-
-            Settings.StructuralSettings.SubSteps = StructuralSteps
-
-            ' Initialize the links with the selected step interval:
-
-            For Each StructuralLink As StructuralLink In StructuralLinks
-
-                RaiseEvent PushMessage("Initializing links...")
-                StructuralLink.Initialize(sDt)
-
-            Next
-
-            RaiseEvent PushMessage("All links have been succesfully created")
-
-            ' Start inegration:
-
-            Dim AerodynamicEquations As New LinearEquations
-
-            For TimeStep = 1 To Settings.SimulationSteps
-
-                If CancellationPending Then
-                    CancelProcess()
-                    Return
-                End If
-
-                ' Update stream parameters:
-
-                _StreamVelocity.Assign(Settings.AeroelasticHistogram.State(TimeStep).Velocity)
-
-                _StreamDensity = Settings.Density
-
-                Dim SquareVelocity As Double = _StreamVelocity.SquareEuclideanNorm
-
-                _StreamDynamicPressure = 0.5 * _StreamDensity * SquareVelocity
-
-                ' Update modal damping and integrators data:
-
-                For Each StructuralLink As StructuralLink In StructuralLinks
-
-                    Dim DampingChanged As Boolean = False
-
-                    For Each Mode In StructuralLink.StructuralCore.Modes
-
-                        Mode.C = Settings.AeroelasticHistogram.State(TimeStep).Damping * Mode.Cc
-
-                        DampingChanged = DampingChanged Or (Settings.AeroelasticHistogram.State(TimeStep - 1).Damping <> Settings.AeroelasticHistogram.State(TimeStep).Damping)
-
-                    Next
-
-                    If DampingChanged Then
-                        StructuralLink.UpdateIntegrators()
-                    End If
-
-                Next
-
-                ' Perform one step:
-
-                RaiseEvent PushProgress(String.Format("Step {0}", TimeStep), 100 * TimeStep / Settings.SimulationSteps)
-
-                ' Rebuild matrix (from 2nd time step)
-
-                If TimeStep > 1 Then BuildMatrixForDoublets(False)
-
-                '  Calculate new circulation and its time derivative:
-
-                G = AerodynamicEquations.Solve(MatrixDoublets, RHS)
-
-                AssignDoublets()
-
-                ' Calculate induced velocity on wake NP:
-
-                CalculateVelocityOnWakes(WithStreamOmega)
-
-                ' Convect wake:
-
-                For Each Lattice In Lattices
-
-                    Lattice.PopulateWakeVortices(Settings.Interval, TimeStep, False, Nothing)
-
-                Next
-
-                ' Calculate velocityI at rings NPs for RHS and airloads:
-
-                CalculateVelocityInducedByTheWakesOnBoundedLattices()
-
-                RaiseEvent PushMessage("Calculating airloads")
-
-                ' Calculate velocityII (total velocity) at rings NPs (for airloads):
-
-                CalculateTotalVelocityOnBoundedLattices(WithStreamOmega)
-
-                For Each Lattice In Lattices
-
-                    Lattice.CalculatePressure(SquareVelocity)
-
-                Next
-
-                If TimeStep > Settings.StructuralSettings.StructuralLinkingStep Then ' Leave wake be convected before starting structural interaction
-
-                    ' Update structure displacement:
-
-                    For k = 0 To StructuralSteps
-
-                        For Each StructuralLink As StructuralLink In StructuralLinks ' This should be in parallel
-
-                            StructuralLink.Integrate(_StreamVelocity, _StreamDensity)
-
-                        Next
-
-                    Next
-
-                    ' Recomposes the wake on the primitive nodes
-
-                    For Each Lattice In Lattices ' This should be in parallel
-                        Lattice.ReEstablishWakes()
-                    Next
-
-                    ' Calculate new right hand side at new deformed position with new surface velocity:
-                    ' (not required when the link has not been performed)
-
-                    CalculateVelocityInducedByTheWakesOnBoundedLattices()
-
-                End If
-
-                BuildRHS_II(WithStreamOmega)
-
-            Next
-
-            ' Save last time step
-
-            RaiseEvent PushMessage("Writing binaries")
-
-            WriteToXML(String.Format("{0}\Aeroelastic.res", Aeroelastic_Path, Settings.SimulationSteps))
-
-            RaiseEvent CalculationDone()
-
-        End Sub
-
-        ''' <summary>
-        ''' Calculates the unsteady aeroelastic transit provided a velocity profile and a structural model.
         ''' The implicit Nemark algorithm is used.
         ''' </summary>
         Public Sub AeroelasticUnsteadyTransit(ByVal DataBasePath As String)
 
             If _WithSources Then
+
+                ' Abort calculation: doublets are not allowed in the aeroelastic analysis
 
                 RaiseEvent PushMessage("Cannot run aeroelastic analysis with thick bodies")
                 RaiseEvent CalculationAborted()
@@ -269,7 +39,19 @@ Namespace CalculationModel.Solver
 
             End If
 
-            ' Create database:
+            If Settings.UseGpu Then
+
+                ' Abort calculation: the GPU is not allowed in the aeroelastic analysis
+
+                RaiseEvent PushMessage("Cannot run transit analysis with OpenCL")
+                RaiseEvent CalculationAborted()
+                Exit Sub
+
+            End If
+
+            '/////////////////'
+            ' Create database '
+            '/////////////////'
 
             RaiseEvent PushMessage("Creating database structure")
 
@@ -279,16 +61,18 @@ Namespace CalculationModel.Solver
             CreateSubFolder(DataBaseSection.Structural)
             CleanDirectory(DataBaseSection.Structural)
 
-            RaiseEvent PushMessage("Generating stream velocity")
+            RaiseEvent PushMessage("Generating stream velocity histogram")
 
-            Settings.GenerateVelocityProfile()
+            Settings.GenerateVelocityHistogram()
 
             If IsNothing(Settings.AeroelasticHistogram) Then
                 RaiseEvent PushMessage("Unable to generate aeroelastic histogram!")
                 Return
             End If
 
-            ' Initialize aerodynamic model
+            '//////////////////////////////'
+            ' Initialize aerodynamic model '
+            '//////////////////////////////'
 
             RaiseEvent PushMessage("Building matrix")
 
@@ -300,13 +84,17 @@ Namespace CalculationModel.Solver
             BuildRHS_I(WithStreamOmega)
             InitializeWakes()
 
-            ' Initialize structural link:
+            '/////////////////////////////'
+            ' Initialize structural model '
+            '/////////////////////////////'
 
             Dim l As Integer = 0
 
-            Dim sDt As Double = Double.MaxValue
+            Dim StructuralDt As Double = Double.MaxValue
 
-            For Each StructuralLink As StructuralLink In StructuralLinks ' This should be in parallel
+            For Each StructuralLink As StructuralLink In StructuralLinks
+
+                ' NOTE: this could be done in parallel
 
                 If CancellationPending Then
                     CancelProcess()
@@ -328,7 +116,7 @@ Namespace CalculationModel.Solver
                 For Each Mode In StructuralLink.StructuralCore.Modes
 
                     Mode.C = Settings.AeroelasticHistogram.State(0).Damping * Mode.Cc
-                    sDt = Math.Min(sDt, 2 * Math.PI / Mode.w)
+                    StructuralDt = Math.Min(StructuralDt, 2 * Math.PI / Mode.w)
 
                 Next
 
@@ -336,11 +124,11 @@ Namespace CalculationModel.Solver
 
             ' Calculate the structural step interval:
 
-            Dim StructuralSteps As Integer = Math.Max(1, Math.Round(Settings.Interval / sDt) * 10)
+            Dim StructuralSteps As Integer = Math.Max(1, Math.Round(Settings.Interval / StructuralDt) * 10)
 
-            sDt = Settings.Interval / StructuralSteps
+            StructuralDt = Settings.Interval / StructuralSteps
 
-            RaiseEvent PushMessage(String.Format("Structural step: {0:F4}s (x{1})", sDt, StructuralSteps))
+            RaiseEvent PushMessage(String.Format("Structural step: {0:F4}s (x{1})", StructuralDt, StructuralSteps))
 
             Settings.StructuralSettings.SubSteps = StructuralSteps
 
@@ -349,24 +137,30 @@ Namespace CalculationModel.Solver
             For Each StructuralLink As StructuralLink In StructuralLinks
 
                 RaiseEvent PushMessage("Initializing links...")
-                StructuralLink.Initialize(sDt)
+                StructuralLink.Initialize(StructuralDt)
 
             Next
 
             RaiseEvent PushMessage("All links have been succesfully created")
 
-            ' Start inegration:
+            '///////////////////'
+            ' Start integration '
+            '///////////////////'
 
-            Dim LE As New LinearEquations
+            Dim Equations As New LinearEquations
 
             For TimeStep = 1 To Settings.SimulationSteps
+
+                RaiseEvent PushProgress(String.Format("Step {0}", TimeStep), 100 * TimeStep / Settings.SimulationSteps)
 
                 If CancellationPending Then
                     CancelProcess()
                     Return
                 End If
 
-                ' Update stream parameters:
+                '//////////////////////////'
+                ' Update stream parameters '
+                '//////////////////////////'
 
                 _StreamVelocity.Assign(Settings.AeroelasticHistogram.State(TimeStep).Velocity)
 
@@ -376,7 +170,9 @@ Namespace CalculationModel.Solver
 
                 _StreamDynamicPressure = 0.5 * _StreamDensity * SquareVelocity
 
-                ' Update modal damping and integrators data:
+                '///////////////////////////////////////////'
+                ' Update modal damping and integrators data '
+                '///////////////////////////////////////////'
 
                 For Each StructuralLink As StructuralLink In StructuralLinks
 
@@ -396,17 +192,23 @@ Namespace CalculationModel.Solver
 
                 Next
 
-                RaiseEvent PushProgress(String.Format("Step {0}", TimeStep), 100 * TimeStep / Settings.SimulationSteps)
+                '//////////////////'
+                ' Perform one step '
+                '//////////////////'
 
-                ' Perform one step:
+                RaiseEvent PushMessage("Performing Newmark loop")
 
-                ' BEGIN NEWMARK LOOP:
+                ' Begin newmark loop (failure declared after 10 steps):
 
                 Dim Converged As Boolean = False
 
                 Dim k As Integer = 0
 
-                While Not Converged
+                Dim Level As Double = 0#
+
+                While Not Converged And k <= 10
+
+                    Level = 0#
 
                     ' Calculate new right hand side at new deformed position with new surface velocity:
 
@@ -422,7 +224,7 @@ Namespace CalculationModel.Solver
 
                     '  Calculate new circulation and its time derivative:
 
-                    G = LE.Solve(MatrixDoublets, RHS)
+                    G = Equations.Solve(MatrixDoublets, RHS)
 
                     AssignDoublets()
 
@@ -450,20 +252,24 @@ Namespace CalculationModel.Solver
 
                                 ' Compute one step in the fixed point iteration:
 
-                                Converged = Converged And StructuralLink.Integrate(_StreamVelocity, _StreamDensity, k, 0.005)
+                                Converged = Converged And StructuralLink.Integrate(_StreamVelocity, _StreamDensity, Level, k, 0.005)
 
                             Next
 
                         Next
 
-                        If k = 0 Then Converged = False
+                        ' Force at least two steps
 
-                        If k >= 10 Then Converged = True
+                        If k = 0 Then Converged = False
 
                         ' Recomposes the wake on the primitive nodes
 
-                        For Each Lattice In Lattices ' This should be in parallel
+                        For Each Lattice In Lattices
+
+                            ' NOTE: This could be done in parallel
+
                             Lattice.ReEstablishWakes()
+
                         Next
 
                         k += 1
@@ -476,15 +282,21 @@ Namespace CalculationModel.Solver
 
                 End While
 
-                ' END OF LOOP: if converged, the system is in dynamic equilibrium.
+                '/////////////'
+                ' End of loop '
+                '/////////////'
 
                 If Converged Then
 
-                    ' Calculate induced velocity on wake NP:
+                    ' The system is in dynamic equilibrium
+
+                    RaiseEvent PushMessage(String.Format("Convergence reached {0:P3}", Level))
+
+                    '//////////////'
+                    ' Convect wake '
+                    '//////////////'
 
                     CalculateVelocityOnWakes(WithStreamOmega)
-
-                    ' Convect wake:
 
                     For Each Lattice In Lattices
 
@@ -494,6 +306,10 @@ Namespace CalculationModel.Solver
 
                 Else
 
+                    '////////////////////////'
+                    ' The calculation failed '
+                    '////////////////////////'
+
                     RaiseEvent PushMessage("Error: the aeroelastic coupling didn't converge.")
                     Exit For
 
@@ -501,7 +317,9 @@ Namespace CalculationModel.Solver
 
             Next
 
-            ' Save last time step
+            '/////////////////////'
+            ' Save last time step '
+            '/////////////////////'
 
             RaiseEvent PushMessage("Writing binaries")
 
@@ -510,7 +328,6 @@ Namespace CalculationModel.Solver
             RaiseEvent CalculationDone()
 
         End Sub
-
 
     End Class
 

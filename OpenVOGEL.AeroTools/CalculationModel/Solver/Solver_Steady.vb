@@ -32,6 +32,10 @@ Namespace CalculationModel.Solver
 
             CheckForSources()
 
+            '///////////////////'
+            ' Check for the GPU '
+            '///////////////////'
+
             If not WithSources AndAlso Settings.UseGpu AndAlso TestOpenCL() Then
 
                 GpuVortexSolver = New GpuTools.VortexSolver
@@ -49,9 +53,17 @@ Namespace CalculationModel.Solver
 
             Dim StartingTime As Date = Now
 
+            '///////////////////////////////'
+            ' Initialize output directories '
+            '///////////////////////////////'
+
             CreateSubFoldersNames(DataBasePath)
             CreateSubFolder(DataBaseSection.Steady)
             CleanDirectory(DataBaseSection.Steady)
+
+            '//////////////////////////////'
+            ' Initialize stream properties '
+            '//////////////////////////////'
 
             _StreamVelocity.Assign(Settings.StreamVelocity)
 
@@ -69,6 +81,10 @@ Namespace CalculationModel.Solver
             WakeExtension.Normalize()
             WakeExtension.Scale(100.0)
 
+            '////////////////////////////////////'
+            ' Build influcence matrix (constant) '
+            '////////////////////////////////////'
+
             RaiseEvent PushMessage("Building doublets matrix")
             BuildMatrixForDoublets()
 
@@ -82,6 +98,10 @@ Namespace CalculationModel.Solver
 
             End If
 
+            '////////////////'
+            ' Initialize RHS '
+            '////////////////'
+
             RaiseEvent PushMessage("Building RHS")
             BuildRHS_I(WithStreamOmega)
 
@@ -89,9 +109,15 @@ Namespace CalculationModel.Solver
             InitializeWakes()
 
             RaiseEvent PushMessage(String.Format("Generating LU decomposition ({0})", Dimension))
-            Dim LE As New LinearEquations
-            LE.ComputeLU(MatrixDoublets)
+            Dim Equations As New LinearEquations
+            Equations.ComputeLU(MatrixDoublets)
             G = New Vector(Dimension)
+
+            '///////////////////////'
+            ' Generate relaxed wake '
+            '///////////////////////'
+
+            Dim Start As DateTime = Now
 
             For TimeStep = 1 To Settings.SimulationSteps
 
@@ -102,15 +128,25 @@ Namespace CalculationModel.Solver
 
                 RaiseEvent PushProgress(String.Format("Step {0}", TimeStep), 100 * TimeStep / Settings.SimulationSteps)
 
-                LE.SolveLU(RHS, G)
+                '/////////////////////////////////////'
+                ' Find circulation on bouded lattices '
+                '/////////////////////////////////////'
+
+                Start = Now
+
+                Equations.SolveLU(RHS, G)
 
                 AssignDoublets()
 
-                ' Calculate induced velocity on wake NP:
+                RaiseEvent PushMessage(String.Format("{0} -> equations", (Now - Start).ToString))
+
+                '//////////////'
+                ' Convect wake '
+                '//////////////'
+
+                Start = Now
 
                 CalculateVelocityOnWakes(WithStreamOmega)
-
-                ' Convect wake:
 
                 For Each Lattice In Lattices
 
@@ -120,13 +156,21 @@ Namespace CalculationModel.Solver
 
                     Else
 
-                        ' We tame the root vortex when there are fuselages.
+                        ' NOTE: the root vortex is tamed when there are fuselages to simulate continuity in the circulation.
 
                         Lattice.PopulateWakeVortices(Settings.Interval, TimeStep, Settings.ExtendWakes, WakeExtension)
 
                     End If
 
                 Next
+
+                RaiseEvent PushMessage(String.Format("{0} -> wake convection", (Now - Start).ToString))
+
+                '/////////////////'
+                ' Rebuild the RHS '
+                '/////////////////'
+
+                Start = Now
 
                 CalculateVelocityInducedByTheWakesOnBoundedLattices(True)
 
@@ -138,25 +182,27 @@ Namespace CalculationModel.Solver
 
                 BuildRHS_II(WithStreamOmega)
 
-                'Next time step
+                RaiseEvent PushMessage(String.Format("{0} -> rhs", (Now - Start).ToString))
 
             Next
 
             RaiseEvent PushMessage("Calculating airloads")
 
-            ' Complete the last step
+            '////////////////////////'
+            ' Complete the last step '
+            '////////////////////////'
 
-            LE.SolveLU(RHS, G)
+            Equations.SolveLU(RHS, G)
 
             AssignDoublets()
 
+            '//////////////////////////////////'
+            ' Calculate vortex rings Cp or DCp '
+            '//////////////////////////////////'
+
             CalculateVelocityInducedByTheWakesOnBoundedLattices(False)
 
-            ' Calculate total velocity:
-
             CalculateTotalVelocityOnBoundedLattices(WithStreamOmega)
-
-            ' Calculate vortex rings Cp or DCp:
 
             For Each Lattice In Lattices
 
@@ -164,11 +210,15 @@ Namespace CalculationModel.Solver
 
             Next
 
-            ' Calculate the total airload:
+            '/////////////////////////////'
+            ' Calculate the total airload '
+            '/////////////////////////////'
 
             CalculateAirloads()
 
-            ' Ready
+            '///////////////////////////'
+            ' Announce ready and finish '
+            '///////////////////////////'
 
             RaiseEvent PushMessage("Writing to database")
 

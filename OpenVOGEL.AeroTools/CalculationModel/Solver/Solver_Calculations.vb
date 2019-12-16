@@ -491,8 +491,8 @@ Namespace CalculationModel.Solver
                                                                   Vz += _StreamOmega.X * VortexRing.ControlPoint.Y - _StreamOmega.Y * VortexRing.ControlPoint.X
                                                               End If
 
-                                                              RHS(VortexRing.IndexG) = (VortexRing.VelocityS.X - Vx) * VortexRing.Normal.X + _
-                                                                                       (VortexRing.VelocityS.Y - Vy) * VortexRing.Normal.Y + _
+                                                              RHS(VortexRing.IndexG) = (VortexRing.VelocityS.X - Vx) * VortexRing.Normal.X +
+                                                                                       (VortexRing.VelocityS.Y - Vy) * VortexRing.Normal.Y +
                                                                                        (VortexRing.VelocityS.Z - Vz) * VortexRing.Normal.Z
 
                                                           Else
@@ -761,47 +761,6 @@ Namespace CalculationModel.Solver
 
             For Each Lattice In Lattices
 
-#If WITH_PARALLEL_LOOPS Then
-                Parallel.ForEach(Lattice.VortexRings, Sub(Ring As VortexRing)
-
-                    For Each Ring In Lattice.VortexRings
-
-                        Ring.VelocityT.X = _StreamVelocity.X
-                        Ring.VelocityT.Y = _StreamVelocity.Y
-                        Ring.VelocityT.Z = _StreamVelocity.Z
-
-                        If WithStreamOmega Then
-
-                            Ring.VelocityT.AddCrossProduct(_StreamOmega, Ring.ControlPoint) ' Add stream angular velocity
-
-                        End If
-
-                        Ring.VelocityT.X += Ring.VelocityW.X
-                        Ring.VelocityT.Y += Ring.VelocityW.Y
-                        Ring.VelocityT.Z += Ring.VelocityW.Z
-
-                        For Each OtherLattice In Lattices
-
-                            If Not Ring.IsSlender Then
-
-                                ' Use the outer control point:
-
-                                OtherLattice.AddInducedVelocity(Ring.VelocityT, Ring.OuterControlPoint, CutOff)
-
-                            Else
-
-                                ' Use the common control point:
-
-                                OtherLattice.AddInducedVelocity(Ring.VelocityT, Ring.ControlPoint, CutOff)
-
-                            End If
-
-                        Next
-
-                    Next
-
-               End Sub)
-#Else
                 For Each Ring In Lattice.VortexRings
 
                     Ring.VelocityT.X = _StreamVelocity.X
@@ -837,7 +796,7 @@ Namespace CalculationModel.Solver
                     Next
 
                 Next
-#End If
+
             Next
 
         End Sub

@@ -310,7 +310,7 @@ Namespace CalculationModel.Settings
         ''' <remarks>
         ''' This is only intended for unsteady or aeroelastic problems.
         ''' </remarks>
-        Public Sub GenerateVelocityProfile()
+        Public Sub GenerateVelocityHistogram()
 
             Select Case AnalysisType
 

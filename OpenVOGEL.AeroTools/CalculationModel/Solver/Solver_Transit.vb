@@ -48,7 +48,7 @@ Namespace CalculationModel.Solver
 
             RaiseEvent PushMessage("Generating stream velocity")
 
-            Settings.GenerateVelocityProfile()
+            Settings.GenerateVelocityHistogram()
 
             RaiseEvent PushProgress("Building matrix", 0)
 

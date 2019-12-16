@@ -83,41 +83,6 @@ Namespace CalculationModel.Models.Aero
 
         End Sub
 
-        ' ''' <summary>
-        ' ''' Computes velocity induced by this lattice at Point.
-        ' ''' </summary>
-        'Public Function InduceVelocityFromRings(ByVal Point As EVector3, Optional ByVal CutOff As Double = 0.0001) As EVector3
-
-        '    Dim InducedVelocity As New EVector3
-
-        '    For Each VortexRing In VortexRings
-        '        'InducedVelocity.Add(VortexRing.BiotSavart(Point, CutOff))
-        '        VortexRing.AddDoubletVelocityInfluence(InducedVelocity, Point, CutOff)
-        '    Next
-
-        '    Return InducedVelocity
-
-        'End Function
-
-        ' ''' <summary>
-        ' ''' Computes velocity induced by this lattice at Point.
-        ' ''' </summary>
-        'Public Sub AddInducedVelocityFromRings(ByRef Velocity As EVector3, ByVal Point As EVector3, Optional ByVal CutOff As Double = 0.0001)
-
-        '    For Each VortexRing In VortexRings
-
-        '        VortexRing.AddDoubletVelocityInfluence(Velocity, Point, CutOff)
-
-        '        If Not VortexRing.IsSlender Then
-
-        '            VortexRing.AddSourceVelocityInfluence(Velocity, Point, CutOff)
-
-        '        End If
-
-        '    Next
-
-        'End Sub
-
         ''' <summary>
         ''' Computed velocity induced by this lattice at Point.
         ''' </summary>
@@ -125,7 +90,7 @@ Namespace CalculationModel.Models.Aero
         ''' <remarks></remarks>
         Public Sub AddInducedVelocity(ByRef Velocity As Vector3, ByVal Point As Vector3, ByVal CutOff As Double)
 
-            ' Add velocity associated to doublets
+            ' Add velocity associated to doublets (using the associated vortices)
 
             For Each Vortex In Vortices
 
