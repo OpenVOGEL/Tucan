@@ -510,7 +510,7 @@ ErrSub:
             niNotification.ShowBalloonTip(3000)
             LoadResultProperties()
             LoadModes()
-            FormReport.ReportResults(ProjectRoot.CalculationCore)
+            FormReport.ReportResults()
             CalculationBussy = False
             RaiseEvent PushMessage("Calculation done!")
         End If
@@ -521,7 +521,6 @@ ErrSub:
 
         If ProjectRoot.Initialized Then
 
-            FormReport.Clear()
             FormReport.Hide()
 
             Calculate(cbxSimulationMode.SelectedIndex)
@@ -1043,7 +1042,7 @@ ErrSub:
 
                 ModelInterface.PostprocessMode()
 
-                FormReport.ReportResults(ProjectRoot.CalculationCore)
+                FormReport.ReportResults()
 
                 LoadResultProperties()
 

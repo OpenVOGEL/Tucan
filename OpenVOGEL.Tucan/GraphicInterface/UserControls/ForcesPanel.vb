@@ -286,19 +286,17 @@ Public Class ForcesPanel
 
     ' Results object:
 
-    Private _CalculationCore As CalculationModel.Solver.Solver
-
     Private Sub LoadResultsData()
 
-        If _CalculationCore IsNot Nothing Then
+        If CalculationCore IsNot Nothing Then
 
-            rbVelocity.Value = _CalculationCore.StreamVelocity.EuclideanNorm
-            rbDensity.Value = _CalculationCore.StreamDensity
-            rbAlpha.Value = Math.Asin(_CalculationCore.StreamVelocity.Z / _CalculationCore.StreamVelocity.EuclideanNorm)
-            rbBeta.Value = Math.Asin(_CalculationCore.StreamVelocity.Y / _CalculationCore.StreamVelocity.EuclideanNorm)
+            rbVelocity.Value = CalculationCore.StreamVelocity.EuclideanNorm
+            rbDensity.Value = CalculationCore.StreamDensity
+            rbAlpha.Value = Math.Asin(CalculationCore.StreamVelocity.Z / CalculationCore.StreamVelocity.EuclideanNorm)
+            rbBeta.Value = Math.Asin(CalculationCore.StreamVelocity.Y / CalculationCore.StreamVelocity.EuclideanNorm)
             cbLattices.Items.Clear()
 
-            For i = 0 To _CalculationCore.Lattices.Count - 1
+            For i = 0 To CalculationCore.Lattices.Count - 1
 
                 cbLattices.Items.Add(String.Format("Lattice {0}", i))
 
@@ -313,50 +311,52 @@ Public Class ForcesPanel
 
     Private Sub LoadLattice()
 
-        Dim Index As Integer = cbLattices.SelectedIndex
+        If CalculationCore IsNot Nothing Then
 
-        If Index >= 0 And Index < _CalculationCore.Lattices.Count Then
+            Dim Index As Integer = cbLattices.SelectedIndex
 
-            Dim s As Double = _CalculationCore.Lattices(Index).AirLoads.Area
-            rbArea.Value = s
+            If Index >= 0 And Index < CalculationCore.Lattices.Count Then
 
-            rbCL.Value = _CalculationCore.Lattices(Index).AirLoads.CL
-            rbCDp.Value = _CalculationCore.Lattices(Index).AirLoads.CDp
-            rbCDi.Value = _CalculationCore.Lattices(Index).AirLoads.CDi
+                Dim s As Double = CalculationCore.Lattices(Index).AirLoads.Area
+                rbArea.Value = s
 
-            rbCFx.Value = _CalculationCore.Lattices(Index).AirLoads.Force.X
-            rbCFy.Value = _CalculationCore.Lattices(Index).AirLoads.Force.Y
-            rbCFz.Value = _CalculationCore.Lattices(Index).AirLoads.Force.Z
+                rbCL.Value = CalculationCore.Lattices(Index).AirLoads.CL
+                rbCDp.Value = CalculationCore.Lattices(Index).AirLoads.CDp
+                rbCDi.Value = CalculationCore.Lattices(Index).AirLoads.CDi
 
-            rbCMx.Value = _CalculationCore.Lattices(Index).AirLoads.Moment.X
-            rbCMy.Value = _CalculationCore.Lattices(Index).AirLoads.Moment.Y
-            rbCMz.Value = _CalculationCore.Lattices(Index).AirLoads.Moment.Z
+                rbCFx.Value = CalculationCore.Lattices(Index).AirLoads.Force.X
+                rbCFy.Value = CalculationCore.Lattices(Index).AirLoads.Force.Y
+                rbCFz.Value = CalculationCore.Lattices(Index).AirLoads.Force.Z
 
-            ' Net forces:
+                rbCMx.Value = CalculationCore.Lattices(Index).AirLoads.Moment.X
+                rbCMy.Value = CalculationCore.Lattices(Index).AirLoads.Moment.Y
+                rbCMz.Value = CalculationCore.Lattices(Index).AirLoads.Moment.Z
 
-            Dim q As Double = 0.5 * _CalculationCore.StreamVelocity.SquareEuclideanNorm * _CalculationCore.StreamDensity
+                ' Net forces:
 
-            rbL.Value = _CalculationCore.Lattices(Index).AirLoads.CL * q * s
-            rbDp.Value = _CalculationCore.Lattices(Index).AirLoads.CDp * q * s
-            rbDi.Value = _CalculationCore.Lattices(Index).AirLoads.CDi * q * s
+                Dim q As Double = 0.5 * CalculationCore.StreamVelocity.SquareEuclideanNorm * CalculationCore.StreamDensity
 
-            rbFx.Value = _CalculationCore.Lattices(Index).AirLoads.Force.X * q * s
-            rbFy.Value = _CalculationCore.Lattices(Index).AirLoads.Force.Y * q * s
-            rbFz.Value = _CalculationCore.Lattices(Index).AirLoads.Force.Z * q * s
+                rbL.Value = CalculationCore.Lattices(Index).AirLoads.CL * q * s
+                rbDp.Value = CalculationCore.Lattices(Index).AirLoads.CDp * q * s
+                rbDi.Value = CalculationCore.Lattices(Index).AirLoads.CDi * q * s
 
-            rbMx.Value = _CalculationCore.Lattices(Index).AirLoads.Moment.X * q * s
-            rbMy.Value = _CalculationCore.Lattices(Index).AirLoads.Moment.Y * q * s
-            rbMz.Value = _CalculationCore.Lattices(Index).AirLoads.Moment.Z * q * s
+                rbFx.Value = CalculationCore.Lattices(Index).AirLoads.Force.X * q * s
+                rbFy.Value = CalculationCore.Lattices(Index).AirLoads.Force.Y * q * s
+                rbFz.Value = CalculationCore.Lattices(Index).AirLoads.Force.Z * q * s
 
-            pbLoadingGraph.Refresh()
+                rbMx.Value = CalculationCore.Lattices(Index).AirLoads.Moment.X * q * s
+                rbMy.Value = CalculationCore.Lattices(Index).AirLoads.Moment.Y * q * s
+                rbMz.Value = CalculationCore.Lattices(Index).AirLoads.Moment.Z * q * s
+
+                pbLoadingGraph.Refresh()
+
+            End If
 
         End If
 
     End Sub
 
-    Public Sub LoadResults(CalculationCore As CalculationModel.Solver.Solver)
-
-        _CalculationCore = CalculationCore
+    Public Sub LoadResults()
 
         LoadResultsData()
 
@@ -370,15 +370,15 @@ Public Class ForcesPanel
 
     Private Sub DrawLoad(sender As Object, e As PaintEventArgs)
 
-        If _CalculationCore IsNot Nothing Then
+        If CalculationCore IsNot Nothing Then
 
             Dim Index As Integer = cbLattices.SelectedIndex
 
-            If Index >= 0 And Index < _CalculationCore.Lattices.Count Then
+            If Index >= 0 And Index < CalculationCore.Lattices.Count Then
 
-                If _CalculationCore.Lattices(Index).ChordWiseStripes.Count > 0 Then
+                If CalculationCore.Lattices(Index).ChordWiseStripes.Count > 0 Then
 
-                    Dim Stripes As List(Of ChorwiseStripe) = _CalculationCore.Lattices(Index).ChordWiseStripes
+                    Dim Stripes As List(Of ChorwiseStripe) = CalculationCore.Lattices(Index).ChordWiseStripes
 
                     Dim ymax As Single
 

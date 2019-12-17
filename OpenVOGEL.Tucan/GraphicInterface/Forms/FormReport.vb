@@ -16,15 +16,13 @@
 'along with this program.  If Not, see < http:  //www.gnu.org/licenses/>.
 
 Imports OpenVOGEL.AeroTools
-Imports OpenVOGEL.AeroTools.CalculationModel.Models.Aero.Components
 Imports OpenVOGEL.AeroTools.CalculationModel.Models.Structural
-Imports System.Windows.Forms
+Imports OpenVOGEL.DesignTools.DataStore
 
 Public Class FormReport
 
     'Private Result As String
 
-    Private CalculationCore As CalculationModel.Solver.Solver
     Private ForcesPanel As ForcesPanel
     Private TotalForcePanel As TotalForcePanel
     Private RawResults As New Text.StringBuilder
@@ -48,17 +46,19 @@ Public Class FormReport
 
     End Sub
 
-    Public Sub ReportResults(ByRef CalculationCore As CalculationModel.Solver.Solver)
+    Private Sub AppendLine(Line As String)
+        RawResults.AppendLine(Line)
+    End Sub
 
-        Me.CalculationCore = CalculationCore
+    Public Sub ReportResults()
 
         ' Load the total forces panels
 
-        TotalForcePanel.LoadResults(CalculationCore)
+        TotalForcePanel.LoadResults()
 
         ' Load the forces by component
 
-        ForcesPanel.LoadResults(CalculationCore)
+        ForcesPanel.LoadResults()
 
         ' Write the raw results text block
 
@@ -66,7 +66,9 @@ Public Class FormReport
 
         If Not IsNothing(CalculationCore) Then
 
-            AddHandler CalculationCore.PushResultLine, AddressOf RawResults.AppendLine
+            RemoveHandler CalculationCore.PushResultLine, AddressOf AppendLine
+            AddHandler CalculationCore.PushResultLine, AddressOf AppendLine
+
             CalculationCore.ReportResults()
 
         Else
@@ -104,9 +106,7 @@ Public Class FormReport
 
     End Sub
 
-    Public Sub Clear()
-        CalculationCore = Nothing
-    End Sub
+
 
     Private Sub LoadLink()
 

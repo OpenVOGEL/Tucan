@@ -15,15 +15,12 @@
 'You should have received a copy Of the GNU General Public License
 'along with this program.  If Not, see < http:  //www.gnu.org/licenses/>.
 
-Imports OpenVOGEL.AeroTools
 Imports OpenVOGEL.AeroTools.CalculationModel.Models.Aero
 Imports OpenVOGEL.DesignTools.DataStore
 Imports OpenVOGEL.MathTools.Magnitudes
 Imports OpenVOGEL.MathTools.Algebra.EuclideanSpace
 
 Public Class TotalForcePanel
-
-    Private _CalculationCore As CalculationModel.Solver.Solver
 
     ' Components:
 
@@ -70,9 +67,7 @@ Public Class TotalForcePanel
 
     End Sub
 
-    Public Sub LoadResults(CalculationCore As CalculationModel.Solver.Solver)
-
-        _CalculationCore = CalculationCore
+    Public Sub LoadResults()
 
         LoadResultsData()
 
@@ -239,32 +234,32 @@ Public Class TotalForcePanel
 
     Private Sub LoadResultsData()
 
-        If _CalculationCore IsNot Nothing Then
+        If CalculationCore IsNot Nothing Then
 
-            rbVelocity.Value = _CalculationCore.StreamVelocity.EuclideanNorm
-            rbDensity.Value = _CalculationCore.StreamDensity
-            rbAlpha.Value = Math.Asin(_CalculationCore.StreamVelocity.Z / _CalculationCore.StreamVelocity.EuclideanNorm)
-            rbBeta.Value = Math.Asin(_CalculationCore.StreamVelocity.Y / _CalculationCore.StreamVelocity.EuclideanNorm)
+            rbVelocity.Value = CalculationCore.StreamVelocity.EuclideanNorm
+            rbDensity.Value = CalculationCore.StreamDensity
+            rbAlpha.Value = Math.Asin(CalculationCore.StreamVelocity.Z / CalculationCore.StreamVelocity.EuclideanNorm)
+            rbBeta.Value = Math.Asin(CalculationCore.StreamVelocity.Y / CalculationCore.StreamVelocity.EuclideanNorm)
+
+            TotalAirloads.Clear()
+
+            For i = 0 To CalculationCore.Lattices.Count - 1
+
+                TotalAirloads.Add(CalculationCore.Lattices(i).AirLoads)
+
+            Next
+
+            RecalculateLoads()
 
         End If
-
-        TotalAirloads.Clear()
-
-        For i = 0 To _CalculationCore.Lattices.Count - 1
-
-            TotalAirloads.Add(_CalculationCore.Lattices(i).AirLoads)
-
-        Next
-
-        RecalculateLoads()
 
     End Sub
 
     Private Sub RecalculateLoads()
 
-        If _CalculationCore IsNot Nothing Then
+        If CalculationCore IsNot Nothing Then
 
-            Dim q As Double = _CalculationCore.StreamDynamicPressure
+            Dim q As Double = CalculationCore.StreamDynamicPressure
 
             rbq.Value = q
 
@@ -320,9 +315,9 @@ Public Class TotalForcePanel
 
             Dim Basis As New Base3
 
-            Basis.U.X = _CalculationCore.StreamVelocity.X
-            Basis.U.Y = _CalculationCore.StreamVelocity.Y
-            Basis.U.Z = _CalculationCore.StreamVelocity.Z
+            Basis.U.X = CalculationCore.StreamVelocity.X
+            Basis.U.Y = CalculationCore.StreamVelocity.Y
+            Basis.U.Z = CalculationCore.StreamVelocity.Z
             Basis.U.Normalize()
 
             Basis.W.X = Basis.U.X

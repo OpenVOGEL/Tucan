@@ -26,7 +26,7 @@ Namespace CalculationModel.Solver
         ''' <summary>
         ''' Convect wakes and calculates loads at the last time step.
         ''' </summary>
-        Public Sub FlightSim(ByVal DataBasePath As String)
+        Public Sub FreeFlight(ByVal DataBasePath As String)
 
             CreateSubFoldersNames(DataBasePath)
             CreateSubFolder(DataBaseSection.Steady)
