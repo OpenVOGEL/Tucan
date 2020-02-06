@@ -123,12 +123,6 @@ Namespace CalculationModel.Solver
         ''' <remarks></remarks>
         Private Sub ComputeForcesAndMoments()
 
-            Dim StreamDirection As New Vector3
-            StreamDirection.Assign(Stream.Velocity)
-            StreamDirection.Normalize()
-
-            Dim V As Double = Stream.Velocity.EuclideanNorm
-
             For Each Lattice In Lattices
 
                 Lattice.AirLoads.CL = 0
@@ -191,7 +185,7 @@ Namespace CalculationModel.Solver
 
                 For Each Stripe In Lattice.ChordWiseStripes
 
-                    Stripe.Compute(StreamDirection, V, Settings.Density, Settings.Viscocity)
+                    Stripe.Compute(Stream.Velocity, Stream.Omega, Settings.Density, Settings.Viscocity)
 
                     Lattice.AirLoads.SlenderForce.Add(Stripe.L, Stripe.Area)
                     Lattice.AirLoads.InducedDrag.Add(Stripe.Di, Stripe.Area)

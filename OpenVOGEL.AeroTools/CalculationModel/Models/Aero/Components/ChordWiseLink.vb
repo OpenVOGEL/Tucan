@@ -209,12 +209,12 @@ Namespace CalculationModel.Models.Aero.Components
         ''' The Cp (pressure coefficient) and the Cdi (local induced component) should be calculated before calling this sub.
         ''' NOTE:
         ''' This method corrects the missing leading edge pressure decay by substracting the projection of the total force in 
-        ''' the direction of the stream velocity (this is why the stream direction is requested). This is an extention of the
-        ''' 2D potential theory in which 2D airfoils do not introduce drag. This is arguable, but at least the correction does
-        ''' provide more consistent results.
+        ''' the direction of the local stream velocity (this is why the stream direction is requested). This is an extention of 
+        ''' the 2D potential theory in which 2D airfoils do not introduce drag. This is arguable, but at least the correction 
+        ''' does provide more consistent results, specially in the case of rotating wings where the incidence varies considerably.
         ''' </summary>
         ''' <remarks></remarks>
-        Public Sub Compute(ByVal StreamDirection As Vector3, ByVal V As Double, Rho As Double, Mu As Double)
+        Public Sub Compute(Velocity As Vector3, Omega As Vector3, Rho As Double, Mu As Double)
 
             ' Calculate local chordwise direction and chord:
 
@@ -230,6 +230,10 @@ Namespace CalculationModel.Models.Aero.Components
 
             _Chord = _ChordWiseVector.EuclideanNorm
             _ChordWiseVector.Normalize()
+
+            Dim StreamDirection As New Vector3(Velocity)
+            StreamDirection.AddCrossProduct(Omega, _CenterPoint)
+            StreamDirection.Normalize()
 
             _CL = 0.0#
             _Area = 0.0#
@@ -312,7 +316,7 @@ Namespace CalculationModel.Models.Aero.Components
 
             ' Calculate _CDp from CL (if there is a polar curve):
 
-            Dim Re As Double = V * Rho * Chord / Mu
+            Dim Re As Double = Velocity.EuclideanNorm * Rho * Chord / Mu
 
             If Not IsNothing(Polars) Then
                 _CDp = Polars.SkinDrag(CL, Re)

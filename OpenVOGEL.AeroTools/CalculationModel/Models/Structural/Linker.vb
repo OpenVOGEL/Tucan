@@ -196,6 +196,8 @@ Namespace CalculationModel.Models.Structural
 
         ''' <summary>
         ''' Transfer loads from the aerodynamic model to the structural model
+        ''' TODO: this metod should take into account the missing leading edge pressure decay
+        ''' by substracting the projection of the force in the stream velocity direction.
         ''' </summary>
         ''' <param name="Velocity">Reference velocity</param>
         ''' <remarks></remarks>
