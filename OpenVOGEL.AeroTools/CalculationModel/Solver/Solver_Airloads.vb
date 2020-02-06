@@ -24,214 +24,6 @@ Namespace CalculationModel.Solver
 
         'This part constains several methods used to calculate the total airloads
 
-#Region " Treftz integral "
-
-        Public Class TrefftzSegment
-
-            Public Point1 As Vector3
-            Public Point2 As Vector3
-            Public G As Double = 0.0#
-            Public Velocity As Vector3
-            Public PA As Vector2
-            Public PB As Vector2
-            Public PC As Vector2
-
-        End Class
-
-        ''' <summary>
-        ''' Computes treftz line integral provided a plane cutting the wake
-        ''' </summary>
-        ''' <param name="Normal"></param>
-        ''' <param name="RPoint"></param>
-        ''' <remarks></remarks>
-        Public Sub ComputeTrefftzIntegral(ByVal Normal As Vector3, ByVal RPoint As Vector3, ByRef TrefftzSegments As List(Of TrefftzSegment), Optional ByVal S As Double = 1.0)
-
-            Dim Basis As New Base3
-            Basis.U.Assign(_StreamVelocity)
-            Basis.U.Normalize()
-            Basis.V.X = -Basis.U.Y
-            Basis.V.Y = Basis.U.X
-            Basis.V.Normalize()
-            Basis.W.FromVectorProduct(Basis.U, Basis.V)
-
-            Dim V1 As New Vector3
-            Dim V2 As New Vector3
-            Dim D1 As Double
-            Dim D2 As Double
-            Dim nA As Integer
-            Dim nB As Integer
-
-            Dim Found1 As Boolean = False
-            Dim Found2 As Boolean = False
-
-            TrefftzSegments.Clear()
-
-            ' Find the trefftz line and asociated circulation
-
-            For Each Lattice In Lattices
-
-                For Each Wake In Lattice.Wakes
-
-                    For Each Ring In Wake.VortexRings
-
-                        Found1 = False
-                        Found2 = False
-
-                        Dim Segment As New TrefftzSegment
-
-                        For i = 1 To 4
-
-                            Select Case i
-                                Case 1
-                                    nA = 1
-                                    nB = 2
-                                Case 2
-                                    nA = 2
-                                    nB = 3
-                                Case 3
-                                    nA = 3
-                                    nB = 4
-                                Case 4
-                                    nA = 4
-                                    nB = 1
-                            End Select
-
-                            V1.X = Ring.Node(nA).Position.X - RPoint.X
-                            V1.Y = Ring.Node(nA).Position.Y - RPoint.Y
-                            V1.Z = Ring.Node(nA).Position.Z - RPoint.Z
-                            V2.X = Ring.Node(nB).Position.X - RPoint.X
-                            V2.Y = Ring.Node(nB).Position.Y - RPoint.Y
-                            V2.Z = Ring.Node(nB).Position.Z - RPoint.Z
-
-                            D1 = Normal.X * V1.X + Normal.Y * V1.Y + Normal.Z * V1.Z
-                            D2 = Normal.X * V2.X + Normal.Y * V2.Y + Normal.Z * V2.Z
-
-                            If Math.Sign(D1) <> Math.Sign(D2) Then
-
-                                If Found1 Then Found2 = True
-
-                                Dim mPoint As New Vector3
-                                Dim mVelocity As New Vector3
-                                Dim Dist As Double = Math.Abs(D1) + Math.Abs(D2)
-                                Dim ScaA As Double = (Math.Abs(D2) / Dist)
-                                Dim ScaB As Double = (Math.Abs(D1) / Dist)
-
-                                mPoint.X = ScaA * Ring.Node(nA).Position.X + ScaB * Ring.Node(nB).Position.X
-                                mPoint.Y = ScaA * Ring.Node(nA).Position.Y + ScaB * Ring.Node(nB).Position.Y
-                                mPoint.Z = ScaA * Ring.Node(nA).Position.Z + ScaB * Ring.Node(nB).Position.Z
-
-                                mVelocity.X = ScaA * Ring.Node(nA).Velocity.X + ScaB * Ring.Node(nB).Velocity.X
-                                mVelocity.Y = ScaA * Ring.Node(nA).Velocity.Y + ScaB * Ring.Node(nB).Velocity.Y
-                                mVelocity.Z = ScaA * Ring.Node(nA).Velocity.Z + ScaB * Ring.Node(nB).Velocity.Z
-
-                                If Not Found1 Then
-                                    Segment.Point1 = mPoint
-                                    Segment.PA = New Vector2
-                                    Segment.PA.X = mPoint.InnerProduct(Basis.V)
-                                    Segment.PA.Y = mPoint.InnerProduct(Basis.W)
-                                    Segment.Velocity = mVelocity
-                                    Segment.G = Ring.G
-                                Else
-                                    Segment.Point2 = mPoint
-                                    Segment.PB = New Vector2
-                                    Segment.PB.X = mPoint.InnerProduct(Basis.V)
-                                    Segment.PB.Y = mPoint.InnerProduct(Basis.W)
-                                    Segment.Velocity.Add(mVelocity)
-                                    Segment.Velocity.Scale(0.5)
-                                End If
-
-                                Found1 = True
-
-                            End If
-
-                        Next
-
-                        If Found1 And Found2 Then
-                            TrefftzSegments.Add(Segment)
-                        End If
-
-                    Next
-
-                Next
-
-            Next
-
-            ' Now that vortex stripes have been found, calculate the induced drag as a 2D problem
-
-            Dim nV As Double
-            Dim n As New Vector2
-            Dim V As New Vector2
-            Dim dL As Double
-            Dim CDi As Double = 0.0#
-
-            'Dim d As New Windows.Forms.SaveFileDialog
-            'Dim r As Windows.Forms.DialogResult = d.ShowDialog()
-            'Dim file As String = ""
-            'Dim write As Boolean = False
-            'If r = Windows.Forms.DialogResult.OK Then
-            'file = d.FileName
-            'Write = True
-            'FileOpen(120, file, OpenMode.Output)
-            'PrintLine(120, "PA.X, PA.Y, PB.X, PB.Y, Δl, Δφ, dφ/dn")
-            'End If
-
-            For Each Segment In TrefftzSegments
-
-                ' Calculate PC:
-
-                Segment.PC = New Vector2
-                Segment.PC.X = 0.5 * (Segment.PA.X + Segment.PB.X)
-                Segment.PC.Y = 0.5 * (Segment.PA.Y + Segment.PB.Y)
-
-                ' Calculate induced velocity on PC:
-
-                V.SetToCero()
-
-                For Each OtherSegment In TrefftzSegments
-
-                    V.Y += 0.5 / Math.PI * OtherSegment.G * (Segment.PC.X - OtherSegment.PA.X) _
-                        / (Segment.PC.DistanceTo(OtherSegment.PA)) ^ 2
-
-                    V.X -= 0.5 / Math.PI * OtherSegment.G * (Segment.PC.Y - OtherSegment.PA.Y) _
-                        / (Segment.PC.DistanceTo(OtherSegment.PA)) ^ 2
-
-                    V.Y -= 0.5 / Math.PI * OtherSegment.G * (Segment.PC.X - OtherSegment.PB.X) _
-                        / (Segment.PC.DistanceTo(OtherSegment.PB)) ^ 2
-
-                    V.X += 0.5 / Math.PI * OtherSegment.G * (Segment.PC.Y - OtherSegment.PB.Y) _
-                        / (Segment.PC.DistanceTo(OtherSegment.PB)) ^ 2
-
-                Next
-
-                n.X = Segment.PA.Y - Segment.PB.Y
-                n.Y = Segment.PB.X - Segment.PA.X
-                n.Normalize()
-
-                nV = V.X * n.X + V.Y * n.Y
-                dL = Segment.PA.DistanceTo(Segment.PB)
-
-                CDi += Segment.G * nV * dL
-
-                'If write Then
-                'PrintLine(120, String.Format("{0,12:F8}, {1,12:F8}, {2,12:F8}, {3,12:F8}, {4,12:F8}, {5,12:F8}, {6,12:F8}", Segment.PA.X, Segment.PA.Y, Segment.PB.X, Segment.PB.Y, dL, Segment.G, nV))
-                'End If
-
-            Next
-
-            'If write Then
-            'CDi /= Math.Sign(CDi) * _StreamVelocity.SquareEuclideanNorm * S
-            'PrintLine(120, String.Format("CDi = {0,12:F8}", CDi))
-            'FileClose(120)
-            'End If
-
-            'MsgBox(String.Format("Computed S.CDi = {0,12:F8}m²", CDi))
-
-            ComputeInducedDrag()
-
-        End Sub
-
-#End Region
-
 #Region " Total aerodynamic force through modified surface integral "
 
         ''' <summary>
@@ -253,10 +45,10 @@ Namespace CalculationModel.Solver
         Private Sub ComputeInducedDrag()
 
             Dim StreamDirection As New Vector3
-            StreamDirection.Assign(_StreamVelocity)
+            StreamDirection.Assign(Stream.Velocity)
             StreamDirection.Normalize()
             Dim Projection As New Vector3
-            Dim V As Double = _StreamVelocity.EuclideanNorm
+            Dim V As Double = Stream.Velocity.EuclideanNorm
             Dim CutOff As Double = Settings.Cutoff
 
             For Each Lattice In Lattices
@@ -304,7 +96,7 @@ Namespace CalculationModel.Solver
 
                     ' Take the component of iVelocity in the direction of the projection of the normal vector to the normal plane
 
-                    Dim nv As Double = _StreamVelocity.InnerProduct(VortexRing.Normal)
+                    Dim nv As Double = Stream.Velocity.InnerProduct(VortexRing.Normal)
 
                     Projection.SetToCero()
                     Projection.X = VortexRing.Normal.X - nv * StreamDirection.X
@@ -332,10 +124,10 @@ Namespace CalculationModel.Solver
         Private Sub ComputeForcesAndMoments()
 
             Dim StreamDirection As New Vector3
-            StreamDirection.Assign(_StreamVelocity)
+            StreamDirection.Assign(Stream.Velocity)
             StreamDirection.Normalize()
 
-            Dim V As Double = _StreamVelocity.EuclideanNorm
+            Dim V As Double = Stream.Velocity.EuclideanNorm
 
             For Each Lattice In Lattices
 
@@ -411,7 +203,7 @@ Namespace CalculationModel.Solver
                         'This is simplified method has the next restrictions:
                         '> It does not take into account the pressure gradient.
                         '> It assumes everywhere a turbulent layer
-                        '> It approaches the reynolds number using a diagonal (which only wokrs for low incidence angle)
+                        '> It approaches the reynolds number using a diagonal (which only works for low incidence angle)
                         Dim Direction As New Vector3(Ring.VelocityT)
                         Direction.ProjectOnPlane(Ring.Normal)
                         Dim SurfaceVelocity As Double = Direction.EuclideanNorm

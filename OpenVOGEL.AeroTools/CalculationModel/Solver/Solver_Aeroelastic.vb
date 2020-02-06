@@ -29,7 +29,7 @@ Namespace CalculationModel.Solver
         ''' </summary>
         Public Sub AeroelasticUnsteadyTransit(ByVal DataBasePath As String)
 
-            If _WithSources Then
+            If WithSources Then
 
                 ' Abort calculation: doublets are not allowed in the aeroelastic analysis
 
@@ -78,17 +78,17 @@ Namespace CalculationModel.Solver
 
             ' Build starting matrix and RHS:
 
-            Dim WithStreamOmega As Boolean = _StreamOmega.EuclideanNorm > 0.00001
+            Dim WithStreamOmega As Boolean = Stream.Omega.EuclideanNorm > 0.00001
 
             BuildMatrixForDoublets(True)
-            BuildRHS_I(WithStreamOmega)
+            BuildRightHandSide1()
             InitializeWakes()
 
             '/////////////////////////////'
             ' Initialize structural model '
             '/////////////////////////////'
 
-            Dim l As Integer = 0
+            Dim L As Integer = 0
 
             Dim StructuralDt As Double = Double.MaxValue
 
@@ -101,22 +101,22 @@ Namespace CalculationModel.Solver
                     Return
                 End If
 
-                l += 1
+                L += 1
 
-                RaiseEvent PushMessage(String.Format("Creating structural link {0}", l))
+                RaiseEvent PushMessage(String.Format("Creating structural link {0}", L))
 
                 RaiseEvent PushMessage("Creating mass and stiffness matrices...")
                 StructuralLink.StructuralCore.CreateMatrices(Structure_Path, True)
 
                 RaiseEvent PushMessage("Finding modes...")
-                StructuralLink.StructuralCore.FindModes(Structure_Path, l)
+                StructuralLink.StructuralCore.FindModes(Structure_Path, L)
 
                 ' Update the minimum modal period:
 
                 For Each Mode In StructuralLink.StructuralCore.Modes
 
                     Mode.C = Settings.AeroelasticHistogram.State(0).Damping * Mode.Cc
-                    StructuralDt = Math.Min(StructuralDt, 2 * Math.PI / Mode.w)
+                    StructuralDt = Math.Min(StructuralDt, 2 * Math.PI / Mode.W)
 
                 Next
 
@@ -162,13 +162,10 @@ Namespace CalculationModel.Solver
                 ' Update stream parameters '
                 '//////////////////////////'
 
-                _StreamVelocity.Assign(Settings.AeroelasticHistogram.State(TimeStep).Velocity)
-
-                _StreamDensity = Settings.Density
-
-                Dim SquareVelocity As Double = _StreamVelocity.SquareEuclideanNorm
-
-                _StreamDynamicPressure = 0.5 * _StreamDensity * SquareVelocity
+                Stream.Velocity.Assign(Settings.AeroelasticHistogram.State(TimeStep).Velocity)
+                Stream.SquareVelocity = Stream.Velocity.SquareEuclideanNorm
+                Stream.Density = Settings.Density
+                Stream.DynamicPressure = 0.5 * Stream.Density * Stream.SquareVelocity
 
                 '///////////////////////////////////////////'
                 ' Update modal damping and integrators data '
@@ -176,91 +173,91 @@ Namespace CalculationModel.Solver
 
                 For Each StructuralLink As StructuralLink In StructuralLinks
 
-                    Dim dampingChanged As Boolean = False
+                    Dim DampingChanged As Boolean = False
 
                     For Each Mode In StructuralLink.StructuralCore.Modes
 
                         Mode.C = Settings.AeroelasticHistogram.State(TimeStep).Damping * Mode.Cc
 
-                        dampingChanged = dampingChanged Or (Settings.AeroelasticHistogram.State(TimeStep - 1).Damping <> Settings.AeroelasticHistogram.State(TimeStep).Damping)
+                        DampingChanged = DampingChanged Or (Settings.AeroelasticHistogram.State(TimeStep - 1).Damping <> Settings.AeroelasticHistogram.State(TimeStep).Damping)
 
                     Next
 
-                    If dampingChanged Then
+                    If DampingChanged Then
                         StructuralLink.UpdateIntegrators()
                     End If
 
                 Next
 
-                '//////////////////'
-                ' Perform one step '
-                '//////////////////'
+                '//////////////////////////'
+                ' Perform the Newmark loop '
+                '//////////////////////////'
 
                 RaiseEvent PushMessage("Performing Newmark loop")
 
-                ' Begin newmark loop (failure declared after 10 steps):
-
                 Dim Converged As Boolean = False
 
-                Dim k As Integer = 0
+                Dim K As Integer = 0
 
                 Dim Level As Double = 0#
 
-                While Not Converged And k <= 10
+                While Not Converged And K <= 10
 
                     Level = 0#
 
-                    ' Calculate new right hand side at new deformed position with new surface velocity:
+                    ' Rebuild RHS:
 
                     CalculateVelocityInducedByTheWakesOnBoundedLattices()
 
-                    ' Rebuild RHS:
-
-                    BuildRHS_II(WithStreamOmega)
+                    BuildRightHandSide2()
 
                     ' Rebuild matrix (from 2nd time step on)
 
                     BuildMatrixForDoublets(False)
 
-                    '  Calculate new circulation and its time derivative:
+                    ' Calculate new circulation and its time derivative
 
                     G = Equations.Solve(MatrixDoublets, RHS)
 
                     AssignDoublets()
 
-                    If TimeStep > Settings.StructuralSettings.StructuralLinkingStep Then ' Leave wake be convected before starting structural interaction
+                    ' Start the link only after a certain number of steps
+
+                    If TimeStep > Settings.StructuralSettings.StructuralLinkingStep Then
 
                         RaiseEvent PushMessage("Calculating airloads")
 
-                        ' Calculate velocityII (total velocity) at rings NPs (for airloads):
+                        ' Calculate pressure on latices
 
-                        CalculateTotalVelocityOnBoundedLattices(WithStreamOmega)
+                        CalculateTotalVelocityOnBoundedLattices()
 
                         For Each Lattice In Lattices
 
-                            Lattice.CalculatePressure(SquareVelocity)
+                            Lattice.CalculatePressure(Stream.SquareVelocity)
 
                         Next
 
-                        ' Update structural displacement with the new loads:
+                        ' Update structural displacement with the new loads
 
                         Converged = True
 
-                        For p = 0 To StructuralSteps
+                        For P = 0 To StructuralSteps
 
-                            For Each StructuralLink As StructuralLink In StructuralLinks ' This should be in parallel
+                            For Each StructuralLink As StructuralLink In StructuralLinks
 
-                                ' Compute one step in the fixed point iteration:
+                                ' NOTE: this could be done in parallel
 
-                                Converged = Converged And StructuralLink.Integrate(_StreamVelocity, _StreamDensity, Level, k, 0.005)
+                                ' Compute one step in the fixed point iteration
+
+                                Converged = Converged And StructuralLink.ImplicitIntegration(Stream.Velocity, Stream.Density, Level, K, 0.005)
 
                             Next
 
                         Next
 
-                        ' Force at least two steps
+                        ' Force at least two iteration steps
 
-                        If k = 0 Then Converged = False
+                        If K = 0 Then Converged = False
 
                         ' Recomposes the wake on the primitive nodes
 
@@ -272,7 +269,7 @@ Namespace CalculationModel.Solver
 
                         Next
 
-                        k += 1
+                        K += 1
 
                     Else
 
@@ -296,7 +293,7 @@ Namespace CalculationModel.Solver
                     ' Convect wake '
                     '//////////////'
 
-                    CalculateVelocityOnWakes(WithStreamOmega)
+                    CalculateVelocityOnWakes()
 
                     For Each Lattice In Lattices
 

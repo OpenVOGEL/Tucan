@@ -314,9 +314,9 @@ Namespace CalculationModel.Solver
 
                 For Each Ring In Lattice.VortexRings
 
-                    Ring.VelocityT.X = _StreamVelocity.X
-                    Ring.VelocityT.Y = _StreamVelocity.Y
-                    Ring.VelocityT.Z = _StreamVelocity.Z
+                    Ring.VelocityT.X = Stream.Velocity.X
+                    Ring.VelocityT.Y = Stream.Velocity.Y
+                    Ring.VelocityT.Z = Stream.Velocity.Z
 
                     Ring.VelocityT.X += Ring.VelocityS.X
                     Ring.VelocityT.Y += Ring.VelocityS.Y
@@ -324,7 +324,7 @@ Namespace CalculationModel.Solver
 
                     If WithStreamOmega Then
 
-                        Ring.VelocityT.AddCrossProduct(_StreamOmega, Ring.ControlPoint) ' Add stream angular velocity
+                        Ring.VelocityT.AddCrossProduct(Stream.Omega, Ring.ControlPoint) ' Add stream angular velocity
 
                     End If
 

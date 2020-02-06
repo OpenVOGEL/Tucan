@@ -326,7 +326,7 @@ Namespace CalculationModel.Models.Structural
         ''' Current time step
         ''' </summary>
         ''' <remarks></remarks>
-        Private t As Integer = 0
+        Private T As Integer = 0
 
         ''' <summary>
         ''' Time interval.
@@ -354,14 +354,14 @@ Namespace CalculationModel.Models.Structural
 
             For Each Mode In StructuralCore.Modes
 
-                Dim ni = New NewmarkIntegrator()
-                ni.Load(0.25#, 0.5#, Mode.C / Mode.Cc, Mode.w, Dt)
-                NewmarkIntegrators.Add(ni)
+                Dim Integrator = New NewmarkIntegrator()
+                Integrator.Load(0.25#, 0.5#, Mode.C / Mode.Cc, Mode.W, Dt)
+                NewmarkIntegrators.Add(Integrator)
 
             Next
 
             Me.Dt = Dt
-            Me.t = 0.0#
+            Me.T = 0.0#
 
             Initialized = True
 
@@ -369,13 +369,13 @@ Namespace CalculationModel.Models.Structural
 
         Public Sub UpdateIntegrators()
 
-            Dim i As Integer = 0
+            Dim M As Integer = 0
 
             For Each Mode In StructuralCore.Modes
 
-                NewmarkIntegrators(i).Load(0.25#, 0.5#, Mode.C / Mode.Cc, Mode.w, Dt)
+                NewmarkIntegrators(M).Load(0.25#, 0.5#, Mode.C / Mode.Cc, Mode.W, Dt)
 
-                i += 1
+                M += 1
 
             Next
 
@@ -386,11 +386,11 @@ Namespace CalculationModel.Models.Structural
         ''' </summary>
         ''' <param name="Velocity">Reference velocity used to calculate aerodinamic loads</param>
         ''' <remarks>This method integrates the uncoupled ecuations of motion</remarks>
-        Public Function Integrate(ByVal Velocity As Vector3, ByVal Density As Double) As Boolean
+        Public Function ExplicitIntegration(ByVal Velocity As Vector3, ByVal Density As Double) As Boolean
 
             If Not Initialized Then Throw New Exception("Attempting to integrate with non initialized link")
 
-            t += 1 ' From 1 to ... (t = 0 are the initial conditions, known in advance)
+            T += 1 ' From 1 to ... (t = 0 are the initial conditions, known in advance)
 
             ' Clear loads and tranfer the new ones to the structure:
 
@@ -424,15 +424,15 @@ Namespace CalculationModel.Models.Structural
                     P += Mode.Shape(Node.Index).VirtualWork(Node.Load)
                 Next
 
-                Dim ni As NewmarkIntegrator = NewmarkIntegrators(m)
+                Dim Itegrator As NewmarkIntegrator = NewmarkIntegrators(m)
 
-                Dim p0 As Double = ModalResponse(t - 1)(m).p
-                Dim v0 As Double = ModalResponse(t - 1)(m).v
-                Dim a0 As Double = ModalResponse(t - 1)(m).a
+                Dim P0 As Double = ModalResponse(T - 1)(m).P
+                Dim V0 As Double = ModalResponse(T - 1)(m).V
+                Dim A0 As Double = ModalResponse(T - 1)(m).A
 
-                ModalResponse(t)(m).a = ni._A(0, 0) * a0 + ni._A(0, 1) * v0 + ni._A(0, 2) * p0 + ni._L(0) * P
-                ModalResponse(t)(m).v = ni._A(1, 0) * a0 + ni._A(1, 1) * v0 + ni._A(1, 2) * p0 + ni._L(1) * P
-                ModalResponse(t)(m).p = ni._A(2, 0) * a0 + ni._A(2, 1) * v0 + ni._A(2, 2) * p0 + ni._L(2) * P
+                ModalResponse(T)(m).A = Itegrator.A(0, 0) * A0 + Itegrator.A(0, 1) * V0 + Itegrator.A(0, 2) * P0 + Itegrator.L(0) * P
+                ModalResponse(T)(m).V = Itegrator.A(1, 0) * A0 + Itegrator.A(1, 1) * V0 + Itegrator.A(1, 2) * P0 + Itegrator.L(1) * P
+                ModalResponse(T)(m).P = Itegrator.A(2, 0) * A0 + Itegrator.A(2, 1) * V0 + Itegrator.A(2, 2) * P0 + Itegrator.L(2) * P
 
                 ' 2) Calculate nodal displacements by modal superposition:
 
@@ -446,8 +446,8 @@ Namespace CalculationModel.Models.Structural
 
                     For j = 0 To 5
 
-                        Node.Displacement.Values(j) += ModalResponse(t)(m).p * Mode.Shape(n).Values(j)
-                        Node.Velocity.Values(j) += ModalResponse(t)(m).v * Mode.Shape(n).Values(j)
+                        Node.Displacement.Values(j) += ModalResponse(T)(m).P * Mode.Shape(n).Values(j)
+                        Node.Velocity.Values(j) += ModalResponse(T)(m).V * Mode.Shape(n).Values(j)
 
                     Next
 
@@ -476,9 +476,11 @@ Namespace CalculationModel.Models.Structural
         ''' </summary>
         ''' <param name="Velocity">Reference velocity used to calculate aerodinamic loads</param>
         ''' <param name="Level">Keeps track on the worst level of convergence</param>
+        ''' <param name="K">Implicit step counter</param>
+        ''' <param name="E">Convergence threshold</param>
         ''' <remarks>This method integrates the uncoupled ecuations of motion</remarks>
         ''' <returns>True when the relative increment of the new prediction in all modal displacements is less than e.</returns>
-        Public Function Integrate(ByVal Velocity As Vector3, ByVal Density As Double, ByRef Level As Double, k As Integer, Optional e As Double = 0.01) As Boolean
+        Public Function ImplicitIntegration(ByVal Velocity As Vector3, ByVal Density As Double, ByRef Level As Double, K As Integer, Optional E As Double = 0.01) As Boolean
 
             If Not Initialized Then Throw New Exception("Attempting to integrate with non initialized link")
 
@@ -496,11 +498,11 @@ Namespace CalculationModel.Models.Structural
                 Node.Velocity.Clear()
             Next
 
-            ' If this is the first iteration loop (k = 0), add new response elemet and advance one time step:
+            ' If this is the first iteration loop (k = 0), add new response element and advance one time step:
 
-            If (k = 0) Then
+            If (K = 0) Then
 
-                t += 1 ' From 1 to ... (t = 0 are the initial conditions, known in advance)
+                T += 1 ' From 1 to ... (t = 0 are the initial conditions, known in advance)
 
                 ModalResponse.Add(New ModalCoordinates(StructuralCore.Modes.Count))
 
@@ -512,9 +514,9 @@ Namespace CalculationModel.Models.Structural
 
             For Each Mode In StructuralCore.Modes
 
-                Dim m As Integer = Mode.Index
+                Dim M As Integer = Mode.Index
 
-                ' 1) Solve each uncoupled ODE by the central difference method:
+                ' 1) Solve each uncoupled ODE by the Newmark method:
 
                 Dim P As Double = 0
 
@@ -522,21 +524,21 @@ Namespace CalculationModel.Models.Structural
                     P += Mode.Shape(Node.Index).VirtualWork(Node.Load)
                 Next
 
-                Dim ni As NewmarkIntegrator = NewmarkIntegrators(m)
+                Dim ni As NewmarkIntegrator = NewmarkIntegrators(M)
 
-                Dim p0 As Double = ModalResponse(t - 1)(m).p
-                Dim v0 As Double = ModalResponse(t - 1)(m).v
-                Dim a0 As Double = ModalResponse(t - 1)(m).a
+                Dim P0 As Double = ModalResponse(T - 1)(M).P
+                Dim V0 As Double = ModalResponse(T - 1)(M).V
+                Dim A0 As Double = ModalResponse(T - 1)(M).A
 
-                Dim pp As Double = ModalResponse(t)(m).p
+                Dim pp As Double = ModalResponse(T)(M).P
 
-                ModalResponse(t)(m).a = ni._A(0, 0) * a0 + ni._A(0, 1) * v0 + ni._A(0, 2) * p0 + ni._L(0) * P
-                ModalResponse(t)(m).v = ni._A(1, 0) * a0 + ni._A(1, 1) * v0 + ni._A(1, 2) * p0 + ni._L(1) * P
-                ModalResponse(t)(m).p = ni._A(2, 0) * a0 + ni._A(2, 1) * v0 + ni._A(2, 2) * p0 + ni._L(2) * P
+                ModalResponse(T)(M).A = ni.A(0, 0) * A0 + ni.A(0, 1) * V0 + ni.A(0, 2) * P0 + ni.L(0) * P
+                ModalResponse(T)(M).V = ni.A(1, 0) * A0 + ni.A(1, 1) * V0 + ni.A(1, 2) * P0 + ni.L(1) * P
+                ModalResponse(T)(M).P = ni.A(2, 0) * A0 + ni.A(2, 1) * V0 + ni.A(2, 2) * P0 + ni.L(2) * P
 
                 If pp <> 0 Then
-                    Dim c As Double = (ModalResponse(t)(m).p - pp) / pp
-                    Converged = Converged And c < e
+                    Dim c As Double = (ModalResponse(T)(M).P - pp) / pp
+                    Converged = Converged And c < E
                     Level = Math.Max(Level, c)
                 End If
 
@@ -552,8 +554,8 @@ Namespace CalculationModel.Models.Structural
 
                     For j = 0 To 5
 
-                        Node.Displacement.Values(j) += ModalResponse(t)(m).p * Mode.Shape(n).Values(j)
-                        Node.Velocity.Values(j) += ModalResponse(t)(m).v * Mode.Shape(n).Values(j)
+                        Node.Displacement.Values(j) += ModalResponse(T)(M).P * Mode.Shape(n).Values(j)
+                        Node.Velocity.Values(j) += ModalResponse(T)(M).V * Mode.Shape(n).Values(j)
 
                     Next
 
@@ -658,7 +660,7 @@ Namespace CalculationModel.Models.Structural
             For i = 0 To StructuralCore.Modes.Count - 1 ' < For each mode
                 w.Write(StructuralCore.Modes(i).K)
                 w.Write(StructuralCore.Modes(i).M)
-                w.Write(StructuralCore.Modes(i).w)
+                w.Write(StructuralCore.Modes(i).W)
                 w.Write(StructuralCore.Modes(i).C)
                 w.Write(StructuralCore.Modes(i).Cc)
                 w.Write(StructuralCore.Modes(i).Shape.Count)
@@ -710,9 +712,9 @@ Namespace CalculationModel.Models.Structural
 
                 For j = 0 To StructuralCore.Modes.Count - 1 ' < For each mode
 
-                    w.Write(Response.Item(j).p)
-                    w.Write(Response.Item(j).v)
-                    w.Write(Response.Item(j).a)
+                    w.Write(Response.Item(j).P)
+                    w.Write(Response.Item(j).V)
+                    w.Write(Response.Item(j).A)
 
                 Next
 
@@ -816,7 +818,7 @@ Namespace CalculationModel.Models.Structural
 
                 Mode.K = r.ReadDouble
                 Mode.M = r.ReadDouble
-                Mode.w = r.ReadDouble
+                Mode.W = r.ReadDouble
                 Mode.C = r.ReadDouble
                 Mode.Cc = r.ReadDouble
 
@@ -885,9 +887,9 @@ Namespace CalculationModel.Models.Structural
 
                     Dim modalCoord As New ModalCoordinate()
 
-                    modalCoord.p = r.ReadDouble
-                    modalCoord.v = r.ReadDouble
-                    modalCoord.a = r.ReadDouble
+                    modalCoord.P = r.ReadDouble
+                    modalCoord.V = r.ReadDouble
+                    modalCoord.A = r.ReadDouble
 
                     modalCoords.Item(j) = modalCoord
 

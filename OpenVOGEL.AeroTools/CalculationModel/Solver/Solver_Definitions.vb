@@ -31,18 +31,6 @@ Namespace CalculationModel.Solver
             Settings = New SimulationSettings
         End Sub
 
-        ' Public fields:
-
-        ''' <summary>
-        ''' Indicates if source panels are included
-        ''' </summary>
-        ''' <returns></returns>
-        Public ReadOnly Property WithSources As Boolean
-            Get
-                Return _WithSources
-            End Get
-        End Property
-
         ''' <summary>
         ''' Contains all parameters required to run a complete simulation
         ''' </summary>
@@ -75,11 +63,39 @@ Namespace CalculationModel.Solver
         Private RHS As Vector
         Private Dimension As Integer
 
-        Private _WithSources As Boolean = False
-        Private _StreamVelocity As New Vector3
-        Private _StreamDensity As Double
-        Private _StreamDynamicPressure As Double
-        Private _StreamOmega As New Vector3
+        ''' <summary>
+        ''' Indicates if source panels are included
+        ''' </summary>
+        ''' <returns></returns>
+        Private WithSources As Boolean = False
+
+        ''' <summary>
+        ''' Indicates if the stream rotates
+        ''' </summary>
+        ''' <returns></returns>
+        Private WithStreamOmega As Boolean = False
+
+        ''' <summary>
+        ''' Gathers the instantaneus stream properties
+        ''' </summary>
+        Class StreamProperties
+
+            Public Velocity As New Vector3
+
+            Public Omega As New Vector3
+
+            Public DynamicPressure As Double
+
+            Public SquareVelocity As Double
+
+            Public Density As Double
+
+        End Class
+
+        ''' <summary>
+        ''' The instantaneus stream properties
+        ''' </summary>
+        Private Stream As New StreamProperties
 
         ' Public properties:
 
@@ -91,7 +107,7 @@ Namespace CalculationModel.Solver
         ''' <remarks></remarks>
         Public ReadOnly Property StreamVelocity As Vector3
             Get
-                Return _StreamVelocity
+                Return Stream.Velocity
             End Get
         End Property
 
@@ -103,7 +119,7 @@ Namespace CalculationModel.Solver
         ''' <remarks></remarks>
         Public ReadOnly Property StreamDensity As Double
             Get
-                Return _StreamDensity
+                Return Stream.Density
             End Get
         End Property
 
@@ -115,7 +131,7 @@ Namespace CalculationModel.Solver
         ''' <remarks></remarks>
         Public ReadOnly Property StreamDynamicPressure As Double
             Get
-                Return _StreamDynamicPressure
+                Return Stream.DynamicPressure
             End Get
         End Property
 

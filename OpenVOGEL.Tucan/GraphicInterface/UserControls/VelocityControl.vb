@@ -130,21 +130,14 @@ Public Class VelocityControl
 
             Dim Total As Boolean = Not Plane.InducedVelocity
 
-            Parallel.For(1, Count + 1, Sub(i As Integer)
-                                           Plane.GetInducedVelocity(i).Assign(ProjectRoot.CalculationCore.CalculateVelocityAtPoint(Plane.GetNode(i),
-                                                                                                                                   Total,
-                                                                                                                                   WithStreamOmega))
-                                           Plane.GetInducedVelocity(i).ProjectOnPlane(Plane.NormalVector)
-                                       End Sub)
+            Parallel.For(1, Count + 1,
+                         Sub(i As Integer)
+                             Plane.GetInducedVelocity(i).Assign(ProjectRoot.CalculationCore.CalculateVelocityAtPoint(Plane.GetNode(i), Total))
+                             Plane.GetInducedVelocity(i).ProjectOnPlane(Plane.NormalVector)
+                         End Sub)
             ModelInterface.RepresentOnGL()
 
         End If
-
-    End Sub
-
-    Private Sub CalculateTreftzIntegral()
-
-        ProjectRoot.CalculationCore.ComputeTrefftzIntegral(Plane.NormalVector, Plane.Origin, Plane.TreftSegments)
 
     End Sub
 

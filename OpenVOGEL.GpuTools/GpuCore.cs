@@ -20,9 +20,9 @@ namespace OpenVOGEL.GpuTools
             {
                 CudafyModes.Target = eGPUType.OpenCL;
                 CudafyTranslator.Language = eLanguage.OpenCL;
-                CudafyModule km = CudafyTranslator.Cudafy();
+                CudafyModule Module = CudafyTranslator.Cudafy();
                 GPGPU gpu = CudafyHost.GetDevice(eGPUType.OpenCL, DeviceId);
-                gpu.LoadModule(km);
+                gpu.LoadModule(Module);
 
                 double c;
                 double[] dev_c = gpu.Allocate<double>(); 
@@ -49,13 +49,15 @@ namespace OpenVOGEL.GpuTools
 
         private GPGPU Gpu;
 
-        public void Initialize (int DeviceId)
+        public void Initialize(int DeviceId, String Directory)
         {
             CudafyModes.Target = eGPUType.OpenCL;
             CudafyTranslator.Language = eLanguage.OpenCL;
-            CudafyModule km = CudafyTranslator.Cudafy();
+            CudafyTranslator.WorkingDirectory = Directory;
+            CudafyTranslator.DeleteTempFiles = false;
+            CudafyModule Module = CudafyTranslator.Cudafy();
             Gpu = CudafyHost.GetDevice(eGPUType.OpenCL, DeviceId);
-            Gpu.LoadModule(km);
+            Gpu.LoadModule(Module);
             Initialized = true;
         }
         

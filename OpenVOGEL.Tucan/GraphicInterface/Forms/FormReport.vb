@@ -116,7 +116,7 @@ Public Class FormReport
             cbModes.Items.Clear()
 
             For Mode = 0 To sl.StructuralCore.Modes.Count - 1
-                Dim f As Double = sl.StructuralCore.Modes(Mode).w / 2 / Math.PI
+                Dim f As Double = sl.StructuralCore.Modes(Mode).W / 2 / Math.PI
                 cbModes.Items.Add(String.Format("Mode {0} - {1,10:F4}Hz", Mode, f))
             Next
 
@@ -136,7 +136,7 @@ Public Class FormReport
 
                 Dim Mode As Integer = cbModes.SelectedIndex
 
-                Dim f As Double = sl.StructuralCore.Modes(Mode).w / 2 / Math.PI
+                Dim f As Double = sl.StructuralCore.Modes(Mode).W / 2 / Math.PI
 
                 cModalResponse.Series.Clear()
 
@@ -148,8 +148,8 @@ Public Class FormReport
 
                 For s = 0 To sl.ModalResponse.Count - 1
 
-                    cModalResponse.Series(0).Points.AddXY(s, sl.ModalResponse(s).Item(Mode).p) ' position
-                    cModalResponse.Series(1).Points.AddXY(s, sl.ModalResponse(s).Item(Mode).v) ' velocity
+                    cModalResponse.Series(0).Points.AddXY(s, sl.ModalResponse(s).Item(Mode).P) ' position
+                    cModalResponse.Series(1).Points.AddXY(s, sl.ModalResponse(s).Item(Mode).V) ' velocity
 
                 Next
 

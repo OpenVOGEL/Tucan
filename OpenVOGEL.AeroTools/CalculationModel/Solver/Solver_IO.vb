@@ -50,17 +50,17 @@ Namespace CalculationModel.Solver
                 Dim nLattices As Integer = reader.GetAttribute("Lattices")
                 Dim nLinks As Integer = reader.GetAttribute("Links")
 
-                _StreamVelocity.X = IOXML.ReadDouble(reader, "VX", 1.0)
-                _StreamVelocity.Y = IOXML.ReadDouble(reader, "VY", 0.0)
-                _StreamVelocity.Z = IOXML.ReadDouble(reader, "VZ", 0.0)
-                _StreamOmega.X = IOXML.ReadDouble(reader, "OX", 0.0)
-                _StreamOmega.Y = IOXML.ReadDouble(reader, "OY", 0.0)
-                _StreamOmega.Z = IOXML.ReadDouble(reader, "OZ", 0.0)
-                _StreamDensity = IOXML.ReadDouble(reader, "Rho", 1.225)
+                Stream.Velocity.X = IOXML.ReadDouble(reader, "VX", 1.0)
+                Stream.Velocity.Y = IOXML.ReadDouble(reader, "VY", 0.0)
+                Stream.Velocity.Z = IOXML.ReadDouble(reader, "VZ", 0.0)
+                Stream.Omega.X = IOXML.ReadDouble(reader, "OX", 0.0)
+                Stream.Omega.Y = IOXML.ReadDouble(reader, "OY", 0.0)
+                Stream.Omega.Z = IOXML.ReadDouble(reader, "OZ", 0.0)
+                Stream.Density = IOXML.ReadDouble(reader, "Rho", 1.225)
 
-                If _StreamDensity = 0 Then _StreamDensity = 1.225
+                If Stream.Density = 0 Then Stream.Density = 1.225
 
-                _StreamDynamicPressure = 0.5 * _StreamVelocity.SquareEuclideanNorm * _StreamDensity
+                Stream.DynamicPressure = 0.5 * Stream.Velocity.SquareEuclideanNorm * Stream.Density
 
                 Try
                     If File.Exists(FilePath & ".Polars.bin") Then
@@ -137,13 +137,13 @@ Namespace CalculationModel.Solver
 
             writer.WriteAttributeString("Version", Version)
 
-            writer.WriteAttributeString("VX", _StreamVelocity.X)
-            writer.WriteAttributeString("VY", _StreamVelocity.Y)
-            writer.WriteAttributeString("VZ", _StreamVelocity.Z)
-            writer.WriteAttributeString("OX", _StreamOmega.X)
-            writer.WriteAttributeString("OY", _StreamOmega.Y)
-            writer.WriteAttributeString("OZ", _StreamOmega.Z)
-            writer.WriteAttributeString("Rho", _StreamDensity)
+            writer.WriteAttributeString("VX", Stream.Velocity.X)
+            writer.WriteAttributeString("VY", Stream.Velocity.Y)
+            writer.WriteAttributeString("VZ", Stream.Velocity.Z)
+            writer.WriteAttributeString("OX", Stream.Omega.X)
+            writer.WriteAttributeString("OY", Stream.Omega.Y)
+            writer.WriteAttributeString("OZ", Stream.Omega.Z)
+            writer.WriteAttributeString("Rho", Stream.Density)
 
             writer.WriteAttributeString("Lattices", Lattices.Count)
 

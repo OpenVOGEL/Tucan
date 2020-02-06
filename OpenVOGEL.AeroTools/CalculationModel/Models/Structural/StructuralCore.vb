@@ -277,7 +277,7 @@ Namespace CalculationModel.Models.Structural
                 Dim Mode As New Mode(E)
 
                 Mode.K = D(E)
-                Mode.w = Math.Sqrt(Mode.K)
+                Mode.W = Math.Sqrt(Mode.K)
                 Mode.M = 1.0
                 Mode.Cc = 2 * Math.Sqrt(Mode.M * Mode.K)
                 Mode.C = StructuralSettings.ModalDamping * Mode.Cc

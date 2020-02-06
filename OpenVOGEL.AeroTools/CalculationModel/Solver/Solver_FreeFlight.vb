@@ -32,17 +32,17 @@ Namespace CalculationModel.Solver
             CreateSubFolder(DataBaseSection.Steady)
             CleanDirectory(DataBaseSection.Steady)
 
-            _StreamVelocity.Assign(Settings.StreamVelocity)
-            _StreamOmega.Assign(Settings.Omega)
-            _StreamDensity = Settings.Density
-            Dim SquareVelocity As Double = _StreamVelocity.SquareEuclideanNorm
-            _StreamDynamicPressure = 0.5 * _StreamDensity * SquareVelocity
-            Dim WithStreamOmega As Boolean = _StreamOmega.EuclideanNorm > 0.00001
+            Stream.Velocity.Assign(Settings.StreamVelocity)
+            Stream.Omega.Assign(Settings.Omega)
+            Stream.Density = Settings.Density
+            Stream.SquareVelocity = Stream.Velocity.SquareEuclideanNorm
+            Stream.DynamicPressure = 0.5 * StreamDensity * Stream.SquareVelocity
+            WithStreamOmega = True
 
             'f.PushMessageWithProgress("Building matrix", 0)
 
             BuildMatrixForDoublets()
-            BuildRHS_I(WithStreamOmega)
+            BuildRightHandSide1()
             InitializeWakes()
 
             Dim LE As New LinearEquations
@@ -59,7 +59,7 @@ Namespace CalculationModel.Solver
 
                 ' Calculate induced velocity on wake NP:
 
-                CalculateVelocityOnWakes(WithStreamOmega)
+                CalculateVelocityOnWakes()
 
                 ' Convect wake:
 
@@ -69,21 +69,21 @@ Namespace CalculationModel.Solver
 
                 Next
 
-                CalculateVelocityInducedByTheWakesOnBoundedLattices(WithStreamOmega)
+                CalculateVelocityInducedByTheWakesOnBoundedLattices()
 
-                BuildRHS_II(WithStreamOmega)
+                BuildRightHandSide2()
 
                 'Next time step
 
                 'PushMessageWithProgress("Calculating airloads", 0)
 
-                CalculateTotalVelocityOnBoundedLattices(WithStreamOmega)
+                CalculateTotalVelocityOnBoundedLattices()
 
                 ' Calculate vortex rings Cp or DCp:
 
                 For Each Lattice In Lattices
 
-                    Lattice.CalculatePressure(SquareVelocity)
+                    Lattice.CalculatePressure(Stream.SquareVelocity)
 
                 Next
 

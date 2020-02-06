@@ -30,16 +30,24 @@ Namespace CalculationModel.Solver
             RaiseEvent PushMessage("Starting steady analysis")
             RaiseEvent PushMessage("Solver version: " & Version)
 
+            '///////////////////////////////'
+            ' Initialize output directories '
+            '///////////////////////////////'
+
+            CreateSubFoldersNames(DataBasePath)
+            CreateSubFolder(DataBaseSection.Steady)
+            CleanDirectory(DataBaseSection.Steady)
+
             CheckForSources()
 
             '///////////////////'
             ' Check for the GPU '
             '///////////////////'
 
-            If not WithSources AndAlso Settings.UseGpu AndAlso TestOpenCL() Then
+            If Not WithSources AndAlso Settings.UseGpu AndAlso TestOpenCL() Then
 
                 GpuVortexSolver = New GpuTools.VortexSolver
-                GpuVortexSolver.Initialize(Settings.GpuDeviceId)
+                GpuVortexSolver.Initialize(Settings.GpuDeviceId, Steady_Path)
 
                 RaiseEvent PushMessage("GPU enabled")
 
@@ -53,29 +61,16 @@ Namespace CalculationModel.Solver
 
             Dim StartingTime As Date = Now
 
-            '///////////////////////////////'
-            ' Initialize output directories '
-            '///////////////////////////////'
-
-            CreateSubFoldersNames(DataBasePath)
-            CreateSubFolder(DataBaseSection.Steady)
-            CleanDirectory(DataBaseSection.Steady)
-
             '//////////////////////////////'
             ' Initialize stream properties '
             '//////////////////////////////'
 
-            _StreamVelocity.Assign(Settings.StreamVelocity)
-
-            _StreamOmega.Assign(Settings.Omega)
-
-            _StreamDensity = Settings.Density
-
-            Dim SquareVelocity As Double = _StreamVelocity.SquareEuclideanNorm
-
-            _StreamDynamicPressure = 0.5 * _StreamDensity * SquareVelocity
-
-            Dim WithStreamOmega As Boolean = _StreamOmega.EuclideanNorm > 0
+            Stream.Velocity.Assign(Settings.StreamVelocity)
+            Stream.Omega.Assign(Settings.Omega)
+            Stream.Density = Settings.Density
+            Stream.SquareVelocity = Stream.Velocity.SquareEuclideanNorm
+            Stream.DynamicPressure = 0.5 * Stream.Density * Stream.SquareVelocity
+            WithStreamOmega = Stream.Omega.EuclideanNorm > 0
 
             Dim WakeExtension As New Vector3(Settings.StreamVelocity)
             WakeExtension.Normalize()
@@ -94,7 +89,7 @@ Namespace CalculationModel.Solver
                 BuildMatrixForSources()
 
                 RaiseEvent PushMessage("Assigning sources")
-                AssignSources(WithStreamOmega)
+                AssignSources()
 
             End If
 
@@ -103,7 +98,7 @@ Namespace CalculationModel.Solver
             '////////////////'
 
             RaiseEvent PushMessage("Building RHS")
-            BuildRHS_I(WithStreamOmega)
+            BuildRightHandSide1()
 
             RaiseEvent PushMessage("Initializing wakes")
             InitializeWakes()
@@ -116,8 +111,6 @@ Namespace CalculationModel.Solver
             '///////////////////////'
             ' Generate relaxed wake '
             '///////////////////////'
-
-            Dim Start As DateTime = Now
 
             For TimeStep = 1 To Settings.SimulationSteps
 
@@ -132,21 +125,15 @@ Namespace CalculationModel.Solver
                 ' Find circulation on bouded lattices '
                 '/////////////////////////////////////'
 
-                Start = Now
-
                 Equations.SolveLU(RHS, G)
 
                 AssignDoublets()
-
-                RaiseEvent PushMessage(String.Format("{0} -> equations", (Now - Start).ToString))
 
                 '//////////////'
                 ' Convect wake '
                 '//////////////'
 
-                Start = Now
-
-                CalculateVelocityOnWakes(WithStreamOmega)
+                CalculateVelocityOnWakes()
 
                 For Each Lattice In Lattices
 
@@ -164,13 +151,9 @@ Namespace CalculationModel.Solver
 
                 Next
 
-                RaiseEvent PushMessage(String.Format("{0} -> wake convection", (Now - Start).ToString))
-
                 '/////////////////'
                 ' Rebuild the RHS '
                 '/////////////////'
-
-                Start = Now
 
                 CalculateVelocityInducedByTheWakesOnBoundedLattices(True)
 
@@ -180,9 +163,7 @@ Namespace CalculationModel.Solver
 
                 End If
 
-                BuildRHS_II(WithStreamOmega)
-
-                RaiseEvent PushMessage(String.Format("{0} -> rhs", (Now - Start).ToString))
+                BuildRightHandSide2()
 
             Next
 
@@ -202,11 +183,11 @@ Namespace CalculationModel.Solver
 
             CalculateVelocityInducedByTheWakesOnBoundedLattices(False)
 
-            CalculateTotalVelocityOnBoundedLattices(WithStreamOmega)
+            CalculateTotalVelocityOnBoundedLattices()
 
             For Each Lattice In Lattices
 
-                Lattice.CalculatePressure(SquareVelocity)
+                Lattice.CalculatePressure(Stream.SquareVelocity)
 
             Next
 

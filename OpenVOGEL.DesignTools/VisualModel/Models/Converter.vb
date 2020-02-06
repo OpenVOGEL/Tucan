@@ -611,7 +611,7 @@ Namespace VisualModel.Models
 
                             Dim ModalShapeModel As New ResultContainer()
 
-                            ModalShapeModel.Name = String.Format("Mode {0} - {1:F3}Hz", Mode.Index, Mode.w / (2 * Math.PI))
+                            ModalShapeModel.Name = String.Format("Mode {0} - {1:F3}Hz", Mode.Index, Mode.W / (2 * Math.PI))
                             ModalShapeModel.VisualProperties.ColorMesh = Drawing.Color.Maroon
                             ModalShapeModel.VisualProperties.ColorSurface = Drawing.Color.Orange
                             ModalShapeModel.VisualProperties.Transparency = 1.0
@@ -731,9 +731,9 @@ Namespace VisualModel.Models
 
                                 For ModeIndex = 0 To Link.StructuralCore.Modes.Count - 1
 
-                                    NodalDisplacement.X += Results.DynamicModes(ModeIndex + FirstModeIndex).Mesh.Nodes(GlobalIndexNodes).Displacement.X * ModalResponse(ModeIndex).p
-                                    NodalDisplacement.Y += Results.DynamicModes(ModeIndex + FirstModeIndex).Mesh.Nodes(GlobalIndexNodes).Displacement.Y * ModalResponse(ModeIndex).p
-                                    NodalDisplacement.Z += Results.DynamicModes(ModeIndex + FirstModeIndex).Mesh.Nodes(GlobalIndexNodes).Displacement.Z * ModalResponse(ModeIndex).p
+                                    NodalDisplacement.X += Results.DynamicModes(ModeIndex + FirstModeIndex).Mesh.Nodes(GlobalIndexNodes).Displacement.X * ModalResponse(ModeIndex).P
+                                    NodalDisplacement.Y += Results.DynamicModes(ModeIndex + FirstModeIndex).Mesh.Nodes(GlobalIndexNodes).Displacement.Y * ModalResponse(ModeIndex).P
+                                    NodalDisplacement.Z += Results.DynamicModes(ModeIndex + FirstModeIndex).Mesh.Nodes(GlobalIndexNodes).Displacement.Z * ModalResponse(ModeIndex).P
 
                                 Next
 

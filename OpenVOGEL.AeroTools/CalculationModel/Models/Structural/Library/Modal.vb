@@ -23,7 +23,7 @@ Namespace CalculationModel.Models.Structural.Library
 
         Public Shape As List(Of NodalDisplacement)
 
-        Public w As Double
+        Public W As Double
         Public K As Double
         Public M As Double
         Public C As Double
@@ -56,19 +56,19 @@ Namespace CalculationModel.Models.Structural.Library
         ''' Position
         ''' </summary>
         ''' <remarks></remarks>
-        Public p As Double
+        Public P As Double
 
         ''' <summary>
         ''' Velocity
         ''' </summary>
         ''' <remarks></remarks>
-        Public v As Double
+        Public V As Double
 
         ''' <summary>
         ''' Acceleration
         ''' </summary>
         ''' <remarks></remarks>
-        Public a As Double
+        Public A As Double
 
     End Class
 

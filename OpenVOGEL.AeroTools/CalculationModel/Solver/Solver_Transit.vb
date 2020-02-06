@@ -26,7 +26,7 @@ Namespace CalculationModel.Solver
         ''' </summary>
         Public Sub UnsteadyTransit(ByVal DataBasePath As String)
 
-            If _WithSources Then
+            If WithSources Then
 
                 RaiseEvent PushMessage("Cannot run transit analysis with thick bodies")
                 RaiseEvent CalculationAborted()
@@ -52,10 +52,10 @@ Namespace CalculationModel.Solver
 
             RaiseEvent PushProgress("Building matrix", 0)
 
-            Dim WithStreamOmega As Boolean = _StreamOmega.EuclideanNorm > 0.00001
+            WithStreamOmega = Stream.Omega.EuclideanNorm > 0.00001
 
             BuildMatrixForDoublets()
-            BuildRHS_I(WithStreamOmega)
+            BuildRightHandSide1()
             InitializeWakes()
 
             Dim LE As New LinearEquations
@@ -69,10 +69,10 @@ Namespace CalculationModel.Solver
                     Return
                 End If
 
-                _StreamVelocity.Assign(Settings.UnsteadyVelocity.Velocity(TimeStep))
-                _StreamDensity = Settings.Density
-                Dim SquareVelocity As Double = _StreamVelocity.SquareEuclideanNorm
-                _StreamDynamicPressure = 0.5 * _StreamDensity * SquareVelocity
+                Stream.Velocity.Assign(Settings.UnsteadyVelocity.Velocity(TimeStep))
+                Stream.Density = Settings.Density
+                Stream.SquareVelocity = Stream.Velocity.SquareEuclideanNorm
+                Stream.DynamicPressure = 0.5 * Stream.Density * Stream.SquareVelocity
 
                 RaiseEvent PushProgress(String.Format("Step {0}", TimeStep), 100 * TimeStep / Settings.SimulationSteps)
 
@@ -84,7 +84,7 @@ Namespace CalculationModel.Solver
 
                 ' Calculate induced velocity on wake NP:
 
-                CalculateVelocityOnWakes(WithStreamOmega)
+                CalculateVelocityOnWakes()
 
                 ' Convect wake:
 
@@ -98,11 +98,11 @@ Namespace CalculationModel.Solver
 
                 RaiseEvent PushMessage(" > Calculating airloads")
 
-                CalculateTotalVelocityOnBoundedLattices(WithStreamOmega)
+                CalculateTotalVelocityOnBoundedLattices()
 
                 For Each Lattice In Lattices
 
-                    Lattice.CalculatePressure(_StreamVelocity.SquareEuclideanNorm)
+                    Lattice.CalculatePressure(Stream.SquareVelocity)
 
                 Next
 
@@ -112,7 +112,7 @@ Namespace CalculationModel.Solver
 
                 Me.WriteToXML(String.Format("{0}\Unsteady.T{1}.res", Transit_Path, TimeStep))
 
-                BuildRHS_II(WithStreamOmega)
+                BuildRightHandSide2()
 
                 'Next time step
 

@@ -1305,29 +1305,6 @@ Namespace Tucan.Utility
 
                     gl.End()
 
-                    If .TreftSegments.Count > 0 Then
-
-                        gl.Begin(OpenGL.GL_LINES)
-                        gl.Color(.ColorVectors.R / 255,
-                                 .ColorVectors.G / 255,
-                                 .ColorVectors.B / 255, 1)
-
-                        For i = 0 To .TreftSegments.Count - 1
-
-                            gl.Vertex(.TreftSegments(i).Point1.X, .TreftSegments(i).Point1.Y, .TreftSegments(i).Point1.Z)
-                            gl.Vertex(.TreftSegments(i).Point2.X, .TreftSegments(i).Point2.Y, .TreftSegments(i).Point2.Z)
-
-                            gl.Vertex(.TreftSegments(i).Point1.X, .TreftSegments(i).Point1.Y, .TreftSegments(i).Point1.Z)
-                            gl.Vertex(.TreftSegments(i).Point1.X + .Scale * .TreftSegments(i).Velocity.X,
-                                      .TreftSegments(i).Point1.Y + .Scale * .TreftSegments(i).Velocity.Y,
-                                      .TreftSegments(i).Point1.Z + .Scale * .TreftSegments(i).Velocity.Z)
-
-                        Next
-
-                        gl.End()
-
-                    End If
-
                 End If
 
             End With
