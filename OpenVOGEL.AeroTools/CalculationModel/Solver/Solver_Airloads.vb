@@ -58,7 +58,7 @@ Namespace CalculationModel.Solver
                     If Not VortexRing.IsSlender Then Continue For
 
                     Dim Point As Vector3 = VortexRing.ControlPoint
-                    Dim iVelocity As New Vector3
+                    Dim InducedVelocity As New Vector3
 
                     ' Calculate the total induced velocity at the control point by streamwise segments only:
 
@@ -68,11 +68,11 @@ Namespace CalculationModel.Solver
 
                             If OtherRing.IsSlender Then
 
-                                iVelocity.Add(OtherRing.StreamwiseInfluence(Point, 1, 3, CutOff))
+                                InducedVelocity.Add(OtherRing.StreamwiseInfluence(Point, 1, 3, CutOff))
 
                             Else
 
-                                OtherRing.AddDoubletVelocityInfluence(iVelocity, Point, CutOff)
+                                OtherRing.AddDoubletVelocityInfluence(InducedVelocity, Point, CutOff)
 
                             End If
 
@@ -84,7 +84,7 @@ Namespace CalculationModel.Solver
 
                                 If Vortex.Streamwise Then
 
-                                    Vortex.AddBiotSavartVector(iVelocity, Point, CutOff, True)
+                                    Vortex.AddBiotSavartVector(InducedVelocity, Point, CutOff, True)
 
                                 End If
 
@@ -96,19 +96,19 @@ Namespace CalculationModel.Solver
 
                     ' Take the component of iVelocity in the direction of the projection of the normal vector to the normal plane
 
-                    Dim nv As Double = Stream.Velocity.InnerProduct(VortexRing.Normal)
+                    Dim NormalVelocity As Double = Stream.Velocity.InnerProduct(VortexRing.Normal)
 
                     Projection.SetToCero()
-                    Projection.X = VortexRing.Normal.X - nv * StreamDirection.X
-                    Projection.Y = VortexRing.Normal.Y - nv * StreamDirection.Y
-                    Projection.Z = VortexRing.Normal.Z - nv * StreamDirection.Z
+                    Projection.X = VortexRing.Normal.X - NormalVelocity * StreamDirection.X
+                    Projection.Y = VortexRing.Normal.Y - NormalVelocity * StreamDirection.Y
+                    Projection.Z = VortexRing.Normal.Z - NormalVelocity * StreamDirection.Z
 
-                    Dim nu As Double = Projection.EuclideanNorm
+                    Dim ProjectionNorm As Double = Projection.EuclideanNorm
 
                     Projection.Normalize()
 
-                    Dim wi As Double = Math.Abs(iVelocity.InnerProduct(Projection))
-                    VortexRing.Cdi = nu * Math.Abs(VortexRing.Cp) * wi / V
+                    Dim Deflection As Double = Math.Abs(InducedVelocity.InnerProduct(Projection))
+                    VortexRing.Cdi = ProjectionNorm * Math.Abs(VortexRing.Cp) * Deflection / V
 
                 Next
 
@@ -146,38 +146,6 @@ Namespace CalculationModel.Solver
                 Lattice.AirLoads.BodyForce.SetToCero()
                 Lattice.AirLoads.BodyMoment.SetToCero()
 
-                'Dim FreeForce As New Vector3
-                'Dim StreamForce As New Vector3
-
-                'For Each Ring In Lattice.VortexRings
-
-                '    Lattice.AirLoads.Area += Ring.Area
-
-                '    If Not Ring.IsSlender Then
-
-                '        Dim f As Double = -Ring.Area
-
-                '        FreeForce.X += f * Ring.Normal.X
-                '        FreeForce.Y += f * Ring.Normal.Y
-                '        FreeForce.Z += f * Ring.Normal.Z
-
-                '        f *= Ring.Cp
-
-                '        StreamForce.X += f * Ring.Normal.X
-                '        StreamForce.Y += f * Ring.Normal.Y
-                '        StreamForce.Z += f * Ring.Normal.Z
-
-                '    End If
-
-                'Next
-
-                'Dim FreeForceDirection As New Vector3(FreeForce)
-
-                'If FreeForce.EuclideanNorm > 0 Then
-                '    FreeForceDirection.Normalize()
-                'End If
-
-                'Dim FreePressure As Double = -StreamForce.InnerProduct(FreeForceDirection)
                 Dim FirstNode As Node = Lattice.Nodes.First
 
                 For Each Ring In Lattice.VortexRings
@@ -185,8 +153,6 @@ Namespace CalculationModel.Solver
                     Lattice.AirLoads.Area += Ring.Area
 
                     If Not Ring.IsSlender Then
-
-                        'Dim Cf As Double = -(Ring.Cp + FreePressure) * Ring.Area
 
                         Dim Cf As Double = Ring.Cp * Ring.Area
 
@@ -227,10 +193,7 @@ Namespace CalculationModel.Solver
 
                     Stripe.Compute(StreamDirection, V, Settings.Density, Settings.Viscocity)
 
-                    Lattice.AirLoads.SlenderForce.X += Stripe.Area * Stripe.L.X
-                    Lattice.AirLoads.SlenderForce.Y += Stripe.Area * Stripe.L.Y
-                    Lattice.AirLoads.SlenderForce.Z += Stripe.Area * Stripe.L.Z
-
+                    Lattice.AirLoads.SlenderForce.Add(Stripe.L, Stripe.Area)
                     Lattice.AirLoads.InducedDrag.Add(Stripe.Di, Stripe.Area)
                     Lattice.AirLoads.SkinDrag.Add(Stripe.Dp, Stripe.Area)
                     Lattice.AirLoads.SlenderMoment.Add(Stripe.ML, Stripe.Area)
@@ -239,17 +202,17 @@ Namespace CalculationModel.Solver
 
                 Next
 
-                Dim Sm1 = 1 / Lattice.AirLoads.Area
+                Dim InverseArea = 1 / Lattice.AirLoads.Area
 
-                Lattice.AirLoads.SlenderForce.Scale(Sm1)
-                Lattice.AirLoads.InducedDrag.Scale(Sm1)
-                Lattice.AirLoads.SkinDrag.Scale(Sm1)
-                Lattice.AirLoads.BodyForce.Scale(Sm1)
+                Lattice.AirLoads.SlenderForce.Scale(InverseArea)
+                Lattice.AirLoads.InducedDrag.Scale(InverseArea)
+                Lattice.AirLoads.SkinDrag.Scale(InverseArea)
+                Lattice.AirLoads.BodyForce.Scale(InverseArea)
 
-                Lattice.AirLoads.SlenderMoment.Scale(Sm1)
-                Lattice.AirLoads.InducedMoment.Scale(Sm1)
-                Lattice.AirLoads.SkinMoment.Scale(Sm1)
-                Lattice.AirLoads.BodyMoment.Scale(Sm1)
+                Lattice.AirLoads.SlenderMoment.Scale(InverseArea)
+                Lattice.AirLoads.InducedMoment.Scale(InverseArea)
+                Lattice.AirLoads.SkinMoment.Scale(InverseArea)
+                Lattice.AirLoads.BodyMoment.Scale(InverseArea)
 
                 Lattice.AirLoads.Force.SetToCero()
 

@@ -205,10 +205,16 @@ Namespace CalculationModel.Models.Aero.Components
         End Property
 
         ''' <summary>
-        ''' Calculates the stripe lift, drag and area. The Cp (pressure coefficient) should be calculated before calling this sub.
+        ''' Calculates the stripe lift, drag and area. 
+        ''' The Cp (pressure coefficient) and the Cdi (local induced component) should be calculated before calling this sub.
+        ''' NOTE:
+        ''' This method corrects the missing leading edge pressure decay by substracting the projection of the total force in 
+        ''' the direction of the stream velocity (this is why the stream direction is requested). This is an extention of the
+        ''' 2D potential theory in which 2D airfoils do not introduce drag. This is arguable, but at least the correction does
+        ''' provide more consistent results.
         ''' </summary>
         ''' <remarks></remarks>
-        Public Sub Compute(ByVal StreamDirection As Vector3, ByVal V As Double, Rho As Double, Mu As Double) ' the stream direction should be an argument...
+        Public Sub Compute(ByVal StreamDirection As Vector3, ByVal V As Double, Rho As Double, Mu As Double)
 
             ' Calculate local chordwise direction and chord:
 
