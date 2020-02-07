@@ -220,13 +220,13 @@ Namespace CalculationModel.Models.Aero.Components
 
             Dim n As Integer = Rings.Count - 1
 
-            _ChordWiseVector.X = 0.5 * ((Rings(n).Node(1).Position.X - Rings(0).Node(2).Position.X) + (Rings(n).Node(4).Position.X - Rings(0).Node(3).Position.X))
-            _ChordWiseVector.Y = 0.5 * ((Rings(n).Node(1).Position.Y - Rings(0).Node(2).Position.Y) + (Rings(n).Node(4).Position.Y - Rings(0).Node(3).Position.Y))
-            _ChordWiseVector.Z = 0.5 * ((Rings(n).Node(1).Position.Z - Rings(0).Node(2).Position.Z) + (Rings(n).Node(4).Position.Z - Rings(0).Node(3).Position.Z))
+            _ChordWiseVector.X = 0.5 * ((Rings(n).Node(2).Position.X + Rings(n).Node(3).Position.X) - (Rings(0).Node(1).Position.X + Rings(0).Node(4).Position.X))
+            _ChordWiseVector.Y = 0.5 * ((Rings(n).Node(2).Position.Y + Rings(n).Node(3).Position.Y) - (Rings(0).Node(1).Position.Y + Rings(0).Node(4).Position.Y))
+            _ChordWiseVector.Z = 0.5 * ((Rings(n).Node(2).Position.Z + Rings(n).Node(3).Position.Z) - (Rings(0).Node(1).Position.Z + Rings(0).Node(4).Position.Z))
 
-            _CenterPoint.X = 0.5 * (Rings(0).Node(1).Position.X + Rings(0).Node(4).Position.X) + _ChordWiseVector.X
-            _CenterPoint.Y = 0.5 * (Rings(0).Node(1).Position.Y + Rings(0).Node(4).Position.Y) + _ChordWiseVector.Y
-            _CenterPoint.Z = 0.5 * (Rings(0).Node(1).Position.Z + Rings(0).Node(4).Position.Z) + _ChordWiseVector.Z
+            _CenterPoint.X = 0.5 * (Rings(0).Node(1).Position.X + Rings(0).Node(4).Position.X + _ChordWiseVector.X)
+            _CenterPoint.Y = 0.5 * (Rings(0).Node(1).Position.Y + Rings(0).Node(4).Position.Y + _ChordWiseVector.Y)
+            _CenterPoint.Z = 0.5 * (Rings(0).Node(1).Position.Z + Rings(0).Node(4).Position.Z + _ChordWiseVector.Z)
 
             _Chord = _ChordWiseVector.EuclideanNorm
             _ChordWiseVector.Normalize()

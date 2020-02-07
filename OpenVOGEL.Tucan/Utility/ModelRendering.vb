@@ -29,6 +29,8 @@ Namespace Tucan.Utility
     ''' <summary>
     ''' Implements the rendering of the surfaces declared in 
     ''' OpenVOGEL.DesignTools.VisualModel.Models.Components
+    ''' NOTE: the rendering is based in the OpenGL compatibility mode
+    ''' so it will not work for some graphics cards.
     ''' </summary>
     Module ModelRendering
 
@@ -216,7 +218,7 @@ Namespace Tucan.Utility
 
                 Next
 
-                ' Genera el mallado:
+                ' Create lattice:
 
                 If ForSelection Or
                     .VisualProperties.VisualizationMode = VisualizationMode.Lattice Or
@@ -889,6 +891,7 @@ Namespace Tucan.Utility
                                   Optional ByVal ForSelection As Boolean = False,
                                   Optional ByVal ElementIndex As Integer = 0)
             With This
+
                 Dim Node As NodalPoint
 
                 Dim Index As Integer = 0
@@ -1116,6 +1119,8 @@ Namespace Tucan.Utility
 
                 If .VisualProperties.ShowLoadVectors Then
 
+                    ' Local Cp
+                    '---------------------------------------------
                     Dim Load As New Vector3
 
                     For Each Panel In .Mesh.Panels
@@ -1150,6 +1155,30 @@ Namespace Tucan.Utility
                         gl.End()
 
                     Next
+
+                    ' Lift vectors
+                    '---------------------------------------------
+
+                    If .MaximumLift > 0 Then
+
+                        gl.Color(.VisualProperties.ColorPositiveLoad.R,
+                                 .VisualProperties.ColorPositiveLoad.G,
+                                 .VisualProperties.ColorPositiveLoad.B)
+
+                        For Each LiftVector In .LiftVectors
+
+                            gl.Begin(OpenGL.GL_LINES)
+                            gl.Vertex(LiftVector.Point.X,
+                                      LiftVector.Point.Y,
+                                      LiftVector.Point.Z)
+                            gl.Vertex(LiftVector.Point.X + LiftVector.Vector.X / .MaximumLift,
+                                      LiftVector.Point.Y + LiftVector.Vector.Y / .MaximumLift,
+                                      LiftVector.Point.Z + LiftVector.Vector.Z / .MaximumLift)
+                            gl.End()
+
+                        Next
+
+                    End If
 
                 End If
 

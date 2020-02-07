@@ -150,13 +150,8 @@ Namespace CalculationModel.Solver
 
                         Dim Cf As Double = Ring.Cp * Ring.Area
 
-                        Lattice.AirLoads.BodyForce.X += Cf * Ring.Normal.X
-                        Lattice.AirLoads.BodyForce.Y += Cf * Ring.Normal.Y
-                        Lattice.AirLoads.BodyForce.Z += Cf * Ring.Normal.Z
-
-                        Lattice.AirLoads.BodyMoment.X += Cf * (Ring.ControlPoint.Y * Ring.Normal.Z - Ring.ControlPoint.Z * Ring.Normal.Y)
-                        Lattice.AirLoads.BodyMoment.Y += Cf * (Ring.ControlPoint.Z * Ring.Normal.X - Ring.ControlPoint.X * Ring.Normal.Z)
-                        Lattice.AirLoads.BodyMoment.Z += Cf * (Ring.ControlPoint.X * Ring.Normal.Y - Ring.ControlPoint.Y * Ring.Normal.X)
+                        Lattice.AirLoads.BodyForce.Add(Ring.Normal, Cf)
+                        Lattice.AirLoads.BodyMoment.AddCrossProduct(Ring.ControlPoint, Ring.Normal, Cf)
 
                         'NOTE:
                         'We estimate the local friction using a flat plate analogy.
@@ -172,12 +167,8 @@ Namespace CalculationModel.Solver
                         Dim LocalReynolds As Double = SurfaceVelocity * Distance * Settings.Density / Settings.Viscocity
                         Dim Stress As Double = 0.0576 * 0.5 * SurfaceVelocity ^ 2.0 * Settings.Density / Math.Pow(LocalReynolds, 0.2)
                         Cf = Ring.Area * Stress / Settings.DynamicPressure
-                        Lattice.AirLoads.SkinDrag.X += Direction.X * Cf
-                        Lattice.AirLoads.SkinDrag.Y += Direction.Y * Cf
-                        Lattice.AirLoads.SkinDrag.Z += Direction.Z * Cf
-                        Lattice.AirLoads.SkinMoment.X += Cf * (Ring.ControlPoint.Y * Direction.Z - Ring.ControlPoint.Z * Direction.Y)
-                        Lattice.AirLoads.SkinMoment.Y += Cf * (Ring.ControlPoint.Z * Direction.X - Ring.ControlPoint.X * Direction.Z)
-                        Lattice.AirLoads.SkinMoment.Z += Cf * (Ring.ControlPoint.X * Direction.Y - Ring.ControlPoint.Y * Direction.X)
+                        Lattice.AirLoads.SkinDrag.Add(Direction, Cf)
+                        Lattice.AirLoads.SkinMoment.AddCrossProduct(Ring.ControlPoint, Direction, Cf)
 
                     End If
 

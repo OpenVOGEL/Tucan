@@ -27,11 +27,61 @@ Imports OpenVOGEL.MathTools
 Namespace VisualModel.Models.Components
 
     ''' <summary>
+    ''' A vector that is attached to a point
+    ''' </summary>
+    Public Class FixedVector
+
+        ''' <summary>
+        ''' The associated point
+        ''' </summary>
+        Public Point As New Vector3
+
+        ''' <summary>
+        ''' The associated vector
+        ''' </summary>
+        Public Vector As New Vector3
+
+    End Class
+
+    ''' <summary>
     ''' Represents a multi-purpose surface for post-processing.
     ''' </summary>
     Public Class ResultContainer
 
         Inherits Surface
+
+        ''' <summary>
+        ''' All lift vectors
+        ''' </summary>
+        Public Property LiftVectors As New List(Of FixedVector)
+
+        ''' <summary>
+        ''' The maximum lift
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property MaximumLift As Double = 0
+
+        ''' <summary>
+        ''' All induced drag vectors
+        ''' </summary>
+        Public Property InducedDragVectors As New List(Of FixedVector)
+
+        ''' <summary>
+        ''' The maximum induced drag
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property MaximumInducedDrag As Double = 0
+
+        ''' <summary>
+        ''' All skin drag vectors
+        ''' </summary>
+        Public Property SkinDragVectors As New List(Of FixedVector)
+
+        ''' <summary>
+        ''' The maximum skin drag
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property MaximumSkinDrag As Double = 0
 
         ''' <summary>
         ''' The different kind of results
@@ -42,6 +92,7 @@ Namespace VisualModel.Models.Components
             ''' No results
             ''' </summary>
             None
+
             ''' <summary>
             ''' The mean pressure over a panel
             ''' </summary>

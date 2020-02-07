@@ -363,6 +363,18 @@ Namespace Algebra.EuclideanSpace
             Z += V1.X * V2.Y - V1.Y * V2.X
         End Sub
 
+        ''' <summary>
+        ''' Adds the cross product between two vectors multiplied by a scalar
+        ''' </summary>
+        ''' <param name="V1"></param>
+        ''' <param name="V2"></param>
+        ''' <remarks></remarks>
+        Public Sub AddCrossProduct(ByVal V1 As Vector3, ByVal V2 As Vector3, Scalar As Double)
+            X += Scalar * (V1.Y * V2.Z - V1.Z * V2.Y)
+            Y += Scalar * (V1.Z * V2.X - V1.X * V2.Z)
+            Z += Scalar * (V1.X * V2.Y - V1.Y * V2.X)
+        End Sub
+
         Public Shared Operator +(ByVal V1 As Vector3, ByVal V2 As Vector3) As Vector3
             Dim Suma As New Vector3
             Suma.X = V1.X + V2.X

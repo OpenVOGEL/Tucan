@@ -101,7 +101,7 @@
   <ItemGroup>
     <Compile Include="CalculationModel\IO\IOXML.vb" />
     <Compile Include="CalculationModel\Models\Aero\BoundedLattice.vb" />
-    <Compile Include="CalculationModel\Models\Aero\Components\ChordWiseLink.vb" />
+    <Compile Include="CalculationModel\Models\Aero\Components\ChordWiseStripe.vb" />
     <Compile Include="CalculationModel\Models\Aero\Components\Node.vb" />
     <Compile Include="CalculationModel\Models\Aero\Components\Polars.vb" />
     <Compile Include="CalculationModel\Models\Aero\Components\Primitives.vb" />

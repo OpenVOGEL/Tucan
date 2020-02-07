@@ -499,6 +499,13 @@ Namespace VisualModel.Models
             Results.Model.Name = "Results"
             Results.Model.Clear()
             Results.DynamicModes.Clear()
+            Results.Model.MaximumLift = 0.0#
+            Results.Model.LiftVectors.Clear()
+            Results.Model.MaximumInducedDrag = 0.0#
+            Results.Model.InducedDragVectors.Clear()
+            Results.Model.MaximumSkinDrag = 0.0#
+            Results.Model.SkinDragVectors.Clear()
+
             Results.SimulationSettings.Assign(This.Settings)
 
             Dim CantidadDeSuperficies As Integer = 0
@@ -508,6 +515,10 @@ Namespace VisualModel.Models
 
             For Each Lattice In This.Lattices
 
+                '-----------------------'
+                ' Load the nodal points '
+                '-----------------------'
+
                 For Each NodalPoint In Lattice.Nodes
 
                     GlobalIndexNodes += 1
@@ -515,6 +526,10 @@ Namespace VisualModel.Models
                     Results.Model.AddNodalPoint(NodalPoint.Position)
 
                 Next
+
+                '-----------------------'
+                ' Load the vortex rings '
+                '-----------------------'
 
                 For Each VortexRing In Lattice.VortexRings
 
@@ -547,6 +562,43 @@ Namespace VisualModel.Models
 
                 Next
 
+                '------------------------'
+                ' Load the fixed vectors '
+                '------------------------'
+
+                For Each Stripe In Lattice.ChordWiseStripes
+
+                    ' Lift vectors
+                    '-----------------------------------
+                    If Stripe.L.EuclideanNorm > 0.0 Then
+                        Dim LiftVector As New FixedVector
+                        LiftVector.Vector.Assign(Stripe.L)
+                        LiftVector.Point.Assign(Stripe.CenterPoint)
+                        Results.Model.LiftVectors.Add(LiftVector)
+                        Results.Model.MaximumLift = Math.Max(Results.Model.MaximumLift, Stripe.L.EuclideanNorm)
+                    End If
+
+                    ' Induced drag vectors
+                    '-----------------------------------
+                    If Stripe.Di.EuclideanNorm > 0.0 Then
+                        Dim DragVector As New FixedVector
+                        DragVector.Vector.Assign(Stripe.Di)
+                        DragVector.Point.Assign(Stripe.CenterPoint)
+                        Results.Model.InducedDragVectors.Add(DragVector)
+                        Results.Model.MaximumInducedDrag = Math.Max(Results.Model.MaximumInducedDrag, Stripe.Di.EuclideanNorm)
+                    End If
+
+                    ' Skin drag vectors
+                    '-----------------------------------
+                    If Stripe.Dp.EuclideanNorm > 0.0 Then
+                        Dim DragVector As New FixedVector
+                        DragVector.Vector.Assign(Stripe.Dp)
+                        DragVector.Point.Assign(Stripe.CenterPoint)
+                        Results.Model.SkinDragVectors.Add(DragVector)
+                        Results.Model.MaximumSkinDrag = Math.Max(Results.Model.MaximumSkinDrag, Stripe.Dp.EuclideanNorm)
+                    End If
+
+                Next
             Next
 
             Results.Model.FindPressureRange()
