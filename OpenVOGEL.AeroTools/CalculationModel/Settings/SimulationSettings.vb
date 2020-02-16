@@ -305,6 +305,12 @@ Namespace CalculationModel.Settings
         Public Property TransitionReynods As Double = 2000000
 
         ''' <summary>
+        ''' Indicates if the aproximated sking friction of thick bodies must be included
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property IncludeAproximateBodyFriction As Boolean = False
+
+        ''' <summary>
         ''' Generates a vector containing the velocity at each time step.
         ''' </summary>
         ''' <remarks>

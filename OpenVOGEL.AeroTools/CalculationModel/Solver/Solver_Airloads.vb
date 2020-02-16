@@ -153,22 +153,24 @@ Namespace CalculationModel.Solver
                         Lattice.AirLoads.BodyForce.Add(Ring.Normal, Cf)
                         Lattice.AirLoads.BodyMoment.AddCrossProduct(Ring.ControlPoint, Ring.Normal, Cf)
 
-                        'NOTE:
-                        'We estimate the local friction using a flat plate analogy.
-                        'This is simplified method has the next restrictions:
-                        '> It does not take into account the pressure gradient.
-                        '> It assumes everywhere a turbulent layer
-                        '> It approaches the reynolds number using a diagonal (which only works for low incidence angle)
-                        Dim Direction As New Vector3(Ring.VelocityT)
-                        Direction.ProjectOnPlane(Ring.Normal)
-                        Dim SurfaceVelocity As Double = Direction.EuclideanNorm
-                        Direction.Normalize()
-                        Dim Distance As Double = Ring.ControlPoint.DistanceTo(FirstNode.Position)
-                        Dim LocalReynolds As Double = SurfaceVelocity * Distance * Settings.Density / Settings.Viscocity
-                        Dim Stress As Double = 0.0576 * 0.5 * SurfaceVelocity ^ 2.0 * Settings.Density / Math.Pow(LocalReynolds, 0.2)
-                        Cf = Ring.Area * Stress / Settings.DynamicPressure
-                        Lattice.AirLoads.SkinDrag.Add(Direction, Cf)
-                        Lattice.AirLoads.SkinMoment.AddCrossProduct(Ring.ControlPoint, Direction, Cf)
+                        If Settings.IncludeAproximateBodyFriction Then
+                            'NOTE:
+                            'We estimate the local friction using a flat plate analogy.
+                            'This is simplified method has the next restrictions:
+                            '> It does not take into account the pressure gradient.
+                            '> It assumes everywhere a turbulent layer
+                            '> It approaches the reynolds number using a diagonal (which only works for low incidence angle)
+                            Dim Direction As New Vector3(Ring.VelocityT)
+                            Direction.ProjectOnPlane(Ring.Normal)
+                            Dim SurfaceVelocity As Double = Direction.EuclideanNorm
+                            Direction.Normalize()
+                            Dim Distance As Double = Ring.ControlPoint.DistanceTo(FirstNode.Position)
+                            Dim LocalReynolds As Double = SurfaceVelocity * Distance * Settings.Density / Settings.Viscocity
+                            Dim Stress As Double = 0.0576 * 0.5 * SurfaceVelocity ^ 2.0 * Settings.Density / Math.Pow(LocalReynolds, 0.2)
+                            Cf = Ring.Area * Stress / Settings.DynamicPressure
+                            Lattice.AirLoads.SkinDrag.Add(Direction, Cf)
+                            Lattice.AirLoads.SkinMoment.AddCrossProduct(Ring.ControlPoint, Direction, Cf)
+                        End If
 
                     End If
 

@@ -283,7 +283,7 @@ Namespace VisualModel.Models.Components
             Dihedral = IOXML.ReadDouble(reader, "Diedral", 0.0)
             Twist = IOXML.ReadDouble(reader, "Torsion", 0.0)
             TwistAxis = IOXML.ReadDouble(reader, "TorsionAxis", 0.0)
-            SpacementType = IOXML.ReadInteger(reader, "SpacingType", 1)
+            SpacementType = DirectCast([Enum].Parse(GetType(Spacements), IOXML.ReadString(reader, "SpacingType", String.Format("{0}", Spacements.Constant))), Spacements)
 
             Flapped = IOXML.ReadBoolean(reader, "Flapped", False)
             FlapChord = IOXML.ReadDouble(reader, "FlapChord", 0.2)
