@@ -148,7 +148,7 @@ Namespace CalculationModel.Solver
 
                     If Not Ring.IsSlender Then
 
-                        Dim Cf As Double = Ring.Cp * Ring.Area
+                        Dim Cf As Double = -Ring.Cp * Ring.Area
 
                         Lattice.AirLoads.BodyForce.Add(Ring.Normal, Cf)
                         Lattice.AirLoads.BodyMoment.AddCrossProduct(Ring.ControlPoint, Ring.Normal, Cf)
