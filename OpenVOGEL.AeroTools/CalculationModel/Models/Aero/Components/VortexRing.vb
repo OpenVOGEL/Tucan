@@ -197,12 +197,17 @@ Namespace CalculationModel.Models.Aero.Components
         Function StreamwiseInfluence(ByVal Point As Vector3, ByVal N1 As Integer, ByVal N2 As Integer, Optional ByVal CutOff As Double = 0.0001) As Vector3
 
         ''' <summary>
+        ''' Approaches the local velocity using the local source strength and the circulation of the adjacent panels.
+        ''' </summary>
+        Sub CalculateLocalVelocity(StreamVelocity As Vector3)
+
+        ''' <summary>
         ''' Calculates the jump of pressure through the vortex ring.
         ''' </summary>
         ''' <param name="VSqr">
         ''' Square of reference velocity Norm2.
         ''' </param>
-        Sub CalculateCP(ByVal VSqr As Double)
+        Sub CalculateCp(ByVal VSqr As Double)
 
         ''' <summary>
         ''' Indicates whether the panel is used to convect wake or not. 

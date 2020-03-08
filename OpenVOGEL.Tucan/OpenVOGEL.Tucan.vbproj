@@ -23,14 +23,15 @@
     <UpdateIntervalUnits>Days</UpdateIntervalUnits>
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
-    <MapFileExtensions>true</MapFileExtensions>
-    <SupportUrl>https://sites.google.com/site/gahvogel/</SupportUrl>
+    <MapFileExtensions>false</MapFileExtensions>
+    <SupportUrl>https://openvogel.org</SupportUrl>
     <ErrorReportUrl>https://github.com/GuillermoHazebrouck/OpenVOGEL/issues</ErrorReportUrl>
     <ProductName>Tucan</ProductName>
     <PublisherName>OpenVOGEL</PublisherName>
     <SuiteName>OpenVOGEL Tucan</SuiteName>
-    <ApplicationRevision>33</ApplicationRevision>
-    <ApplicationVersion>1.3.0.%2a</ApplicationVersion>
+    <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
+    <ApplicationRevision>2</ApplicationRevision>
+    <ApplicationVersion>2.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>

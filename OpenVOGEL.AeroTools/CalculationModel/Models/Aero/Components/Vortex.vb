@@ -96,9 +96,9 @@ Namespace CalculationModel.Models.Aero.Components
         ''' Calculation has been optimized by replacing object subs by local code.
         ''' Value types are used on internal calculations (other versions used reference type EVector3).
         ''' </remarks>
-        Public Function BiotSavart(ByVal Point As Vector3,
-                                   Optional ByVal CutOff As Double = 0.0001,
-                                   Optional ByVal WithG As Boolean = True) As Vector3
+        Public Function InducedVelocity(ByVal Point As Vector3,
+                                        Optional ByVal CutOff As Double = 0.0001,
+                                        Optional ByVal WithG As Boolean = True) As Vector3
 
             Dim Vector As New Vector3
 
@@ -171,7 +171,7 @@ Namespace CalculationModel.Models.Aero.Components
         ''' Calculation has been optimized by replacing object subs by local code.
         ''' Value types are used on internal calculations (other versions used reference type EVector3).
         ''' </remarks>
-        Public Sub AddBiotSavartVector(ByRef Vector As Vector3,
+        Public Sub AddInducedVelocity(ByRef Vector As Vector3,
                                        Point As Vector3,
                                        CutOff As Double,
                                        WithG As Boolean)

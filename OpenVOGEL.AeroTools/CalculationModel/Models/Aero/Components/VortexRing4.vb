@@ -15,6 +15,7 @@
 'You should have received a copy Of the GNU General Public License
 'along with this program.  If Not, see < http:  //www.gnu.org/licenses/>.
 
+Imports DotNumerics.LinearAlgebra
 Imports OpenVOGEL.MathTools.Algebra.EuclideanSpace
 
 Namespace CalculationModel.Models.Aero.Components
@@ -201,13 +202,19 @@ Namespace CalculationModel.Models.Aero.Components
         ''' Four times PI
         ''' </summary>
         ''' <remarks></remarks>
-        Const FourPi As Double = 4 * Math.PI
+        Const FourPi As Double = 4.0# * Math.PI
+
+        ''' <summary>
+        ''' Four times PI
+        ''' </summary>
+        ''' <remarks></remarks>
+        Const InverseFourPi As Double = 1.0# / (4.0# * Math.PI)
 
         ''' <summary>
         ''' Collocation point delta
         ''' </summary>
         ''' <remarks></remarks>
-        Const Delta As Double = 0.0001
+        Const Delta As Double = 0.0000001
 
         ''' <summary>
         ''' Minimum value of the Biot-Savart denominator
@@ -610,7 +617,7 @@ Namespace CalculationModel.Models.Aero.Components
 
             Dim Vw As Double = Math.Sign(p.Z) * (tn01 + tn12 + tn23 + tn30)
 
-            ' Tangent components
+            ' Logarithmic factors
 
             Dim ln01 As Double = Math.Log((r0p + r1p - d01) / (r0p + r1p + d01))
             Dim ln12 As Double = Math.Log((r1p + r2p - d12) / (r1p + r2p + d12))
@@ -624,7 +631,7 @@ Namespace CalculationModel.Models.Aero.Components
 
             ' Recompose vector in global coordinates
 
-            Dim Factor As Double = 1.0# / FourPi
+            Dim Factor As Double = InverseFourPi
 
             If WithS Then
                 Factor *= S
@@ -928,7 +935,7 @@ Namespace CalculationModel.Models.Aero.Components
             Dim g3 As Double = d30y * e0 - d30x * h0
             Dim tn30 As Double = Math.Atan2(z * d30x * (f3 * r0p - g3 * r3p), z2 * d30x * d30x * r3p * r0p + f3 * g3)
 
-            Dim Potential As Double = (ln01 + ln12 + ln23 + ln30 - z * (tn01 + tn12 + tn23 + tn30)) / FourPi
+            Dim Potential As Double = -(ln01 + ln12 + ln23 + ln30 - z * (tn01 + tn12 + tn23 + tn30)) / FourPi
 
             If WithS Then Potential *= S
 
@@ -1060,7 +1067,7 @@ Namespace CalculationModel.Models.Aero.Components
         ''' <param name="SquaredVelocity">
         ''' Square of reference velocity Norm2.
         ''' </param>
-        Public Sub CalculateCP(ByVal SquaredVelocity As Double) Implements VortexRing.CalculateCP
+        Public Sub CalculateCp(ByVal SquaredVelocity As Double) Implements VortexRing.CalculateCp
 
             If IsSlender Then
 
@@ -1136,6 +1143,89 @@ Namespace CalculationModel.Models.Aero.Components
             _SurroundingRings(1, 1) = Nothing
             _SurroundingRings(2, 1) = Nothing
             _SurroundingRings(3, 1) = Nothing
+        End Sub
+
+        ''' <summary>
+        ''' Calculates the local tangent velocity by analyzing the gradient of circulation.
+        ''' </summary>
+        ''' <remarks>
+        ''' This is only intenderd for thick bodies. It works by computing the best fit
+        ''' to the circulation using least squares.
+        ''' </remarks>
+        Public Sub CalculateLocalVelocity(StreamVelocity As Vector3) Implements VortexRing.CalculateLocalVelocity
+
+            VelocityT.SetToCero()
+
+            If Not _IsSlender Then
+
+                Dim M As New Matrix(3)
+                Dim B As New Vector(3)
+
+                ' Local local circulation at (0,0)
+
+                M(2, 2) += 1
+                B(0) += 0.0#
+                B(1) += 0.0#
+                B(2) += G
+
+                ' Add circulation of adjacent panels
+
+                For i = _SurroundingRings.GetLowerBound(0) To _SurroundingRings.GetUpperBound(0)
+
+                    ' Do not include the panels behind a shared edge
+
+                    If _SurroundingRings(i, 0) IsNot Nothing AndAlso _SurroundingRings(i, 1) Is Nothing Then
+
+                        Dim Delta As New Vector3
+
+                        Delta.X = _SurroundingRings(i, 0).ControlPoint.X - ControlPoint.X
+                        Delta.Y = _SurroundingRings(i, 0).ControlPoint.Y - ControlPoint.Y
+                        Delta.Z = _SurroundingRings(i, 0).ControlPoint.Z - ControlPoint.Z
+
+                        Dim OtherU As Double = Delta.InnerProduct(_Basis.U)
+                        Dim OtherV As Double = Delta.InnerProduct(_Basis.V)
+                        Dim OtherG = _SurroundingRings(i, 0).G
+
+                        M(0, 0) += OtherU * OtherU
+                        M(0, 1) += OtherU * OtherV
+                        M(0, 2) += OtherU
+
+                        M(1, 0) += OtherU * OtherV
+                        M(1, 1) += OtherV * OtherV
+                        M(1, 2) += OtherV
+
+                        M(2, 0) += OtherU
+                        M(2, 1) += OtherV
+                        M(2, 2) += 1
+
+                        B(0) += OtherU * OtherG
+                        B(1) += OtherV * OtherG
+                        B(2) += OtherG
+
+                    End If
+
+                Next
+
+                ' Calculate the circulation derivatives on each tagent directions
+                ' Vector A will contain the circulation slopes and the local mean circulation
+
+                Dim Equations As New LinearEquations
+                Dim A As Vector
+
+                Try
+                    A = Equations.Solve(M, B)
+                Catch ex As Exception
+                    A = New Vector(3)
+                End Try
+
+                Dim StreamU As Double = _Basis.U.InnerProduct(StreamVelocity)
+                Dim StreamV As Double = _Basis.V.InnerProduct(StreamVelocity)
+
+                VelocityT.Add(_Basis.U, -A(0) + StreamU)
+                VelocityT.Add(_Basis.V, -A(1) + StreamV)
+
+            End If
+
         End Sub
 
 #End Region

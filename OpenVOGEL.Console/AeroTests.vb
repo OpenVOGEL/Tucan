@@ -28,6 +28,7 @@ Public Module AeroTests
 
         TestPanelOrientation()
         TestTriangularPanels()
+        TestSourcePanelVelocity()
 
     End Sub
 
@@ -114,6 +115,104 @@ Public Module AeroTests
         If (S1 - S2) / S1 < 0.0000000001 Then
             System.Console.WriteLine("Sources OK")
         End If
+
+    End Sub
+
+    ''' <summary>
+    ''' This test verifies that the source and doublet potentials are the same
+    ''' when for a non flat 4-nodes panel only the order of the nodes is modified.
+    ''' </summary>
+    Private Sub TestSourcePanelVelocity()
+
+        System.Console.WriteLine("Testing influence velocity against potential derivative in quad panel")
+
+        Dim N1 As New Node
+        Dim N2 As New Node
+        Dim N3 As New Node
+        Dim N4 As New Node
+        Dim P As New Vector3
+
+        N1.Position.X = 0.0
+        N1.Position.Y = 0.0
+        N1.Position.Z = 0.0
+
+        N2.Position.X = 1.0
+        N2.Position.Y = 0.0
+        N2.Position.Z = 0.0
+
+        N3.Position.X = 1.0
+        N3.Position.Y = 1.0
+        N3.Position.Z = 0.0
+
+        N4.Position.X = 0.0
+        N4.Position.Y = 1.0
+        N4.Position.Z = 0.0
+
+        Dim Panel As New VortexRing4(N1, N2, N3, N4, 0, False, False)
+
+        For I = 1 To 2
+
+            System.Console.WriteLine("CASE " & I.ToString)
+
+            Select Case I
+                Case 1
+                    P.X = 0.0
+                    P.Y = 0.0
+                    P.Z = 0.5
+                Case 2
+                    P.X = 0.0
+                    P.Y = 0.0
+                    P.Z = -0.5
+            End Select
+
+            Dim V As New Vector3
+
+            Dim Rx As New Vector3(P)
+            Rx.X += 0.00001
+            Dim Ry As New Vector3(P)
+            Ry.Y += 0.00001
+            Dim Rz As New Vector3(P)
+            Rz.Z += 0.00001
+
+            ' Source
+
+            System.Console.WriteLine("Source:")
+
+            Panel.AddSourceVelocityInfluence(V, P, False)
+
+            Dim Qx As Double = (Panel.GetSourcePotentialInfluence(Rx, False) - Panel.GetSourcePotentialInfluence(P, False)) / 0.00001
+            System.Console.WriteLine("dQ/dx = {0:F14}", (Qx))
+            System.Console.WriteLine("Vx    = {0:F14}", (V.X))
+
+            Dim Qy As Double = (Panel.GetSourcePotentialInfluence(Ry, False) - Panel.GetSourcePotentialInfluence(P, False)) / 0.00001
+            System.Console.WriteLine("dQ/dy = {0:F14}", (Qy))
+            System.Console.WriteLine("Vy    = {0:F14}", (V.Y))
+
+            Dim Qz As Double = (Panel.GetSourcePotentialInfluence(Rz, False) - Panel.GetSourcePotentialInfluence(P, False)) / 0.00001
+            System.Console.WriteLine("dQ/dz = {0:F14}", (Qz))
+            System.Console.WriteLine("Vz    = {0:F14}", (V.Z))
+
+            V.SetToCero()
+
+            ' Dipole
+
+            System.Console.WriteLine("Doublet:")
+
+            Panel.AddDoubletVelocityInfluence(V, P, False, False)
+
+            Qx = (Panel.GetDoubletPotentialInfluence(Rx, False) - Panel.GetDoubletPotentialInfluence(P, False)) / 0.00001
+            System.Console.WriteLine("dQ/dx = {0:F14}", (Qx))
+            System.Console.WriteLine("Vx    = {0:F14}", (V.X))
+
+            Qy = (Panel.GetDoubletPotentialInfluence(Ry, False) - Panel.GetDoubletPotentialInfluence(P, False)) / 0.00001
+            System.Console.WriteLine("dQ/dy = {0:F14}", (Qy))
+            System.Console.WriteLine("Vy    = {0:F14}", (V.Y))
+
+            Qz = (Panel.GetDoubletPotentialInfluence(Rz, False) - Panel.GetDoubletPotentialInfluence(P, False)) / 0.00001
+            System.Console.WriteLine("dQ/dz = {0:F14}", (Qz))
+            System.Console.WriteLine("Vz    = {0:F14}", (V.Z))
+
+        Next
 
     End Sub
 

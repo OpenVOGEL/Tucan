@@ -434,7 +434,7 @@ Namespace CalculationModel.Models.Aero
 
             For Each Ring In VortexRings
 
-                Ring.CalculateCP(SquareVelocity)
+                Ring.CalculateCp(SquareVelocity)
 
             Next
 

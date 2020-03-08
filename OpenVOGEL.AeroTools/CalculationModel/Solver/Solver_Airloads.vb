@@ -84,7 +84,7 @@ Namespace CalculationModel.Solver
 
                                 If Vortex.Streamwise Then
 
-                                    Vortex.AddBiotSavartVector(InducedVelocity, Point, CutOff, True)
+                                    Vortex.AddInducedVelocity(InducedVelocity, Point, CutOff, True)
 
                                 End If
 

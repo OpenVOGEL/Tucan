@@ -94,7 +94,7 @@ Namespace CalculationModel.Models.Aero
 
             For Each Vortex In Vortices
 
-                Vortex.AddBiotSavartVector(Velocity, Point, CutOff, True)
+                Vortex.AddInducedVelocity(Velocity, Point, CutOff, True)
 
             Next
 

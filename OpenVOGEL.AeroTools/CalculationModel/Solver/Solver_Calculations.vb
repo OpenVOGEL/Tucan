@@ -83,6 +83,8 @@ Namespace CalculationModel.Solver
         ''' </summary>
         Public Sub FindSurroundingRingsGlobally()
 
+            RaiseEvent PushMessage("Finding all adjacent panels")
+
             Dim Tolerance As Double = Settings.SurveyTolerance
 
             Dim Order4(4, 2) As Integer
@@ -112,15 +114,16 @@ Namespace CalculationModel.Solver
 
             For Each Lattice In Lattices
 
-                Dim Pi As Vector3
-                Dim Pj As Vector3
+                ' Run each ring in parallel to increase speed
 
-                Dim Pm As Vector3
-                Dim Pn As Vector3
+                Parallel.ForEach(Lattice.VortexRings,
+                Sub(Ring As VortexRing)
 
-                For Each Ring In Lattice.VortexRings
+                    Dim Pi As Vector3
+                    Dim Pj As Vector3
 
-                    If Not Ring.IsSlender Then Continue For ' Do not find adjacent panels of non-slender rings (not required)
+                    Dim Pm As Vector3
+                    Dim Pn As Vector3
 
                     Ring.InitializeSurroundingRings()
 
@@ -252,7 +255,7 @@ Namespace CalculationModel.Solver
 
                     End If
 
-                Next
+                End Sub)
 
                 ' Set primitive flag on primitive panels:
 
@@ -300,13 +303,13 @@ Namespace CalculationModel.Solver
                             ' Impose Neumann boundary conditions
 
                             Parallel.ForEach(OtherLattice.VortexRings,
-                                             Sub(OtherVortexRing As VortexRing)
+                            Sub(OtherVortexRing As VortexRing)
 
-                                                 Dim Induced As Vector3 = OtherVortexRing.GetDoubletVelocityInfluence(Point, CutOff, False)
+                                Dim Induced As Vector3 = OtherVortexRing.GetDoubletVelocityInfluence(Point, CutOff, False)
 
-                                                 MatrixDoublets(Row, OtherVortexRing.IndexG) = Induced.X * Normal.X + Induced.Y * Normal.Y + Induced.Z * Normal.Z
+                                MatrixDoublets(Row, OtherVortexRing.IndexG) = Induced.X * Normal.X + Induced.Y * Normal.Y + Induced.Z * Normal.Z
 
-                                             End Sub)
+                            End Sub)
 
                         Else
 
@@ -380,6 +383,8 @@ Namespace CalculationModel.Solver
 
                         If VortexRing.IsSlender Then
 
+                            ' Neumman boundary conditions in this panel
+
                             n = -1
 
                             For Each OtherVortexRing As VortexRing In OtherLattice.VortexRings
@@ -399,6 +404,8 @@ Namespace CalculationModel.Solver
                             Next
 
                         Else
+
+                            ' Dirchlet boundary conditions in this panel
 
                             n = -1
 
@@ -459,7 +466,7 @@ Namespace CalculationModel.Solver
 
                         For i = 0 To MatrixSources.ColumnCount - 1
 
-                            RHS(VortexRing.IndexG) += MatrixSources(VortexRing.IndexG, i) * S(i)
+                            RHS(VortexRing.IndexG) -= MatrixSources(VortexRing.IndexG, i) * S(i)
 
                         Next
 
@@ -479,44 +486,45 @@ Namespace CalculationModel.Solver
             For Each Lattice As Lattice In Lattices
 
                 Parallel.ForEach(Lattice.VortexRings,
-                                 Sub(VortexRing As VortexRing)
+                Sub(VortexRing As VortexRing)
 
-                                     If VortexRing.IsSlender Then
+                    If VortexRing.IsSlender Then
 
-                                         ' Neumann boundary conditions:
+                        ' Neumann boundary conditions:
+                        ' (Missing sumation of sources)
 
-                                         Dim Vx As Double = VortexRing.VelocityW.X + Stream.Velocity.X
-                                         Dim Vy As Double = VortexRing.VelocityW.Y + Stream.Velocity.Y
-                                         Dim Vz As Double = VortexRing.VelocityW.Z + Stream.Velocity.Z
+                        Dim Vx As Double = VortexRing.VelocityW.X + Stream.Velocity.X
+                        Dim Vy As Double = VortexRing.VelocityW.Y + Stream.Velocity.Y
+                        Dim Vz As Double = VortexRing.VelocityW.Z + Stream.Velocity.Z
 
-                                         If WithStreamOmega Then
+                        If WithStreamOmega Then
 
-                                             Vx += Stream.Omega.Y * VortexRing.ControlPoint.Z - Stream.Omega.Z * VortexRing.ControlPoint.Y
-                                             Vy += Stream.Omega.Z * VortexRing.ControlPoint.X - Stream.Omega.X * VortexRing.ControlPoint.Z
-                                             Vz += Stream.Omega.X * VortexRing.ControlPoint.Y - Stream.Omega.Y * VortexRing.ControlPoint.X
+                            Vx += Stream.Omega.Y * VortexRing.ControlPoint.Z - Stream.Omega.Z * VortexRing.ControlPoint.Y
+                            Vy += Stream.Omega.Z * VortexRing.ControlPoint.X - Stream.Omega.X * VortexRing.ControlPoint.Z
+                            Vz += Stream.Omega.X * VortexRing.ControlPoint.Y - Stream.Omega.Y * VortexRing.ControlPoint.X
 
-                                         End If
+                        End If
 
-                                         RHS(VortexRing.IndexG) = (VortexRing.VelocityS.X - Vx) * VortexRing.Normal.X +
-                                                              (VortexRing.VelocityS.Y - Vy) * VortexRing.Normal.Y +
-                                                              (VortexRing.VelocityS.Z - Vz) * VortexRing.Normal.Z
+                        RHS(VortexRing.IndexG) = (VortexRing.VelocityS.X - Vx) * VortexRing.Normal.X +
+                                                                  (VortexRing.VelocityS.Y - Vy) * VortexRing.Normal.Y +
+                                                                  (VortexRing.VelocityS.Z - Vz) * VortexRing.Normal.Z
 
-                                     Else
+                    Else
 
-                                         ' Dirichlet boundary conditions:
-                                         ' (Stream omega already takein into account in vector S)
+                        ' Dirichlet boundary conditions:
+                        ' (Stream omega already taken into account in vector S)
 
-                                         RHS(VortexRing.IndexG) = -VortexRing.PotentialW
+                        RHS(VortexRing.IndexG) = -VortexRing.PotentialW
 
-                                         For i = 0 To MatrixSources.ColumnCount - 1
+                        For i = 0 To MatrixSources.ColumnCount - 1
 
-                                             RHS(VortexRing.IndexG) += MatrixSources(VortexRing.IndexG, i) * S(i)
+                            RHS(VortexRing.IndexG) -= MatrixSources(VortexRing.IndexG, i) * S(i)
 
-                                         Next
+                        Next
 
-                                     End If
+                    End If
 
-                                 End Sub)
+                End Sub)
 
             Next
 
@@ -731,37 +739,47 @@ Namespace CalculationModel.Solver
 
                 For Each Ring In Lattice.VortexRings
 
-                    Ring.VelocityT.X = Stream.Velocity.X
-                    Ring.VelocityT.Y = Stream.Velocity.Y
-                    Ring.VelocityT.Z = Stream.Velocity.Z
+                    If Ring.IsSlender Then
 
-                    If WithStreamOmega Then
+                        Ring.VelocityT.X = Stream.Velocity.X
+                        Ring.VelocityT.Y = Stream.Velocity.Y
+                        Ring.VelocityT.Z = Stream.Velocity.Z
 
-                        Ring.VelocityT.AddCrossProduct(Stream.Omega, Ring.ControlPoint) ' Add stream angular velocity
+                        If WithStreamOmega Then
 
-                    End If
+                            ' Add stream angular velocity
 
-                    Ring.VelocityT.X += Ring.VelocityW.X
-                    Ring.VelocityT.Y += Ring.VelocityW.Y
-                    Ring.VelocityT.Z += Ring.VelocityW.Z
+                            Ring.VelocityT.AddCrossProduct(Stream.Omega, Ring.ControlPoint)
 
-                    For Each OtherLattice In Lattices
+                        End If
 
-                        If Not Ring.IsSlender Then
+                        Ring.VelocityT.X += Ring.VelocityW.X
+                        Ring.VelocityT.Y += Ring.VelocityW.Y
+                        Ring.VelocityT.Z += Ring.VelocityW.Z
 
-                            ' Use the outer control point:
-
-                            OtherLattice.AddInducedVelocity(Ring.VelocityT, Ring.OuterControlPoint, CutOff)
-
-                        Else
+                        For Each OtherLattice In Lattices
 
                             ' Use the common control point:
 
                             OtherLattice.AddInducedVelocity(Ring.VelocityT, Ring.ControlPoint, CutOff)
 
+                        Next
+
+                    Else
+
+                        Dim Velocity As New Vector3(Stream.Velocity)
+
+                        If WithStreamOmega Then
+
+                            ' Add stream angular velocity
+
+                            Velocity.AddCrossProduct(Stream.Omega, Ring.ControlPoint)
+
                         End If
 
-                    Next
+                        Ring.CalculateLocalVelocity(Velocity)
+
+                    End If
 
                 Next
 
