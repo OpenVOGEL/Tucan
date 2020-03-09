@@ -1022,11 +1022,9 @@ Namespace CalculationModel.Models.Aero.Components
                 Dim M As New Matrix(3)
                 Dim B As New Vector(3)
 
-                ' Local local circulation at (0,0)
+                ' Local circulation at (0,0)
 
                 M(2, 2) += 1
-                B(0) += 0.0#
-                B(1) += 0.0#
                 B(2) += G
 
                 ' Add circulation of adjacent panels
@@ -1067,7 +1065,7 @@ Namespace CalculationModel.Models.Aero.Components
 
                 Next
 
-                ' Calculate the circulation derivatives on each tagent directions
+                ' Calculate the circulation derivatives on each tangent directions
                 ' Vector A will contain the circulation slopes and the local mean circulation
 
                 Dim Equations As New LinearEquations
