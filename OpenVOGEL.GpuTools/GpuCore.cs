@@ -8,7 +8,11 @@ namespace OpenVOGEL.GpuTools
 {
     public static class GpuCore
     {
-
+        /// <summary>
+        /// Launches a small program to check if the GPU is up and running.
+        /// </summary>
+        /// <param name="DeviceId"></param>
+        /// <returns></returns>
         public static bool TestGpuDoublePrecision(int DeviceId)
         {
             if (DeviceId > CudafyHost.GetDeviceCount (eGPUType.OpenCL))
@@ -35,6 +39,12 @@ namespace OpenVOGEL.GpuTools
             { return false; }
         }
 
+        /// <summary>
+        /// Small cudafy test program to check functionality.
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        /// <param name="c"></param>
         [Cudafy]
         public static void add_double(double a, double b, double[] c)
         {
@@ -43,6 +53,11 @@ namespace OpenVOGEL.GpuTools
 
     }
 
+    /// <summary>
+    /// Object able to comunicate with the GPU in order to calculate induced velocities.
+    /// This object contains a small GPU program (translated later by Codafy) that calculates the
+    /// velocity induced by a series of vortices on a series of points.
+    /// </summary>
     public class VortexSolver
     {
         private bool Initialized = false;
