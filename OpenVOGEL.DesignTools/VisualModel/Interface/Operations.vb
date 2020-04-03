@@ -16,19 +16,40 @@
 'along with this program.  If Not, see < http:  //www.gnu.org/licenses/>.
 
 Imports OpenVOGEL.MathTools.Algebra.EuclideanSpace
-Imports SharpGL
 
 Namespace VisualModel.Interface
 
     ''' <summary>
-    ''' Interface that implements operations on objects
+    ''' Interface that implements operations on objects.
     ''' </summary>
-    ''' <remarks></remarks>
     Public Interface IOperational
 
-        Sub MoveTo(ByVal Vector As Vector3)
-        Sub Orientate(ByVal Point As Vector3, ByVal Ori As EulerAngles)
+        ''' <summary>
+        ''' Moves the object local origin to the given global position.
+        ''' </summary>
+        ''' <param name="Point">Position of the new origin.</param>
+        Sub MoveTo(ByVal Point As Vector3)
+
+        ''' <summary>
+        ''' Sets the given orientation.
+        ''' </summary>
+        ''' <param name="Point">Center of rotation</param>
+        ''' <param name="Orientation">The orientation</param>
+        Sub Orientate(ByVal Point As Vector3, ByVal Orientation As EulerAngles)
+
+        ''' <summary>
+        ''' Scales the object by the given factor.
+        ''' </summary>
+        ''' <param name="Scale">Factor by which all coordinates will be multiplied.</param>
         Sub Scale(ByVal Scale As Double)
+
+        ''' <summary>
+        ''' Aligns the object.
+        ''' </summary>
+        ''' <param name="P1">First point.</param>
+        ''' <param name="P2">Second point.</param>
+        ''' <param name="P3">Fist point target.</param>
+        ''' <param name="P4">Second point inclusion.</param>
         Sub Align(ByVal P1 As Vector3, ByVal P2 As Vector3, ByVal P3 As Vector3, ByVal P4 As Vector3)
 
     End Interface
@@ -36,7 +57,6 @@ Namespace VisualModel.Interface
     ''' <summary>
     ''' Operation types
     ''' </summary>
-    ''' <remarks></remarks>
     Public Enum Operations As UInteger
 
         NoOperation = 0
@@ -50,7 +70,6 @@ Namespace VisualModel.Interface
     ''' <summary>
     ''' Provides methods to handle gometric operations such as translation and rotation of IOperational objects.
     ''' </summary>
-    ''' <remarks></remarks>
     Public Class OperationsTool
 
         Public Event OnTaskReady()
@@ -68,8 +87,6 @@ Namespace VisualModel.Interface
         ''' Specifies the desired geometric operation.
         ''' </summary>
         ''' <value></value>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
         Public Property Operation As Operations
             Set(ByVal value As Operations)
                 CancelOperation()
@@ -83,7 +100,6 @@ Namespace VisualModel.Interface
         ''' <summary>
         ''' Tells the user what the situation is inside the operations tool.
         ''' </summary>
-        ''' <remarks></remarks>
         Public ReadOnly Property StatusFlag As String
             Get
                 Return _StatusFlag
@@ -94,11 +110,10 @@ Namespace VisualModel.Interface
         ''' Loads a refference to the IOperational object that is going to be modified under the current task.
         ''' It will only work if there is an active operation and no loaded object.
         ''' </summary>
-        ''' <param name="Obj"></param>
-        ''' <remarks></remarks>
-        Public Sub SetDestinationObject(ByRef Obj As IOperational)
+        ''' <param name="Destination"></param>
+        Public Sub SetDestinationObject(ByRef Destination As IOperational)
             If _Operation <> Operations.NoOperation And Not _SurfaceLoaded Then
-                _DestinationObject = Obj
+                _DestinationObject = Destination
                 _SurfaceLoaded = True
             End If
         End Sub
@@ -107,7 +122,6 @@ Namespace VisualModel.Interface
         ''' Adds an item that might be used on the current operation.
         ''' </summary>
         ''' <param name="Entity"></param>
-        ''' <remarks></remarks>
         Public Sub SetEntityToQueue(ByVal Entity As Object)
 
             If _Operation = Operations.NoOperation Or Not _SurfaceLoaded Then Return
@@ -143,6 +157,9 @@ Namespace VisualModel.Interface
 
         End Sub
 
+        ''' <summary>
+        ''' Attempts to excecute the current operation using the provided information.
+        ''' </summary>
         Private Sub TryOperation()
 
             If IsNothing(_DestinationObject) Then Return
@@ -185,7 +202,7 @@ Namespace VisualModel.Interface
 
                 End Select
 
-            Catch ex As Exception
+            Catch Fault As Exception
 
                 CancelOperation()
                 _StatusFlag = String.Format("Operation ""{0}"" has been due to errors", _Operation.ToString)
@@ -194,6 +211,9 @@ Namespace VisualModel.Interface
 
         End Sub
 
+        ''' <summary>
+        ''' Clears the operation stack and announces task ready.
+        ''' </summary>
         Private Sub RaiseTaskReady()
 
             CancelOperation()

@@ -22,15 +22,20 @@ Imports OpenVOGEL.AeroTools.IoHelper
 
 Namespace VisualModel.Interface
 
+    ''' <summary>
+    ''' The different kind of visualization modes.
+    ''' This is used to know what kind of interactions are allowed. 
+    ''' </summary>
     Public Enum VisualizationMode As Integer
-
         Physic
         Lattice
         Airfoils
         Structural
-
     End Enum
 
+    ''' <summary>
+    ''' Provides information about the visual aspect of objects.
+    ''' </summary>
     Public Class VisualProperties
 
         Implements INotifyPropertyChanged
@@ -38,7 +43,7 @@ Namespace VisualModel.Interface
         Private _ColorSurface As Color
 
         ''' <summary>
-        ''' Color of the surface
+        ''' Color of the surface.
         ''' </summary>
         Public Property ColorSurface As Color
             Set(value As Color)
@@ -55,7 +60,7 @@ Namespace VisualModel.Interface
         Private _ColorMesh As Color
 
         ''' <summary>
-        ''' Color of the mesh
+        ''' Color of the mesh.
         ''' </summary>
         Public Property ColorMesh As Color
             Set(value As Color)
@@ -72,7 +77,7 @@ Namespace VisualModel.Interface
         Private _ThicknessMesh As Double
 
         ''' <summary>
-        ''' Thickness of the mesh
+        ''' Thickness of the mesh lattice.
         ''' </summary>
         Public Property ThicknessMesh As Double
             Set(value As Double)
@@ -88,9 +93,8 @@ Namespace VisualModel.Interface
         Private _Transparency As Double
 
         ''' <summary>
-        ''' Transparency of the model
+        ''' Transparency of the model.
         ''' </summary>
-        ''' <returns></returns>
         Public Property Transparency As Double
             Set(value As Double)
                 If value <> _Transparency Then
@@ -103,11 +107,21 @@ Namespace VisualModel.Interface
             End Get
         End Property
 
+        ''' <summary>
+        ''' The color of the shedding edge primitives.
+        ''' </summary>
         Public Property ColorPrimitives As Color
+
+        ''' <summary>
+        ''' The color of the surface when selected.
+        ''' </summary>
         Public Property ColorSelection As Color
 
         Private _ShowMesh As Boolean
 
+        ''' <summary>
+        ''' Indicates if the mesh should be displayed.
+        ''' </summary>
         Public Property ShowMesh As Boolean
             Set(value As Boolean)
                 If value <> _ShowMesh Then
@@ -122,6 +136,9 @@ Namespace VisualModel.Interface
 
         Private _ShowSurface As Boolean
 
+        ''' <summary>
+        ''' Indicates if the surface should be displayed.
+        ''' </summary>
         Public Property ShowSurface As Boolean
             Set(value As Boolean)
                 If value <> _ShowSurface Then
@@ -136,6 +153,9 @@ Namespace VisualModel.Interface
 
         Private _ShowPrimitives As Boolean
 
+        ''' <summary>
+        ''' Indicates if the primitive shedding edges should be displayed.
+        ''' </summary>
         Public Property ShowPrimitives As Boolean
             Set(value As Boolean)
                 If value <> _ShowPrimitives Then
@@ -148,28 +168,85 @@ Namespace VisualModel.Interface
             End Get
         End Property
 
+        ''' <summary>
+        ''' The color of the mesh nodes.
+        ''' </summary>
         Public Property ColorNodes As Color
-        Public Property ColorVelocity As Color
-        Public Property ColorPositiveLoad As Color
-        Public Property ColorNegativeLoad As Color
-        Public Property SizeNodes As Double
-        Public Property ScaleVelocity As Double
-        Public Property ScalePressure As Double
 
+        ''' <summary>
+        ''' The color of the velocity vectors.
+        ''' </summary>
+        Public Property ColorVelocity As Color
+
+        ''' <summary>
+        ''' The color of a positive load.
+        ''' For thick bodies, a positive load is when it is higher than the static pressure.
+        ''' </summary>
+        Public Property ColorPositiveLoad As Color
+
+        ''' <summary>
+        ''' The color of a negative load.
+        ''' For thick bodies, a negative load is when it is lower than the static pressure.
+        ''' </summary>
+        Public Property ColorNegativeLoad As Color
+
+        ''' <summary>
+        ''' The size of the mesh nodes.
+        ''' </summary>
+        Public Property SizeNodes As Double
+
+        ''' <summary>
+        ''' The scale of the velocity vectors.
+        ''' </summary>
+        Public Property ScaleVelocityVectors As Double
+
+        ''' <summary>
+        ''' The scale of the pressure load vectors.
+        ''' </summary>
+        Public Property ScaleLoadVectors As Double
+
+        ''' <summary>
+        ''' Indicqtes if the nodes should be displayed.
+        ''' </summary>
         Public Property ShowNodes As Boolean
+
+        ''' <summary>
+        ''' Indicates if the velocity vectors should be displayed.
+        ''' </summary>
         Public Property ShowVelocityVectors As Boolean
+
+        ''' <summary>
+        ''' Indicates if the pressure load vectors should be displayed.
+        ''' </summary>
+        ''' <returns></returns>
         Public Property ShowLoadVectors As Boolean
+
+        ''' <summary>
+        ''' Indicates if the color of the surface should be overriden by a pressure colormap.
+        ''' </summary>
         Public Property ShowColormap As Boolean
+
+        ''' <summary>
+        ''' Indicates if the local coordinates system should be displayed.
+        ''' </summary>
         Public Property ShowLocalCoordinates As Boolean = True
+
+        ''' <summary>
+        ''' Indicates if the normal vectors should be displayed.
+        ''' </summary>
         Public Property ShowNormalVectors As Boolean
 
         Private _VisualizationMode As VisualizationMode = [Interface].VisualizationMode.Lattice
 
+        ''' <summary>
+        ''' Indicates how the model should be represented.
+        ''' </summary>
+        ''' <returns></returns>
         Public Property VisualizationMode As VisualizationMode
             Set(ByVal value As VisualizationMode)
                 _VisualizationMode = value
                 Select Case VisualizationMode
-                    Case [Interface].VisualizationMode.Lattice
+                    Case VisualizationMode.Lattice
                         ShowMesh = True
                         ShowPrimitives = True
                 End Select
@@ -179,6 +256,10 @@ Namespace VisualModel.Interface
             End Get
         End Property
 
+        ''' <summary>
+        ''' Creates a visualization property object with default values for the given component type.
+        ''' </summary>
+        ''' <param name="ElementType"></param>
         Public Sub New(ByVal ElementType As ComponentTypes)
 
             Select Case ElementType
@@ -198,8 +279,8 @@ Namespace VisualModel.Interface
                     Transparency = 1.0#
                     ThicknessMesh = 1.0#
                     SizeNodes = 8.0#
-                    ScaleVelocity = 0.0#
-                    ScalePressure = 0.0#
+                    ScaleVelocityVectors = 0.0#
+                    ScaleLoadVectors = 0.0#
 
                 Case ComponentTypes.etFuselage
 
@@ -210,8 +291,8 @@ Namespace VisualModel.Interface
                     Transparency = 1.0#
                     ThicknessMesh = 1.0#
                     SizeNodes = 8.0#
-                    ScaleVelocity = 0.0#
-                    ScalePressure = 0.0#
+                    ScaleVelocityVectors = 0.0#
+                    ScaleLoadVectors = 0.0#
                     ShowMesh = True
                     ShowSurface = True
                     ShowNodes = False
@@ -225,8 +306,8 @@ Namespace VisualModel.Interface
                     Transparency = 1.0#
                     ThicknessMesh = 1.0#
                     SizeNodes = 8.0#
-                    ScaleVelocity = 0.0#
-                    ScalePressure = 0.0#
+                    ScaleVelocityVectors = 0.0#
+                    ScaleLoadVectors = 0.0#
                     ShowMesh = True
                     ShowSurface = True
                     ShowNodes = False
@@ -242,8 +323,8 @@ Namespace VisualModel.Interface
                     Transparency = 1.0#
                     ThicknessMesh = 1.0#
                     SizeNodes = 8.0#
-                    ScaleVelocity = 0.01#
-                    ScalePressure = 1.0#
+                    ScaleVelocityVectors = 0.01#
+                    ScaleLoadVectors = 1.0#
                     ShowMesh = True
                     ShowSurface = True
                     ShowNodes = False
@@ -257,8 +338,8 @@ Namespace VisualModel.Interface
                     Transparency = 1.0#
                     ThicknessMesh = 1.0#
                     SizeNodes = 2.0#
-                    ScaleVelocity = 0.0#
-                    ScalePressure = 0.0#
+                    ScaleVelocityVectors = 0.0#
+                    ScaleLoadVectors = 0.0#
                     ShowMesh = True
                     ShowSurface = False
                     ShowNodes = False
@@ -266,6 +347,9 @@ Namespace VisualModel.Interface
             End Select
         End Sub
 
+        ''' <summary>
+        ''' Reads the data from an XML node.
+        ''' </summary>
         Public Sub ReadFromXML(ByRef reader As XmlReader)
 
             While reader.Read
@@ -288,8 +372,8 @@ Namespace VisualModel.Interface
                         Case "Size"
                             SizeNodes = IOXML.ReadDouble(reader, "NodeSize", 1.0)
                             SizeNodes = IOXML.ReadDouble(reader, "LatticeThickness", 2.0)
-                            ScaleVelocity = IOXML.ReadDouble(reader, "ScaleVelocity", 1.0)
-                            ScalePressure = IOXML.ReadDouble(reader, "ScalePressure", 1)
+                            ScaleVelocityVectors = IOXML.ReadDouble(reader, "ScaleVelocity", 1.0)
+                            ScaleLoadVectors = IOXML.ReadDouble(reader, "ScalePressure", 1)
 
                         Case "Colors"
 
@@ -317,6 +401,10 @@ Namespace VisualModel.Interface
 
         End Sub
 
+        ''' <summary>
+        ''' Writes the data to an XML node.
+        ''' </summary>
+        ''' <param name="writer"></param>
         Public Sub WriteToXML(ByRef writer As XmlWriter)
 
             writer.WriteStartElement("Visibility")
@@ -334,8 +422,8 @@ Namespace VisualModel.Interface
             writer.WriteStartElement("Size")
             writer.WriteAttributeString("NodeSize", String.Format("{0}", Me.SizeNodes))
             writer.WriteAttributeString("LatticeThickness", String.Format("{0}", Me.ThicknessMesh))
-            writer.WriteAttributeString("ScaleVelocity", String.Format("{0}", Me.ScaleVelocity))
-            writer.WriteAttributeString("ScalePressure", String.Format("{0}", Me.ScalePressure))
+            writer.WriteAttributeString("ScaleVelocity", String.Format("{0}", Me.ScaleVelocityVectors))
+            writer.WriteAttributeString("ScalePressure", String.Format("{0}", Me.ScaleLoadVectors))
             writer.WriteEndElement()
 
             writer.WriteStartElement("Colors")
@@ -353,6 +441,10 @@ Namespace VisualModel.Interface
 
 #Region "Property Changed"
 
+        ''' <summary>
+        ''' Indicates that a property has changed.
+        ''' Note: not all properties raise this event.
+        ''' </summary>
         Public Event PropertyChanged(Sender As Object, e As PropertyChangedEventArgs) Implements INotifyPropertyChanged.PropertyChanged
 
         Private Sub RaisePropertyChanged(PropertyName As String)
@@ -362,7 +454,6 @@ Namespace VisualModel.Interface
         End Sub
 
 #End Region
-
 
     End Class
 

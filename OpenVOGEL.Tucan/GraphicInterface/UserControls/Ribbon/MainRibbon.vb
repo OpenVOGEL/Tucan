@@ -1221,8 +1221,8 @@ ErrSub:
             cbxShowForce.Checked = ProjectRoot.Results.Model.VisualProperties.ShowLoadVectors
             cbxShowVelocity.Checked = ProjectRoot.Results.Model.VisualProperties.ShowVelocityVectors
 
-            nudScaleForce.Value = ProjectRoot.Results.Model.VisualProperties.ScalePressure
-            nudScaleVelocity.Value = ProjectRoot.Results.Model.VisualProperties.ScaleVelocity
+            nudScaleForce.Value = ProjectRoot.Results.Model.VisualProperties.ScaleLoadVectors
+            nudScaleVelocity.Value = ProjectRoot.Results.Model.VisualProperties.ScaleVelocityVectors
 
             cbxShowColormap.Checked = ProjectRoot.Results.Model.VisualProperties.ShowColormap
             nudDCpmax.Value = ProjectRoot.Results.Model.PressureDeltaRange.Maximum
@@ -1360,7 +1360,7 @@ ErrSub:
 
         If (Not _LockResultPropsEvents) And ProjectRoot.Initialized Then
 
-            ProjectRoot.Results.Model.VisualProperties.ScaleVelocity = nudScaleVelocity.Value
+            ProjectRoot.Results.Model.VisualProperties.ScaleVelocityVectors = nudScaleVelocity.Value
 
             ModelInterface.RefreshOnGL()
 
@@ -1372,7 +1372,7 @@ ErrSub:
 
         If (Not _LockResultPropsEvents) And ProjectRoot.Initialized Then
 
-            ProjectRoot.Results.Model.VisualProperties.ScalePressure = nudScaleForce.Value
+            ProjectRoot.Results.Model.VisualProperties.ScaleLoadVectors = nudScaleForce.Value
 
             ModelInterface.RefreshOnGL()
 

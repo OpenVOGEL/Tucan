@@ -1107,9 +1107,9 @@ Namespace Tucan.Utility
                         gl.Vertex(Panel.ControlPoint.X,
                                   Panel.ControlPoint.Y,
                                   Panel.ControlPoint.Z)
-                        gl.Vertex(Panel.ControlPoint.X + .VisualProperties.ScaleVelocity * Panel.LocalVelocity.X,
-                                  Panel.ControlPoint.Y + .VisualProperties.ScaleVelocity * Panel.LocalVelocity.Y,
-                                  Panel.ControlPoint.Z + .VisualProperties.ScaleVelocity * Panel.LocalVelocity.Z)
+                        gl.Vertex(Panel.ControlPoint.X + .VisualProperties.ScaleVelocityVectors * Panel.LocalVelocity.X,
+                                  Panel.ControlPoint.Y + .VisualProperties.ScaleVelocityVectors * Panel.LocalVelocity.Y,
+                                  Panel.ControlPoint.Z + .VisualProperties.ScaleVelocityVectors * Panel.LocalVelocity.Z)
 
                     Next
 
@@ -1130,18 +1130,18 @@ Namespace Tucan.Utility
                             gl.Color(.VisualProperties.ColorPositiveLoad.R / 255,
                                      .VisualProperties.ColorPositiveLoad.G / 255,
                                      .VisualProperties.ColorPositiveLoad.B / 255)
-                            Load.Scale(.VisualProperties.ScalePressure * Panel.Cp * Panel.Area)
+                            Load.Scale(.VisualProperties.ScaleLoadVectors * Panel.Cp * Panel.Area)
                         Else
                             If Panel.Cp > 0 Then
                                 gl.Color(.VisualProperties.ColorPositiveLoad.R / 255,
                                          .VisualProperties.ColorPositiveLoad.G / 255,
                                          .VisualProperties.ColorPositiveLoad.B / 255)
-                                Load.Scale(.VisualProperties.ScalePressure * Panel.Cp * Panel.Area)
+                                Load.Scale(.VisualProperties.ScaleLoadVectors * Panel.Cp * Panel.Area)
                             Else
                                 gl.Color(.VisualProperties.ColorPositiveLoad.R,
                                          .VisualProperties.ColorPositiveLoad.G,
                                          .VisualProperties.ColorPositiveLoad.B)
-                                Load.Scale(- .VisualProperties.ScalePressure * Panel.Cp * Panel.Area)
+                                Load.Scale(- .VisualProperties.ScaleLoadVectors * Panel.Cp * Panel.Area)
                             End If
                         End If
 

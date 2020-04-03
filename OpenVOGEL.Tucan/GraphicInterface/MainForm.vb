@@ -343,7 +343,7 @@ Public Class MainForm
 
                 ' Search a structural element:
 
-                For Each SelectedItem As SelectionRecord In ModelInterface.Selection.SelectionList
+                For Each SelectedItem As SelectionInfo In ModelInterface.Selection.SelectionList
 
                     If SelectedItem.EntityType = EntityTypes.etStructuralElement Then
 
@@ -376,7 +376,7 @@ Public Class MainForm
 
                 If KeepSearching Then
 
-                    For Each SelectedItem As SelectionRecord In ModelInterface.Selection.SelectionList
+                    For Each SelectedItem As SelectionInfo In ModelInterface.Selection.SelectionList
 
                         If SelectedItem.EntityType = EntityTypes.etNode Then
 
@@ -405,7 +405,7 @@ Public Class MainForm
 
                 If KeepSearching Then
 
-                    For Each SelectedItem As SelectionRecord In ModelInterface.Selection.SelectionList
+                    For Each SelectedItem As SelectionInfo In ModelInterface.Selection.SelectionList
 
                         If SelectedItem.EntityType = EntityTypes.etPanel Then
 
@@ -439,7 +439,7 @@ Public Class MainForm
 
             Case Tucan.Utility.InterfaceModes.Postprocess
 
-                For Each SelectedItem As SelectionRecord In ModelInterface.Selection.SelectionList
+                For Each SelectedItem As SelectionInfo In ModelInterface.Selection.SelectionList
 
                     If SelectedItem.ComponentType = ComponentTypes.etResultContainer Then
 

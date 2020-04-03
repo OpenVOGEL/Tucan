@@ -576,8 +576,8 @@ Namespace Tucan.Utility
 
                 Dim InitialPos As Integer = 0
                 Dim PreviousHits As Integer = 0
-                Dim SelectedItem As SelectionRecord
-                Dim LocalList As New List(Of SelectionRecord)
+                Dim SelectedItem As SelectionInfo
+                Dim LocalList As New List(Of SelectionInfo)
                 Dim Mesh As Basics.Mesh
                 Dim R1 As Vector3
                 Dim R2 As Vector3
@@ -598,7 +598,7 @@ Namespace Tucan.Utility
 
                     If PreviousHits > 0 Then
 
-                        SelectedItem.ID = Buffer(InitialPos + 2 + PreviousHits)
+                        SelectedItem.Id = Buffer(InitialPos + 2 + PreviousHits)
 
                         ' Only take the entities of the active selection type
 
@@ -707,7 +707,7 @@ Namespace Tucan.Utility
 
                 If LocalList.Count > 0 Then
 
-                    Dim ClosestItem As SelectionRecord
+                    Dim ClosestItem As SelectionInfo
                     Dim First As Boolean = True
 
                     For Each Record In LocalList

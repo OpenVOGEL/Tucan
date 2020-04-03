@@ -119,8 +119,8 @@ Public Module AeroTests
     End Sub
 
     ''' <summary>
-    ''' This test verifies that the source and doublet potentials are the same
-    ''' when for a non flat 4-nodes panel only the order of the nodes is modified.
+    ''' This test verifies that the source and doublet potentials derivatives
+    ''' are equivalent to their induced velocity.
     ''' </summary>
     Private Sub TestSourcePanelVelocity()
 
