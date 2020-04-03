@@ -25,6 +25,7 @@ Namespace CalculationModel.Solver
 
         ''' <summary>
         ''' Convect wakes and calculates loads at the last time step.
+        ''' Note: this part of the kernel is under development.
         ''' </summary>
         Public Sub FreeFlight(ByVal DataBasePath As String)
 

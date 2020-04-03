@@ -22,6 +22,9 @@ Namespace CalculationModel.Solver
 
     Partial Public Class Solver
 
+        ''' <summary>
+        ''' The object that comunicates with the GPU to perform the aerodynamic calculation.
+        ''' </summary>
         Private GpuVortexSolver As GpuTools.VortexSolver
 
         ''' <summary>
@@ -49,7 +52,8 @@ Namespace CalculationModel.Solver
         End Function
 
         ''' <summary>
-        ''' Calculates the velocity induced by the wakes on the bounded lattices using the GPU.
+        ''' Uses the GPU to calculate the velocity induced by the wakes (vortices) on the bounded lattices using the GPU.
+        ''' At the end of the procedure, all bounded rigns will have their VelocityW vector filled in.
         ''' This procedure can only be used when there are only slender panels.
         ''' </summary>
         Private Sub CalculateVelocityInducedByTheWakesOnBoundedLatticesWithOpenCL()
@@ -58,29 +62,29 @@ Namespace CalculationModel.Solver
 
             ' Count number of vortices in the wakes
 
-            Dim nVortices As Integer = 0
+            Dim V As Integer = 0
 
             For Each Lattice As BoundedLattice In Lattices
 
                 For Each Wake As Wake In Lattice.Wakes
 
-                    nVortices += Wake.Vortices.Count
+                    V += Wake.Vortices.Count
 
                 Next
 
             Next
 
-            ' Generate array
+            ' Generate arrays for the wake data
 
-            Dim G(nVortices - 1) As Double
-            Dim Ax(nVortices - 1) As Double
-            Dim Ay(nVortices - 1) As Double
-            Dim Az(nVortices - 1) As Double
-            Dim Bx(nVortices - 1) As Double
-            Dim By(nVortices - 1) As Double
-            Dim Bz(nVortices - 1) As Double
+            Dim G(V - 1) As Double
+            Dim Ax(V - 1) As Double
+            Dim Ay(V - 1) As Double
+            Dim Az(V - 1) As Double
+            Dim Bx(V - 1) As Double
+            Dim By(V - 1) As Double
+            Dim Bz(V - 1) As Double
 
-            ' Make a list of vortices
+            ' Fill in the wake data arrays
 
             Dim i As Integer = 0
 
@@ -108,7 +112,9 @@ Namespace CalculationModel.Solver
 
             Next
 
-            Dim nRings As Integer = 0
+            ' Count the number of vortex rings in the bounded lattices
+
+            Dim R As Integer = 0
 
             For Each Lattice As BoundedLattice In Lattices
 
@@ -118,19 +124,23 @@ Namespace CalculationModel.Solver
                     Ring.VelocityW.Y = 0.0#
                     Ring.VelocityW.Z = 0.0#
 
-                    nRings += 1
+                    R += 1
 
                 Next
 
             Next
 
-            Dim Vx(nRings - 1) As Double
-            Dim Vy(nRings - 1) As Double
-            Dim Vz(nRings - 1) As Double
+            ' Generate arrays for the rings in the bounded lattices
 
-            Dim Px(nRings - 1) As Double
-            Dim Py(nRings - 1) As Double
-            Dim Pz(nRings - 1) As Double
+            Dim Vx(R - 1) As Double
+            Dim Vy(R - 1) As Double
+            Dim Vz(R - 1) As Double
+
+            Dim Px(R - 1) As Double
+            Dim Py(R - 1) As Double
+            Dim Pz(R - 1) As Double
+
+            ' Fill in control points
 
             i = 0
 
@@ -148,6 +158,8 @@ Namespace CalculationModel.Solver
 
             Next
 
+            ' Calculate the velocity induced by the wakes in the control points
+
             RaiseEvent PushMessage(String.Format("{0} -> GPU assignments", (Now - Start).ToString))
 
             GpuVortexSolver.CalculateVelocity(G,
@@ -159,7 +171,7 @@ Namespace CalculationModel.Solver
 
             RaiseEvent PushMessage(String.Format("{0} -> actual GPU task", (Now - Start).ToString))
 
-            ' Set information to lattice:
+            ' Set information back to the bounded lattice rings:
 
             Start = Now
 
@@ -183,21 +195,27 @@ Namespace CalculationModel.Solver
 
         End Sub
 
+        ''' <summary>
+        ''' Uses the GPU to calculate the total velocity induced by the wake and bounded vortices on the bounded rings.
+        ''' At the end of the procedure, all bounded rigns will have their VelocityT vector filled in.
+        ''' This procedure can only be used when there are only slender panels.
+        ''' </summary>
+        ''' <param name="WithStreamOmega"></param>
         Private Sub CalculateTotalVelocityOnBoundedLatticesWithOpenCL(ByVal WithStreamOmega As Boolean)
 
             Dim Start As DateTime = Now
 
             ' Count number of vortices
 
-            Dim nVortices As Integer = 0
+            Dim V As Integer = 0
 
             For Each Lattice As BoundedLattice In Lattices
 
-                nVortices += Lattice.Vortices.Count
+                V += Lattice.Vortices.Count
 
                 For Each Wake As Wake In Lattice.Wakes
 
-                    nVortices += Wake.Vortices.Count
+                    V += Wake.Vortices.Count
 
                 Next
 
@@ -205,13 +223,13 @@ Namespace CalculationModel.Solver
 
             ' Generate array
 
-            Dim G(nVortices - 1) As Double
-            Dim Ax(nVortices - 1) As Double
-            Dim Ay(nVortices - 1) As Double
-            Dim Az(nVortices - 1) As Double
-            Dim Bx(nVortices - 1) As Double
-            Dim By(nVortices - 1) As Double
-            Dim Bz(nVortices - 1) As Double
+            Dim G(V - 1) As Double
+            Dim Ax(V - 1) As Double
+            Dim Ay(V - 1) As Double
+            Dim Az(V - 1) As Double
+            Dim Bx(V - 1) As Double
+            Dim By(V - 1) As Double
+            Dim Bz(V - 1) As Double
 
             ' Make a list of vortices
 
@@ -257,21 +275,21 @@ Namespace CalculationModel.Solver
 
             Next
 
-            Dim nRings As Integer = 0
+            Dim R As Integer = 0
 
             For Each Lattice As BoundedLattice In Lattices
 
-                nRings += Lattice.VortexRings.Count
+                R += Lattice.VortexRings.Count
 
             Next
 
-            Dim Vx(nRings - 1) As Double
-            Dim Vy(nRings - 1) As Double
-            Dim Vz(nRings - 1) As Double
+            Dim Vx(R - 1) As Double
+            Dim Vy(R - 1) As Double
+            Dim Vz(R - 1) As Double
 
-            Dim Px(nRings - 1) As Double
-            Dim Py(nRings - 1) As Double
-            Dim Pz(nRings - 1) As Double
+            Dim Px(R - 1) As Double
+            Dim Py(R - 1) As Double
+            Dim Pz(R - 1) As Double
 
             i = 0
 
