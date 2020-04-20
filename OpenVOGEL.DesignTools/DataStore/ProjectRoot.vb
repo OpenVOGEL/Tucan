@@ -406,16 +406,16 @@ Namespace DataStore
 
                 Case ExportTypes.ExportCalculix
 
-                    ' Init the counters that must be passed between consecutive calls
-
-                    Dim N As Integer = 0
-                    Dim E As Integer = 0
-
                     If OneFile Then
+
+                        ' Init the counters that must be passed between consecutive calls
+
+                        Dim N As Integer = 0
+                        Dim E As Integer = 0
 
                         ' Write all solids in a single file
 
-                        FileName = FileName & ".abq"
+                        FileName = FileName & ".fbd"
 
                         For Each Surface In Model.Objects
                             Surface.ExportCalculix(FileName, N, E, True)
@@ -429,13 +429,18 @@ Namespace DataStore
 
                         For Each Surface In Model.Objects
 
+                            ' Init the counters only for this file
+
+                            Dim N As Integer = 0
+                            Dim E As Integer = 0
+
                             Dim Name As String = Surface.Name
 
                             If Name = "" Then
                                 Name = "Surface_" & I
                             End If
 
-                            Surface.ExportCalculix(FileName & "_" & Name & ".abq", N, E, False)
+                            Surface.ExportCalculix(FileName & "_" & Name & ".fbd", N, E, False)
 
                         Next
 
