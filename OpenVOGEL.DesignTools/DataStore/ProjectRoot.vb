@@ -346,6 +346,105 @@ Namespace DataStore
 
         End Sub
 
+        Public Enum ExportTypes As Integer
+            ExportStl
+            ExportCalculix
+        End Enum
+
+        ''' <summary>
+        ''' Exports the model geometry in the given format.
+        ''' </summary>
+        ''' <param name="Type"></param>
+        ''' <param name="OneFile"></param>
+        Public Sub Export(Type As ExportTypes, OneFile As Boolean)
+
+            Dim FileName As String = Strings.Left(FilePath, FilePath.Length - 4)
+
+            Select Case Type
+
+                Case ExportTypes.ExportStl
+
+                    If OneFile Then
+
+                        ' Write all solids in a single file
+
+                        FileName = FileName & ".stl"
+
+                        Dim FileId As Integer = FreeFile()
+                        FileOpen(FileId, FileName, OpenMode.Output)
+                        PrintLine(FileId, "solid Model")
+                        FileClose(FileId)
+
+                        For Each Surface In Model.Objects
+                            Surface.ExportSTL(FileName, True)
+                        Next
+
+                        FileId = FreeFile()
+                        FileOpen(FileId, FileName, OpenMode.Append)
+                        PrintLine(FileId, "endsolid Model")
+                        FileClose(FileId)
+
+                    Else
+
+                        ' Write each model surface in a different file
+
+                        Dim I As Integer = 0
+
+                        For Each Surface In Model.Objects
+
+                            Dim Name As String = Surface.Name
+
+                            If Name = "" Then
+                                Name = "Surface_" & I
+                            End If
+
+                            Surface.ExportSTL(FileName & "_" & Name & ".stl", False)
+
+                        Next
+
+                    End If
+
+                Case ExportTypes.ExportCalculix
+
+                    ' Init the counters that must be passed between consecutive calls
+
+                    Dim N As Integer = 0
+                    Dim E As Integer = 0
+
+                    If OneFile Then
+
+                        ' Write all solids in a single file
+
+                        FileName = FileName & ".abq"
+
+                        For Each Surface In Model.Objects
+                            Surface.ExportCalculix(FileName, N, E, True)
+                        Next
+
+                    Else
+
+                        ' Write each model surface in a different file
+
+                        Dim I As Integer = 0
+
+                        For Each Surface In Model.Objects
+
+                            Dim Name As String = Surface.Name
+
+                            If Name = "" Then
+                                Name = "Surface_" & I
+                            End If
+
+                            Surface.ExportCalculix(FileName & "_" & Name & ".abq", N, E, False)
+
+                        Next
+
+                    End If
+
+            End Select
+
+        End Sub
+
 #End Region
 
     End Module

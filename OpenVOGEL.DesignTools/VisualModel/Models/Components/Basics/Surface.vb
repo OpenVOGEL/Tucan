@@ -19,6 +19,7 @@ Imports OpenVOGEL.MathTools.Algebra.EuclideanSpace
 Imports OpenVOGEL.DesignTools.VisualModel.Interface
 Imports SharpGL
 Imports System.Xml
+Imports OpenVOGEL.MathTools.Algebra.CustomMatrices
 
 Namespace VisualModel.Models.Components.Basics
 
@@ -249,6 +250,199 @@ Namespace VisualModel.Models.Components.Basics
         Public MustOverride Sub WriteToXML(ByRef writes As XmlWriter)
 
         Public MustOverride Sub ReadFromXML(ByRef reader As XmlReader)
+
+        ''' <summary>
+        ''' Writes an ASCII STL file containing the model mesh.
+        ''' Note that this method can be overriden by classes inheriting Surface, so this is probably not the final implementation.
+        ''' </summary>
+        ''' <param name="FilePath">The target file</param>
+        ''' <param name="Append">Indicates if the information must be added to the given file without the solid header</param>
+        ''' <param name="Transformation">The linear transformation if necessary (or nothing)</param>
+        Public Overridable Sub ExportSTL(FilePath As String, Optional Append As Boolean = False, Optional Transformation As Matrix3x3 = Nothing)
+
+            Dim FileId As Integer = FreeFile()
+
+            If Append Then
+                FileOpen(FileId, FilePath, OpenMode.Append)
+            Else
+                FileOpen(FileId, FilePath, OpenMode.Output)
+            End If
+
+            Try
+
+                If Not Append Then
+                    PrintLine(FileId, String.Format("solid {0}", Name))
+                End If
+
+                For Each Panel In Mesh.Panels
+
+                    If Panel.IsTriangular Then
+
+                        Dim V1 As New Vector3(Mesh.Nodes(Panel.N1).Position)
+                        Dim V2 As New Vector3(Mesh.Nodes(Panel.N2).Position)
+                        Dim V3 As New Vector3(Mesh.Nodes(Panel.N3).Position)
+
+                        If Transformation IsNot Nothing Then
+                            V1.Transform(Transformation)
+                            V2.Transform(Transformation)
+                            V3.Transform(Transformation)
+                        End If
+
+                        Dim N As Vector3 = (V3 - V1) ^ (V2 - V1)
+                        N.Normalize()
+
+                        PrintLine(FileId, String.Format("facet normal {0:E3} {1:E3} {2:E3}", N.X, N.Y, N.Z))
+                        PrintLine(FileId, "   outer loop")
+                        PrintLine(FileId, String.Format("      vertex {0:E3} {1:E3} {2:E3}", V1.X, V1.Y, V1.Z))
+                        PrintLine(FileId, String.Format("      vertex {0:E3} {1:E3} {2:E3}", V2.X, V2.Y, V2.Z))
+                        PrintLine(FileId, String.Format("      vertex {0:E3} {1:E3} {2:E3}", V3.X, V3.Y, V3.Z))
+                        PrintLine(FileId, "   endloop")
+                        PrintLine(FileId, "endfacet")
+
+                    Else
+
+                        Dim V1 As New Vector3(Mesh.Nodes(Panel.N1).Position)
+                        Dim V2 As New Vector3(Mesh.Nodes(Panel.N2).Position)
+                        Dim V3 As New Vector3(Mesh.Nodes(Panel.N3).Position)
+                        Dim V4 As New Vector3(Mesh.Nodes(Panel.N4).Position)
+
+                        If Transformation IsNot Nothing Then
+                            V1.Transform(Transformation)
+                            V2.Transform(Transformation)
+                            V3.Transform(Transformation)
+                            V4.Transform(Transformation)
+                        End If
+
+                        Dim N As Vector3 = (V3 - V1) ^ (V2 - V1)
+                        N.Normalize()
+
+                        PrintLine(FileId, String.Format("facet normal {0:E3} {1:E3} {2:E3}", N.X, N.Y, N.Z))
+                        PrintLine(FileId, "   outer loop")
+                        PrintLine(FileId, String.Format("      vertex {0:E3} {1:E3} {2:E3}", V1.X, V1.Y, V1.Z))
+                        PrintLine(FileId, String.Format("      vertex {0:E3} {1:E3} {2:E3}", V2.X, V2.Y, V2.Z))
+                        PrintLine(FileId, String.Format("      vertex {0:E3} {1:E3} {2:E3}", V3.X, V3.Y, V3.Z))
+                        PrintLine(FileId, "   endloop")
+                        PrintLine(FileId, "endfacet")
+
+                        N = (V1 - V3) ^ (V4 - V3)
+                        N.Normalize()
+
+                        PrintLine(FileId, String.Format("facet normal {0:E3} {1:E3} {2:E3}", N.X, N.Y, N.Z))
+                        PrintLine(FileId, "   outer loop")
+                        PrintLine(FileId, String.Format("      vertex {0:E3} {1:E3} {2:E3}", V3.X, V3.Y, V3.Z))
+                        PrintLine(FileId, String.Format("      vertex {0:E3} {1:E3} {2:E3}", V4.X, V4.Y, V4.Z))
+                        PrintLine(FileId, String.Format("      vertex {0:E3} {1:E3} {2:E3}", V1.X, V1.Y, V1.Z))
+                        PrintLine(FileId, "   endloop")
+                        PrintLine(FileId, "endfacet")
+
+                    End If
+
+                Next
+
+                If Not Append Then
+                    PrintLine(FileId, String.Format("endsolid {0}", Name))
+                End If
+
+            Finally
+
+                FileClose(FileId)
+
+            End Try
+
+        End Sub
+
+        ''' <summary>
+        ''' Writes a CALCULIX file containing the model mesh.
+        ''' Note that this method can be overriden by classes inheriting Surface, so this is probably not the final implementation.
+        ''' </summary>
+        ''' <param name="FilePath">The target file</param>
+        ''' <param name="Append">Indicates if the information must be added to the given file without the solid header</param>
+        ''' <param name="Transformation">The linear transformation if necessary (or nothing)</param>
+        Public Overridable Sub ExportCalculix(FilePath As String, ByRef N As Integer, ByRef E As Integer, Optional Append As Boolean = False, Optional Transformation As Matrix3x3 = Nothing)
+
+            Dim FileId As Integer = FreeFile()
+
+            If Append Then
+                FileOpen(FileId, FilePath, OpenMode.Append)
+            Else
+                FileOpen(FileId, FilePath, OpenMode.Output)
+            End If
+
+            Try
+
+                ' Nodes
+
+                PrintLine(FileId, String.Format("*NODE, NSET={0}", Name))
+
+                For Each Node In Mesh.Nodes
+
+                    N += 1
+
+                    Dim V As New Vector3(Node.Position)
+
+                    If Transformation IsNot Nothing Then
+                        V.Transform(Transformation)
+                    End If
+
+                    PrintLine(FileId, String.Format("{0:D},{1:E14},{2:E14},{3:E14}", N, V.X, V.Y, V.Z))
+
+                Next
+
+                ' Trianglular elements
+
+                Dim First As Boolean = True
+
+                For Each Panel In Mesh.Panels
+
+                    If Panel.IsTriangular Then
+
+                        If First Then
+
+                            PrintLine(FileId, String.Format("*ELEMENT, TYPE=CPS3, ELSET={0}_T", Name))
+
+                            First = False
+
+                        End If
+
+                        E += 1
+
+                        PrintLine(FileId, String.Format("{0:D},{1:D},{2:D},{3:D}", E, Panel.N1, Panel.N2, Panel.N3))
+
+                    End If
+
+                Next
+
+                ' Quadrilateral elements
+
+                First = True
+
+                For Each Panel In Mesh.Panels
+
+                    If Not Panel.IsTriangular Then
+
+                        If First Then
+
+                            PrintLine(FileId, String.Format("*ELEMENT, TYPE=CPS4, ELSET={0}_Q", Name))
+
+                            First = False
+
+                        End If
+
+                        E += 1
+
+                        PrintLine(FileId, String.Format("{0:D},{1:D},{2:D},{3:D},{4:D}", E, Panel.N1, Panel.N2, Panel.N3, Panel.N4))
+
+                    End If
+
+                Next
+
+            Finally
+
+                FileClose(FileId)
+
+            End Try
+
+        End Sub
 
 #End Region
 

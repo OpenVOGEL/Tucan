@@ -157,6 +157,7 @@ Partial Class MainRibbon
         Me.cbxShowRulers = New System.Windows.Forms.CheckBox()
         Me.pnlScreenColor = New System.Windows.Forms.Panel()
         Me.TableLayoutPanel4 = New System.Windows.Forms.TableLayoutPanel()
+        Me.btnExport = New System.Windows.Forms.Button()
         Me.tcRibbon.SuspendLayout()
         Me.tpModel.SuspendLayout()
         Me.TableLayoutPanel1.SuspendLayout()
@@ -700,6 +701,7 @@ Partial Class MainRibbon
         'pnlIO
         '
         Me.pnlIO.BackColor = System.Drawing.Color.Transparent
+        Me.pnlIO.Controls.Add(Me.btnExport)
         Me.pnlIO.Controls.Add(Me.btnNew)
         Me.pnlIO.Controls.Add(Me.btnOpen)
         Me.pnlIO.Controls.Add(Me.btnSaveAs)
@@ -743,7 +745,7 @@ Partial Class MainRibbon
         Me.btnOpen.Font = New System.Drawing.Font("Segoe UI", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnOpen.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
         Me.btnOpen.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.btnOpen.Location = New System.Drawing.Point(68, 17)
+        Me.btnOpen.Location = New System.Drawing.Point(67, 17)
         Me.btnOpen.Name = "btnOpen"
         Me.btnOpen.Size = New System.Drawing.Size(60, 22)
         Me.btnOpen.TabIndex = 60
@@ -761,7 +763,7 @@ Partial Class MainRibbon
         Me.btnSaveAs.Font = New System.Drawing.Font("Segoe UI", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnSaveAs.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
         Me.btnSaveAs.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.btnSaveAs.Location = New System.Drawing.Point(68, 41)
+        Me.btnSaveAs.Location = New System.Drawing.Point(67, 40)
         Me.btnSaveAs.Name = "btnSaveAs"
         Me.btnSaveAs.Size = New System.Drawing.Size(60, 22)
         Me.btnSaveAs.TabIndex = 62
@@ -779,7 +781,7 @@ Partial Class MainRibbon
         Me.btnSave.Font = New System.Drawing.Font("Segoe UI", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnSave.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
         Me.btnSave.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.btnSave.Location = New System.Drawing.Point(6, 41)
+        Me.btnSave.Location = New System.Drawing.Point(6, 40)
         Me.btnSave.Name = "btnSave"
         Me.btnSave.Size = New System.Drawing.Size(60, 22)
         Me.btnSave.TabIndex = 61
@@ -1972,6 +1974,24 @@ Partial Class MainRibbon
         Me.TableLayoutPanel4.Size = New System.Drawing.Size(1204, 175)
         Me.TableLayoutPanel4.TabIndex = 508
         '
+        'btnExport
+        '
+        Me.btnExport.BackColor = System.Drawing.Color.Gainsboro
+        Me.btnExport.FlatAppearance.BorderColor = System.Drawing.Color.Gray
+        Me.btnExport.FlatAppearance.CheckedBackColor = System.Drawing.SystemColors.ButtonFace
+        Me.btnExport.FlatAppearance.MouseDownBackColor = System.Drawing.Color.PaleGreen
+        Me.btnExport.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DeepSkyBlue
+        Me.btnExport.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnExport.Font = New System.Drawing.Font("Segoe UI", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnExport.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.btnExport.ImeMode = System.Windows.Forms.ImeMode.NoControl
+        Me.btnExport.Location = New System.Drawing.Point(6, 63)
+        Me.btnExport.Name = "btnExport"
+        Me.btnExport.Size = New System.Drawing.Size(60, 22)
+        Me.btnExport.TabIndex = 64
+        Me.btnExport.Text = "Export..."
+        Me.btnExport.UseVisualStyleBackColor = False
+        '
         'MainRibbon
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -2182,4 +2202,5 @@ Partial Class MainRibbon
     Friend WithEvents rbNode As Windows.Forms.RadioButton
     Friend WithEvents cbMultiselect As Windows.Forms.CheckBox
     Friend WithEvents rbStructure As Windows.Forms.RadioButton
+    Friend WithEvents btnExport As Button
 End Class

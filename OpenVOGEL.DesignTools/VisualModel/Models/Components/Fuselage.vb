@@ -76,7 +76,7 @@ Namespace VisualModel.Models.Components
         ''' <summary>
         ''' Lines of extrusion.
         ''' </summary>
-        Public Property Lines As New List(Of ELine3)
+        Public Property Lines As New List(Of Line3)
 
         ''' <summary>
         ''' Surface coordinates anchor points.
@@ -148,7 +148,7 @@ Namespace VisualModel.Models.Components
 
                         Case "Line"
 
-                            Dim Line As New ELine3
+                            Dim Line As New Line3
 
                             Line.Point.X = IOXML.ReadDouble(reader, "Xp", 0.0)
                             Line.Point.Y = IOXML.ReadDouble(reader, "Yp", 0.0)

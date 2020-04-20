@@ -20,62 +20,65 @@ Imports OpenVOGEL.MathTools.Algebra.EuclideanSpace
 
 Namespace Algebra.CustomMatrices
 
+    ''' <summary>
+    ''' A generic n x m matrix
+    ''' </summary>
     Public Structure Matrix
 
-        Public Sub New(ByVal i As Integer, ByVal j As Integer)
-            ReDim FElements(i - 1, j - 1)
-            Me.FRows = i
-            Me.FColumns = j
-            FTransponse = False
+        Public Sub New(ByVal n As Integer, ByVal m As Integer)
+            ReDim _Elements(n - 1, m - 1)
+            Me._Rows = n
+            Me._Columns = m
+            _Transponse = False
         End Sub
 
-        Private FElements(,) As Double
+        Private _Elements(,) As Double
 
         Public Property Element(ByVal i As Integer, ByVal j As Integer) As Double
             Get
-                If Not FTransponse Then
-                    Return FElements(i - 1, j - 1)
+                If Not _Transponse Then
+                    Return _Elements(i - 1, j - 1)
                 Else
-                    Return FElements(j - 1, i - 1)
+                    Return _Elements(j - 1, i - 1)
                 End If
             End Get
             Set(ByVal value As Double)
-                If Not FTransponse Then
-                    FElements(i - 1, j - 1) = value
+                If Not _Transponse Then
+                    _Elements(i - 1, j - 1) = value
                 Else
-                    FElements(j - 1, i - 1) = value
+                    _Elements(j - 1, i - 1) = value
                 End If
             End Set
         End Property
 
-        Private FRows As Integer
+        Private _Rows As Integer
 
         Public ReadOnly Property Rows As Integer
             Get
-                If Not FTransponse Then
-                    Return FRows
+                If Not _Transponse Then
+                    Return _Rows
                 Else
-                    Return FColumns
+                    Return _Columns
                 End If
             End Get
         End Property
 
-        Private FColumns As Integer
+        Private _Columns As Integer
 
         Public ReadOnly Property Columns As Integer
             Get
-                If Not FTransponse Then
-                    Return FColumns
+                If Not _Transponse Then
+                    Return _Columns
                 Else
-                    Return FRows
+                    Return _Rows
                 End If
             End Get
         End Property
 
-        Private FTransponse As Boolean
+        Private _Transponse As Boolean
 
         Public Sub Transponse()
-            FTransponse = Not FTransponse
+            _Transponse = Not _Transponse
         End Sub
 
         Public Sub Clear()
@@ -167,6 +170,12 @@ Namespace Algebra.CustomMatrices
 
         Private RM(2, 2) As Double
 
+        ''' <summary>
+        ''' Sets and gets the value of an item. Indices are 1-based (from 1 to 3)
+        ''' </summary>
+        ''' <param name="i">1-based row index</param>
+        ''' <param name="j">1-based column index</param>
+        ''' <returns></returns>
         Public Property Item(ByVal i As Integer, ByVal j As Integer) As Double
             Get
                 If 1 < i < 3 And 1 < i < 3 Then

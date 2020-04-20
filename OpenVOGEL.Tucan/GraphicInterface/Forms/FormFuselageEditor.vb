@@ -728,7 +728,7 @@ Public Class FormFuselageEditor
 
                 For j = 0 To n
 
-                    Dim Line As New ELine3()
+                    Dim Line As New Line3()
 
                     Line.Point.Z = _LiftingSurfaces(i).Mesh.Nodes(j).Position.X
                     Line.Point.Y = _LiftingSurfaces(i).Mesh.Nodes(j).Position.Z

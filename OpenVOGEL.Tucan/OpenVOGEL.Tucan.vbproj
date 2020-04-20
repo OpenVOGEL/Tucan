@@ -129,6 +129,12 @@
     <Compile Include="GraphicInterface\Forms\FormAbout.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="GraphicInterface\Forms\FormExport.Designer.vb">
+      <DependentUpon>FormExport.vb</DependentUpon>
+    </Compile>
+    <Compile Include="GraphicInterface\Forms\FormExport.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="GraphicInterface\Forms\StartupScreen.designer.vb">
       <DependentUpon>StartupScreen.vb</DependentUpon>
     </Compile>
@@ -211,6 +217,12 @@
       <DependentUpon>ForcesPanel.vb</DependentUpon>
     </Compile>
     <Compile Include="GraphicInterface\UserControls\ForcesPanel.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GraphicInterface\UserControls\GroupPanel.Designer.vb">
+      <DependentUpon>GroupPanel.vb</DependentUpon>
+    </Compile>
+    <Compile Include="GraphicInterface\UserControls\GroupPanel.vb">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="GraphicInterface\UserControls\MiniComponents\ResultBox.Designer.vb">
@@ -298,6 +310,9 @@
     <EmbeddedResource Include="GraphicInterface\Forms\FormAbout.resx">
       <DependentUpon>FormAbout.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="GraphicInterface\Forms\FormExport.resx">
+      <DependentUpon>FormExport.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="GraphicInterface\Forms\StartupScreen.ig.resx">
       <DependentUpon>StartupScreen.vb</DependentUpon>
     </EmbeddedResource>
@@ -342,6 +357,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="GraphicInterface\UserControls\ForcesPanel.resx">
       <DependentUpon>ForcesPanel.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GraphicInterface\UserControls\GroupPanel.resx">
+      <DependentUpon>GroupPanel.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GraphicInterface\UserControls\MiniComponents\ResultBox.resx">
       <DependentUpon>ResultBox.vb</DependentUpon>

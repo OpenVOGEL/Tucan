@@ -497,7 +497,7 @@ Namespace Algebra.EuclideanSpace
 
 #End Region
 
-#Region " Operaciones lineales "
+#Region " Linear operations "
 
         ''' <summary>
         ''' Multiplies the vector by a given scalar factor.
@@ -555,8 +555,6 @@ Namespace Algebra.EuclideanSpace
             Y = Px * RotM.Item(2, 1) + Py * RotM.Item(2, 2) + Pz * RotM.Item(2, 3)
             Z = Px * RotM.Item(3, 1) + Py * RotM.Item(3, 2) + Pz * RotM.Item(3, 3)
 
-            RotM = Nothing
-
         End Sub
 
         Public Sub Rotate(ByVal ReferencePoint As Vector3, ByVal RotM As RotationMatrix)
@@ -607,6 +605,22 @@ Namespace Algebra.EuclideanSpace
 
         End Function
 
+        Public Sub Transform(M As Matrix3x3)
+
+            Dim _X As Double
+            Dim _Y As Double
+            Dim _Z As Double
+
+            _X = X
+            _Y = Y
+            _Z = Z
+
+            X = _X * M.Item(1, 1) + _Y * M.Item(1, 2) + _Z * M.Item(1, 3)
+            Y = _X * M.Item(2, 1) + _Y * M.Item(2, 2) + _Z * M.Item(2, 3)
+            Z = _X * M.Item(3, 1) + _Y * M.Item(3, 2) + _Z * M.Item(3, 3)
+
+        End Sub
+
 #End Region
 
 #Region " Operaciones vectoriales "
@@ -651,7 +665,7 @@ Namespace Algebra.EuclideanSpace
 
 #End Region
 
-#Region " Otras operaciones "
+#Region " Other operations "
 
         Public Sub SetToCero()
             X = 0
@@ -701,7 +715,7 @@ Namespace Algebra.EuclideanSpace
     ''' Represents a line in space.
     ''' </summary>
     ''' <remarks></remarks>
-    Public Class ELine3
+    Public Class Line3
 
         Public Property Point As New Vector3
         Public Property Direction As New Vector3

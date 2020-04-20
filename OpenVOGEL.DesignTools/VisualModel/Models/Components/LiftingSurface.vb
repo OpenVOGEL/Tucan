@@ -1818,6 +1818,31 @@ Namespace VisualModel.Models.Components
         End Sub
 
         ''' <summary>
+        ''' Writes a ASCII STL file containing the model mesh
+        ''' </summary>
+        ''' <param name="FilePath"></param>
+        Public Overrides Sub ExportSTL(FilePath As String, Optional Append As Boolean = False, Optional Transformation As Matrix3x3 = Nothing)
+
+            ' Export the normal side
+
+            MyBase.ExportSTL(FilePath, Append)
+
+            ' Export the symmetric side
+
+            If Symmetric Then
+
+                Dim M As New Matrix3x3
+                M.Item(1, 1) = 1.0#
+                M.Item(2, 2) = -1.0#
+                M.Item(3, 3) = 1.0#
+
+                MyBase.ExportSTL(FilePath, Append, M)
+
+            End If
+
+        End Sub
+
+        ''' <summary>
         ''' Returns a string with information about this wing.
         ''' </summary>
         ''' <returns></returns>

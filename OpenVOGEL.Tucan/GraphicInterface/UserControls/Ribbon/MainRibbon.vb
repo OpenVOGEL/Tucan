@@ -1777,6 +1777,19 @@ ErrSub:
 
     End Sub
 
+    Private Sub btnExport_Click(sender As Object, e As EventArgs) Handles btnExport.Click
+
+        If System.IO.File.Exists(FilePath) Then
+
+            FormExport.ShowDialog()
+
+        Else
+            MessageBox.Show("Please, save the project first")
+
+        End If
+
+    End Sub
+
 #End Region
 
 End Class
