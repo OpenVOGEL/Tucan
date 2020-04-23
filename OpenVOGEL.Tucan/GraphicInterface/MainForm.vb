@@ -234,8 +234,15 @@ Public Class MainForm
     Public Sub ShowSurfaceLoader(Surface As ImportedSurface)
 
         Dim Dialog As New OpenFileDialog()
+        Dialog.Filter = "Stereolithography (*.stl)|*.stl|Native (*.dat)|*.dat"
+
         If Dialog.ShowDialog = DialogResult.OK Then
-            Surface.Load(Dialog.FileName)
+            Select Case Dialog.FilterIndex
+                Case 1
+                    Surface.Load(Dialog.FileName, ImportedSurface.ImportFormats.StlFile)
+                Case 2
+                    Surface.Load(Dialog.FileName, ImportedSurface.ImportFormats.ConnectivityFile)
+            End Select
         End If
 
     End Sub

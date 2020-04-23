@@ -1089,7 +1089,7 @@ Namespace VisualModel.Models.Components
 
                     ' We don't reverse slender panels (because the same is done in wings, and this simplifies the canvection):
 
-                    NewPanel.Reversed = Not NewPanel.IsSlender
+                    NewPanel.IsReversed = Not NewPanel.IsSlender
 
                     Mesh.Panels.Insert(2 * i + 1, NewPanel)
 

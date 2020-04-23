@@ -350,7 +350,7 @@ Namespace VisualModel.Models.Components
 
                 End If
 
-                If Mesh.Panels(i).Reversed Then
+                If Mesh.Panels(i).IsReversed Then
 
                     Mesh.Panels(i).NormalVector.Scale(-1.0#)
 

@@ -247,6 +247,16 @@ Namespace VisualModel.Models.Components.Basics
 
 #Region " IO "
 
+        Public Function GetCharFlag(Flag As Boolean) As Char
+
+            If Flag Then
+                Return "*"
+            Else
+                Return "-"
+            End If
+
+        End Function
+
         Public MustOverride Sub WriteToXML(ByRef writes As XmlWriter)
 
         Public MustOverride Sub ReadFromXML(ByRef reader As XmlReader)
@@ -258,7 +268,7 @@ Namespace VisualModel.Models.Components.Basics
         ''' <param name="FilePath">The target file</param>
         ''' <param name="Append">Indicates if the information must be added to the given file without the solid header</param>
         ''' <param name="Transformation">The linear transformation if necessary (or nothing)</param>
-        Public Overridable Sub ExportSTL(FilePath As String, Optional Append As Boolean = False, Optional Transformation As Matrix3x3 = Nothing)
+        Public Overridable Sub ExportStlFile(FilePath As String, Optional Append As Boolean = False, Optional Transformation As Matrix3x3 = Nothing)
 
             Dim FileId As Integer = FreeFile()
 
@@ -352,13 +362,13 @@ Namespace VisualModel.Models.Components.Basics
         End Sub
 
         ''' <summary>
-        ''' Writes a CALCULIX file containing the model mesh.
+        ''' Writes a connectivity file containing the model mesh.
         ''' Note that this method can be overriden by classes inheriting Surface, so this is probably not the final implementation.
         ''' </summary>
         ''' <param name="FilePath">The target file</param>
         ''' <param name="Append">Indicates if the information must be added to the given file without the solid header</param>
         ''' <param name="Transformation">The linear transformation if necessary (or nothing)</param>
-        Public Overridable Sub ExportCalculix(FilePath As String, ByRef N As Integer, ByRef E As Integer, Optional Append As Boolean = False, Optional Transformation As Matrix3x3 = Nothing)
+        Public Overridable Sub ExportConnectivityFile(FilePath As String, Optional Append As Boolean = False, Optional Transformation As Matrix3x3 = Nothing)
 
             Dim FileId As Integer = FreeFile()
 
@@ -370,13 +380,17 @@ Namespace VisualModel.Models.Components.Basics
 
             Try
 
+                If Not Append Then
+
+                    PrintLine(FileId, String.Format("SURFACE {0}", Name))
+
+                End If
+
                 ' Nodes
 
-                PrintLine(FileId, String.Format("*NODE, NSET={0}", Name))
+                PrintLine(FileId, "NODES")
 
                 For Each Node In Mesh.Nodes
-
-                    N += 1
 
                     Dim V As New Vector3(Node.Position)
 
@@ -384,53 +398,45 @@ Namespace VisualModel.Models.Components.Basics
                         V.Transform(Transformation)
                     End If
 
-                    PrintLine(FileId, String.Format("{0:D},{1:E14},{2:E14},{3:E14}", N, V.X, V.Y, V.Z))
+                    PrintLine(FileId, String.Format("{0:E14} {1:E14} {2:E14}", V.X, V.Y, V.Z))
 
                 Next
 
-                ' Trianglular elements
+                ' Panels
 
                 Dim First As Boolean = True
 
                 For Each Panel In Mesh.Panels
 
-                    If Panel.IsTriangular Then
+                    If First Then
 
-                        If First Then
+                        PrintLine(FileId, "PANELS")
 
-                            PrintLine(FileId, String.Format("*ELEMENT, TYPE=CPS3, ELSET={0}_T", Name))
-
-                            First = False
-
-                        End If
-
-                        E += 1
-
-                        PrintLine(FileId, String.Format("{0:D},{1:D},{2:D},{3:D}", E, Panel.N1, Panel.N2, Panel.N3))
+                        First = False
 
                     End If
 
-                Next
+                    If Panel.IsTriangular Then
 
-                ' Quadrilateral elements
+                        PrintLine(FileId, String.Format("{0}{1}{2} {3:D} {4:D} {5:D}",
+                                                        GetCharFlag(Panel.IsSlender),
+                                                        GetCharFlag(Panel.IsReversed),
+                                                        GetCharFlag(Panel.IsPrimitive),
+                                                        Panel.N1,
+                                                        Panel.N2,
+                                                        Panel.N3))
 
-                First = True
+                    Else
 
-                For Each Panel In Mesh.Panels
+                        PrintLine(FileId, String.Format("{0}{1}{2} {3:D} {4:D} {5:D} {6:D}",
+                                                        GetCharFlag(Panel.IsSlender),
+                                                        GetCharFlag(Panel.IsReversed),
+                                                        GetCharFlag(Panel.IsPrimitive),
+                                                        Panel.N1,
+                                                        Panel.N2,
+                                                        Panel.N3,
+                                                        Panel.N4))
 
-                    If Not Panel.IsTriangular Then
-
-                        If First Then
-
-                            PrintLine(FileId, String.Format("*ELEMENT, TYPE=CPS4, ELSET={0}_Q", Name))
-
-                            First = False
-
-                        End If
-
-                        E += 1
-
-                        PrintLine(FileId, String.Format("{0:D},{1:D},{2:D},{3:D},{4:D}", E, Panel.N1, Panel.N2, Panel.N3, Panel.N4))
 
                     End If
 

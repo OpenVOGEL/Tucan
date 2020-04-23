@@ -33,7 +33,7 @@ Partial Class FormExport
         Me.cbxFormats.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cbxFormats.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cbxFormats.FormattingEnabled = True
-        Me.cbxFormats.Location = New System.Drawing.Point(12, 24)
+        Me.cbxFormats.Location = New System.Drawing.Point(11, 24)
         Me.cbxFormats.Name = "cbxFormats"
         Me.cbxFormats.Size = New System.Drawing.Size(172, 21)
         Me.cbxFormats.TabIndex = 64
@@ -42,7 +42,7 @@ Partial Class FormExport
         '
         Me.lblTarget.AutoSize = True
         Me.lblTarget.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblTarget.Location = New System.Drawing.Point(12, 6)
+        Me.lblTarget.Location = New System.Drawing.Point(11, 6)
         Me.lblTarget.Name = "lblTarget"
         Me.lblTarget.Size = New System.Drawing.Size(98, 13)
         Me.lblTarget.TabIndex = 66
@@ -59,7 +59,7 @@ Partial Class FormExport
         Me.btnExport.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnExport.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
         Me.btnExport.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.btnExport.Location = New System.Drawing.Point(124, 51)
+        Me.btnExport.Location = New System.Drawing.Point(123, 51)
         Me.btnExport.Name = "btnExport"
         Me.btnExport.Size = New System.Drawing.Size(60, 22)
         Me.btnExport.TabIndex = 67
@@ -71,7 +71,7 @@ Partial Class FormExport
         Me.cbxOneFile.AutoSize = True
         Me.cbxOneFile.Checked = True
         Me.cbxOneFile.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.cbxOneFile.Location = New System.Drawing.Point(12, 53)
+        Me.cbxOneFile.Location = New System.Drawing.Point(11, 53)
         Me.cbxOneFile.Name = "cbxOneFile"
         Me.cbxOneFile.Size = New System.Drawing.Size(62, 17)
         Me.cbxOneFile.TabIndex = 74

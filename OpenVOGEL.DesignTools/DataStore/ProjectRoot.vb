@@ -356,7 +356,7 @@ Namespace DataStore
         ''' </summary>
         ''' <param name="Type"></param>
         ''' <param name="OneFile"></param>
-        Public Sub Export(Type As ExportTypes, OneFile As Boolean)
+        Public Sub ExportDesignModel(Type As ExportTypes, OneFile As Boolean)
 
             Dim FileName As String = Strings.Left(FilePath, FilePath.Length - 4)
 
@@ -376,7 +376,7 @@ Namespace DataStore
                         FileClose(FileId)
 
                         For Each Surface In Model.Objects
-                            Surface.ExportSTL(FileName, True)
+                            Surface.ExportStlFile(FileName, True)
                         Next
 
                         FileId = FreeFile()
@@ -398,7 +398,7 @@ Namespace DataStore
                                 Name = "Surface_" & I
                             End If
 
-                            Surface.ExportSTL(FileName & "_" & Name & ".stl", False)
+                            Surface.ExportStlFile(FileName & "_" & Name & ".stl", False)
 
                         Next
 
@@ -408,17 +408,12 @@ Namespace DataStore
 
                     If OneFile Then
 
-                        ' Init the counters that must be passed between consecutive calls
-
-                        Dim N As Integer = 0
-                        Dim E As Integer = 0
-
                         ' Write all solids in a single file
 
-                        FileName = FileName & ".fbd"
+                        FileName = FileName & ".dat"
 
                         For Each Surface In Model.Objects
-                            Surface.ExportCalculix(FileName, N, E, True)
+                            Surface.ExportConnectivityFile(FileName, True)
                         Next
 
                     Else
@@ -429,18 +424,13 @@ Namespace DataStore
 
                         For Each Surface In Model.Objects
 
-                            ' Init the counters only for this file
-
-                            Dim N As Integer = 0
-                            Dim E As Integer = 0
-
                             Dim Name As String = Surface.Name
 
                             If Name = "" Then
                                 Name = "Surface_" & I
                             End If
 
-                            Surface.ExportCalculix(FileName & "_" & Name & ".fbd", N, E, False)
+                            Surface.ExportConnectivityFile(FileName & "_" & Name & ".dat", False)
 
                         Next
 

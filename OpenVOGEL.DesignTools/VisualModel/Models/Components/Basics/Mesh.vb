@@ -79,6 +79,10 @@ Namespace VisualModel.Models.Components.Basics
 
         Public Sub GenerateLattice()
 
+            If Panels.Count = 0 Then
+                Exit Sub
+            End If
+
             Try
 
                 Lattice.Clear()

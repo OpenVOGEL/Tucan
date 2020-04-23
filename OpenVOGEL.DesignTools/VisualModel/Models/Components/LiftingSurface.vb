@@ -1821,11 +1821,11 @@ Namespace VisualModel.Models.Components
         ''' Writes a ASCII STL file containing the model mesh
         ''' </summary>
         ''' <param name="FilePath"></param>
-        Public Overrides Sub ExportSTL(FilePath As String, Optional Append As Boolean = False, Optional Transformation As Matrix3x3 = Nothing)
+        Public Overrides Sub ExportStlFile(FilePath As String, Optional Append As Boolean = False, Optional Transformation As Matrix3x3 = Nothing)
 
             ' Export the normal side
 
-            MyBase.ExportSTL(FilePath, Append)
+            MyBase.ExportStlFile(FilePath, Append)
 
             ' Export the symmetric side
 
@@ -1836,7 +1836,7 @@ Namespace VisualModel.Models.Components
                 M.Item(2, 2) = -1.0#
                 M.Item(3, 3) = 1.0#
 
-                MyBase.ExportSTL(FilePath, Append, M)
+                MyBase.ExportStlFile(FilePath, Append, M)
 
             End If
 

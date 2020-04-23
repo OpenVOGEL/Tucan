@@ -42,98 +42,325 @@ Namespace VisualModel.Models.Components
         End Sub
 
         ''' <summary>
-        ''' Generates a triangular or quadrilateral mesh.
+        ''' The different kinds of import formats
+        ''' </summary>
+        Public Enum ImportFormats As Integer
+
+            ConnectivityFile
+            StlFile
+
+        End Enum
+
+        ''' <summary>
+        ''' Loads the mesh from a file
         ''' </summary>
         ''' <remarks></remarks>
-        Public Sub Load(FilePath As String)
+        Public Sub Load(FilePath As String, Format As ImportFormats)
+
+            Select Case Format
+
+                Case ImportFormats.ConnectivityFile
+                    LoadConnectivityFile(FilePath)
+
+                Case ImportFormats.StlFile
+                    LoadStlFile(FilePath)
+
+            End Select
+
+        End Sub
+
+        ''' <summary>
+        ''' The current entity
+        ''' </summary>
+        Enum EntityType As Integer
+
+            EntitySurface
+
+            EntityNode
+
+            EntityPanel
+
+        End Enum
+
+        ''' <summary>
+        ''' Loads the mesh from a connectivity file.
+        ''' </summary>
+        ''' <remarks></remarks>
+        Private Sub LoadConnectivityFile(FilePath As String)
+
+            Dim Section As EntityType = EntityType.EntitySurface
 
             If File.Exists(FilePath) Then
 
                 Mesh.Nodes.Clear()
                 Mesh.Panels.Clear()
 
-                Dim FileNumber As Integer = FreeFile()
+                Dim FileId As Integer = FreeFile()
+                Dim Offset As Integer = 0
 
-                FileOpen(FileNumber, FilePath, OpenAccess.Read)
+                FileOpen(FileId, FilePath, OpenAccess.Read)
 
-                Do While Not EOF(FileNumber)
+                Do While Not EOF(FileId)
 
-                    Dim Line As String = LineInput(FileNumber)
+                    Dim Line As String = LineInput(FileId).ToUpper
 
                     Dim Keywords As String() = Line.Split(" ")
 
-                    If UBound(Keywords) >= 1 Then
+                    ' Check if the entity has changed
 
-                        If Keywords(0) = "NODES" Then
+                    If UBound(Keywords) >= 0 Then
 
-                            Dim N As Integer = Keywords(1)
+                        Select Case Keywords(0)
 
-                            For i = 1 To N
+                            Case "NODES"
 
-                                Line = LineInput(FileNumber).Trim
+                                Section = EntityType.EntityNode
+                                GoTo NextLine
 
-                                Dim Coordinates As String() = Line.Split({" "c}, StringSplitOptions.RemoveEmptyEntries)
+                            Case "PANELS"
 
-                                If UBound(Coordinates) = 2 Then
+                                Section = EntityType.EntityPanel
+                                GoTo NextLine
 
-                                    Dim Node As New NodalPoint
-                                    Node.ReferencePosition = New Vector3(CDbl(Coordinates(0)),
-                                                                         CDbl(Coordinates(1)),
-                                                                         CDbl(Coordinates(2)))
-                                    Mesh.Nodes.Add(Node)
+                            Case "SURFACE"
 
-                                End If
+                                Section = EntityType.EntitySurface
+                                Offset = Mesh.Nodes.Count
+                                GoTo NextLine
 
-                            Next
-
-                        ElseIf Keywords(0) = "PANELS" Then
-
-                            Dim N As Integer = Keywords(1)
-
-                            For i = 1 To N
-
-                                Line = LineInput(FileNumber)
-
-                                Dim Nodes As String() = Line.Split({" "c}, StringSplitOptions.RemoveEmptyEntries)
-
-                                If UBound(Nodes) > 0 Then
-
-                                    If Nodes(0) = "1" And UBound(Nodes) >= 4 Then
-
-                                        Dim Panel As New Panel(CInt(Nodes(1)) - 1,
-                                                               CInt(Nodes(2)) - 1,
-                                                               CInt(Nodes(3)) - 1,
-                                                               CInt(Nodes(4)) - 1)
-
-                                        Panel.IsSlender = False
-                                        Mesh.Panels.Add(Panel)
-
-                                    ElseIf Nodes(0) = "2" And UBound(Nodes) >= 3 Then
-
-                                        Dim Panel As New Panel(CInt(Nodes(1)) - 1,
-                                                               CInt(Nodes(2)) - 1,
-                                                               CInt(Nodes(3)) - 1)
-
-                                        Panel.IsSlender = False
-                                        Mesh.Panels.Add(Panel)
-
-                                    End If
-
-                                End If
-
-                            Next
-
-                        End If
+                        End Select
 
                     End If
 
+                    ' Read the line for the entitiy
+
+                    Select Case Section
+
+                        Case EntityType.EntityNode
+
+                            Dim Data As String() = Line.Split({" "c}, StringSplitOptions.RemoveEmptyEntries)
+
+                            If UBound(Data) = 2 Then
+
+                                Dim Node As New NodalPoint
+                                Node.ReferencePosition = New Vector3(CDbl(Data(0)),
+                                                                     CDbl(Data(1)),
+                                                                     CDbl(Data(2)))
+                                Mesh.Nodes.Add(Node)
+
+                            End If
+
+                        Case EntityType.EntityPanel
+
+                            Dim Data As String() = Line.Split({" "c}, StringSplitOptions.RemoveEmptyEntries)
+
+                            If UBound(Data) > 0 Then
+
+                                Dim Panel As Panel = Nothing
+                                Dim IsSlender As Boolean = Data(0).Length > 0 AndAlso Data(0)(0) = "*"
+                                Dim IsReversed As Boolean = Data(0).Length > 1 AndAlso Data(0)(1) = "*"
+                                Dim IsPrimitive As Boolean = Data(0).Length > 2 AndAlso Data(0)(2) = "*"
+
+                                If UBound(Data) = 4 Then
+
+                                    ' Quadrilaterals
+
+                                    Panel = New Panel(CInt(Data(1)) + Offset,
+                                                      CInt(Data(2)) + Offset,
+                                                      CInt(Data(3)) + Offset,
+                                                      CInt(Data(4)) + Offset)
+
+                                ElseIf UBound(Data) = 3 Then
+
+                                    ' Triangles
+
+                                    Panel = New Panel(CInt(Data(1)) + Offset,
+                                                      CInt(Data(2)) + Offset,
+                                                      CInt(Data(3)) + Offset)
+
+                                End If
+
+                                If Panel IsNot Nothing Then
+
+                                    Mesh.Panels.Add(Panel)
+                                    Panel.IsSlender = IsSlender
+                                    Panel.IsReversed = IsReversed
+                                    Panel.IsPrimitive = IsPrimitive
+
+                                End If
+
+                            End If
+
+                    End Select
+
+NextLine:
+
                 Loop
 
-                FileClose(FileNumber)
+                FileClose(FileId)
 
             End If
 
             GenerateMesh()
+
+        End Sub
+
+        ''' <summary>
+        ''' Loads the mesh from a connectivity file.
+        ''' </summary>
+        ''' <remarks></remarks>
+        Private Sub LoadStlFile(FilePath As String)
+
+            Dim FileId As Integer = FreeFile()
+
+            Dim InvalidData As Boolean = False
+
+            Try
+
+                If File.Exists(FilePath) Then
+
+                    Mesh.Nodes.Clear()
+                    Mesh.Panels.Clear()
+
+                    FileOpen(FileId, FilePath, OpenAccess.Read)
+
+                    Do While Not EOF(FileId)
+
+                        Dim Line As String = LineInput(FileId)
+
+                        Dim Keywords As String() = Line.Split({" "c}, StringSplitOptions.RemoveEmptyEntries)
+
+                        ' Read a facet
+
+                        If UBound(Keywords) >= 0 AndAlso Keywords(0).ToLower = "facet" Then
+
+                            ' Disregard normal vector
+
+                            Line = LineInput(FileId).Trim.ToLower
+
+                            If Line = "outer loop" Then
+
+                                Line = LineInput(FileId).ToLower
+
+                                Dim Nodes(3) As Integer
+
+                                Dim NodeCount As Integer = 0
+
+                                ' Read until the en of the loop but maximum for nodes
+
+                                Do While Line <> "endloop"
+
+                                    ' Stop if there are already four nodes (only triangles or quads allowed)
+
+                                    If NodeCount = 4 Then
+                                        InvalidData = True
+                                        GoTo CheckInvalid
+                                    End If
+
+                                    Dim Coordinates As String() = Line.Split({" "c}, StringSplitOptions.RemoveEmptyEntries)
+
+                                    ' Read a vertex (the must be three coordinates prefixed by the word "vertex")
+
+                                    If UBound(Coordinates) = 3 AndAlso Coordinates(0) = "vertex" Then
+
+                                        NodeCount += 1
+
+                                        Dim Vertex As New Vector3(CDbl(Coordinates(1)),
+                                                                  CDbl(Coordinates(2)),
+                                                                  CDbl(Coordinates(3)))
+
+                                        ' Check if the vertex already exist
+
+                                        Dim NodeFound As Boolean = False
+                                        Dim NodeIndex As Integer = -1
+
+                                        For Each Node In Mesh.Nodes
+
+                                            NodeIndex += 1
+
+                                            If Vertex.DistanceTo(Node.Position) < 0.00001 Then
+
+                                                NodeFound = True
+
+                                                Exit For
+
+                                            End If
+
+                                        Next
+
+                                        ' If the node is not in the mesh, add it
+
+                                        If Not NodeFound Then
+
+                                            Dim NewNode As New NodalPoint
+                                            NewNode.ReferencePosition = Vertex
+                                            Mesh.Nodes.Add(NewNode)
+                                            NodeIndex = Mesh.Nodes.Count - 1
+
+                                        End If
+
+                                        ' Store the node index for the panel
+
+                                        Nodes(NodeCount - 1) = NodeIndex
+
+                                    Else
+
+                                        ' Stop if the vertex data format is wrong
+
+                                        InvalidData = True
+                                        GoTo CheckInvalid
+
+                                    End If
+
+                                    Line = LineInput(FileId).Trim.ToLower
+
+                                Loop
+
+                                ' TODO: use the normal to arrange the nodes in the correct order
+
+                                Dim NewPanel As Panel = Nothing
+
+                                If NodeCount = 3 Then
+                                    NewPanel = New Panel(Nodes(0), Nodes(1), Nodes(2))
+                                ElseIf NodeCount = 4 Then
+                                    NewPanel = New Panel(Nodes(0), Nodes(1), Nodes(2), Nodes(3))
+                                End If
+
+                                If NewPanel IsNot Nothing Then
+                                    NewPanel.IsSlender = False
+                                    NewPanel.IsPrimitive = False
+                                    Mesh.Panels.Add(NewPanel)
+                                End If
+
+                            End If
+
+                        End If
+
+                    Loop
+
+                End If
+
+CheckInvalid:
+
+                If InvalidData Then
+
+                    Mesh.Nodes.Clear()
+                    Mesh.Panels.Clear()
+
+                End If
+
+            Catch
+
+                Mesh.Nodes.Clear()
+                Mesh.Panels.Clear()
+
+            Finally
+
+                FileClose(FileId)
+
+                GenerateMesh()
+
+            End Try
 
         End Sub
 
@@ -200,13 +427,13 @@ Namespace VisualModel.Models.Components
 
                         For Each Point In Points
 
-                            Dim Coordinates As String() = Point.Split(":")
+                            Dim Data As String() = Point.Split(":")
 
-                            If Coordinates.Length = 3 Then
+                            If Data.Length = 3 Then
                                 Dim Node As New NodalPoint()
-                                Node.ReferencePosition = New Vector3(Coordinates(0),
-                                                                     Coordinates(1),
-                                                                     Coordinates(2))
+                                Node.ReferencePosition = New Vector3(Data(0),
+                                                                     Data(1),
+                                                                     Data(2))
                                 Mesh.Nodes.Add(Node)
                             End If
 
@@ -218,31 +445,34 @@ Namespace VisualModel.Models.Components
 
                         For Each PanelData In Panels
 
-                            Dim Vertices As String() = PanelData.Split(":")
+                            Dim Data As String() = PanelData.Split(":")
 
-                            If Vertices.Length = 3 Then
+                            Dim Panel As Panel = Nothing
+                            Dim IsSlender As Boolean = Data(0).Length > 0 AndAlso Data(0)(0) = "*"
+                            Dim IsReversed As Boolean = Data(0).Length > 1 AndAlso Data(0)(1) = "*"
+                            Dim IsPrimitive As Boolean = Data(0).Length > 2 AndAlso Data(0)(2) = "*"
 
-                                Dim Panel As New Panel()
+                            If Data.Length = 4 Then
 
-                                Panel = New Panel(Vertices(0),
-                                                  Vertices(1),
-                                                  Vertices(2))
+                                Panel = New Panel(Data(1),
+                                                  Data(2),
+                                                  Data(3))
 
-                                Panel.IsSlender = False
+                            ElseIf Data.Length = 5 Then
+
+                                Panel = New Panel(Data(1),
+                                                  Data(2),
+                                                  Data(3),
+                                                  Data(4))
+
+                            End If
+
+                            If Panel IsNot Nothing Then
 
                                 Mesh.Panels.Add(Panel)
-
-                            ElseIf Vertices.Length = 4 Then
-
-                                Dim Panel As New Panel()
-                                Panel = New Panel(Vertices(0),
-                                                  Vertices(1),
-                                                  Vertices(2),
-                                                  Vertices(3))
-
-                                Panel.IsSlender = False
-
-                                Mesh.Panels.Add(Panel)
+                                Panel.IsSlender = IsSlender
+                                Panel.IsReversed = IsReversed
+                                Panel.IsPrimitive = IsPrimitive
 
                             End If
 
@@ -307,17 +537,23 @@ Namespace VisualModel.Models.Components
 
                 If Panel.IsTriangular Then
 
-                    Panels = Panels & String.Format("{0}:{1}:{2};",
-                                               Panel.N1,
-                                               Panel.N2,
-                                               Panel.N3)
+                    Panels = Panels & String.Format("{0}{1}{2}:{3:D}:{4:D}:{5:D};",
+                                                    GetCharFlag(Panel.IsSlender),
+                                                    GetCharFlag(Panel.IsReversed),
+                                                    GetCharFlag(Panel.IsPrimitive),
+                                                    Panel.N1,
+                                                    Panel.N2,
+                                                    Panel.N3)
                 Else
 
-                    Panels = Panels & String.Format("{0}:{1}:{2}:{3};",
-                                               Panel.N1,
-                                               Panel.N2,
-                                               Panel.N3,
-                                               Panel.N4)
+                    Panels = Panels & String.Format("{0}{1}{2}:{3:D}:{4:D}:{5:D}:{6:D};",
+                                                    GetCharFlag(Panel.IsSlender),
+                                                    GetCharFlag(Panel.IsReversed),
+                                                    GetCharFlag(Panel.IsPrimitive),
+                                                    Panel.N1,
+                                                    Panel.N2,
+                                                    Panel.N3,
+                                                    Panel.N4)
                 End If
 
             Next

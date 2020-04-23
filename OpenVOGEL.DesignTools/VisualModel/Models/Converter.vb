@@ -108,7 +108,7 @@ Namespace VisualModel.Models
                         Dim Node2 As Integer = Body.Mesh.Panels(PanelIndex).N2
                         Dim Node3 As Integer = Body.Mesh.Panels(PanelIndex).N3
                         Dim Node4 As Integer = Body.Mesh.Panels(PanelIndex).N4
-                        Dim Reversed As Boolean = Body.Mesh.Panels(PanelIndex).Reversed
+                        Dim Reversed As Boolean = Body.Mesh.Panels(PanelIndex).IsReversed
                         Dim Slender As Boolean = Body.Mesh.Panels(PanelIndex).IsSlender
 
                         If Body.Mesh.Panels(PanelIndex).IsTriangular Then
@@ -179,7 +179,7 @@ Namespace VisualModel.Models
                         Dim Node2 As Integer = Body.Mesh.Panels(PanelIndex).N2
                         Dim Node3 As Integer = Body.Mesh.Panels(PanelIndex).N3
                         Dim Node4 As Integer = Body.Mesh.Panels(PanelIndex).N4
-                        Dim Reversed As Boolean = Body.Mesh.Panels(PanelIndex).Reversed
+                        Dim Reversed As Boolean = Body.Mesh.Panels(PanelIndex).IsReversed
                         Dim Slender As Boolean = Body.Mesh.Panels(PanelIndex).IsSlender
 
                         If Body.Mesh.Panels(PanelIndex).IsTriangular Then

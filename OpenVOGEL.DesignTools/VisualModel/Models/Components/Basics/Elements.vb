@@ -38,7 +38,7 @@ Namespace VisualModel.Models.Components.Basics
             Circulation = 0.0#
             Cp = 0.0#
             GlobalIndex = 0
-            Reversed = False
+            IsReversed = False
             IsPrimitive = False
         End Sub
 
@@ -94,7 +94,7 @@ Namespace VisualModel.Models.Components.Basics
         ''' Indicates if this panel has a reversed singularity behavior
         ''' </summary>
         ''' <returns></returns>
-        Public Property Reversed As Boolean
+        Public Property IsReversed As Boolean
 
         ''' <summary>
         ''' The local velocity vector at the control point
@@ -223,7 +223,7 @@ Namespace VisualModel.Models.Components.Basics
             ControlPoint.Assign(Panel.ControlPoint)
             NormalVector.Assign(Panel.NormalVector)
             Area = Panel.Area
-            Reversed = Panel.Reversed
+            IsReversed = Panel.IsReversed
 
             LocalVelocity.Assign(Panel.LocalVelocity)
             Circulation = Panel.Circulation
