@@ -189,11 +189,11 @@ Namespace CalculationModel.Solver
         Const DB_File_Steady = "_Steady"
         Const DB_File_Transit = "_Unsteady"
 
-        Private Base_Path As String
-        Private Structure_Path As String
-        Private Aeroelastic_Path As String
-        Private Steady_Path As String
-        Private Transit_Path As String
+        Public Base_Path As String
+        Public Structure_Path As String
+        Public Aeroelastic_Path As String
+        Public Steady_Path As String
+        Public Transit_Path As String
 
         ''' <summary>
         ''' Creates the subfolders where results are stored

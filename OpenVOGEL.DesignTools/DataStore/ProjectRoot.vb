@@ -113,24 +113,6 @@ Namespace DataStore
             End Get
         End Property
 
-        ''' <summary>
-        ''' Returns the file path of the result
-        ''' </summary>
-        ''' <returns></returns>
-        Public ReadOnly Property ResultsFilePath As String
-            Get
-                If FilePath <> "" Then
-                    Try
-                        Return Left(FilePath, FilePath.Length - 4) & ".res"
-                    Catch ex As Exception
-                        Return ""
-                    End Try
-                Else
-                    Return ""
-                End If
-            End Get
-        End Property
-
 #Region " Basic calculation launcher "
 
         ''' <summary>
@@ -145,8 +127,9 @@ Namespace DataStore
             Try
 
                 RaiseEvent PushMessage("Preparing calculation cell")
+                Dim BuildStructure As Boolean = Type = CalculationType.ctAeroelastic
                 CalculationCore = New Solver
-                CalculationCore.GenerateFromExistingModel(Model, SimulationSettings, Type = CalculationType.ctAeroelastic)
+                CalculationCore.GenerateFromExistingModel(Model, SimulationSettings, BuildStructure)
 
                 AddHandler CalculationCore.PushProgress, AddressOf HandleProgress
                 AddHandler CalculationCore.PushMessage, AddressOf HandleMessage
@@ -187,8 +170,6 @@ Namespace DataStore
         Private Sub CalculationFinished()
 
             If CalculationCore IsNot Nothing Then
-                RaiseEvent PushMessage("Loading results")
-                CalculationCore.SetCompleteModelOnResults(Results)
                 RaiseEvent PushMessage("Ready")
                 RaiseEvent PushMessage("Calculation done")
                 RaiseEvent CalculationDone()

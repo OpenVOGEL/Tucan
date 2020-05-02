@@ -7,10 +7,6 @@
 #endregion
 
 using System;
-using System.Collections.Generic;
-using System.Text;
-using System.ComponentModel;
-using System.Drawing;
 using DotNumerics.LinearAlgebra.CSLapack;
 
 namespace DotNumerics.LinearAlgebra
@@ -35,7 +31,6 @@ namespace DotNumerics.LinearAlgebra
         /// </summary>
         public LinearEquations()
         {
-
         }
 
         #region Public LU Solver
@@ -147,25 +142,55 @@ namespace DotNumerics.LinearAlgebra
             #endregion
 
         }
-
+        
+        /// <summary>
+        /// LU cache
+        /// </summary>
         private double[] _LU;
+
+        /// <summary>
+        /// Cached number of equations
+        /// </summary>
         private int _N;
+
+        /// <summary>
+        /// The pivoting cache
+        /// </summary>
         private int[] _IPIV;
+
+        /// <summary>
+        /// Result status given by LAPACK
+        /// </summary>
         private int _Info = 0;
 
+        /// <summary>
+        /// Indicates if the Intel MKL should be used whenever possible.
+        /// </summary>
+        public static bool UseIntelMathKernel = false;
+
+        /// <summary>
+        /// Computes the LU and caches the results locally.
+        /// Either the native .NET library or Intel MKL is used.
+        /// </summary>
+        /// <param name="A"></param>
         public void ComputeLU(Matrix A)
         {
-            
             _N = A.RowCount;
             _LU = (double[]) A.Data.Clone();
 
             _IPIV = new int[_N];
             _Info = 0;
-
-            DGETRF _dgetrf = new DGETRF();
-
-            _dgetrf.Run(_N, _N, ref _LU, 0, _N, ref _IPIV, 0, ref _Info);
-
+            
+            if (UseIntelMathKernel)
+            {
+                IntelMathKernel.dgetrf(ref _N, ref _N, _LU, ref _N, _IPIV, ref _Info);
+            }
+            else                
+            {
+                DGETRF _dgetrf = new DGETRF();
+                _dgetrf.Run(_N, _N, ref _LU, 0, _N, ref _IPIV, 0, ref _Info);
+            }
+                                
         }
 
         public void SolveLU(Vector B, Vector X)
@@ -413,9 +438,9 @@ namespace DotNumerics.LinearAlgebra
         }
 
         #endregion
-        
-        #endregion
 
+        #endregion
+        
     }
 
 }

@@ -52,6 +52,10 @@ Public Class FormReport
 
     Public Sub ReportResults()
 
+        If CalculationCore Is Nothing Then
+            Return
+        End If
+
         ' Load the total forces panels
 
         TotalForcePanel.LoadResults()

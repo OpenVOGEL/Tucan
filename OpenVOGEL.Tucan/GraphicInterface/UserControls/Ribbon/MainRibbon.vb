@@ -493,7 +493,7 @@ ErrSub:
 
             AddHandler CalculationManager.CalculationDone, AddressOf PostCalculationActions
 
-            CalculationManager.StartCalculation(CalculationType, Me.Parent)
+            CalculationManager.StartCalculation(CalculationType, cbxOnServer.Checked, Me.Parent)
 
         End If
 

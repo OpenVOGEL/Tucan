@@ -1,6 +1,6 @@
 ﻿'Open VOGEL (openvogel.org)
 'Open source software for aerodynamics
-'Copyright (C) 2018 Guillermo Hazebrouck (guillermo.hazebrouck@openvogel.org)
+'Copyright (C) 2020 Guillermo Hazebrouck (guillermo.hazebrouck@openvogel.org)
 
 'This program Is free software: you can redistribute it And/Or modify
 'it under the terms Of the GNU General Public License As published by
@@ -15,7 +15,6 @@
 'You should have received a copy Of the GNU General Public License
 'along with this program.  If Not, see < http:  //www.gnu.org/licenses/>.
 
-Imports DotNumerics
 Imports OpenVOGEL.MathTools.Algebra.EuclideanSpace
 
 Namespace Algebra.CustomMatrices

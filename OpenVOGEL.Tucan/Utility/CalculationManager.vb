@@ -16,6 +16,9 @@
 'along with this program.  If Not, see < http:  //www.gnu.org/licenses/>.
 
 Imports System.ComponentModel
+Imports System.Net
+Imports System.Net.Sockets
+Imports System.Text
 Imports OpenVOGEL.AeroTools.CalculationModel.Settings
 Imports OpenVOGEL.DesignTools.DataStore
 Imports OpenVOGEL.DesignTools.VisualModel.Models
@@ -38,67 +41,72 @@ Namespace Tucan.Utility
         ''' </summary>
         ''' <param name="Type"></param>
         ''' <param name="Parent"></param>
-        Public Sub StartCalculation(ByVal Type As CalculationType, ByRef Parent As Control)
+        Public Sub StartCalculation(ByVal Type As CalculationType, OnServer As Boolean, ByRef Parent As Control)
 
-            If Not IsNothing(CalculationWorker) Then
-                If CalculationWorker.IsBusy Then
-                    Return
-                Else
-                    CalculationWorker.Dispose()
-                End If
+            If OnServer Then
+                RequestCalculationToServer()
+                Exit Sub
             End If
 
-            FormProgress.ClearMessages()
-            If Not IsNothing(Parent) Then FormProgress.Owner = Parent
-            FormProgress.ClearMessages()
-            FormProgress.Show()
-            FormProgress.PushMessage("Preparing calculation cell")
-            ProjectRoot.SimulationSettings.AnalysisType = Type
+            If Not IsNothing(CalculationWorker) Then
+                    If CalculationWorker.IsBusy Then
+                        Return
+                    Else
+                        CalculationWorker.Dispose()
+                    End If
+                End If
 
-            Try
+                FormProgress.ClearMessages()
+                If Not IsNothing(Parent) Then FormProgress.Owner = Parent
+                FormProgress.ClearMessages()
+                FormProgress.Show()
+                FormProgress.PushMessage("Preparing calculation cell")
+                ProjectRoot.SimulationSettings.AnalysisType = Type
 
-                CalculationCore = New AeroTools.CalculationModel.Solver.Solver
-                CalculationCore.GenerateFromExistingModel(Model, ProjectRoot.SimulationSettings, Type = CalculationType.ctAeroelastic)
+                Try
 
-                AddHandler CalculationCore.PushProgress, AddressOf FormProgress.PushMessageWithProgress
-                AddHandler CalculationCore.PushMessage, AddressOf FormProgress.PushMessage
-                AddHandler CalculationCore.CalculationDone, AddressOf CalculationFinished
-                AddHandler CalculationCore.CalculationDone, AddressOf FormProgress.ChangeToCloseModus
-                AddHandler CalculationCore.CalculationAborted, AddressOf CalculationAborted
+                    CalculationCore = New AeroTools.CalculationModel.Solver.Solver
+                    CalculationCore.GenerateFromExistingModel(Model, ProjectRoot.SimulationSettings, Type = CalculationType.ctAeroelastic)
 
-                Dim StartingTime As Date = Now
-                Results.SimulationSettings = CalculationCore.Settings
-                FormProgress.PushMessage("Calculating with parallel solver")
+                    AddHandler CalculationCore.PushProgress, AddressOf FormProgress.PushMessageWithProgress
+                    AddHandler CalculationCore.PushMessage, AddressOf FormProgress.PushMessage
+                    AddHandler CalculationCore.CalculationDone, AddressOf CalculationFinished
+                    AddHandler CalculationCore.CalculationDone, AddressOf FormProgress.ChangeToCloseModus
+                    AddHandler CalculationCore.CalculationAborted, AddressOf CalculationAborted
 
-                CalculationWorker = New BackgroundWorker
-                CalculationWorker.WorkerSupportsCancellation = True
-                CalculationWorker.WorkerReportsProgress = True
-                AddHandler FormProgress.CancellationRequested, AddressOf CalculationCore.RequestCancellation
+                    Dim StartingTime As Date = Now
+                    Results.SimulationSettings = CalculationCore.Settings
+                    FormProgress.PushMessage("Calculating with parallel solver")
 
-                Select Case Type
+                    CalculationWorker = New BackgroundWorker
+                    CalculationWorker.WorkerSupportsCancellation = True
+                    CalculationWorker.WorkerReportsProgress = True
+                    AddHandler FormProgress.CancellationRequested, AddressOf CalculationCore.RequestCancellation
 
-                    Case CalculationType.ctSteady
+                    Select Case Type
 
-                        AddHandler CalculationWorker.DoWork, AddressOf StartWakeConvection
+                        Case CalculationType.ctSteady
 
-                    Case CalculationType.ctUnsteady
+                            AddHandler CalculationWorker.DoWork, AddressOf StartWakeConvection
 
-                        AddHandler CalculationWorker.DoWork, AddressOf StartUnsteadyTransit
+                        Case CalculationType.ctUnsteady
 
-                    Case CalculationType.ctAeroelastic
+                            AddHandler CalculationWorker.DoWork, AddressOf StartUnsteadyTransit
 
-                        AddHandler CalculationWorker.DoWork, AddressOf StartAeroelsaticTransit
+                        Case CalculationType.ctAeroelastic
 
-                End Select
+                            AddHandler CalculationWorker.DoWork, AddressOf StartAeroelsaticTransit
 
-                CalculationWorker.RunWorkerAsync()
+                    End Select
 
-            Catch ex As Exception
-                CalculationWorker.CancelAsync()
-                FormProgress.PushMessage(String.Format("Calculation exited with exception: ""{0}"".", ex.Message))
-                FormProgress.ChangeToCloseModus()
-                Return
-            End Try
+                    CalculationWorker.RunWorkerAsync()
+
+                Catch ex As Exception
+                    CalculationWorker.CancelAsync()
+                    FormProgress.PushMessage(String.Format("Calculation exited with exception: ""{0}"".", ex.Message))
+                    FormProgress.ChangeToCloseModus()
+                    Return
+                End Try
 
         End Sub
 
@@ -156,6 +164,101 @@ Namespace Tucan.Utility
 
             CalculationCore.AeroelasticUnsteadyTransit(FilePath)
 
+        End Sub
+
+        ''' <summary>
+        ''' Requests the calculation to the OpenVOGEL server
+        ''' </summary>
+        Public Sub RequestCalculationToServer()
+
+            ' Start up the calculation form
+
+            FormProgress.ClearMessages()
+            FormProgress.Show()
+            FormProgress.PushMessage("Connecting to server")
+
+            ' Launch the progress digestion asynchronously
+
+            If Not IsNothing(CalculationWorker) Then
+                CalculationWorker.Dispose()
+            End If
+            CalculationWorker = New BackgroundWorker
+            CalculationWorker.WorkerSupportsCancellation = True
+            CalculationWorker.WorkerReportsProgress = True
+            'AddHandler FormProgress.CancellationRequested, AddressOf CalculationCore.RequestCancellation
+
+            AddHandler CalculationWorker.DoWork, AddressOf RequestServerSteady
+            CalculationWorker.RunWorkerAsync()
+
+        End Sub
+
+        ''' <summary>
+        ''' Requests a steady analisis to the server
+        ''' </summary>
+        Private Sub RequestServerSteady()
+
+            ' Connect to the server squekear to publish the messages and know when the calculation is over
+
+            Dim Receiver As New UdpClient
+            Receiver.Client.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, True)
+            Receiver.Client.Bind(New IPEndPoint(IPAddress.Any, 11001))
+
+            ' Set up the squeaker
+
+            Dim Squeaker As New UdpClient
+            Squeaker.Client.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, True)
+            Squeaker.Connect("localhost", 11000)
+
+            ' Request the calculation and start listening
+
+            Squeak(Squeaker, "steady;" & FilePath)
+
+            Dim Done As Boolean = False
+
+            While Not Done
+
+                Dim ClientAddress As New IPEndPoint(IPAddress.Any, 11001)
+                Dim Message As String = Encoding.ASCII.GetString(Receiver.Receive(ClientAddress))
+
+                Dim Commands As String() = Message.Split({";"c}, StringSplitOptions.RemoveEmptyEntries)
+
+                If Commands.Count > 0 Then
+
+                    Select Case Commands(0)
+
+                        Case "done"
+
+                            Done = True
+                            If Commands.Count > 1 Then
+                                Dim File As String = Commands(1)
+                                If IO.File.Exists(File) Then
+                                    CalculationCore = New AeroTools.CalculationModel.Solver.Solver
+                                    CalculationCore.ReadFromXML(File)
+                                    CalculationFinished()
+                                End If
+                            End If
+                            FormProgress.ChangeToCloseModus()
+
+                        Case "message"
+
+                            If Commands.Count > 1 Then
+                                FormProgress.PushMessage(Commands(1))
+                            End If
+
+                    End Select
+
+                End If
+
+            End While
+
+            Squeaker.Close()
+            Receiver.Close()
+
+        End Sub
+
+        Private Sub Squeak(Squeaker As UdpClient, Message As String)
+            Dim Bytes As Byte() = Text.Encoding.ASCII.GetBytes(Message)
+            Squeaker.Send(Bytes, Bytes.Count)
         End Sub
 
     End Module

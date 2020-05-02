@@ -61,6 +61,7 @@ Partial Class MainRibbon
         Me.pnlMeshColor = New System.Windows.Forms.Panel()
         Me.pnlSurfaceColor = New System.Windows.Forms.Panel()
         Me.pnlIO = New System.Windows.Forms.GroupBox()
+        Me.btnExport = New System.Windows.Forms.Button()
         Me.btnNew = New System.Windows.Forms.Button()
         Me.btnOpen = New System.Windows.Forms.Button()
         Me.btnSaveAs = New System.Windows.Forms.Button()
@@ -91,6 +92,7 @@ Partial Class MainRibbon
         Me.nudVy = New System.Windows.Forms.NumericUpDown()
         Me.nudVx = New System.Windows.Forms.NumericUpDown()
         Me.gbxCalculationType = New System.Windows.Forms.GroupBox()
+        Me.cbxOnServer = New System.Windows.Forms.CheckBox()
         Me.btnStartCalculation = New System.Windows.Forms.Button()
         Me.cbxSimulationMode = New System.Windows.Forms.ComboBox()
         Me.tpResults = New System.Windows.Forms.TabPage()
@@ -157,7 +159,6 @@ Partial Class MainRibbon
         Me.cbxShowRulers = New System.Windows.Forms.CheckBox()
         Me.pnlScreenColor = New System.Windows.Forms.Panel()
         Me.TableLayoutPanel4 = New System.Windows.Forms.TableLayoutPanel()
-        Me.btnExport = New System.Windows.Forms.Button()
         Me.tcRibbon.SuspendLayout()
         Me.tpModel.SuspendLayout()
         Me.TableLayoutPanel1.SuspendLayout()
@@ -716,6 +717,24 @@ Partial Class MainRibbon
         Me.pnlIO.TabStop = False
         Me.pnlIO.Text = "IO"
         '
+        'btnExport
+        '
+        Me.btnExport.BackColor = System.Drawing.Color.Gainsboro
+        Me.btnExport.FlatAppearance.BorderColor = System.Drawing.Color.Gray
+        Me.btnExport.FlatAppearance.CheckedBackColor = System.Drawing.SystemColors.ButtonFace
+        Me.btnExport.FlatAppearance.MouseDownBackColor = System.Drawing.Color.PaleGreen
+        Me.btnExport.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DeepSkyBlue
+        Me.btnExport.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnExport.Font = New System.Drawing.Font("Segoe UI", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnExport.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.btnExport.ImeMode = System.Windows.Forms.ImeMode.NoControl
+        Me.btnExport.Location = New System.Drawing.Point(6, 63)
+        Me.btnExport.Name = "btnExport"
+        Me.btnExport.Size = New System.Drawing.Size(60, 22)
+        Me.btnExport.TabIndex = 64
+        Me.btnExport.Text = "Export..."
+        Me.btnExport.UseVisualStyleBackColor = False
+        '
         'btnNew
         '
         Me.btnNew.BackColor = System.Drawing.Color.Gainsboro
@@ -1097,6 +1116,7 @@ Partial Class MainRibbon
         '
         'gbxCalculationType
         '
+        Me.gbxCalculationType.Controls.Add(Me.cbxOnServer)
         Me.gbxCalculationType.Controls.Add(Me.btnStartCalculation)
         Me.gbxCalculationType.Controls.Add(Me.cbxSimulationMode)
         Me.gbxCalculationType.Dock = System.Windows.Forms.DockStyle.Left
@@ -1108,6 +1128,16 @@ Partial Class MainRibbon
         Me.gbxCalculationType.TabIndex = 520
         Me.gbxCalculationType.TabStop = False
         Me.gbxCalculationType.Text = "Mode"
+        '
+        'cbxOnServer
+        '
+        Me.cbxOnServer.AutoSize = True
+        Me.cbxOnServer.Location = New System.Drawing.Point(6, 73)
+        Me.cbxOnServer.Name = "cbxOnServer"
+        Me.cbxOnServer.Size = New System.Drawing.Size(90, 16)
+        Me.cbxOnServer.TabIndex = 108
+        Me.cbxOnServer.Text = "Launch on server"
+        Me.cbxOnServer.UseVisualStyleBackColor = True
         '
         'btnStartCalculation
         '
@@ -1974,24 +2004,6 @@ Partial Class MainRibbon
         Me.TableLayoutPanel4.Size = New System.Drawing.Size(1204, 175)
         Me.TableLayoutPanel4.TabIndex = 508
         '
-        'btnExport
-        '
-        Me.btnExport.BackColor = System.Drawing.Color.Gainsboro
-        Me.btnExport.FlatAppearance.BorderColor = System.Drawing.Color.Gray
-        Me.btnExport.FlatAppearance.CheckedBackColor = System.Drawing.SystemColors.ButtonFace
-        Me.btnExport.FlatAppearance.MouseDownBackColor = System.Drawing.Color.PaleGreen
-        Me.btnExport.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DeepSkyBlue
-        Me.btnExport.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btnExport.Font = New System.Drawing.Font("Segoe UI", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnExport.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        Me.btnExport.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.btnExport.Location = New System.Drawing.Point(6, 63)
-        Me.btnExport.Name = "btnExport"
-        Me.btnExport.Size = New System.Drawing.Size(60, 22)
-        Me.btnExport.TabIndex = 64
-        Me.btnExport.Text = "Export..."
-        Me.btnExport.UseVisualStyleBackColor = False
-        '
         'MainRibbon
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -2034,6 +2046,7 @@ Partial Class MainRibbon
         CType(Me.nudVy, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.nudVx, System.ComponentModel.ISupportInitialize).EndInit()
         Me.gbxCalculationType.ResumeLayout(False)
+        Me.gbxCalculationType.PerformLayout()
         Me.tpResults.ResumeLayout(False)
         Me.TableLayoutPanel3.ResumeLayout(False)
         Me.gbxAeroelastic.ResumeLayout(False)
@@ -2203,4 +2216,5 @@ Partial Class MainRibbon
     Friend WithEvents cbMultiselect As Windows.Forms.CheckBox
     Friend WithEvents rbStructure As Windows.Forms.RadioButton
     Friend WithEvents btnExport As Button
+    Friend WithEvents cbxOnServer As CheckBox
 End Class

@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{CF0416E7-5660-4101-9FF3-AABA086F07D2}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <StartupObject>OpenVOGEL.Console.MainModule</StartupObject>
+    <StartupObject>OpenVOGEL.Console.Commands</StartupObject>
     <RootNamespace>OpenVOGEL.Console</RootNamespace>
     <AssemblyName>OpenVOGEL.Console</AssemblyName>
     <FileAlignment>512</FileAlignment>
@@ -24,14 +24,14 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>false</MapFileExtensions>
-    <ApplicationRevision>2</ApplicationRevision>
+    <ApplicationRevision>3</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
+    <PlatformTarget>x64</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <DefineDebug>true</DefineDebug>
@@ -42,7 +42,7 @@
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
+    <PlatformTarget>x64</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <DefineDebug>false</DefineDebug>
     <DefineTrace>true</DefineTrace>
@@ -99,7 +99,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AeroTests.vb" />
-    <Compile Include="MainModule.vb" />
+    <Compile Include="Commands.vb" />
+    <Compile Include="MklSetup.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -115,6 +116,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="Server.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
@@ -145,6 +147,10 @@
     <ProjectReference Include="..\OpenVOGEL.DesignTools\OpenVOGEL.DesignTools.vbproj">
       <Project>{96d536ee-e16a-4acc-bdf4-c34dcc5bba44}</Project>
       <Name>OpenVOGEL.DesignTools</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\OpenVOGEL.DotNumerics\OpenVOGEL.DotNumerics.csproj">
+      <Project>{48185ef1-b73b-457b-aa37-0bce567c5ab1}</Project>
+      <Name>OpenVOGEL.DotNumerics</Name>
     </ProjectReference>
     <ProjectReference Include="..\OpenVOGEL.MathTools\OpenVOGEL.MathTools.vbproj">
       <Project>{7b3d8e3f-d52b-4118-9178-f457444c596d}</Project>
