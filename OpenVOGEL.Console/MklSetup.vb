@@ -30,7 +30,10 @@ Public Module MklSetup
     ''' The path to the MKL suit (mkl_rt.dll)
     ''' </summary>
     ''' <returns></returns>
-    Private MklSuitPath As String = "C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2020\windows\redist\intel64\mkl"
+    Private MklSuitPath As String = ""
+
+    'C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2020\windows\redist\intel64\mkl
+    Private InitPath As String = IO.Path.Combine(IO.Directory.GetCurrentDirectory, "MklPath.dat")
 
     ''' <summary>
     ''' Sets the MKL library path
@@ -40,6 +43,11 @@ Public Module MklSetup
         MklSuitPath = Path
         Environment.SetEnvironmentVariable("path", String.Format("{0};{1}", MklSuitPath, OriginalPath))
 
+        Dim FileId As Integer = FreeFile()
+        FileOpen(FileId, InitPath, OpenMode.Output)
+        PrintLine(FileId, Path)
+        FileClose(FileId)
+
     End Sub
 
     ''' <summary>
@@ -47,11 +55,20 @@ Public Module MklSetup
     ''' </summary>
     Public Sub Initialize()
 
-        DotNumerics.LinearAlgebra.LinearEquations.UseIntelMathKernel = True
+        DotNumerics.LinearAlgebra.LinearEquations.UseIntelMathKernel = False
 
-        'TODO: read user path from inifile to avoid reentering it every time
+        ' Use the path previously given by the user (if the configuration exists)
 
-        ChangePath(MklSuitPath)
+        If IO.File.Exists(InitPath) Then
+            Dim FileId As Integer = FreeFile()
+            FileOpen(FileId, InitPath, OpenMode.Input)
+            If Not EOF(FileId) Then
+                MklSuitPath = LineInput(FileId)
+                Environment.SetEnvironmentVariable("path", String.Format("{0};{1}", MklSuitPath, OriginalPath))
+                DotNumerics.LinearAlgebra.LinearEquations.UseIntelMathKernel = True
+            End If
+            FileClose(FileId)
+        End If
 
     End Sub
 
