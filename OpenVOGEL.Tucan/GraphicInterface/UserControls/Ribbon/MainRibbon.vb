@@ -459,6 +459,12 @@ ErrSub:
 
     Public Sub Calculate(Optional ByVal CalculationType As CalculationType = CalculationType.ctSteady)
 
+        If Not System.IO.File.Exists(ProjectRoot.FilePath) Then
+
+            MsgBox("Please, save the project first.")
+
+        End If
+
         Dim FormSettings = New FormSettings()
 
         FormSettings.Settings = ProjectRoot.SimulationSettings

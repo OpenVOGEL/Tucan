@@ -171,21 +171,16 @@ Namespace Tucan.Utility
         ''' </summary>
         Public Sub RequestCalculationToServer()
 
-            ' Start up the calculation form
+            ' Save the model
 
-            FormProgress.ClearMessages()
-            FormProgress.Show()
-            FormProgress.PushMessage("Connecting to server")
+            ProjectRoot.WriteToXML()
 
-            ' Launch the progress digestion asynchronously
+            ' Launch the comunication asynchronously
 
             If Not IsNothing(CalculationWorker) Then
                 CalculationWorker.Dispose()
             End If
             CalculationWorker = New BackgroundWorker
-            CalculationWorker.WorkerSupportsCancellation = True
-            CalculationWorker.WorkerReportsProgress = True
-            'AddHandler FormProgress.CancellationRequested, AddressOf CalculationCore.RequestCancellation
 
             AddHandler CalculationWorker.DoWork, AddressOf RequestServerSteady
             CalculationWorker.RunWorkerAsync()
@@ -236,13 +231,6 @@ Namespace Tucan.Utility
                                     CalculationCore.ReadFromXML(File)
                                     CalculationFinished()
                                 End If
-                            End If
-                            FormProgress.ChangeToCloseModus()
-
-                        Case "message"
-
-                            If Commands.Count > 1 Then
-                                FormProgress.PushMessage(Commands(1))
                             End If
 
                     End Select

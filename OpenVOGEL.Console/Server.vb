@@ -43,9 +43,6 @@ Public Module Server
         System.Console.WriteLine("Solver  version: " & AeroTools.CalculationModel.Solver.Solver.Version)
         System.Console.WriteLine("Listening to udp on port 11000")
 
-        AddHandler DataStore.PushMessage, AddressOf OutputConsoleMessage
-        AddHandler DataStore.PushProgress, AddressOf OutputConsoleProgress
-
         Dim Quit As Boolean = False
 
         While Not Quit
@@ -78,17 +75,14 @@ Public Module Server
                                 Squeaker.Connect("localhost", 11001)
 
                                 ' Perform calculation
-                                System.Console.WriteLine("steady state requested")
+                                System.Console.WriteLine("Steady state requested")
                                 DataStore.FilePath = Commands(1)
-                                Squeak(Squeaker, "message;loading model")
                                 DataStore.ProjectRoot.RestartProject()
                                 DataStore.ProjectRoot.ReadFromXML()
-                                Squeak(Squeaker, "message;requesting calculation")
                                 DataStore.StartCalculation(AeroTools.CalculationModel.Settings.CalculationType.ctSteady)
 
                             Finally
 
-                                Squeak(Squeaker, "message;calculation done")
                                 Squeak(Squeaker, "done;" & String.Format("{0}\Steady.res", DataStore.CalculationCore.Steady_Path))
                                 Squeaker.Close()
 

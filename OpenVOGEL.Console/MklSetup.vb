@@ -47,6 +47,8 @@ Public Module MklSetup
     ''' </summary>
     Public Sub Initialize()
 
+        DotNumerics.LinearAlgebra.LinearEquations.UseIntelMathKernel = True
+
         'TODO: read user path from inifile to avoid reentering it every time
 
         ChangePath(MklSuitPath)
