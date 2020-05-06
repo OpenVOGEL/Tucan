@@ -14,8 +14,27 @@ namespace DotNumerics.LinearAlgebra
     internal sealed class IntelMathKernel
     {
         private IntelMathKernel() { }
+
+        /// <summary>
+        /// Computes the LU decomposition of the given matrix a
+        /// void dgetrf (const MKL_INT* m, const MKL_INT* n, double* a, const MKL_INT* lda,
+        ///              MKL_INT* ipiv, MKL_INT* info);
+        /// </summary>
         [DllImport("mkl_rt.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true, SetLastError = false)]
-        internal static extern void dgetrf(ref int n, ref int m, [In, Out] double[] a, ref int lda, [Out] int[] ipiv, ref int info);
+        internal static extern void dgetrf(ref int n, ref int m, [In, Out] double[] a, ref int lda, 
+                                           [Out] int[] ipiv, ref int info);
+
+        /// <summary>
+        /// Computes the solution vector for the given LU matrix
+        /// void dgetrs (const char* trans, const MKL_INT* n, const MKL_INT* nrhs,
+        ///              const double* a, const MKL_INT* lda, const MKL_INT* ipiv,
+        ///              double* b, const MKL_INT* ldb, MKL_INT* info);
+        /// </summary>
+        [DllImport("mkl_rt.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true, SetLastError = false)]
+        internal static extern void dgetrs([In] char [] trans, ref int n, ref int nrhs,
+                                           [In] double[] a, ref int lda, [In] int[] ipiv, 
+                                           [In, Out] double[] b, ref int ldb, ref int info);
+
     }
 
     #endregion
@@ -28,11 +47,10 @@ namespace DotNumerics.LinearAlgebra
         {
             Console.WriteLine("Testing LU decomposition");
 
-            int n = 5;
+            int n = 3;
             int info = 0;
-            int[] ipiv = new int[n];
-
-            n = 3;
+            int[] ipiv = new int[3];
+            
             Matrix Mtx = new Matrix(3);
             Mtx[0, 0] = 1;
             Mtx[0, 1] = 9;
@@ -67,6 +85,15 @@ namespace DotNumerics.LinearAlgebra
                         return false;
                     }
                 }
+
+                info = 0;
+                int nrhs = 1;
+                double[] R = new double[3];
+                R[0] = 1;
+                R[1] = 2;
+                R[2] = 5;
+                char[] trans = "No transponse".ToCharArray();
+                IntelMathKernel.dgetrs(trans, ref n, ref nrhs, A, ref n, ipiv, R, ref n, ref info);
 
                 Console.WriteLine("TEST PASSED");
                 return true;

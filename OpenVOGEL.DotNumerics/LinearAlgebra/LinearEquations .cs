@@ -200,15 +200,24 @@ namespace DotNumerics.LinearAlgebra
                 // Make a copy of B on X:
 
                 for (int i = 0; i < B.Length; i++) X[i] = B[i];
-                
+
                 // Solve the system A*X = B, overwriting B with X:
 
-                DGETRS _dgetrs = new DGETRS();
-                
-                double[] _X = X.Data;
+                if (UseIntelMathKernel)
+                {
+                    double[] _X = X.Data;
+                    char[] trans = "No transponse".ToCharArray();
+                    int one = 1;
+                    IntelMathKernel.dgetrs(trans, ref _N, ref one, _LU, ref _N, _IPIV, _X, ref _N, ref _Info);
+                }
+                else
+                {
+                    DGETRS _dgetrs = new DGETRS();
 
-                _dgetrs.Run("No transpose", _N, 1, _LU, 0, _N, _IPIV, 0, ref _X, 0, _N, ref _Info);
+                    double[] _X = X.Data;
 
+                    _dgetrs.Run("No transpose", _N, 1, _LU, 0, _N, _IPIV, 0, ref _X, 0, _N, ref _Info);
+                }
             }
         }
 

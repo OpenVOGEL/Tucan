@@ -32,7 +32,9 @@ Public Module MklSetup
     ''' <returns></returns>
     Private MklSuitPath As String = ""
 
-    'C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2020\windows\redist\intel64\mkl
+    ''' <summary>
+    ''' The path to the local file containing the last mkl path entered by the user
+    ''' </summary>
     Private InitPath As String = IO.Path.Combine(IO.Directory.GetCurrentDirectory, "MklPath.dat")
 
     ''' <summary>
