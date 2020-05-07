@@ -60,7 +60,7 @@ Namespace VisualModel.Models.Components
             Select Case Format
 
                 Case ImportFormats.ConnectivityFile
-                    LoadConnectivityFile(FilePath)
+                    LoadNativeFile(FilePath)
 
                 Case ImportFormats.StlFile
                     LoadStlFile(FilePath)
@@ -83,10 +83,10 @@ Namespace VisualModel.Models.Components
         End Enum
 
         ''' <summary>
-        ''' Loads the mesh from a connectivity file.
+        ''' Loads the mesh from a connectivity file in native OpenVOGEL format.
         ''' </summary>
         ''' <remarks></remarks>
-        Private Sub LoadConnectivityFile(FilePath As String)
+        Private Sub LoadNativeFile(FilePath As String)
 
             Dim Section As EntityType = EntityType.EntitySurface
 
@@ -97,6 +97,7 @@ Namespace VisualModel.Models.Components
 
                 Dim FileId As Integer = FreeFile()
                 Dim Offset As Integer = 0
+                Dim BaseIndex As Integer = 0
 
                 FileOpen(FileId, FilePath, OpenAccess.Read)
 
@@ -115,6 +116,13 @@ Namespace VisualModel.Models.Components
                             Case "NODES"
 
                                 Section = EntityType.EntityNode
+                                GoTo NextLine
+
+                            Case "BASE_INDEX"
+
+                                If UBound(Keywords) >= 1 Then
+                                    BaseIndex = CInt(Keywords(1))
+                                End If
                                 GoTo NextLine
 
                             Case "PANELS"
@@ -165,18 +173,41 @@ Namespace VisualModel.Models.Components
 
                                     ' Quadrilaterals
 
-                                    Panel = New Panel(CInt(Data(1)) + Offset,
-                                                      CInt(Data(2)) + Offset,
-                                                      CInt(Data(3)) + Offset,
-                                                      CInt(Data(4)) + Offset)
+                                    Dim N1 As Integer = CInt(Data(1)) + Offset - BaseIndex
+                                    Dim N2 As Integer = CInt(Data(2)) + Offset - BaseIndex
+                                    Dim N3 As Integer = CInt(Data(3)) + Offset - BaseIndex
+                                    Dim N4 As Integer = CInt(Data(4)) + Offset - BaseIndex
+
+                                    If (N1 < 0 Or N1 >= Mesh.Nodes.Count) OrElse
+                                       (N2 < 0 Or N2 >= Mesh.Nodes.Count) OrElse
+                                       (N3 < 0 Or N3 >= Mesh.Nodes.Count) OrElse
+                                       (N4 < 0 Or N4 >= Mesh.Nodes.Count) Then
+                                        FileClose(FileId)
+                                        Mesh.Nodes.Clear()
+                                        Mesh.Panels.Clear()
+                                        Exit Sub
+                                    End If
+
+                                    Panel = New Panel(N1, N2, N3, N4)
 
                                 ElseIf UBound(Data) = 3 Then
 
                                     ' Triangles
 
-                                    Panel = New Panel(CInt(Data(1)) + Offset,
-                                                      CInt(Data(2)) + Offset,
-                                                      CInt(Data(3)) + Offset)
+                                    Dim N1 As Integer = CInt(Data(1)) + Offset - BaseIndex
+                                    Dim N2 As Integer = CInt(Data(2)) + Offset - BaseIndex
+                                    Dim N3 As Integer = CInt(Data(3)) + Offset - BaseIndex
+
+                                    If (N1 < 0 Or N1 >= Mesh.Nodes.Count) OrElse
+                                       (N2 < 0 Or N2 >= Mesh.Nodes.Count) OrElse
+                                       (N3 < 0 Or N3 >= Mesh.Nodes.Count) Then
+                                        FileClose(FileId)
+                                        Mesh.Nodes.Clear()
+                                        Mesh.Panels.Clear()
+                                        Exit Sub
+                                    End If
+
+                                    Panel = New Panel(N1, N2, N3)
 
                                 End If
 

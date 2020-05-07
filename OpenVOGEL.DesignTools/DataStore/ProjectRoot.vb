@@ -394,7 +394,7 @@ Namespace DataStore
                         FileName = FileName & ".dat"
 
                         For Each Surface In Model.Objects
-                            Surface.ExportConnectivityFile(FileName, True)
+                            Surface.ExportNativeFile(FileName, True)
                         Next
 
                     Else
@@ -411,7 +411,7 @@ Namespace DataStore
                                 Name = "Surface_" & I
                             End If
 
-                            Surface.ExportConnectivityFile(FileName & "_" & Name & ".dat", False)
+                            Surface.ExportNativeFile(FileName & "_" & Name & ".dat", False)
 
                         Next
 

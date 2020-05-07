@@ -17,6 +17,7 @@ namespace DotNumerics.LinearAlgebra
 
         /// <summary>
         /// Computes the LU decomposition of the given matrix a
+        /// Original C header:
         /// void dgetrf (const MKL_INT* m, const MKL_INT* n, double* a, const MKL_INT* lda,
         ///              MKL_INT* ipiv, MKL_INT* info);
         /// </summary>
@@ -26,6 +27,7 @@ namespace DotNumerics.LinearAlgebra
 
         /// <summary>
         /// Computes the solution vector for the given LU matrix
+        /// Original C header:
         /// void dgetrs (const char* trans, const MKL_INT* n, const MKL_INT* nrhs,
         ///              const double* a, const MKL_INT* lda, const MKL_INT* ipiv,
         ///              double* b, const MKL_INT* ldb, MKL_INT* info);
@@ -86,6 +88,8 @@ namespace DotNumerics.LinearAlgebra
                     }
                 }
 
+                // Case 3
+                Console.WriteLine("Solving linear equations with MKL dgetrs...");
                 info = 0;
                 int nrhs = 1;
                 double[] R = new double[3];

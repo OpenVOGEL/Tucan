@@ -122,11 +122,11 @@ namespace DotNumerics.LinearAlgebra
             this._dgesv.Run(numberEquations, numberSolutions, ref AMatrix, 0, numberEquations, ref IPIV, 0, ref BMatrix, 0, numberEquations, ref Info);
             
             #region Error
-            /// = 0:  successful exit
-            /// .LT. 0:  if INFO = -i, the i-th argument had an illegal value
-            /// .GT. 0:  if INFO = i, U(i,i) is exactly zero.  The factorization
-            /// has been completed, but the factor U is exactly
-            /// singular, so the solution could not be computed.
+            // = 0:  successful exit
+            // .LT. 0:  if INFO = -i, the i-th argument had an illegal value
+            // .GT. 0:  if INFO = i, U(i,i) is exactly zero.  The factorization
+            // has been completed, but the factor U is exactly
+            // singular, so the solution could not be computed.
 
             if (Info < 0)
             {
@@ -193,6 +193,11 @@ namespace DotNumerics.LinearAlgebra
                                 
         }
 
+        /// <summary>
+        /// Solves the system of equations for right hand side vector B.
+        /// </summary>
+        /// <param name="B"></param>
+        /// <param name="X"></param>
         public void SolveLU(Vector B, Vector X)
         {
             if (_LU != null)
@@ -221,10 +226,15 @@ namespace DotNumerics.LinearAlgebra
             }
         }
 
+        /// <summary>
+        /// Solves the system of equations for each column of matrix B.
+        /// </summary>
         public void SolveLU(Matrix B, Matrix X)
         {
             if (_LU != null)
             {
+                // TODO: implement direct MKL method
+
                 if (B.RowCount == _N & X.RowCount == _N & B.ColumnCount == X.ColumnCount)
                 {
                     for (int j = 0; j < B.ColumnCount; j++)

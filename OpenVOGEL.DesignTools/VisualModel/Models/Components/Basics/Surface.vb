@@ -362,13 +362,13 @@ Namespace VisualModel.Models.Components.Basics
         End Sub
 
         ''' <summary>
-        ''' Writes a connectivity file containing the model mesh.
+        ''' Writes a connectivity file containing the model mesh in native OpenVOGEL format.
         ''' Note that this method can be overriden by classes inheriting Surface, so this is probably not the final implementation.
         ''' </summary>
         ''' <param name="FilePath">The target file</param>
         ''' <param name="Append">Indicates if the information must be added to the given file without the solid header</param>
-        ''' <param name="Transformation">The linear transformation if necessary (or nothing)</param>
-        Public Overridable Sub ExportConnectivityFile(FilePath As String, Optional Append As Boolean = False, Optional Transformation As Matrix3x3 = Nothing)
+        ''' <param name="Transformation">The linear transformation if necessary (or Nothing)</param>
+        Public Overridable Sub ExportNativeFile(FilePath As String, Optional Append As Boolean = False, Optional Transformation As Matrix3x3 = Nothing)
 
             Dim FileId As Integer = FreeFile()
 
