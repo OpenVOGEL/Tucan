@@ -747,6 +747,8 @@ ErrSub:
 
         UpdateMeshInfo()
 
+        ModelInterface.RefreshOnGL()
+
     End Sub
 
     Private Sub UpdateMeshInfo()
