@@ -301,7 +301,7 @@ Public Class WingControl
         nudCMy.Value = Surface.CurrentRegion.TipSection.CMy
         nudCMz.Value = Surface.CurrentRegion.TipSection.CMz
 
-        Dim camber As CamberLine = CamberLinesDatabase.GetCamberLineFromID(Surface.CurrentRegion.CamberLineID)
+        Dim camber As CamberLine = CamberLinesDatabase.GetCamberLineFromId(Surface.CurrentRegion.CamberLineId)
 
         If camber IsNot Nothing Then
             lblCamberLineName.Text = camber.Name
@@ -839,7 +839,7 @@ Public Class WingControl
 
         Dim g As Graphics = e.Graphics
 
-        DrawCamberLine(GetCamberLineFromID(Surface.CurrentRegion.CamberLineID), nudChordwisePanels.Value, pbProfileSketch.Width, pbProfileSketch.Height, g)
+        DrawCamberLine(GetCamberLineFromId(Surface.CurrentRegion.CamberLineId), nudChordwisePanels.Value, pbProfileSketch.Width, pbProfileSketch.Height, g)
 
     End Sub
 
@@ -893,11 +893,11 @@ Public Class WingControl
 
         If (Surface.CurrentRegion IsNot Nothing) Then
 
-            Dim form As New FormCamberLine(Surface.CurrentRegion.CamberLineID)
+            Dim form As New FormCamberLine(Surface.CurrentRegion.CamberLineId)
 
             Select Case form.ShowDialog()
                 Case DialogResult.OK
-                    Surface.CurrentRegion.CamberLineID = form.SelectedCamberID
+                    Surface.CurrentRegion.CamberLineId = form.SelectedCamberID
                     Surface.GenerateMesh()
                     RaiseEvent RefreshGL()
             End Select

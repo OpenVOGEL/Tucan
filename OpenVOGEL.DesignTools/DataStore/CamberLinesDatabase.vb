@@ -34,7 +34,7 @@ Namespace DataStore
 
         End Sub
 
-        Public Function GetCamberLineFromID(ID As Guid) As CamberLine
+        Public Function GetCamberLineFromId(ID As Guid) As CamberLine
 
             For i = 0 To CamberLines.Count - 1
 
