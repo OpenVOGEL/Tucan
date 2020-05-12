@@ -112,7 +112,7 @@ Public Class CustomPolarControl
             dgvNodes.Columns(1).Width = ColumnWidth
             dgvNodes.Columns(1).SortMode = DataGridViewColumnSortMode.NotSortable
 
-            dgvNodes.Columns.Add("Y", "CDi")
+            dgvNodes.Columns.Add("Y", "CD")
             dgvNodes.Columns(2).Width = ColumnWidth
             dgvNodes.Columns(2).SortMode = DataGridViewColumnSortMode.NotSortable
 
