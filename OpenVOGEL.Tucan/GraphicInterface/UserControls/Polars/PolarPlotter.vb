@@ -29,6 +29,7 @@ Public Class PolarPlotter
     Private ActiveCurvePen As New Pen(Color.Blue, 2)
     Private MarkerPen As New Pen(Color.Black, 1)
     Private FontLabel As New Font("Segoe UI", 6.5)
+    Private FontAxis As New Font("Segoe UI", 10.0)
     Private MarginX As Integer = 10
     Private MarginY As Integer = 10
 
@@ -145,6 +146,10 @@ Public Class PolarPlotter
             x = CSng(MarginX - GraphW * Xmin / dx)
             g.DrawLine(AxisPen, x, MarginY, x, MarginY + GraphH)
         End If
+
+        g.DrawString("CL", FontAxis, Brushes.Black, LimitXmin + 2, LimitYmin + 2)
+        Dim Size As SizeF = g.MeasureString("CD", FontAxis)
+        g.DrawString("CD", FontAxis, Brushes.Black, LimitXmax - Size.Width - 2, LimitYmax - Size.Height - 2)
 
     End Sub
 

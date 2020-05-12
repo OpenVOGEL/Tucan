@@ -246,20 +246,25 @@ Public Class CustomPolarControl
     End Sub
 
     Private Sub GetFromClipboard() Handles btnGetFromClipboard.Click
+        ' Extract clipbard data and load it on the polar
 
-        If Clipboard.ContainsText Then
+        If Not Polar Is Nothing AndAlso Clipboard.ContainsText Then
 
             _Polar.Nodes.Clear()
 
-            Dim data() As String = Clipboard.GetText.Split(vbNewLine)
+            ' Separate lines by carriage return / line feed
 
-            For Each line As String In data
+            Dim Data() As String = Clipboard.GetText.Split({Chr(10), Chr(13)}, StringSplitOptions.RemoveEmptyEntries)
 
-                Dim points() As String = line.Split(vbTab)
+            For Each Line As String In Data
 
-                If points IsNot Nothing AndAlso points.Length = 2 Then
+                ' Accept tabs, space and ";" characters as separators
 
-                    _Polar.Nodes.Add(New Vector2(CDbl(points(0)), CDbl(points(1))))
+                Dim Points() As String = Line.Split({Chr(9), Chr(32), Chr(59)}, StringSplitOptions.RemoveEmptyEntries)
+
+                If Points IsNot Nothing AndAlso Points.Length = 2 Then
+
+                    _Polar.Nodes.Add(New Vector2(CDbl(Points(0)), CDbl(Points(1))))
 
                 End If
 
