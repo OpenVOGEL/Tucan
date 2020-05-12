@@ -23,13 +23,17 @@ Public Class PolarPlotter
     Private _Family As PolarFamily
     Private _Polar As IPolarCurve
 
-    Private AxisPen As New Pen(Color.DarkGray, 2)
-    Private GridPen As New Pen(Color.Gainsboro, 1)
-    Private OtherCurvePen As New Pen(Color.Gray, 2)
-    Private ActiveCurvePen As New Pen(Color.Blue, 2)
-    Private MarkerPen As New Pen(Color.Black, 1)
+    Private Background As SolidBrush = Brushes.Black
+    Private AxisPen As New Pen(Color.DimGray, 2)
+    Private GridPen As New Pen(Color.DimGray, 1)
+    Private OtherCurvePen As New Pen(Color.Gainsboro, 2)
+    Private ActiveCurvePen As New Pen(Color.GreenYellow, 2)
+    Private MarkerPen As New Pen(Color.GreenYellow, 1)
+    Private MarkerFill As SolidBrush = Brushes.DarkGreen
     Private FontLabel As New Font("Segoe UI", 6.5)
     Private FontAxis As New Font("Segoe UI", 10.0)
+    Private FontAxisColor As SolidBrush = Brushes.White
+
     Private MarginX As Integer = 10
     Private MarginY As Integer = 10
 
@@ -67,6 +71,9 @@ Public Class PolarPlotter
 
     End Sub
 
+    ''' <summary>
+    ''' Dereferences the polar
+    ''' </summary>
     Public Sub ClearPolar()
 
         _Polar = Nothing
@@ -74,12 +81,21 @@ Public Class PolarPlotter
 
     End Sub
 
+    ''' <summary>
+    ''' The current polar
+    ''' </summary>
+    ''' <returns></returns>
     Public ReadOnly Property Polar As IPolarCurve
         Get
             Return _Polar
         End Get
     End Property
 
+    ''' <summary>
+    ''' Draws the curves in the polar family
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
     Private Sub DrawCurve(sender As Object, e As System.Windows.Forms.PaintEventArgs) Handles MyBase.Paint
 
         ' Gridlines and axes
@@ -106,7 +122,13 @@ Public Class PolarPlotter
 
     End Sub
 
+    ''' <summary>
+    ''' Drwas the grid and the axis labels
+    ''' </summary>
+    ''' <param name="g"></param>
     Private Sub DrawGrid(g As Graphics)
+
+        g.FillRectangle(Background, 0, 0, Width, Height)
 
         Dim nx As Integer = 10
         Dim x As Single
@@ -147,9 +169,9 @@ Public Class PolarPlotter
             g.DrawLine(AxisPen, x, MarginY, x, MarginY + GraphH)
         End If
 
-        g.DrawString("CL", FontAxis, Brushes.Black, LimitXmin + 2, LimitYmin + 2)
+        g.DrawString("CL", FontAxis, FontAxisColor, LimitXmin + 2, LimitYmin + 2)
         Dim Size As SizeF = g.MeasureString("CD", FontAxis)
-        g.DrawString("CD", FontAxis, Brushes.Black, LimitXmax - Size.Width - 2, LimitYmax - Size.Height - 2)
+        g.DrawString("CD", FontAxis, FontAxisColor, LimitXmax - Size.Width - 2, LimitYmax - Size.Height - 2)
 
     End Sub
 
@@ -191,72 +213,72 @@ Public Class PolarPlotter
 
                         Dim pnts(Custom.Nodes.Count) As Point
 
-                            ' convert to screen coordinates
+                        ' convert to screen coordinates
+
+                        For i = 0 To Custom.Nodes.Count - 1
+
+                            pnts(i).X = MarginX + gW * (Custom.Nodes(i).X - Xmin) / dx
+                            pnts(i).Y = MarginY + gH * (1 - Custom.Nodes(i).Y / Ymax)
+
+                        Next
+
+                        ' draw lines:
+
+                        For i = 1 To Custom.Nodes.Count - 1
+
+                            g.DrawLine(CurvePen, pnts(i - 1), pnts(i))
+
+                        Next
+
+                        ' draw points:
+
+                        If WithNodes Then
+
+                            HighlightedPointIndex = -1
+                            Dim pnt As Point
 
                             For i = 0 To Custom.Nodes.Count - 1
 
-                                pnts(i).X = MarginX + gW * (Custom.Nodes(i).X - Xmin) / dx
-                                pnts(i).Y = MarginY + gH * (1 - Custom.Nodes(i).Y / Ymax)
+                                pnt = pnts(i)
 
-                            Next
+                                Dim dmx As Single = pnt.X - MousePoint.X
+                                Dim dmy As Single = pnt.Y - MousePoint.Y
 
-                            ' draw lines:
+                                ' draw marker:
 
-                            For i = 1 To Custom.Nodes.Count - 1
+                                If dmx * dmx + dmy * dmy < 9 Then
 
-                                g.DrawLine(CurvePen, pnts(i - 1), pnts(i))
+                                    HighlightedPointIndex = i
 
-                            Next
+                                    g.FillEllipse(Brushes.Orange, pnt.X - 3, pnt.Y - 3, 6, 6)
+                                    g.DrawEllipse(MarkerPen, pnt.X - 3, pnt.Y - 3, 6, 6)
 
-                            ' draw points:
+                                Else
 
-                            If WithNodes Then
-
-                                HighlightedPointIndex = -1
-                                Dim pnt As Point
-
-                                For i = 0 To Custom.Nodes.Count - 1
-
-                                    pnt = pnts(i)
-
-                                    Dim dmx As Single = pnt.X - MousePoint.X
-                                    Dim dmy As Single = pnt.Y - MousePoint.Y
-
-                                    ' draw marker:
-
-                                    If dmx * dmx + dmy * dmy < 9 Then
-
-                                        HighlightedPointIndex = i
-
-                                        g.FillEllipse(Brushes.Orange, pnt.X - 3, pnt.Y - 3, 6, 6)
-                                        g.DrawEllipse(MarkerPen, pnt.X - 3, pnt.Y - 3, 6, 6)
-
-                                    Else
-
-                                        g.FillEllipse(Brushes.White, pnt.X - 3, pnt.Y - 3, 6, 6)
-                                        g.DrawEllipse(MarkerPen, pnt.X - 3, pnt.Y - 3, 6, 6)
-
-                                    End If
-
-                                Next
-
-                                ' draw label on selected point:
-
-                                If HighlightedPointIndex >= 0 Then
-
-                                    pnt = pnts(HighlightedPointIndex)
-
-                                    Dim lblPoint As String = String.Format("CL = {0:F3} / CD = {1:F4}", Custom.Nodes(HighlightedPointIndex).X, Custom.Nodes(HighlightedPointIndex).Y)
-
-                                    DrawLabel(g, lblPoint, pnt, FontLabel)
+                                    g.FillEllipse(MarkerFill, pnt.X - 3, pnt.Y - 3, 6, 6)
+                                    g.DrawEllipse(MarkerPen, pnt.X - 3, pnt.Y - 3, 6, 6)
 
                                 End If
+
+                            Next
+
+                            ' draw label on selected point:
+
+                            If HighlightedPointIndex >= 0 Then
+
+                                pnt = pnts(HighlightedPointIndex)
+
+                                Dim lblPoint As String = String.Format("CL = {0:F3} / CD = {1:F4}", Custom.Nodes(HighlightedPointIndex).X, Custom.Nodes(HighlightedPointIndex).Y)
+
+                                DrawLabel(g, lblPoint, pnt, FontLabel)
 
                             End If
 
                         End If
 
                     End If
+
+                End If
 
             ElseIf TypeOf Curve Is QuadraticPolar Then
 
@@ -303,7 +325,7 @@ Public Class PolarPlotter
 
                         Else
 
-                            g.FillEllipse(Brushes.White, pnt.X - 3, pnt.Y - 3, 6, 6)
+                            g.FillEllipse(MarkerFill, pnt.X - 3, pnt.Y - 3, 6, 6)
                             g.DrawEllipse(MarkerPen, pnt.X - 3, pnt.Y - 3, 6, 6)
 
                         End If

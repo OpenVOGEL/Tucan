@@ -69,7 +69,7 @@ Public Class FormPolarCurve
     End Sub
 
 
-    Public ReadOnly Property SelectedFamilyID As Guid
+    Public ReadOnly Property SelectedFamilyId As Guid
         Get
             If IsNothing(CurrentFamily) Then
                 Return Guid.Empty
@@ -79,7 +79,7 @@ Public Class FormPolarCurve
         End Get
     End Property
 
-    Public ReadOnly Property SelectedPolarID As Guid
+    Public ReadOnly Property SelectedPolarId As Guid
         Get
             If IsNothing(CurrentPolar) Then
                 Return Guid.Empty

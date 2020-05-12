@@ -854,9 +854,9 @@ Public Class WingControl
             End If
             Dim form As New FormPolarCurve(PolarDataBase, ID)
             If form.ShowDialog() = vbOK Then
-                If Not form.SelectedFamilyID.Equals(Guid.Empty) Then
-                    Surface.CurrentRegion.PolarFamiliy = PolarDataBase.GetFamilyFromID(form.SelectedFamilyID)
-                    Surface.CurrentRegion.PolarID = form.SelectedFamilyID
+                If Not form.SelectedFamilyId.Equals(Guid.Empty) Then
+                    Surface.CurrentRegion.PolarFamiliy = PolarDataBase.GetFamilyFromID(form.SelectedFamilyId)
+                    Surface.CurrentRegion.PolarID = form.SelectedFamilyId
                 End If
             End If
             LoadRegionToForm()

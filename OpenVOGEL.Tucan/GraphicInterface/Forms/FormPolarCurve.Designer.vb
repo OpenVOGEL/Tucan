@@ -200,7 +200,7 @@ Partial Class FormPolarCurve
         Me.ShowIcon = False
         Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
-        Me.Text = "Polar curves"
+        Me.Text = "Polar curves for airfoil skin drag"
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
