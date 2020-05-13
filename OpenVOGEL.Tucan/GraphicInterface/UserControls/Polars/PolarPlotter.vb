@@ -169,9 +169,9 @@ Public Class PolarPlotter
             g.DrawLine(AxisPen, x, MarginY, x, MarginY + GraphH)
         End If
 
-        g.DrawString("CL", FontAxis, FontAxisColor, LimitXmin + 2, LimitYmin + 2)
-        Dim Size As SizeF = g.MeasureString("CD", FontAxis)
-        g.DrawString("CD", FontAxis, FontAxisColor, LimitXmax - Size.Width - 2, LimitYmax - Size.Height - 2)
+        g.DrawString("CD", FontAxis, FontAxisColor, LimitXmin + 2, LimitYmin + 2)
+        Dim Size As SizeF = g.MeasureString("CL", FontAxis)
+        g.DrawString("CL", FontAxis, FontAxisColor, LimitXmax - Size.Width - 2, LimitYmax - Size.Height - 2)
 
     End Sub
 
