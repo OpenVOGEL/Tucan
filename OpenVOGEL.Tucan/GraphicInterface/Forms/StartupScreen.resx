@@ -168,13 +168,13 @@ Original author: Guillermo Hazebrouck</value>
     <value>6, 220</value>
   </data>
   <data name="LabelLicense.Size" type="System.Drawing.Size, System.Drawing">
-    <value>90, 15</value>
+    <value>91, 15</value>
   </data>
   <data name="LabelLicense.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>
   </data>
   <data name="LabelLicense.Text" xml:space="preserve">
-    <value>Compilation 2.1</value>
+    <value>Compilation 2.2</value>
   </data>
   <data name="LabelLicense.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
     <value>MiddleRight</value>
