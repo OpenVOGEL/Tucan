@@ -60,9 +60,12 @@ Namespace CalculationModel.Solver
                     Dim Point As Vector3 = VortexRing.ControlPoint
                     Dim InducedVelocity As New Vector3
 
-                    ' Calculate the total induced velocity at the control point by streamwise segments only:
+                    ' Calculate the total induced velocity at the control point
+                    '----------------------------------------------------------
 
                     For Each OtherLattice In Lattices
+
+                        ' Streamwise wing segments:
 
                         For Each OtherRing In OtherLattice.VortexRings
 
@@ -77,6 +80,8 @@ Namespace CalculationModel.Solver
                             End If
 
                         Next
+
+                        ' Streamwise wake vortex filaments:
 
                         For Each Wake In OtherLattice.Wakes
 
@@ -94,21 +99,19 @@ Namespace CalculationModel.Solver
 
                     Next
 
-                    ' Take the component of iVelocity in the direction of the projection of the normal vector to the normal plane
+                    ' Compute the local downwash (the component of the induced velocity in the direction 
+                    ' of the projection of the normal vector to the normal plane).
+                    '-----------------------------------------------------------------------------------
 
-                    Dim NormalVelocity As Double = Stream.Velocity.InnerProduct(VortexRing.Normal)
-
-                    Projection.SetToCero()
-                    Projection.X = VortexRing.Normal.X - NormalVelocity * StreamDirection.X
-                    Projection.Y = VortexRing.Normal.Y - NormalVelocity * StreamDirection.Y
-                    Projection.Z = VortexRing.Normal.Z - NormalVelocity * StreamDirection.Z
-
-                    Dim ProjectionNorm As Double = Projection.EuclideanNorm
+                    Projection.X = VortexRing.Normal.X * (1.0 - StreamDirection.X)
+                    Projection.Y = VortexRing.Normal.Y * (1.0 - StreamDirection.Y)
+                    Projection.Z = VortexRing.Normal.Z * (1.0 - StreamDirection.Z)
 
                     Projection.Normalize()
 
-                    Dim Deflection As Double = Math.Abs(InducedVelocity.InnerProduct(Projection))
-                    VortexRing.Cdi = ProjectionNorm * Math.Abs(VortexRing.Cp) * Deflection / V
+                    Dim Downwash As Double = Math.Abs(InducedVelocity.InnerProduct(Projection))
+
+                    VortexRing.Cdi = Math.Abs(VortexRing.Cp) * Downwash / V
 
                 Next
 

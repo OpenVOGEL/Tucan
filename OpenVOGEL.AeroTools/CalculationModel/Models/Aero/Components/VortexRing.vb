@@ -190,11 +190,11 @@ Namespace CalculationModel.Models.Aero.Components
         ''' Computes the induced velocity at a given point by counting only the streamwise vortices.
         ''' </summary>
         ''' <param name="Point">Point where influence is to be calculated</param>
-        ''' <param name="N1">First streamwise segment</param>
-        ''' <param name="N2">Second streamwise segment</param>
+        ''' <param name="S1">First streamwise segment</param>
+        ''' <param name="S2">Second streamwise segment</param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Function StreamwiseInfluence(ByVal Point As Vector3, ByVal N1 As Integer, ByVal N2 As Integer, Optional ByVal CutOff As Double = 0.0001) As Vector3
+        Function StreamwiseInfluence(ByVal Point As Vector3, ByVal S1 As Integer, ByVal S2 As Integer, Optional ByVal CutOff As Double = 0.0001) As Vector3
 
         ''' <summary>
         ''' Approaches the local velocity using the local source strength and the circulation of the adjacent panels.
