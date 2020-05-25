@@ -110,7 +110,7 @@ Namespace CalculationModel.Solver
 
                 RaiseEvent PushMessage(" > Writing binaries")
 
-                Me.WriteToXML(String.Format("{0}\Unsteady.T{1}.res", Transit_Path, TimeStep))
+                Me.WriteToXML(TransitResFile(TimeStep))
 
                 BuildRightHandSide2()
 

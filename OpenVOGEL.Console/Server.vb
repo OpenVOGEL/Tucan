@@ -83,7 +83,7 @@ Public Module Server
 
                             Finally
 
-                                Squeak(Squeaker, "done;" & String.Format("{0}\Steady.res", DataStore.CalculationCore.Steady_Path))
+                                Squeak(Squeaker, "done;" & System.IO.Path.Combine(DataStore.CalculationCore.SteadyPath, "Steady.res"))
                                 Squeaker.Close()
 
                             End Try

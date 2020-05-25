@@ -99,7 +99,7 @@ Namespace CalculationModel.Solver
 
             'f.PushMessageWithProgress("Writing to database", 100)
 
-            Me.WriteToXML(String.Format("{0}\Steady.res", Steady_Path), True)
+            Me.WriteToXML(String.Format("{0}\Steady.res", SteadyPath), True)
 
             'f.PushState("Calculation finished")
 

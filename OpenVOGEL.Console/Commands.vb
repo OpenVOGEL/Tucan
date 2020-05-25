@@ -89,10 +89,19 @@ Module Commands
                         DataStore.FilePath = System.Console.ReadLine
                         DataStore.ProjectRoot.RestartProject()
                         DataStore.ProjectRoot.ReadFromXML()
+                        System.Console.WriteLine(String.Format("loaded {0} objects", DataStore.ProjectRoot.Model.Objects.Count))
 
                     Case "steady"
 
                         DataStore.StartCalculation(AeroTools.CalculationModel.Settings.CalculationType.ctSteady)
+
+                    Case "alfascan"
+
+                        If Commands.Length > 3 Then
+
+                            BatchAnalysis.AlfaScan(CDbl(Commands(1)), CDbl(Commands(2)), CDbl(Commands(3)))
+
+                        End If
 
                     Case "print_report"
 

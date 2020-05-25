@@ -184,16 +184,16 @@ Namespace CalculationModel.Solver
 
         End Enum
 
-        Const DB_File_Structure = "_Structural"
-        Const DB_File_Aeroelastic = "_Aeroelastic"
-        Const DB_File_Steady = "_Steady"
-        Const DB_File_Transit = "_Unsteady"
+        Const DatabaseFileStructure = "_Structural"
+        Const DatabaseFileAeroelastic = "_Aeroelastic"
+        Const DatabaseFileSteady = "_Steady"
+        Const DatabaseFileTransit = "_Unsteady"
 
-        Public Base_Path As String
-        Public Structure_Path As String
-        Public Aeroelastic_Path As String
-        Public Steady_Path As String
-        Public Transit_Path As String
+        Public BasePath As String
+        Public StructurePath As String
+        Public AeroelasticPath As String
+        Public SteadyPath As String
+        Public TransitPath As String
 
         ''' <summary>
         ''' Creates the subfolders where results are stored
@@ -203,12 +203,11 @@ Namespace CalculationModel.Solver
 
             If DataBasePath IsNot Nothing AndAlso DataBasePath <> "" Then
 
-                Dim Base_Path As String = Path.Combine(Path.GetDirectoryName(DataBasePath), Path.GetFileNameWithoutExtension(DataBasePath))
-
-                Structure_Path = Base_Path + DB_File_Structure
-                Aeroelastic_Path = Base_Path + DB_File_Aeroelastic
-                Steady_Path = Base_Path + DB_File_Steady
-                Transit_Path = Base_Path + Transit_Path
+                BasePath = Path.Combine(Path.GetDirectoryName(DataBasePath), Path.GetFileNameWithoutExtension(DataBasePath))
+                StructurePath = BasePath + DatabaseFileStructure
+                AeroelasticPath = BasePath + DatabaseFileAeroelastic
+                SteadyPath = BasePath + DatabaseFileSteady
+                TransitPath = BasePath + TransitPath
 
             Else
 
@@ -226,16 +225,16 @@ Namespace CalculationModel.Solver
                 Select Case DataBaseSection
 
                     Case Solver.DataBaseSection.Aeroelastic
-                        System.IO.Directory.CreateDirectory(Aeroelastic_Path)
+                        System.IO.Directory.CreateDirectory(AeroelasticPath)
 
                     Case Solver.DataBaseSection.Steady
-                        System.IO.Directory.CreateDirectory(Steady_Path)
+                        System.IO.Directory.CreateDirectory(SteadyPath)
 
                     Case Solver.DataBaseSection.Structural
-                        System.IO.Directory.CreateDirectory(Structure_Path)
+                        System.IO.Directory.CreateDirectory(StructurePath)
 
                     Case Solver.DataBaseSection.Unsteady
-                        System.IO.Directory.CreateDirectory(Transit_Path)
+                        System.IO.Directory.CreateDirectory(TransitPath)
 
                 End Select
 
@@ -249,6 +248,36 @@ Namespace CalculationModel.Solver
         End Sub
 
         ''' <summary>
+        ''' The file where the steady state results are written
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property SteadyResFile As String
+            Get
+                Return System.IO.Path.Combine(SteadyPath, "Steady.res")
+            End Get
+        End Property
+
+        ''' <summary>
+        ''' The file where the aeroelastic results are written
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property AeroelasticResFile(TimeStep As Integer) As String
+            Get
+                Return System.IO.Path.Combine(AeroelasticPath, String.Format("Aeroelastic_{0}.res", TimeStep))
+            End Get
+        End Property
+
+        ''' <summary>
+        ''' The file where the transit results are written
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property TransitResFile(TimeStep As Integer) As String
+            Get
+                Return System.IO.Path.Combine(AeroelasticPath, String.Format("Transit_{0}.res", TimeStep))
+            End Get
+        End Property
+
+        ''' <summary>
         ''' Removes all calculation files from the selected path
         ''' </summary>
         ''' <remarks></remarks>
@@ -259,16 +288,16 @@ Namespace CalculationModel.Solver
             Select Case DataBaseSection
 
                 Case Solver.DataBaseSection.Aeroelastic
-                    path = Aeroelastic_Path
+                    path = AeroelasticPath
 
                 Case Solver.DataBaseSection.Steady
-                    path = Steady_Path
+                    path = SteadyPath
 
                 Case Solver.DataBaseSection.Structural
-                    path = Structure_Path
+                    path = StructurePath
 
                 Case Solver.DataBaseSection.Unsteady
-                    path = Transit_Path
+                    path = TransitPath
 
             End Select
 
@@ -319,51 +348,51 @@ Namespace CalculationModel.Solver
                 RaiseEvent PushResultLine(String.Format("S = {0:F6}m²", Lattice.AirLoads.Area))
                 RaiseEvent PushResultLine("")
 
-                RaiseEvent PushResultLine(String.Format("CL = {0:F6}", Lattice.AirLoads.CL))
-                RaiseEvent PushResultLine(String.Format("CDi = {0:F6}", Lattice.AirLoads.CDi))
-                RaiseEvent PushResultLine(String.Format("CDp = {0:F6}", Lattice.AirLoads.CDp))
+                RaiseEvent PushResultLine(String.Format("CL = {0:F6}", Lattice.AirLoads.LiftCoefficient))
+                RaiseEvent PushResultLine(String.Format("CDi = {0:F6}", Lattice.AirLoads.InducedDragCoefficient))
+                RaiseEvent PushResultLine(String.Format("CDp = {0:F6}", Lattice.AirLoads.SkinDragCoefficient))
                 RaiseEvent PushResultLine("")
 
                 RaiseEvent PushResultLine("Force due to local lift")
 
-                RaiseEvent PushResultLine(String.Format("Fx/qS = {0:F8}", Lattice.AirLoads.SlenderForce.X))
-                RaiseEvent PushResultLine(String.Format("Fy/qS = {0:F8}", Lattice.AirLoads.SlenderForce.Y))
-                RaiseEvent PushResultLine(String.Format("Fz/qS = {0:F8}", Lattice.AirLoads.SlenderForce.Z))
+                RaiseEvent PushResultLine(String.Format("Fx/qS = {0:F8}", Lattice.AirLoads.LiftForce.X))
+                RaiseEvent PushResultLine(String.Format("Fy/qS = {0:F8}", Lattice.AirLoads.LiftForce.Y))
+                RaiseEvent PushResultLine(String.Format("Fz/qS = {0:F8}", Lattice.AirLoads.LiftForce.Z))
                 RaiseEvent PushResultLine("")
 
                 RaiseEvent PushResultLine("Moment due to local lift")
 
-                RaiseEvent PushResultLine(String.Format("Mx/qS = {0:F8}", Lattice.AirLoads.SlenderMoment.X))
-                RaiseEvent PushResultLine(String.Format("My/qS = {0:F8}", Lattice.AirLoads.SlenderMoment.Y))
-                RaiseEvent PushResultLine(String.Format("Mz/qS = {0:F8}", Lattice.AirLoads.SlenderMoment.Z))
+                RaiseEvent PushResultLine(String.Format("Mx/qS = {0:F8}", Lattice.AirLoads.LiftMoment.X))
+                RaiseEvent PushResultLine(String.Format("My/qS = {0:F8}", Lattice.AirLoads.LiftMoment.Y))
+                RaiseEvent PushResultLine(String.Format("Mz/qS = {0:F8}", Lattice.AirLoads.LiftMoment.Z))
                 RaiseEvent PushResultLine("")
 
                 RaiseEvent PushResultLine("Force due to local induced drag")
 
-                RaiseEvent PushResultLine(String.Format("Fx/qS = {0:F8}", Lattice.AirLoads.InducedDrag.X))
-                RaiseEvent PushResultLine(String.Format("Fy/qS = {0:F8}", Lattice.AirLoads.InducedDrag.Y))
-                RaiseEvent PushResultLine(String.Format("Fz/qS = {0:F8}", Lattice.AirLoads.InducedDrag.Z))
+                RaiseEvent PushResultLine(String.Format("Fx/qS = {0:F8}", Lattice.AirLoads.InducedDragForce.X))
+                RaiseEvent PushResultLine(String.Format("Fy/qS = {0:F8}", Lattice.AirLoads.InducedDragForce.Y))
+                RaiseEvent PushResultLine(String.Format("Fz/qS = {0:F8}", Lattice.AirLoads.InducedDragForce.Z))
                 RaiseEvent PushResultLine("")
 
                 RaiseEvent PushResultLine("Moment due to local induced drag")
 
-                RaiseEvent PushResultLine(String.Format("Mx/qS = {0:F8}", Lattice.AirLoads.InducedMoment.X))
-                RaiseEvent PushResultLine(String.Format("My/qS = {0:F8}", Lattice.AirLoads.InducedMoment.Y))
-                RaiseEvent PushResultLine(String.Format("Mz/qS = {0:F8}", Lattice.AirLoads.InducedMoment.Z))
+                RaiseEvent PushResultLine(String.Format("Mx/qS = {0:F8}", Lattice.AirLoads.InducedDragMoment.X))
+                RaiseEvent PushResultLine(String.Format("My/qS = {0:F8}", Lattice.AirLoads.InducedDragMoment.Y))
+                RaiseEvent PushResultLine(String.Format("Mz/qS = {0:F8}", Lattice.AirLoads.InducedDragMoment.Z))
                 RaiseEvent PushResultLine("")
 
                 RaiseEvent PushResultLine("Force due to local skin drag")
 
-                RaiseEvent PushResultLine(String.Format("Fx/qS = {0:F8}", Lattice.AirLoads.SkinDrag.X))
-                RaiseEvent PushResultLine(String.Format("Fy/qS = {0:F8}", Lattice.AirLoads.SkinDrag.Y))
-                RaiseEvent PushResultLine(String.Format("Fz/qS = {0:F8}", Lattice.AirLoads.SkinDrag.Z))
+                RaiseEvent PushResultLine(String.Format("Fx/qS = {0:F8}", Lattice.AirLoads.SkinDragForce.X))
+                RaiseEvent PushResultLine(String.Format("Fy/qS = {0:F8}", Lattice.AirLoads.SkinDragForce.Y))
+                RaiseEvent PushResultLine(String.Format("Fz/qS = {0:F8}", Lattice.AirLoads.SkinDragForce.Z))
                 RaiseEvent PushResultLine("")
 
                 RaiseEvent PushResultLine("Moment due to local skin drag")
 
-                RaiseEvent PushResultLine(String.Format("Mx/qS = {0:F8}", Lattice.AirLoads.SkinMoment.X))
-                RaiseEvent PushResultLine(String.Format("My/qS = {0:F8}", Lattice.AirLoads.SkinMoment.Y))
-                RaiseEvent PushResultLine(String.Format("Mz/qS = {0:F8}", Lattice.AirLoads.SkinMoment.Z))
+                RaiseEvent PushResultLine(String.Format("Mx/qS = {0:F8}", Lattice.AirLoads.SkinDragMoment.X))
+                RaiseEvent PushResultLine(String.Format("My/qS = {0:F8}", Lattice.AirLoads.SkinDragMoment.Y))
+                RaiseEvent PushResultLine(String.Format("Mz/qS = {0:F8}", Lattice.AirLoads.SkinDragMoment.Z))
                 RaiseEvent PushResultLine("")
                 RaiseEvent PushResultLine("Force on body")
 
@@ -383,7 +412,7 @@ Namespace CalculationModel.Solver
                 RaiseEvent PushResultLine("CD, CDi, CDp")
 
                 For Each cl In Lattice.ChordWiseStripes
-                    RaiseEvent PushResultLine(String.Format("{0:F8}, {1:F8}, {2:F8}", cl.CL, cl.CDi, cl.CDp))
+                    RaiseEvent PushResultLine(String.Format("{0:F8}, {1:F8}, {2:F8}", cl.LiftCoefficient, cl.InducedDragCoefficient, cl.SkinDragCoefficient))
                 Next
 
                 RaiseEvent PushResultLine("")

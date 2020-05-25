@@ -106,10 +106,10 @@ Namespace CalculationModel.Solver
                 RaiseEvent PushMessage(String.Format("Creating structural link {0}", L))
 
                 RaiseEvent PushMessage("Creating mass and stiffness matrices...")
-                StructuralLink.StructuralCore.CreateMatrices(Structure_Path, True)
+                StructuralLink.StructuralCore.CreateMatrices(StructurePath, True)
 
                 RaiseEvent PushMessage("Finding modes...")
-                StructuralLink.StructuralCore.FindModes(Structure_Path, L)
+                StructuralLink.StructuralCore.FindModes(StructurePath, L)
 
                 ' Update the minimum modal period:
 
@@ -320,7 +320,7 @@ Namespace CalculationModel.Solver
 
             RaiseEvent PushMessage("Writing binaries")
 
-            WriteToXML(String.Format("{0}\Aeroelastic.res", Aeroelastic_Path, Settings.SimulationSteps))
+            WriteToXML(AeroelasticResFile(Settings.SimulationSteps))
 
             RaiseEvent CalculationDone()
 

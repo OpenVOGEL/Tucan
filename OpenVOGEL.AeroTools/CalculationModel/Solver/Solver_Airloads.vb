@@ -24,7 +24,13 @@ Namespace CalculationModel.Solver
 
         'This part constains several methods used to calculate the total airloads
 
-#Region " Total aerodynamic force through modified surface integral "
+        ''' <summary>
+        ''' A snapshot on the total airloads (summed from all lattices)
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property GlobalAirloads As New Models.Aero.AirLoads
+
+#Region " Total aerodynamic force "
 
         ''' <summary>
         ''' Computes the total aerodynamic loads on each bounded lattice
@@ -126,22 +132,30 @@ Namespace CalculationModel.Solver
         ''' <remarks></remarks>
         Private Sub ComputeForcesAndMoments()
 
+            GlobalAirloads.Clear()
+            GlobalAirloads.DynamicPressure = Settings.DynamicPressure
+            GlobalAirloads.Area = 0.0
+            GlobalAirloads.Length = 1.0
+            Dim qS As Double = 0.0#
+
             For Each Lattice In Lattices
 
-                Lattice.AirLoads.CL = 0
-                Lattice.AirLoads.CDi = 0
-                Lattice.AirLoads.CDp = 0
-                Lattice.AirLoads.Area = 0
+                Lattice.AirLoads.DynamicPressure = Settings.DynamicPressure
+                Lattice.AirLoads.Area = 0.0
+                Lattice.AirLoads.Length = 1.0
 
-                Lattice.AirLoads.SlenderForce.SetToCero()
-                Lattice.AirLoads.InducedDrag.SetToCero()
-                Lattice.AirLoads.SkinDrag.SetToCero()
+                Lattice.AirLoads.LiftForce.SetToCero()
+                Lattice.AirLoads.InducedDragForce.SetToCero()
+                Lattice.AirLoads.SkinDragForce.SetToCero()
                 Lattice.AirLoads.Force.SetToCero()
-                Lattice.AirLoads.SlenderMoment.SetToCero()
-                Lattice.AirLoads.InducedMoment.SetToCero()
-                Lattice.AirLoads.SkinMoment.SetToCero()
+                Lattice.AirLoads.LiftMoment.SetToCero()
+                Lattice.AirLoads.InducedDragMoment.SetToCero()
+                Lattice.AirLoads.SkinDragMoment.SetToCero()
                 Lattice.AirLoads.BodyForce.SetToCero()
                 Lattice.AirLoads.BodyMoment.SetToCero()
+
+                ' Body force
+                '-------------------------------------------------------------
 
                 Dim FirstNode As Node = Lattice.Nodes.First
 
@@ -158,7 +172,7 @@ Namespace CalculationModel.Solver
 
                         If Settings.IncludeAproximateBodyFriction Then
                             'NOTE:
-                            'We estimate the local friction using a flat plate analogy.
+                            'We estimate the local friction using a flat plate analogy (extremely simplistic approach).
                             'This is simplified method has the next restrictions:
                             '> It does not take into account the pressure gradient.
                             '> It assumes everywhere a turbulent layer
@@ -171,58 +185,77 @@ Namespace CalculationModel.Solver
                             Dim LocalReynolds As Double = SurfaceVelocity * Distance * Settings.Density / Settings.Viscocity
                             Dim Stress As Double = 0.0576 * 0.5 * SurfaceVelocity ^ 2.0 * Settings.Density / Math.Pow(LocalReynolds, 0.2)
                             Cf = Ring.Area * Stress / Settings.DynamicPressure
-                            Lattice.AirLoads.SkinDrag.Add(Direction, Cf)
-                            Lattice.AirLoads.SkinMoment.AddCrossProduct(Ring.ControlPoint, Direction, Cf)
+                            Lattice.AirLoads.SkinDragForce.Add(Direction, Cf)
+                            Lattice.AirLoads.SkinDragMoment.AddCrossProduct(Ring.ControlPoint, Direction, Cf)
                         End If
 
                     End If
 
                 Next
 
+                Lattice.AirLoads.BodyForce.Scale(Settings.DynamicPressure)
+                Lattice.AirLoads.BodyMoment.Scale(Settings.DynamicPressure)
+
+                ' Slender surface forces (from the stripes)
+                '-------------------------------------------------------------
+
                 For Each Stripe In Lattice.ChordWiseStripes
 
                     Stripe.Compute(Stream.Velocity, Stream.Omega, Settings.Density, Settings.Viscocity)
 
-                    Lattice.AirLoads.SlenderForce.Add(Stripe.L, Stripe.Area)
-                    Lattice.AirLoads.InducedDrag.Add(Stripe.Di, Stripe.Area)
-                    Lattice.AirLoads.SkinDrag.Add(Stripe.Dp, Stripe.Area)
-                    Lattice.AirLoads.SlenderMoment.Add(Stripe.ML, Stripe.Area)
-                    Lattice.AirLoads.InducedMoment.Add(Stripe.MDi, Stripe.Area)
-                    Lattice.AirLoads.SkinMoment.Add(Stripe.MDp, Stripe.Area)
+                    Lattice.AirLoads.LiftForce.Add(Stripe.Lift)
+                    Lattice.AirLoads.InducedDragForce.Add(Stripe.InducedDrag)
+                    Lattice.AirLoads.SkinDragForce.Add(Stripe.SkinDrag)
+                    Lattice.AirLoads.LiftMoment.Add(Stripe.LiftMoment)
+                    Lattice.AirLoads.InducedDragMoment.Add(Stripe.InducedDragMoment)
+                    Lattice.AirLoads.SkinDragMoment.Add(Stripe.SkinDragMoment)
 
                 Next
 
-                Dim InverseArea = 1 / Lattice.AirLoads.Area
+                ' Traditional coefficients:
 
-                Lattice.AirLoads.SlenderForce.Scale(InverseArea)
-                Lattice.AirLoads.InducedDrag.Scale(InverseArea)
-                Lattice.AirLoads.SkinDrag.Scale(InverseArea)
-                Lattice.AirLoads.BodyForce.Scale(InverseArea)
+                qS = StreamDynamicPressure * Lattice.AirLoads.Area
+                Lattice.AirLoads.LiftCoefficient = Lattice.AirLoads.LiftForce.EuclideanNorm / qS
+                Lattice.AirLoads.InducedDragCoefficient = Lattice.AirLoads.InducedDragForce.EuclideanNorm / qS
+                Lattice.AirLoads.SkinDragCoefficient = Lattice.AirLoads.SkinDragForce.EuclideanNorm / qS
 
-                Lattice.AirLoads.SlenderMoment.Scale(InverseArea)
-                Lattice.AirLoads.InducedMoment.Scale(InverseArea)
-                Lattice.AirLoads.SkinMoment.Scale(InverseArea)
-                Lattice.AirLoads.BodyMoment.Scale(InverseArea)
+                ' Total force
+                '-------------------------------------------------------------
 
                 Lattice.AirLoads.Force.SetToCero()
 
-                Lattice.AirLoads.Force.Add(Lattice.AirLoads.SlenderForce)
-                Lattice.AirLoads.Force.Add(Lattice.AirLoads.InducedDrag)
-                Lattice.AirLoads.Force.Add(Lattice.AirLoads.SkinDrag)
+                Lattice.AirLoads.Force.Add(Lattice.AirLoads.LiftForce)
+                Lattice.AirLoads.Force.Add(Lattice.AirLoads.InducedDragForce)
+                Lattice.AirLoads.Force.Add(Lattice.AirLoads.SkinDragForce)
                 Lattice.AirLoads.Force.Add(Lattice.AirLoads.BodyForce)
+
+                ' Total moment
+                '-------------------------------------------------------------
 
                 Lattice.AirLoads.Moment.SetToCero()
 
-                Lattice.AirLoads.Moment.Add(Lattice.AirLoads.SlenderMoment)
-                Lattice.AirLoads.Moment.Add(Lattice.AirLoads.InducedMoment)
-                Lattice.AirLoads.Moment.Add(Lattice.AirLoads.SkinMoment)
+                Lattice.AirLoads.Moment.Add(Lattice.AirLoads.LiftMoment)
+                Lattice.AirLoads.Moment.Add(Lattice.AirLoads.InducedDragMoment)
+                Lattice.AirLoads.Moment.Add(Lattice.AirLoads.SkinDragMoment)
                 Lattice.AirLoads.Moment.Add(Lattice.AirLoads.BodyMoment)
 
-                Lattice.AirLoads.CL = Lattice.AirLoads.SlenderForce.EuclideanNorm
-                Lattice.AirLoads.CDi = Lattice.AirLoads.InducedDrag.EuclideanNorm
-                Lattice.AirLoads.CDp = Lattice.AirLoads.SkinDrag.EuclideanNorm
+                ' Add the contribution of the lattice to the global loads
+                '-------------------------------------------------------------
+
+                GlobalAirloads.Area += Lattice.AirLoads.Area
+                GlobalAirloads.Add(Lattice.AirLoads)
 
             Next
+
+            ' Traditional coefficients (total):
+            '-----------------------------------------------------------------
+
+            qS = StreamDynamicPressure * GlobalAirloads.Area
+            GlobalAirloads.LiftCoefficient = GlobalAirloads.LiftForce.EuclideanNorm / qS
+            GlobalAirloads.InducedDragCoefficient = GlobalAirloads.InducedDragForce.EuclideanNorm / qS
+            GlobalAirloads.SkinDragCoefficient = GlobalAirloads.SkinDragForce.EuclideanNorm / qS
+            GlobalAirloads.Alfa = Math.Asin(StreamVelocity.Z / StreamVelocity.EuclideanNorm)
+            GlobalAirloads.Beta = Math.Asin(StreamVelocity.Y / StreamVelocity.EuclideanNorm)
 
         End Sub
 

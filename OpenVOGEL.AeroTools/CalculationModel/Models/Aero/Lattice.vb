@@ -275,7 +275,7 @@ Namespace CalculationModel.Models.Aero
 
 #Region " Forces and moments "
 
-        Public Property AirLoads As New TotalAirLoads
+        Public Property AirLoads As New AirLoads
 
 #End Region
 

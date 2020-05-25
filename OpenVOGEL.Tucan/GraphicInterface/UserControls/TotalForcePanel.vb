@@ -55,7 +55,6 @@ Public Class TotalForcePanel
     Private rbCD As New ResultBox(UserMagnitudes(Magnitudes.Dimensionless))
     Private rbCY As New ResultBox(UserMagnitudes(Magnitudes.Dimensionless))
 
-    Private TotalAirloads As New TotalAirLoads
     Private TotalForce As New Vector3
     Private TotalMoment As New Vector3
 
@@ -237,17 +236,10 @@ Public Class TotalForcePanel
         If CalculationCore IsNot Nothing Then
 
             rbVelocity.Value = CalculationCore.StreamVelocity.EuclideanNorm
-            rbDensity.Value = CalculationCore.StreamDensity
-            rbAlpha.Value = Math.Asin(CalculationCore.StreamVelocity.Z / CalculationCore.StreamVelocity.EuclideanNorm)
-            rbBeta.Value = Math.Asin(CalculationCore.StreamVelocity.Y / CalculationCore.StreamVelocity.EuclideanNorm)
-
-            TotalAirloads.Clear()
-
-            For i = 0 To CalculationCore.Lattices.Count - 1
-
-                TotalAirloads.Add(CalculationCore.Lattices(i).AirLoads)
-
-            Next
+            rbDensity.Value = CalculationCore.GlobalAirloads.DynamicPressure
+            rbAlpha.Value = CalculationCore.GlobalAirloads.Alfa
+            rbBeta.Value = CalculationCore.GlobalAirloads.Beta
+            nudSurface.Value = CalculationCore.GlobalAirloads.Area
 
             RecalculateLoads()
 
@@ -259,24 +251,22 @@ Public Class TotalForcePanel
 
         If CalculationCore IsNot Nothing Then
 
-            Dim q As Double = CalculationCore.StreamDynamicPressure
+            Dim TotalAirloads As AirLoads = CalculationCore.GlobalAirloads
 
-            rbq.Value = q
+            rbq.Value = TotalAirloads.DynamicPressure
 
             TotalForce.SetToCero()
 
-            If cbSlenderForces.Checked Then TotalForce.Add(TotalAirloads.SlenderForce)
-            If cbInducedForces.Checked Then TotalForce.Add(TotalAirloads.InducedDrag)
-            If cbSkinDrag.Checked Then TotalForce.Add(TotalAirloads.SkinDrag)
+            If cbSlenderForces.Checked Then TotalForce.Add(TotalAirloads.LiftForce)
+            If cbInducedForces.Checked Then TotalForce.Add(TotalAirloads.InducedDragForce)
+            If cbSkinDrag.Checked Then TotalForce.Add(TotalAirloads.SkinDragForce)
             If cbBodyForces.Checked Then TotalForce.Add(TotalAirloads.BodyForce)
-            TotalForce.Scale(q)
 
             TotalMoment.SetToCero()
-            If cbSlenderForces.Checked Then TotalMoment.Add(TotalAirloads.SlenderMoment)
-            If cbInducedForces.Checked Then TotalMoment.Add(TotalAirloads.InducedMoment)
-            If cbSkinDrag.Checked Then TotalMoment.Add(TotalAirloads.SkinMoment)
+            If cbSlenderForces.Checked Then TotalMoment.Add(TotalAirloads.LiftMoment)
+            If cbInducedForces.Checked Then TotalMoment.Add(TotalAirloads.InducedDragMoment)
+            If cbSkinDrag.Checked Then TotalMoment.Add(TotalAirloads.SkinDragMoment)
             If cbBodyForces.Checked Then TotalMoment.Add(TotalAirloads.BodyMoment)
-            TotalMoment.Scale(q)
 
             Dim R As New Vector3
             R.X = nudRx.Value
@@ -293,15 +283,13 @@ Public Class TotalForcePanel
             rbMy.Value = TotalMoment.Y
             rbMz.Value = TotalMoment.Z
 
-            ' Dimensionless
+            ' Dimensionless (the user can adapt the reference area and length)
 
             Dim S As Double = Math.Max(0.001, nudSurface.Value)
-
             Dim c As Double = Math.Max(0.001, nudLength.Value)
 
-            Dim qS As Double = q * S
-
-            Dim qSc As Double = q * S * c
+            Dim qS As Double = TotalAirloads.DynamicPressure * S
+            Dim qSc As Double = TotalAirloads.DynamicPressure * S * c
 
             rbCFx.Value = TotalForce.X / qS
             rbCFy.Value = TotalForce.Y / qS

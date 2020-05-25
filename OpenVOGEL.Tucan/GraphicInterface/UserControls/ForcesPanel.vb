@@ -317,36 +317,38 @@ Public Class ForcesPanel
 
             If Index >= 0 And Index < CalculationCore.Lattices.Count Then
 
-                Dim s As Double = CalculationCore.Lattices(Index).AirLoads.Area
-                rbArea.Value = s
+                Dim q As Double = CalculationCore.Lattices(Index).AirLoads.DynamicPressure
+                Dim S As Double = CalculationCore.Lattices(Index).AirLoads.Area
+                Dim qS As Double = q * S
+                Dim qSc As Double = q * S * CalculationCore.Lattices(Index).AirLoads.Length
 
-                rbCL.Value = CalculationCore.Lattices(Index).AirLoads.CL
-                rbCDp.Value = CalculationCore.Lattices(Index).AirLoads.CDp
-                rbCDi.Value = CalculationCore.Lattices(Index).AirLoads.CDi
+                rbArea.Value = S
 
-                rbCFx.Value = CalculationCore.Lattices(Index).AirLoads.Force.X
-                rbCFy.Value = CalculationCore.Lattices(Index).AirLoads.Force.Y
-                rbCFz.Value = CalculationCore.Lattices(Index).AirLoads.Force.Z
+                rbCL.Value = CalculationCore.Lattices(Index).AirLoads.LiftCoefficient
+                rbCDp.Value = CalculationCore.Lattices(Index).AirLoads.SkinDragCoefficient
+                rbCDi.Value = CalculationCore.Lattices(Index).AirLoads.InducedDragCoefficient
 
-                rbCMx.Value = CalculationCore.Lattices(Index).AirLoads.Moment.X
-                rbCMy.Value = CalculationCore.Lattices(Index).AirLoads.Moment.Y
-                rbCMz.Value = CalculationCore.Lattices(Index).AirLoads.Moment.Z
+                rbCFx.Value = CalculationCore.Lattices(Index).AirLoads.Force.X / qS
+                rbCFy.Value = CalculationCore.Lattices(Index).AirLoads.Force.Y / qS
+                rbCFz.Value = CalculationCore.Lattices(Index).AirLoads.Force.Z / qS
+
+                rbCMx.Value = CalculationCore.Lattices(Index).AirLoads.Moment.X / qSc
+                rbCMy.Value = CalculationCore.Lattices(Index).AirLoads.Moment.Y / qSc
+                rbCMz.Value = CalculationCore.Lattices(Index).AirLoads.Moment.Z / qSc
 
                 ' Net forces:
 
-                Dim q As Double = 0.5 * CalculationCore.StreamVelocity.SquareEuclideanNorm * CalculationCore.StreamDensity
+                rbL.Value = CalculationCore.Lattices(Index).AirLoads.LiftCoefficient * q * S
+                rbDp.Value = CalculationCore.Lattices(Index).AirLoads.SkinDragCoefficient * q * S
+                rbDi.Value = CalculationCore.Lattices(Index).AirLoads.InducedDragCoefficient * q * S
 
-                rbL.Value = CalculationCore.Lattices(Index).AirLoads.CL * q * s
-                rbDp.Value = CalculationCore.Lattices(Index).AirLoads.CDp * q * s
-                rbDi.Value = CalculationCore.Lattices(Index).AirLoads.CDi * q * s
+                rbFx.Value = CalculationCore.Lattices(Index).AirLoads.Force.X
+                rbFy.Value = CalculationCore.Lattices(Index).AirLoads.Force.Y
+                rbFz.Value = CalculationCore.Lattices(Index).AirLoads.Force.Z
 
-                rbFx.Value = CalculationCore.Lattices(Index).AirLoads.Force.X * q * s
-                rbFy.Value = CalculationCore.Lattices(Index).AirLoads.Force.Y * q * s
-                rbFz.Value = CalculationCore.Lattices(Index).AirLoads.Force.Z * q * s
-
-                rbMx.Value = CalculationCore.Lattices(Index).AirLoads.Moment.X * q * s
-                rbMy.Value = CalculationCore.Lattices(Index).AirLoads.Moment.Y * q * s
-                rbMz.Value = CalculationCore.Lattices(Index).AirLoads.Moment.Z * q * s
+                rbMx.Value = CalculationCore.Lattices(Index).AirLoads.Moment.X
+                rbMy.Value = CalculationCore.Lattices(Index).AirLoads.Moment.Y
+                rbMz.Value = CalculationCore.Lattices(Index).AirLoads.Moment.Z
 
                 pbLoadingGraph.Refresh()
 
@@ -389,13 +391,13 @@ Public Class ForcesPanel
                         Select Case cbResultType.SelectedIndex
 
                             Case 0
-                                Data(i).Y = Stripes(i).CL
+                                Data(i).Y = Stripes(i).LiftCoefficient
 
                             Case 1
-                                Data(i).Y = Stripes(i).CDp
+                                Data(i).Y = Stripes(i).SkinDragCoefficient
 
                             Case 2
-                                Data(i).Y = Stripes(i).CDi
+                                Data(i).Y = Stripes(i).InducedDragCoefficient
 
                         End Select
 

@@ -47,7 +47,7 @@ Namespace CalculationModel.Solver
             If Not WithSources AndAlso Settings.UseGpu AndAlso TestOpenCL() Then
 
                 GpuVortexSolver = New GpuTools.VortexSolver
-                GpuVortexSolver.Initialize(Settings.GpuDeviceId, Steady_Path)
+                GpuVortexSolver.Initialize(Settings.GpuDeviceId, SteadyPath)
 
                 RaiseEvent PushMessage("GPU enabled")
 
@@ -203,7 +203,7 @@ Namespace CalculationModel.Solver
 
             RaiseEvent PushMessage("Writing to database")
 
-            Me.WriteToXML(String.Format("{0}\Steady.res", Steady_Path), True)
+            Me.WriteToXML(System.IO.Path.Combine(SteadyPath, "Steady.res"), True)
 
             Dim Interval As TimeSpan = Now - StartingTime
             Dim Message As String = String.Format("Calculation finished. Elapsed time: {0}m {1}.{2}s", Interval.Minutes, Interval.Seconds, Interval.Milliseconds)

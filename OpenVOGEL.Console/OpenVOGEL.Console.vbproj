@@ -99,6 +99,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AeroTests.vb" />
+    <Compile Include="BatchAnalysis.vb" />
     <Compile Include="Commands.vb" />
     <Compile Include="MklSetup.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />

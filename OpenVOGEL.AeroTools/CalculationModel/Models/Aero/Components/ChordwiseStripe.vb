@@ -54,111 +54,111 @@ Namespace CalculationModel.Models.Aero.Components
             End Get
         End Property
 
-        Private _CL As Double
+        Private _LiftCoefficient As Double
 
         ''' <summary>
         ''' Local lift coefficient in this portion of wing.
         ''' </summary>
         ''' <remarks></remarks>
-        Public ReadOnly Property CL As Double
+        Public ReadOnly Property LiftCoefficient As Double
             Get
-                Return _CL
+                Return _LiftCoefficient
             End Get
         End Property
 
-        Private _CDi As Double
+        Private _InducedDragCoefficient As Double
 
         ''' <summary>
         ''' Local induced drag coefficient in this portion of wing.
         ''' </summary>
         ''' <remarks></remarks>
-        Public ReadOnly Property CDi As Double
+        Public ReadOnly Property InducedDragCoefficient As Double
             Get
-                Return _CDi
+                Return _InducedDragCoefficient
             End Get
         End Property
 
-        Private _CDp As Double
+        Private _SkinDragCoefficient As Double
 
         ''' <summary>
         ''' Skin drag coefficient in this portion of wing.
         ''' </summary>
         ''' <remarks></remarks>
-        Public ReadOnly Property CDp As Double
+        Public ReadOnly Property SkinDragCoefficient As Double
             Get
-                Return _CDp
+                Return _SkinDragCoefficient
             End Get
         End Property
 
-        Public _L As Vector3
+        Public _Lift As New Vector3
 
         ''' <summary>
         ''' Total stripe lift in N.
         ''' </summary>
         ''' <remarks></remarks>
-        Public ReadOnly Property L As Vector3
+        Public ReadOnly Property Lift As Vector3
             Get
-                Return _L
+                Return _Lift
             End Get
         End Property
 
-        Public _Di As Vector3
+        Public _InducedDrag As New Vector3
 
         ''' <summary>
         ''' Total stripe induced drag in N.
         ''' </summary>
         ''' <remarks></remarks>
-        Public ReadOnly Property Di As Vector3
+        Public ReadOnly Property InducedDrag As Vector3
             Get
-                Return _Di
+                Return _InducedDrag
             End Get
         End Property
 
-        Public _Dp As Vector3
+        Public _SkinDrag As New Vector3
 
         ''' <summary>
         ''' Total stripe induced drag in N.
         ''' </summary>
         ''' <remarks></remarks>
-        Public ReadOnly Property Dp As Vector3
+        Public ReadOnly Property SkinDrag As Vector3
             Get
-                Return _Dp
+                Return _SkinDrag
             End Get
         End Property
 
-        Public _ML As Vector3
+        Public _LiftMoment As New Vector3
 
         ''' <summary>
         ''' Total stripe moment (with respect to the origin) in N.m.
         ''' </summary>
         ''' <remarks></remarks>
-        Public ReadOnly Property ML As Vector3
+        Public ReadOnly Property LiftMoment As Vector3
             Get
-                Return _ML
+                Return _LiftMoment
             End Get
         End Property
 
-        Public _MDi As Vector3
+        Public _InducedDragMoment As New Vector3
 
         ''' <summary>
         ''' Total stripe moment (with respect to the origin) in N.m.
         ''' </summary>
         ''' <remarks></remarks>
-        Public ReadOnly Property MDi As Vector3
+        Public ReadOnly Property InducedDragMoment As Vector3
             Get
-                Return _MDi
+                Return _InducedDragMoment
             End Get
         End Property
 
-        Public _MDp As Vector3
+        Public _SkinDragMoment As New Vector3
 
         ''' <summary>
         ''' Total stripe moment (with respect to the origin) in N.m.
         ''' </summary>
         ''' <remarks></remarks>
-        Public ReadOnly Property MDp As Vector3
+        Public ReadOnly Property SkinDragMoment As Vector3
             Get
-                Return _MDp
+                Return _SkinDragMoment
             End Get
         End Property
 
@@ -206,7 +206,7 @@ Namespace CalculationModel.Models.Aero.Components
 
         ''' <summary>
         ''' Calculates the stripe lift, drag and area. 
-        ''' The Cp (pressure coefficient) and the Cdi (local induced component) should be calculated before calling this sub.
+        ''' The Cp (pressure coefficient) and the Cdi (local induced component) of each panel should be calculated before calling this sub.
         ''' NOTE:
         ''' This method corrects the missing leading edge pressure decay by substracting the projection of the total force in 
         ''' the direction of the local stream velocity (this is why the stream direction is requested). This is an extention of 
@@ -214,7 +214,7 @@ Namespace CalculationModel.Models.Aero.Components
         ''' does provide more consistent results, specially in the case of rotating wings where the incidence varies considerably.
         ''' </summary>
         ''' <remarks></remarks>
-        Public Sub Compute(Velocity As Vector3, Omega As Vector3, Rho As Double, Mu As Double)
+        Public Sub Compute(StreamVelocity As Vector3, Omega As Vector3, Density As Double, Viscosity As Double)
 
             ' Calculate local chordwise direction and chord:
 
@@ -231,103 +231,90 @@ Namespace CalculationModel.Models.Aero.Components
             _Chord = _ChordWiseVector.EuclideanNorm
             _ChordWiseVector.Normalize()
 
-            Dim StreamDirection As New Vector3(Velocity)
+            Dim DynamicPressure As Double = 0.5 * StreamVelocity.SquareEuclideanNorm * Density
+            Dim StreamDirection As New Vector3(StreamVelocity)
             StreamDirection.AddCrossProduct(Omega, _CenterPoint)
             StreamDirection.Normalize()
 
-            _CL = 0.0#
             _Area = 0.0#
-            _CDp = 0
-            _CDi = 0
+            _LiftCoefficient = 0.0#
+            _SkinDragCoefficient = 0.0#
+            _InducedDragCoefficient = 0.0#
 
             Dim Projection As Double
             Dim Force As Double
-            Dim InducedDrag As Double = 0
 
-            Dim LocalL = New Vector3
-            Dim LocalDi = New Vector3
-            Dim LocalML As New Vector3
-            Dim LocalMDi As New Vector3
-            Dim LocalMDp As New Vector3
+            Dim LocalLift = New Vector3
+            Dim LocalInducedDrag = New Vector3
+            Dim qS As Double = 0.0#
 
-            _L = New Vector3
-            _Di = New Vector3
-            _Dp = New Vector3
-            _ML = New Vector3
-            _MDi = New Vector3
-            _MDp = New Vector3
+            _Lift.SetToCero()
+            _InducedDrag.SetToCero()
+            _SkinDrag.SetToCero()
+            _LiftMoment.SetToCero()
+            _InducedDragMoment.SetToCero()
+            _SkinDragMoment.SetToCero()
 
-            ' Sum contributions to CL and CDi:
+            ' Sum contributions to lift and induced drag:
 
             For Each VortexRing In Rings
 
                 _Area += VortexRing.Area
-                InducedDrag += VortexRing.Cdi * VortexRing.Area
 
-                Force = VortexRing.Cp * VortexRing.Area
+                qS = VortexRing.Area * DynamicPressure
+
+                ' Lift
+                '-------------------------------------------------------
+
+                Force = VortexRing.Cp * qS
                 Projection = VortexRing.Normal.InnerProduct(StreamDirection)
 
-                LocalL.X = Force * (VortexRing.Normal.X - Projection * StreamDirection.X)
-                LocalL.Y = Force * (VortexRing.Normal.Y - Projection * StreamDirection.Y)
-                LocalL.Z = Force * (VortexRing.Normal.Z - Projection * StreamDirection.Z)
+                LocalLift.X = Force * (VortexRing.Normal.X - Projection * StreamDirection.X)
+                LocalLift.Y = Force * (VortexRing.Normal.Y - Projection * StreamDirection.Y)
+                LocalLift.Z = Force * (VortexRing.Normal.Z - Projection * StreamDirection.Z)
 
-                LocalDi.X = VortexRing.Cdi * VortexRing.Area * StreamDirection.X
-                LocalDi.Y = VortexRing.Cdi * VortexRing.Area * StreamDirection.Y
-                LocalDi.Z = VortexRing.Cdi * VortexRing.Area * StreamDirection.Z
+                _Lift.X += LocalLift.X
+                _Lift.Y += LocalLift.Y
+                _Lift.Z += LocalLift.Z
 
-                LocalML.FromVectorProduct(VortexRing.ControlPoint, LocalL)
-                LocalMDi.FromVectorProduct(VortexRing.ControlPoint, LocalDi)
+                _LiftMoment.AddCrossProduct(VortexRing.ControlPoint, LocalLift)
 
-                _ML.Add(LocalML)
-                _MDi.Add(LocalMDi)
+                ' Induced drag 
+                '-------------------------------------------------------
 
-                _L.X += LocalL.X
-                _L.Y += LocalL.Y
-                _L.Z += LocalL.Z
+                Dim qS_Cdi As Double = qS * VortexRing.Cdi
+                LocalInducedDrag.X = qS_Cdi * StreamDirection.X
+                LocalInducedDrag.Y = qS_Cdi * StreamDirection.Y
+                LocalInducedDrag.Z = qS_Cdi * StreamDirection.Z
 
-                _Di.X += LocalDi.X
-                _Di.Y += LocalDi.Y
-                _Di.Z += LocalDi.Z
+                _InducedDrag.X += LocalInducedDrag.X
+                _InducedDrag.Y += LocalInducedDrag.Y
+                _InducedDrag.Z += LocalInducedDrag.Z
+
+                _InducedDragMoment.AddCrossProduct(VortexRing.ControlPoint, LocalInducedDrag)
 
             Next
 
-            _L.X /= _Area
-            _L.Y /= _Area
-            _L.Z /= _Area
+            qS = _Area * DynamicPressure
 
-            _Di.X /= _Area
-            _Di.Y /= _Area
-            _Di.Z /= _Area
+            _LiftCoefficient = _Lift.EuclideanNorm / qS
+            _InducedDragCoefficient = InducedDrag.EuclideanNorm / qS
 
-            _ML.X /= _Area
-            _ML.Y /= _Area
-            _ML.Z /= _Area
+            ' Skin drag from polar curve using lift coefficient and the Reynolds number 
+            ' If there is no polar curve it stays zero.
+            '--------------------------------------------------------------------------
 
-            _MDi.X /= _Area
-            _MDi.Y /= _Area
-            _MDi.Z /= _Area
-
-            _MDp.X /= _Area
-            _MDp.Y /= _Area
-            _MDp.Z /= _Area
-
-            _CL = _L.EuclideanNorm
-            _CDi = InducedDrag / _Area
-
-            ' Calculate _CDp from CL (if there is a polar curve):
-
-            Dim Re As Double = Velocity.EuclideanNorm * Rho * Chord / Mu
+            Dim Reynolds As Double = StreamVelocity.EuclideanNorm * Density * Chord / Viscosity
 
             If Not IsNothing(Polars) Then
-                _CDp = Polars.SkinDrag(CL, Re)
+                _SkinDragCoefficient = Polars.SkinDrag(LiftCoefficient, Reynolds)
             End If
 
-            _Dp.X = _CDp * ChordWiseVector.X
-            _Dp.Y = _CDp * ChordWiseVector.Y
-            _Dp.Z = _CDp * ChordWiseVector.Z
+            _SkinDrag.X = _SkinDragCoefficient * ChordWiseVector.X * qS
+            _SkinDrag.Y = _SkinDragCoefficient * ChordWiseVector.Y * qS
+            _SkinDrag.Z = _SkinDragCoefficient * ChordWiseVector.Z * qS
 
-            LocalMDp.FromVectorProduct(CenterPoint, Dp)
-            _MDp.Add(LocalMDi)
+            _SkinDragMoment.FromVectorProduct(CenterPoint, SkinDrag)
 
         End Sub
 

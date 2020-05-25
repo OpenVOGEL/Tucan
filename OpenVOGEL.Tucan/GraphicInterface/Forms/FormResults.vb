@@ -164,9 +164,9 @@ Public Class FormResults
 
             rbArea.Value = _CalculationCore.Lattices(Index).AirLoads.Area
 
-            rbCL.Value = _CalculationCore.Lattices(Index).AirLoads.CL
-            rbCDp.Value = _CalculationCore.Lattices(Index).AirLoads.CDp
-            rbCDi.Value = _CalculationCore.Lattices(Index).AirLoads.CDi
+            rbCL.Value = _CalculationCore.Lattices(Index).AirLoads.LiftCoefficient
+            rbCDp.Value = _CalculationCore.Lattices(Index).AirLoads.SkinDragCoefficient
+            rbCDi.Value = _CalculationCore.Lattices(Index).AirLoads.InducedDragCoefficient
 
             rbCFx.Value = _CalculationCore.Lattices(Index).AirLoads.Force.X
             rbCFy.Value = _CalculationCore.Lattices(Index).AirLoads.Force.Y

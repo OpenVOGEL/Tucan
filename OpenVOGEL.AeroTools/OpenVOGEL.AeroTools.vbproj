@@ -112,7 +112,7 @@
     <Compile Include="CalculationModel\Models\Aero\Components\VortexRing3.vb" />
     <Compile Include="CalculationModel\Models\Aero\Components\VortexRing4.vb" />
     <Compile Include="CalculationModel\Models\Aero\Lattice.vb" />
-    <Compile Include="CalculationModel\Models\Aero\TotalAirLoads.vb" />
+    <Compile Include="CalculationModel\Models\Aero\AirLoads.vb" />
     <Compile Include="CalculationModel\Models\Aero\Wake.vb" />
     <Compile Include="CalculationModel\Models\Structural\Library\Material.vb" />
     <Compile Include="CalculationModel\Models\Structural\Library\Elements\BeamElements.vb" />

@@ -570,32 +570,32 @@ Namespace VisualModel.Models
 
                     ' Lift vectors
                     '-----------------------------------
-                    If Stripe.L.EuclideanNorm > 0.0 Then
+                    If Stripe.Lift.EuclideanNorm > 0.0 Then
                         Dim LiftVector As New FixedVector
-                        LiftVector.Vector.Assign(Stripe.L)
+                        LiftVector.Vector.Assign(Stripe.Lift)
                         LiftVector.Point.Assign(Stripe.CenterPoint)
                         Results.Model.LiftVectors.Add(LiftVector)
-                        Results.Model.MaximumLift = Math.Max(Results.Model.MaximumLift, Stripe.L.EuclideanNorm)
+                        Results.Model.MaximumLift = Math.Max(Results.Model.MaximumLift, Stripe.Lift.EuclideanNorm)
                     End If
 
                     ' Induced drag vectors
                     '-----------------------------------
-                    If Stripe.Di.EuclideanNorm > 0.0 Then
+                    If Stripe.InducedDrag.EuclideanNorm > 0.0 Then
                         Dim DragVector As New FixedVector
-                        DragVector.Vector.Assign(Stripe.Di)
+                        DragVector.Vector.Assign(Stripe.InducedDrag)
                         DragVector.Point.Assign(Stripe.CenterPoint)
                         Results.Model.InducedDragVectors.Add(DragVector)
-                        Results.Model.MaximumInducedDrag = Math.Max(Results.Model.MaximumInducedDrag, Stripe.Di.EuclideanNorm)
+                        Results.Model.MaximumInducedDrag = Math.Max(Results.Model.MaximumInducedDrag, Stripe.InducedDrag.EuclideanNorm)
                     End If
 
                     ' Skin drag vectors
                     '-----------------------------------
-                    If Stripe.Dp.EuclideanNorm > 0.0 Then
+                    If Stripe.SkinDrag.EuclideanNorm > 0.0 Then
                         Dim DragVector As New FixedVector
-                        DragVector.Vector.Assign(Stripe.Dp)
+                        DragVector.Vector.Assign(Stripe.SkinDrag)
                         DragVector.Point.Assign(Stripe.CenterPoint)
                         Results.Model.SkinDragVectors.Add(DragVector)
-                        Results.Model.MaximumSkinDrag = Math.Max(Results.Model.MaximumSkinDrag, Stripe.Dp.EuclideanNorm)
+                        Results.Model.MaximumSkinDrag = Math.Max(Results.Model.MaximumSkinDrag, Stripe.SkinDrag.EuclideanNorm)
                     End If
 
                 Next
