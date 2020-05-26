@@ -320,7 +320,7 @@ Public Class ForcesPanel
                 Dim q As Double = CalculationCore.Lattices(Index).AirLoads.DynamicPressure
                 Dim S As Double = CalculationCore.Lattices(Index).AirLoads.Area
                 Dim qS As Double = q * S
-                Dim qSc As Double = q * S * CalculationCore.Lattices(Index).AirLoads.Length
+                Dim qSc As Double = qS * CalculationCore.Lattices(Index).AirLoads.Length
 
                 rbArea.Value = S
 
@@ -338,9 +338,9 @@ Public Class ForcesPanel
 
                 ' Net forces:
 
-                rbL.Value = CalculationCore.Lattices(Index).AirLoads.LiftCoefficient * q * S
-                rbDp.Value = CalculationCore.Lattices(Index).AirLoads.SkinDragCoefficient * q * S
-                rbDi.Value = CalculationCore.Lattices(Index).AirLoads.InducedDragCoefficient * q * S
+                rbL.Value = CalculationCore.Lattices(Index).AirLoads.LiftCoefficient * qS
+                rbDp.Value = CalculationCore.Lattices(Index).AirLoads.SkinDragCoefficient * qS
+                rbDi.Value = CalculationCore.Lattices(Index).AirLoads.InducedDragCoefficient * qS
 
                 rbFx.Value = CalculationCore.Lattices(Index).AirLoads.Force.X
                 rbFy.Value = CalculationCore.Lattices(Index).AirLoads.Force.Y

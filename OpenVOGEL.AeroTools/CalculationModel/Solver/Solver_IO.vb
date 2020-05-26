@@ -322,17 +322,20 @@ Namespace CalculationModel.Solver
 
         Public Sub ReportResults()
 
-            RaiseEvent PushResultLine("RESULS OF THE AERODYNAMIC ANALYSIS:")
+            RaiseEvent PushResultLine("RESULS OF THE AERODYNAMIC ANALYSIS")
+            RaiseEvent PushResultLine(String.Format("OpenVOGEL kernel: {0}", Version))
             RaiseEvent PushResultLine("")
 
-            RaiseEvent PushResultLine("Reference velocity:")
-            RaiseEvent PushResultLine(String.Format("V = {0:F6}m/s", StreamVelocity.EuclideanNorm))
-            RaiseEvent PushResultLine(String.Format("Vx = {0:F6}m/s, Vy = {1:F6}m/s, Vz = {2:F6}m/s",
-                                            StreamVelocity.X,
-                                            StreamVelocity.Y,
-                                            StreamVelocity.Z))
-            RaiseEvent PushResultLine(String.Format("Rho = {0:F6}kg/m³", StreamDensity))
-            RaiseEvent PushResultLine(String.Format("q = {0:F6}Pa", StreamDynamicPressure))
+            RaiseEvent PushResultLine("# Reference velocity [m/s]")
+            RaiseEvent PushResultLine(String.Format("V  = {0,14:E6}", StreamVelocity.EuclideanNorm))
+            RaiseEvent PushResultLine(String.Format("Vx = {0,14:E6}", StreamVelocity.X))
+            RaiseEvent PushResultLine(String.Format("Vy = {0,14:E6}", StreamVelocity.Y))
+            RaiseEvent PushResultLine(String.Format("Vz = {0,14:E6}", StreamVelocity.Z))
+            RaiseEvent PushResultLine("")
+
+            RaiseEvent PushResultLine("# Dynamic pressure")
+            RaiseEvent PushResultLine(String.Format("Rho = {0,14:E6} kg/m³", StreamDensity))
+            RaiseEvent PushResultLine(String.Format("q   = {0,14:E6} Pa", StreamDynamicPressure))
 
             Dim i As Integer = 0
 
@@ -344,104 +347,107 @@ Namespace CalculationModel.Solver
                 RaiseEvent PushResultLine(String.Format("LATTICE {0}", i))
                 RaiseEvent PushResultLine("")
 
-                RaiseEvent PushResultLine("Total area: (ΣSi)")
-                RaiseEvent PushResultLine(String.Format("S = {0:F6}m²", Lattice.AirLoads.Area))
+                RaiseEvent PushResultLine("# Total area (ΣSi) [m²]")
+                RaiseEvent PushResultLine(String.Format("S = {0,14:E6}", Lattice.AirLoads.Area))
                 RaiseEvent PushResultLine("")
 
-                RaiseEvent PushResultLine(String.Format("CL = {0:F6}", Lattice.AirLoads.LiftCoefficient))
-                RaiseEvent PushResultLine(String.Format("CDi = {0:F6}", Lattice.AirLoads.InducedDragCoefficient))
-                RaiseEvent PushResultLine(String.Format("CDp = {0:F6}", Lattice.AirLoads.SkinDragCoefficient))
+                RaiseEvent PushResultLine("# Classic dimensionless force coefficients")
+                RaiseEvent PushResultLine(String.Format("CL  = {0,14:E6}", Lattice.AirLoads.LiftCoefficient))
+                RaiseEvent PushResultLine(String.Format("CDi = {0,14:E6}", Lattice.AirLoads.InducedDragCoefficient))
+                RaiseEvent PushResultLine(String.Format("CDp = {0,14:E6}", Lattice.AirLoads.SkinDragCoefficient))
                 RaiseEvent PushResultLine("")
 
-                RaiseEvent PushResultLine("Force due to local lift")
+                RaiseEvent PushResultLine("# Force due to local lift [N]")
 
-                RaiseEvent PushResultLine(String.Format("Fx/qS = {0:F8}", Lattice.AirLoads.LiftForce.X))
-                RaiseEvent PushResultLine(String.Format("Fy/qS = {0:F8}", Lattice.AirLoads.LiftForce.Y))
-                RaiseEvent PushResultLine(String.Format("Fz/qS = {0:F8}", Lattice.AirLoads.LiftForce.Z))
+                RaiseEvent PushResultLine(String.Format("Fx = {0,14:E6}", Lattice.AirLoads.LiftForce.X))
+                RaiseEvent PushResultLine(String.Format("Fy = {0,14:E6}", Lattice.AirLoads.LiftForce.Y))
+                RaiseEvent PushResultLine(String.Format("Fz = {0,14:E6}", Lattice.AirLoads.LiftForce.Z))
                 RaiseEvent PushResultLine("")
 
-                RaiseEvent PushResultLine("Moment due to local lift")
+                RaiseEvent PushResultLine("# Moment due to local lift [Nm]")
 
-                RaiseEvent PushResultLine(String.Format("Mx/qS = {0:F8}", Lattice.AirLoads.LiftMoment.X))
-                RaiseEvent PushResultLine(String.Format("My/qS = {0:F8}", Lattice.AirLoads.LiftMoment.Y))
-                RaiseEvent PushResultLine(String.Format("Mz/qS = {0:F8}", Lattice.AirLoads.LiftMoment.Z))
+                RaiseEvent PushResultLine(String.Format("Mx = {0,14:E6}", Lattice.AirLoads.LiftMoment.X))
+                RaiseEvent PushResultLine(String.Format("My = {0,14:E6}", Lattice.AirLoads.LiftMoment.Y))
+                RaiseEvent PushResultLine(String.Format("Mz = {0,14:E6}", Lattice.AirLoads.LiftMoment.Z))
                 RaiseEvent PushResultLine("")
 
-                RaiseEvent PushResultLine("Force due to local induced drag")
+                RaiseEvent PushResultLine("# Force due to local induced drag [N]")
 
-                RaiseEvent PushResultLine(String.Format("Fx/qS = {0:F8}", Lattice.AirLoads.InducedDragForce.X))
-                RaiseEvent PushResultLine(String.Format("Fy/qS = {0:F8}", Lattice.AirLoads.InducedDragForce.Y))
-                RaiseEvent PushResultLine(String.Format("Fz/qS = {0:F8}", Lattice.AirLoads.InducedDragForce.Z))
+                RaiseEvent PushResultLine(String.Format("Fx = {0,14:E6}", Lattice.AirLoads.InducedDragForce.X))
+                RaiseEvent PushResultLine(String.Format("Fy = {0,14:E6}", Lattice.AirLoads.InducedDragForce.Y))
+                RaiseEvent PushResultLine(String.Format("Fz = {0,14:E6}", Lattice.AirLoads.InducedDragForce.Z))
                 RaiseEvent PushResultLine("")
 
-                RaiseEvent PushResultLine("Moment due to local induced drag")
+                RaiseEvent PushResultLine("# Moment due to local induced drag [Nm]")
 
-                RaiseEvent PushResultLine(String.Format("Mx/qS = {0:F8}", Lattice.AirLoads.InducedDragMoment.X))
-                RaiseEvent PushResultLine(String.Format("My/qS = {0:F8}", Lattice.AirLoads.InducedDragMoment.Y))
-                RaiseEvent PushResultLine(String.Format("Mz/qS = {0:F8}", Lattice.AirLoads.InducedDragMoment.Z))
+                RaiseEvent PushResultLine(String.Format("Mx = {0,14:E6}", Lattice.AirLoads.InducedDragMoment.X))
+                RaiseEvent PushResultLine(String.Format("My = {0,14:E6}", Lattice.AirLoads.InducedDragMoment.Y))
+                RaiseEvent PushResultLine(String.Format("Mz = {0,14:E6}", Lattice.AirLoads.InducedDragMoment.Z))
                 RaiseEvent PushResultLine("")
 
-                RaiseEvent PushResultLine("Force due to local skin drag")
+                RaiseEvent PushResultLine("# Force due to local skin drag [N]")
 
-                RaiseEvent PushResultLine(String.Format("Fx/qS = {0:F8}", Lattice.AirLoads.SkinDragForce.X))
-                RaiseEvent PushResultLine(String.Format("Fy/qS = {0:F8}", Lattice.AirLoads.SkinDragForce.Y))
-                RaiseEvent PushResultLine(String.Format("Fz/qS = {0:F8}", Lattice.AirLoads.SkinDragForce.Z))
+                RaiseEvent PushResultLine(String.Format("Fx = {0,14:E6}", Lattice.AirLoads.SkinDragForce.X))
+                RaiseEvent PushResultLine(String.Format("Fy = {0,14:E6}", Lattice.AirLoads.SkinDragForce.Y))
+                RaiseEvent PushResultLine(String.Format("Fz = {0,14:E6}", Lattice.AirLoads.SkinDragForce.Z))
                 RaiseEvent PushResultLine("")
 
-                RaiseEvent PushResultLine("Moment due to local skin drag")
+                RaiseEvent PushResultLine("# Moment due to local skin drag [Nm]")
 
-                RaiseEvent PushResultLine(String.Format("Mx/qS = {0:F8}", Lattice.AirLoads.SkinDragMoment.X))
-                RaiseEvent PushResultLine(String.Format("My/qS = {0:F8}", Lattice.AirLoads.SkinDragMoment.Y))
-                RaiseEvent PushResultLine(String.Format("Mz/qS = {0:F8}", Lattice.AirLoads.SkinDragMoment.Z))
-                RaiseEvent PushResultLine("")
-                RaiseEvent PushResultLine("Force on body")
-
-                RaiseEvent PushResultLine(String.Format("Fx/qS = {0:F8}", Lattice.AirLoads.BodyForce.X))
-                RaiseEvent PushResultLine(String.Format("Fy/qS = {0:F8}", Lattice.AirLoads.BodyForce.Y))
-                RaiseEvent PushResultLine(String.Format("Fz/qS = {0:F8}", Lattice.AirLoads.BodyForce.Z))
+                RaiseEvent PushResultLine(String.Format("Mx = {0,14:E6}", Lattice.AirLoads.SkinDragMoment.X))
+                RaiseEvent PushResultLine(String.Format("My = {0,14:E6}", Lattice.AirLoads.SkinDragMoment.Y))
+                RaiseEvent PushResultLine(String.Format("Mz = {0,14:E6}", Lattice.AirLoads.SkinDragMoment.Z))
                 RaiseEvent PushResultLine("")
 
-                RaiseEvent PushResultLine("Moment on body")
+                RaiseEvent PushResultLine("# Force on body [N]")
 
-                RaiseEvent PushResultLine(String.Format("Mx/qS = {0:F8}", Lattice.AirLoads.BodyMoment.X))
-                RaiseEvent PushResultLine(String.Format("My/qS = {0:F8}", Lattice.AirLoads.BodyMoment.Y))
-                RaiseEvent PushResultLine(String.Format("Mz/qS = {0:F8}", Lattice.AirLoads.BodyMoment.Z))
+                RaiseEvent PushResultLine(String.Format("Fx = {0,14:E6}", Lattice.AirLoads.BodyForce.X))
+                RaiseEvent PushResultLine(String.Format("Fy = {0,14:E6}", Lattice.AirLoads.BodyForce.Y))
+                RaiseEvent PushResultLine(String.Format("Fz = {0,14:E6}", Lattice.AirLoads.BodyForce.Z))
                 RaiseEvent PushResultLine("")
 
-                RaiseEvent PushResultLine("Chordwise stations:")
-                RaiseEvent PushResultLine("CD, CDi, CDp")
+                RaiseEvent PushResultLine("# Moment on body [Nm]")
 
-                For Each cl In Lattice.ChordWiseStripes
-                    RaiseEvent PushResultLine(String.Format("{0:F8}, {1:F8}, {2:F8}", cl.LiftCoefficient, cl.InducedDragCoefficient, cl.SkinDragCoefficient))
+                RaiseEvent PushResultLine(String.Format("Mx = {0,14:E6}", Lattice.AirLoads.BodyMoment.X))
+                RaiseEvent PushResultLine(String.Format("My = {0,14:E6}", Lattice.AirLoads.BodyMoment.Y))
+                RaiseEvent PushResultLine(String.Format("Mz = {0,14:E6}", Lattice.AirLoads.BodyMoment.Z))
+                RaiseEvent PushResultLine("")
+
+                RaiseEvent PushResultLine("# Spanwise load distribution (dimensionless coefficients)")
+                RaiseEvent PushResultLine(String.Format("{0,-14} {1,-14} {2,-14}", "CD", "CDi", "CDp"))
+
+                For Each Stripe In Lattice.ChordWiseStripes
+                    RaiseEvent PushResultLine(String.Format("{0,14:E6} {1,14:E6} {2,14:E6}", Stripe.LiftCoefficient, Stripe.InducedDragCoefficient, Stripe.SkinDragCoefficient))
                 Next
 
                 RaiseEvent PushResultLine("")
-                RaiseEvent PushResultLine("Local vortex ring properties:")
-                RaiseEvent PushResultLine("Index, Cp, Area, G, S, Vx, Vy, Vz")
+                RaiseEvent PushResultLine("# Vortex rings (velocity in [m/s])")
+                RaiseEvent PushResultLine(String.Format("{0,-4} {1,-14} {2,-14} {3,-14} {4,-14} {5,-14} {6,-14} {7,-14}", "Index", "Cp", "Area", "G", "S", "Vx", "Vy", "Vz"))
                 For Each Ring As VortexRing In Lattice.VortexRings
-                    RaiseEvent PushResultLine(String.Format("{0,4:D}: {1,12:F8}, {2,12:F8}, {3,12:F8}, {4,12:F8}, {5,12:F8}, {6,12:F8}, {7,12:F8}", Ring.IndexL, Ring.Cp, Ring.Area, Ring.G, Ring.S, Ring.VelocityT.X, Ring.VelocityT.Y, Ring.VelocityT.Z))
+                    RaiseEvent PushResultLine(String.Format("{0,4:D}: {1,14:E6} {2,14:E6} {3,14:E6} {4,14:E6} {5,14:E6} {6,14:E6} {7,14:E6}", Ring.IndexL, Ring.Cp, Ring.Area, Ring.G, Ring.S, Ring.VelocityT.X, Ring.VelocityT.Y, Ring.VelocityT.Z))
                 Next
 
                 RaiseEvent PushResultLine("")
-                RaiseEvent PushResultLine("Control point")
-                RaiseEvent PushResultLine("Index, CPx, CPy, CPz")
+                RaiseEvent PushResultLine("# Control points [m]")
+                RaiseEvent PushResultLine(String.Format("{0,-4} {1,-14} {2,-14} {3,-14}", "Index", "X", "Y", "Z"))
                 For Each Ring As VortexRing In Lattice.VortexRings
-                    RaiseEvent PushResultLine(String.Format("{0,4:D}: {1,12:F8}, {2,12:F8}, {3,12:F8}", Ring.IndexL, Ring.ControlPoint.X, Ring.ControlPoint.Y, Ring.ControlPoint.Z))
+                    RaiseEvent PushResultLine(String.Format("{0,4:D} {1,14:E6} {2,14:E6} {3,14:E6}", Ring.IndexL, Ring.ControlPoint.X, Ring.ControlPoint.Y, Ring.ControlPoint.Z))
                 Next
 
                 RaiseEvent PushResultLine("")
-                RaiseEvent PushResultLine("Outer control point")
-                RaiseEvent PushResultLine("Index, CPx, CPy, CPz")
+                RaiseEvent PushResultLine("# Outer control points [m]")
+                RaiseEvent PushResultLine(String.Format("{0,-4} {1,-14} {2,-14} {3,-14}", "Index", "X", "Y", "Z"))
                 For Each Ring As VortexRing In Lattice.VortexRings
                     If Ring.OuterControlPoint IsNot Nothing Then
-                        RaiseEvent PushResultLine(String.Format("{0,4:D}: {1,12:F8}, {2,12:F8}, {3,12:F8}", Ring.IndexL, Ring.OuterControlPoint.X, Ring.OuterControlPoint.Y, Ring.OuterControlPoint.Z))
+                        RaiseEvent PushResultLine(String.Format("{0,4:D}: {1,14:E6}, {2,14:E6}, {3,14:E6}", Ring.IndexL, Ring.OuterControlPoint.X, Ring.OuterControlPoint.Y, Ring.OuterControlPoint.Z))
                     End If
                 Next
 
                 RaiseEvent PushResultLine("")
-                RaiseEvent PushResultLine("Index, Nx, Ny, Nz")
+                RaiseEvent PushResultLine("# Normal vectors")
+                RaiseEvent PushResultLine(String.Format("{0,-4} {1,-14} {2,-14} {3,-14}", "Index", "X", "Y", "Z"))
                 For Each Ring As VortexRing In Lattice.VortexRings
-                    RaiseEvent PushResultLine(String.Format("{0,4:D}: {1,12:F8}, {2,12:F8}, {3,12:F8}", Ring.IndexL, Ring.Normal.X, Ring.Normal.Y, Ring.Normal.Z))
+                    RaiseEvent PushResultLine(String.Format("{0,4:D}: {1,14:E6}, {2,14:E6}, {3,14:E6}", Ring.IndexL, Ring.Normal.X, Ring.Normal.Y, Ring.Normal.Z))
                 Next
 
             Next
