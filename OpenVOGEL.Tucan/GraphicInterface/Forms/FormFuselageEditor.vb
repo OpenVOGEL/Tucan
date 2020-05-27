@@ -95,9 +95,12 @@ Public Class FormFuselageEditor
     Private Sub SelectSection() Handles lbSections.SelectedIndexChanged
         _SelectedVertexIndex = -1
         CoordinateControlsEnabled = False
-        allowZevent = False
-        If CurrentSection IsNot Nothing Then nudPosition.Value = CurrentSection.Z
-        allowZevent = True
+        AllowSectionEvents = False
+        If CurrentSection IsNot Nothing Then
+            nudPosition.Value = CurrentSection.Z
+            cbxBrokenEdge.Checked = CurrentSection.BrokenEdge
+        End If
+        AllowSectionEvents = True
         Refresh()
     End Sub
 
@@ -166,12 +169,12 @@ Public Class FormFuselageEditor
             End If
 
             For Each Vertex In Section.Vertices
-                If firstvertex Then
+                If firstVertex Then
                     _URg.X = Vertex.X
                     _URg.Y = Vertex.Y
                     _BLg.X = Vertex.X
                     _BLg.Y = Vertex.Y
-                    firstvertex = False
+                    firstVertex = False
                 Else
                     _URg.X = Math.Max(_URg.X, Vertex.X)
                     _URg.Y = Math.Max(_URg.Y, Vertex.Y)
@@ -625,6 +628,7 @@ Public Class FormFuselageEditor
         _Fuselage.CrossSections.Insert(CurrentSectionIndex + 1, Section)
 
         LoadSections()
+
         ObtainGlobalExtremeCoordinates()
 
     End Sub
@@ -947,11 +951,11 @@ Public Class FormFuselageEditor
 
     End Sub
 
-    Private allowZevent As Boolean = False
+    Private AllowSectionEvents As Boolean = False
 
     Private Sub nudPosition_ValueChanged(sender As Object, e As EventArgs) Handles nudPosition.ValueChanged
 
-        If allowZevent And CurrentSection IsNot Nothing Then
+        If AllowSectionEvents And CurrentSection IsNot Nothing Then
             CurrentSection.Z = nudPosition.Value
             pbSideView.Refresh()
         End If
@@ -961,6 +965,15 @@ Public Class FormFuselageEditor
     Private Sub btnCenter_Click(sender As Object, e As EventArgs) Handles btnCenter.Click
         UpdateGeometricParameters()
         Refresh()
+    End Sub
+
+    Private Sub cbxBrokenEdge_CheckedChanged(sender As Object, e As EventArgs) Handles cbxBrokenEdge.CheckedChanged
+
+        If AllowSectionEvents And CurrentSection IsNot Nothing Then
+            CurrentSection.BrokenEdge = cbxBrokenEdge.Checked
+            pbSideView.Refresh()
+        End If
+
     End Sub
 
 End Class

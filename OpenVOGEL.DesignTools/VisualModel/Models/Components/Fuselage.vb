@@ -20,6 +20,7 @@ Imports OpenVOGEL.DesignTools.VisualModel.Models.Components.Basics
 Imports OpenVOGEL.DesignTools.VisualModel.Interface
 Imports OpenVOGEL.AeroTools.IoHelper
 Imports System.Xml
+Imports DotNumerics.Interpolation
 
 Namespace VisualModel.Models.Components
 
@@ -241,20 +242,46 @@ Namespace VisualModel.Models.Components
 
         Implements IComparable
 
+        ''' <summary>
+        ''' Te position of the cross section along the Z axis.
+        ''' </summary>
+        ''' <returns></returns>
         Public Property Z As Double = 0.0#
 
+        ''' <summary>
+        ''' The nodes describing the section.
+        ''' </summary>
+        ''' <returns></returns>
         Public Property Vertices As New List(Of Vector2)
 
+        ''' <summary>
+        ''' Indicates if this section breaks the spline first order continuity.
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property BrokenEdge As Boolean = False
+
+        ''' <summary>
+        ''' The total perimeter.
+        ''' </summary>
         Private _Perimeter As Double
 
         Public Sub New()
 
         End Sub
 
+        ''' <summary>
+        ''' Creates a new section from an XML node.
+        ''' </summary>
+        ''' <param name="Reader"></param>
         Public Sub New(ByRef Reader As XmlReader)
+
             ReadFromXML(Reader)
+
         End Sub
 
+        ''' <summary>
+        ''' Calculates and caches the perimeter.
+        ''' </summary>
         Public Sub CalculatePerimeter()
 
             _Perimeter = 0
@@ -271,8 +298,6 @@ Namespace VisualModel.Models.Components
         ''' Perimeter of the section.
         ''' </summary>
         ''' <value></value>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
         Public ReadOnly Property Perimeter As Double
             Get
                 Return _Perimeter
@@ -345,13 +370,18 @@ Namespace VisualModel.Models.Components
 
         End Function
 
+        ''' <summary>
+        ''' Compares the position of this cross section with another section.
+        ''' </summary>
+        ''' <param name="obj"></param>
+        ''' <returns></returns>
         Public Function CompareTo(obj As Object) As Integer Implements IComparable.CompareTo
 
-            Dim otherSection As CrossSection = obj
+            Dim OtherSection As CrossSection = obj
 
-            If otherSection.Z > Z Then
+            If OtherSection.Z > Z Then
                 Return -1
-            ElseIf otherSection.Z = Z
+            ElseIf OtherSection.Z = Z
                 Return 0
             Else
                 Return 1
@@ -422,6 +452,13 @@ Namespace VisualModel.Models.Components
 
     End Enum
 
+    Public Enum InterpolationTypes
+
+        Linear = 0
+        CubicSpline = 1
+
+    End Enum
+
     ''' <summary>
     ''' Represents a surface defined by parallel planar cross sections.
     ''' </summary>
@@ -472,6 +509,12 @@ Namespace VisualModel.Models.Components
         ''' <remarks></remarks>
         Public Property MeshType As MeshTypes = MeshTypes.StructuredQuadrilaterals
 
+        ''' <summary>
+        ''' The interpolation used between the declared cross sections.
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property InterpolationType As InterpolationTypes = InterpolationTypes.CubicSpline
+
         Private _LongitudinalRefinement As Integer = 2
 
         ''' <summary>
@@ -512,32 +555,103 @@ Namespace VisualModel.Models.Components
         ''' <remarks></remarks>
         Private _CrossSectionsToDisplay(0)() As Vector3
 
-        Private Function GetPoint(ByVal z As Double, ByVal s As Double) As Vector3
+        ''' <summary>
+        ''' Gets a point on the surface given its 2D surface coordinates.
+        ''' </summary>
+        ''' <param name="Z">The longitudinal coordinate (along extrusion axis).</param>
+        ''' <param name="S">The transverse coordinate.</param>
+        ''' <returns></returns>
+        Private Function GetPoint(ByVal Z As Double, ByVal S As Double) As Vector3
 
-            Dim i_f As Integer = 1
-            Dim _z As Double = z
+            ' Limit Z (locally) to the cross section longitudinal range
+            '----------------------------------------------------------
 
-            If _z < CrossSections(0).Z Then
-                _z = CrossSections(0).Z
-            ElseIf _z > CrossSections(CrossSections.Count - 1).Z
-                _z = CrossSections(CrossSections.Count - 1).Z
+            If Z < CrossSections(0).Z Then
+                Z = CrossSections(0).Z
+            ElseIf Z > CrossSections(CrossSections.Count - 1).Z
+                Z = CrossSections(CrossSections.Count - 1).Z
             End If
 
-            For i = 1 To CrossSections.Count - 1
+            Select Case InterpolationType
 
-                If CrossSections(i).Z >= _z Then
-                    i_f = i
-                    Exit For
-                End If
+                Case InterpolationTypes.Linear
 
-            Next
+                    ' Linear interpolation between two sections
+                    '------------------------------------------------
 
-            Dim point_i = CrossSections(i_f).GetPoint(s)
-            Dim point_f = CrossSections(i_f - 1).GetPoint(s)
+                    Dim i_a As Integer = 0
+                    Dim i_b As Integer = 1
 
-            Dim f As Double = (CrossSections(i_f).Z - _z) / (CrossSections(i_f).Z - CrossSections(i_f - 1).Z)
+                    For i = 1 To CrossSections.Count - 1
+                        If CrossSections(i).Z >= Z Then
+                            i_a = i - 1
+                            i_b = i
+                            Exit For
+                        End If
+                    Next
 
-            Return New Vector3((1 - f) * point_i.X + f * point_f.X, (1 - f) * point_i.Y + f * point_f.Y, _z)
+                    Dim point_b = CrossSections(i_b).GetPoint(S)
+                    Dim point_a = CrossSections(i_a).GetPoint(S)
+
+                    Dim f As Double = (CrossSections(i_b).Z - Z) / (CrossSections(i_b).Z - CrossSections(i_a).Z)
+
+                    Return New Vector3((1 - f) * point_b.X + f * point_a.X, (1 - f) * point_b.Y + f * point_a.Y, Z)
+
+                Case InterpolationTypes.CubicSpline
+
+                    Dim n As Integer = CrossSections.Count - 1
+
+                    ' Find the previous and next broken edges (if any)
+                    '------------------------------------------------
+
+                    Dim i_a As Integer = 0
+                    Dim i_b As Integer = n
+
+                    For i = 0 To CrossSections.Count - 1
+                        If CrossSections(i).BrokenEdge AndAlso CrossSections(i).Z <= Z Then
+                            i_a = i
+                        End If
+                        If CrossSections(i).BrokenEdge AndAlso CrossSections(i).Z >= Z Then
+                            i_b = i
+                            Exit For
+                        End If
+                    Next
+
+                    Dim Count As Integer = i_b - i_a
+
+                    If Count = 0 Then
+
+                        ' The Z coordinate is exactly in a cross section
+                        '------------------------------------------------
+
+                        Dim Point = CrossSections(i_b).GetPoint(S)
+
+                        Return New Vector3(Point.X, Point.Y, Z)
+
+                    Else
+
+                        ' Spline between two or more sections
+                        '------------------------------------------------
+
+                        Dim U(Count) As Double
+                        Dim X(Count) As Double
+                        Dim Y(Count) As Double
+
+                        For i = 0 To Count
+                            U(i) = CrossSections(i_a + i).Z
+                            Dim Point = CrossSections(i_a + i).GetPoint(S)
+                            X(i) = Point.X
+                            Y(i) = Point.Y
+                        Next
+
+                        Dim SplineX As CubicSpline = CubicSpline.InterpolateNaturalSorted(U, X)
+                        Dim SplineY As CubicSpline = CubicSpline.InterpolateNaturalSorted(U, Y)
+
+                        Return New Vector3(SplineX.Interpolate(Z), SplineY.Interpolate(Z), Z)
+
+                    End If
+
+            End Select
 
         End Function
 

@@ -60,6 +60,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Interpolation\Interpolation.cs" />
+    <Compile Include="Interpolation\Precision.cs" />
+    <Compile Include="Interpolation\Sorting.cs" />
+    <Compile Include="Interpolation\Spline.cs" />
     <Compile Include="LinearAlgebra\IntelMathKernel.cs" />
     <Compile Include="ODE\Dopri5\Dopri5.cs" />
     <Compile Include="ODE\Dopri5\Interfaces.cs" />

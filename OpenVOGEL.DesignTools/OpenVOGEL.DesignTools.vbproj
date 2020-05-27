@@ -130,6 +130,10 @@
       <Project>{5085a290-add2-429e-a3a3-cf4158147e27}</Project>
       <Name>OpenVOGEL.AeroTools</Name>
     </ProjectReference>
+    <ProjectReference Include="..\OpenVOGEL.DotNumerics\OpenVOGEL.DotNumerics.csproj">
+      <Project>{48185ef1-b73b-457b-aa37-0bce567c5ab1}</Project>
+      <Name>OpenVOGEL.DotNumerics</Name>
+    </ProjectReference>
     <ProjectReference Include="..\OpenVOGEL.MathTools\OpenVOGEL.MathTools.vbproj">
       <Project>{7b3d8e3f-d52b-4118-9178-f457444c596d}</Project>
       <Name>OpenVOGEL.MathTools</Name>
