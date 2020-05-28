@@ -192,6 +192,8 @@ Module BatchAnalysis
 
             Region.FlapDeflection = Math.Min(Math.PI * (Delta1 + I * DeltaStep) / 180.0, Delta2)
 
+            LiftingSurface.GenerateMesh()
+
             ProjectRoot.StartCalculation(CalculationType.ctSteady)
 
             Loads.Add(CalculationCore.GlobalAirloads)
@@ -214,15 +216,21 @@ Module BatchAnalysis
         PrintLine(FileId, String.Format("L = {0,12:E6}m", CalculationCore.GlobalAirloads.Area))
         PrintLine(FileId, String.Format("A = {0,12:E6}m²", CalculationCore.GlobalAirloads.Area))
         PrintLine(FileId, String.Format("q = {0,12:E6}Pa", CalculationCore.GlobalAirloads.DynamicPressure))
+        PrintLine(FileId, String.Format("a = {0,12:E6}°", CalculationCore.GlobalAirloads.Alfa))
 
         PrintLine(FileId, "")
         PrintLine(FileId, "# Force coefficients")
-        PrintLine(FileId, String.Format("{0,-6} {1,-14} {2,-14} {3,-14}", "Alfa", "CL", "CDi", "CDp"))
+        PrintLine(FileId, String.Format("{0,-6} {1,-14} {2,-14} {3,-14}", "Delta", "CL", "CDi", "CDp"))
+
+        Dim J = 0
 
         For Each Load In Loads
 
+            J += 1
+            Dim Delta = Math.Min((Delta1 + J * DeltaStep), Delta2)
+
             PrintLine(FileId, String.Format("{0,6:F3} {1,14:E6} {2,14:E6} {3,14:E6}",
-                                            Load.Alfa * 180.0 / Math.PI,
+                                            Delta,
                                             Load.LiftCoefficient,
                                             Load.InducedDragCoefficient,
                                             Load.SkinDragCoefficient))
@@ -231,15 +239,20 @@ Module BatchAnalysis
 
         PrintLine(FileId, "")
         PrintLine(FileId, "# Force and moment coefficients")
-        PrintLine(FileId, String.Format("{0,-6} {1,-14} {2,-14} {3,-14} {4,-14} {5,-14} {6,-14}", "Alfa", "Fx", "Fy", "Fz", "Mx", "My", "Mz"))
+        PrintLine(FileId, String.Format("{0,-6} {1,-14} {2,-14} {3,-14} {4,-14} {5,-14} {6,-14}", "Delta", "Fx", "Fy", "Fz", "Mx", "My", "Mz"))
+
+        J = 0
 
         For Each Load In Loads
+
+            J += 1
+            Dim Delta = Math.Min((Delta1 + J * DeltaStep), Delta2)
 
             Dim qS As Double = Load.DynamicPressure * Load.Area
             Dim qSL As Double = Load.DynamicPressure * Load.Area * Load.Length
 
             PrintLine(FileId, String.Format("{0,6:F3} {1,14:E6} {2,14:E6} {3,14:E6} {4,14:E6} {5,14:E6} {6,14:E6}",
-                                            Load.Alfa * 180.0 / Math.PI,
+                                            Delta,
                                             Load.Force.X / qS,
                                             Load.Force.Y / qS,
                                             Load.Force.Z / qS,
