@@ -856,6 +856,16 @@ Public Class FormFuselageEditor
             Dim first As Boolean = True
             Dim i As Integer = 0
 
+            'Dim UpperPoints As New List(Of Vector3)
+            'Dim LowerPoints As New List(Of Vector3)
+            'Dim Z0 As Double = _Fuselage.CrossSections.First.Z
+            'Dim Z1 As Double = _Fuselage.CrossSections.Last.Z
+
+            'For i = 0 To 100
+            'UpperPoints.Add(_Fuselage.GetPoint(Z0 + (Z1 - Z0) * i / 100, 1))
+            'LowerPoints.Add(_Fuselage.GetPoint(Z0 + (Z1 - Z0) * i / 100, 0))
+            'Next
+
             For Each Section In _Fuselage.CrossSections
 
                 z = ox + (Section.Z - xmean) * scale
@@ -881,27 +891,25 @@ Public Class FormFuselageEditor
 
                         g.DrawLine(Pens.Orange, z, 0, z, pbSideView.Height)
 
-                        Dim pnts(2) As Point
+                        Dim Points(2) As Point
 
-                        pnts(0).X = z
-                        pnts(0).Y = 10.0F
-                        pnts(1).X = z - 3.0F
-                        pnts(1).Y = 0F
-                        pnts(2).X = z + 3.0F
-                        pnts(2).Y = 0
+                        Points(0).X = z
+                        Points(0).Y = 10.0F
+                        Points(1).X = z - 3.0F
+                        Points(1).Y = 0F
+                        Points(2).X = z + 3.0F
+                        Points(2).Y = 0
 
-                        g.FillPolygon(Brushes.Gray, pnts)
+                        g.FillPolygon(Brushes.Gray, Points)
 
-                        pnts(0).Y = pbSideView.Height - 10.0F
-                        pnts(1).Y = pbSideView.Height
-                        pnts(2).Y = pbSideView.Height
+                        Points(0).Y = pbSideView.Height - 10.0F
+                        Points(1).Y = pbSideView.Height
+                        Points(2).Y = pbSideView.Height
 
-                        g.FillPolygon(Brushes.Gray, pnts)
+                        g.FillPolygon(Brushes.Gray, Points)
 
                         Dim lblZ As String = String.Format("{0:D}: {1:F3}", i + 1, Section.Z)
-
                         Dim lblZsize = g.MeasureString(lblZ, FontLabel)
-
                         g.FillRectangle(Brushes.Orange, z - 0.5F * lblZsize.Width - 2.0F, 10.0F, lblZsize.Width + 4.0F, lblZsize.Height + 4.0F)
                         g.DrawString(lblZ, FontLabel, Brushes.Brown, z - 0.5F * lblZsize.Width, 12.0F)
 

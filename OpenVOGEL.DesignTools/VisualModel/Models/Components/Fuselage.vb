@@ -307,7 +307,7 @@ Namespace VisualModel.Models.Components
         ''' <summary>
         ''' Returns an interpolated point at the given line coordinate s.
         ''' </summary>
-        ''' <param name="s">Curvilinear coordinate from 0 to 1</param>
+        ''' <param name="s">Curvilinear dimensionless coordinate (from 0 to 1)</param>
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Function GetPoint(ByVal s As Double) As Vector2
@@ -561,9 +561,9 @@ Namespace VisualModel.Models.Components
         ''' Gets a point on the surface given its 2D surface coordinates.
         ''' </summary>
         ''' <param name="Z">The longitudinal coordinate (along extrusion axis).</param>
-        ''' <param name="S">The transverse coordinate.</param>
+        ''' <param name="S">The transverse dimensionless coordinate.</param>
         ''' <returns></returns>
-        Private Function GetPoint(ByVal Z As Double, ByVal S As Double) As Vector3
+        Public Function GetPoint(ByVal Z As Double, ByVal S As Double) As Vector3
 
             ' Limit Z (locally) to the cross section longitudinal range
             '----------------------------------------------------------
