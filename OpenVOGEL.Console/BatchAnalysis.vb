@@ -226,7 +226,6 @@ Module BatchAnalysis
 
         For Each Load In Loads
 
-            J += 1
             Dim Delta = Math.Min((Delta1 + J * DeltaStep), Delta2)
 
             PrintLine(FileId, String.Format("{0,6:F3} {1,14:E6} {2,14:E6} {3,14:E6}",
@@ -235,6 +234,7 @@ Module BatchAnalysis
                                             Load.InducedDragCoefficient,
                                             Load.SkinDragCoefficient))
 
+            J += 1
         Next
 
         PrintLine(FileId, "")
@@ -245,7 +245,6 @@ Module BatchAnalysis
 
         For Each Load In Loads
 
-            J += 1
             Dim Delta = Math.Min((Delta1 + J * DeltaStep), Delta2)
 
             Dim qS As Double = Load.DynamicPressure * Load.Area
@@ -259,6 +258,8 @@ Module BatchAnalysis
                                             Load.Moment.X / qSL,
                                             Load.Moment.Y / qSL,
                                             Load.Moment.Z / qSL))
+
+            J += 1
         Next
 
         FileClose(FileId)
