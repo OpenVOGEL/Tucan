@@ -180,8 +180,8 @@ Module BatchAnalysis
         ' Set the incidence angle
         '-----------------------------------------------------------------
 
-        ProjectRoot.SimulationSettings.StreamVelocity.X = V * Math.Cos(Alfa)
-        ProjectRoot.SimulationSettings.StreamVelocity.Z = V * Math.Sin(Alfa)
+        ProjectRoot.SimulationSettings.StreamVelocity.X = V * Math.Cos(Alfa / 180.0 * Math.PI)
+        ProjectRoot.SimulationSettings.StreamVelocity.Z = V * Math.Sin(Alfa / 180.0 * Math.PI)
 
         ' Scan the flap deflection
         '-----------------------------------------------------------------

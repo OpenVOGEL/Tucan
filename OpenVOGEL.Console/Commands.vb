@@ -43,7 +43,7 @@ Module Commands
 
             If Commands.Length > 0 Then
 
-                Select Case Commands(0)
+                Select Case Commands(0).ToLower
 
                     Case "quit"
 
@@ -95,11 +95,19 @@ Module Commands
 
                         DataStore.StartCalculation(AeroTools.CalculationModel.Settings.CalculationType.ctSteady)
 
-                    Case "alfascan"
+                    Case "alfa_scan"
 
                         If Commands.Length > 3 Then
 
                             BatchAnalysis.AlfaScan(CDbl(Commands(1)), CDbl(Commands(2)), CDbl(Commands(3)))
+
+                        End If
+
+                    Case "delta_scan"
+
+                        If Commands.Length > 5 Then
+
+                            BatchAnalysis.DeltaScan(Commands(1), CInt(Commands(2)), CDbl(Commands(3)), CDbl(Commands(4)), CDbl(Commands(5)), CDbl(Commands(6)))
 
                         End If
 
