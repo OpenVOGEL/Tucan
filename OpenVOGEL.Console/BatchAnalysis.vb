@@ -65,6 +65,7 @@ Module BatchAnalysis
 
         PrintLine(FileId, "OpenVOGEL alfa scan")
         PrintLine(FileId, "Kernel version: " & CalculationCore.Version)
+        PrintLine(FileId, "Original model: " & ProjectRoot.FilePath)
         PrintLine(FileId, "")
 
         PrintLine(FileId, String.Format("L = {0,12:E6}m", CalculationCore.GlobalAirloads.Area))
@@ -211,6 +212,7 @@ Module BatchAnalysis
 
         PrintLine(FileId, "OpenVOGEL delta scan")
         PrintLine(FileId, "Kernel version: " & CalculationCore.Version)
+        PrintLine(FileId, "Original model: " & ProjectRoot.FilePath)
         PrintLine(FileId, "")
 
         PrintLine(FileId, String.Format("L = {0,12:E6}m", CalculationCore.GlobalAirloads.Area))

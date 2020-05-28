@@ -91,6 +91,18 @@ Module Commands
                         DataStore.ProjectRoot.ReadFromXML()
                         System.Console.WriteLine(String.Format("loaded {0} objects", DataStore.ProjectRoot.Model.Objects.Count))
 
+                        Dim I As Integer = 0
+                        For Each Surface In DataStore.ProjectRoot.Model.Objects
+                            I += 1
+                            System.Console.WriteLine(String.Format(" {0} -> {1,-20} N:{2,-5} P:{3,-5} S:{4,-5} [{5}]",
+                                                                   I,
+                                                                   Surface.Name,
+                                                                   Surface.NumberOfNodes,
+                                                                   Surface.NumberOfPanels,
+                                                                   Surface.NumberOfSegments,
+                                                                   Surface.GetType))
+                        Next
+
                     Case "steady"
 
                         DataStore.StartCalculation(AeroTools.CalculationModel.Settings.CalculationType.ctSteady)
