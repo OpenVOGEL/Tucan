@@ -399,6 +399,7 @@ Namespace VisualModel.Models.Components
         Public Sub WriteToXML(ByRef writer As XmlWriter)
 
             writer.WriteAttributeString("Z", String.Format("{0}", Z))
+            writer.WriteAttributeString("BrokenEdge", String.Format("{0}", BrokenEdge))
 
             For Each Vertex In Vertices
 
@@ -421,6 +422,7 @@ Namespace VisualModel.Models.Components
             Vertices.Clear()
 
             Z = IOXML.ReadDouble(reader, "Z", 0.0)
+            BrokenEdge = IOXML.ReadBoolean(reader, "BrokenEdge", True)
 
             Dim subtree As XmlReader = reader.ReadSubtree()
 
