@@ -119,7 +119,22 @@ Module Commands
 
                         If Commands.Length > 5 Then
 
-                            BatchAnalysis.DeltaScan(Commands(1), CInt(Commands(2)), CDbl(Commands(3)), CDbl(Commands(4)), CDbl(Commands(5)), CDbl(Commands(6)))
+                            BatchAnalysis.DeltaScan(CDbl(Commands(1)), Commands(2), CInt(Commands(3)), CDbl(Commands(4)), CDbl(Commands(5)), CDbl(Commands(6)))
+
+                        End If
+
+                    Case "alfa_delta_scan"
+
+                        If Commands.Length > 8 Then
+
+                            BatchAnalysis.AlfaDeltaScan(CDbl(Commands(1)),
+                                                        CDbl(Commands(2)),
+                                                        CDbl(Commands(3)),
+                                                        Commands(4),
+                                                        CInt(Commands(5)),
+                                                        CDbl(Commands(6)),
+                                                        CDbl(Commands(7)),
+                                                        CDbl(Commands(8)))
 
                         End If
 
