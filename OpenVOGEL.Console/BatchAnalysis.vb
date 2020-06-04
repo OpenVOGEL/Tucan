@@ -388,11 +388,10 @@ Module BatchAnalysis
 
         Next
 
-        ' Write results
+        ' Write results in dat file
         '-----------------------------------------------------------------
 
         Dim FileId As Integer = FreeFile()
-
         FileOpen(FileId, Path.Combine(Path.GetDirectoryName(FilePath), Path.GetFileNameWithoutExtension(FilePath)) & "_batch.dat", OpenMode.Output)
 
         PrintLine(FileId, "OpenVOGEL alfa delta scan")
@@ -473,6 +472,151 @@ Module BatchAnalysis
             End If
 
         Next
+
+        FileClose(FileId)
+
+        ' Write results in Scilab script file to plot the equilibrium states
+        '-------------------------------------------------------------------
+
+        FileId = FreeFile()
+        FileOpen(FileId, Path.Combine(Path.GetDirectoryName(FilePath), Path.GetFileNameWithoutExtension(FilePath)) & "_script.sce", OpenMode.Output)
+        PrintLine(FileId, "// OpenVOGEL automatic script for alfa-delta scan")
+        PrintLine(FileId, "// Kernel version: " & CalculationCore.Version)
+        PrintLine(FileId, "// Original model: " & ProjectRoot.FilePath)
+        PrintLine(FileId, "")
+
+        Dim Line As String = ""
+
+        ' Alfa and delta vectors
+        '----------------------------------------------------------------
+
+        For I = 0 To Na
+
+            Dim Alfa = Math.Min((Alfa1 + I * AlfaS), Alfa2)
+
+            Line = Line & String.Format("{0,8:F2}", Alfa)
+
+        Next
+
+        PrintLine(FileId, String.Format("X = [{0}]", Line))
+
+        Line = ""
+
+        For I = 0 To Nd
+
+            Dim Delta = Math.Min((Delta1 + I * DeltaS), Delta2)
+
+            Line = Line & String.Format("{0,8:F2}", Delta)
+
+        Next
+
+        PrintLine(FileId, String.Format("Y = [{0}]", Line))
+
+        ' Lift coefficient
+        '----------------------------------------------------------------
+
+        PrintLine(FileId, "CL = [")
+
+        K = 0
+        Line = ""
+
+        For Each Load In Loads
+
+            Line = Line & String.Format(" {0,14:E6}", Load.LiftCoefficient)
+
+            If K = Nd Then
+                PrintLine(FileId, Line)
+                Line = ""
+                K = 0
+            Else
+                K += 1
+            End If
+
+        Next
+
+        PrintLine(FileId, "]")
+
+        ' Vertical force coefficient
+        '----------------------------------------------------------------
+
+        PrintLine(FileId, "CFz = [")
+
+        K = 0
+        Line = ""
+
+        For Each Load In Loads
+
+            Dim qS As Double = Load.DynamicPressure * Load.Area
+
+            Line = Line & String.Format(" {0,14:E6}", Load.Force.Z / qS)
+
+            If K = Nd Then
+                PrintLine(FileId, Line)
+                Line = ""
+                K = 0
+            Else
+                K += 1
+            End If
+
+        Next
+
+        PrintLine(FileId, "]")
+
+        ' Vertical force coefficient
+        '----------------------------------------------------------------
+
+        PrintLine(FileId, "CMy = [")
+
+        K = 0
+        Line = ""
+
+        For Each Load In Loads
+
+            Dim qSL As Double = Load.DynamicPressure * Load.Area * Load.Length
+
+            Line = Line & String.Format(" {0,14:E6}", Load.Moment.Y / qSL)
+
+            If K = Nd Then
+                PrintLine(FileId, Line)
+                Line = ""
+                K = 0
+            Else
+                K += 1
+            End If
+
+        Next
+
+        PrintLine(FileId, "]")
+
+        ' Plot lift contourn lines
+        '----------------------------------------------------------------
+
+        PrintLine(FileId, "// CL countour lines")
+        PrintLine(FileId, "contour(X, Y, CL, 30)")
+
+        ' Plot the contour lines for the X coordinate of the 
+        ' gravity center (Xcg)
+        '----------------------------------------------------------------
+
+        PrintLine(FileId, "// Expand CL And CM to refine Xcg")
+
+        ' Build spline interpolation for CFz and FMy
+
+        PrintLine(FileId, "CFz_Spline = splin2d(X, Y, CFz)")
+        PrintLine(FileId, "CMy_Spline = splin2d(X, Y, CMy)")
+
+        ' Expand the data in a finer grid
+
+        PrintLine(FileId, String.Format("X_Int = linspace({0,6:F2}, {1,6:F2}, 100)", Alfa1, Alfa2))
+        PrintLine(FileId, String.Format("Y_Int = linspace({0,6:F2}, {1,6:F2}, 100)", Delta1, Delta2))
+        PrintLine(FileId, "[X_Grid,Y_Grid] = ndgrid(X_Int, Y_Int)")
+        PrintLine(FileId, "CFz_Int = interp2d(X_Grid, Y_Grid, X, Y, CFz_Spline)")
+        PrintLine(FileId, "CMy_Int = interp2d(X_Grid, Y_Grid, X, Y, CMy_Spline)")
+
+        ' Compute center of gravity for the refined grid and plot the iso-curves
+
+        PrintLine(FileId, "Xcg_Int = CMy_Int./ CFz_Int")
+        PrintLine(FileId, "contour(X_Int, Y_Int, Xcg_Int, 45)")
 
         FileClose(FileId)
 
