@@ -588,17 +588,26 @@ Module BatchAnalysis
 
         PrintLine(FileId, "]")
 
+        PrintLine(FileId, "clf")
+        PrintLine(FileId, "title(""Stability plot"", ""fontsize"", 4)")
+        PrintLine(FileId, "xlabel(""alpha [degrees]"", ""fontsize"", 3)")
+        PrintLine(FileId, "ylabel(""delta [degrees]"", ""fontsize"", 3)")
+        PrintLine(FileId, "xgrid(3)")
+        PrintLine(FileId, "legends([""iso-CL"", ""iso-Xcg""], [2, 5], ""lr"")")
+
         ' Plot lift contourn lines
         '----------------------------------------------------------------
 
         PrintLine(FileId, "// CL countour lines")
-        PrintLine(FileId, "contour(X, Y, CL, 30)")
+        PrintLine(FileId, "N_CL = 30")
+        PrintLine(FileId, "Stl_CL = 2 * ones(1, N_CL)")
+        PrintLine(FileId, "contour(X, Y, CL, N_CL, Stl_CL)")
 
         ' Plot the contour lines for the X coordinate of the 
         ' gravity center (Xcg)
         '----------------------------------------------------------------
 
-        PrintLine(FileId, "// Expand CL And CM to refine Xcg")
+        PrintLine(FileId, "// Expand CL And CM To refine Xcg")
 
         ' Build spline interpolation for CFz and FMy
 
@@ -616,7 +625,10 @@ Module BatchAnalysis
         ' Compute center of gravity for the refined grid and plot the iso-curves
 
         PrintLine(FileId, "Xcg_Int = CMy_Int./ CFz_Int")
-        PrintLine(FileId, "contour(X_Int, Y_Int, Xcg_Int, 45)")
+
+        PrintLine(FileId, "N_Xcg = 45")
+        PrintLine(FileId, "Stl_Xcg = 5 * ones(1, N_Xcg)")
+        PrintLine(FileId, "contour(X_Int, Y_Int, Xcg_Int, 45, Stl_Xcg)")
 
         FileClose(FileId)
 
