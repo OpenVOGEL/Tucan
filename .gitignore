@@ -20,6 +20,11 @@ OpenVOGEL.DotNumerics/obj/**
 OpenVOGEL.DotNumerics/**/bin
 OpenVOGEL.DotNumerics/**/obj
 
+OpenVOGEL.Console/bin/**
+OpenVOGEL.Console/obj/**
+OpenVOGEL.Console/**/bin
+OpenVOGEL.Console/**/obj
+
 OpenVOGEL/bin/**
 OpenVOGEL/obj/**
 OpenVOGEL/publish/**
