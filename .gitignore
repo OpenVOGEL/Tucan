@@ -30,6 +30,11 @@ OpenVOGEL.GpuTools/obj/**
 OpenVOGEL.GpuTools/**/bin
 OpenVOGEL.GpuTools/**/obj
 
+OpenVOGEL.Tucan/bin/**
+OpenVOGEL.Tucan/obj/**
+OpenVOGEL.Tucan/**/bin
+OpenVOGEL.Tucan/**/obj
+
 OpenVOGEL/bin/**
 OpenVOGEL/obj/**
 OpenVOGEL/publish/**
