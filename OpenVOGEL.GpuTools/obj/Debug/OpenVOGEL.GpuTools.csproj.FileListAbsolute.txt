@@ -1,8 +1,0 @@
-C:\Users\Laz-os\Source\Repos\OpenVOGEL\Tucan\OpenVOGEL.GpuTools\bin\Debug\OpenVOGEL.GpuTools.dll
-C:\Users\Laz-os\Source\Repos\OpenVOGEL\Tucan\OpenVOGEL.GpuTools\bin\Debug\OpenVOGEL.GpuTools.pdb
-C:\Users\Laz-os\Source\Repos\OpenVOGEL\Tucan\OpenVOGEL.GpuTools\bin\Debug\Cudafy.NET.dll
-C:\Users\Laz-os\Source\Repos\OpenVOGEL\Tucan\OpenVOGEL.GpuTools\bin\Debug\Cudafy.NET.xml
-C:\Users\Laz-os\Source\Repos\OpenVOGEL\Tucan\OpenVOGEL.GpuTools\obj\Debug\OpenVOGEL.GpuTools.csproj.CoreCompileInputs.cache
-C:\Users\Laz-os\Source\Repos\OpenVOGEL\Tucan\OpenVOGEL.GpuTools\obj\Debug\OpenVOGEL.GpuTools.csproj.CopyComplete
-C:\Users\Laz-os\Source\Repos\OpenVOGEL\Tucan\OpenVOGEL.GpuTools\obj\Debug\OpenVOGEL.GpuTools.dll
-C:\Users\Laz-os\Source\Repos\OpenVOGEL\Tucan\OpenVOGEL.GpuTools\obj\Debug\OpenVOGEL.GpuTools.pdb
