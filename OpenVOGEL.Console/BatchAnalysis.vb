@@ -624,11 +624,193 @@ Module BatchAnalysis
 
         ' Compute center of gravity for the refined grid and plot the iso-curves
 
-        PrintLine(FileId, "Xcg_Int = CMy_Int./ CFz_Int")
+        PrintLine(FileId, "Xcg_Int = - CMy_Int ./ CFz_Int")
 
         PrintLine(FileId, "N_Xcg = 45")
         PrintLine(FileId, "Stl_Xcg = 5 * ones(1, N_Xcg)")
         PrintLine(FileId, "contour(X_Int, Y_Int, Xcg_Int, 45, Stl_Xcg)")
+
+        FileClose(FileId)
+
+    End Sub
+
+    ''' <summary>
+    ''' Performs a series of steady analysis between Omega1 and Omega2 using the OmegaS in between.
+    ''' </summary>
+    ''' <param name="Alfa1">The initial angular velocity.</param>
+    ''' <param name="Alfa2">The final angular velocity.</param>
+    ''' <param name="AlfaS">The step.</param>
+    Public Sub OmegaScan(OmegaMax As Double, No As Integer, Mass1 As Double, Mass2 As Double, Nm As Integer)
+
+        Dim Loads As New List(Of AirLoads)
+
+        ProjectRoot.SimulationSettings.ExtendWakes = False
+
+        For I = 0 To No
+
+            System.Console.WriteLine(String.Format("STEP {0} of {1}", I, No))
+
+            ProjectRoot.SimulationSettings.Omega.Y = -OmegaMax * I / No
+
+            ProjectRoot.StartCalculation(CalculationType.ctSteady)
+
+            Loads.Add(CalculationCore.GlobalAirloads)
+
+        Next
+
+        Dim FileId As Integer = FreeFile()
+
+        FileOpen(FileId, Path.Combine(Path.GetDirectoryName(FilePath), Path.GetFileNameWithoutExtension(FilePath)) & "_batch.dat", OpenMode.Output)
+
+        PrintLine(FileId, "OpenVOGEL omega scan")
+        PrintLine(FileId, "Kernel version: " & CalculationCore.Version)
+        PrintLine(FileId, "Original model: " & ProjectRoot.FilePath)
+        PrintLine(FileId, "")
+
+        PrintLine(FileId, String.Format("L = {0,12:E6}m", CalculationCore.GlobalAirloads.Length))
+        PrintLine(FileId, String.Format("A = {0,12:E6}m²", CalculationCore.GlobalAirloads.Area))
+        PrintLine(FileId, String.Format("q = {0,12:E6}Pa", CalculationCore.GlobalAirloads.DynamicPressure))
+        PrintLine(FileId, String.Format("a = {0,12:E6}deg", CalculationCore.GlobalAirloads.Alfa * 180 / Math.PI))
+
+        PrintLine(FileId, "")
+        PrintLine(FileId, "# Force coefficients")
+        PrintLine(FileId, String.Format("{0,-8} {1,-14} {2,-14} {3,-14}", "Omega", "CL", "CDi", "CDp"))
+
+        Dim J As Integer = 0
+
+        For Each Load In Loads
+
+            Dim Omega = -OmegaMax * J / No
+
+            PrintLine(FileId, String.Format("{0,8:F4} {1,14:E6} {2,14:E6} {3,14:E6}",
+                                            Omega,
+                                            Load.LiftCoefficient,
+                                            Load.InducedDragCoefficient,
+                                            Load.SkinDragCoefficient))
+
+            J += 1
+
+        Next
+
+        PrintLine(FileId, "")
+        PrintLine(FileId, "# Force and moment coefficients")
+        PrintLine(FileId, String.Format("{0,-8} {1,-14} {2,-14} {3,-14} {4,-14} {5,-14} {6,-14}", "Alfa", "Fx", "Fy", "Fz", "Mx", "My", "Mz"))
+
+        J = 0
+
+        For Each Load In Loads
+
+            Dim Omega = -OmegaMax * J / No
+
+            Dim qS As Double = Load.DynamicPressure * Load.Area
+            Dim qSL As Double = Load.DynamicPressure * Load.Area * Load.Length
+
+            PrintLine(FileId, String.Format("{0,8:F4} {1,14:E6} {2,14:E6} {3,14:E6} {4,14:E6} {5,14:E6} {6,14:E6}",
+                                            Omega,
+                                            Load.Force.X / qS,
+                                            Load.Force.Y / qS,
+                                            Load.Force.Z / qS,
+                                            Load.Moment.X / qSL,
+                                            Load.Moment.Y / qSL,
+                                            Load.Moment.Z / qSL))
+
+            J += 1
+
+        Next
+
+        FileClose(FileId)
+
+        ' Write results in Scilab script file to plot the equilibrium states
+        '-------------------------------------------------------------------
+
+        FileId = FreeFile()
+        FileOpen(FileId, Path.Combine(Path.GetDirectoryName(FilePath), Path.GetFileNameWithoutExtension(FilePath)) & "_script.sce", OpenMode.Output)
+        PrintLine(FileId, "// OpenVOGEL automatic script for omega scan")
+        PrintLine(FileId, "// Kernel version: " & CalculationCore.Version)
+        PrintLine(FileId, "// Original model: " & ProjectRoot.FilePath)
+        PrintLine(FileId, "")
+
+        ' M vector (mass)
+        '----------------------------------------------------------------
+
+        PrintLine(FileId, String.Format("M = linspace({0,14:E6}, {1,14:E6}, {2})", Mass1, Mass2, Nm))
+
+        ' C vector (curvature of the trajectory)
+        '----------------------------------------------------------------
+
+        Dim Velocity As Double = ProjectRoot.SimulationSettings.StreamVelocity.EuclideanNorm
+
+        Dim Line As String = ""
+
+        For I = 0 To No
+
+            Dim Omega = OmegaMax * I / No
+
+            Line = Line & String.Format("{0,14:E6}", Omega / Velocity)
+
+        Next
+
+        PrintLine(FileId, String.Format("C  = [{0}]", Line))
+
+        ' X vector (Xcg)
+        '----------------------------------------------------------------
+
+        Line = ""
+
+        For Each Load In Loads
+
+            Line = Line & String.Format(" {0,14:E6}", -Load.Moment.Y / (Load.Force.Z * Load.Length))
+
+        Next
+
+        PrintLine(FileId, String.Format("X  = [{0}]", Line))
+
+        ' CL vector
+        '----------------------------------------------------------------
+
+        Line = ""
+
+        For Each Load In Loads
+
+            Line = Line & String.Format(" {0,14:E6}", Load.LiftCoefficient)
+
+        Next
+
+        PrintLine(FileId, String.Format("CL = [{0}]", Line))
+
+        ' Other data
+        '----------------------------------------------------------------
+
+        PrintLine(FileId, String.Format("r = {0,14:E6}", ProjectRoot.SimulationSettings.Density))
+        PrintLine(FileId, String.Format("S = {0,14:E6}", CalculationCore.GlobalAirloads.Area))
+        PrintLine(FileId, "g = 9.8")
+
+        ' Compute velocity and load factor for each C and M
+        '----------------------------------------------------------------
+
+        PrintLine(FileId, "V = zeros(length(M), length(C))")
+        PrintLine(FileId, "n = zeros(length(M), length(C))")
+        PrintLine(FileId, "for I = 1: length(M)")
+        PrintLine(FileId, "    for J = 1: length(C)")
+        PrintLine(FileId, "        V(I, J) = sqrt(2 * M(I) * 9.8 / (r * S * CL(J) - 2 * C(J) * M(I)))")
+        PrintLine(FileId, "        n(I, J) = 1 + C(J) * V(I, J) ^ 2 / 9.8")
+        PrintLine(FileId, "    end")
+        PrintLine(FileId, "end")
+        PrintLine(FileId, "scf(2)")
+        PrintLine(FileId, "clf")
+
+        ' Make the diagram
+        '----------------------------------------------------------------
+
+        PrintLine(FileId, "title(""Recovery performance (alpha=10°, delta = 20°)"", ""fontsize"", 4)")
+        PrintLine(FileId, "xlabel(""mass [kg]"", ""fontsize"", 3)")
+        PrintLine(FileId, "ylabel(""Xcg [x/L]"", ""fontsize"", 3)")
+        PrintLine(FileId, "xgrid(3)")
+        PrintLine(FileId, "legends([""iso-n"", ""iso-V""], [2, 5], ""lr"")")
+        PrintLine(FileId, "Stl_n = 2 * ones(1, 10)")
+        PrintLine(FileId, "Stl_V = 5 * ones(1, 10)")
+        PrintLine(FileId, "contour2d(M, X, n, 10, Stl_n)")
+        PrintLine(FileId, "contour2d(M, X, V, 10, Stl_V)")
 
         FileClose(FileId)
 
