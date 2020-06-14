@@ -17,6 +17,8 @@
 
 Imports System.IO
 Imports OpenVOGEL.DesignTools
+Imports OpenVOGEL.DesignTools.VisualModel.Models.Components
+Imports OpenVOGEL.DesignTools.VisualModel.Models.Components.Basics
 
 Module Commands
 
@@ -56,7 +58,7 @@ Module Commands
 
         If Commands.Length > 0 Then
 
-            Select Case Commands(0).ToLower
+            Select Case Commands(0).ToLower.Trim
 
                 Case "quit"
 
@@ -166,6 +168,106 @@ Module Commands
                                                     CDbl(Commands(3)),
                                                     CDbl(Commands(4)),
                                                     CInt(Commands(5)))
+
+                    End If
+
+                Case "set_velocity"
+
+                    If Commands.Length > 1 Then
+                        DataStore.ProjectRoot.SimulationSettings.StreamVelocity.X = CDbl(Commands(1))
+                        DataStore.ProjectRoot.SimulationSettings.StreamVelocity.Y = 0
+                        DataStore.ProjectRoot.SimulationSettings.StreamVelocity.Z = 0
+                    End If
+
+                    If Commands.Length > 2 Then
+                        DataStore.ProjectRoot.SimulationSettings.StreamVelocity.Y = CDbl(Commands(2))
+                        DataStore.ProjectRoot.SimulationSettings.StreamVelocity.Z = 0
+                    End If
+
+                    If Commands.Length > 3 Then
+                        DataStore.ProjectRoot.SimulationSettings.StreamVelocity.Z = CDbl(Commands(3))
+                    End If
+
+                Case "set_omega"
+
+                    If Commands.Length > 1 Then
+                        DataStore.ProjectRoot.SimulationSettings.Omega.X = CDbl(Commands(1))
+                        DataStore.ProjectRoot.SimulationSettings.Omega.Y = 0
+                        DataStore.ProjectRoot.SimulationSettings.Omega.Z = 0
+                    End If
+
+                    If Commands.Length > 2 Then
+                        DataStore.ProjectRoot.SimulationSettings.Omega.Y = CDbl(Commands(2))
+                        DataStore.ProjectRoot.SimulationSettings.Omega.Z = 0
+                    End If
+
+                    If Commands.Length > 3 Then
+                        DataStore.ProjectRoot.SimulationSettings.Omega.Z = CDbl(Commands(3))
+                    End If
+
+                Case "set_alfa"
+
+                    If Commands.Length > 1 Then
+                        Dim Alfa As Double = CDbl(Commands(1))
+                        Dim V As Double = DataStore.ProjectRoot.SimulationSettings.StreamVelocity.EuclideanNorm
+                        DataStore.ProjectRoot.SimulationSettings.StreamVelocity.X = V * Math.Cos(Alfa)
+                        DataStore.ProjectRoot.SimulationSettings.StreamVelocity.Y = 0
+                        DataStore.ProjectRoot.SimulationSettings.StreamVelocity.Z = V * Math.Sin(Alfa)
+                    End If
+
+                Case "set_delta"
+
+                    If Commands.Length > 3 Then
+
+                        Dim SurfaceName As String = Commands(1).Trim
+                        Dim RegionIndex As Integer = CInt(Commands(2))
+                        Dim Delta As Double = CDbl(Commands(3))
+
+                        System.Console.WriteLine("setting flap deflection for " & SurfaceName & "...")
+
+                        ' Find the lifting surface
+                        '-----------------------------------------------------------------
+
+                        Dim LiftingSurface As LiftingSurface = Nothing
+
+                        For Each Surface As Surface In DataStore.ProjectRoot.Model.Objects
+
+                            If Surface.Name.ToLower = SurfaceName.ToLower Then
+
+                                If TypeOf (Surface) Is LiftingSurface Then
+                                    LiftingSurface = Surface
+                                Else
+                                    System.Console.WriteLine("the target surface exist in the model, but it is not a lifting surface")
+                                    Exit For
+                                End If
+
+                            End If
+
+                        Next
+
+                        If LiftingSurface Is Nothing Then
+                            System.Console.WriteLine("the target surface does not exist in the model")
+                        Else
+
+                            ' Check the region and flap
+                            '-----------------------------------------------------------------
+
+                            If RegionIndex < 1 Or RegionIndex > LiftingSurface.WingRegions.Count Then
+                                System.Console.WriteLine(String.Format("invalid target region (must be between 1 and {0})", LiftingSurface.WingRegions.Count))
+                            Else
+
+                                Dim Region As WingRegion = LiftingSurface.WingRegions(RegionIndex - 1)
+
+                                If Region.Flapped Then
+                                    Region.FlapDeflection = Delta
+                                    LiftingSurface.GenerateMesh()
+                                Else
+                                    System.Console.WriteLine("invalid target region (not flapped)")
+                                End If
+
+                            End If
+
+                        End If
 
                     End If
 
