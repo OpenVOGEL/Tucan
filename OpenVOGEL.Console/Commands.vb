@@ -271,6 +271,18 @@ Module Commands
 
                     End If
 
+                Case "set_density"
+
+                    If Commands.Length > 1 Then
+                        DataStore.ProjectRoot.SimulationSettings.Density = CDbl(Commands(1))
+                    End If
+
+                Case "set_viscosity"
+
+                    If Commands.Length > 1 Then
+                        DataStore.ProjectRoot.SimulationSettings.Viscocity = CDbl(Commands(1))
+                    End If
+
                 Case "print_report"
 
                     If DataStore.ProjectRoot.CalculationCore IsNot Nothing Then
