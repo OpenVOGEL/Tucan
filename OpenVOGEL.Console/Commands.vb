@@ -208,7 +208,7 @@ Module Commands
                 Case "set_alfa"
 
                     If Commands.Length > 1 Then
-                        Dim Alfa As Double = CDbl(Commands(1))
+                        Dim Alfa As Double = CDbl(Commands(1)) / 180 * Math.PI
                         Dim V As Double = DataStore.ProjectRoot.SimulationSettings.StreamVelocity.EuclideanNorm
                         DataStore.ProjectRoot.SimulationSettings.StreamVelocity.X = V * Math.Cos(Alfa)
                         DataStore.ProjectRoot.SimulationSettings.StreamVelocity.Y = 0
@@ -221,7 +221,7 @@ Module Commands
 
                         Dim SurfaceName As String = Commands(1).Trim
                         Dim RegionIndex As Integer = CInt(Commands(2))
-                        Dim Delta As Double = CDbl(Commands(3))
+                        Dim Delta As Double = CDbl(Commands(3)) / 180 * Math.PI
 
                         System.Console.WriteLine("setting flap deflection for " & SurfaceName & "...")
 
@@ -283,27 +283,33 @@ Module Commands
 
                     If DataStore.ProjectRoot.CalculationCore IsNot Nothing Then
 
-                        System.Console.WriteLine("enter destination file:")
-                        Dim FileName As String = System.Console.ReadLine
-                        Dim Append As Boolean = True
-                        If File.Exists(FileName) Then
-                            System.Console.WriteLine("the file already exists, append?")
-                            If System.Console.ReadLine = "n" Then
-                                Append = False
-                            End If
+                        Dim FileName As String = ""
+                        If Interactive Then
+                            System.Console.WriteLine("enter destination file:")
+                            FileName = System.Console.ReadLine
+                        ElseIf Commands.Length > 1
+                            FileName = Commands(1).Trim
                         End If
-                        System.Console.WriteLine("Writing results to file")
-                        OutputFile = My.Computer.FileSystem.OpenTextFileWriter(FileName, Append)
-                        OutputFile.WriteLine("----------------------------------------------")
-                        OutputFile.WriteLine("|            OpenVOGEL results               |")
-                        OutputFile.WriteLine("----------------------------------------------")
-                        AddHandler DataStore.ProjectRoot.CalculationCore.PushResultLine, AddressOf WriteToFile
-                        DataStore.ProjectRoot.CalculationCore.ReportResults()
-                        System.Console.WriteLine("Done")
 
-                    End If
+                        Dim Append As Boolean = True
+                            If File.Exists(FileName) Then
+                                System.Console.WriteLine("the file already exists, append?")
+                                If System.Console.ReadLine = "n" Then
+                                    Append = False
+                                End If
+                            End If
+                            System.Console.WriteLine("Writing results to file")
+                            OutputFile = My.Computer.FileSystem.OpenTextFileWriter(FileName, Append)
+                            OutputFile.WriteLine("----------------------------------------------")
+                            OutputFile.WriteLine("|            OpenVOGEL results               |")
+                            OutputFile.WriteLine("----------------------------------------------")
+                            AddHandler DataStore.ProjectRoot.CalculationCore.PushResultLine, AddressOf WriteToFile
+                            DataStore.ProjectRoot.CalculationCore.ReportResults()
+                            System.Console.WriteLine("Done")
 
-                Case "server"
+                        End If
+
+                        Case "server"
 
                     Server.RunServer()
 
