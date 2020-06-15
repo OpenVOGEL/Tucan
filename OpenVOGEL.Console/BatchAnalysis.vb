@@ -730,15 +730,41 @@ Module BatchAnalysis
         PrintLine(FileId, "// Original model: " & ProjectRoot.FilePath)
         PrintLine(FileId, "")
 
-        ' M vector (mass)
+        Dim Velocity As Double = ProjectRoot.SimulationSettings.StreamVelocity.EuclideanNorm
+        Dim Rho As Double = ProjectRoot.SimulationSettings.Density
+
+        ' M vector (mass, limited to Mcrit)
         '----------------------------------------------------------------
+
+        J = 0
+
+        For Each Load In Loads
+
+            Dim Kappa = (OmegaMax * J / No) / Velocity
+            Dim Mcrit = Mass2
+
+            If Kappa > 0 Then
+                Mcrit = Load.Area * Rho * Load.LiftCoefficient / Kappa
+                If Mass2 > Mcrit Then
+                    PrintLine(FileId, String.Format("// WARNING: the upper mass limit is constrained to {1,14:E6}kg for a curvature of {1,14:E6}!", Mcrit, Kappa))
+                    Mass2 = 0.9 * Mcrit
+                    PrintLine(FileId, String.Format("// The upper mass limit has been reduced to {1,14:E6}kg", Mass2))
+                    If Mass1 > Mass2 Then
+                        Mass1 = 0.5 * Mass2
+                        PrintLine(FileId, String.Format("// The lower mass limit has also been reduced to {1,14:E6}kg", Mass1))
+                    End If
+                    PrintLine(FileId, "// Either reduce the mass or the maximum path curvature")
+                End If
+            End If
+
+            J += 1
+
+        Next
 
         PrintLine(FileId, String.Format("M = linspace({0,14:E6}, {1,14:E6}, {2})", Mass1, Mass2, Nm))
 
         ' C vector (curvature of the trajectory)
         '----------------------------------------------------------------
-
-        Dim Velocity As Double = ProjectRoot.SimulationSettings.StreamVelocity.EuclideanNorm
 
         Dim Line As String = ""
 

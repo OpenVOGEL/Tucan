@@ -341,7 +341,7 @@ Module Commands
 
                 Case Else
 
-                    System.Console.WriteLine("Unrecognized command")
+                    System.Console.WriteLine("unrecognized command")
 
             End Select
 
