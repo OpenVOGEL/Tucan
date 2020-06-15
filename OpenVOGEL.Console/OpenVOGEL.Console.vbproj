@@ -170,6 +170,17 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Vogel.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <FileAssociation Include=".ave">
+      <Visible>False</Visible>
+      <Description>OpenVOGEL scripting file</Description>
+      <Progid>0</Progid>
+      <DefaultIcon>Vogel.ico</DefaultIcon>
+    </FileAssociation>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

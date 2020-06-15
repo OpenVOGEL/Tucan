@@ -25,20 +25,33 @@ Module Commands
     Sub Main(Arguments As String())
 
         System.Console.WriteLine("** OpenVOGEL **")
-        System.Console.WriteLine("Console version: 2.2")
+        System.Console.WriteLine("Console version: 3.1")
         System.Console.WriteLine("Solver  version: " & AeroTools.CalculationModel.Solver.Solver.Version)
 
         MklSetup.Initialize()
 
         DataStore.ProjectRoot.Initialize()
 
-        AddHandler DataStore.PushMessage, AddressOf OutputConsoleMessage
-        AddHandler DataStore.PushProgress, AddressOf OutputConsoleProgress
-
-        Dim Quit As Boolean = False
+        ' Interprete *.ave files as OpenVOGEL scripts
+        '-----------------------------------------------------------------
+        Dim Argusments() As String = System.Environment.GetCommandLineArgs
+        If Arguments.Length > 0 Then
+            System.Console.WriteLine("arguments:")
+            For I = 0 To Arguments.Length - 1
+                System.Console.WriteLine(Arguments(I))
+                If File.Exists(Arguments(I)) And Path.GetExtension(Arguments(I)).ToLower = ".ave" Then
+                    ProcessScript(Arguments(I))
+                End If
+            Next
+        Else
+            System.Console.WriteLine("(no arguments)")
+        End If
 
         ' Process the user commands interactively
-        '-----------------------------------------------------
+        '-----------------------------------------------------------------
+
+        AddHandler DataStore.PushMessage, AddressOf OutputConsoleMessage
+        AddHandler DataStore.PushProgress, AddressOf OutputConsoleProgress
 
         While ProcessCommand(System.Console.ReadLine(), True)
 
