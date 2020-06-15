@@ -733,6 +733,7 @@ Module BatchAnalysis
         Dim Velocity As Double = ProjectRoot.SimulationSettings.StreamVelocity.EuclideanNorm
         Dim Density As Double = ProjectRoot.SimulationSettings.Density
         Dim Area As Double = CalculationCore.GlobalAirloads.Area
+
         ' M vector (mass, limited to Mcrit)
         '----------------------------------------------------------------
 
@@ -744,7 +745,7 @@ Module BatchAnalysis
             Dim Mcrit = Mass2
 
             If Kappa > 0 Then
-                Mcrit = Load.Area * Density * Load.LiftCoefficient / Kappa
+                Mcrit = 0.5 * Load.Area * Density * Load.LiftCoefficient / Kappa
                 If Mass2 > Mcrit Then
                     PrintLine(FileId, String.Format("// WARNING: the upper mass limit is constrained to {1,14:E6}kg for a curvature of {1,14:E6}!", Mcrit, Kappa))
                     Mass2 = 0.9 * Mcrit

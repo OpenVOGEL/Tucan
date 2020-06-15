@@ -344,8 +344,6 @@ Module Commands
 
                         ProcessScript(Commands(1))
 
-                        System.Console.WriteLine("script digested")
-
                     End If
 
                 Case "help"
@@ -381,6 +379,8 @@ Module Commands
             End While
 
             FileClose(FileId)
+
+            System.Console.WriteLine("script digested")
 
         Else
 
