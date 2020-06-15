@@ -731,8 +731,8 @@ Module BatchAnalysis
         PrintLine(FileId, "")
 
         Dim Velocity As Double = ProjectRoot.SimulationSettings.StreamVelocity.EuclideanNorm
-        Dim Rho As Double = ProjectRoot.SimulationSettings.Density
-
+        Dim Density As Double = ProjectRoot.SimulationSettings.Density
+        Dim Area As Double = CalculationCore.GlobalAirloads.Area
         ' M vector (mass, limited to Mcrit)
         '----------------------------------------------------------------
 
@@ -744,7 +744,7 @@ Module BatchAnalysis
             Dim Mcrit = Mass2
 
             If Kappa > 0 Then
-                Mcrit = Load.Area * Rho * Load.LiftCoefficient / Kappa
+                Mcrit = Load.Area * Density * Load.LiftCoefficient / Kappa
                 If Mass2 > Mcrit Then
                     PrintLine(FileId, String.Format("// WARNING: the upper mass limit is constrained to {1,14:E6}kg for a curvature of {1,14:E6}!", Mcrit, Kappa))
                     Mass2 = 0.9 * Mcrit
@@ -807,8 +807,8 @@ Module BatchAnalysis
         ' Other data
         '----------------------------------------------------------------
 
-        PrintLine(FileId, String.Format("r = {0,14:E6}", ProjectRoot.SimulationSettings.Density))
-        PrintLine(FileId, String.Format("S = {0,14:E6}", CalculationCore.GlobalAirloads.Area))
+        PrintLine(FileId, String.Format("r = {0,14:E6}", Density))
+        PrintLine(FileId, String.Format("S = {0,14:E6}", Area))
         PrintLine(FileId, "g = 9.8")
 
         ' Compute velocity and load factor for each C and M
