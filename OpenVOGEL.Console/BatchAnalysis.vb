@@ -747,12 +747,12 @@ Module BatchAnalysis
             If Kappa > 0 Then
                 Mcrit = 0.5 * Load.Area * Density * Load.LiftCoefficient / Kappa
                 If Mass2 > Mcrit Then
-                    PrintLine(FileId, String.Format("// WARNING: the upper mass limit is constrained to {1,14:E6}kg for a curvature of {1,14:E6}!", Mcrit, Kappa))
+                    PrintLine(FileId, String.Format("// WARNING: the upper mass limit is constrained to {0,14:E6}kg for a curvature of {1,14:E6}!", Mcrit, Kappa))
                     Mass2 = 0.9 * Mcrit
-                    PrintLine(FileId, String.Format("// The upper mass limit has been reduced to {1,14:E6}kg", Mass2))
+                    PrintLine(FileId, String.Format("// The upper mass limit has been reduced to {0,14:E6}kg", Mass2))
                     If Mass1 > Mass2 Then
                         Mass1 = 0.5 * Mass2
-                        PrintLine(FileId, String.Format("// The lower mass limit has also been reduced to {1,14:E6}kg", Mass1))
+                        PrintLine(FileId, String.Format("// The lower mass limit has also been reduced to {0,14:E6}kg", Mass1))
                     End If
                     PrintLine(FileId, "// Either reduce the mass or the maximum path curvature")
                 End If
