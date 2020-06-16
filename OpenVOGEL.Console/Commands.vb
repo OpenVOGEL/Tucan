@@ -439,9 +439,7 @@ Module Commands
 
             System.Console.WriteLine("digesting script")
 
-            While Not EOF(FileId)
-
-                ProcessCommand(LineInput(FileId), False)
+            While Not EOF(FileId) And ProcessCommand(LineInput(FileId), False)
 
             End While
 
