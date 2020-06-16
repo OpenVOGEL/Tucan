@@ -239,7 +239,7 @@ Public Class TotalForcePanel
             rbDensity.Value = CalculationCore.GlobalAirloads.DynamicPressure
             rbAlpha.Value = CalculationCore.GlobalAirloads.Alfa
             rbBeta.Value = CalculationCore.GlobalAirloads.Beta
-            nudSurface.Maximum = CalculationCore.GlobalAirloads.Area
+            nudSurface.Maximum = 2 * CalculationCore.GlobalAirloads.Area
             nudSurface.Value = CalculationCore.GlobalAirloads.Area
 
             RecalculateLoads()

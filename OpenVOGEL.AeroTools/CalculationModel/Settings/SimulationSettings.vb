@@ -446,6 +446,19 @@ Namespace CalculationModel.Settings
 
         End Sub
 
+        Public Sub AssignStandardAtmosphere(Altitude As Double)
+
+            Dim ISA As New StandardAtmosphere(Altitude)
+
+            Density = ISA.Density
+            StaticPressure = ISA.Pressure
+            Viscocity = ISA.KinematicVisc
+
+        End Sub
+
+        Protected Overrides Sub Finalize()
+            MyBase.Finalize()
+        End Sub
     End Class
 
 End Namespace

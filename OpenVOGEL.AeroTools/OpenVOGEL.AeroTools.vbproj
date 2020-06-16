@@ -125,6 +125,7 @@
     <Compile Include="CalculationModel\Models\Structural\Library\StructuralSettings.vb" />
     <Compile Include="CalculationModel\Models\Structural\Linker.vb" />
     <Compile Include="CalculationModel\Models\Structural\StructuralCore.vb" />
+    <Compile Include="CalculationModel\Settings\AirProperties.vb" />
     <Compile Include="CalculationModel\Settings\SimulationSettings.vb" />
     <Compile Include="CalculationModel\Settings\AeroelasticHistogram.vb" />
     <Compile Include="CalculationModel\Settings\UnsteadyPerturbation.vb" />
