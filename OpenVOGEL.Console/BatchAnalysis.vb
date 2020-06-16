@@ -829,7 +829,7 @@ Module BatchAnalysis
         ' Make the diagram
         '----------------------------------------------------------------
 
-        PrintLine(FileId, "title(""Recovery performance (alpha=10°, delta = 20°)"", ""fontsize"", 4)")
+        PrintLine(FileId, String.Format("title(""Recovery performance (alpha={0:N0}°)"", ""fontsize"", 4)", Loads(0).Alfa * 180 / Math.PI))
         PrintLine(FileId, "xlabel(""mass [kg]"", ""fontsize"", 3)")
         PrintLine(FileId, "ylabel(""Xcg [x/L]"", ""fontsize"", 3)")
         PrintLine(FileId, "xgrid(3)")

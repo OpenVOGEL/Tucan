@@ -297,7 +297,7 @@ Module Commands
                                         Region.FlapDeflection = Delta
                                         LiftingSurface.GenerateMesh()
                                         If ReadBack Then
-                                            System.Console.WriteLine(String.Format("delta set to {0:F2} for {1}, region {2:N}", Delta * 180 / Math.PI, SurfaceName, RegionIndex))
+                                            System.Console.WriteLine(String.Format("delta set to {0:F2} for {1}, region {2:N0}", Delta * 180 / Math.PI, SurfaceName, RegionIndex))
                                         End If
                                     Else
                                         System.Console.WriteLine("invalid target region (not flapped)")
