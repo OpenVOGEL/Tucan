@@ -60,6 +60,11 @@ Module Commands
     End Sub
 
     ''' <summary>
+    ''' Indicates if commands should be read back
+    ''' </summary>
+    Private ReadBack As Boolean = False
+
+    ''' <summary>
     ''' Interpretes and excecutes the given command
     ''' </summary>
     ''' <param name="Command">The command</param>
@@ -203,6 +208,12 @@ Module Commands
                             DataStore.ProjectRoot.SimulationSettings.StreamVelocity.Z = CDbl(Commands(3))
                         End If
 
+                        If ReadBack Then
+                            System.Console.WriteLine(String.Format("VX = {0,14:E6}", DataStore.ProjectRoot.SimulationSettings.StreamVelocity.X))
+                            System.Console.WriteLine(String.Format("VY = {0,14:E6}", DataStore.ProjectRoot.SimulationSettings.StreamVelocity.Y))
+                            System.Console.WriteLine(String.Format("VZ = {0,14:E6}", DataStore.ProjectRoot.SimulationSettings.StreamVelocity.Z))
+                        End If
+
                     Case "set_omega"
 
                         If Commands.Length > 1 Then
@@ -220,6 +231,12 @@ Module Commands
                             DataStore.ProjectRoot.SimulationSettings.Omega.Z = CDbl(Commands(3))
                         End If
 
+                        If ReadBack Then
+                            System.Console.WriteLine(String.Format("OX = {0,14:E6}", DataStore.ProjectRoot.SimulationSettings.Omega.X))
+                            System.Console.WriteLine(String.Format("OY = {0,14:E6}", DataStore.ProjectRoot.SimulationSettings.Omega.Y))
+                            System.Console.WriteLine(String.Format("OZ = {0,14:E6}", DataStore.ProjectRoot.SimulationSettings.Omega.Z))
+                        End If
+
                     Case "set_alfa"
 
                         If Commands.Length > 1 Then
@@ -228,6 +245,9 @@ Module Commands
                             DataStore.ProjectRoot.SimulationSettings.StreamVelocity.X = V * Math.Cos(Alfa)
                             DataStore.ProjectRoot.SimulationSettings.StreamVelocity.Y = 0
                             DataStore.ProjectRoot.SimulationSettings.StreamVelocity.Z = V * Math.Sin(Alfa)
+                            If ReadBack Then
+                                System.Console.WriteLine(String.Format("alpha = {0,14:E6}", Alfa * 180 / Math.PI))
+                            End If
                         End If
 
                     Case "set_delta"
@@ -276,6 +296,9 @@ Module Commands
                                     If Region.Flapped Then
                                         Region.FlapDeflection = Delta
                                         LiftingSurface.GenerateMesh()
+                                        If ReadBack Then
+                                            System.Console.WriteLine(String.Format("delta set to {0:F2} for {1}, region {2:N}", Delta * 180 / Math.PI, SurfaceName, RegionIndex))
+                                        End If
                                     Else
                                         System.Console.WriteLine("invalid target region (not flapped)")
                                     End If
@@ -290,18 +313,29 @@ Module Commands
 
                         If Commands.Length > 1 Then
                             DataStore.ProjectRoot.SimulationSettings.Density = CDbl(Commands(1))
+                            If ReadBack Then
+                                System.Console.WriteLine(String.Format("density = {0,14:E6}", DataStore.ProjectRoot.SimulationSettings.Density))
+                            End If
                         End If
 
                     Case "set_viscosity"
 
                         If Commands.Length > 1 Then
                             DataStore.ProjectRoot.SimulationSettings.Viscocity = CDbl(Commands(1))
+                            If ReadBack Then
+                                System.Console.WriteLine(String.Format("viscosity = {0,14:E6}", DataStore.ProjectRoot.SimulationSettings.Viscocity))
+                            End If
                         End If
 
                     Case "set_altitude"
 
                         If Commands.Length > 1 Then
                             DataStore.ProjectRoot.SimulationSettings.AssignStandardAtmosphere(CDbl(Commands(1)))
+                            If ReadBack Then
+                                System.Console.WriteLine(String.Format("altitude = {0,14:E6}", CDbl(Commands(1))))
+                                System.Console.WriteLine(String.Format("density = {0,14:E6}", DataStore.ProjectRoot.SimulationSettings.Density))
+                                System.Console.WriteLine(String.Format("viscosity = {0,14:E6}", DataStore.ProjectRoot.SimulationSettings.Viscocity))
+                            End If
                         End If
 
                     Case "print_report"
@@ -352,6 +386,23 @@ Module Commands
 
                             ProcessScript(Commands(1))
 
+                        End If
+
+                    Case "pause"
+
+                        System.Console.WriteLine("pause requested, press Q to quit or any other key to continue...")
+                        If System.Console.ReadLine().ToLower = "q" Then
+                            Return False
+                        End If
+
+                    Case "readback"
+
+                        ReadBack = Not ReadBack
+
+                        If ReadBack Then
+                            System.Console.WriteLine("read back turned on")
+                        Else
+                            System.Console.WriteLine("read back turned off")
                         End If
 
                     Case "help"
