@@ -164,6 +164,27 @@ Public Class MainRibbon
 
     End Sub
 
+    Public Sub OpenProject(FilePath As String)
+
+        Try
+
+            ModelInterface.RestartProject()
+            ProjectRoot.FilePath = FilePath
+            ModelInterface.ReadFromXML()
+
+            LoadVisualization()
+            LoadSettings()
+
+        Catch ex As Exception
+            MsgBox("Error while reading proyect data file. File data might be corrupted.", MsgBoxStyle.OkOnly, "Error")
+            FileClose(200)
+        End Try
+
+        ModelInterface.RefreshOnGL()
+        RefreshListOfObjects()
+
+    End Sub
+
     Private Sub OpenProject()
 
         Dim SaveBeforeClose As MsgBoxResult = MsgBox("The current project will be closed. Do you wish to save it?", vbYesNoCancel, "Opening exsisting project")

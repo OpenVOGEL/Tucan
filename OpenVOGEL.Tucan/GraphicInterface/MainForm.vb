@@ -32,18 +32,21 @@ Public Class MainForm
     Private Sub Main_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
 
         ' Initialize project root module
+        '-------------------------------------------------------------
 
         ModelInterface.Initialize()
 
         Text = Application.ProductName
 
         ' Initialize OpenGL control:
+        '-------------------------------------------------------------
 
         ControlOpenGL.Dock = DockStyle.Fill
 
         ModelInterface.SetControlGL(ControlOpenGL.OpenGL)
 
         ' Force design mode:
+        '-------------------------------------------------------------
 
         SwitchToDesignMode()
 
@@ -58,22 +61,20 @@ Public Class MainForm
         AddHandler ModelInterface.InputOutputDone, AddressOf ChangeTitle
 
         ' Read command line arguments:
+        '-------------------------------------------------------------
 
         Try
 
-            Dim arguments As String() = Environment.GetCommandLineArgs
+            Dim Arguments As String() = Environment.GetCommandLineArgs
 
-            If arguments.Length > 1 Then
+            If Arguments.Length > 1 Then
 
+                For Each Argument In Arguments
 
-                For Each argument In arguments
+                    If IO.File.Exists(Argument) And IO.Path.GetExtension(Argument) = ".vog" Then
 
-                    MsgBox(String.Format("Argument found: {0}", argument))
+                        mrRibbon.OpenProject(Argument)
 
-                    If IO.File.Exists(argument) And IO.Path.GetExtension(argument) = ".vog" Then
-
-                        MsgBox(String.Format("Trying to open file {0}", argument))
-                        'Me.OpenProject(argument)
                         Exit For
 
                     End If

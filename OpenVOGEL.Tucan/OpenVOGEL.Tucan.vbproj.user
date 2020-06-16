@@ -2,9 +2,9 @@
 <Project ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <ProjectView>ShowAllFiles</ProjectView>
-    <PublishUrlHistory>C:\Users\Guillermo\Documents\Vogel\Published\Official\Tucan\|C:\Users\Guillermo\Documents\Vogel\Published\Official\|publish\</PublishUrlHistory>
+    <PublishUrlHistory>C:\Users\Guillermo\Documents\OpenVOGEL\Published\Official\Tucan\|C:\Users\Guillermo\Documents\Vogel\Published\Official\Tucan\|C:\Users\Guillermo\Documents\Vogel\Published\Official\|publish\</PublishUrlHistory>
     <InstallUrlHistory />
-    <SupportUrlHistory>https://sites.google.com/site/gahvogel/|https://www.openvogel.com|https://sites.google.com/site/gahvogel/main/steady-aerodynamics</SupportUrlHistory>
+    <SupportUrlHistory>https://openvogel.org|https://sites.google.com/site/gahvogel/|https://www.openvogel.com|https://sites.google.com/site/gahvogel/main/steady-aerodynamics</SupportUrlHistory>
     <UpdateUrlHistory />
     <BootstrapperUrlHistory />
     <ErrorReportUrlHistory>https://github.com/GuillermoHazebrouck/OpenVOGEL/issues|https://sites.google.com/site/gahvogel/main/steady-aerodynamics</ErrorReportUrlHistory>

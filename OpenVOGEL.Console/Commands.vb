@@ -67,101 +67,103 @@ Module Commands
     ''' <returns></returns>
     Private Function ProcessCommand(Command As String, Interactive As Boolean) As Boolean
 
-        Dim Commands As String() = Command.Split({";"c}, StringSplitOptions.RemoveEmptyEntries)
+        Try
 
-        If Commands.Length > 0 Then
+            Dim Commands As String() = Command.Split({";"c}, StringSplitOptions.RemoveEmptyEntries)
 
-            Select Case Commands(0).ToLower.Trim
+            If Commands.Length > 0 Then
 
-                Case "quit"
+                Select Case Commands(0).ToLower.Trim
 
-                    Return False
+                    Case "quit"
 
-                Case "test"
+                        Return False
 
-                    TestAerodynamicSolver()
+                    Case "test"
 
-                Case "mkl_on"
+                        TestAerodynamicSolver()
 
-                    DotNumerics.LinearAlgebra.LinearEquations.UseIntelMathKernel = True
+                    Case "mkl_on"
 
-                Case "mkl_off"
+                        DotNumerics.LinearAlgebra.LinearEquations.UseIntelMathKernel = True
 
-                    DotNumerics.LinearAlgebra.LinearEquations.UseIntelMathKernel = False
+                    Case "mkl_off"
 
-                Case "mkl_test"
+                        DotNumerics.LinearAlgebra.LinearEquations.UseIntelMathKernel = False
 
-                    DotNumerics.LinearAlgebra.IntelMathKernelTest.Start()
+                    Case "mkl_test"
 
-                Case "mkl_path"
+                        DotNumerics.LinearAlgebra.IntelMathKernelTest.Start()
 
-                    If Commands.Length > 1 Then
-                        MklSetup.ChangePath(Commands(1))
-                    End If
+                    Case "mkl_path"
 
-                Case "mkl_path"
+                        If Commands.Length > 1 Then
+                            MklSetup.ChangePath(Commands(1))
+                        End If
 
-                    DotNumerics.LinearAlgebra.IntelMathKernelTest.Start()
+                    Case "mkl_path"
 
-                Case "mkl_status"
+                        DotNumerics.LinearAlgebra.IntelMathKernelTest.Start()
 
-                    If DotNumerics.LinearAlgebra.LinearEquations.UseIntelMathKernel Then
-                        System.Console.WriteLine("MKL is on")
-                    Else
-                        System.Console.WriteLine("MKL is off")
-                    End If
+                    Case "mkl_status"
 
-                Case "load"
+                        If DotNumerics.LinearAlgebra.LinearEquations.UseIntelMathKernel Then
+                            System.Console.WriteLine("MKL is on")
+                        Else
+                            System.Console.WriteLine("MKL is off")
+                        End If
 
-                    If Not Interactive And Commands.Length > 1 Then
-                        System.Console.WriteLine("loading file...")
-                        DataStore.FilePath = Commands(1)
-                    Else
-                        System.Console.WriteLine("enter file name:")
-                        DataStore.FilePath = System.Console.ReadLine
-                    End If
+                    Case "load"
 
-                    DataStore.ProjectRoot.RestartProject()
-                    DataStore.ProjectRoot.ReadFromXML()
-                    System.Console.WriteLine(String.Format("loaded {0} objects", DataStore.ProjectRoot.Model.Objects.Count))
+                        If Not Interactive And Commands.Length > 1 Then
+                            System.Console.WriteLine("loading file...")
+                            DataStore.FilePath = Commands(1)
+                        Else
+                            System.Console.WriteLine("enter file name:")
+                            DataStore.FilePath = System.Console.ReadLine
+                        End If
 
-                    Dim I As Integer = 0
-                    For Each Surface In DataStore.ProjectRoot.Model.Objects
-                        I += 1
-                        System.Console.WriteLine(String.Format(" {0} -> {1,-20} N:{2,-5} P:{3,-5} S:{4,-5} [{5}]",
+                        DataStore.ProjectRoot.RestartProject()
+                        DataStore.ProjectRoot.ReadFromXML()
+                        System.Console.WriteLine(String.Format("loaded {0} objects", DataStore.ProjectRoot.Model.Objects.Count))
+
+                        Dim I As Integer = 0
+                        For Each Surface In DataStore.ProjectRoot.Model.Objects
+                            I += 1
+                            System.Console.WriteLine(String.Format(" {0} -> {1,-20} N:{2,-5} P:{3,-5} S:{4,-5} [{5}]",
                                                                    I,
                                                                    Surface.Name,
                                                                    Surface.NumberOfNodes,
                                                                    Surface.NumberOfPanels,
                                                                    Surface.NumberOfSegments,
                                                                    Surface.GetType))
-                    Next
+                        Next
 
-                Case "steady"
+                    Case "steady"
 
-                    DataStore.StartCalculation(AeroTools.CalculationModel.Settings.CalculationType.ctSteady)
+                        DataStore.StartCalculation(AeroTools.CalculationModel.Settings.CalculationType.ctSteady)
 
-                Case "alfa_scan"
+                    Case "alfa_scan"
 
-                    If Commands.Length > 3 Then
+                        If Commands.Length > 3 Then
 
-                        BatchAnalysis.AlfaScan(CDbl(Commands(1)), CDbl(Commands(2)), CDbl(Commands(3)))
+                            BatchAnalysis.AlfaScan(CDbl(Commands(1)), CDbl(Commands(2)), CDbl(Commands(3)))
 
-                    End If
+                        End If
 
-                Case "delta_scan"
+                    Case "delta_scan"
 
-                    If Commands.Length > 5 Then
+                        If Commands.Length > 5 Then
 
-                        BatchAnalysis.DeltaScan(CDbl(Commands(1)), Commands(2), CInt(Commands(3)), CDbl(Commands(4)), CDbl(Commands(5)), CDbl(Commands(6)))
+                            BatchAnalysis.DeltaScan(CDbl(Commands(1)), Commands(2), CInt(Commands(3)), CDbl(Commands(4)), CDbl(Commands(5)), CDbl(Commands(6)))
 
-                    End If
+                        End If
 
-                Case "alfa_delta_scan"
+                    Case "alfa_delta_scan"
 
-                    If Commands.Length > 8 Then
+                        If Commands.Length > 8 Then
 
-                        BatchAnalysis.AlfaDeltaScan(CDbl(Commands(1)),
+                            BatchAnalysis.AlfaDeltaScan(CDbl(Commands(1)),
                                                         CDbl(Commands(2)),
                                                         CDbl(Commands(3)),
                                                         Commands(4),
@@ -170,153 +172,159 @@ Module Commands
                                                         CDbl(Commands(7)),
                                                         CDbl(Commands(8)))
 
-                    End If
+                        End If
 
-                Case "omega_scan"
+                    Case "omega_scan"
 
-                    If Commands.Length > 5 Then
+                        If Commands.Length > 5 Then
 
-                        BatchAnalysis.OmegaScan(CDbl(Commands(1)),
+                            BatchAnalysis.OmegaScan(CDbl(Commands(1)),
                                                     CInt(Commands(2)),
                                                     CDbl(Commands(3)),
                                                     CDbl(Commands(4)),
                                                     CInt(Commands(5)))
 
-                    End If
+                        End If
 
-                Case "set_velocity"
+                    Case "set_velocity"
 
-                    If Commands.Length > 1 Then
-                        DataStore.ProjectRoot.SimulationSettings.StreamVelocity.X = CDbl(Commands(1))
-                        DataStore.ProjectRoot.SimulationSettings.StreamVelocity.Y = 0
-                        DataStore.ProjectRoot.SimulationSettings.StreamVelocity.Z = 0
-                    End If
+                        If Commands.Length > 1 Then
+                            DataStore.ProjectRoot.SimulationSettings.StreamVelocity.X = CDbl(Commands(1))
+                            DataStore.ProjectRoot.SimulationSettings.StreamVelocity.Y = 0
+                            DataStore.ProjectRoot.SimulationSettings.StreamVelocity.Z = 0
+                        End If
 
-                    If Commands.Length > 2 Then
-                        DataStore.ProjectRoot.SimulationSettings.StreamVelocity.Y = CDbl(Commands(2))
-                        DataStore.ProjectRoot.SimulationSettings.StreamVelocity.Z = 0
-                    End If
+                        If Commands.Length > 2 Then
+                            DataStore.ProjectRoot.SimulationSettings.StreamVelocity.Y = CDbl(Commands(2))
+                            DataStore.ProjectRoot.SimulationSettings.StreamVelocity.Z = 0
+                        End If
 
-                    If Commands.Length > 3 Then
-                        DataStore.ProjectRoot.SimulationSettings.StreamVelocity.Z = CDbl(Commands(3))
-                    End If
+                        If Commands.Length > 3 Then
+                            DataStore.ProjectRoot.SimulationSettings.StreamVelocity.Z = CDbl(Commands(3))
+                        End If
 
-                Case "set_omega"
+                    Case "set_omega"
 
-                    If Commands.Length > 1 Then
-                        DataStore.ProjectRoot.SimulationSettings.Omega.X = CDbl(Commands(1))
-                        DataStore.ProjectRoot.SimulationSettings.Omega.Y = 0
-                        DataStore.ProjectRoot.SimulationSettings.Omega.Z = 0
-                    End If
+                        If Commands.Length > 1 Then
+                            DataStore.ProjectRoot.SimulationSettings.Omega.X = CDbl(Commands(1))
+                            DataStore.ProjectRoot.SimulationSettings.Omega.Y = 0
+                            DataStore.ProjectRoot.SimulationSettings.Omega.Z = 0
+                        End If
 
-                    If Commands.Length > 2 Then
-                        DataStore.ProjectRoot.SimulationSettings.Omega.Y = CDbl(Commands(2))
-                        DataStore.ProjectRoot.SimulationSettings.Omega.Z = 0
-                    End If
+                        If Commands.Length > 2 Then
+                            DataStore.ProjectRoot.SimulationSettings.Omega.Y = CDbl(Commands(2))
+                            DataStore.ProjectRoot.SimulationSettings.Omega.Z = 0
+                        End If
 
-                    If Commands.Length > 3 Then
-                        DataStore.ProjectRoot.SimulationSettings.Omega.Z = CDbl(Commands(3))
-                    End If
+                        If Commands.Length > 3 Then
+                            DataStore.ProjectRoot.SimulationSettings.Omega.Z = CDbl(Commands(3))
+                        End If
 
-                Case "set_alfa"
+                    Case "set_alfa"
 
-                    If Commands.Length > 1 Then
-                        Dim Alfa As Double = CDbl(Commands(1)) / 180 * Math.PI
-                        Dim V As Double = DataStore.ProjectRoot.SimulationSettings.StreamVelocity.EuclideanNorm
-                        DataStore.ProjectRoot.SimulationSettings.StreamVelocity.X = V * Math.Cos(Alfa)
-                        DataStore.ProjectRoot.SimulationSettings.StreamVelocity.Y = 0
-                        DataStore.ProjectRoot.SimulationSettings.StreamVelocity.Z = V * Math.Sin(Alfa)
-                    End If
+                        If Commands.Length > 1 Then
+                            Dim Alfa As Double = CDbl(Commands(1)) / 180 * Math.PI
+                            Dim V As Double = DataStore.ProjectRoot.SimulationSettings.StreamVelocity.EuclideanNorm
+                            DataStore.ProjectRoot.SimulationSettings.StreamVelocity.X = V * Math.Cos(Alfa)
+                            DataStore.ProjectRoot.SimulationSettings.StreamVelocity.Y = 0
+                            DataStore.ProjectRoot.SimulationSettings.StreamVelocity.Z = V * Math.Sin(Alfa)
+                        End If
 
-                Case "set_delta"
+                    Case "set_delta"
 
-                    If Commands.Length > 3 Then
+                        If Commands.Length > 3 Then
 
-                        Dim SurfaceName As String = Commands(1).Trim
-                        Dim RegionIndex As Integer = CInt(Commands(2))
-                        Dim Delta As Double = CDbl(Commands(3)) / 180 * Math.PI
+                            Dim SurfaceName As String = Commands(1).Trim
+                            Dim RegionIndex As Integer = CInt(Commands(2))
+                            Dim Delta As Double = CDbl(Commands(3)) / 180 * Math.PI
 
-                        System.Console.WriteLine("setting flap deflection for " & SurfaceName & "...")
+                            System.Console.WriteLine("setting flap deflection for " & SurfaceName & "...")
 
-                        ' Find the lifting surface
-                        '-----------------------------------------------------------------
-
-                        Dim LiftingSurface As LiftingSurface = Nothing
-
-                        For Each Surface As Surface In DataStore.ProjectRoot.Model.Objects
-
-                            If Surface.Name.ToLower = SurfaceName.ToLower Then
-
-                                If TypeOf (Surface) Is LiftingSurface Then
-                                    LiftingSurface = Surface
-                                Else
-                                    System.Console.WriteLine("the target surface exist in the model, but it is not a lifting surface")
-                                    Exit For
-                                End If
-
-                            End If
-
-                        Next
-
-                        If LiftingSurface Is Nothing Then
-                            System.Console.WriteLine("the target surface does not exist in the model")
-                        Else
-
-                            ' Check the region and flap
+                            ' Find the lifting surface
                             '-----------------------------------------------------------------
 
-                            If RegionIndex < 1 Or RegionIndex > LiftingSurface.WingRegions.Count Then
-                                System.Console.WriteLine(String.Format("invalid target region (must be between 1 and {0})", LiftingSurface.WingRegions.Count))
+                            Dim LiftingSurface As LiftingSurface = Nothing
+
+                            For Each Surface As Surface In DataStore.ProjectRoot.Model.Objects
+
+                                If Surface.Name.ToLower = SurfaceName.ToLower Then
+
+                                    If TypeOf (Surface) Is LiftingSurface Then
+                                        LiftingSurface = Surface
+                                    Else
+                                        System.Console.WriteLine("the target surface exist in the model, but it is not a lifting surface")
+                                        Exit For
+                                    End If
+
+                                End If
+
+                            Next
+
+                            If LiftingSurface Is Nothing Then
+                                System.Console.WriteLine("the target surface does not exist in the model")
                             Else
 
-                                Dim Region As WingRegion = LiftingSurface.WingRegions(RegionIndex - 1)
+                                ' Check the region and flap
+                                '-----------------------------------------------------------------
 
-                                If Region.Flapped Then
-                                    Region.FlapDeflection = Delta
-                                    LiftingSurface.GenerateMesh()
+                                If RegionIndex < 1 Or RegionIndex > LiftingSurface.WingRegions.Count Then
+                                    System.Console.WriteLine(String.Format("invalid target region (must be between 1 and {0})", LiftingSurface.WingRegions.Count))
                                 Else
-                                    System.Console.WriteLine("invalid target region (not flapped)")
+
+                                    Dim Region As WingRegion = LiftingSurface.WingRegions(RegionIndex - 1)
+
+                                    If Region.Flapped Then
+                                        Region.FlapDeflection = Delta
+                                        LiftingSurface.GenerateMesh()
+                                    Else
+                                        System.Console.WriteLine("invalid target region (not flapped)")
+                                    End If
+
                                 End If
 
                             End If
 
                         End If
 
-                    End If
+                    Case "set_density"
 
-                Case "set_density"
-
-                    If Commands.Length > 1 Then
-                        DataStore.ProjectRoot.SimulationSettings.Density = CDbl(Commands(1))
-                    End If
-
-                Case "set_viscosity"
-
-                    If Commands.Length > 1 Then
-                        DataStore.ProjectRoot.SimulationSettings.Viscocity = CDbl(Commands(1))
-                    End If
-
-                Case "print_report"
-
-                    If DataStore.ProjectRoot.CalculationCore IsNot Nothing Then
-
-                        DataStore.ProjectRoot.CalculationCore.ReportResults()
-
-                    End If
-
-                Case "save_report"
-
-                    If DataStore.ProjectRoot.CalculationCore IsNot Nothing Then
-
-                        Dim FileName As String = ""
-                        If Interactive Then
-                            System.Console.WriteLine("enter destination file:")
-                            FileName = System.Console.ReadLine
-                        ElseIf Commands.Length > 1
-                            FileName = Commands(1).Trim
+                        If Commands.Length > 1 Then
+                            DataStore.ProjectRoot.SimulationSettings.Density = CDbl(Commands(1))
                         End If
 
-                        Dim Append As Boolean = True
+                    Case "set_viscosity"
+
+                        If Commands.Length > 1 Then
+                            DataStore.ProjectRoot.SimulationSettings.Viscocity = CDbl(Commands(1))
+                        End If
+
+                    Case "set_altitude"
+
+                        If Commands.Length > 1 Then
+                            DataStore.ProjectRoot.SimulationSettings.AssignStandardAtmosphere(CDbl(Commands(1)))
+                        End If
+
+                    Case "print_report"
+
+                        If DataStore.ProjectRoot.CalculationCore IsNot Nothing Then
+
+                            DataStore.ProjectRoot.CalculationCore.ReportResults()
+
+                        End If
+
+                    Case "save_report"
+
+                        If DataStore.ProjectRoot.CalculationCore IsNot Nothing Then
+
+                            Dim FileName As String = ""
+                            If Interactive Then
+                                System.Console.WriteLine("enter destination file:")
+                                FileName = System.Console.ReadLine
+                            ElseIf Commands.Length > 1
+                                FileName = Commands(1).Trim
+                            End If
+
+                            Dim Append As Boolean = True
                             If File.Exists(FileName) Then
                                 System.Console.WriteLine("the file already exists, append?")
                                 If System.Console.ReadLine = "n" Then
@@ -334,29 +342,37 @@ Module Commands
 
                         End If
 
-                        Case "server"
+                    Case "server"
 
-                    Server.RunServer()
+                        Server.RunServer()
 
-                Case "load_script"
+                    Case "load_script"
 
-                    If Commands.Length > 1 Then
+                        If Commands.Length > 1 Then
 
-                        ProcessScript(Commands(1))
+                            ProcessScript(Commands(1))
 
-                    End If
+                        End If
 
-                Case "help"
+                    Case "help"
 
-                    System.Console.WriteLine("visit www.openvogel.org for info about this console")
+                        System.Console.WriteLine("visit www.openvogel.org for info about this console")
 
-                Case Else
+                    Case Else
 
-                    System.Console.WriteLine("unrecognized command")
+                        System.Console.WriteLine("unrecognized command")
 
-            End Select
+                End Select
 
-        End If
+            End If
+
+        Catch Exept As Exception
+
+            System.Console.WriteLine("Exception while processing command " & Command & ", the error message is:")
+
+            System.Console.WriteLine(Exept.Message)
+
+        End Try
 
         Return True
 
