@@ -66,7 +66,7 @@ Public Class MainRibbon
 
             End If
 
-        ElseIf tcRibbon.SelectedIndex = 2
+        ElseIf tcRibbon.SelectedIndex = 2 Then
 
             If ModelInterface.Initialized Then
 
@@ -1814,6 +1814,18 @@ ErrSub:
 
         Else
             MessageBox.Show("Please, save the project first")
+
+        End If
+
+    End Sub
+
+    Private Sub btnISA_Click(sender As Object, e As EventArgs) Handles btnISA.Click
+
+        Dim FormISA As New FormISA
+        If (FormISA.ShowDialog()) = DialogResult.OK Then
+
+            FormISA.GetSettings(ProjectRoot.SimulationSettings)
+            LoadSettings()
 
         End If
 

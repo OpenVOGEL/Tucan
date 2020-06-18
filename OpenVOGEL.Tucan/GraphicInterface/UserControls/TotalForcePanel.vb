@@ -236,12 +236,11 @@ Public Class TotalForcePanel
         If CalculationCore IsNot Nothing Then
 
             rbVelocity.Value = CalculationCore.StreamVelocity.EuclideanNorm
-            rbDensity.Value = CalculationCore.GlobalAirloads.DynamicPressure
+            'rbDensity.Value = CalculationCore.GlobalAirloads.DynamicPressure
             rbAlpha.Value = CalculationCore.GlobalAirloads.Alfa
             rbBeta.Value = CalculationCore.GlobalAirloads.Beta
-            nudSurface.Maximum = 2 * CalculationCore.GlobalAirloads.Area
             nudSurface.Value = CalculationCore.GlobalAirloads.Area
-
+            rbDensity.Value = CalculationCore.StreamDensity
             RecalculateLoads()
 
         End If

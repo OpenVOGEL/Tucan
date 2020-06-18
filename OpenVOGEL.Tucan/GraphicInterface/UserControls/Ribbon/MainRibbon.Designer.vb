@@ -159,6 +159,7 @@ Partial Class MainRibbon
         Me.cbxShowRulers = New System.Windows.Forms.CheckBox()
         Me.pnlScreenColor = New System.Windows.Forms.Panel()
         Me.TableLayoutPanel4 = New System.Windows.Forms.TableLayoutPanel()
+        Me.btnISA = New System.Windows.Forms.Button()
         Me.tcRibbon.SuspendLayout()
         Me.tpModel.SuspendLayout()
         Me.TableLayoutPanel1.SuspendLayout()
@@ -894,6 +895,7 @@ Partial Class MainRibbon
         '
         'GroupBox11
         '
+        Me.GroupBox11.Controls.Add(Me.btnISA)
         Me.GroupBox11.Controls.Add(Me.btnHistogram)
         Me.GroupBox11.Controls.Add(Me.Label27)
         Me.GroupBox11.Controls.Add(Me.nudViscosity)
@@ -2004,6 +2006,21 @@ Partial Class MainRibbon
         Me.TableLayoutPanel4.Size = New System.Drawing.Size(1204, 175)
         Me.TableLayoutPanel4.TabIndex = 508
         '
+        'btnISA
+        '
+        Me.btnISA.BackColor = System.Drawing.Color.White
+        Me.btnISA.FlatAppearance.BorderColor = System.Drawing.Color.Gray
+        Me.btnISA.FlatAppearance.CheckedBackColor = System.Drawing.Color.White
+        Me.btnISA.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LightCoral
+        Me.btnISA.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DeepSkyBlue
+        Me.btnISA.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnISA.Location = New System.Drawing.Point(27, 75)
+        Me.btnISA.Name = "btnISA"
+        Me.btnISA.Size = New System.Drawing.Size(60, 23)
+        Me.btnISA.TabIndex = 109
+        Me.btnISA.Text = "ISA"
+        Me.btnISA.UseVisualStyleBackColor = False
+        '
         'MainRibbon
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -2217,4 +2234,5 @@ Partial Class MainRibbon
     Friend WithEvents rbStructure As Windows.Forms.RadioButton
     Friend WithEvents btnExport As Button
     Friend WithEvents cbxOnServer As CheckBox
+    Friend WithEvents btnISA As Button
 End Class

@@ -55,6 +55,7 @@ Partial Class FormSettings
         Me.Label23 = New System.Windows.Forms.Label()
         Me.tpAero = New System.Windows.Forms.TabPage()
         Me.gbParameters = New System.Windows.Forms.GroupBox()
+        Me.cbAutoCutOff = New System.Windows.Forms.CheckBox()
         Me.Label15 = New System.Windows.Forms.Label()
         Me.cbExtendWakes = New System.Windows.Forms.CheckBox()
         Me.Label5 = New System.Windows.Forms.Label()
@@ -86,7 +87,7 @@ Partial Class FormSettings
         Me.Label34 = New System.Windows.Forms.Label()
         Me.btOK = New System.Windows.Forms.Button()
         Me.btnCancel = New System.Windows.Forms.Button()
-        Me.cbAutoCutOff = New System.Windows.Forms.CheckBox()
+        Me.btnISA = New System.Windows.Forms.Button()
         Me.tpSettings.SuspendLayout()
         Me.tpStream.SuspendLayout()
         Me.gbFlowRotation.SuspendLayout()
@@ -142,10 +143,14 @@ Partial Class FormSettings
         '
         'gbFlowRotation
         '
+        Me.gbFlowRotation.Controls.Add(Me.btnISA)
+        Me.gbFlowRotation.Controls.Add(Me.Label32)
+        Me.gbFlowRotation.Controls.Add(Me.Label33)
         Me.gbFlowRotation.Controls.Add(Me.Label14)
         Me.gbFlowRotation.Controls.Add(Me.Label21)
         Me.gbFlowRotation.Controls.Add(Me.Label12)
         Me.gbFlowRotation.Controls.Add(Me.Label13)
+        Me.gbFlowRotation.Controls.Add(Me.nudStaticPressure)
         Me.gbFlowRotation.Controls.Add(Me.nudViscosity)
         Me.gbFlowRotation.Controls.Add(Me.nudDensity)
         Me.gbFlowRotation.Dock = System.Windows.Forms.DockStyle.Top
@@ -180,7 +185,7 @@ Partial Class FormSettings
         '
         Me.Label12.AutoSize = True
         Me.Label12.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label12.Location = New System.Drawing.Point(116, 47)
+        Me.Label12.Location = New System.Drawing.Point(113, 47)
         Me.Label12.Name = "Label12"
         Me.Label12.Size = New System.Drawing.Size(38, 13)
         Me.Label12.TabIndex = 102
@@ -190,7 +195,7 @@ Partial Class FormSettings
         '
         Me.Label13.AutoSize = True
         Me.Label13.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label13.Location = New System.Drawing.Point(116, 23)
+        Me.Label13.Location = New System.Drawing.Point(113, 23)
         Me.Label13.Name = "Label13"
         Me.Label13.Size = New System.Drawing.Size(37, 13)
         Me.Label13.TabIndex = 101
@@ -201,7 +206,7 @@ Partial Class FormSettings
         Me.nudViscosity.DecimalPlaces = 8
         Me.nudViscosity.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.nudViscosity.Increment = New Decimal(New Integer() {1, 0, 0, 458752})
-        Me.nudViscosity.Location = New System.Drawing.Point(29, 45)
+        Me.nudViscosity.Location = New System.Drawing.Point(25, 45)
         Me.nudViscosity.Maximum = New Decimal(New Integer() {99999, 0, 0, 0})
         Me.nudViscosity.Minimum = New Decimal(New Integer() {99999, 0, 0, -2147483648})
         Me.nudViscosity.Name = "nudViscosity"
@@ -215,7 +220,7 @@ Partial Class FormSettings
         Me.nudDensity.DecimalPlaces = 5
         Me.nudDensity.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.nudDensity.Increment = New Decimal(New Integer() {1, 0, 0, 65536})
-        Me.nudDensity.Location = New System.Drawing.Point(29, 21)
+        Me.nudDensity.Location = New System.Drawing.Point(25, 21)
         Me.nudDensity.Maximum = New Decimal(New Integer() {99999, 0, 0, 0})
         Me.nudDensity.Name = "nudDensity"
         Me.nudDensity.Size = New System.Drawing.Size(85, 22)
@@ -225,11 +230,8 @@ Partial Class FormSettings
         '
         'bgFreeStream
         '
-        Me.bgFreeStream.Controls.Add(Me.Label32)
         Me.bgFreeStream.Controls.Add(Me.Label3)
-        Me.bgFreeStream.Controls.Add(Me.Label33)
         Me.bgFreeStream.Controls.Add(Me.Label19)
-        Me.bgFreeStream.Controls.Add(Me.nudStaticPressure)
         Me.bgFreeStream.Controls.Add(Me.Label2)
         Me.bgFreeStream.Controls.Add(Me.Label1)
         Me.bgFreeStream.Controls.Add(Me.Label20)
@@ -258,7 +260,7 @@ Partial Class FormSettings
         '
         Me.Label32.AutoSize = True
         Me.Label32.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label32.Location = New System.Drawing.Point(9, 96)
+        Me.Label32.Location = New System.Drawing.Point(150, 23)
         Me.Label32.Name = "Label32"
         Me.Label32.Size = New System.Drawing.Size(20, 13)
         Me.Label32.TabIndex = 107
@@ -278,7 +280,7 @@ Partial Class FormSettings
         '
         Me.Label33.AutoSize = True
         Me.Label33.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label33.Location = New System.Drawing.Point(116, 96)
+        Me.Label33.Location = New System.Drawing.Point(258, 23)
         Me.Label33.Name = "Label33"
         Me.Label33.Size = New System.Drawing.Size(19, 13)
         Me.Label33.TabIndex = 106
@@ -298,7 +300,7 @@ Partial Class FormSettings
         '
         Me.nudStaticPressure.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.nudStaticPressure.Increment = New Decimal(New Integer() {10, 0, 0, 0})
-        Me.nudStaticPressure.Location = New System.Drawing.Point(29, 94)
+        Me.nudStaticPressure.Location = New System.Drawing.Point(170, 21)
         Me.nudStaticPressure.Maximum = New Decimal(New Integer() {276447232, 23283, 0, 0})
         Me.nudStaticPressure.Name = "nudStaticPressure"
         Me.nudStaticPressure.Size = New System.Drawing.Size(85, 22)
@@ -524,6 +526,16 @@ Partial Class FormSettings
         Me.gbParameters.TabStop = False
         Me.gbParameters.Text = "Simulation parameters"
         '
+        'cbAutoCutOff
+        '
+        Me.cbAutoCutOff.AutoSize = True
+        Me.cbAutoCutOff.Location = New System.Drawing.Point(273, 69)
+        Me.cbAutoCutOff.Name = "cbAutoCutOff"
+        Me.cbAutoCutOff.Size = New System.Drawing.Size(50, 17)
+        Me.cbAutoCutOff.TabIndex = 127
+        Me.cbAutoCutOff.Text = "auto"
+        Me.cbAutoCutOff.UseVisualStyleBackColor = True
+        '
         'Label15
         '
         Me.Label15.AutoSize = True
@@ -554,13 +566,13 @@ Partial Class FormSettings
         Me.Label5.TabIndex = 101
         Me.Label5.Text = "Global wake life:"
         '
-        'CSTEPSBox
+        'nudClippingStep
         '
         Me.nudClippingStep.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.nudClippingStep.Location = New System.Drawing.Point(143, 115)
         Me.nudClippingStep.Maximum = New Decimal(New Integer() {99999, 0, 0, 0})
         Me.nudClippingStep.Minimum = New Decimal(New Integer() {1, 0, 0, 0})
-        Me.nudClippingStep.Name = "CSTEPSBox"
+        Me.nudClippingStep.Name = "nudClippingStep"
         Me.nudClippingStep.Size = New System.Drawing.Size(99, 22)
         Me.nudClippingStep.TabIndex = 102
         Me.nudClippingStep.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
@@ -609,14 +621,14 @@ Partial Class FormSettings
         Me.Label9.TabIndex = 105
         Me.Label9.Text = "Step interval:"
         '
-        'DTBox
+        'nudInterval
         '
         Me.nudInterval.DecimalPlaces = 7
         Me.nudInterval.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.nudInterval.Increment = New Decimal(New Integer() {1, 0, 0, 196608})
         Me.nudInterval.Location = New System.Drawing.Point(143, 43)
         Me.nudInterval.Maximum = New Decimal(New Integer() {99999, 0, 0, 0})
-        Me.nudInterval.Name = "DTBox"
+        Me.nudInterval.Name = "nudInterval"
         Me.nudInterval.Size = New System.Drawing.Size(99, 22)
         Me.nudInterval.TabIndex = 106
         Me.nudInterval.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
@@ -642,14 +654,14 @@ Partial Class FormSettings
         Me.Label10.TabIndex = 111
         Me.Label10.Text = "m²"
         '
-        'CUTOFFBox
+        'nudCutoff
         '
         Me.nudCutoff.DecimalPlaces = 10
         Me.nudCutoff.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.nudCutoff.Increment = New Decimal(New Integer() {1, 0, 0, 196608})
         Me.nudCutoff.Location = New System.Drawing.Point(143, 67)
         Me.nudCutoff.Maximum = New Decimal(New Integer() {99999, 0, 0, 0})
-        Me.nudCutoff.Name = "CUTOFFBox"
+        Me.nudCutoff.Name = "nudCutoff"
         Me.nudCutoff.Size = New System.Drawing.Size(99, 22)
         Me.nudCutoff.TabIndex = 110
         Me.nudCutoff.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
@@ -675,13 +687,13 @@ Partial Class FormSettings
         Me.Label6.TabIndex = 103
         Me.Label6.Text = "steps"
         '
-        'STEPSBox
+        'nudSimulationSteps
         '
         Me.nudSimulationSteps.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.nudSimulationSteps.Location = New System.Drawing.Point(143, 19)
         Me.nudSimulationSteps.Maximum = New Decimal(New Integer() {99999, 0, 0, 0})
         Me.nudSimulationSteps.Minimum = New Decimal(New Integer() {1, 0, 0, 0})
-        Me.nudSimulationSteps.Name = "STEPSBox"
+        Me.nudSimulationSteps.Name = "nudSimulationSteps"
         Me.nudSimulationSteps.Size = New System.Drawing.Size(99, 22)
         Me.nudSimulationSteps.TabIndex = 100
         Me.nudSimulationSteps.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
@@ -693,7 +705,7 @@ Partial Class FormSettings
         Me.Label4.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label4.Location = New System.Drawing.Point(7, 21)
         Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(121, 13)
+        Me.Label4.Size = New System.Drawing.Size(122, 13)
         Me.Label4.TabIndex = 99
         Me.Label4.Text = "Total simulation steps:"
         '
@@ -873,15 +885,22 @@ Partial Class FormSettings
         Me.btnCancel.Text = "Cancel"
         Me.btnCancel.UseVisualStyleBackColor = False
         '
-        'cbAutoCutOff
+        'btnISA
         '
-        Me.cbAutoCutOff.AutoSize = True
-        Me.cbAutoCutOff.Location = New System.Drawing.Point(273, 69)
-        Me.cbAutoCutOff.Name = "cbAutoCutOff"
-        Me.cbAutoCutOff.Size = New System.Drawing.Size(50, 17)
-        Me.cbAutoCutOff.TabIndex = 127
-        Me.cbAutoCutOff.Text = "auto"
-        Me.cbAutoCutOff.UseVisualStyleBackColor = True
+        Me.btnISA.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.btnISA.BackColor = System.Drawing.Color.White
+        Me.btnISA.DialogResult = System.Windows.Forms.DialogResult.Cancel
+        Me.btnISA.FlatAppearance.BorderColor = System.Drawing.Color.Gray
+        Me.btnISA.FlatAppearance.CheckedBackColor = System.Drawing.Color.White
+        Me.btnISA.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LightCoral
+        Me.btnISA.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DeepSkyBlue
+        Me.btnISA.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnISA.Location = New System.Drawing.Point(170, 45)
+        Me.btnISA.Name = "btnISA"
+        Me.btnISA.Size = New System.Drawing.Size(75, 23)
+        Me.btnISA.TabIndex = 108
+        Me.btnISA.Text = "ISA"
+        Me.btnISA.UseVisualStyleBackColor = False
         '
         'FormSettings
         '
@@ -998,4 +1017,5 @@ Partial Class FormSettings
     Friend WithEvents cbExtendWakes As Windows.Forms.CheckBox
     Friend WithEvents Label15 As Windows.Forms.Label
     Friend WithEvents cbAutoCutOff As Windows.Forms.CheckBox
+    Friend WithEvents btnISA As Button
 End Class

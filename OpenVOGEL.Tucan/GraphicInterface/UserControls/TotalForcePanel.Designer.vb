@@ -45,9 +45,9 @@ Partial Class TotalForcePanel
         Me.cbInducedForces = New System.Windows.Forms.CheckBox()
         Me.cbSkinDrag = New System.Windows.Forms.CheckBox()
         Me.cbBodyForces = New System.Windows.Forms.CheckBox()
-        Me.rbBodyCoordinates = New System.Windows.Forms.RadioButton()
-        Me.rbAeroCoordinates = New System.Windows.Forms.RadioButton()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.rbAeroCoordinates = New System.Windows.Forms.RadioButton()
+        Me.rbBodyCoordinates = New System.Windows.Forms.RadioButton()
         Me.gbReferencePoint.SuspendLayout()
         CType(Me.nudRz, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.nudRy, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -187,6 +187,7 @@ Partial Class TotalForcePanel
         Me.nudSurface.DecimalPlaces = 4
         Me.nudSurface.Increment = New Decimal(New Integer() {1, 0, 0, 65536})
         Me.nudSurface.Location = New System.Drawing.Point(169, 32)
+        Me.nudSurface.Maximum = New Decimal(New Integer() {1000, 0, 0, 0})
         Me.nudSurface.Name = "nudSurface"
         Me.nudSurface.Size = New System.Drawing.Size(75, 22)
         Me.nudSurface.TabIndex = 8
@@ -281,33 +282,11 @@ Partial Class TotalForcePanel
         Me.cbBodyForces.CheckState = System.Windows.Forms.CheckState.Checked
         Me.cbBodyForces.Location = New System.Drawing.Point(293, 70)
         Me.cbBodyForces.Name = "cbBodyForces"
-        Me.cbBodyForces.Size = New System.Drawing.Size(86, 17)
+        Me.cbBodyForces.Size = New System.Drawing.Size(85, 17)
         Me.cbBodyForces.TabIndex = 17
         Me.cbBodyForces.Text = "Body forces"
         Me.ToolTip.SetToolTip(Me.cbBodyForces, "Indicate if the resultant of the pressure over fuselages" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "have to be included")
         Me.cbBodyForces.UseVisualStyleBackColor = True
-        '
-        'rbBodyCoordinates
-        '
-        Me.rbBodyCoordinates.AutoSize = True
-        Me.rbBodyCoordinates.Location = New System.Drawing.Point(9, 42)
-        Me.rbBodyCoordinates.Name = "rbBodyCoordinates"
-        Me.rbBodyCoordinates.Size = New System.Drawing.Size(77, 17)
-        Me.rbBodyCoordinates.TabIndex = 19
-        Me.rbBodyCoordinates.Text = "Body (XYZ)"
-        Me.rbBodyCoordinates.UseVisualStyleBackColor = True
-        '
-        'rbAeroCoordinates
-        '
-        Me.rbAeroCoordinates.AutoSize = True
-        Me.rbAeroCoordinates.Checked = True
-        Me.rbAeroCoordinates.Location = New System.Drawing.Point(9, 21)
-        Me.rbAeroCoordinates.Name = "rbAeroCoordinates"
-        Me.rbAeroCoordinates.Size = New System.Drawing.Size(91, 17)
-        Me.rbAeroCoordinates.TabIndex = 20
-        Me.rbAeroCoordinates.TabStop = True
-        Me.rbAeroCoordinates.Text = "Aerodynamic"
-        Me.rbAeroCoordinates.UseVisualStyleBackColor = True
         '
         'GroupBox1
         '
@@ -321,6 +300,28 @@ Partial Class TotalForcePanel
         Me.GroupBox1.Text = "Coordinates system"
         Me.ToolTip.SetToolTip(Me.GroupBox1, "Select a coordinate system to project the components" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "of the total aerodynamic fo" &
         "rce")
+        '
+        'rbAeroCoordinates
+        '
+        Me.rbAeroCoordinates.AutoSize = True
+        Me.rbAeroCoordinates.Checked = True
+        Me.rbAeroCoordinates.Location = New System.Drawing.Point(9, 21)
+        Me.rbAeroCoordinates.Name = "rbAeroCoordinates"
+        Me.rbAeroCoordinates.Size = New System.Drawing.Size(91, 17)
+        Me.rbAeroCoordinates.TabIndex = 20
+        Me.rbAeroCoordinates.TabStop = True
+        Me.rbAeroCoordinates.Text = "Aerodynamic"
+        Me.rbAeroCoordinates.UseVisualStyleBackColor = True
+        '
+        'rbBodyCoordinates
+        '
+        Me.rbBodyCoordinates.AutoSize = True
+        Me.rbBodyCoordinates.Location = New System.Drawing.Point(9, 42)
+        Me.rbBodyCoordinates.Name = "rbBodyCoordinates"
+        Me.rbBodyCoordinates.Size = New System.Drawing.Size(76, 17)
+        Me.rbBodyCoordinates.TabIndex = 19
+        Me.rbBodyCoordinates.Text = "Body (XYZ)"
+        Me.rbBodyCoordinates.UseVisualStyleBackColor = True
         '
         'TotalForcePanel
         '
