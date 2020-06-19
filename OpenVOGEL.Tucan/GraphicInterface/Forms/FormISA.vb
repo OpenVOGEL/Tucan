@@ -16,8 +16,75 @@
 'along with this program.  If Not, see < http:  //www.gnu.org/licenses/>.
 
 Imports OpenVOGEL.AeroTools.CalculationModel.Settings
+Imports OpenVOGEL.DesignTools.DataStore
+Imports OpenVOGEL.MathTools.Magnitudes
 
 Public Class FormISA
+
+    Private rbPressure As ResultBox
+    Private rbDensity As ResultBox
+    Private rbViscocity As ResultBox
+    Private rbSoundSpeed As ResultBox
+    Private rbTemperature As ResultBox
+
+    Public Sub New()
+
+        InitializeComponent()
+
+        rbPressure = New ResultBox(UserMagnitudes(Magnitudes.Pressure))
+        rbDensity = New ResultBox(UserMagnitudes(Magnitudes.Density))
+        rbViscocity = New ResultBox(UserMagnitudes(Magnitudes.Viscosity))
+        rbSoundSpeed = New ResultBox(UserMagnitudes(Magnitudes.Velocity))
+        rbTemperature = New ResultBox(UserMagnitudes(Magnitudes.Temperature))
+
+        rbTemperature.Name = "T"
+        rbTemperature.Top = 40
+        rbTemperature.Left = 10
+        rbTemperature.Width = 200
+        rbTemperature.NameWidth = 20
+        rbTemperature.UnitWidth = 50
+        rbTemperature.Parent = Me
+        rbTemperature.Decimals = GlobalDecimals(Magnitudes.Temperature)
+
+        rbPressure.Name = "P"
+        rbPressure.Top = rbTemperature.Bottom + 5
+        rbPressure.Left = 10
+        rbPressure.Width = 200
+        rbPressure.NameWidth = 20
+        rbPressure.UnitWidth = 50
+        rbPressure.Parent = Me
+        rbPressure.Decimals = GlobalDecimals(Magnitudes.Pressure)
+
+        rbDensity.GreekLetter = True
+        rbDensity.Name = "r"
+        rbDensity.Top = rbPressure.Bottom + 5
+        rbDensity.Left = 10
+        rbDensity.Width = 200
+        rbDensity.NameWidth = 20
+        rbDensity.UnitWidth = 50
+        rbDensity.Parent = Me
+        rbDensity.Decimals = GlobalDecimals(Magnitudes.Density)
+
+        rbViscocity.GreekLetter = True
+        rbViscocity.Name = "m"
+        rbViscocity.Top = rbDensity.Bottom + 5
+        rbViscocity.Left = 10
+        rbViscocity.Width = 200
+        rbViscocity.NameWidth = 20
+        rbViscocity.UnitWidth = 50
+        rbViscocity.Parent = Me
+        rbViscocity.Decimals = GlobalDecimals(Magnitudes.Density)
+
+        rbSoundSpeed.Name = "a"
+        rbSoundSpeed.Top = rbViscocity.Bottom + 5
+        rbSoundSpeed.Left = 10
+        rbSoundSpeed.Width = 200
+        rbSoundSpeed.NameWidth = 20
+        rbSoundSpeed.UnitWidth = 50
+        rbSoundSpeed.Parent = Me
+        rbSoundSpeed.Decimals = GlobalDecimals(Magnitudes.Density)
+
+    End Sub
 
     Private Sub btnCancel_Click(sender As Object, e As EventArgs) Handles btnCancel.Click
 
@@ -29,11 +96,12 @@ Public Class FormISA
 
         Try
             Dim ISA As New AeroTools.CalculationModel.Settings.StandardAtmosphere(nudAltitude.Value)
-            txtTemp.Text = CStr(ISA.Temperature)
-            txtPressure.Text = CStr(ISA.Pressure)
-            txtDensity.Text = CStr(ISA.Density)
-            txtViscosity.Text = CStr(ISA.DynamicVisc)
-            txtSoundSpeed.Text = CStr(ISA.SoundSpeed)
+
+            rbTemperature.Value = ISA.Temperature
+            rbPressure.Value = ISA.Pressure
+            rbDensity.Value = ISA.Density
+            rbViscocity.Value = ISA.DynamicVisc
+            rbSoundSpeed.Value = ISA.SoundSpeed
 
         Catch ex As Exception
 
@@ -41,10 +109,6 @@ Public Class FormISA
 
         End Try
 
-    End Sub
-
-    Public Sub New()
-        InitializeComponent()
     End Sub
 
     Public Sub GetSettings(ByRef Settings As SimulationSettings)

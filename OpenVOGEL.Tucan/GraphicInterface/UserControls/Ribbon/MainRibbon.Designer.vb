@@ -74,6 +74,7 @@ Partial Class MainRibbon
         Me.Label35 = New System.Windows.Forms.Label()
         Me.nudSteps = New System.Windows.Forms.NumericUpDown()
         Me.GroupBox11 = New System.Windows.Forms.GroupBox()
+        Me.btnISA = New System.Windows.Forms.Button()
         Me.btnHistogram = New System.Windows.Forms.Button()
         Me.Label27 = New System.Windows.Forms.Label()
         Me.nudViscosity = New System.Windows.Forms.NumericUpDown()
@@ -159,7 +160,6 @@ Partial Class MainRibbon
         Me.cbxShowRulers = New System.Windows.Forms.CheckBox()
         Me.pnlScreenColor = New System.Windows.Forms.Panel()
         Me.TableLayoutPanel4 = New System.Windows.Forms.TableLayoutPanel()
-        Me.btnISA = New System.Windows.Forms.Button()
         Me.tcRibbon.SuspendLayout()
         Me.tpModel.SuspendLayout()
         Me.TableLayoutPanel1.SuspendLayout()
@@ -923,6 +923,21 @@ Partial Class MainRibbon
         Me.GroupBox11.TabStop = False
         Me.GroupBox11.Text = "Stream"
         '
+        'btnISA
+        '
+        Me.btnISA.BackColor = System.Drawing.Color.White
+        Me.btnISA.FlatAppearance.BorderColor = System.Drawing.Color.Gray
+        Me.btnISA.FlatAppearance.CheckedBackColor = System.Drawing.Color.White
+        Me.btnISA.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LightGreen
+        Me.btnISA.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DeepSkyBlue
+        Me.btnISA.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnISA.Location = New System.Drawing.Point(192, 57)
+        Me.btnISA.Name = "btnISA"
+        Me.btnISA.Size = New System.Drawing.Size(50, 22)
+        Me.btnISA.TabIndex = 109
+        Me.btnISA.Text = "ISA"
+        Me.btnISA.UseVisualStyleBackColor = False
+        '
         'btnHistogram
         '
         Me.btnHistogram.BackColor = System.Drawing.Color.White
@@ -933,9 +948,9 @@ Partial Class MainRibbon
         Me.btnHistogram.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.btnHistogram.Font = New System.Drawing.Font("Segoe UI", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnHistogram.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.btnHistogram.Location = New System.Drawing.Point(182, 59)
+        Me.btnHistogram.Location = New System.Drawing.Point(10, 73)
         Me.btnHistogram.Name = "btnHistogram"
-        Me.btnHistogram.Size = New System.Drawing.Size(60, 22)
+        Me.btnHistogram.Size = New System.Drawing.Size(67, 22)
         Me.btnHistogram.TabIndex = 108
         Me.btnHistogram.Text = "Histogram"
         Me.btnHistogram.UseVisualStyleBackColor = False
@@ -2005,21 +2020,6 @@ Partial Class MainRibbon
         Me.TableLayoutPanel4.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
         Me.TableLayoutPanel4.Size = New System.Drawing.Size(1204, 175)
         Me.TableLayoutPanel4.TabIndex = 508
-        '
-        'btnISA
-        '
-        Me.btnISA.BackColor = System.Drawing.Color.White
-        Me.btnISA.FlatAppearance.BorderColor = System.Drawing.Color.Gray
-        Me.btnISA.FlatAppearance.CheckedBackColor = System.Drawing.Color.White
-        Me.btnISA.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LightCoral
-        Me.btnISA.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DeepSkyBlue
-        Me.btnISA.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btnISA.Location = New System.Drawing.Point(27, 75)
-        Me.btnISA.Name = "btnISA"
-        Me.btnISA.Size = New System.Drawing.Size(60, 23)
-        Me.btnISA.TabIndex = 109
-        Me.btnISA.Text = "ISA"
-        Me.btnISA.UseVisualStyleBackColor = False
         '
         'MainRibbon
         '

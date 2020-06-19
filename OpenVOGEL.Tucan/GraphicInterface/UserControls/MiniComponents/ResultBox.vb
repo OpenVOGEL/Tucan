@@ -60,12 +60,28 @@ Public Class ResultBox
 
     End Sub
 
+    Private _Scientific As Integer = False
+
+    Public Property Scientific As Boolean
+        Set(value As Boolean)
+            _Scientific = value
+            Decimals = _Decimals
+        End Set
+        Get
+            Return _Scientific
+        End Get
+    End Property
+
     Private _Decimals As Integer
 
     Public Property Decimals As Integer
         Set(value As Integer)
             _Decimals = value
-            _FormatString = "{0:F" + _Decimals.ToString + "}"
+            If _Scientific Then
+                _FormatString = "{0:F" + _Decimals.ToString + "}"
+            Else
+                _FormatString = "{0:E" + _Decimals.ToString + "}"
+            End If
         End Set
         Get
             Return _Decimals
@@ -117,6 +133,36 @@ Public Class ResultBox
             Return Magnitude.DefaultUnitValue
         End Get
 
+    End Property
+
+    ''' <summary>
+    ''' The width of the name label
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property NameWidth As Integer
+        Set(value As Integer)
+            lblName.Width = value
+            tbValue.Left = value
+            tbValue.Width = Width - lblName.Width - lblUnit.Width
+        End Set
+        Get
+            Return lblName.Width
+        End Get
+    End Property
+
+    ''' <summary>
+    ''' The width of the unit label
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property UnitWidth As Integer
+        Set(value As Integer)
+            lblUnit.Width = value
+            lblUnit.Left = Me.Width - lblUnit.Width
+            tbValue.Width = Width - lblName.Width - lblUnit.Width
+        End Set
+        Get
+            Return lblUnit.Width
+        End Get
     End Property
 
     ''' <summary>

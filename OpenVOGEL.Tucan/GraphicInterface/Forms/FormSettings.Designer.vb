@@ -25,18 +25,19 @@ Partial Class FormSettings
         Me.tpSettings = New System.Windows.Forms.TabControl()
         Me.tpStream = New System.Windows.Forms.TabPage()
         Me.gbFlowRotation = New System.Windows.Forms.GroupBox()
+        Me.btnISA = New System.Windows.Forms.Button()
+        Me.Label32 = New System.Windows.Forms.Label()
+        Me.Label33 = New System.Windows.Forms.Label()
         Me.Label14 = New System.Windows.Forms.Label()
         Me.Label21 = New System.Windows.Forms.Label()
         Me.Label12 = New System.Windows.Forms.Label()
         Me.Label13 = New System.Windows.Forms.Label()
+        Me.nudStaticPressure = New System.Windows.Forms.NumericUpDown()
         Me.nudViscosity = New System.Windows.Forms.NumericUpDown()
         Me.nudDensity = New System.Windows.Forms.NumericUpDown()
         Me.bgFreeStream = New System.Windows.Forms.GroupBox()
-        Me.Label32 = New System.Windows.Forms.Label()
         Me.Label3 = New System.Windows.Forms.Label()
-        Me.Label33 = New System.Windows.Forms.Label()
         Me.Label19 = New System.Windows.Forms.Label()
-        Me.nudStaticPressure = New System.Windows.Forms.NumericUpDown()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.Label20 = New System.Windows.Forms.Label()
@@ -87,14 +88,13 @@ Partial Class FormSettings
         Me.Label34 = New System.Windows.Forms.Label()
         Me.btOK = New System.Windows.Forms.Button()
         Me.btnCancel = New System.Windows.Forms.Button()
-        Me.btnISA = New System.Windows.Forms.Button()
         Me.tpSettings.SuspendLayout()
         Me.tpStream.SuspendLayout()
         Me.gbFlowRotation.SuspendLayout()
+        CType(Me.nudStaticPressure, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.nudViscosity, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.nudDensity, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.bgFreeStream.SuspendLayout()
-        CType(Me.nudStaticPressure, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.nudVz, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.nudVy, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.nudVx, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -161,6 +161,43 @@ Partial Class FormSettings
         Me.gbFlowRotation.TabStop = False
         Me.gbFlowRotation.Text = "Fluid properties"
         '
+        'btnISA
+        '
+        Me.btnISA.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.btnISA.BackColor = System.Drawing.Color.White
+        Me.btnISA.DialogResult = System.Windows.Forms.DialogResult.Cancel
+        Me.btnISA.FlatAppearance.BorderColor = System.Drawing.Color.Gray
+        Me.btnISA.FlatAppearance.CheckedBackColor = System.Drawing.Color.White
+        Me.btnISA.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LightCoral
+        Me.btnISA.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DeepSkyBlue
+        Me.btnISA.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnISA.Location = New System.Drawing.Point(170, 45)
+        Me.btnISA.Name = "btnISA"
+        Me.btnISA.Size = New System.Drawing.Size(85, 23)
+        Me.btnISA.TabIndex = 108
+        Me.btnISA.Text = "ISA"
+        Me.btnISA.UseVisualStyleBackColor = False
+        '
+        'Label32
+        '
+        Me.Label32.AutoSize = True
+        Me.Label32.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label32.Location = New System.Drawing.Point(150, 23)
+        Me.Label32.Name = "Label32"
+        Me.Label32.Size = New System.Drawing.Size(20, 13)
+        Me.Label32.TabIndex = 107
+        Me.Label32.Text = "Po"
+        '
+        'Label33
+        '
+        Me.Label33.AutoSize = True
+        Me.Label33.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label33.Location = New System.Drawing.Point(258, 23)
+        Me.Label33.Name = "Label33"
+        Me.Label33.Size = New System.Drawing.Size(19, 13)
+        Me.Label33.TabIndex = 106
+        Me.Label33.Text = "Pa"
+        '
         'Label14
         '
         Me.Label14.AutoSize = True
@@ -200,6 +237,18 @@ Partial Class FormSettings
         Me.Label13.Size = New System.Drawing.Size(37, 13)
         Me.Label13.TabIndex = 101
         Me.Label13.Text = "kg/m³"
+        '
+        'nudStaticPressure
+        '
+        Me.nudStaticPressure.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.nudStaticPressure.Increment = New Decimal(New Integer() {10, 0, 0, 0})
+        Me.nudStaticPressure.Location = New System.Drawing.Point(170, 21)
+        Me.nudStaticPressure.Maximum = New Decimal(New Integer() {276447232, 23283, 0, 0})
+        Me.nudStaticPressure.Name = "nudStaticPressure"
+        Me.nudStaticPressure.Size = New System.Drawing.Size(85, 22)
+        Me.nudStaticPressure.TabIndex = 105
+        Me.nudStaticPressure.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.nudStaticPressure.Value = New Decimal(New Integer() {101300, 0, 0, 0})
         '
         'nudViscosity
         '
@@ -256,16 +305,6 @@ Partial Class FormSettings
         Me.bgFreeStream.TabStop = False
         Me.bgFreeStream.Text = "Free stream"
         '
-        'Label32
-        '
-        Me.Label32.AutoSize = True
-        Me.Label32.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label32.Location = New System.Drawing.Point(150, 23)
-        Me.Label32.Name = "Label32"
-        Me.Label32.Size = New System.Drawing.Size(20, 13)
-        Me.Label32.TabIndex = 107
-        Me.Label32.Text = "Po"
-        '
         'Label3
         '
         Me.Label3.AutoSize = True
@@ -276,16 +315,6 @@ Partial Class FormSettings
         Me.Label3.TabIndex = 98
         Me.Label3.Text = "m/s"
         '
-        'Label33
-        '
-        Me.Label33.AutoSize = True
-        Me.Label33.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label33.Location = New System.Drawing.Point(258, 23)
-        Me.Label33.Name = "Label33"
-        Me.Label33.Size = New System.Drawing.Size(19, 13)
-        Me.Label33.TabIndex = 106
-        Me.Label33.Text = "Pa"
-        '
         'Label19
         '
         Me.Label19.AutoSize = True
@@ -295,18 +324,6 @@ Partial Class FormSettings
         Me.Label19.Size = New System.Drawing.Size(33, 13)
         Me.Label19.TabIndex = 98
         Me.Label19.Text = "rad/s"
-        '
-        'nudStaticPressure
-        '
-        Me.nudStaticPressure.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.nudStaticPressure.Increment = New Decimal(New Integer() {10, 0, 0, 0})
-        Me.nudStaticPressure.Location = New System.Drawing.Point(170, 21)
-        Me.nudStaticPressure.Maximum = New Decimal(New Integer() {276447232, 23283, 0, 0})
-        Me.nudStaticPressure.Name = "nudStaticPressure"
-        Me.nudStaticPressure.Size = New System.Drawing.Size(85, 22)
-        Me.nudStaticPressure.TabIndex = 105
-        Me.nudStaticPressure.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        Me.nudStaticPressure.Value = New Decimal(New Integer() {101300, 0, 0, 0})
         '
         'Label2
         '
@@ -885,23 +902,6 @@ Partial Class FormSettings
         Me.btnCancel.Text = "Cancel"
         Me.btnCancel.UseVisualStyleBackColor = False
         '
-        'btnISA
-        '
-        Me.btnISA.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.btnISA.BackColor = System.Drawing.Color.White
-        Me.btnISA.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.btnISA.FlatAppearance.BorderColor = System.Drawing.Color.Gray
-        Me.btnISA.FlatAppearance.CheckedBackColor = System.Drawing.Color.White
-        Me.btnISA.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LightCoral
-        Me.btnISA.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DeepSkyBlue
-        Me.btnISA.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btnISA.Location = New System.Drawing.Point(170, 45)
-        Me.btnISA.Name = "btnISA"
-        Me.btnISA.Size = New System.Drawing.Size(75, 23)
-        Me.btnISA.TabIndex = 108
-        Me.btnISA.Text = "ISA"
-        Me.btnISA.UseVisualStyleBackColor = False
-        '
         'FormSettings
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -922,11 +922,11 @@ Partial Class FormSettings
         Me.tpStream.ResumeLayout(False)
         Me.gbFlowRotation.ResumeLayout(False)
         Me.gbFlowRotation.PerformLayout()
+        CType(Me.nudStaticPressure, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.nudViscosity, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.nudDensity, System.ComponentModel.ISupportInitialize).EndInit()
         Me.bgFreeStream.ResumeLayout(False)
         Me.bgFreeStream.PerformLayout()
-        CType(Me.nudStaticPressure, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.nudVz, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.nudVy, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.nudVx, System.ComponentModel.ISupportInitialize).EndInit()

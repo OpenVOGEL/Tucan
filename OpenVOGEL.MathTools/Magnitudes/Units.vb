@@ -25,13 +25,14 @@ Namespace Magnitudes
         Area
         Velocity
         Density
+        Viscosity
+        Temperature
         'Acceleration
         Force
         Moment
         Angular
         Pressure
         Dimensionless
-
     End Enum
 
     Public Interface IPhysicalMagnitude
@@ -61,6 +62,10 @@ Namespace Magnitudes
                     Return New AreaMagnitude()
                 Case Magnitudes.Density
                     Return New DensityMagnitude()
+                Case Magnitudes.Viscosity
+                    Return New ViscosityMagnitude()
+                Case Magnitudes.Temperature
+                    Return New TemperatureMagnitude()
                 Case Magnitudes.Force
                     Return New ForceMagnitude()
                 Case Magnitudes.Pressure
@@ -721,7 +726,7 @@ Namespace Magnitudes
 
         Public Sub Assign(Magnitude As IPhysicalMagnitude) Implements IPhysicalMagnitude.Assign
 
-            If Magnitude.Magnitude = Magnitudes.Length Then
+            If Magnitude.Magnitude = Magnitudes.Density Then
                 Dim Mag As DensityMagnitude = Magnitude
                 _DefaultUnitValue = Mag._DefaultUnitValue
                 _Value = Mag._Value
@@ -810,6 +815,249 @@ Namespace Magnitudes
                         Return "kg/m³"
                     Case Units.lb_ft3
                         Return "lb/ft³"
+                    Case Else
+                        Return ""
+                End Select
+            End Get
+        End Property
+
+    End Class
+
+    ''' <summary>
+    ''' Represents a viscocity magnitude.
+    ''' </summary>
+    Public Class ViscosityMagnitude
+
+        Implements IPhysicalMagnitude
+
+        ''' <summary>
+        ''' Time units.
+        ''' </summary>
+        Public Enum Units As Short
+
+            kg_ms
+
+        End Enum
+
+        ''' <summary>
+        ''' Unit used as reference.
+        ''' </summary>
+        Public Const DefaultUnit As Units = Units.kg_ms
+
+        Private _DefaultUnitValue As Double
+        Private _Value As Double
+        Private _Unit As Units
+
+        Public Sub Assign(Magnitude As IPhysicalMagnitude) Implements IPhysicalMagnitude.Assign
+
+            If Magnitude.Magnitude = Magnitudes.Viscosity Then
+                Dim Mag As ViscosityMagnitude = Magnitude
+                _DefaultUnitValue = Mag._DefaultUnitValue
+                _Value = Mag._Value
+                _Unit = Mag._Unit
+            End If
+
+        End Sub
+
+        Private Sub SetValueFromDafaultUnitValue(value As Double)
+
+            _DefaultUnitValue = value
+
+            Select Case Unit
+                Case Units.kg_ms
+                    _Value = _DefaultUnitValue
+                Case Else
+                    _Value = _DefaultUnitValue
+            End Select
+
+        End Sub
+
+        Private Sub SetDafaultUnitValueFromValue(value As Double)
+
+            Select Case Unit
+                Case Units.kg_ms
+                    _DefaultUnitValue = value
+                Case Else
+                    _DefaultUnitValue = value
+            End Select
+
+        End Sub
+
+        Public Property DefaultUnitValue As Double Implements IPhysicalMagnitude.DefaultUnitValue
+            Set(value As Double)
+
+                _DefaultUnitValue = value
+
+                SetValueFromDafaultUnitValue(value)
+
+            End Set
+            Get
+                Return _DefaultUnitValue
+            End Get
+        End Property
+
+        Public Property Unit As Units
+            Set(value As Units)
+
+                _Unit = value
+
+                SetValueFromDafaultUnitValue(value)
+
+            End Set
+            Get
+                Return _Unit
+            End Get
+        End Property
+
+        Public Property Value As Double Implements IPhysicalMagnitude.Value
+            Set(value As Double)
+
+                _Value = value
+
+                SetDafaultUnitValueFromValue(value)
+
+            End Set
+            Get
+                Return _Value
+            End Get
+        End Property
+
+        Public ReadOnly Property Magnitude As Magnitudes Implements IPhysicalMagnitude.Magnitude
+            Get
+                Return Magnitudes.Viscosity
+            End Get
+        End Property
+
+        Public ReadOnly Property Label As String Implements IPhysicalMagnitude.Label
+            Get
+                Select Case Unit
+                    Case Units.kg_ms
+                        Return "kg/ms"
+                    Case Else
+                        Return ""
+                End Select
+            End Get
+        End Property
+
+    End Class
+
+    ''' <summary>
+    ''' Represents a temperature magnitude.
+    ''' </summary>
+    Public Class TemperatureMagnitude
+
+        Implements IPhysicalMagnitude
+
+        ''' <summary>
+        ''' Time units.
+        ''' </summary>
+        Public Enum Units As Short
+
+            Kelving
+            Celsius
+
+        End Enum
+
+        ''' <summary>
+        ''' Unit used as reference.
+        ''' </summary>
+        Public Const DefaultUnit As Units = Units.Celsius
+
+        Private _DefaultUnitValue As Double
+        Private _Value As Double
+        Private _Unit As Units
+
+        Public Sub Assign(Magnitude As IPhysicalMagnitude) Implements IPhysicalMagnitude.Assign
+
+            If Magnitude.Magnitude = Magnitudes.Temperature Then
+                Dim Mag As TemperatureMagnitude = Magnitude
+                _DefaultUnitValue = Mag._DefaultUnitValue
+                _Value = Mag._Value
+                _Unit = Mag._Unit
+            End If
+
+        End Sub
+
+        Private Sub SetValueFromDafaultUnitValue(value As Double)
+
+            _DefaultUnitValue = value
+
+            Select Case Unit
+                Case Units.Celsius
+                    _Value = _DefaultUnitValue
+                Case Units.Kelving
+                    _Value = _DefaultUnitValue * 0.0624279606
+                Case Else
+                    _Value = _DefaultUnitValue
+            End Select
+
+        End Sub
+
+        Private Sub SetDafaultUnitValueFromValue(value As Double)
+
+            Select Case Unit
+                Case Units.Celsius
+                    _DefaultUnitValue = value - 273.0
+                Case Units.Kelving
+                    _DefaultUnitValue = value
+                Case Else
+                    _DefaultUnitValue = value
+            End Select
+
+        End Sub
+
+        Public Property DefaultUnitValue As Double Implements IPhysicalMagnitude.DefaultUnitValue
+            Set(value As Double)
+
+                _DefaultUnitValue = value
+
+                SetValueFromDafaultUnitValue(value)
+
+            End Set
+            Get
+                Return _DefaultUnitValue
+            End Get
+        End Property
+
+        Public Property Unit As Units
+            Set(value As Units)
+
+                _Unit = value
+
+                SetValueFromDafaultUnitValue(value)
+
+            End Set
+            Get
+                Return _Unit
+            End Get
+        End Property
+
+        Public Property Value As Double Implements IPhysicalMagnitude.Value
+            Set(value As Double)
+
+                _Value = value
+
+                SetDafaultUnitValueFromValue(value)
+
+            End Set
+            Get
+                Return _Value
+            End Get
+        End Property
+
+        Public ReadOnly Property Magnitude As Magnitudes Implements IPhysicalMagnitude.Magnitude
+            Get
+                Return Magnitudes.Temperature
+            End Get
+        End Property
+
+        Public ReadOnly Property Label As String Implements IPhysicalMagnitude.Label
+            Get
+                Select Case Unit
+                    Case Units.Kelving
+                        Return "K"
+                    Case Units.Celsius
+                        Return "°C"
                     Case Else
                         Return ""
                 End Select
