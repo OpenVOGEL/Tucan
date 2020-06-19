@@ -18,7 +18,9 @@
 Imports System.Math
 
 Namespace CalculationModel.Settings
+
     Public Class StandardAtmosphere
+
         Public Property Temperature As Double
         Public Property Pressure As Double
         Public Property Density As Double

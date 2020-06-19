@@ -78,9 +78,9 @@ Public Class ResultBox
         Set(value As Integer)
             _Decimals = value
             If _Scientific Then
-                _FormatString = "{0:F" + _Decimals.ToString + "}"
-            Else
                 _FormatString = "{0:E" + _Decimals.ToString + "}"
+            Else
+                _FormatString = "{0:F" + _Decimals.ToString + "}"
             End If
         End Set
         Get

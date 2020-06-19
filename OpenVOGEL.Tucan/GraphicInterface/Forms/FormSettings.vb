@@ -134,11 +134,9 @@ Public Class FormSettings
     Private Sub btnISA_Click(sender As Object, e As EventArgs) Handles btnISA.Click
 
         Dim FormISA As New FormISA
-        If (FormISA.ShowDialog()) = DialogResult.OK Then
-
+        If FormISA.ShowDialog = DialogResult.OK Then
             FormISA.GetSettings(LocalSettings)
-            Settings = DesignTools.DataStore.SimulationSettings
-
+            SetSettings()
         End If
 
     End Sub

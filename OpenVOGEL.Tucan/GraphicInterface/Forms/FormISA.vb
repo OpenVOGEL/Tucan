@@ -74,6 +74,7 @@ Public Class FormISA
         rbViscocity.UnitWidth = 50
         rbViscocity.Parent = Me
         rbViscocity.Decimals = GlobalDecimals(Magnitudes.Density)
+        rbViscocity.Scientific = True
 
         rbSoundSpeed.Name = "a"
         rbSoundSpeed.Top = rbViscocity.Bottom + 5
