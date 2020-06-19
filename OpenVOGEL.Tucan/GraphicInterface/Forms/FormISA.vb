@@ -51,7 +51,6 @@ Public Class FormISA
 
         Try
             Settings.AssignStandardAtmosphere(nudAltitude.Value)
-            DesignTools.DataStore.ProjectRoot.SimulationSettings = Settings
         Catch ex As Exception
             MessageBox.Show("Enter a valid Altitude setting")
         End Try
