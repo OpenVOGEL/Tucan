@@ -21,62 +21,18 @@ Imports OpenVOGEL.DesignTools.VisualModel.Models.Components
 Namespace VisualModel.Models
 
     ''' <summary>
-    ''' Stores results for a given time step.
+    ''' Represents the latties at a single transit state
     ''' </summary>
-    Public Class ResultModel
-
-        Public Name As String
-        Public TimeStep As Integer
-
-        Private _Model As ResultContainer
-        Private _Wakes As ResultContainer
-        Private _DynamicModes As List(Of ResultContainer)
-
-        Public Property SimulationSettings As New SimulationSettings
-        Public TotalArea As Double
-
-        Public Property Loaded As Boolean = False
-
-        Public Property VisualizeModes As Boolean
-
-        Public Property SelectedModeIndex As Integer
+    Public Class TransitState
 
         Public ReadOnly Property Model As ResultContainer
-            Get
-                Return _Model
-            End Get
-        End Property
 
         Public ReadOnly Property Wakes As ResultContainer
-            Get
-                Return _Wakes
-            End Get
-        End Property
 
-        Public Property DynamicModes As List(Of ResultContainer)
-            Get
-                Return _DynamicModes
-            End Get
-            Set(ByVal value As List(Of ResultContainer))
-                _DynamicModes = value
-            End Set
-        End Property
-
-        Public ReadOnly Property SelectedMode As ResultContainer
-            Get
-                If SelectedModeIndex > -1 And SelectedModeIndex < DynamicModes.Count Then
-                    Return _DynamicModes(SelectedModeIndex)
-                Else
-                    Return Nothing
-                End If
-            End Get
-        End Property
-
-        Public Sub InitializeResults()
+        Public Sub New()
 
             _Model = New ResultContainer
             _Wakes = New ResultContainer
-            _DynamicModes = New List(Of ResultContainer)
 
             _Model.Name = "Full_Model"
             _Model.VisualProperties.ColorMesh = System.Drawing.Color.DimGray
@@ -106,47 +62,67 @@ Namespace VisualModel.Models
 
         End Sub
 
-        Public Sub Clear()
+    End Class
 
-            _Model.Clear()
-            _Wakes.Clear()
-            _DynamicModes.Clear()
+    ''' <summary>
+    ''' Stores results for a given time step.
+    ''' </summary>
+    Public Class ResultModel
 
+        Public Name As String
+
+        ''' <summary>
+        ''' The active transit
+        ''' </summary>
+        Public Property ActiveState As TransitState
+
+        ''' <summary>
+        ''' Contains all the transit states
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property TransitStates As List(Of TransitState)
+
+        ''' <summary>
+        ''' Contains the dynamics models (if available)
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property DynamicModes As List(Of ResultContainer)
+
+        ''' <summary>
+        ''' Creates a new empty result model
+        ''' </summary>
+        Public Sub New()
+            _TransitStates = New List(Of TransitState)
+            _DynamicModes = New List(Of ResultContainer)
         End Sub
 
-#Region " Transit simulation "
-
         ''' <summary>
-        ''' Gathers all transit lattices.
+        ''' The simulation settings that where used for this results.
         ''' </summary>
-        ''' <value></value>
         ''' <returns></returns>
-        ''' <remarks></remarks>
-        Public Property TransitLattices As New List(Of ResultContainer)
+        Public Property SimulationSettings As New SimulationSettings
 
-        Private _TransitStages As Integer = 0
+        Public Property Loaded As Boolean = False
 
-        ''' <summary>
-        ''' Indicates the number of loaded stages
-        ''' </summary>
-        Public ReadOnly Property TransitStages As Integer
+        Public Property VisualizeModes As Boolean
+
+        Public Property SelectedModeIndex As Integer
+
+        Public ReadOnly Property SelectedMode As ResultContainer
             Get
-                Return TransitLattices.Count
+                If SelectedModeIndex > -1 And SelectedModeIndex < DynamicModes.Count Then
+                    Return DynamicModes(SelectedModeIndex)
+                Else
+                    Return Nothing
+                End If
             End Get
         End Property
 
-        ''' <summary>
-        ''' Indicates if the simulation frames have been loaded
-        ''' </summary>
-        ''' <remarks></remarks>
-        Public Property TransitLoaded As Boolean
-
-        Public Sub ClearTransit()
-            TransitLattices.Clear()
-            _TransitLoaded = False
+        Public Sub Clear()
+            ActiveState = Nothing
+            _TransitStates.Clear()
+            _DynamicModes.Clear()
         End Sub
-
-#End Region
 
     End Class
 

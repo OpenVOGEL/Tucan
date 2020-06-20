@@ -85,7 +85,7 @@ Namespace DataStore
         Public Sub Initialize()
 
             SimulationSettings.InitializaParameters()
-            Results.InitializeResults()
+            Results.Clear()
             _Initialized = True
 
         End Sub
@@ -98,7 +98,7 @@ Namespace DataStore
             Name = "New aircraft"
             Model.Objects.Clear()
             SimulationSettings.InitializaParameters()
-            Results.InitializeResults()
+            Results.Clear()
             CalculationCore = Nothing
 
         End Sub

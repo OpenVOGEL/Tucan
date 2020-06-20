@@ -984,9 +984,9 @@ Namespace Magnitudes
 
             Select Case Unit
                 Case Units.Celsius
-                    _Value = _DefaultUnitValue
+                    _Value = _DefaultUnitValue - 273.0#
                 Case Units.Kelving
-                    _Value = _DefaultUnitValue * 0.0624279606
+                    _Value = _DefaultUnitValue
                 Case Else
                     _Value = _DefaultUnitValue
             End Select
@@ -997,7 +997,7 @@ Namespace Magnitudes
 
             Select Case Unit
                 Case Units.Celsius
-                    _DefaultUnitValue = value - 273.0
+                    _DefaultUnitValue = value + 273.0#
                 Case Units.Kelving
                     _DefaultUnitValue = value
                 Case Else

@@ -152,12 +152,6 @@
     <Compile Include="GraphicInterface\Forms\FormAnchors.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="GraphicInterface\Forms\FormAskVelocity.Designer.vb">
-      <DependentUpon>FormAskVelocity.vb</DependentUpon>
-    </Compile>
-    <Compile Include="GraphicInterface\Forms\FormAskVelocity.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="GraphicInterface\Forms\FormCamberLine.Designer.vb">
       <DependentUpon>FormCamberLine.vb</DependentUpon>
     </Compile>
@@ -329,9 +323,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="GraphicInterface\Forms\FormAnchors.resx">
       <DependentUpon>FormAnchors.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="GraphicInterface\Forms\FormAskVelocity.resx">
-      <DependentUpon>FormAskVelocity.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GraphicInterface\Forms\FormCamberLine.resx">
       <DependentUpon>FormCamberLine.vb</DependentUpon>

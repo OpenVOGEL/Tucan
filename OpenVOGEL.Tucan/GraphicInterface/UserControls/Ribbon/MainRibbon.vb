@@ -20,6 +20,7 @@ Imports OpenVOGEL.DesignTools.VisualModel.Interface
 Imports OpenVOGEL.DesignTools.VisualModel.Models.Components.Basics
 Imports OpenVOGEL.DesignTools.DataStore
 Imports OpenVOGEL.Tucan.Utility
+Imports OpenVOGEL.DesignTools.VisualModel.Models.Components
 
 Public Class MainRibbon
 
@@ -1095,7 +1096,7 @@ ErrSub:
 
         If ProjectRoot.Initialized Then
 
-            If Not IsNothing(ProjectRoot.Results.DynamicModes) Then
+            If ProjectRoot.Results.DynamicModes IsNot Nothing Then
 
                 If ProjectRoot.Results.DynamicModes.Count > 0 Then
 
@@ -1124,7 +1125,7 @@ ErrSub:
 
             End If
 
-            btnPlayStop.Enabled = ProjectRoot.Results.TransitLoaded
+            btnPlayStop.Enabled = ProjectRoot.Results.TransitStates.Count > 1
 
         End If
 
@@ -1160,7 +1161,7 @@ ErrSub:
 
         If ProjectRoot.Initialized Then
 
-            If Not IsNothing(ProjectRoot.Results.DynamicModes) Then
+            If ProjectRoot.Results.DynamicModes IsNot Nothing Then
 
                 If cbxModes.SelectedIndex > 0 And cbxModes.SelectedIndex < ProjectRoot.Results.DynamicModes.Count + 1 Then
 
@@ -1184,14 +1185,16 @@ ErrSub:
 
         If ModelInterface.Initialized Then
 
-            If ProjectRoot.Results.TransitLoaded Then
+            If ProjectRoot.Results.TransitStates.Count > 1 Then
 
                 If Not ModelInterface.Simulating Then
                     _timer.Interval = ProjectRoot.Results.SimulationSettings.Interval * 1000 / ProjectRoot.Results.SimulationSettings.StructuralSettings.SubSteps
                     ModelInterface.Simulating = True
                     _timer.Start()
                     btnPlayStop.Text = "Stop"
-                    RaiseEvent PushMessage(String.Format("Simulating. Rate {0}f/{1}s", ProjectRoot.Results.SimulationSettings.StructuralSettings.SubSteps, ProjectRoot.Results.SimulationSettings.Interval))
+                    RaiseEvent PushMessage(String.Format("Simulating. Rate {0}f/{1}s",
+                                                         ProjectRoot.Results.SimulationSettings.StructuralSettings.SubSteps,
+                                                         ProjectRoot.Results.SimulationSettings.Interval))
                 Else
                     ModelInterface.Simulating = False
                     _timer.Stop()
@@ -1212,7 +1215,7 @@ ErrSub:
     Private Sub _timer_Tick(ByVal sender As System.Object, ByVal e As System.EventArgs)
 
         If ModelInterface.Initialized Then
-            If _CurrentFrame > ProjectRoot.Results.TransitStages Then _CurrentFrame = 0
+            If _CurrentFrame > ProjectRoot.Results.TransitStates.Count Then _CurrentFrame = 0
             ModelInterface.RepresentResultsTransitWithOpenGL(_CurrentFrame)
             _CurrentFrame += 1
         End If
@@ -1238,34 +1241,38 @@ ErrSub:
 
         _LockResultPropsEvents = True
 
-        If ProjectRoot.Initialized Then
+        If ProjectRoot.Initialized And ProjectRoot.Results.ActiveState IsNot Nothing Then
 
-            cbxShowResMesh.Checked = ProjectRoot.Results.Model.VisualProperties.ShowMesh
-            cbxShowResSurface.Checked = ProjectRoot.Results.Model.VisualProperties.ShowSurface
-            pnlResultMeshColor.BackColor = ProjectRoot.Results.Model.VisualProperties.ColorMesh
-            pnlResultSurfaceColor.BackColor = ProjectRoot.Results.Model.VisualProperties.ColorSurface
+            Dim Model As ResultContainer = ProjectRoot.Results.ActiveState.Model
 
-            pnlForceColor.BackColor = ProjectRoot.Results.Model.VisualProperties.ColorPositiveLoad
-            pnlVelocityColor.BackColor = ProjectRoot.Results.Model.VisualProperties.ColorVelocity
-            cbxShowForce.Checked = ProjectRoot.Results.Model.VisualProperties.ShowLoadVectors
-            cbxShowVelocity.Checked = ProjectRoot.Results.Model.VisualProperties.ShowVelocityVectors
+            cbxShowResMesh.Checked = Model.VisualProperties.ShowMesh
+            cbxShowResSurface.Checked = Model.VisualProperties.ShowSurface
+            pnlResultMeshColor.BackColor = Model.VisualProperties.ColorMesh
+            pnlResultSurfaceColor.BackColor = Model.VisualProperties.ColorSurface
 
-            nudScaleForce.Value = ProjectRoot.Results.Model.VisualProperties.ScaleLoadVectors
-            nudScaleVelocity.Value = ProjectRoot.Results.Model.VisualProperties.ScaleVelocityVectors
+            pnlForceColor.BackColor = Model.VisualProperties.ColorPositiveLoad
+            pnlVelocityColor.BackColor = Model.VisualProperties.ColorVelocity
+            cbxShowForce.Checked = Model.VisualProperties.ShowLoadVectors
+            cbxShowVelocity.Checked = Model.VisualProperties.ShowVelocityVectors
 
-            cbxShowColormap.Checked = ProjectRoot.Results.Model.VisualProperties.ShowColormap
-            nudDCpmax.Value = ProjectRoot.Results.Model.PressureDeltaRange.Maximum
-            nudDCpmin.Value = ProjectRoot.Results.Model.PressureDeltaRange.Minimum
-            nudCpmax.Value = ProjectRoot.Results.Model.PressureRange.Maximum
-            nudCpmin.Value = ProjectRoot.Results.Model.PressureRange.Minimum
+            nudScaleForce.Value = Model.VisualProperties.ScaleLoadVectors
+            nudScaleVelocity.Value = Model.VisualProperties.ScaleVelocityVectors
 
-            cbxShowWakeSurface.Checked = ProjectRoot.Results.Wakes.VisualProperties.ShowSurface
-            cbxShowWakeMesh.Checked = ProjectRoot.Results.Wakes.VisualProperties.ShowMesh
-            cbxShowWakeNodes.Checked = ProjectRoot.Results.Wakes.VisualProperties.ShowNodes
+            cbxShowColormap.Checked = Model.VisualProperties.ShowColormap
+            nudDCpmax.Value = Model.PressureDeltaRange.Maximum
+            nudDCpmin.Value = Model.PressureDeltaRange.Minimum
+            nudCpmax.Value = Model.PressureRange.Maximum
+            nudCpmin.Value = Model.PressureRange.Minimum
 
-            pnlWakeSurfaceColor.BackColor = ProjectRoot.Results.Wakes.VisualProperties.ColorSurface
-            pnlWakeMeshColor.BackColor = ProjectRoot.Results.Wakes.VisualProperties.ColorMesh
-            pnlWakeNodeColor.BackColor = ProjectRoot.Results.Wakes.VisualProperties.ColorNodes
+            Dim Wakes As ResultContainer = ProjectRoot.Results.ActiveState.Wakes
+
+            cbxShowWakeSurface.Checked = Wakes.VisualProperties.ShowSurface
+            cbxShowWakeMesh.Checked = Wakes.VisualProperties.ShowMesh
+            cbxShowWakeNodes.Checked = Wakes.VisualProperties.ShowNodes
+
+            pnlWakeSurfaceColor.BackColor = Wakes.VisualProperties.ColorSurface
+            pnlWakeMeshColor.BackColor = Wakes.VisualProperties.ColorMesh
+            pnlWakeNodeColor.BackColor = Wakes.VisualProperties.ColorNodes
 
             cbxShowVelocityPlane.Checked = ProjectRoot.VelocityPlane.Visible
 
@@ -1279,9 +1286,9 @@ ErrSub:
 
     Private Sub cbxShowColormap_CheckedChanged(sender As Object, e As EventArgs) Handles cbxShowColormap.CheckedChanged
 
-        If (Not _LockResultPropsEvents) And ProjectRoot.Initialized Then
+        If (Not _LockResultPropsEvents) And ProjectRoot.Initialized And ProjectRoot.Results.ActiveState IsNot Nothing Then
 
-            ProjectRoot.Results.Model.VisualProperties.ShowColormap = cbxShowColormap.Checked
+            ProjectRoot.Results.ActiveState.Model.VisualProperties.ShowColormap = cbxShowColormap.Checked
 
             ModelInterface.RefreshOnGL()
 
@@ -1291,17 +1298,17 @@ ErrSub:
 
     Private Sub pnlResultSurfaceColor_MouseClick(sender As Object, e As MouseEventArgs) Handles pnlResultSurfaceColor.MouseClick
 
-        If (Not _LockResultPropsEvents) And ProjectRoot.Initialized Then
+        If (Not _LockResultPropsEvents) And ProjectRoot.Initialized And ProjectRoot.Results.ActiveState IsNot Nothing Then
 
             Dim Dialog As New ColorDialog
 
-            Dialog.Color = ProjectRoot.Results.Model.VisualProperties.ColorSurface
+            Dialog.Color = ProjectRoot.Results.ActiveState.Model.VisualProperties.ColorSurface
 
-            ' show dialog:
+            ' Show dialog:
 
             If Dialog.ShowDialog = DialogResult.OK Then
 
-                ProjectRoot.Results.Model.VisualProperties.ColorSurface = Dialog.Color
+                ProjectRoot.Results.ActiveState.Model.VisualProperties.ColorSurface = Dialog.Color
 
                 pnlResultSurfaceColor.BackColor = Dialog.Color
 
@@ -1315,17 +1322,17 @@ ErrSub:
 
     Private Sub pnlResultMeshColor_MouseClick(sender As Object, e As MouseEventArgs) Handles pnlResultMeshColor.MouseClick
 
-        If (Not _LockResultPropsEvents) And ProjectRoot.Initialized Then
+        If (Not _LockResultPropsEvents) And ProjectRoot.Initialized And ProjectRoot.Results.ActiveState IsNot Nothing Then
 
             Dim Dialog As New ColorDialog
 
-            Dialog.Color = ProjectRoot.Results.Model.VisualProperties.ColorMesh
+            Dialog.Color = ProjectRoot.Results.ActiveState.Model.VisualProperties.ColorMesh
 
             ' show dialog:
 
             If Dialog.ShowDialog = DialogResult.OK Then
 
-                ProjectRoot.Results.Model.VisualProperties.ColorMesh = Dialog.Color
+                ProjectRoot.Results.ActiveState.Model.VisualProperties.ColorMesh = Dialog.Color
 
                 pnlResultMeshColor.BackColor = Dialog.Color
 
@@ -1339,17 +1346,17 @@ ErrSub:
 
     Private Sub pnlVelocityColor_MouseClick(sender As Object, e As MouseEventArgs) Handles pnlVelocityColor.MouseClick
 
-        If (Not _LockResultPropsEvents) And ProjectRoot.Initialized Then
+        If (Not _LockResultPropsEvents) And ProjectRoot.Initialized And ProjectRoot.Results.ActiveState IsNot Nothing Then
 
             Dim Dialog As New ColorDialog
 
-            Dialog.Color = ProjectRoot.Results.Model.VisualProperties.ColorVelocity
+            Dialog.Color = ProjectRoot.Results.ActiveState.Model.VisualProperties.ColorVelocity
 
             ' show dialog:
 
             If Dialog.ShowDialog = DialogResult.OK Then
 
-                ProjectRoot.Results.Model.VisualProperties.ColorVelocity = Dialog.Color
+                ProjectRoot.Results.ActiveState.Model.VisualProperties.ColorVelocity = Dialog.Color
 
                 pnlVelocityColor.BackColor = Dialog.Color
 
@@ -1363,17 +1370,17 @@ ErrSub:
 
     Private Sub pnlForceColor_MouseClick(sender As Object, e As MouseEventArgs) Handles pnlForceColor.MouseClick
 
-        If (Not _LockResultPropsEvents) And ProjectRoot.Initialized Then
+        If (Not _LockResultPropsEvents) And ProjectRoot.Initialized And ProjectRoot.Results.ActiveState IsNot Nothing Then
 
             Dim Dialog As New ColorDialog
 
-            Dialog.Color = ProjectRoot.Results.Model.VisualProperties.ColorPositiveLoad
+            Dialog.Color = ProjectRoot.Results.ActiveState.Model.VisualProperties.ColorPositiveLoad
 
             ' show dialog:
 
             If Dialog.ShowDialog = DialogResult.OK Then
 
-                ProjectRoot.Results.Model.VisualProperties.ColorPositiveLoad = Dialog.Color
+                ProjectRoot.Results.ActiveState.Model.VisualProperties.ColorPositiveLoad = Dialog.Color
 
                 pnlForceColor.BackColor = Dialog.Color
 
@@ -1387,9 +1394,9 @@ ErrSub:
 
     Private Sub nudScaleVelocity_ValueChanged(sender As Object, e As EventArgs) Handles nudScaleVelocity.ValueChanged
 
-        If (Not _LockResultPropsEvents) And ProjectRoot.Initialized Then
+        If (Not _LockResultPropsEvents) And ProjectRoot.Initialized And ProjectRoot.Results.ActiveState IsNot Nothing Then
 
-            ProjectRoot.Results.Model.VisualProperties.ScaleVelocityVectors = nudScaleVelocity.Value
+            ProjectRoot.Results.ActiveState.Model.VisualProperties.ScaleVelocityVectors = nudScaleVelocity.Value
 
             ModelInterface.RefreshOnGL()
 
@@ -1399,9 +1406,9 @@ ErrSub:
 
     Private Sub nudScaleForce_ValueChanged(sender As Object, e As EventArgs) Handles nudScaleForce.ValueChanged
 
-        If (Not _LockResultPropsEvents) And ProjectRoot.Initialized Then
+        If (Not _LockResultPropsEvents) And ProjectRoot.Initialized And ProjectRoot.Results.ActiveState IsNot Nothing Then
 
-            ProjectRoot.Results.Model.VisualProperties.ScaleLoadVectors = nudScaleForce.Value
+            ProjectRoot.Results.ActiveState.Model.VisualProperties.ScaleLoadVectors = nudScaleForce.Value
 
             ModelInterface.RefreshOnGL()
 
@@ -1411,9 +1418,9 @@ ErrSub:
 
     Private Sub cbxShowWakeSurface_CheckedChanged(sender As Object, e As EventArgs) Handles cbxShowWakeSurface.CheckedChanged
 
-        If (Not _LockResultPropsEvents) And ProjectRoot.Initialized Then
+        If (Not _LockResultPropsEvents) And ProjectRoot.Initialized And ProjectRoot.Results.ActiveState IsNot Nothing Then
 
-            ProjectRoot.Results.Wakes.VisualProperties.ShowSurface = cbxShowWakeSurface.Checked
+            ProjectRoot.Results.ActiveState.Wakes.VisualProperties.ShowSurface = cbxShowWakeSurface.Checked
 
             ModelInterface.RefreshOnGL()
 
@@ -1423,9 +1430,9 @@ ErrSub:
 
     Private Sub cbxShowWakeMesh_CheckedChanged(sender As Object, e As EventArgs) Handles cbxShowWakeMesh.CheckedChanged
 
-        If (Not _LockResultPropsEvents) And ProjectRoot.Initialized Then
+        If (Not _LockResultPropsEvents) And ProjectRoot.Initialized And ProjectRoot.Results.ActiveState IsNot Nothing Then
 
-            ProjectRoot.Results.Wakes.VisualProperties.ShowMesh = cbxShowWakeMesh.Checked
+            ProjectRoot.Results.ActiveState.Wakes.VisualProperties.ShowMesh = cbxShowWakeMesh.Checked
 
             ModelInterface.RefreshOnGL()
 
@@ -1435,9 +1442,9 @@ ErrSub:
 
     Private Sub cbxShowWakeNodes_CheckedChanged(sender As Object, e As EventArgs) Handles cbxShowWakeNodes.CheckedChanged
 
-        If (Not _LockResultPropsEvents) And ProjectRoot.Initialized Then
+        If (Not _LockResultPropsEvents) And ProjectRoot.Initialized And ProjectRoot.Results.ActiveState IsNot Nothing Then
 
-            ProjectRoot.Results.Wakes.VisualProperties.ShowNodes = cbxShowWakeNodes.Checked
+            ProjectRoot.Results.ActiveState.Wakes.VisualProperties.ShowNodes = cbxShowWakeNodes.Checked
 
             ModelInterface.RefreshOnGL()
 
@@ -1447,17 +1454,17 @@ ErrSub:
 
     Private Sub pnlWakeSurfaceColor_MouseClick(sender As Object, e As MouseEventArgs) Handles pnlWakeSurfaceColor.MouseClick
 
-        If (Not _LockResultPropsEvents) And ProjectRoot.Initialized Then
+        If (Not _LockResultPropsEvents) And ProjectRoot.Initialized And ProjectRoot.Results.ActiveState IsNot Nothing Then
 
             Dim dialog As New ColorDialog
 
-            dialog.Color = ProjectRoot.Results.Wakes.VisualProperties.ColorSurface
+            dialog.Color = ProjectRoot.Results.ActiveState.Wakes.VisualProperties.ColorSurface
 
             ' show dialog:
 
             If dialog.ShowDialog = DialogResult.OK Then
 
-                ProjectRoot.Results.Wakes.VisualProperties.ColorSurface = dialog.Color
+                ProjectRoot.Results.ActiveState.Wakes.VisualProperties.ColorSurface = dialog.Color
 
                 pnlWakeSurfaceColor.BackColor = dialog.Color
 
@@ -1471,17 +1478,17 @@ ErrSub:
 
     Private Sub pnlWakeMeshColor_MouseClick(sender As Object, e As MouseEventArgs) Handles pnlWakeMeshColor.MouseClick
 
-        If (Not _LockResultPropsEvents) And ProjectRoot.Initialized Then
+        If (Not _LockResultPropsEvents) And ProjectRoot.Initialized And ProjectRoot.Results.ActiveState IsNot Nothing Then
 
             Dim dialog As New ColorDialog
 
-            dialog.Color = ProjectRoot.Results.Wakes.VisualProperties.ColorMesh
+            dialog.Color = ProjectRoot.Results.ActiveState.Wakes.VisualProperties.ColorMesh
 
             ' show dialog:
 
             If dialog.ShowDialog = DialogResult.OK Then
 
-                ProjectRoot.Results.Wakes.VisualProperties.ColorMesh = dialog.Color
+                ProjectRoot.Results.ActiveState.Wakes.VisualProperties.ColorMesh = dialog.Color
 
                 pnlWakeMeshColor.BackColor = dialog.Color
 
@@ -1495,17 +1502,17 @@ ErrSub:
 
     Private Sub pnlWakeNodeColor_MouseClick(sender As Object, e As MouseEventArgs) Handles pnlWakeNodeColor.MouseClick
 
-        If (Not _LockResultPropsEvents) And ProjectRoot.Initialized Then
+        If (Not _LockResultPropsEvents) And ProjectRoot.Initialized And ProjectRoot.Results.ActiveState IsNot Nothing Then
 
             Dim dialog As New ColorDialog
 
-            dialog.Color = ProjectRoot.Results.Wakes.VisualProperties.ColorNodes
+            dialog.Color = ProjectRoot.Results.ActiveState.Wakes.VisualProperties.ColorNodes
 
             ' show dialog:
 
             If dialog.ShowDialog = DialogResult.OK Then
 
-                ProjectRoot.Results.Wakes.VisualProperties.ColorNodes = dialog.Color
+                ProjectRoot.Results.ActiveState.Wakes.VisualProperties.ColorNodes = dialog.Color
 
                 pnlWakeNodeColor.BackColor = dialog.Color
 
@@ -1519,9 +1526,9 @@ ErrSub:
 
     Private Sub cbxShowResSurface_CheckedChanged(sender As Object, e As EventArgs) Handles cbxShowResSurface.CheckedChanged
 
-        If (Not _LockResultPropsEvents) And ProjectRoot.Initialized Then
+        If (Not _LockResultPropsEvents) And ProjectRoot.Initialized And ProjectRoot.Results.ActiveState IsNot Nothing Then
 
-            ProjectRoot.Results.Model.VisualProperties.ShowSurface = cbxShowResSurface.Checked
+            ProjectRoot.Results.ActiveState.Model.VisualProperties.ShowSurface = cbxShowResSurface.Checked
 
             ModelInterface.RefreshOnGL()
 
@@ -1531,9 +1538,9 @@ ErrSub:
 
     Private Sub cbxShowResMesh_CheckedChanged(sender As Object, e As EventArgs) Handles cbxShowResMesh.CheckedChanged
 
-        If (Not _LockResultPropsEvents) And ProjectRoot.Initialized Then
+        If (Not _LockResultPropsEvents) And ProjectRoot.Initialized And ProjectRoot.Results.ActiveState IsNot Nothing Then
 
-            ProjectRoot.Results.Model.VisualProperties.ShowMesh = cbxShowResMesh.Checked
+            ProjectRoot.Results.ActiveState.Model.VisualProperties.ShowMesh = cbxShowResMesh.Checked
 
             ModelInterface.RefreshOnGL()
 
@@ -1543,9 +1550,9 @@ ErrSub:
 
     Private Sub cbxShowVelocity_CheckedChanged(sender As Object, e As EventArgs) Handles cbxShowVelocity.CheckedChanged
 
-        If (Not _LockResultPropsEvents) And ProjectRoot.Initialized Then
+        If (Not _LockResultPropsEvents) And ProjectRoot.Initialized And ProjectRoot.Results.ActiveState IsNot Nothing Then
 
-            ProjectRoot.Results.Model.VisualProperties.ShowVelocityVectors = cbxShowVelocity.Checked
+            ProjectRoot.Results.ActiveState.Model.VisualProperties.ShowVelocityVectors = cbxShowVelocity.Checked
 
             ModelInterface.RefreshOnGL()
 
@@ -1555,9 +1562,9 @@ ErrSub:
 
     Private Sub cbxShowForce_CheckedChanged(sender As Object, e As EventArgs) Handles cbxShowForce.CheckedChanged
 
-        If (Not _LockResultPropsEvents) And ProjectRoot.Initialized Then
+        If (Not _LockResultPropsEvents) And ProjectRoot.Initialized And ProjectRoot.Results.ActiveState IsNot Nothing Then
 
-            ProjectRoot.Results.Model.VisualProperties.ShowLoadVectors = cbxShowForce.Checked
+            ProjectRoot.Results.ActiveState.Model.VisualProperties.ShowLoadVectors = cbxShowForce.Checked
 
             ModelInterface.RefreshOnGL()
 
@@ -1605,11 +1612,11 @@ ErrSub:
 
     Private Sub nudDCpmax_ValueChanged(sender As Object, e As EventArgs) Handles nudDCpmax.ValueChanged
 
-        If (Not _LockResultPropsEvents) And ProjectRoot.Initialized Then
+        If (Not _LockResultPropsEvents) And ProjectRoot.Initialized And ProjectRoot.Results.ActiveState IsNot Nothing Then
 
-            ProjectRoot.Results.Model.PressureDeltaRange.Maximum = nudDCpmax.Value
+            ProjectRoot.Results.ActiveState.Model.PressureDeltaRange.Maximum = nudDCpmax.Value
 
-            ProjectRoot.Results.Model.UpdatePressureColormap()
+            ProjectRoot.Results.ActiveState.Model.UpdatePressureColormap()
 
             ModelInterface.RefreshOnGL()
 
@@ -1619,11 +1626,11 @@ ErrSub:
 
     Private Sub nudDCpmin_ValueChanged(sender As Object, e As EventArgs) Handles nudDCpmin.ValueChanged
 
-        If (Not _LockResultPropsEvents) And ProjectRoot.Initialized Then
+        If (Not _LockResultPropsEvents) And ProjectRoot.Initialized And ProjectRoot.Results.ActiveState IsNot Nothing Then
 
-            ProjectRoot.Results.Model.PressureDeltaRange.Minimum = nudDCpmin.Value
+            ProjectRoot.Results.ActiveState.Model.PressureDeltaRange.Minimum = nudDCpmin.Value
 
-            ProjectRoot.Results.Model.UpdatePressureColormap()
+            ProjectRoot.Results.ActiveState.Model.UpdatePressureColormap()
 
             ModelInterface.RefreshOnGL()
 
@@ -1633,11 +1640,11 @@ ErrSub:
 
     Private Sub nudCpmin_ValueChanged(sender As Object, e As EventArgs) Handles nudCpmin.ValueChanged
 
-        If (Not _LockResultPropsEvents) And ProjectRoot.Initialized Then
+        If (Not _LockResultPropsEvents) And ProjectRoot.Initialized And ProjectRoot.Results.ActiveState IsNot Nothing Then
 
-            ProjectRoot.Results.Model.PressureRange.Minimum = nudCpmin.Value
+            ProjectRoot.Results.ActiveState.Model.PressureRange.Minimum = nudCpmin.Value
 
-            ProjectRoot.Results.Model.UpdatePressureColormap()
+            ProjectRoot.Results.ActiveState.Model.UpdatePressureColormap()
 
             ModelInterface.RefreshOnGL()
 
@@ -1647,11 +1654,11 @@ ErrSub:
 
     Private Sub nudCpmax_ValueChanged(sender As Object, e As EventArgs) Handles nudCpmax.ValueChanged
 
-        If (Not _LockResultPropsEvents) And ProjectRoot.Initialized Then
+        If (Not _LockResultPropsEvents) And ProjectRoot.Initialized And ProjectRoot.Results.ActiveState IsNot Nothing Then
 
-            ProjectRoot.Results.Model.PressureRange.Maximum = nudCpmax.Value
+            ProjectRoot.Results.ActiveState.Model.PressureRange.Maximum = nudCpmax.Value
 
-            ProjectRoot.Results.Model.UpdatePressureColormap()
+            ProjectRoot.Results.ActiveState.Model.UpdatePressureColormap()
 
             ModelInterface.RefreshOnGL()
 
@@ -1661,19 +1668,19 @@ ErrSub:
 
     Private Sub btnResetColormap_Click(sender As Object, e As EventArgs) Handles btnResetColormap.Click
 
-        If ProjectRoot.Initialized Then
+        If ProjectRoot.Initialized And ProjectRoot.Results.ActiveState IsNot Nothing Then
 
-            ProjectRoot.Results.Model.FindPressureRange()
+            ProjectRoot.Results.ActiveState.Model.FindPressureRange()
 
-            ProjectRoot.Results.Model.UpdatePressureColormap()
+            ProjectRoot.Results.ActiveState.Model.UpdatePressureColormap()
 
             _LockResultPropsEvents = True
 
-            nudDCpmax.Value = ProjectRoot.Results.Model.PressureDeltaRange.Maximum
-            nudDCpmin.Value = ProjectRoot.Results.Model.PressureDeltaRange.Minimum
+            nudDCpmax.Value = ProjectRoot.Results.ActiveState.Model.PressureDeltaRange.Maximum
+            nudDCpmin.Value = ProjectRoot.Results.ActiveState.Model.PressureDeltaRange.Minimum
 
-            nudCpmax.Value = ProjectRoot.Results.Model.PressureRange.Maximum
-            nudCpmin.Value = ProjectRoot.Results.Model.PressureRange.Minimum
+            nudCpmax.Value = ProjectRoot.Results.ActiveState.Model.PressureRange.Maximum
+            nudCpmin.Value = ProjectRoot.Results.ActiveState.Model.PressureRange.Minimum
 
             _LockResultPropsEvents = False
 

@@ -26,6 +26,9 @@ Namespace DataStore
             GlobalDecimals(Magnitudes.Force) = 0
             GlobalDecimals(Magnitudes.Moment) = 0
             GlobalDecimals(Magnitudes.Dimensionless) = 5
+            GlobalDecimals(Magnitudes.Density) = 4
+            GlobalDecimals(Magnitudes.Temperature) = 1
+            GlobalDecimals(Magnitudes.Pressure) = 0
 
         End Sub
 

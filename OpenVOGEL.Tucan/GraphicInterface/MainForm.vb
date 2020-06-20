@@ -447,55 +447,59 @@ Public Class MainForm
 
             Case Tucan.Utility.InterfaceModes.Postprocess
 
-                For Each SelectedItem As SelectionInfo In ModelInterface.Selection.SelectionList
+                If Results.ActiveState IsNot Nothing Then
 
-                    If SelectedItem.ComponentType = ComponentTypes.etResultContainer Then
+                    For Each SelectedItem As SelectionInfo In ModelInterface.Selection.SelectionList
 
-                        Select Case SelectedItem.EntityType
+                        If SelectedItem.ComponentType = ComponentTypes.etResultContainer Then
 
-                            Case EntityTypes.etPanel
+                            Select Case SelectedItem.EntityType
 
-                                ' Show associated surface info
+                                Case EntityTypes.etPanel
 
-                                Dim Panel As Panel = Results.Model.Mesh.Panels(SelectedItem.EntityIndex)
+                                    ' Show associated surface info
 
-                                If Panel.IsSlender Then
+                                    Dim Panel As Panel = Results.ActiveState.Model.Mesh.Panels(SelectedItem.EntityIndex)
 
-                                    lblStatus.Text = String.Format("Panel {0}: ΔCp={1:F5}; V={2:F5}m/s; G={3:F5}; A={4:F5}m²",
-                                                                   SelectedItem.EntityIndex,
-                                                                   Panel.Cp,
-                                                                   Panel.LocalVelocity.EuclideanNorm,
-                                                                   Panel.Circulation,
-                                                                   Panel.Area)
+                                    If Panel.IsSlender Then
 
-                                Else
+                                        lblStatus.Text = String.Format("Panel {0}: ΔCp={1:F5}; V={2:F5}m/s; G={3:F5}; A={4:F5}m²",
+                                                                       SelectedItem.EntityIndex,
+                                                                       Panel.Cp,
+                                                                       Panel.LocalVelocity.EuclideanNorm,
+                                                                       Panel.Circulation,
+                                                                       Panel.Area)
 
-                                    lblStatus.Text = String.Format("Panel {0}: Cp={1:F5}; V={2:F5}m/s; G={3:F5}; S={4:F5}; A={5:F5}m²",
-                                                                   SelectedItem.EntityIndex,
-                                                                   Panel.Cp,
-                                                                   Panel.LocalVelocity.EuclideanNorm,
-                                                                   Panel.Circulation,
-                                                                   Panel.SourceStrength,
-                                                                   Panel.Area)
+                                    Else
 
-                                End If
+                                        lblStatus.Text = String.Format("Panel {0}: Cp={1:F5}; V={2:F5}m/s; G={3:F5}; S={4:F5}; A={5:F5}m²",
+                                                                       SelectedItem.EntityIndex,
+                                                                       Panel.Cp,
+                                                                       Panel.LocalVelocity.EuclideanNorm,
+                                                                       Panel.Circulation,
+                                                                       Panel.SourceStrength,
+                                                                       Panel.Area)
 
-                                Exit For
+                                    End If
 
-                            Case EntityTypes.etNode
+                                    Exit For
 
-                                ' Show associated surface info
+                                Case EntityTypes.etNode
 
-                                lblStatus.Text = String.Format("Node {0}: ", SelectedItem.EntityIndex,
-                                                                              Results.Model.Mesh.Nodes(SelectedItem.EntityIndex).Position.ToString)
+                                    ' Show associated surface info
 
-                                Exit For
+                                    lblStatus.Text = String.Format("Node {0}: ", SelectedItem.EntityIndex,
+                                                                                  Results.ActiveState.Model.Mesh.Nodes(SelectedItem.EntityIndex).Position.ToString)
 
-                        End Select
+                                    Exit For
 
-                    End If
+                            End Select
 
-                Next
+                        End If
+
+                    Next
+
+                End If
 
         End Select
 

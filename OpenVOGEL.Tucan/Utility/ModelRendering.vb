@@ -1374,32 +1374,32 @@ Namespace Tucan.Utility
 
             With This
 
-                If (Not .TransitLoaded) Or (TimeStep >= .TransitLattices.Count) Then Exit Sub
+                If (.TransitStates.Count <= 1) Or (TimeStep >= .TransitStates.Count) Then Exit Sub
 
                 GL.Color(0, 1.0#, 0)
                 GL.Begin(SharpGL.OpenGL.GL_TRIANGLES)
 
-                For Each Ring In .TransitLattices(TimeStep).Mesh.Panels
+                For Each Ring In .TransitStates(TimeStep).Model.Mesh.Panels
 
-                    GL.Vertex(.TransitLattices(TimeStep).Mesh.Nodes(Ring.N1).Position.X,
-                              .TransitLattices(TimeStep).Mesh.Nodes(Ring.N1).Position.Y,
-                              .TransitLattices(TimeStep).Mesh.Nodes(Ring.N1).Position.Z)
-                    GL.Vertex(.TransitLattices(TimeStep).Mesh.Nodes(Ring.N2).Position.X,
-                              .TransitLattices(TimeStep).Mesh.Nodes(Ring.N2).Position.Y,
-                              .TransitLattices(TimeStep).Mesh.Nodes(Ring.N2).Position.Z)
-                    GL.Vertex(.TransitLattices(TimeStep).Mesh.Nodes(Ring.N3).Position.X,
-                              .TransitLattices(TimeStep).Mesh.Nodes(Ring.N3).Position.Y,
-                              .TransitLattices(TimeStep).Mesh.Nodes(Ring.N3).Position.Z)
+                    GL.Vertex(.TransitStates(TimeStep).Model.Mesh.Nodes(Ring.N1).Position.X,
+                              .TransitStates(TimeStep).Model.Mesh.Nodes(Ring.N1).Position.Y,
+                              .TransitStates(TimeStep).Model.Mesh.Nodes(Ring.N1).Position.Z)
+                    GL.Vertex(.TransitStates(TimeStep).Model.Mesh.Nodes(Ring.N2).Position.X,
+                              .TransitStates(TimeStep).Model.Mesh.Nodes(Ring.N2).Position.Y,
+                              .TransitStates(TimeStep).Model.Mesh.Nodes(Ring.N2).Position.Z)
+                    GL.Vertex(.TransitStates(TimeStep).Model.Mesh.Nodes(Ring.N3).Position.X,
+                              .TransitStates(TimeStep).Model.Mesh.Nodes(Ring.N3).Position.Y,
+                              .TransitStates(TimeStep).Model.Mesh.Nodes(Ring.N3).Position.Z)
 
-                    GL.Vertex(.TransitLattices(TimeStep).Mesh.Nodes(Ring.N3).Position.X,
-                              .TransitLattices(TimeStep).Mesh.Nodes(Ring.N3).Position.Y,
-                              .TransitLattices(TimeStep).Mesh.Nodes(Ring.N3).Position.Z)
-                    GL.Vertex(.TransitLattices(TimeStep).Mesh.Nodes(Ring.N4).Position.X,
-                              .TransitLattices(TimeStep).Mesh.Nodes(Ring.N4).Position.Y,
-                              .TransitLattices(TimeStep).Mesh.Nodes(Ring.N4).Position.Z)
-                    GL.Vertex(.TransitLattices(TimeStep).Mesh.Nodes(Ring.N1).Position.X,
-                              .TransitLattices(TimeStep).Mesh.Nodes(Ring.N1).Position.Y,
-                              .TransitLattices(TimeStep).Mesh.Nodes(Ring.N1).Position.Z)
+                    GL.Vertex(.TransitStates(TimeStep).Model.Mesh.Nodes(Ring.N3).Position.X,
+                              .TransitStates(TimeStep).Model.Mesh.Nodes(Ring.N3).Position.Y,
+                              .TransitStates(TimeStep).Model.Mesh.Nodes(Ring.N3).Position.Z)
+                    GL.Vertex(.TransitStates(TimeStep).Model.Mesh.Nodes(Ring.N4).Position.X,
+                              .TransitStates(TimeStep).Model.Mesh.Nodes(Ring.N4).Position.Y,
+                              .TransitStates(TimeStep).Model.Mesh.Nodes(Ring.N4).Position.Z)
+                    GL.Vertex(.TransitStates(TimeStep).Model.Mesh.Nodes(Ring.N1).Position.X,
+                              .TransitStates(TimeStep).Model.Mesh.Nodes(Ring.N1).Position.Y,
+                              .TransitStates(TimeStep).Model.Mesh.Nodes(Ring.N1).Position.Z)
 
                 Next
 
@@ -1408,14 +1408,14 @@ Namespace Tucan.Utility
                 GL.Color(0.0#, 0.0#, 0.0#)
                 GL.Begin(SharpGL.OpenGL.GL_LINES)
 
-                For Each Vortex In .TransitLattices(TimeStep).Mesh.Lattice
+                For Each Vortex In .TransitStates(TimeStep).Model.Mesh.Lattice
 
-                    GL.Vertex(.TransitLattices(TimeStep).Mesh.Nodes(Vortex.N1).Position.X,
-                              .TransitLattices(TimeStep).Mesh.Nodes(Vortex.N1).Position.Y,
-                              .TransitLattices(TimeStep).Mesh.Nodes(Vortex.N1).Position.Z)
-                    GL.Vertex(.TransitLattices(TimeStep).Mesh.Nodes(Vortex.N2).Position.X,
-                              .TransitLattices(TimeStep).Mesh.Nodes(Vortex.N2).Position.Y,
-                              .TransitLattices(TimeStep).Mesh.Nodes(Vortex.N2).Position.Z)
+                    GL.Vertex(.TransitStates(TimeStep).Model.Mesh.Nodes(Vortex.N1).Position.X,
+                              .TransitStates(TimeStep).Model.Mesh.Nodes(Vortex.N1).Position.Y,
+                              .TransitStates(TimeStep).Model.Mesh.Nodes(Vortex.N1).Position.Z)
+                    GL.Vertex(.TransitStates(TimeStep).Model.Mesh.Nodes(Vortex.N2).Position.X,
+                              .TransitStates(TimeStep).Model.Mesh.Nodes(Vortex.N2).Position.Y,
+                              .TransitStates(TimeStep).Model.Mesh.Nodes(Vortex.N2).Position.Z)
 
                 Next
 

@@ -28,15 +28,19 @@ Public Class GroupPanel
 
         lbxPanels.Items.Clear()
 
-        For Each Panel In Results.Model.Mesh.Panels
+        If Results.ActiveState IsNot Nothing Then
 
-            If Panel.Active Then
+            For Each Panel In Results.ActiveState.Model.Mesh.Panels
 
-                lbxPanels.Items.Add("Panel " & Panel.GlobalIndex.ToString)
+                If Panel.Active Then
 
-            End If
+                    lbxPanels.Items.Add("Panel " & Panel.GlobalIndex.ToString)
 
-        Next
+                End If
+
+            Next
+
+        End If
 
     End Sub
 

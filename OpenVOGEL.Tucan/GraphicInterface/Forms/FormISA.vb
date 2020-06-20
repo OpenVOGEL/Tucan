@@ -73,7 +73,7 @@ Public Class FormISA
         rbViscocity.NameWidth = 20
         rbViscocity.UnitWidth = 50
         rbViscocity.Parent = Me
-        rbViscocity.Decimals = GlobalDecimals(Magnitudes.Density)
+        rbViscocity.Decimals = GlobalDecimals(Magnitudes.Viscosity)
         rbViscocity.Scientific = True
 
         rbSoundSpeed.Name = "a"
@@ -83,7 +83,9 @@ Public Class FormISA
         rbSoundSpeed.NameWidth = 20
         rbSoundSpeed.UnitWidth = 50
         rbSoundSpeed.Parent = Me
-        rbSoundSpeed.Decimals = GlobalDecimals(Magnitudes.Density)
+        rbSoundSpeed.Decimals = GlobalDecimals(Magnitudes.Velocity)
+
+        LoadData()
 
     End Sub
 
@@ -93,16 +95,22 @@ Public Class FormISA
 
     End Sub
 
+    Private Sub LoadData()
+
+        Dim ISA As New AeroTools.CalculationModel.Settings.StandardAtmosphere(nudAltitude.Value)
+
+        rbTemperature.Value = ISA.Temperature
+        rbPressure.Value = ISA.Pressure
+        rbDensity.Value = ISA.Density
+        rbViscocity.Value = ISA.DynamicVisc
+        rbSoundSpeed.Value = ISA.SoundSpeed
+
+    End Sub
+
     Private Sub btnCheck_Click(sender As Object, e As EventArgs) Handles btnCheck.Click
 
         Try
-            Dim ISA As New AeroTools.CalculationModel.Settings.StandardAtmosphere(nudAltitude.Value)
-
-            rbTemperature.Value = ISA.Temperature
-            rbPressure.Value = ISA.Pressure
-            rbDensity.Value = ISA.Density
-            rbViscocity.Value = ISA.DynamicVisc
-            rbSoundSpeed.Value = ISA.SoundSpeed
+            LoadData()
 
         Catch ex As Exception
 

@@ -305,17 +305,17 @@ Namespace Tucan.Utility
 
                         Results.DynamicModes(Results.SelectedModeIndex).Refresh3DModel(ControlGL)
 
-                    Else
+                    ElseIf Results.ActiveState IsNot Nothing
 
-                        If Results.Model.VisualProperties.ShowSurface Then
+                        If Results.ActiveState.Model.VisualProperties.ShowSurface Then
 
-                            Results.Model.Refresh3DModel(ControlGL)
+                            Results.ActiveState.Model.Refresh3DModel(ControlGL)
 
                         End If
 
-                        If Not IsNothing(Results.Wakes) Then
+                        If Not IsNothing(Results.ActiveState.Wakes) Then
 
-                            Results.Wakes.Refresh3DModel(ControlGL)
+                            Results.ActiveState.Wakes.Refresh3DModel(ControlGL)
 
                         End If
 
@@ -404,29 +404,30 @@ Namespace Tucan.Utility
                         ControlGL.NewList(List.Name, OpenGL.GL_COMPILE)
                         Results.SelectedMode.Refresh3DModel(ControlGL)
                         ControlGL.EndList()
-                    Else
+
+                    ElseIf Results.ActiveState IsNot Nothing Then
 
                         ' Results:
 
-                        If Results.Model.VisualProperties.ShowSurface Then
+                        If Results.ActiveState.Model.VisualProperties.ShowSurface Then
                             Dim List As GLElement
                             List.Name = ControlGL.GenLists(1)
                             List.ShowOnPan = True
                             List.ShowOnRotate = True
                             ListOfSurfacesToDraw.Add(List)
                             ControlGL.NewList(List.Name, OpenGL.GL_COMPILE)
-                            Results.Model.Refresh3DModel(ControlGL)
+                            Results.ActiveState.Model.Refresh3DModel(ControlGL)
                             ControlGL.EndList()
                         End If
 
-                        If Not IsNothing(Results.Wakes) Then
+                        If Not IsNothing(Results.ActiveState.Wakes) Then
                             Dim List As GLElement
                             List.Name = ControlGL.GenLists(1)
                             List.ShowOnPan = False
                             List.ShowOnRotate = False
                             ListOfSurfacesToDraw.Add(List)
                             ControlGL.NewList(List.Name, OpenGL.GL_COMPILE)
-                            Results.Wakes.Refresh3DModel(ControlGL)
+                            Results.ActiveState.Wakes.Refresh3DModel(ControlGL)
                             ControlGL.EndList()
                         End If
 
@@ -551,16 +552,16 @@ Namespace Tucan.Utility
 
                 Case InterfaceModes.Postprocess
 
-                    If Results.Model IsNot Nothing Then
+                    If Results.ActiveState IsNot Nothing Then
 
-                        Results.Model.Active = False
+                        Results.ActiveState.Model.Active = False
 
                         If Not Selection.MultipleSelection Then
-                            Results.Model.UnselectAll()
+                            Results.ActiveState.Model.UnselectAll()
                             Selection.SelectionList.Clear()
                         End If
 
-                        Results.Model.Refresh3DModel(ControlGL, True, 0)
+                        Results.ActiveState.Model.Refresh3DModel(ControlGL, True, 0)
 
                     End If
 
@@ -668,7 +669,7 @@ Namespace Tucan.Utility
 
                                     If SelectedItem.ComponentType = ComponentTypes.etResultContainer Then
 
-                                        Mesh = Results.Model.Mesh
+                                        Mesh = Results.ActiveState.Model.Mesh
 
                                         Select Case SelectedItem.EntityType
 
@@ -761,7 +762,7 @@ Namespace Tucan.Utility
 
                                 If ClosestItem.ComponentType = ComponentTypes.etResultContainer Then
 
-                                    Mesh = Results.Model.Mesh
+                                    Mesh = Results.ActiveState.Model.Mesh
 
                                     Select Case ClosestItem.EntityType
 
