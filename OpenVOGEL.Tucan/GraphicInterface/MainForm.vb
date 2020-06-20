@@ -71,11 +71,21 @@ Public Class MainForm
 
                 For Each Argument In Arguments
 
-                    If IO.File.Exists(Argument) And IO.Path.GetExtension(Argument) = ".vog" Then
+                    If IO.File.Exists(Argument) Then
 
-                        mrRibbon.OpenProject(Argument)
+                        If IO.Path.GetExtension(Argument) = ".vog" Then
 
-                        Exit For
+                            mrRibbon.OpenProject(Argument)
+
+                            Exit For
+
+                        ElseIf IO.Path.GetExtension(Argument) = ".res" Then
+
+                            mrRibbon.LoadResults(Argument)
+
+                            Exit For
+
+                        End If
 
                     End If
 

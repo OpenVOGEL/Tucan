@@ -1056,38 +1056,36 @@ ErrSub:
 
 #Region "Load results and transit"
 
-    Private Sub btnLoadResults_Click(sender As Object, e As EventArgs) Handles btnLoadResults.Click
+    Public Sub LoadResults(File As String)
 
         Try
-
-            Dim dlgOpenFile As New OpenFileDialog
-
-            dlgOpenFile.Filter = "Vogel result files (*.res)|*.res"
-
-            Dim Respuesta2 As MsgBoxResult = dlgOpenFile.ShowDialog()
-
-            If Respuesta2 = MsgBoxResult.Ok Then
-
-                ProjectRoot.ReadResults(dlgOpenFile.FileName)
-
-                ModelInterface.PostprocessMode()
-
-                FormReport.ReportResults()
-
-                LoadResultProperties()
-
-                LoadFrames()
-
-            End If
-
+            ProjectRoot.ReadResults(File)
+            ModelInterface.PostprocessMode()
+            FormReport.ReportResults()
+            LoadResultProperties()
+            LoadFrames()
             ModelInterface.RefreshOnGL()
-
         Catch
 
             MsgBox("Could not open the selected result file!")
 
         End Try
 
+    End Sub
+
+    Private Sub btnLoadResults_Click(sender As Object, e As EventArgs) Handles btnLoadResults.Click
+
+        Dim dlgOpenFile As New OpenFileDialog
+
+        dlgOpenFile.Filter = "Vogel result files (*.res)|*.res"
+
+        Dim Respuesta2 As MsgBoxResult = dlgOpenFile.ShowDialog()
+
+        If Respuesta2 = MsgBoxResult.Ok Then
+
+            LoadResults(dlgOpenFile.FileName)
+
+        End If
     End Sub
 
     Private Sub LoadFrames()
