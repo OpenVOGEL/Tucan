@@ -28,9 +28,9 @@ Public Class GroupPanel
 
         lbxPanels.Items.Clear()
 
-        If Results.ActiveState IsNot Nothing Then
+        If Results.ActiveFrame IsNot Nothing Then
 
-            For Each Panel In Results.ActiveState.Model.Mesh.Panels
+            For Each Panel In Results.ActiveFrame.Model.Mesh.Panels
 
                 If Panel.Active Then
 

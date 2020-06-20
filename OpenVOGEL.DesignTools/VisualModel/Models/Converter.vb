@@ -494,19 +494,17 @@ Namespace VisualModel.Models
         <Extension()>
         Public Sub SetCompleteModelOnResults(This As Solver, ByRef Results As ResultModel)
 
-            Results.Loaded = False
-            Dim State As New TransitState
-            Results.TransitStates.Add(State)
-            Results.ActiveState = State
-            State.Model.Name = "Results"
-            State.Model.Clear()
-            Results.DynamicModes.Clear()
-            State.Model.MaximumLift = 0.0#
-            State.Model.LiftVectors.Clear()
-            State.Model.MaximumInducedDrag = 0.0#
-            State.Model.InducedDragVectors.Clear()
-            State.Model.MaximumSkinDrag = 0.0#
-            State.Model.SkinDragVectors.Clear()
+            Dim Frame As New ResultFrame(ResultFrameKinds.EndState)
+            Results.Frames.Add(Frame)
+            Results.ActiveFrame = Frame
+            Frame.Model.Name = "Results"
+            Frame.Model.Clear()
+            Frame.Model.MaximumLift = 0.0#
+            Frame.Model.LiftVectors.Clear()
+            Frame.Model.MaximumInducedDrag = 0.0#
+            Frame.Model.InducedDragVectors.Clear()
+            Frame.Model.MaximumSkinDrag = 0.0#
+            Frame.Model.SkinDragVectors.Clear()
 
             Results.SimulationSettings.Assign(This.Settings)
 
@@ -525,7 +523,7 @@ Namespace VisualModel.Models
 
                     GlobalIndexNodes += 1
                     NodalPoint.IndexG = GlobalIndexNodes
-                    State.Model.AddNodalPoint(NodalPoint.Position)
+                    Frame.Model.AddNodalPoint(NodalPoint.Position)
 
                 Next
 
@@ -539,28 +537,28 @@ Namespace VisualModel.Models
 
                     If VortexRing.Type = VortexRingType.VR4 Then
 
-                        State.Model.AddPanel(VortexRing.Node(1).IndexG,
+                        Frame.Model.AddPanel(VortexRing.Node(1).IndexG,
                                                VortexRing.Node(2).IndexG,
                                                VortexRing.Node(3).IndexG,
                                                VortexRing.Node(4).IndexG)
 
                     Else
 
-                        State.Model.AddPanel(VortexRing.Node(1).IndexG,
+                        Frame.Model.AddPanel(VortexRing.Node(1).IndexG,
                                                VortexRing.Node(2).IndexG,
                                                VortexRing.Node(3).IndexG,
                                                VortexRing.Node(1).IndexG)
 
                     End If
 
-                    State.Model.Mesh.Panels(GlobalIndexRings).Circulation = VortexRing.G
-                    State.Model.Mesh.Panels(GlobalIndexRings).SourceStrength = VortexRing.S
-                    State.Model.Mesh.Panels(GlobalIndexRings).Cp = VortexRing.Cp
-                    State.Model.Mesh.Panels(GlobalIndexRings).Area = VortexRing.Area
-                    State.Model.Mesh.Panels(GlobalIndexRings).NormalVector.Assign(VortexRing.Normal)
-                    State.Model.Mesh.Panels(GlobalIndexRings).LocalVelocity.Assign(VortexRing.VelocityT)
-                    State.Model.Mesh.Panels(GlobalIndexRings).ControlPoint.Assign(VortexRing.ControlPoint)
-                    State.Model.Mesh.Panels(GlobalIndexRings).IsSlender = VortexRing.IsSlender
+                    Frame.Model.Mesh.Panels(GlobalIndexRings).Circulation = VortexRing.G
+                    Frame.Model.Mesh.Panels(GlobalIndexRings).SourceStrength = VortexRing.S
+                    Frame.Model.Mesh.Panels(GlobalIndexRings).Cp = VortexRing.Cp
+                    Frame.Model.Mesh.Panels(GlobalIndexRings).Area = VortexRing.Area
+                    Frame.Model.Mesh.Panels(GlobalIndexRings).NormalVector.Assign(VortexRing.Normal)
+                    Frame.Model.Mesh.Panels(GlobalIndexRings).LocalVelocity.Assign(VortexRing.VelocityT)
+                    Frame.Model.Mesh.Panels(GlobalIndexRings).ControlPoint.Assign(VortexRing.ControlPoint)
+                    Frame.Model.Mesh.Panels(GlobalIndexRings).IsSlender = VortexRing.IsSlender
 
                 Next
 
@@ -576,8 +574,8 @@ Namespace VisualModel.Models
                         Dim LiftVector As New FixedVector
                         LiftVector.Vector.Assign(Stripe.Lift)
                         LiftVector.Point.Assign(Stripe.CenterPoint)
-                        State.Model.LiftVectors.Add(LiftVector)
-                        State.Model.MaximumLift = Math.Max(State.Model.MaximumLift, Stripe.Lift.EuclideanNorm)
+                        Frame.Model.LiftVectors.Add(LiftVector)
+                        Frame.Model.MaximumLift = Math.Max(Frame.Model.MaximumLift, Stripe.Lift.EuclideanNorm)
                     End If
 
                     ' Induced drag vectors
@@ -586,8 +584,8 @@ Namespace VisualModel.Models
                         Dim DragVector As New FixedVector
                         DragVector.Vector.Assign(Stripe.InducedDrag)
                         DragVector.Point.Assign(Stripe.CenterPoint)
-                        State.Model.InducedDragVectors.Add(DragVector)
-                        State.Model.MaximumInducedDrag = Math.Max(State.Model.MaximumInducedDrag, Stripe.InducedDrag.EuclideanNorm)
+                        Frame.Model.InducedDragVectors.Add(DragVector)
+                        Frame.Model.MaximumInducedDrag = Math.Max(Frame.Model.MaximumInducedDrag, Stripe.InducedDrag.EuclideanNorm)
                     End If
 
                     ' Skin drag vectors
@@ -596,21 +594,21 @@ Namespace VisualModel.Models
                         Dim DragVector As New FixedVector
                         DragVector.Vector.Assign(Stripe.SkinDrag)
                         DragVector.Point.Assign(Stripe.CenterPoint)
-                        State.Model.SkinDragVectors.Add(DragVector)
-                        State.Model.MaximumSkinDrag = Math.Max(State.Model.MaximumSkinDrag, Stripe.SkinDrag.EuclideanNorm)
+                        Frame.Model.SkinDragVectors.Add(DragVector)
+                        Frame.Model.MaximumSkinDrag = Math.Max(Frame.Model.MaximumSkinDrag, Stripe.SkinDrag.EuclideanNorm)
                     End If
 
                 Next
             Next
 
-            State.Model.FindPressureRange()
-            State.Model.UpdatePressureColormap()
-            State.Model.VisualProperties.ShowColormap = True
-            State.Model.VisualProperties.ShowVelocityVectors = True
-            State.Model.VisualProperties.ShowMesh = True
-            State.Model.FindBestVelocityScale()
+            Frame.Model.FindPressureRange()
+            Frame.Model.UpdatePressureColormap()
+            Frame.Model.VisualProperties.ShowColormap = True
+            Frame.Model.VisualProperties.ShowVelocityVectors = True
+            Frame.Model.VisualProperties.ShowMesh = True
+            Frame.Model.FindBestVelocityScale()
 
-            State.Model.Mesh.GenerateLattice()
+            Frame.Model.Mesh.GenerateLattice()
 
             '------------------------'
             ' Load the wakes         '
@@ -618,7 +616,7 @@ Namespace VisualModel.Models
 
             GlobalIndexNodes = -1
             GlobalIndexRings = -1
-            State.Wakes.Clear()
+            Frame.Wakes.Clear()
 
             For Each Lattice In This.Lattices
 
@@ -628,20 +626,20 @@ Namespace VisualModel.Models
 
                         GlobalIndexNodes += 1
                         NodalPoint.IndexG = GlobalIndexNodes
-                        State.Wakes.AddNodalPoint(NodalPoint.Position)
+                        Frame.Wakes.AddNodalPoint(NodalPoint.Position)
 
                     Next
 
                     For Each VortexRing In Wake.VortexRings
 
                         GlobalIndexRings += 1
-                        State.Wakes.AddPanel(VortexRing.Node(1).IndexG,
+                        Frame.Wakes.AddPanel(VortexRing.Node(1).IndexG,
                                                VortexRing.Node(2).IndexG,
                                                VortexRing.Node(3).IndexG,
                                                VortexRing.Node(4).IndexG)
-                        State.Wakes.Mesh.Panels(GlobalIndexRings).Circulation = VortexRing.G
-                        State.Wakes.Mesh.Panels(GlobalIndexRings).SourceStrength = VortexRing.S
-                        State.Wakes.Mesh.Panels(GlobalIndexRings).IsSlender = VortexRing.IsSlender
+                        Frame.Wakes.Mesh.Panels(GlobalIndexRings).Circulation = VortexRing.G
+                        Frame.Wakes.Mesh.Panels(GlobalIndexRings).SourceStrength = VortexRing.S
+                        Frame.Wakes.Mesh.Panels(GlobalIndexRings).IsSlender = VortexRing.IsSlender
 
                     Next
 
@@ -649,20 +647,22 @@ Namespace VisualModel.Models
                         Dim Segment As New Basics.LatticeSegment
                         Segment.N1 = Vortex.Node1.IndexG
                         Segment.N2 = Vortex.Node2.IndexG
-                        State.Wakes.Mesh.Lattice.Add(Segment)
+                        Frame.Wakes.Mesh.Lattice.Add(Segment)
                     Next
 
                 Next
 
             Next
 
-            State.Wakes.VisualProperties.ShowMesh = False
-            State.Wakes.VisualProperties.ShowNodes = True
+            Frame.Wakes.VisualProperties.ShowMesh = False
+            Frame.Wakes.VisualProperties.ShowNodes = True
 
             ' Load dynamic modes
             '----------------------------------------------
 
             If This.StructuralLinks IsNot Nothing Then
+
+                Dim Modes As New List(Of ResultContainer)
 
                 For Each Link As StructuralLink In This.StructuralLinks
 
@@ -670,7 +670,11 @@ Namespace VisualModel.Models
 
                         For Each Mode As Mode In Link.StructuralCore.Modes
 
-                            Dim ModalShapeModel As New ResultContainer()
+                            Dim ModelShapeFrame As New ResultFrame(ResultFrameKinds.DynamicMode)
+                            Results.Frames.Add(ModelShapeFrame)
+
+                            Dim ModalShapeModel As ResultContainer = ModelShapeFrame.Model
+                            Modes.Add(ModalShapeModel)
 
                             ModalShapeModel.Name = String.Format("Mode {0} - {1:F3}Hz", Mode.Index, Mode.W / (2 * Math.PI))
                             ModalShapeModel.VisualProperties.ColorMesh = Drawing.Color.Maroon
@@ -742,7 +746,6 @@ Namespace VisualModel.Models
                             ModalShapeModel.Mesh.GenerateLattice()
                             ModalShapeModel.FindDisplacementsRange()
                             ModalShapeModel.UpdateColormapWithDisplacements()
-                            Results.DynamicModes.Add(ModalShapeModel)
 
                         Next
 
@@ -768,7 +771,7 @@ Namespace VisualModel.Models
 
                     ' Make a lattice based on the current modal displacement:
 
-                    Dim Transit As New TransitState()
+                    Dim Transit As New ResultFrame(ResultFrameKinds.Transit)
                     Transit.Model.Name = String.Format("Step {0}", TimeStep)
 
                     GlobalIndexNodes = -1
@@ -792,9 +795,9 @@ Namespace VisualModel.Models
 
                                 For ModeIndex = 0 To Link.StructuralCore.Modes.Count - 1
 
-                                    NodalDisplacement.X += Results.DynamicModes(ModeIndex + FirstModeIndex).Mesh.Nodes(GlobalIndexNodes).Displacement.X * ModalResponse(ModeIndex).P
-                                    NodalDisplacement.Y += Results.DynamicModes(ModeIndex + FirstModeIndex).Mesh.Nodes(GlobalIndexNodes).Displacement.Y * ModalResponse(ModeIndex).P
-                                    NodalDisplacement.Z += Results.DynamicModes(ModeIndex + FirstModeIndex).Mesh.Nodes(GlobalIndexNodes).Displacement.Z * ModalResponse(ModeIndex).P
+                                    NodalDisplacement.X += Modes(ModeIndex + FirstModeIndex).Mesh.Nodes(GlobalIndexNodes).Displacement.X * ModalResponse(ModeIndex).P
+                                    NodalDisplacement.Y += Modes(ModeIndex + FirstModeIndex).Mesh.Nodes(GlobalIndexNodes).Displacement.Y * ModalResponse(ModeIndex).P
+                                    NodalDisplacement.Z += Modes(ModeIndex + FirstModeIndex).Mesh.Nodes(GlobalIndexNodes).Displacement.Z * ModalResponse(ModeIndex).P
 
                                 Next
 
@@ -823,15 +826,13 @@ Namespace VisualModel.Models
                     Next
 
                     Transit.Model.Mesh.GenerateLattice()
-                    Results.TransitStates.Add(Transit)
+                    Results.Frames.Add(Transit)
 
                     TimeStep += 1
 
                 End While
 
             End If
-
-            Results.Loaded = True
 
         End Sub
 

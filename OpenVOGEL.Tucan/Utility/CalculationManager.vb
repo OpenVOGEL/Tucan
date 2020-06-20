@@ -116,6 +116,7 @@ Namespace Tucan.Utility
         Private Sub CalculationFinished()
 
             FormProgress.PushMessage("Loading results")
+            Results.Clear()
             CalculationCore.SetCompleteModelOnResults(Results)
             FormProgress.PushMessage("Ready")
             RaiseEvent CalculationDone()

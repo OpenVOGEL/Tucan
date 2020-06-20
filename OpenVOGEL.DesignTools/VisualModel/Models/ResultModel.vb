@@ -20,16 +20,38 @@ Imports OpenVOGEL.DesignTools.VisualModel.Models.Components
 
 Namespace VisualModel.Models
 
+    Public Enum ResultFrameKinds
+
+        Transit = 1
+        EndState = 2
+        DynamicMode = 3
+
+    End Enum
+
     ''' <summary>
     ''' Represents the latties at a single transit state
     ''' </summary>
-    Public Class TransitState
+    Public Class ResultFrame
 
+        ''' <summary>
+        ''' The model
+        ''' </summary>
         Public ReadOnly Property Model As ResultContainer
 
+        ''' <summary>
+        ''' The wakes shed from the model
+        ''' </summary>
         Public ReadOnly Property Wakes As ResultContainer
 
-        Public Sub New()
+        ''' <summary>
+        ''' The kind of frame
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property FrameKind As ResultFrameKinds
+
+        Public Sub New(Kind As ResultFrameKinds)
+
+            _FrameKind = Kind
 
             _Model = New ResultContainer
             _Wakes = New ResultContainer
@@ -69,31 +91,27 @@ Namespace VisualModel.Models
     ''' </summary>
     Public Class ResultModel
 
+        ''' <summary>
+        ''' Name of the model
+        ''' </summary>
         Public Name As String
 
         ''' <summary>
         ''' The active transit
         ''' </summary>
-        Public Property ActiveState As TransitState
+        Public Property ActiveFrame As ResultFrame
 
         ''' <summary>
         ''' Contains all the transit states
         ''' </summary>
         ''' <returns></returns>
-        Public ReadOnly Property TransitStates As List(Of TransitState)
-
-        ''' <summary>
-        ''' Contains the dynamics models (if available)
-        ''' </summary>
-        ''' <returns></returns>
-        Public ReadOnly Property DynamicModes As List(Of ResultContainer)
+        Public ReadOnly Property Frames As List(Of ResultFrame)
 
         ''' <summary>
         ''' Creates a new empty result model
         ''' </summary>
         Public Sub New()
-            _TransitStates = New List(Of TransitState)
-            _DynamicModes = New List(Of ResultContainer)
+            _Frames = New List(Of ResultFrame)
         End Sub
 
         ''' <summary>
@@ -102,26 +120,9 @@ Namespace VisualModel.Models
         ''' <returns></returns>
         Public Property SimulationSettings As New SimulationSettings
 
-        Public Property Loaded As Boolean = False
-
-        Public Property VisualizeModes As Boolean
-
-        Public Property SelectedModeIndex As Integer
-
-        Public ReadOnly Property SelectedMode As ResultContainer
-            Get
-                If SelectedModeIndex > -1 And SelectedModeIndex < DynamicModes.Count Then
-                    Return DynamicModes(SelectedModeIndex)
-                Else
-                    Return Nothing
-                End If
-            End Get
-        End Property
-
         Public Sub Clear()
-            ActiveState = Nothing
-            _TransitStates.Clear()
-            _DynamicModes.Clear()
+            ActiveFrame = Nothing
+            _Frames.Clear()
         End Sub
 
     End Class

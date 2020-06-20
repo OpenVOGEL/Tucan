@@ -321,6 +321,7 @@ Namespace DataStore
         ''' <param name="FilePath"></param>
         Public Sub ReadResults(ByVal FilePath As String)
 
+            Results.Frames.Clear()
             CalculationCore = New Solver()
             CalculationCore.ReadFromXML(FilePath)
             CalculationCore.SetCompleteModelOnResults(Results)

@@ -101,7 +101,7 @@ Namespace Tucan.Utility
 
         Public Sub PostprocessMode()
 
-            If Results.Loaded Then
+            If Results.Frames.Count > 0 Then
                 _InterfaceMode = InterfaceModes.Postprocess
                 RefreshOnGL()
             End If
@@ -301,21 +301,17 @@ Namespace Tucan.Utility
 
                     ' Results:
 
-                    If Results.VisualizeModes Then
+                    If Results.ActiveFrame IsNot Nothing Then
 
-                        Results.DynamicModes(Results.SelectedModeIndex).Refresh3DModel(ControlGL)
+                        If Results.ActiveFrame.Model.VisualProperties.ShowSurface Then
 
-                    ElseIf Results.ActiveState IsNot Nothing
-
-                        If Results.ActiveState.Model.VisualProperties.ShowSurface Then
-
-                            Results.ActiveState.Model.Refresh3DModel(ControlGL)
+                            Results.ActiveFrame.Model.Refresh3DModel(ControlGL)
 
                         End If
 
-                        If Not IsNothing(Results.ActiveState.Wakes) Then
+                        If Not IsNothing(Results.ActiveFrame.Wakes) Then
 
-                            Results.ActiveState.Wakes.Refresh3DModel(ControlGL)
+                            Results.ActiveFrame.Wakes.Refresh3DModel(ControlGL)
 
                         End If
 
@@ -395,39 +391,29 @@ Namespace Tucan.Utility
 
                 Case InterfaceModes.Postprocess
 
-                    If Results.VisualizeModes And Not IsNothing(Results.SelectedMode) Then
-                        Dim List As GLElement
-                        List.Name = ControlGL.GenLists(1)
-                        List.ShowOnPan = True
-                        List.ShowOnRotate = True
-                        ListOfSurfacesToDraw.Add(List)
-                        ControlGL.NewList(List.Name, OpenGL.GL_COMPILE)
-                        Results.SelectedMode.Refresh3DModel(ControlGL)
-                        ControlGL.EndList()
-
-                    ElseIf Results.ActiveState IsNot Nothing Then
+                    If Results.ActiveFrame IsNot Nothing Then
 
                         ' Results:
 
-                        If Results.ActiveState.Model.VisualProperties.ShowSurface Then
+                        If Results.ActiveFrame.Model.VisualProperties.ShowSurface Then
                             Dim List As GLElement
                             List.Name = ControlGL.GenLists(1)
                             List.ShowOnPan = True
                             List.ShowOnRotate = True
                             ListOfSurfacesToDraw.Add(List)
                             ControlGL.NewList(List.Name, OpenGL.GL_COMPILE)
-                            Results.ActiveState.Model.Refresh3DModel(ControlGL)
+                            Results.ActiveFrame.Model.Refresh3DModel(ControlGL)
                             ControlGL.EndList()
                         End If
 
-                        If Not IsNothing(Results.ActiveState.Wakes) Then
+                        If Not IsNothing(Results.ActiveFrame.Wakes) Then
                             Dim List As GLElement
                             List.Name = ControlGL.GenLists(1)
                             List.ShowOnPan = False
                             List.ShowOnRotate = False
                             ListOfSurfacesToDraw.Add(List)
                             ControlGL.NewList(List.Name, OpenGL.GL_COMPILE)
-                            Results.ActiveState.Wakes.Refresh3DModel(ControlGL)
+                            Results.ActiveFrame.Wakes.Refresh3DModel(ControlGL)
                             ControlGL.EndList()
                         End If
 
@@ -552,16 +538,16 @@ Namespace Tucan.Utility
 
                 Case InterfaceModes.Postprocess
 
-                    If Results.ActiveState IsNot Nothing Then
+                    If Results.ActiveFrame IsNot Nothing Then
 
-                        Results.ActiveState.Model.Active = False
+                        Results.ActiveFrame.Model.Active = False
 
                         If Not Selection.MultipleSelection Then
-                            Results.ActiveState.Model.UnselectAll()
+                            Results.ActiveFrame.Model.UnselectAll()
                             Selection.SelectionList.Clear()
                         End If
 
-                        Results.ActiveState.Model.Refresh3DModel(ControlGL, True, 0)
+                        Results.ActiveFrame.Model.Refresh3DModel(ControlGL, True, 0)
 
                     End If
 
@@ -669,7 +655,7 @@ Namespace Tucan.Utility
 
                                     If SelectedItem.ComponentType = ComponentTypes.etResultContainer Then
 
-                                        Mesh = Results.ActiveState.Model.Mesh
+                                        Mesh = Results.ActiveFrame.Model.Mesh
 
                                         Select Case SelectedItem.EntityType
 
@@ -762,7 +748,7 @@ Namespace Tucan.Utility
 
                                 If ClosestItem.ComponentType = ComponentTypes.etResultContainer Then
 
-                                    Mesh = Results.ActiveState.Model.Mesh
+                                    Mesh = Results.ActiveFrame.Model.Mesh
 
                                     Select Case ClosestItem.EntityType
 

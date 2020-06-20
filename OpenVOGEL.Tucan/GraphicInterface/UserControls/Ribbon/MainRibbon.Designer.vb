@@ -102,7 +102,7 @@ Partial Class MainRibbon
         Me.btnPlayStop = New System.Windows.Forms.Button()
         Me.Label19 = New System.Windows.Forms.Label()
         Me.nudModeScale = New System.Windows.Forms.NumericUpDown()
-        Me.cbxModes = New System.Windows.Forms.ComboBox()
+        Me.cbxFrames = New System.Windows.Forms.ComboBox()
         Me.GroupBox5 = New System.Windows.Forms.GroupBox()
         Me.btnEditVelocityPlane = New System.Windows.Forms.Button()
         Me.cbxShowVelocityPlane = New System.Windows.Forms.CheckBox()
@@ -1224,7 +1224,7 @@ Partial Class MainRibbon
         Me.gbxAeroelastic.Controls.Add(Me.btnPlayStop)
         Me.gbxAeroelastic.Controls.Add(Me.Label19)
         Me.gbxAeroelastic.Controls.Add(Me.nudModeScale)
-        Me.gbxAeroelastic.Controls.Add(Me.cbxModes)
+        Me.gbxAeroelastic.Controls.Add(Me.cbxFrames)
         Me.gbxAeroelastic.Dock = System.Windows.Forms.DockStyle.Left
         Me.gbxAeroelastic.Font = New System.Drawing.Font("Segoe UI", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.gbxAeroelastic.Location = New System.Drawing.Point(771, 3)
@@ -1233,7 +1233,7 @@ Partial Class MainRibbon
         Me.gbxAeroelastic.Size = New System.Drawing.Size(128, 139)
         Me.gbxAeroelastic.TabIndex = 519
         Me.gbxAeroelastic.TabStop = False
-        Me.gbxAeroelastic.Text = "Aeroelastic"
+        Me.gbxAeroelastic.Text = "Frames"
         '
         'btnPlayStop
         '
@@ -1256,7 +1256,7 @@ Partial Class MainRibbon
         '
         Me.Label19.AutoSize = True
         Me.Label19.ForeColor = System.Drawing.SystemColors.ControlDarkDark
-        Me.Label19.Location = New System.Drawing.Point(40, 46)
+        Me.Label19.Location = New System.Drawing.Point(30, 46)
         Me.Label19.Name = "Label19"
         Me.Label19.Size = New System.Drawing.Size(26, 12)
         Me.Label19.TabIndex = 104
@@ -1266,23 +1266,23 @@ Partial Class MainRibbon
         'nudModeScale
         '
         Me.nudModeScale.DecimalPlaces = 1
-        Me.nudModeScale.Location = New System.Drawing.Point(72, 44)
+        Me.nudModeScale.Location = New System.Drawing.Point(62, 44)
         Me.nudModeScale.Maximum = New Decimal(New Integer() {1000, 0, 0, 0})
         Me.nudModeScale.Name = "nudModeScale"
-        Me.nudModeScale.Size = New System.Drawing.Size(50, 19)
+        Me.nudModeScale.Size = New System.Drawing.Size(60, 19)
         Me.nudModeScale.TabIndex = 98
         Me.nudModeScale.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         Me.nudModeScale.Value = New Decimal(New Integer() {1, 0, 0, 0})
         '
-        'cbxModes
+        'cbxFrames
         '
-        Me.cbxModes.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.cbxModes.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.cbxModes.FormattingEnabled = True
-        Me.cbxModes.Location = New System.Drawing.Point(6, 18)
-        Me.cbxModes.Name = "cbxModes"
-        Me.cbxModes.Size = New System.Drawing.Size(116, 21)
-        Me.cbxModes.TabIndex = 63
+        Me.cbxFrames.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cbxFrames.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cbxFrames.FormattingEnabled = True
+        Me.cbxFrames.Location = New System.Drawing.Point(6, 18)
+        Me.cbxFrames.Name = "cbxFrames"
+        Me.cbxFrames.Size = New System.Drawing.Size(116, 21)
+        Me.cbxFrames.TabIndex = 63
         '
         'GroupBox5
         '
@@ -2188,7 +2188,7 @@ Partial Class MainRibbon
     Friend WithEvents btnPlayStop As System.Windows.Forms.Button
     Friend WithEvents Label19 As System.Windows.Forms.Label
     Friend WithEvents nudModeScale As System.Windows.Forms.NumericUpDown
-    Friend WithEvents cbxModes As System.Windows.Forms.ComboBox
+    Friend WithEvents cbxFrames As System.Windows.Forms.ComboBox
     Friend WithEvents GroupBox5 As System.Windows.Forms.GroupBox
     Friend WithEvents btnEditVelocityPlane As System.Windows.Forms.Button
     Friend WithEvents cbxShowVelocityPlane As System.Windows.Forms.CheckBox

@@ -447,7 +447,7 @@ Public Class MainForm
 
             Case Tucan.Utility.InterfaceModes.Postprocess
 
-                If Results.ActiveState IsNot Nothing Then
+                If Results.ActiveFrame IsNot Nothing Then
 
                     For Each SelectedItem As SelectionInfo In ModelInterface.Selection.SelectionList
 
@@ -459,7 +459,7 @@ Public Class MainForm
 
                                     ' Show associated surface info
 
-                                    Dim Panel As Panel = Results.ActiveState.Model.Mesh.Panels(SelectedItem.EntityIndex)
+                                    Dim Panel As Panel = Results.ActiveFrame.Model.Mesh.Panels(SelectedItem.EntityIndex)
 
                                     If Panel.IsSlender Then
 
@@ -489,7 +489,7 @@ Public Class MainForm
                                     ' Show associated surface info
 
                                     lblStatus.Text = String.Format("Node {0}: ", SelectedItem.EntityIndex,
-                                                                                  Results.ActiveState.Model.Mesh.Nodes(SelectedItem.EntityIndex).Position.ToString)
+                                                                                  Results.ActiveFrame.Model.Mesh.Nodes(SelectedItem.EntityIndex).Position.ToString)
 
                                     Exit For
 
