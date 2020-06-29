@@ -38,11 +38,11 @@ Public Class FormSettings
         nudAdjacencyTolerance.Value = LocalSettings.SurveyTolerance
 
         If Not _AllowFlowRotation Then
-            LocalSettings.Omega.SetToCero()
+            LocalSettings.StreamOmega.SetToCero()
         End If
-        nudOmegax.Value = LocalSettings.Omega.X
-        nudOmegay.Value = LocalSettings.Omega.Y
-        nudOmagaz.Value = LocalSettings.Omega.Z
+        nudOmegax.Value = LocalSettings.StreamOmega.X
+        nudOmegay.Value = LocalSettings.StreamOmega.Y
+        nudOmagaz.Value = LocalSettings.StreamOmega.Z
         nudOmegax.Enabled = _AllowFlowRotation
         nudOmegay.Enabled = _AllowFlowRotation
         nudOmagaz.Enabled = _AllowFlowRotation
@@ -94,11 +94,11 @@ Public Class FormSettings
         LocalSettings.Cutoff = nudCutoff.Value
         LocalSettings.SurveyTolerance = nudAdjacencyTolerance.Value
         If _AllowFlowRotation Then
-            LocalSettings.Omega.X = nudOmegax.Value
-            LocalSettings.Omega.Y = nudOmegay.Value
-            LocalSettings.Omega.Z = nudOmagaz.Value
+            LocalSettings.StreamOmega.X = nudOmegax.Value
+            LocalSettings.StreamOmega.Y = nudOmegay.Value
+            LocalSettings.StreamOmega.Z = nudOmagaz.Value
         Else
-            LocalSettings.Omega.SetToCero()
+            LocalSettings.StreamOmega.SetToCero()
         End If
         LocalSettings.CalculateCutoff = cbAutoCutOff.Checked
         LocalSettings.ExtendWakes = cbExtendWakes.Checked

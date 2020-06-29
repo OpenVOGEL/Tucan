@@ -984,4 +984,15 @@ Public Class FormFuselageEditor
 
     End Sub
 
+    Private Sub btnInertia_Click(sender As Object, e As EventArgs) Handles btnInertia.Click
+
+        If _Fuselage IsNot Nothing Then
+            FormInertia.SetInertia(_Fuselage.Inertia)
+            If FormInertia.ShowDialog() = DialogResult.OK Then
+                _Fuselage.Inertia = FormInertia.GetInertia
+            End If
+        End If
+
+    End Sub
+
 End Class

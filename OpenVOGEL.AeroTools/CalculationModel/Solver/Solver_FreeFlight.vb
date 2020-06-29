@@ -16,95 +16,321 @@
 'along with this program.  If Not, see < http:  //www.gnu.org/licenses/>.
 
 Imports DotNumerics.LinearAlgebra
+Imports OpenVOGEL.MathTools.Integration
 
 Namespace CalculationModel.Solver
 
     Partial Public Class Solver
 
-        ' Resolution algorithms:
-
         ''' <summary>
-        ''' Convect wakes and calculates loads at the last time step.
-        ''' Note: this part of the kernel is under development.
+        ''' This method simulates an experiment where the model is only rigidly 
+        ''' attached to the inertial reference frame for a certain number of steps
+        ''' and then released without any constrain.
+        ''' If the number of steps is sufficiently high, the method will simulate
+        ''' free flight.
+        ''' Be careful when using this method to select an appropriate initial state,
+        ''' or the model might react violently when being released.
+        ''' It is reccomended to use the Console to run a static equilibrium analysis
+        ''' before any free flight simulation.
         ''' </summary>
         Public Sub FreeFlight(ByVal DataBasePath As String)
 
+            '#############################################
+            ' Prechecks
+            '#############################################
+
+            CheckForSources()
+
+            If WithSources Then
+
+                RaiseEvent PushMessage("Cannot run free flight analysis with thick bodies")
+                RaiseEvent CalculationAborted()
+                Exit Sub
+
+            End If
+
+            If Settings.UseGpu Then
+
+                RaiseEvent PushMessage("Cannot run free flight analysis with OpenCL")
+                RaiseEvent CalculationAborted()
+                Exit Sub
+
+            End If
+
             CreateSubFoldersNames(DataBasePath)
-            CreateSubFolder(DataBaseSection.Steady)
-            CleanDirectory(DataBaseSection.Steady)
+            CreateSubFolder(DataBaseSection.FreeFlight)
+            CleanDirectory(DataBaseSection.FreeFlight)
 
-            Stream.Velocity.Assign(Settings.StreamVelocity)
-            Stream.Omega.Assign(Settings.Omega)
+            '#############################################
+            ' Transform the model to the main inertia axes
+            '#############################################
+
+            RaiseEvent PushProgress("Transforming model", 0)
+
+            ' Lattices
+            '----------------------------
+            For Each Lattice In Lattices
+
+                For Each Node In Lattice.Nodes
+
+                    Node.Position.Substract(Settings.CenterOfGravity)
+                    Node.Position.Transform(Settings.MainInertialAxes)
+
+                Next
+
+            Next
+
+            ' Stream
+            '----------------------------
+
+            Settings.StreamVelocity.Transform(Settings.MainInertialAxes)
+            Settings.StreamOmega.SetToCero()
+
+            ' Gravity
+            '----------------------------
+
+            Settings.Gravity.Transform(Settings.MainInertialAxes)
+
+            '#############################################
+            ' Build integrator
+            '#############################################
+
+            RaiseEvent PushMessage("Building integrator")
+            Dim MotionIntegrator As New HammingIntegrator(Settings.SimulationSteps,
+                                                          Settings.Interval,
+                                                         -Settings.StreamVelocity,
+                                                          Settings.StreamOmega,
+                                                          Settings.Gravity)
+            MotionIntegrator.Mass = Settings.Mass
+            MotionIntegrator.Ixx = Settings.Ixx
+            MotionIntegrator.Iyy = Settings.Iyy
+            MotionIntegrator.Izz = Settings.Izz
+
+            '#############################################
+            ' Setup initial stream
+            '#############################################
+
             Stream.Density = Settings.Density
+            Stream.Velocity.Assign(Settings.StreamVelocity)
             Stream.SquareVelocity = Stream.Velocity.SquareEuclideanNorm
-            Stream.DynamicPressure = 0.5 * StreamDensity * Stream.SquareVelocity
+            Stream.DynamicPressure = 0.5 * Stream.Density * Stream.SquareVelocity
+
+            '#############################################
+            ' Build aerodynamic influence matrix
+            '#############################################
+
+            RaiseEvent PushProgress("Building aerodynamic matrices", 0)
+
             WithStreamOmega = True
-
-            'f.PushMessageWithProgress("Building matrix", 0)
-
             BuildMatrixForDoublets()
             BuildRightHandSide1()
             InitializeWakes()
 
-            Dim LE As New LinearEquations
-            LE.ComputeLU(MatrixDoublets)
+            Dim AerodynamicEquations As New LinearEquations
+            AerodynamicEquations.ComputeLU(MatrixDoublets)
             G = New Vector(Dimension)
 
             For TimeStep = 1 To Settings.SimulationSteps
 
-                'f.PushMessageWithProgress(String.Format("Step {0}", TimeStep), 100 * TimeStep / Settings.SimulationSteps)
+                If CancellationPending Then
+                    CancelProcess()
+                    Return
+                End If
 
-                LE.Solve(RHS, G)
+                RaiseEvent PushProgress(String.Format("Step {0}", TimeStep), 100 * TimeStep / Settings.SimulationSteps)
 
-                AssignDoublets()
+                If TimeStep >= Settings.FreeFlightStartStep Then
 
-                ' Calculate induced velocity on wake NP:
+                    '##################################'
+                    ' Free motion step
+                    '##################################'
 
-                CalculateVelocityOnWakes()
+                    If TimeStep = Settings.FreeFlightStartStep Then
 
-                ' Convect wake:
+                        '//////////////////////////////////'
+                        ' Release the model
+                        '//////////////////////////////////'
 
-                For Each Lattice In Lattices
+                        RaiseEvent PushMessage(" > Releasing the model")
 
-                    Lattice.PopulateWakeRings(Settings.Interval, TimeStep, False, Nothing)
+                        ' Calculating initial airloads
+                        '----------------------------------------
 
-                Next
+                        CalculateTotalVelocityOnBoundedLattices()
 
-                CalculateVelocityInducedByTheWakesOnBoundedLattices()
+                        For Each Lattice In Lattices
+                            Lattice.CalculatePressure(Stream.SquareVelocity)
+                        Next
 
-                BuildRightHandSide2()
+                        CalculateAirloads()
 
-                'Next time step
+                        MotionIntegrator.SetInitialForces(GlobalAirloads.Force, GlobalAirloads.Moment)
 
-                'PushMessageWithProgress("Calculating airloads", 0)
+                    End If
 
-                CalculateTotalVelocityOnBoundedLattices()
+                    Dim Converged As Boolean = False
+                    Dim Finalized As Boolean = False
 
-                ' Calculate vortex rings Cp or DCp:
+                    For IterStep = 0 To Settings.CorrectionSteps ' (replace with maximum number of iterations)
 
-                For Each Lattice In Lattices
+                        If IterStep = 0 Then
 
-                    Lattice.CalculatePressure(Stream.SquareVelocity)
+                            '/////////////////////////////////////////'
+                            ' Predic motion using previous derivatives
+                            '/////////////////////////////////////////'
 
-                Next
+                            ' Cache the initial position of the wakes
+                            '----------------------------------------
 
-                ' Calculate the total airload:
+                            For Each Lattice In Lattices
+                                Lattice.CacheWakePosition()
+                            Next
 
-                CalculateAirloads()
+                            ' Predict
+                            '----------------------------------------
+
+                            RaiseEvent PushMessage("  -> Predicting motion")
+
+                            MotionIntegrator.Predict()
+
+                            ' NOTE: as seen from the aircraft, the stream moves in the oposite direction
+
+                            Stream.Velocity.Assign(MotionIntegrator.Velocity, -1.0#)
+                            Stream.Omega.Assign(MotionIntegrator.Omega, -1.0#)
+                            Stream.SquareVelocity = Stream.Velocity.SquareEuclideanNorm
+                            Stream.DynamicPressure = 0.5 * Stream.Density * Stream.SquareVelocity
+
+                            ' Convect wakes for this time step
+                            '----------------------------------------
+
+                            CalculateVelocityOnWakes()
+
+                            For Each Lattice In Lattices
+                                Lattice.PopulateWakeVortices(Settings.Interval, TimeStep, False, Nothing)
+                            Next
+
+                        Else
+
+                            '//////////////////////////////////////'
+                            ' Find new circulation
+                            '//////////////////////////////////////'
+
+                            RaiseEvent PushMessage("  -> Correcting motion")
+
+                            CalculateVelocityInducedByTheWakesOnBoundedLattices()
+
+                            BuildRightHandSide2()
+
+                            AerodynamicEquations.SolveLU(RHS, G)
+
+                            AssignDoublets()
+
+                            '//////////////////////////////////'
+                            ' Calculate new airloads
+                            '//////////////////////////////////'
+
+                            CalculateTotalVelocityOnBoundedLattices()
+
+                            For Each Lattice In Lattices
+                                Lattice.CalculatePressure(Stream.SquareVelocity)
+                            Next
+
+                            CalculateAirloads()
+
+                            '//////////////////////////////////'
+                            ' Exit here if already converged
+                            '//////////////////////////////////'
+
+                            If Converged Then
+                                RaiseEvent PushMessage(" > Convergence reached")
+                                Finalized = True
+                                Exit For
+                            End If
+
+                            '//////////////////////////////////'
+                            ' Calculate new kinematic state
+                            '//////////////////////////////////'
+
+                            Converged = MotionIntegrator.Correct(GlobalAirloads.Force, GlobalAirloads.Moment)
+
+                            Stream.Velocity.Assign(MotionIntegrator.Velocity, -1.0#)
+                            Stream.Omega.Assign(MotionIntegrator.Omega, -1.0#)
+                            Stream.SquareVelocity = Stream.Velocity.SquareEuclideanNorm
+                            Stream.DynamicPressure = 0.5 * Stream.Density * Stream.SquareVelocity
+
+                            CalculateVelocityOnWakes()
+
+                            For Each Lattice In Lattices
+                                Lattice.ReconvectWakes(Settings.Interval)
+                            Next
+
+                        End If
+
+                    Next
+
+                    If Not Finalized Then
+                        RaiseEvent PushMessage("Could not reach convergence")
+                        If Converged Then
+                            RaiseEvent PushMessage("(consider one more correction step)")
+                        End If
+                        RaiseEvent PushMessage("Calculation aborted")
+                        RaiseEvent CalculationDone()
+                        Exit Sub
+                    End If
+
+                Else
+
+                    '##################################'
+                    ' Constrained flight step
+                    '##################################'
+
+                    '//////////////////////////////////'
+                    ' Solve the equations for G        '
+                    '//////////////////////////////////'
+
+                    AerodynamicEquations.SolveLU(RHS, G)
+
+                    AssignDoublets()
+
+                    '//////////////////////////////////'
+                    ' Convect wakes                    '
+                    '//////////////////////////////////'
+
+                    RaiseEvent PushMessage(" > Convecting wakes")
+
+                    CalculateVelocityOnWakes()
+
+                    For Each Lattice In Lattices
+                        Lattice.PopulateWakeVortices(Settings.Interval, TimeStep, False, Nothing)
+                    Next
+
+                    '//////////////////////////////////'
+                    ' Rebuild RHS                      '
+                    '//////////////////////////////////'
+
+                    CalculateVelocityInducedByTheWakesOnBoundedLattices()
+
+                    BuildRightHandSide2()
+
+                End If
+
+                '//////////////////////////////////'
+                ' Save current step
+                '//////////////////////////////////'
+
+                RaiseEvent PushMessage(" > Writing binaries")
+
+                WriteToXML(FreeFlightResFile(TimeStep))
 
             Next
 
-
-            ' Ready
-
-            'f.PushMessageWithProgress("Writing to database", 100)
-
-            Me.WriteToXML(String.Format("{0}\Steady.res", SteadyPath), True)
-
-            'f.PushState("Calculation finished")
+            RaiseEvent PushProgress("Calculation finished", 100)
+            RaiseEvent PushMessage("Finished")
+            RaiseEvent CalculationDone()
 
         End Sub
 
     End Class
 
 End Namespace
+

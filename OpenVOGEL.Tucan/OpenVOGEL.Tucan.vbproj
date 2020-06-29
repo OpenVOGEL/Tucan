@@ -134,6 +134,12 @@
     <Compile Include="GraphicInterface\Forms\FormExport.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="GraphicInterface\Forms\FormInertia.Designer.vb">
+      <DependentUpon>FormInertia.vb</DependentUpon>
+    </Compile>
+    <Compile Include="GraphicInterface\Forms\FormInertia.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="GraphicInterface\Forms\FormISA.Designer.vb">
       <DependentUpon>FormISA.vb</DependentUpon>
     </Compile>
@@ -311,6 +317,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="GraphicInterface\Forms\FormExport.resx">
       <DependentUpon>FormExport.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GraphicInterface\Forms\FormInertia.resx">
+      <DependentUpon>FormInertia.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GraphicInterface\Forms\FormISA.resx">
       <DependentUpon>FormISA.vb</DependentUpon>

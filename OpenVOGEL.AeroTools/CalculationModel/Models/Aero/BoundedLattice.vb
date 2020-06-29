@@ -410,6 +410,28 @@ Namespace CalculationModel.Models.Aero
 
         End Sub
 
+        ''' <summary>
+        ''' Stores the current position of the wake for later use.
+        ''' </summary>
+        Public Sub CacheWakePosition()
+
+            For Each Wake As Wake In Wakes
+                Wake.CachePosition
+            Next
+
+        End Sub
+
+        ''' <summary>
+        ''' Reconvects the nodes having an original position.
+        ''' </summary>
+        Public Sub ReconvectWakes(Dt)
+
+            For Each Wake As Wake In Wakes
+                Wake.ReConvect(Dt)
+            Next
+
+        End Sub
+
 #End Region
 
 #Region " Loads "

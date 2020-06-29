@@ -126,7 +126,7 @@ Public Class VelocityControl
 
             If ProjectRoot.CalculationCore Is Nothing Then Exit Sub
 
-            Dim WithStreamOmega As Boolean = ProjectRoot.CalculationCore.Settings.Omega.EuclideanNorm > 0.0
+            Dim WithStreamOmega As Boolean = ProjectRoot.CalculationCore.Settings.StreamOmega.EuclideanNorm > 0.0
 
             Dim Total As Boolean = Not Plane.InducedVelocity
 

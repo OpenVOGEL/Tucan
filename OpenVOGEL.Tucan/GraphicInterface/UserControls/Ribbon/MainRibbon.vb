@@ -38,8 +38,8 @@ Public Class MainRibbon
 
         InitializeComponent()
 
-        cbxSimulationMode.Items.Add("Steady")
-        cbxSimulationMode.Items.Add("Unsteady")
+        cbxSimulationMode.Items.Add("Constrained")
+        cbxSimulationMode.Items.Add("Free flight")
         cbxSimulationMode.Items.Add("Aeroelastic")
         cbxSimulationMode.SelectedIndex = 0
 
@@ -479,7 +479,7 @@ ErrSub:
 
     Private niNotification As New NotifyIcon()
 
-    Public Sub Calculate(Optional ByVal CalculationType As CalculationType = CalculationType.ctSteady)
+    Public Sub Calculate(Optional ByVal CalculationType As CalculationType = CalculationType.ctConstrained)
 
         If Not System.IO.File.Exists(ProjectRoot.FilePath) Then
 
@@ -502,12 +502,12 @@ ErrSub:
 
             Select Case CalculationType
 
-                Case CalculationType.ctSteady
+                Case CalculationType.ctConstrained
 
                     niNotification.BalloonTipText = "Calculating steady state"
                     niNotification.ShowBalloonTip(3000)
 
-                Case CalculationType.ctUnsteady
+                Case CalculationType.ctFreeFlight
 
                     niNotification.BalloonTipText = "Calculating unsteady transit"
                     niNotification.ShowBalloonTip(3000)
@@ -570,9 +570,9 @@ ErrSub:
             nudVy.Value = ProjectRoot.SimulationSettings.StreamVelocity.Y
             nudVz.Value = ProjectRoot.SimulationSettings.StreamVelocity.Z
 
-            nudOx.Value = ProjectRoot.SimulationSettings.Omega.X
-            nudOy.Value = ProjectRoot.SimulationSettings.Omega.Y
-            nudOz.Value = ProjectRoot.SimulationSettings.Omega.Z
+            nudOx.Value = ProjectRoot.SimulationSettings.StreamOmega.X
+            nudOy.Value = ProjectRoot.SimulationSettings.StreamOmega.Y
+            nudOz.Value = ProjectRoot.SimulationSettings.StreamOmega.Z
 
             nudDensity.Value = ProjectRoot.SimulationSettings.Density
             nudViscosity.Value = ProjectRoot.SimulationSettings.Viscocity
@@ -619,7 +619,7 @@ ErrSub:
 
         If ProjectRoot.Initialized AndAlso Not _LockSettingsEvents Then
 
-            ProjectRoot.SimulationSettings.Omega.X = nudOx.Value
+            ProjectRoot.SimulationSettings.StreamOmega.X = nudOx.Value
 
         End If
 
@@ -629,7 +629,7 @@ ErrSub:
 
         If ProjectRoot.Initialized AndAlso Not _LockSettingsEvents Then
 
-            ProjectRoot.SimulationSettings.Omega.Y = nudOy.Value
+            ProjectRoot.SimulationSettings.StreamOmega.Y = nudOy.Value
 
         End If
 
@@ -639,7 +639,7 @@ ErrSub:
 
         If ProjectRoot.Initialized AndAlso Not _LockSettingsEvents Then
 
-            ProjectRoot.SimulationSettings.Omega.Z = nudOz.Value
+            ProjectRoot.SimulationSettings.StreamOmega.Z = nudOz.Value
 
         End If
 

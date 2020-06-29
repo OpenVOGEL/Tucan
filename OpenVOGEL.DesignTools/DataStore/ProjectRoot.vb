@@ -142,13 +142,13 @@ Namespace DataStore
 
                 Select Case Type
 
-                    Case CalculationType.ctSteady
+                    Case CalculationType.ctConstrained
 
-                        CalculationCore.SteadyState(FilePath)
+                        CalculationCore.RigidFlight(FilePath)
 
-                    Case CalculationType.ctUnsteady
+                    Case CalculationType.ctFreeFlight
 
-                        CalculationCore.UnsteadyTransit(FilePath)
+                        CalculationCore.FreeFlight(FilePath)
 
                     Case CalculationType.ctAeroelastic
                         CalculationCore.AeroelasticUnsteadyTransit(FilePath)

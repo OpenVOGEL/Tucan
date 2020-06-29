@@ -55,6 +55,7 @@ Partial Class FormJetEngine
         Me.nudPhi = New System.Windows.Forms.NumericUpDown()
         Me.Label9 = New System.Windows.Forms.Label()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.btnInertia = New System.Windows.Forms.Button()
         CType(Me.nudY, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.nudX, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.nudZ, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -217,7 +218,7 @@ Partial Class FormJetEngine
         Me.Label4.AutoSize = True
         Me.Label4.Location = New System.Drawing.Point(7, 109)
         Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(71, 13)
+        Me.Label4.Size = New System.Drawing.Size(72, 13)
         Me.Label4.TabIndex = 150
         Me.Label4.Text = "Total lenght:"
         Me.Label4.TextAlign = System.Drawing.ContentAlignment.MiddleRight
@@ -429,12 +430,29 @@ Partial Class FormJetEngine
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "Wake"
         '
+        'btnInertia
+        '
+        Me.btnInertia.BackColor = System.Drawing.Color.White
+        Me.btnInertia.FlatAppearance.BorderColor = System.Drawing.Color.Gray
+        Me.btnInertia.FlatAppearance.CheckedBackColor = System.Drawing.Color.White
+        Me.btnInertia.FlatAppearance.MouseDownBackColor = System.Drawing.Color.PaleGreen
+        Me.btnInertia.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DeepSkyBlue
+        Me.btnInertia.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnInertia.Font = New System.Drawing.Font("Microsoft Sans Serif", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnInertia.Location = New System.Drawing.Point(6, 244)
+        Me.btnInertia.Name = "btnInertia"
+        Me.btnInertia.Size = New System.Drawing.Size(80, 23)
+        Me.btnInertia.TabIndex = 157
+        Me.btnInertia.Text = "Inertia..."
+        Me.btnInertia.UseVisualStyleBackColor = False
+        '
         'FormJetEngine
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.White
         Me.ClientSize = New System.Drawing.Size(347, 274)
+        Me.Controls.Add(Me.btnInertia)
         Me.Controls.Add(Me.GroupBox1)
         Me.Controls.Add(Me.gbOrientation)
         Me.Controls.Add(Me.gbDimensions)
@@ -508,4 +526,5 @@ Partial Class FormJetEngine
     Friend WithEvents Label10 As System.Windows.Forms.Label
     Friend WithEvents nudResolution As System.Windows.Forms.NumericUpDown
     Friend WithEvents GroupBox1 As Windows.Forms.GroupBox
+    Friend WithEvents btnInertia As Button
 End Class

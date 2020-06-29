@@ -33,7 +33,9 @@ Namespace CalculationModel.Solver
 #Region " Total aerodynamic force "
 
         ''' <summary>
-        ''' Computes the total aerodynamic loads on each bounded lattice
+        ''' Computes the total aerodynamic loads on each bounded lattice.
+        ''' The prerequisite is to have calculated the total velocity and the
+        ''' pressure coefficients.
         ''' </summary>
         ''' <remarks></remarks>
         Public Sub CalculateAirloads()

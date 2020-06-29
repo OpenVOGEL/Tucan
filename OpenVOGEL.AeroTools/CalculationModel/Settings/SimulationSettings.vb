@@ -51,8 +51,8 @@ Namespace CalculationModel.Settings
     ''' The possible kind of simulation.
     ''' </summary>
     Public Enum CalculationType As Byte
-        ctSteady = 0
-        ctUnsteady = 1
+        ctConstrained = 0
+        ctFreeFlight = 1
         ctAeroelastic = 2
     End Enum
 
@@ -73,7 +73,7 @@ Namespace CalculationModel.Settings
         ''' Angular velocity of the aircraft reference frame in rad/s.
         ''' </summary>
         ''' <remarks></remarks>
-        Public Property Omega As New Vector3
+        Public Property StreamOmega As New Vector3
 
         ''' <summary>
         ''' Free stream density in kg/m³.
@@ -93,49 +93,77 @@ Namespace CalculationModel.Settings
         ''' <remarks></remarks>
         Public Property Viscocity As Double = 0.0000178#
 
-        Private _SimulationSteps As Integer = 1
-
         ''' <summary>
         ''' Specifies the number of integration steps.
         ''' </summary>
         ''' <remarks></remarks>
-        Public Property SimulationSteps As Integer
-            Set(ByVal value As Integer)
-                If value > 0 Then _SimulationSteps = value
-            End Set
-            Get
-                Return _SimulationSteps
-            End Get
-        End Property
+        Public Property SimulationSteps As Integer = 1
 
-        Private _Interval As Double = 0.1
+        ''' <summary>
+        ''' The gravity vector
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property Gravity As New Vector3(0.0, 0.0, -9.8)
+
+        ''' <summary>
+        ''' The model mass in kg
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property Mass As Double
+
+        ''' <summary>
+        ''' The model center of grvity
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property CenterOfGravity As New Vector3
+
+        ''' <summary>
+        ''' The model second moment of inertia about the X axis in kg.m²
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property Ixx As Double
+
+        ''' <summary>
+        ''' The model second moment of inertia about the Y axis  in kg.m²
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property Iyy As Double
+
+        ''' <summary>
+        ''' The model second moment of inerti about the Z axis a in kg.m²
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property Izz As Double
+
+        ''' <summary>
+        ''' The main directions of inertia
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property MainInertialAxes As New Base3
+
+        ''' <summary>
+        ''' The number of rigid steps in a free flight simulation
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property FreeFlightStartStep As Integer = 50
+
+        ''' <summary>
+        ''' The number of correction steps in a free flight simulation
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property CorrectionSteps As Integer = 10
 
         ''' <summary>
         ''' Specifies the size of the instegration step in seconds.
         ''' </summary>
         ''' <remarks></remarks>
-        Public Property Interval As Double
-            Set(ByVal value As Double)
-                If value > 0 Then _Interval = value
-            End Set
-            Get
-                Return _Interval
-            End Get
-        End Property
+        Public Property Interval As Double = 0.1
 
-        Private _Cutoff As Double = 0.0001
         ''' <summary>
         ''' Specifies the radius of the region around vortices where the velocity is null in meters.
         ''' </summary>
         ''' <remarks></remarks>
-        Public Property Cutoff As Double
-            Set(ByVal value As Double)
-                If value > 0 Then _Cutoff = value
-            End Set
-            Get
-                Return _Cutoff
-            End Get
-        End Property
+        Public Property Cutoff As Double = 0.0001
 
         ''' <summary>
         ''' Specifies whether the cutoff has to be automatically estimated based on the mesh.
@@ -165,22 +193,13 @@ Namespace CalculationModel.Settings
         ''' The type of analysis to be performed.
         ''' </summary>
         ''' <returns></returns>
-        Public Property AnalysisType As CalculationType = CalculationType.ctSteady
-
-        Private _SurveyTolerance As Double = 0.001
+        Public Property AnalysisType As CalculationType = CalculationType.ctConstrained
 
         ''' <summary>
         ''' Maximum distance between two rings to be considered as adjacent, in meters.
         ''' </summary>
         ''' <remarks></remarks>
-        Public Property SurveyTolerance As Double
-            Set(ByVal value As Double)
-                If value > 0 Then _SurveyTolerance = value
-            End Set
-            Get
-                Return _SurveyTolerance
-            End Get
-        End Property
+        Public Property SurveyTolerance As Double = 0.001
 
         ''' <summary>
         ''' Indicates if the influence of the wakes on the fuselage should be included.
@@ -223,10 +242,10 @@ Namespace CalculationModel.Settings
             StreamVelocity.Y = 0
             StreamVelocity.Z = 0
 
-            Omega = New Vector3
-            Omega.X = 0
-            Omega.Y = 0
-            Omega.Z = 0
+            StreamOmega = New Vector3
+            StreamOmega.X = 0
+            StreamOmega.Y = 0
+            StreamOmega.Z = 0
 
             Density = 1.225
             Viscocity = 0.0000178
@@ -254,7 +273,7 @@ Namespace CalculationModel.Settings
             AnalysisType = SimuData.AnalysisType
             Cutoff = SimuData.Cutoff
             StreamVelocity.Assign(SimuData.StreamVelocity)
-            Omega.Assign(SimuData.Omega)
+            StreamOmega.Assign(SimuData.StreamOmega)
             SimulationSteps = SimuData.SimulationSteps
             Interval = SimuData.Interval
             Viscocity = SimuData.Viscocity
@@ -320,7 +339,7 @@ Namespace CalculationModel.Settings
 
             Select Case AnalysisType
 
-                Case Settings.CalculationType.ctUnsteady
+                Case Settings.CalculationType.ctFreeFlight
                     UnsteadyVelocity.BaseVelocity.Assign(StreamVelocity)
                     UnsteadyVelocity.GeneratePerturbation(SimulationSteps)
 
@@ -346,9 +365,9 @@ Namespace CalculationModel.Settings
             writer.WriteEndElement()
 
             writer.WriteStartElement("StreamOmega")
-            writer.WriteAttributeString("X", String.Format("{0}", Omega.X))
-            writer.WriteAttributeString("Y", String.Format("{0}", Omega.Y))
-            writer.WriteAttributeString("Z", String.Format("{0}", Omega.Z))
+            writer.WriteAttributeString("X", String.Format("{0}", StreamOmega.X))
+            writer.WriteAttributeString("Y", String.Format("{0}", StreamOmega.Y))
+            writer.WriteAttributeString("Z", String.Format("{0}", StreamOmega.Z))
             writer.WriteEndElement()
 
             writer.WriteStartElement("Parameters")
@@ -407,12 +426,12 @@ Namespace CalculationModel.Settings
                             StreamVelocity.Z = IOXML.ReadDouble(reader, "Z", 0.0)
 
                         Case "StreamOmega"
-                            Omega.X = IOXML.ReadDouble(reader, "X", 0.0)
-                            Omega.Y = IOXML.ReadDouble(reader, "Y", 0.0)
-                            Omega.Z = IOXML.ReadDouble(reader, "Z", 0.0)
+                            StreamOmega.X = IOXML.ReadDouble(reader, "X", 0.0)
+                            StreamOmega.Y = IOXML.ReadDouble(reader, "Y", 0.0)
+                            StreamOmega.Z = IOXML.ReadDouble(reader, "Z", 0.0)
 
                         Case "Parameters"
-                            AnalysisType = IOXML.ReadInteger(reader, "Analysis", CalculationType.ctSteady)
+                            AnalysisType = IOXML.ReadInteger(reader, "Analysis", CalculationType.ctConstrained)
                             Interval = IOXML.ReadDouble(reader, "Interval", 0.1)
                             SimulationSteps = IOXML.ReadInteger(reader, "Steps", 15)
                             Cutoff = IOXML.ReadDouble(reader, "Cutoff", 0.0001)

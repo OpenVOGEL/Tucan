@@ -21,6 +21,7 @@ Imports OpenVOGEL.DesignTools.VisualModel.Models.Components
 Imports OpenVOGEL.DesignTools.VisualModel.Models.Components.Basics
 Imports OpenVOGEL.DesignTools.DataStore
 Imports System.Xml
+Imports OpenVOGEL.AeroTools.CalculationModel.Settings
 
 Namespace VisualModel.Models
 
@@ -291,6 +292,57 @@ Namespace VisualModel.Models
             Writer.WriteEndElement()
 
         End Sub
+
+        ''' <summary>
+        ''' Returns the global inertia of the model
+        ''' </summary>
+        ''' <returns></returns>
+        Friend Function GetGlobalInertia() As InertialProperties
+
+            Dim Inertia As InertialProperties
+
+            For Each Surface In Objects
+
+                Dim LocalInertia As InertialProperties = Surface.Inertia
+
+                ' Move CG to global coordinates
+                '-------------------------------------
+
+                LocalInertia.Xcg += Surface.Position.X
+                LocalInertia.Ycg += Surface.Position.Y
+                LocalInertia.Zcg += Surface.Position.Z
+
+                ' Take into account complementing parts
+                '-------------------------------------
+
+                If TypeOf Surface Is LiftingSurface Then
+
+                    Dim Wing As LiftingSurface = Surface
+
+                    If Wing.Symmetric Then
+
+                        Dim ComplementInertia As InertialProperties = LocalInertia
+
+                        ComplementInertia.Ixy *= -1.0
+                        ComplementInertia.Iyz *= -1.0
+                        ComplementInertia.Ycg *= -1.0
+
+                        LocalInertia += ComplementInertia
+
+                    End If
+
+                End If
+
+                ' Add to the total
+                '-------------------------------------
+
+                Inertia += LocalInertia
+
+            Next
+
+            Return Inertia
+
+        End Function
 
 #End Region
 

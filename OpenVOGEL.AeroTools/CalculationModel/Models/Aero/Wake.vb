@@ -60,11 +60,46 @@ Namespace CalculationModel.Models.Aero
         ''' <param name="Dt">The time interval</param>
         Public Sub Convect(ByVal Dt As Double)
 
-            Parallel.ForEach(Nodes, Sub(Node As Node)
-                                        Node.Position.X += Dt * Node.Velocity.X
-                                        Node.Position.Y += Dt * Node.Velocity.Y
-                                        Node.Position.Z += Dt * Node.Velocity.Z
-                                    End Sub)
+            Parallel.ForEach(Nodes,
+                             Sub(Node As Node)
+                                 Node.Position.X += Dt * Node.Velocity.X
+                                 Node.Position.Y += Dt * Node.Velocity.Y
+                                 Node.Position.Z += Dt * Node.Velocity.Z
+                             End Sub)
+
+        End Sub
+
+        ''' <summary>
+        ''' Caches the position of the nodes in the "OriginalPosition".
+        ''' </summary>
+        Public Sub CachePosition()
+
+            For Each Node In Nodes
+                If Node.OriginalPosition Is Nothing Then
+                    Node.OriginalPosition = New Vector3(Node.Position)
+                Else
+                    Node.OriginalPosition.X = Node.Position.X
+                    Node.OriginalPosition.Y = Node.Position.Y
+                    Node.OriginalPosition.Z = Node.Position.Z
+                End If
+            Next
+
+        End Sub
+
+        ''' <summary>
+        ''' Convects the wake using the local nodal velocity
+        ''' </summary>
+        ''' <param name="Dt">The time interval</param>
+        Public Sub ReConvect(ByVal Dt As Double)
+
+            Parallel.ForEach(Nodes,
+                             Sub(Node As Node)
+                                 If Node.OriginalPosition IsNot Nothing Then
+                                     Node.Position.X = Node.OriginalPosition.X + Dt * Node.Velocity.X
+                                     Node.Position.Y = Node.OriginalPosition.Y + Dt * Node.Velocity.Y
+                                     Node.Position.Z = Node.OriginalPosition.Z + Dt * Node.Velocity.Z
+                                 End If
+                             End Sub)
 
         End Sub
 

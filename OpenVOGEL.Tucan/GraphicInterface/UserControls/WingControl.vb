@@ -27,7 +27,7 @@ Public Class WingControl
 
     Public Event RefreshGL()
 
-    Private Surface As LiftingSurface
+    Private Wing As LiftingSurface
     Private PolarDataBase As PolarDatabase
 
     Private ModifyingSegment1 As Boolean = False
@@ -38,17 +38,17 @@ Public Class WingControl
 
     Public ReadOnly Property Assigned As Boolean
         Get
-            Return Not IsNothing(Surface)
+            Return Not IsNothing(Wing)
         End Get
     End Property
 
-    Public Sub InitializeControl(ByRef SuperficieDeReferencia As LiftingSurface, Optional ByRef PolarDataBase As PolarDatabase = Nothing)
+    Public Sub InitializeControl(ByRef ReferenceWing As LiftingSurface, Optional ByRef PolarDataBase As PolarDatabase = Nothing)
 
         Ready = False
 
         Me.PolarDataBase = PolarDataBase
 
-        Surface = SuperficieDeReferencia
+        Wing = ReferenceWing
         ShowSurfaceState()
 
         LoadSurfaceToForm()
@@ -82,7 +82,7 @@ Public Class WingControl
 
     Private Sub PointToCurrentRegion()
 
-        Surface.CurrentRegionID = Me.nudSelectRegion.Value
+        Wing.CurrentRegionID = Me.nudSelectRegion.Value
 
     End Sub
 
@@ -94,74 +94,74 @@ Public Class WingControl
 
         PointToCurrentRegion()
 
-        Surface.Name = tbSurfaceName.Text
-        Surface.NumberOfChordPanels = nudChordwisePanels.Value
+        Wing.Name = tbSurfaceName.Text
+        Wing.NumberOfChordPanels = nudChordwisePanels.Value
 
-        Surface.CurrentRegion.SpanPanelsCount = nudSpanwiseRings.Value
-        Surface.CurrentRegion.TipChord = nudTipChord.Value
-        Surface.CurrentRegion.Length = nudLength.Value
-        Surface.CurrentRegion.Sweepback = nudSweepback.Value
-        Surface.CurrentRegion.Dihedral = nudDihedral.Value
-        Surface.CurrentRegion.Twist = nudTwist.Value
-        Surface.CurrentRegion.TwistAxis = nudTwistingAxis.Value
+        Wing.CurrentRegion.SpanPanelsCount = nudSpanwiseRings.Value
+        Wing.CurrentRegion.TipChord = nudTipChord.Value
+        Wing.CurrentRegion.Length = nudLength.Value
+        Wing.CurrentRegion.Sweepback = nudSweepback.Value
+        Wing.CurrentRegion.Dihedral = nudDihedral.Value
+        Wing.CurrentRegion.Twist = nudTwist.Value
+        Wing.CurrentRegion.TwistAxis = nudTwistingAxis.Value
 
         If rbConstantSpacement.Checked Then
-            Surface.CurrentRegion.SpacementType = WingRegion.Spacements.Constant
+            Wing.CurrentRegion.SpacementType = WingRegion.Spacements.Constant
         ElseIf rbLinearSpacement.Checked Then
-            Surface.CurrentRegion.SpacementType = WingRegion.Spacements.Linear
+            Wing.CurrentRegion.SpacementType = WingRegion.Spacements.Linear
         Else
-            Surface.CurrentRegion.SpacementType = WingRegion.Spacements.Constant
+            Wing.CurrentRegion.SpacementType = WingRegion.Spacements.Constant
         End If
 
-        Surface.RootFlap = nudRootFlap.Value
-        Surface.FlapPanels = nudFlapPanels.Value
-        Surface.CurrentRegion.FlapChord = nudFlapChord.Value
-        Surface.CurrentRegion.FlapDeflection = nudFlapDeflection.Value * Math.PI / 180
-        Surface.CurrentRegion.Flapped = cbFlapped.Checked
+        Wing.RootFlap = nudRootFlap.Value
+        Wing.FlapPanels = nudFlapPanels.Value
+        Wing.CurrentRegion.FlapChord = nudFlapChord.Value
+        Wing.CurrentRegion.FlapDeflection = nudFlapDeflection.Value * Math.PI / 180
+        Wing.CurrentRegion.Flapped = cbFlapped.Checked
 
         If rbTipSection.Checked Then
 
-            Surface.CurrentRegion.TipSection.AE = nudArea.Value * 1000 ' kNm to Nm
-            Surface.CurrentRegion.TipSection.GJ = nudIu.Value
-            Surface.CurrentRegion.TipSection.EIy = nudIv.Value
-            Surface.CurrentRegion.TipSection.EIz = nudIw.Value
-            Surface.CurrentRegion.TipSection.rIp = nudJ.Value
-            Surface.CurrentRegion.TipSection.m = nudM.Value
-            Surface.CurrentRegion.TipSection.CMy = nudCMy.Value
-            Surface.CurrentRegion.TipSection.CMz = nudCMz.Value
+            Wing.CurrentRegion.TipSection.AE = nudArea.Value * 1000 ' kNm to Nm
+            Wing.CurrentRegion.TipSection.GJ = nudIu.Value
+            Wing.CurrentRegion.TipSection.EIy = nudIv.Value
+            Wing.CurrentRegion.TipSection.EIz = nudIw.Value
+            Wing.CurrentRegion.TipSection.rIp = nudJ.Value
+            Wing.CurrentRegion.TipSection.m = nudM.Value
+            Wing.CurrentRegion.TipSection.CMy = nudCMy.Value
+            Wing.CurrentRegion.TipSection.CMz = nudCMz.Value
 
         Else
 
             If nudSelectRegion.Value = 1 Then
 
-                Surface.RootSection.AE = nudArea.Value * 1000 ' kNm to Nm
-                Surface.RootSection.GJ = nudIu.Value
-                Surface.RootSection.EIy = nudIv.Value
-                Surface.RootSection.EIz = nudIw.Value
-                Surface.RootSection.rIp = nudJ.Value
-                Surface.RootSection.m = nudM.Value
-                Surface.RootSection.CMy = nudCMy.Value
-                Surface.RootSection.CMz = nudCMz.Value
+                Wing.RootSection.AE = nudArea.Value * 1000 ' kNm to Nm
+                Wing.RootSection.GJ = nudIu.Value
+                Wing.RootSection.EIy = nudIv.Value
+                Wing.RootSection.EIz = nudIw.Value
+                Wing.RootSection.rIp = nudJ.Value
+                Wing.RootSection.m = nudM.Value
+                Wing.RootSection.CMy = nudCMy.Value
+                Wing.RootSection.CMz = nudCMz.Value
 
             End If
 
         End If
 
-        Surface.CurrentRegion.CenterOfShear = nudCS.Value
+        Wing.CurrentRegion.CenterOfShear = nudCS.Value
 
         If nudSelectRegion.Value = 1 Then
-            Surface.RootChord = nudRootChord.Value
+            Wing.RootChord = nudRootChord.Value
         End If
 
-        Surface.ConvectWake = cbConvectWake.Checked
-        Surface.TrailingEdgeConvection = cbTrailingEdge.Checked
-        Surface.VisualProperties.ShowPrimitives = cbShowPriitives.Checked
+        Wing.ConvectWake = cbConvectWake.Checked
+        Wing.TrailingEdgeConvection = cbTrailingEdge.Checked
+        Wing.VisualProperties.ShowPrimitives = cbShowPriitives.Checked
 
-        Surface.Symmetric = cbSymetricWing.Checked
+        Wing.Symmetric = cbSymetricWing.Checked
 
-        Surface.CuttingStep = nudCuttingStep.Value
+        Wing.CuttingStep = nudCuttingStep.Value
 
-        Surface.GenerateMesh()
+        Wing.GenerateMesh()
 
         WithChanges = True
 
@@ -175,22 +175,22 @@ Public Class WingControl
 
         Ready = False
 
-        tbSurfaceName.Text = Surface.Name
-        nudSelectRegion.Maximum = Surface.WingRegions.Count
+        tbSurfaceName.Text = Wing.Name
+        nudSelectRegion.Maximum = Wing.WingRegions.Count
         nudSelectRegion.Minimum = 1
-        nudSelectRegion.Value = Surface.CurrentRegionID
-        nudRootChord.Value = Surface.RootChord
-        nudRootFlap.Value = Surface.RootFlap
-        nudFlapPanels.Value = Surface.FlapPanels
-        nudChordwisePanels.Value = Surface.NumberOfChordPanels
-        cbSymetricWing.Checked = Surface.Symmetric
+        nudSelectRegion.Value = Wing.CurrentRegionID
+        nudRootChord.Value = Wing.RootChord
+        nudRootFlap.Value = Wing.RootFlap
+        nudFlapPanels.Value = Wing.FlapPanels
+        nudChordwisePanels.Value = Wing.NumberOfChordPanels
+        cbSymetricWing.Checked = Wing.Symmetric
         SetPrimitiveBounds()
-        nudLastPrimitive.Value = Surface.LastPrimitiveSegment
-        nudFirstPrimitive.Value = Surface.FirstPrimitiveSegment
-        cbConvectWake.Checked = Surface.ConvectWake
-        cbTrailingEdge.Checked = Surface.TrailingEdgeConvection
-        cbShowPriitives.Checked = Surface.VisualProperties.ShowPrimitives
-        nudCuttingStep.Value = Surface.CuttingStep
+        nudLastPrimitive.Value = Wing.LastPrimitiveSegment
+        nudFirstPrimitive.Value = Wing.FirstPrimitiveSegment
+        cbConvectWake.Checked = Wing.ConvectWake
+        cbTrailingEdge.Checked = Wing.TrailingEdgeConvection
+        cbShowPriitives.Checked = Wing.VisualProperties.ShowPrimitives
+        nudCuttingStep.Value = Wing.CuttingStep
 
         LoadRegionToForm()
 
@@ -209,14 +209,14 @@ Public Class WingControl
 
     Function ThereIsPreviousRegion() As Boolean
 
-        Return nudSelectRegion.Value > 1 And nudSelectRegion.Value <= Surface.WingRegions.Count
+        Return nudSelectRegion.Value > 1 And nudSelectRegion.Value <= Wing.WingRegions.Count
 
     End Function
 
     Function GetPreviousRegion() As WingRegion
 
         If ThereIsPreviousRegion() Then
-            Return Surface.WingRegions(nudSelectRegion.Value - 2)
+            Return Wing.WingRegions(nudSelectRegion.Value - 2)
         Else
             Return Nothing
         End If
@@ -231,31 +231,31 @@ Public Class WingControl
 
         Ready = False
 
-        nudSpanwiseRings.Value = Surface.CurrentRegion.SpanPanelsCount
-        nudTipChord.Value = Surface.CurrentRegion.TipChord
-        nudLength.Value = Surface.CurrentRegion.Length
-        nudSweepback.Value = Surface.CurrentRegion.Sweepback
-        nudDihedral.Value = Surface.CurrentRegion.Dihedral
-        nudTwist.Value = Surface.CurrentRegion.Twist
-        nudTwistingAxis.Value = Surface.CurrentRegion.TwistAxis
+        nudSpanwiseRings.Value = Wing.CurrentRegion.SpanPanelsCount
+        nudTipChord.Value = Wing.CurrentRegion.TipChord
+        nudLength.Value = Wing.CurrentRegion.Length
+        nudSweepback.Value = Wing.CurrentRegion.Sweepback
+        nudDihedral.Value = Wing.CurrentRegion.Dihedral
+        nudTwist.Value = Wing.CurrentRegion.Twist
+        nudTwistingAxis.Value = Wing.CurrentRegion.TwistAxis
 
-        Select Case Surface.CurrentRegion.SpacementType
+        Select Case Wing.CurrentRegion.SpacementType
             Case WingRegion.Spacements.Constant
                 rbConstantSpacement.Checked = True
             Case WingRegion.Spacements.Linear
                 rbLinearSpacement.Checked = True
         End Select
 
-        cbFlapped.Checked = Surface.CurrentRegion.Flapped
-        nudFlapChord.Value = Surface.CurrentRegion.FlapChord
-        nudFlapDeflection.Value = Math.Max(-90, Math.Min(Surface.CurrentRegion.FlapDeflection / Math.PI * 180, 90))
+        cbFlapped.Checked = Wing.CurrentRegion.Flapped
+        nudFlapChord.Value = Wing.CurrentRegion.FlapChord
+        nudFlapDeflection.Value = Math.Max(-90, Math.Min(Wing.CurrentRegion.FlapDeflection / Math.PI * 180, 90))
 
         nudRootChord.Enabled = nudSelectRegion.Value = 1
         If ThereIsPreviousRegion() Then
             Dim PreviousRegion As WingRegion = GetPreviousRegion()
             nudRootChord.Value = PreviousRegion.TipChord
         Else
-            nudRootChord.Value = Surface.RootChord
+            nudRootChord.Value = Wing.RootChord
         End If
 
         If rbRootSection.Checked Then
@@ -263,12 +263,12 @@ Public Class WingControl
             If nudSelectRegion.Value = 1 Then
 
                 SwitchSectionEdition(True)
-                nudArea.Value = Surface.RootSection.AE / 1000 ' Nm to kNm
-                nudIu.Value = Surface.RootSection.GJ
-                nudIv.Value = Surface.RootSection.EIy
-                nudIw.Value = Surface.RootSection.EIz
-                nudJ.Value = Surface.RootSection.rIp
-                nudM.Value = Surface.RootSection.m
+                nudArea.Value = Wing.RootSection.AE / 1000 ' Nm to kNm
+                nudIu.Value = Wing.RootSection.GJ
+                nudIv.Value = Wing.RootSection.EIy
+                nudIw.Value = Wing.RootSection.EIz
+                nudJ.Value = Wing.RootSection.rIp
+                nudM.Value = Wing.RootSection.m
 
             Else
 
@@ -288,26 +288,26 @@ Public Class WingControl
         Else
 
             SwitchSectionEdition(True)
-            nudArea.Value = Surface.CurrentRegion.TipSection.AE / 1000 ' Nm to kNm
-            nudIu.Value = Surface.CurrentRegion.TipSection.GJ
-            nudIv.Value = Surface.CurrentRegion.TipSection.EIy
-            nudIw.Value = Surface.CurrentRegion.TipSection.EIz
-            nudJ.Value = Surface.CurrentRegion.TipSection.rIp
-            nudM.Value = Surface.CurrentRegion.TipSection.m
+            nudArea.Value = Wing.CurrentRegion.TipSection.AE / 1000 ' Nm to kNm
+            nudIu.Value = Wing.CurrentRegion.TipSection.GJ
+            nudIv.Value = Wing.CurrentRegion.TipSection.EIy
+            nudIw.Value = Wing.CurrentRegion.TipSection.EIz
+            nudJ.Value = Wing.CurrentRegion.TipSection.rIp
+            nudM.Value = Wing.CurrentRegion.TipSection.m
 
         End If
 
-        nudCS.Value = Surface.CurrentRegion.CenterOfShear
-        nudCMy.Value = Surface.CurrentRegion.TipSection.CMy
-        nudCMz.Value = Surface.CurrentRegion.TipSection.CMz
+        nudCS.Value = Wing.CurrentRegion.CenterOfShear
+        nudCMy.Value = Wing.CurrentRegion.TipSection.CMy
+        nudCMz.Value = Wing.CurrentRegion.TipSection.CMz
 
-        Dim camber As CamberLine = CamberLinesDatabase.GetCamberLineFromId(Surface.CurrentRegion.CamberLineId)
+        Dim camber As CamberLine = CamberLinesDatabase.GetCamberLineFromId(Wing.CurrentRegion.CamberLineId)
 
         If camber IsNot Nothing Then
             lblCamberLineName.Text = camber.Name
         End If
 
-        Dim polar As PolarFamily = ProjectRoot.Model.PolarDataBase.GetFamilyFromID(Surface.CurrentRegion.PolarID)
+        Dim polar As PolarFamily = ProjectRoot.Model.PolarDataBase.GetFamilyFromID(Wing.CurrentRegion.PolarID)
 
         If polar IsNot Nothing Then
             lblPolarName.Text = polar.Name
@@ -337,17 +337,17 @@ Public Class WingControl
 
         PointToCurrentRegion()
 
-        Surface.AddRegion()
+        Wing.AddRegion()
 
         Ready = False
-        nudSelectRegion.Maximum = Surface.WingRegions.Count
+        nudSelectRegion.Maximum = Wing.WingRegions.Count
         nudSelectRegion.Minimum = 1
-        nudSelectRegion.Value = Surface.CurrentRegionID
+        nudSelectRegion.Value = Wing.CurrentRegionID
         Ready = True
 
         LoadRegionToForm()
 
-        Surface.GenerateMesh()
+        Wing.GenerateMesh()
 
         RaiseEvent RefreshGL()
 
@@ -359,17 +359,17 @@ Public Class WingControl
 
         PointToCurrentRegion()
 
-        Surface.InsertRegion()
+        Wing.InsertRegion()
 
         Ready = False
-        Me.nudSelectRegion.Maximum = Surface.WingRegions.Count
+        Me.nudSelectRegion.Maximum = Wing.WingRegions.Count
         Me.nudSelectRegion.Minimum = 1
-        Me.nudSelectRegion.Value = Surface.CurrentRegionID
+        Me.nudSelectRegion.Value = Wing.CurrentRegionID
         Ready = True
 
         LoadRegionToForm()
 
-        Surface.GenerateMesh()
+        Wing.GenerateMesh()
 
         RaiseEvent RefreshGL()
 
@@ -380,9 +380,9 @@ Public Class WingControl
 
         PointToCurrentRegion()
 
-        Surface.RemoveCurrentRegion()
+        Wing.RemoveCurrentRegion()
         LoadSurfaceToForm()
-        Surface.GenerateMesh()
+        Wing.GenerateMesh()
 
         RaiseEvent RefreshGL()
 
@@ -390,17 +390,17 @@ Public Class WingControl
 
     Private Sub SetPrimitiveBounds()
 
-        If Surface.FirstPrimitiveSegment < 1 Then
-            Surface.FirstPrimitiveSegment = 1
+        If Wing.FirstPrimitiveSegment < 1 Then
+            Wing.FirstPrimitiveSegment = 1
         End If
-        If Surface.LastPrimitiveSegment < 1 Then
-            Surface.LastPrimitiveSegment = 1
+        If Wing.LastPrimitiveSegment < 1 Then
+            Wing.LastPrimitiveSegment = 1
         End If
 
-        nudLastPrimitive.Minimum = Surface.FirstPrimitiveSegment
-        nudLastPrimitive.Maximum = Surface.nBoundarySegments
+        nudLastPrimitive.Minimum = Wing.FirstPrimitiveSegment
+        nudLastPrimitive.Maximum = Wing.nBoundarySegments
         nudFirstPrimitive.Minimum = 1
-        nudFirstPrimitive.Maximum = Surface.LastPrimitiveSegment
+        nudFirstPrimitive.Maximum = Wing.LastPrimitiveSegment
 
     End Sub
 
@@ -614,10 +614,10 @@ Public Class WingControl
 
         If Not ModifyingSegment2 And Ready Then
 
-            Surface.FirstPrimitiveSegment = nudFirstPrimitive.Value
+            Wing.FirstPrimitiveSegment = nudFirstPrimitive.Value
 
-            nudLastPrimitive.Minimum = Surface.FirstPrimitiveSegment
-            nudLastPrimitive.Maximum = Surface.nBoundarySegments
+            nudLastPrimitive.Minimum = Wing.FirstPrimitiveSegment
+            nudLastPrimitive.Maximum = Wing.nBoundarySegments
 
         End If
 
@@ -630,10 +630,10 @@ Public Class WingControl
     Private Sub CambiarSegmentoPrimitivo2(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles nudLastPrimitive.ValueChanged
         If Not ModifyingSegment1 And Ready Then
 
-            Surface.LastPrimitiveSegment = nudLastPrimitive.Value
+            Wing.LastPrimitiveSegment = nudLastPrimitive.Value
 
             nudFirstPrimitive.Minimum = 1
-            nudFirstPrimitive.Maximum = Surface.LastPrimitiveSegment
+            nudFirstPrimitive.Maximum = Wing.LastPrimitiveSegment
 
         End If
 
@@ -688,12 +688,12 @@ Public Class WingControl
     End Sub
 
     Private Sub MostrarSuperficie(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnHideSurface.Click
-        Surface.VisualProperties.ShowSurface = Not Surface.VisualProperties.ShowSurface
+        Wing.VisualProperties.ShowSurface = Not Wing.VisualProperties.ShowSurface
         Me.ShowSurfaceState()
     End Sub
 
     Private Sub BloquearContenido(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnLockSurface.Click
-        Surface.Lock = Not Surface.Lock
+        Wing.Lock = Not Wing.Lock
         Me.ShowSurfaceState()
     End Sub
 
@@ -742,7 +742,7 @@ Public Class WingControl
     End Sub
 
     Private Sub btSurfaceData_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btSurfaceData.Click
-        tbSurfaceData.Text = Surface.RetriveStringData()
+        tbSurfaceData.Text = Wing.RetriveStringData()
     End Sub
 
     Private Sub nud_Root_J_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
@@ -819,7 +819,7 @@ Public Class WingControl
 
         If Not Assigned Then Exit Sub
 
-        If Surface.Lock Then
+        If Wing.Lock Then
             PanelDeEdicion.Enabled = False
             btnLockSurface.BackColor = Color.DeepSkyBlue
         Else
@@ -827,7 +827,7 @@ Public Class WingControl
             btnLockSurface.BackColor = Color.White
         End If
 
-        If Surface.VisualProperties.ShowSurface Then
+        If Wing.VisualProperties.ShowSurface Then
             btnHideSurface.BackColor = Color.White
         Else
             btnHideSurface.BackColor = Color.DeepSkyBlue
@@ -839,7 +839,7 @@ Public Class WingControl
 
         Dim g As Graphics = e.Graphics
 
-        DrawCamberLine(GetCamberLineFromId(Surface.CurrentRegion.CamberLineId), nudChordwisePanels.Value, pbProfileSketch.Width, pbProfileSketch.Height, g)
+        DrawCamberLine(GetCamberLineFromId(Wing.CurrentRegion.CamberLineId), nudChordwisePanels.Value, pbProfileSketch.Width, pbProfileSketch.Height, g)
 
     End Sub
 
@@ -849,14 +849,14 @@ Public Class WingControl
 
         If Not IsNothing(PolarDataBase) Then
             Dim ID As Guid = Guid.Empty
-            If Not IsNothing(Surface.CurrentRegion.PolarFamiliy) Then
-                ID = Surface.CurrentRegion.PolarFamiliy.ID
+            If Not IsNothing(Wing.CurrentRegion.PolarFamiliy) Then
+                ID = Wing.CurrentRegion.PolarFamiliy.ID
             End If
             Dim form As New FormPolarCurve(PolarDataBase, ID)
             If form.ShowDialog() = vbOK Then
                 If Not form.SelectedFamilyId.Equals(Guid.Empty) Then
-                    Surface.CurrentRegion.PolarFamiliy = PolarDataBase.GetFamilyFromID(form.SelectedFamilyId)
-                    Surface.CurrentRegion.PolarID = form.SelectedFamilyId
+                    Wing.CurrentRegion.PolarFamiliy = PolarDataBase.GetFamilyFromID(form.SelectedFamilyId)
+                    Wing.CurrentRegion.PolarID = form.SelectedFamilyId
                 End If
             End If
             LoadRegionToForm()
@@ -867,9 +867,9 @@ Public Class WingControl
     Private Sub tcMacroPanelProperties_Selected(ByVal sender As System.Object, ByVal e As System.Windows.Forms.TabControlEventArgs) Handles tcMacroPanelProperties.Selected
         Select Case tcMacroPanelProperties.SelectedIndex
             Case 0, 1, 2, 3
-                Surface.VisualProperties.VisualizationMode = VisualModel.Interface.VisualizationMode.Lattice
+                Wing.VisualProperties.VisualizationMode = VisualModel.Interface.VisualizationMode.Lattice
             Case 4
-                Surface.VisualProperties.VisualizationMode = VisualModel.Interface.VisualizationMode.Structural
+                Wing.VisualProperties.VisualizationMode = VisualModel.Interface.VisualizationMode.Structural
         End Select
 
         RaiseEvent RefreshGL()
@@ -891,14 +891,14 @@ Public Class WingControl
 
     Private Sub btnCamberLines_Click(sender As Object, e As EventArgs) Handles btnCamberLines.Click
 
-        If (Surface.CurrentRegion IsNot Nothing) Then
+        If (Wing.CurrentRegion IsNot Nothing) Then
 
-            Dim form As New FormCamberLine(Surface.CurrentRegion.CamberLineId)
+            Dim form As New FormCamberLine(Wing.CurrentRegion.CamberLineId)
 
             Select Case form.ShowDialog()
                 Case DialogResult.OK
-                    Surface.CurrentRegion.CamberLineId = form.SelectedCamberID
-                    Surface.GenerateMesh()
+                    Wing.CurrentRegion.CamberLineId = form.SelectedCamberID
+                    Wing.GenerateMesh()
                     RaiseEvent RefreshGL()
             End Select
 
@@ -915,4 +915,16 @@ Public Class WingControl
     Private Sub rbRootSection_CheckedChanged(sender As Object, e As EventArgs) Handles rbRootSection.CheckedChanged
         LoadRegionToForm()
     End Sub
+
+    Private Sub btnInertia_Click(sender As Object, e As EventArgs) Handles btnInertia.Click
+
+        If Wing IsNot Nothing Then
+            FormInertia.SetInertia(Wing.Inertia)
+            If FormInertia.ShowDialog() = DialogResult.OK Then
+                Wing.Inertia = FormInertia.GetInertia
+            End If
+        End If
+
+    End Sub
+
 End Class

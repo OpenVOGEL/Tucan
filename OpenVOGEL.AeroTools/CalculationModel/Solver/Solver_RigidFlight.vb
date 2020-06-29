@@ -23,9 +23,14 @@ Namespace CalculationModel.Solver
     Partial Public Class Solver
 
         ''' <summary>
-        ''' Convect wakes and calculates loads at the last time step.
+        ''' This method simulates an experiment where the model is rigidly 
+        ''' attached to the inertial reference frame and the flow is
+        ''' suddently started for a given numer of time steps. If the
+        ''' number of steps is sufficiently high, the steady state
+        ''' will be reached.
+        ''' Loads are only calculated at the last time step.
         ''' </summary>
-        Public Sub SteadyState(ByVal DataBasePath As String)
+        Public Sub RigidFlight(ByVal DataBasePath As String)
 
             RaiseEvent PushMessage("Starting steady analysis")
             RaiseEvent PushMessage("Solver version: " & Version)
@@ -35,8 +40,8 @@ Namespace CalculationModel.Solver
             '///////////////////////////////'
 
             CreateSubFoldersNames(DataBasePath)
-            CreateSubFolder(DataBaseSection.Steady)
-            CleanDirectory(DataBaseSection.Steady)
+            CreateSubFolder(DataBaseSection.RigidFlight)
+            CleanDirectory(DataBaseSection.RigidFlight)
 
             CheckForSources()
 
@@ -47,7 +52,7 @@ Namespace CalculationModel.Solver
             If Not WithSources AndAlso Settings.UseGpu AndAlso TestOpenCL() Then
 
                 GpuVortexSolver = New GpuTools.VortexSolver
-                GpuVortexSolver.Initialize(Settings.GpuDeviceId, SteadyPath)
+                GpuVortexSolver.Initialize(Settings.GpuDeviceId, RigidFlightPath)
 
                 RaiseEvent PushMessage("GPU enabled")
 
@@ -66,7 +71,7 @@ Namespace CalculationModel.Solver
             '//////////////////////////////'
 
             Stream.Velocity.Assign(Settings.StreamVelocity)
-            Stream.Omega.Assign(Settings.Omega)
+            Stream.Omega.Assign(Settings.StreamOmega)
             Stream.Density = Settings.Density
             Stream.SquareVelocity = Stream.Velocity.SquareEuclideanNorm
             Stream.DynamicPressure = 0.5 * Stream.Density * Stream.SquareVelocity
@@ -203,7 +208,7 @@ Namespace CalculationModel.Solver
 
             RaiseEvent PushMessage("Writing to database")
 
-            Me.WriteToXML(System.IO.Path.Combine(SteadyPath, "Steady.res"), True)
+            Me.WriteToXML(System.IO.Path.Combine(RigidFlightPath, "Steady.res"), True)
 
             Dim Interval As TimeSpan = Now - StartingTime
             Dim Message As String = String.Format("Calculation finished. Elapsed time: {0}m {1}.{2}s", Interval.Minutes, Interval.Seconds, Interval.Milliseconds)

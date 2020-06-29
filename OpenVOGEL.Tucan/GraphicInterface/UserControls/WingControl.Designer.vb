@@ -97,6 +97,7 @@ Partial Class WingControl
         Me.nudFlapChord = New System.Windows.Forms.NumericUpDown()
         Me.cbFlapped = New System.Windows.Forms.CheckBox()
         Me.TabPage3 = New System.Windows.Forms.TabPage()
+        Me.Label1 = New System.Windows.Forms.Label()
         Me.rbTipSection = New System.Windows.Forms.RadioButton()
         Me.rbRootSection = New System.Windows.Forms.RadioButton()
         Me.Label38 = New System.Windows.Forms.Label()
@@ -132,7 +133,7 @@ Partial Class WingControl
         Me.btSurfaceData = New System.Windows.Forms.Button()
         Me.tbSurfaceName = New System.Windows.Forms.TextBox()
         Me.btnOk = New System.Windows.Forms.Button()
-        Me.Label1 = New System.Windows.Forms.Label()
+        Me.btnInertia = New System.Windows.Forms.Button()
         Me.PanelDeEdicion.SuspendLayout()
         Me.tbDesign.SuspendLayout()
         Me.Panel1.SuspendLayout()
@@ -576,7 +577,7 @@ Partial Class WingControl
         Me.Label7.ImeMode = System.Windows.Forms.ImeMode.NoControl
         Me.Label7.Location = New System.Drawing.Point(45, 118)
         Me.Label7.Name = "Label7"
-        Me.Label7.Size = New System.Drawing.Size(58, 13)
+        Me.Label7.Size = New System.Drawing.Size(59, 13)
         Me.Label7.TabIndex = 14
         Me.Label7.Text = "Tip chord:"
         Me.Label7.TextAlign = System.Drawing.ContentAlignment.MiddleRight
@@ -661,7 +662,7 @@ Partial Class WingControl
         Me.Label12.ImeMode = System.Windows.Forms.ImeMode.NoControl
         Me.Label12.Location = New System.Drawing.Point(28, 223)
         Me.Label12.Name = "Label12"
-        Me.Label12.Size = New System.Drawing.Size(74, 13)
+        Me.Label12.Size = New System.Drawing.Size(75, 13)
         Me.Label12.TabIndex = 24
         Me.Label12.Text = "Twisting axis:"
         Me.Label12.TextAlign = System.Drawing.ContentAlignment.MiddleRight
@@ -1148,6 +1149,16 @@ Partial Class WingControl
         Me.TabPage3.TabIndex = 3
         Me.TabPage3.Text = "Structure"
         '
+        'Label1
+        '
+        Me.Label1.AutoSize = True
+        Me.Label1.ImeMode = System.Windows.Forms.ImeMode.NoControl
+        Me.Label1.Location = New System.Drawing.Point(192, 257)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(49, 13)
+        Me.Label1.TabIndex = 85
+        Me.Label1.Text = "% chord"
+        '
         'rbTipSection
         '
         Me.rbTipSection.AutoSize = True
@@ -1550,20 +1561,27 @@ Partial Class WingControl
         Me.btnOk.Text = "Close"
         Me.btnOk.UseVisualStyleBackColor = False
         '
-        'Label1
+        'btnInertia
         '
-        Me.Label1.AutoSize = True
-        Me.Label1.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.Label1.Location = New System.Drawing.Point(192, 257)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(49, 13)
-        Me.Label1.TabIndex = 85
-        Me.Label1.Text = "% chord"
+        Me.btnInertia.BackColor = System.Drawing.Color.White
+        Me.btnInertia.FlatAppearance.BorderColor = System.Drawing.Color.Gray
+        Me.btnInertia.FlatAppearance.CheckedBackColor = System.Drawing.Color.White
+        Me.btnInertia.FlatAppearance.MouseDownBackColor = System.Drawing.Color.PaleGreen
+        Me.btnInertia.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DeepSkyBlue
+        Me.btnInertia.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnInertia.Font = New System.Drawing.Font("Microsoft Sans Serif", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnInertia.Location = New System.Drawing.Point(9, 406)
+        Me.btnInertia.Name = "btnInertia"
+        Me.btnInertia.Size = New System.Drawing.Size(80, 23)
+        Me.btnInertia.TabIndex = 147
+        Me.btnInertia.Text = "Inertia..."
+        Me.btnInertia.UseVisualStyleBackColor = False
         '
         'WingControl
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.Controls.Add(Me.btnInertia)
         Me.Controls.Add(Me.btnOk)
         Me.Controls.Add(Me.btnLockSurface)
         Me.Controls.Add(Me.btnHideSurface)
@@ -1730,4 +1748,5 @@ Partial Class WingControl
     Friend WithEvents Label14 As Windows.Forms.Label
     Friend WithEvents Label13 As Windows.Forms.Label
     Friend WithEvents Label1 As Windows.Forms.Label
+    Friend WithEvents btnInertia As Button
 End Class

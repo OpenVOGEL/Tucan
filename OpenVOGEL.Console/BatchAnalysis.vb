@@ -53,7 +53,7 @@ Module BatchAnalysis
             ProjectRoot.SimulationSettings.StreamVelocity.X = V * Math.Cos(Alfa)
             ProjectRoot.SimulationSettings.StreamVelocity.Z = V * Math.Sin(Alfa)
 
-            ProjectRoot.StartCalculation(CalculationType.ctSteady)
+            ProjectRoot.StartCalculation(CalculationType.ctConstrained)
 
             Loads.Add(CalculationCore.GlobalAirloads)
 
@@ -200,7 +200,7 @@ Module BatchAnalysis
 
             LiftingSurface.GenerateMesh()
 
-            ProjectRoot.StartCalculation(CalculationType.ctSteady)
+            ProjectRoot.StartCalculation(CalculationType.ctConstrained)
 
             Loads.Add(CalculationCore.GlobalAirloads)
 
@@ -378,7 +378,7 @@ Module BatchAnalysis
 
                 LiftingSurface.GenerateMesh()
 
-                ProjectRoot.StartCalculation(CalculationType.ctSteady)
+                ProjectRoot.StartCalculation(CalculationType.ctConstrained)
 
                 Loads.Add(CalculationCore.GlobalAirloads)
 
@@ -650,9 +650,9 @@ Module BatchAnalysis
 
             System.Console.WriteLine(String.Format("STEP {0} of {1}", I, No))
 
-            ProjectRoot.SimulationSettings.Omega.Y = -OmegaMax * I / No
+            ProjectRoot.SimulationSettings.StreamOmega.Y = -OmegaMax * I / No
 
-            ProjectRoot.StartCalculation(CalculationType.ctSteady)
+            ProjectRoot.StartCalculation(CalculationType.ctConstrained)
 
             Loads.Add(CalculationCore.GlobalAirloads)
 

@@ -146,7 +146,7 @@ Module Commands
 
                     Case "steady"
 
-                        DataStore.StartCalculation(AeroTools.CalculationModel.Settings.CalculationType.ctSteady)
+                        DataStore.StartCalculation(AeroTools.CalculationModel.Settings.CalculationType.ctConstrained)
 
                     Case "alfa_scan"
 
@@ -217,24 +217,24 @@ Module Commands
                     Case "set_omega"
 
                         If Commands.Length > 1 Then
-                            DataStore.ProjectRoot.SimulationSettings.Omega.X = CDbl(Commands(1))
-                            DataStore.ProjectRoot.SimulationSettings.Omega.Y = 0
-                            DataStore.ProjectRoot.SimulationSettings.Omega.Z = 0
+                            DataStore.ProjectRoot.SimulationSettings.StreamOmega.X = CDbl(Commands(1))
+                            DataStore.ProjectRoot.SimulationSettings.StreamOmega.Y = 0
+                            DataStore.ProjectRoot.SimulationSettings.StreamOmega.Z = 0
                         End If
 
                         If Commands.Length > 2 Then
-                            DataStore.ProjectRoot.SimulationSettings.Omega.Y = CDbl(Commands(2))
-                            DataStore.ProjectRoot.SimulationSettings.Omega.Z = 0
+                            DataStore.ProjectRoot.SimulationSettings.StreamOmega.Y = CDbl(Commands(2))
+                            DataStore.ProjectRoot.SimulationSettings.StreamOmega.Z = 0
                         End If
 
                         If Commands.Length > 3 Then
-                            DataStore.ProjectRoot.SimulationSettings.Omega.Z = CDbl(Commands(3))
+                            DataStore.ProjectRoot.SimulationSettings.StreamOmega.Z = CDbl(Commands(3))
                         End If
 
                         If ReadBack Then
-                            System.Console.WriteLine(String.Format("OX = {0,14:E6}", DataStore.ProjectRoot.SimulationSettings.Omega.X))
-                            System.Console.WriteLine(String.Format("OY = {0,14:E6}", DataStore.ProjectRoot.SimulationSettings.Omega.Y))
-                            System.Console.WriteLine(String.Format("OZ = {0,14:E6}", DataStore.ProjectRoot.SimulationSettings.Omega.Z))
+                            System.Console.WriteLine(String.Format("OX = {0,14:E6}", DataStore.ProjectRoot.SimulationSettings.StreamOmega.X))
+                            System.Console.WriteLine(String.Format("OY = {0,14:E6}", DataStore.ProjectRoot.SimulationSettings.StreamOmega.Y))
+                            System.Console.WriteLine(String.Format("OZ = {0,14:E6}", DataStore.ProjectRoot.SimulationSettings.StreamOmega.Z))
                         End If
 
                     Case "set_alfa"

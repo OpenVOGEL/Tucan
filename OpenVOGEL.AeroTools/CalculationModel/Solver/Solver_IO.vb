@@ -179,8 +179,8 @@ Namespace CalculationModel.Solver
             Base = 0
             Structural = 1
             Aeroelastic = 2
-            Steady = 3
-            Unsteady = 4
+            RigidFlight = 3
+            FreeFlight = 4
 
         End Enum
 
@@ -192,8 +192,8 @@ Namespace CalculationModel.Solver
         Public BasePath As String
         Public StructurePath As String
         Public AeroelasticPath As String
-        Public SteadyPath As String
-        Public TransitPath As String
+        Public RigidFlightPath As String
+        Public FreeFlightPath As String
 
         ''' <summary>
         ''' Creates the subfolders where results are stored
@@ -206,8 +206,8 @@ Namespace CalculationModel.Solver
                 BasePath = Path.Combine(Path.GetDirectoryName(DataBasePath), Path.GetFileNameWithoutExtension(DataBasePath))
                 StructurePath = BasePath + DatabaseFileStructure
                 AeroelasticPath = BasePath + DatabaseFileAeroelastic
-                SteadyPath = BasePath + DatabaseFileSteady
-                TransitPath = BasePath + TransitPath
+                RigidFlightPath = BasePath + DatabaseFileSteady
+                FreeFlightPath = BasePath + FreeFlightPath
 
             Else
 
@@ -227,14 +227,14 @@ Namespace CalculationModel.Solver
                     Case Solver.DataBaseSection.Aeroelastic
                         System.IO.Directory.CreateDirectory(AeroelasticPath)
 
-                    Case Solver.DataBaseSection.Steady
-                        System.IO.Directory.CreateDirectory(SteadyPath)
+                    Case Solver.DataBaseSection.RigidFlight
+                        System.IO.Directory.CreateDirectory(RigidFlightPath)
 
                     Case Solver.DataBaseSection.Structural
                         System.IO.Directory.CreateDirectory(StructurePath)
 
-                    Case Solver.DataBaseSection.Unsteady
-                        System.IO.Directory.CreateDirectory(TransitPath)
+                    Case Solver.DataBaseSection.FreeFlight
+                        System.IO.Directory.CreateDirectory(FreeFlightPath)
 
                 End Select
 
@@ -251,9 +251,9 @@ Namespace CalculationModel.Solver
         ''' The file where the steady state results are written
         ''' </summary>
         ''' <returns></returns>
-        Public ReadOnly Property SteadyResFile As String
+        Public ReadOnly Property RigidFlightResFile As String
             Get
-                Return System.IO.Path.Combine(SteadyPath, "Steady.res")
+                Return System.IO.Path.Combine(RigidFlightPath, "RigidFlight.res")
             End Get
         End Property
 
@@ -271,9 +271,9 @@ Namespace CalculationModel.Solver
         ''' The file where the transit results are written
         ''' </summary>
         ''' <returns></returns>
-        Public ReadOnly Property TransitResFile(TimeStep As Integer) As String
+        Public ReadOnly Property FreeFlightResFile(TimeStep As Integer) As String
             Get
-                Return System.IO.Path.Combine(AeroelasticPath, String.Format("Transit_{0}.res", TimeStep))
+                Return System.IO.Path.Combine(AeroelasticPath, String.Format("FreeFlight_{0}.res", TimeStep))
             End Get
         End Property
 
@@ -290,14 +290,14 @@ Namespace CalculationModel.Solver
                 Case Solver.DataBaseSection.Aeroelastic
                     path = AeroelasticPath
 
-                Case Solver.DataBaseSection.Steady
-                    path = SteadyPath
+                Case Solver.DataBaseSection.RigidFlight
+                    path = RigidFlightPath
 
                 Case Solver.DataBaseSection.Structural
                     path = StructurePath
 
-                Case Solver.DataBaseSection.Unsteady
-                    path = TransitPath
+                Case Solver.DataBaseSection.FreeFlight
+                    path = FreeFlightPath
 
             End Select
 

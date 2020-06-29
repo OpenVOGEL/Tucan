@@ -126,6 +126,7 @@
     <Compile Include="CalculationModel\Models\Structural\Linker.vb" />
     <Compile Include="CalculationModel\Models\Structural\StructuralCore.vb" />
     <Compile Include="CalculationModel\Settings\AirProperties.vb" />
+    <Compile Include="CalculationModel\Settings\InertialProperties.vb" />
     <Compile Include="CalculationModel\Settings\SimulationSettings.vb" />
     <Compile Include="CalculationModel\Settings\AeroelasticHistogram.vb" />
     <Compile Include="CalculationModel\Settings\UnsteadyPerturbation.vb" />
@@ -134,10 +135,9 @@
     <Compile Include="CalculationModel\Solver\Solver_Calculations.vb" />
     <Compile Include="CalculationModel\Solver\Solver_OpenCL.vb" />
     <Compile Include="CalculationModel\Solver\Solver_Definitions.vb" />
-    <Compile Include="CalculationModel\Solver\Solver_FreeFlight.vb" />
     <Compile Include="CalculationModel\Solver\Solver_IO.vb" />
-    <Compile Include="CalculationModel\Solver\Solver_Steady.vb" />
-    <Compile Include="CalculationModel\Solver\Solver_Transit.vb" />
+    <Compile Include="CalculationModel\Solver\Solver_RigidFlight.vb" />
+    <Compile Include="CalculationModel\Solver\Solver_FreeFlight.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>

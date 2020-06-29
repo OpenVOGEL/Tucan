@@ -79,11 +79,11 @@ Public Module Server
                                 DataStore.FilePath = Commands(1)
                                 DataStore.ProjectRoot.RestartProject()
                                 DataStore.ProjectRoot.ReadFromXML()
-                                DataStore.StartCalculation(AeroTools.CalculationModel.Settings.CalculationType.ctSteady)
+                                DataStore.StartCalculation(AeroTools.CalculationModel.Settings.CalculationType.ctConstrained)
 
                             Finally
 
-                                Squeak(Squeaker, "done;" & System.IO.Path.Combine(DataStore.CalculationCore.SteadyPath, "Steady.res"))
+                                Squeak(Squeaker, "done;" & System.IO.Path.Combine(DataStore.CalculationCore.RigidFlightPath, "Steady.res"))
                                 Squeaker.Close()
 
                             End Try

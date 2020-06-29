@@ -85,11 +85,11 @@ Namespace Tucan.Utility
 
                     Select Case Type
 
-                        Case CalculationType.ctSteady
+                        Case CalculationType.ctConstrained
 
                             AddHandler CalculationWorker.DoWork, AddressOf StartWakeConvection
 
-                        Case CalculationType.ctUnsteady
+                        Case CalculationType.ctFreeFlight
 
                             AddHandler CalculationWorker.DoWork, AddressOf StartUnsteadyTransit
 
@@ -145,7 +145,7 @@ Namespace Tucan.Utility
         ''' </summary>
         Private Sub StartWakeConvection(ByVal sender As Object, ByVal e As DoWorkEventArgs)
 
-            CalculationCore.SteadyState(FilePath)
+            CalculationCore.RigidFlight(FilePath)
 
         End Sub
 
@@ -154,7 +154,7 @@ Namespace Tucan.Utility
         ''' </summary>
         Private Sub StartUnsteadyTransit(ByVal sender As Object, ByVal e As DoWorkEventArgs)
 
-            CalculationCore.UnsteadyTransit(FilePath)
+            CalculationCore.FreeFlight(FilePath)
 
         End Sub
 

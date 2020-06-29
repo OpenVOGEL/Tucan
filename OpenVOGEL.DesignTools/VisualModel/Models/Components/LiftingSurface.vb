@@ -24,6 +24,7 @@ Imports OpenVOGEL.DesignTools.VisualModel.Models.Components.Basics
 Imports OpenVOGEL.AeroTools.CalculationModel.Models.Structural.Library.Elements
 Imports OpenVOGEL.DesignTools.DataStore
 Imports OpenVOGEL.AeroTools.IoHelper
+Imports OpenVOGEL.AeroTools.CalculationModel.Settings
 
 Namespace VisualModel.Models.Components
 
@@ -1518,23 +1519,6 @@ Namespace VisualModel.Models.Components
 
 #Region " Other methods "
 
-        '''' <summary>
-        '''' Generates a general surface from this wing.
-        '''' </summary>
-        '''' <param name="Superficie"></param>
-        '''' <remarks></remarks>
-        'Public Sub GenerateGeneralSurface(ByRef Superficie As ResultContainer)
-
-        '    For i = 0 To NumberOfNodes - 1
-        '        Superficie.AddNodalPoint(Mesh.Nodes(i).Position)
-        '    Next
-
-        '    For i = 0 To NumberOfPanels - 1
-        '        Superficie.AddPanel(Mesh.Panels(i))
-        '    Next
-
-        'End Sub
-
         ''' <summary>
         ''' Generates a copy of the instance.
         ''' </summary>
@@ -1706,6 +1690,26 @@ Namespace VisualModel.Models.Components
 
                         VisualProperties.ReadFromXML(reader.ReadSubtree)
 
+                    Case "Inertia"
+
+                        Dim I As InertialProperties
+
+                        I.Mass = IOXML.ReadDouble(reader, "Mass", 0.0)
+
+                        I.Xcg = IOXML.ReadDouble(reader, "Xcg", 0.0)
+                        I.Ycg = IOXML.ReadDouble(reader, "Ycg", 0.0)
+                        I.Zcg = IOXML.ReadDouble(reader, "Zcg", 0.0)
+
+                        I.Ixx = IOXML.ReadDouble(reader, "Ixx", 0.0)
+                        I.Iyy = IOXML.ReadDouble(reader, "Iyy", 0.0)
+                        I.Izz = IOXML.ReadDouble(reader, "Izz", 0.0)
+
+                        I.Ixy = IOXML.ReadDouble(reader, "Ixy", 0.0)
+                        I.Ixz = IOXML.ReadDouble(reader, "Ixz", 0.0)
+                        I.Iyz = IOXML.ReadDouble(reader, "Iyz", 0.0)
+
+                        Inertia = I
+
                 End Select
 
             End While
@@ -1789,6 +1793,26 @@ Namespace VisualModel.Models.Components
 
             writer.WriteStartElement("VisualProperties")
             VisualProperties.WriteToXML(writer)
+            writer.WriteEndElement()
+
+            ' Inertia
+
+            writer.WriteStartElement("Inertia")
+
+            writer.WriteAttributeString("Mass", String.Format("{0,14:E6}", Inertia.Mass))
+
+            writer.WriteAttributeString("Xcg", String.Format("{0,14:E6}", Inertia.Xcg))
+            writer.WriteAttributeString("Ycg", String.Format("{0,14:E6}", Inertia.Ycg))
+            writer.WriteAttributeString("Zcg", String.Format("{0,14:E6}", Inertia.Zcg))
+
+            writer.WriteAttributeString("Ixx", String.Format("{0,14:E6}", Inertia.Ixx))
+            writer.WriteAttributeString("Iyy", String.Format("{0,14:E6}", Inertia.Iyy))
+            writer.WriteAttributeString("Izz", String.Format("{0,14:E6}", Inertia.Izz))
+
+            writer.WriteAttributeString("Ixy", String.Format("{0,14:E6}", Inertia.Ixy))
+            writer.WriteAttributeString("Ixz", String.Format("{0,14:E6}", Inertia.Ixz))
+            writer.WriteAttributeString("Izx", String.Format("{0,14:E6}", Inertia.Iyz))
+
             writer.WriteEndElement()
 
         End Sub

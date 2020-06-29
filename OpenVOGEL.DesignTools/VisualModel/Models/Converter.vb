@@ -52,7 +52,8 @@ Namespace VisualModel.Models
             This.Settings = New SimulationSettings
             This.Settings.Assign(Settings)
 
-            ' Import polar database:
+            ' Import polar database
+            '---------------------------------------------------
 
             If Not IsNothing(Model.PolarDataBase) Then
 
@@ -60,7 +61,8 @@ Namespace VisualModel.Models
 
             End If
 
-            ' Add lifting surfaces:
+            ' Add lifting surfaces
+            '---------------------------------------------------
 
             If GenerateStructure Then This.StructuralLinks = New List(Of StructuralLink)
 
@@ -84,7 +86,8 @@ Namespace VisualModel.Models
 
             Next
 
-            ' Add fuselages:
+            ' Add fuselages
+            '---------------------------------------------------
 
             For ObjectIndex = 0 To Model.Objects.Count - 1
 
@@ -141,7 +144,8 @@ Namespace VisualModel.Models
 
             Next
 
-            ' Add jet engine nacelles:
+            ' Add jet engine nacelles
+            '---------------------------------------------------
 
             For ObjectIndex = 0 To Model.Objects.Count - 1
 
@@ -155,7 +159,8 @@ Namespace VisualModel.Models
 
             Next
 
-            ' Add imported surfaces:
+            ' Add imported surfaces
+            '---------------------------------------------------
 
             For ObjectIndex = 0 To Model.Objects.Count - 1
 
@@ -207,20 +212,39 @@ Namespace VisualModel.Models
             End If
 
             ' Set global indices in the elements (to access circulation from matrices)
+            '-------------------------------------------------------------------------
 
             This.IndexateLattices()
 
             ' Find surrounding rings
+            '---------------------------------------------------
 
             This.FindSurroundingRingsGlobally()
 
             ' Populate wakes with vortices
+            '---------------------------------------------------
 
             For Each Lattice In This.Lattices
 
                 Lattice.PopulateVortices()
 
             Next
+
+            ' Global inertial properties
+            '---------------------------------------------------
+
+            Dim Inertia As InertialProperties = Model.GetGlobalInertia
+
+            Settings.Mass = Inertia.Mass
+
+            Settings.CenterOfGravity.X = Inertia.Xcg
+            Settings.CenterOfGravity.Y = Inertia.Ycg
+            Settings.CenterOfGravity.Z = Inertia.Zcg
+
+            Inertia.ToMainInertia(This.Settings.MainInertialAxes,
+                                  This.Settings.Ixx,
+                                  This.Settings.Iyy,
+                                  This.Settings.Izz)
 
         End Sub
 
@@ -238,7 +262,8 @@ Namespace VisualModel.Models
                                       Optional ByVal GenerateStructure As Boolean = False,
                                       Optional IsSymetric As Boolean = True)
 
-            ' Add nodal points:
+            ' Add nodal points
+            '-----------------------------------------
 
             Dim Lattice As New BoundedLattice
 
@@ -252,7 +277,8 @@ Namespace VisualModel.Models
 
             Next
 
-            ' Add rings:
+            ' Add rings
+            '-----------------------------------------
 
             For PanelIndex = 0 To Surface.NumberOfPanels - 1
 
@@ -265,7 +291,8 @@ Namespace VisualModel.Models
 
             Next
 
-            ' Add wakes:
+            ' Add wakes
+            '-----------------------------------------
 
             If Surface.ConvectWake Then
 
@@ -287,7 +314,8 @@ Namespace VisualModel.Models
 
             End If
 
-            ' Generate structural link:
+            ' Generate structural link
+            '-----------------------------------------
 
             Dim KineLink As KinematicLink
             Dim MechaLink As MechanicLink

@@ -1,9 +1,9 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class FormFuselageEditor
     Inherits System.Windows.Forms.Form
 
     'Form reemplaza a Dispose para limpiar la lista de componentes.
-    <System.Diagnostics.DebuggerNonUserCode()> _
+    <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
             If disposing AndAlso components IsNot Nothing Then
@@ -20,7 +20,7 @@ Partial Class FormFuselageEditor
     'NOTA: el Diseñador de Windows Forms necesita el siguiente procedimiento
     'Se puede modificar usando el Diseñador de Windows Forms.  
     'No lo modifique con el editor de código.
-    <System.Diagnostics.DebuggerStepThrough()> _
+    <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.lbSections = New System.Windows.Forms.ListBox()
         Me.btnAddSection = New System.Windows.Forms.Button()
@@ -49,6 +49,7 @@ Partial Class FormFuselageEditor
         Me.Label4 = New System.Windows.Forms.Label()
         Me.btnCenter = New System.Windows.Forms.Button()
         Me.cbxBrokenEdge = New System.Windows.Forms.CheckBox()
+        Me.btnInertia = New System.Windows.Forms.Button()
         CType(Me.pbSections, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.nudPosition, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.nudX, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -107,7 +108,7 @@ Partial Class FormFuselageEditor
         Me.pbSections.Cursor = System.Windows.Forms.Cursors.Cross
         Me.pbSections.Location = New System.Drawing.Point(260, 25)
         Me.pbSections.Name = "pbSections"
-        Me.pbSections.Size = New System.Drawing.Size(482, 296)
+        Me.pbSections.Size = New System.Drawing.Size(482, 247)
         Me.pbSections.TabIndex = 107
         Me.pbSections.TabStop = False
         '
@@ -139,7 +140,7 @@ Partial Class FormFuselageEditor
         Me.btnOK.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DeepSkyBlue
         Me.btnOK.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.btnOK.Font = New System.Drawing.Font("Microsoft Sans Serif", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnOK.Location = New System.Drawing.Point(665, 480)
+        Me.btnOK.Location = New System.Drawing.Point(665, 431)
         Me.btnOK.Name = "btnOK"
         Me.btnOK.Size = New System.Drawing.Size(77, 23)
         Me.btnOK.TabIndex = 111
@@ -304,7 +305,7 @@ Partial Class FormFuselageEditor
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.pbSideView.BackColor = System.Drawing.Color.White
         Me.pbSideView.Cursor = System.Windows.Forms.Cursors.Cross
-        Me.pbSideView.Location = New System.Drawing.Point(260, 340)
+        Me.pbSideView.Location = New System.Drawing.Point(260, 291)
         Me.pbSideView.Name = "pbSideView"
         Me.pbSideView.Size = New System.Drawing.Size(482, 134)
         Me.pbSideView.TabIndex = 140
@@ -314,7 +315,7 @@ Partial Class FormFuselageEditor
         '
         Me.Label3.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.Label3.AutoSize = True
-        Me.Label3.Location = New System.Drawing.Point(257, 324)
+        Me.Label3.Location = New System.Drawing.Point(257, 275)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(55, 13)
         Me.Label3.TabIndex = 141
@@ -355,11 +356,28 @@ Partial Class FormFuselageEditor
         Me.cbxBrokenEdge.Text = "Broken edge"
         Me.cbxBrokenEdge.UseVisualStyleBackColor = True
         '
+        'btnInertia
+        '
+        Me.btnInertia.BackColor = System.Drawing.Color.White
+        Me.btnInertia.FlatAppearance.BorderColor = System.Drawing.Color.Gray
+        Me.btnInertia.FlatAppearance.CheckedBackColor = System.Drawing.Color.White
+        Me.btnInertia.FlatAppearance.MouseDownBackColor = System.Drawing.Color.PaleGreen
+        Me.btnInertia.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DeepSkyBlue
+        Me.btnInertia.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnInertia.Font = New System.Drawing.Font("Microsoft Sans Serif", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnInertia.Location = New System.Drawing.Point(6, 432)
+        Me.btnInertia.Name = "btnInertia"
+        Me.btnInertia.Size = New System.Drawing.Size(80, 23)
+        Me.btnInertia.TabIndex = 145
+        Me.btnInertia.Text = "Inertia..."
+        Me.btnInertia.UseVisualStyleBackColor = False
+        '
         'FormFuselageEditor
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(748, 512)
+        Me.ClientSize = New System.Drawing.Size(748, 463)
+        Me.Controls.Add(Me.btnInertia)
         Me.Controls.Add(Me.cbxBrokenEdge)
         Me.Controls.Add(Me.btnCenter)
         Me.Controls.Add(Me.Label4)
@@ -389,7 +407,7 @@ Partial Class FormFuselageEditor
         Me.DoubleBuffered = True
         Me.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow
-        Me.MinimumSize = New System.Drawing.Size(668, 447)
+        Me.MinimumSize = New System.Drawing.Size(668, 502)
         Me.Name = "FormFuselageEditor"
         Me.ShowIcon = False
         Me.ShowInTaskbar = False
@@ -433,4 +451,5 @@ Partial Class FormFuselageEditor
     Friend WithEvents Label4 As System.Windows.Forms.Label
     Friend WithEvents btnCenter As System.Windows.Forms.Button
     Friend WithEvents cbxBrokenEdge As CheckBox
+    Friend WithEvents btnInertia As Button
 End Class

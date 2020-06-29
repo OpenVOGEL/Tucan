@@ -607,17 +607,26 @@ Namespace Algebra.EuclideanSpace
 
         Public Sub Transform(M As Matrix3x3)
 
-            Dim _X As Double
-            Dim _Y As Double
-            Dim _Z As Double
+            Dim _X As Double = X
+            Dim _Y As Double = Y
+            Dim _Z As Double = Z
 
-            _X = X
-            _Y = Y
-            _Z = Z
 
             X = _X * M.Item(1, 1) + _Y * M.Item(1, 2) + _Z * M.Item(1, 3)
             Y = _X * M.Item(2, 1) + _Y * M.Item(2, 2) + _Z * M.Item(2, 3)
             Z = _X * M.Item(3, 1) + _Y * M.Item(3, 2) + _Z * M.Item(3, 3)
+
+        End Sub
+
+        Public Sub Transform(B As Base3)
+
+            Dim _X As Double = X
+            Dim _Y As Double = Y
+            Dim _Z As Double = Z
+
+            X = _X * B.U.X + _Y * B.U.Y + _Z * B.U.Z
+            Y = _X * B.V.X + _Y * B.V.Y + _Z * B.V.Z
+            Z = _X * B.W.X + _Y * B.W.Y + _Z * B.W.Z
 
         End Sub
 

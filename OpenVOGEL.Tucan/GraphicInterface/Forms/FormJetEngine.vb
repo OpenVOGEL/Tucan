@@ -129,4 +129,14 @@ Public Class FormJetEngine
 
     End Sub
 
+    Private Sub btnInertia_Click(sender As Object, e As EventArgs) Handles btnInertia.Click
+
+        If _JetEngine IsNot Nothing Then
+            FormInertia.SetInertia(_JetEngine.Inertia)
+            If FormInertia.ShowDialog() = DialogResult.OK Then
+                _JetEngine.Inertia = FormInertia.GetInertia
+            End If
+        End If
+
+    End Sub
 End Class

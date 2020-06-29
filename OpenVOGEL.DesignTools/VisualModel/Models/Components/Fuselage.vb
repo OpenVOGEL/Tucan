@@ -15,12 +15,13 @@
 'You should have received a copy Of the GNU General Public License
 'along with this program.  If Not, see < http:  //www.gnu.org/licenses/>.
 
-Imports OpenVOGEL.MathTools.Algebra.EuclideanSpace
+Imports DotNumerics.Interpolation
+Imports OpenVOGEL.AeroTools.CalculationModel.Settings
+Imports OpenVOGEL.AeroTools.IoHelper
 Imports OpenVOGEL.DesignTools.VisualModel.Models.Components.Basics
 Imports OpenVOGEL.DesignTools.VisualModel.Interface
-Imports OpenVOGEL.AeroTools.IoHelper
+Imports OpenVOGEL.MathTools.Algebra.EuclideanSpace
 Imports System.Xml
-Imports DotNumerics.Interpolation
 
 Namespace VisualModel.Models.Components
 
@@ -1538,6 +1539,26 @@ Namespace VisualModel.Models.Components
 
                         AnchorLines.Add(New AnchorLine(reader.ReadSubtree))
 
+                    Case "Inertia"
+
+                        Dim I As InertialProperties
+
+                        I.Mass = IOXML.ReadDouble(reader, "Mass", 0.0)
+
+                        I.Xcg = IOXML.ReadDouble(reader, "Xcg", 0.0)
+                        I.Ycg = IOXML.ReadDouble(reader, "Ycg", 0.0)
+                        I.Zcg = IOXML.ReadDouble(reader, "Zcg", 0.0)
+
+                        I.Ixx = IOXML.ReadDouble(reader, "Ixx", 0.0)
+                        I.Iyy = IOXML.ReadDouble(reader, "Iyy", 0.0)
+                        I.Izz = IOXML.ReadDouble(reader, "Izz", 0.0)
+
+                        I.Ixy = IOXML.ReadDouble(reader, "Ixy", 0.0)
+                        I.Ixz = IOXML.ReadDouble(reader, "Ixz", 0.0)
+                        I.Iyz = IOXML.ReadDouble(reader, "Izx", 0.0)
+
+                        Inertia = I
+
                 End Select
 
             End While
@@ -1602,6 +1623,26 @@ Namespace VisualModel.Models.Components
 
             writer.WriteStartElement("VisualProperties")
             VisualProperties.WriteToXML(writer)
+            writer.WriteEndElement()
+
+            ' Inertia
+
+            writer.WriteStartElement("Inertia")
+
+            writer.WriteAttributeString("Mass", String.Format("{0,14:E6}", Inertia.Mass))
+
+            writer.WriteAttributeString("Xcg", String.Format("{0,14:E6}", Inertia.Xcg))
+            writer.WriteAttributeString("Ycg", String.Format("{0,14:E6}", Inertia.Ycg))
+            writer.WriteAttributeString("Zcg", String.Format("{0,14:E6}", Inertia.Zcg))
+
+            writer.WriteAttributeString("Ixx", String.Format("{0,14:E6}", Inertia.Ixx))
+            writer.WriteAttributeString("Iyy", String.Format("{0,14:E6}", Inertia.Iyy))
+            writer.WriteAttributeString("Izz", String.Format("{0,14:E6}", Inertia.Izz))
+
+            writer.WriteAttributeString("Ixy", String.Format("{0,14:E6}", Inertia.Ixy))
+            writer.WriteAttributeString("Ixz", String.Format("{0,14:E6}", Inertia.Ixz))
+            writer.WriteAttributeString("Izx", String.Format("{0,14:E6}", Inertia.Iyz))
+
             writer.WriteEndElement()
 
         End Sub
