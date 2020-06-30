@@ -29,7 +29,7 @@ Namespace CalculationModel.Solver
         ''' <summary>
         ''' The version of the solver
         ''' </summary>
-        Public Const Version As String = "2.1-2020.05"
+        Public Shared ReadOnly Property Version As String = "4.0-2020.06"
 
         ''' <summary>
         ''' Read a written step
@@ -273,7 +273,7 @@ Namespace CalculationModel.Solver
         ''' <returns></returns>
         Public ReadOnly Property FreeFlightResFile(TimeStep As Integer) As String
             Get
-                Return System.IO.Path.Combine(AeroelasticPath, String.Format("FreeFlight_{0}.res", TimeStep))
+                Return System.IO.Path.Combine(FreeFlightPath, String.Format("FreeFlight_{0}.res", TimeStep))
             End Get
         End Property
 

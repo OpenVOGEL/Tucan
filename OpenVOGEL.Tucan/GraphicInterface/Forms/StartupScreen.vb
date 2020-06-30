@@ -17,4 +17,14 @@
 
 Public Class StartupScreen
 
+    Public Sub New()
+
+        InitializeComponent()
+
+        LblVersion.Text = "Compilation " & My.Application.Info.Version.ToString
+
+        LblKernel.Text = "Kernel " & AeroTools.CalculationModel.Solver.Solver.Version
+
+    End Sub
+
 End Class

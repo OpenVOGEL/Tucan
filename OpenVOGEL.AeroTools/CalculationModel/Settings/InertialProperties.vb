@@ -159,23 +159,28 @@ Namespace CalculationModel.Settings
             M(1, 2) = Iyz
             M(2, 2) = Izz
 
+            ' Solve the eigen system
+            '--------------------------------------
+
             Dim V As New Matrix(3)
             Dim A As Matrix = E.GetEigenvalues(M, V)
+
+            I_xx = A(0, 0)
+            I_yy = A(1, 0)
+            I_zz = A(2, 0)
 
             Basis.U.X = V(0, 0)
             Basis.U.Y = V(1, 0)
             Basis.U.Z = V(2, 0)
-            I_xx = A(0, 0)
 
             Basis.V.X = V(0, 1)
             Basis.V.Y = V(1, 1)
             Basis.V.Z = V(2, 1)
-            I_yy = A(1, 0)
 
-            Basis.W.X = V(0, 2)
-            Basis.W.Y = V(1, 2)
-            Basis.W.Z = V(2, 2)
-            I_zz = A(2, 0)
+            ' Force the basis to be dextro-rotation
+            '--------------------------------------
+
+            Basis.W.FromVectorProduct(Basis.U, Basis.V)
 
         End Sub
 

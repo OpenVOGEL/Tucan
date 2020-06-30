@@ -78,6 +78,8 @@ Namespace CalculationModel.Solver
 
                 Next
 
+                Lattice.CalculateLatticeParameters()
+
             Next
 
             ' Stream
@@ -278,6 +280,14 @@ Namespace CalculationModel.Solver
                         Exit Sub
                     End If
 
+                    '//////////////////////////////////'
+                    ' Save current step
+                    '//////////////////////////////////'
+
+                    RaiseEvent PushMessage(" > Writing binaries")
+
+                    WriteToXML(FreeFlightResFile(TimeStep))
+
                 Else
 
                     '##################################'
@@ -313,14 +323,6 @@ Namespace CalculationModel.Solver
                     BuildRightHandSide2()
 
                 End If
-
-                '//////////////////////////////////'
-                ' Save current step
-                '//////////////////////////////////'
-
-                RaiseEvent PushMessage(" > Writing binaries")
-
-                WriteToXML(FreeFlightResFile(TimeStep))
 
             Next
 

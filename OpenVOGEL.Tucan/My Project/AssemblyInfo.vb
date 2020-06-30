@@ -12,7 +12,7 @@ Imports System.Runtime.InteropServices
 <Assembly: AssemblyDescription("Software for aerodynamic analysis and aircraft design")>
 <Assembly: AssemblyCompany("OpenVOGEL")>
 <Assembly: AssemblyProduct("Tucan")>
-<Assembly: AssemblyCopyright("Copyright ©  2019 - Guillermo A. Hazebrouck")>
+<Assembly: AssemblyCopyright("Copyright ©  2020 - Guillermo A. Hazebrouck")>
 <Assembly: AssemblyTrademark("OpenVOGEL Tucan")>
 
 <Assembly: ComVisible(False)>
@@ -31,5 +31,5 @@ Imports System.Runtime.InteropServices
 ' by using the '*' as shown below:
 ' <Assembly: AssemblyVersion("1.0.*")> 
 
-<Assembly: AssemblyVersion("2019.0.0.0")>
+<Assembly: AssemblyVersion("3.0.2020.06")>
 <Assembly: AssemblyFileVersion("0.0.0.0")>

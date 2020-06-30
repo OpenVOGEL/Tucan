@@ -118,83 +118,86 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="Label3.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+  <data name="LblInfo.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Right</value>
   </data>
   <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="Label3.AutoSize" type="System.Boolean, mscorlib">
+  <data name="LblInfo.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="Label3.Font" type="System.Drawing.Font, System.Drawing">
+  <data name="LblInfo.Font" type="System.Drawing.Font, System.Drawing">
     <value>Candara, 8.25pt</value>
   </data>
-  <data name="Label3.Location" type="System.Drawing.Point, System.Drawing">
-    <value>101, 223</value>
+  <data name="LblInfo.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
-  <data name="Label3.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="LblInfo.Location" type="System.Drawing.Point, System.Drawing">
+    <value>139, 223</value>
+  </data>
+  <data name="LblInfo.Size" type="System.Drawing.Size, System.Drawing">
     <value>243, 39</value>
   </data>
-  <data name="Label3.TabIndex" type="System.Int32, mscorlib">
+  <data name="LblInfo.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
   </data>
-  <data name="Label3.Text" xml:space="preserve">
+  <data name="LblInfo.Text" xml:space="preserve">
     <value>This software is copyright protected
 and distrbuted under General Public Licence GPL v3
 Original author: Guillermo Hazebrouck</value>
   </data>
-  <data name="Label3.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+  <data name="LblInfo.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
     <value>MiddleRight</value>
   </data>
-  <data name="&gt;&gt;Label3.Name" xml:space="preserve">
-    <value>Label3</value>
+  <data name="&gt;&gt;LblInfo.Name" xml:space="preserve">
+    <value>LblInfo</value>
   </data>
-  <data name="&gt;&gt;Label3.Type" xml:space="preserve">
+  <data name="&gt;&gt;LblInfo.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;Label3.Parent" xml:space="preserve">
+  <data name="&gt;&gt;LblInfo.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;Label3.ZOrder" xml:space="preserve">
-    <value>1</value>
+  <data name="&gt;&gt;LblInfo.ZOrder" xml:space="preserve">
+    <value>2</value>
   </data>
-  <data name="LabelLicense.AutoSize" type="System.Boolean, mscorlib">
+  <data name="LblVersion.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="LabelLicense.Font" type="System.Drawing.Font, System.Drawing">
+  <data name="LblVersion.Font" type="System.Drawing.Font, System.Drawing">
     <value>Candara, 9.75pt</value>
   </data>
-  <data name="LabelLicense.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 220</value>
+  <data name="LblVersion.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 224</value>
   </data>
-  <data name="LabelLicense.Size" type="System.Drawing.Size, System.Drawing">
-    <value>91, 15</value>
+  <data name="LblVersion.Size" type="System.Drawing.Size, System.Drawing">
+    <value>83, 15</value>
   </data>
-  <data name="LabelLicense.TabIndex" type="System.Int32, mscorlib">
+  <data name="LblVersion.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>
   </data>
-  <data name="LabelLicense.Text" xml:space="preserve">
-    <value>Compilation 2.2</value>
+  <data name="LblVersion.Text" xml:space="preserve">
+    <value>Compilation X</value>
   </data>
-  <data name="LabelLicense.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+  <data name="LblVersion.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
     <value>MiddleRight</value>
   </data>
-  <data name="&gt;&gt;LabelLicense.Name" xml:space="preserve">
-    <value>LabelLicense</value>
+  <data name="&gt;&gt;LblVersion.Name" xml:space="preserve">
+    <value>LblVersion</value>
   </data>
-  <data name="&gt;&gt;LabelLicense.Type" xml:space="preserve">
+  <data name="&gt;&gt;LblVersion.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;LabelLicense.Parent" xml:space="preserve">
+  <data name="&gt;&gt;LblVersion.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;LabelLicense.ZOrder" xml:space="preserve">
-    <value>0</value>
+  <data name="&gt;&gt;LblVersion.ZOrder" xml:space="preserve">
+    <value>1</value>
   </data>
-  <data name="Logo.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
+  <data name="PbxLogo.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
     <value>Center</value>
   </data>
-  <data name="Logo.ErrorImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="PbxLogo.ErrorImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAWIAAADOCAIAAACLl58MAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
         wwAADsMBx2+oZAAA/7JJREFUeF7svQd8HEW2PTySZronKznnQDBgwIAxGQwscUm75IUlL5kl5xwMzjnn
@@ -1520,7 +1523,7 @@ Original author: Guillermo Hazebrouck</value>
         Jh7jMR7j7+BxmniMx3iMv4PHaeIxHuMx/g4ep4nHeIzH+E3cu/f/AOR25c1LWSY9AAAAAElFTkSuQmCC
 </value>
   </data>
-  <data name="Logo.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="PbxLogo.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAVIAAADVCAIAAACKde9sAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
         wwAADsMBx2+oZAAATRBJREFUeF7tnQecDVf7xzesCBLB2qb33uvqnUWweXVJXkQiJCG8hCQihKhR/gmJ
@@ -1855,10 +1858,10 @@ Original author: Guillermo Hazebrouck</value>
         /X/XkRAqjCn+LgAAAABJRU5ErkJggg==
 </value>
   </data>
-  <data name="Logo.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+  <data name="PbxLogo.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
-  <data name="Logo.InitialImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="PbxLogo.InitialImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAATEAAAC/CAIAAAAZynwjAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
         wwAADsMBx2+oZAAAT09JREFUeF7tnXuUVNWV/+eP3/qt3z+ucY064k9j1JEJxseIP5IY85jBJAaNCnEl
@@ -2202,29 +2205,65 @@ Original author: Guillermo Hazebrouck</value>
         sghgOsgSkXMyRowYWSHmZIwYpYWYkzFilBZiTsaIUUr44ov/D5s3vMliCUj3AAAAAElFTkSuQmCC
 </value>
   </data>
-  <data name="Logo.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="PbxLogo.Location" type="System.Drawing.Point, System.Drawing">
     <value>3, 3</value>
   </data>
-  <data name="Logo.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+  <data name="PbxLogo.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>1, 1, 1, 1</value>
   </data>
-  <data name="Logo.Size" type="System.Drawing.Size, System.Drawing">
-    <value>342, 213</value>
+  <data name="PbxLogo.Size" type="System.Drawing.Size, System.Drawing">
+    <value>380, 213</value>
   </data>
-  <data name="Logo.TabIndex" type="System.Int32, mscorlib">
+  <data name="PbxLogo.TabIndex" type="System.Int32, mscorlib">
     <value>5</value>
   </data>
-  <data name="&gt;&gt;Logo.Name" xml:space="preserve">
-    <value>Logo</value>
+  <data name="&gt;&gt;PbxLogo.Name" xml:space="preserve">
+    <value>PbxLogo</value>
   </data>
-  <data name="&gt;&gt;Logo.Type" xml:space="preserve">
+  <data name="&gt;&gt;PbxLogo.Type" xml:space="preserve">
     <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;Logo.Parent" xml:space="preserve">
+  <data name="&gt;&gt;PbxLogo.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;Logo.ZOrder" xml:space="preserve">
-    <value>2</value>
+  <data name="&gt;&gt;PbxLogo.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="LblKernel.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="LblKernel.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Candara, 9.75pt</value>
+  </data>
+  <data name="LblKernel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="LblKernel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 241</value>
+  </data>
+  <data name="LblKernel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>54, 15</value>
+  </data>
+  <data name="LblKernel.TabIndex" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="LblKernel.Text" xml:space="preserve">
+    <value>Kernel X</value>
+  </data>
+  <data name="LblKernel.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleRight</value>
+  </data>
+  <data name="&gt;&gt;LblKernel.Name" xml:space="preserve">
+    <value>LblKernel</value>
+  </data>
+  <data name="&gt;&gt;LblKernel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;LblKernel.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;LblKernel.ZOrder" xml:space="preserve">
+    <value>0</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
@@ -2233,7 +2272,7 @@ Original author: Guillermo Hazebrouck</value>
     <value>6, 13</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>348, 270</value>
+    <value>386, 270</value>
   </data>
   <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
     <value>CenterScreen</value>

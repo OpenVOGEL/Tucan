@@ -144,11 +144,55 @@ Namespace Integration
 
         End Operator
 
+        Public Shared Operator <(X1 As Variable, X2 As Variable) As Boolean
+
+            Return _
+            X1.Gx < X2.Gx AndAlso
+            X1.Gy < X2.Gy AndAlso
+            X1.Gz < X2.Gz AndAlso
+            X1.Px < X2.Px AndAlso
+            X1.Py < X2.Py AndAlso
+            X1.Pz < X2.Pz AndAlso
+            X1.Vx < X2.Vx AndAlso
+            X1.Vy < X2.Vy AndAlso
+            X1.Vz < X2.Vz AndAlso
+            X1.Ox < X2.Ox AndAlso
+            X1.Oy < X2.Oy AndAlso
+            X1.Oz < X2.Oz
+
+        End Operator
+
+        Public Shared Operator >(X1 As Variable, X2 As Variable) As Boolean
+
+            Return _
+            X1.Gx > X2.Gx AndAlso
+            X1.Gy > X2.Gy AndAlso
+            X1.Gz > X2.Gz AndAlso
+            X1.Px > X2.Px AndAlso
+            X1.Py > X2.Py AndAlso
+            X1.Pz > X2.Pz AndAlso
+            X1.Vx > X2.Vx AndAlso
+            X1.Vy > X2.Vy AndAlso
+            X1.Vz > X2.Vz AndAlso
+            X1.Ox > X2.Ox AndAlso
+            X1.Oy > X2.Oy AndAlso
+            X1.Oz > X2.Oz
+
+        End Operator
+
         ''' <summary>
         ''' Returns the maximum absolute of the velocity and angular velocity.
         ''' </summary>
         ''' <returns></returns>
-        Public Function MaximumAbsolute() As Double
+        Public Sub Absolute()
+
+            Gx = Math.Abs(Gx)
+            Gy = Math.Abs(Gy)
+            Gz = Math.Abs(Gz)
+
+            Px = Math.Abs(Px)
+            Py = Math.Abs(Py)
+            Pz = Math.Abs(Pz)
 
             Vx = Math.Abs(Vx)
             Vy = Math.Abs(Vy)
@@ -158,9 +202,7 @@ Namespace Integration
             Oy = Math.Abs(Oy)
             Oz = Math.Abs(Oz)
 
-            Return Math.Max(Vx, Math.Max(Vy, Math.Max(Vz, Math.Max(Ox, Math.Max(Oy, Oz)))))
-
-        End Function
+        End Sub
 
     End Structure
 
@@ -195,6 +237,9 @@ Namespace Integration
         ''' <param name="O0"></param>
         Public Sub New(N As Integer, T As Double, V0 As Vector3, O0 As Vector3, Gravity As Vector3)
 
+            _Velocity = New Vector3
+            _Omega = New Vector3
+
             ReDim X(N)
             ReDim TE(N)
             ReDim DX(N)
@@ -216,8 +261,28 @@ Namespace Integration
             S = 0
             I = 0
 
-            Epsilon = 0.005#
-            Mass = 0.0#
+            Dim E As Variable
+
+            ' Absolute errors
+            '------------------
+
+            E.Gx = 0.01
+            E.Gy = 0.01
+            E.Gz = 0.01
+
+            E.Px = 0.01
+            E.Py = 0.01
+            E.Pz = 0.01
+
+            E.Vx = 0.01
+            E.Vy = 0.01
+            E.Vz = 0.01
+
+            E.Ox = 0.001
+            E.Oy = 0.001
+            E.Oz = 0.001
+
+            Epsilon = E
 
         End Sub
 
@@ -309,7 +374,11 @@ Namespace Integration
         ''' </summary>
         Private DX() As Variable
 
-        Public Property Epsilon As Double
+        ''' <summary>
+        ''' The maximum absolute step change allowed
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property Epsilon As Variable
 
         ''' <summary>
         ''' The total mass of the system
@@ -368,8 +437,6 @@ Namespace Integration
 
                     X(1) = X(0) + Dt * DX(0)
 
-                    TE(1) = X(1)
-
                 Case 2
 
                     ' 2-steps Adams-Bashford
@@ -377,16 +444,12 @@ Namespace Integration
 
                     X(2) = X(1) + (0.5# * Dt) * (3.0# * DX(1) - DX(0))
 
-                    TE(2) = X(2)
-
                 Case 3
 
                     ' 3-steps Adams-Bashford
                     '------------------------------------------
 
                     X(3) = X(2) + (Dt / 12.0#) * (23.0# * DX(2) - 16.0# * DX(1) + 5.0# * DX(0))
-
-                    TE(3) = X(3)
 
                 Case Else
 
@@ -420,7 +483,7 @@ Namespace Integration
             ' Use the appropriate iterator for each time step
             '--------------------------------------------------
 
-            Dim R As Variable = X(S)
+            Dim XS As Variable = X(S)
 
             Select Case S
 
@@ -433,7 +496,7 @@ Namespace Integration
 
                     X(1) = X(0) + (0.5 * Dt) * (DX(0) + DX(1))
 
-                    TE(1) = (9.0# / 121.0#) * X(1) - TE(1)
+                    TE(1) = (9.0# / 121.0#) * (X(1) - XS)
 
                 Case 2
 
@@ -444,7 +507,7 @@ Namespace Integration
 
                     X(2) = X(1) + (Dt / 12.0#) * (5.0# * DX(2) + 8.0# * DX(1) - DX(0))
 
-                    TE(2) = (9.0# / 121.0#) * X(2) - TE(2)
+                    TE(2) = (9.0# / 121.0#) * (X(2) - XS)
 
                 Case 3
 
@@ -455,7 +518,7 @@ Namespace Integration
 
                     X(3) = X(2) + Dt / 24.0# * (9.0# * DX(3) + 19.0# * DX(2) - 5.0# * DX(1) + DX(0))
 
-                    TE(3) = (9.0# / 121.0#) * X(3) - TE(3)
+                    TE(3) = (9.0# / 121.0#) * (X(3) - XS)
 
                 Case Else
 
@@ -464,9 +527,9 @@ Namespace Integration
 
                     CacheDerivatives(S, F, M)
 
-                    X(S) = (1.0# / 8.0#) * (9.0# * X(S - 1) - X(S - 3) + 3.0# * (DX(S) + 2.0# * DX(S - 1) - DX(S - 2)))
+                    X(S) = (1.0# / 8.0#) * (9.0# * X(S - 1) - X(S - 3) + 3.0# * Dt * (DX(S) + 2.0# * DX(S - 1) - DX(S - 2)))
 
-                    TE(S) = (9.0# / 121.0#) * (X(S) - XP)
+                    TE(S) = (9.0# / 121.0#) * ((X(S) - XP))
 
                     X(S) = X(S) - TE(S)
 
@@ -474,14 +537,14 @@ Namespace Integration
 
             CacheState()
 
-            ' Evaluate relative change
+            ' Evaluate change
             '--------------------------------------------------
 
-            Dim E As Variable = (X(S) - R) / R
+            Dim E As Variable = X(S) - XS
 
-            Dim D As Double = E.MaximumAbsolute
+            E.Absolute()
 
-            Return D < Epsilon
+            Return E < Epsilon
 
         End Function
 

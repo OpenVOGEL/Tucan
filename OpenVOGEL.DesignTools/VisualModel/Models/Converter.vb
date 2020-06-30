@@ -235,11 +235,11 @@ Namespace VisualModel.Models
 
             Dim Inertia As InertialProperties = Model.GetGlobalInertia
 
-            Settings.Mass = Inertia.Mass
+            This.Settings.Mass = Inertia.Mass
 
-            Settings.CenterOfGravity.X = Inertia.Xcg
-            Settings.CenterOfGravity.Y = Inertia.Ycg
-            Settings.CenterOfGravity.Z = Inertia.Zcg
+            This.Settings.CenterOfGravity.X = Inertia.Xcg
+            This.Settings.CenterOfGravity.Y = Inertia.Ycg
+            This.Settings.CenterOfGravity.Z = Inertia.Zcg
 
             Inertia.ToMainInertia(This.Settings.MainInertialAxes,
                                   This.Settings.Ixx,
