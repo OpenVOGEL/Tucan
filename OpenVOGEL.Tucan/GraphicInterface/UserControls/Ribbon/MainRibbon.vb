@@ -761,7 +761,7 @@ ErrSub:
             nudTita.Value = _SelectedSurface.Orientation.Tita
             nudFi.Value = _SelectedSurface.Orientation.Fi
 
-            cbSecuence.SelectedIndex = _SelectedSurface.Orientation.Secuence
+            cbSecuence.SelectedIndex = _SelectedSurface.Orientation.Sequence
 
         End If
 
@@ -1032,7 +1032,7 @@ ErrSub:
 
         If _SelectedSurface IsNot Nothing AndAlso Not _LockPropsEvents Then
 
-            _SelectedSurface.Orientation.Secuence = Math.Max(0, cbSecuence.SelectedIndex)
+            _SelectedSurface.Orientation.Sequence = Math.Max(0, cbSecuence.SelectedIndex)
 
             _SelectedSurface.Orientate(_SelectedSurface.CenterOfRotation, _SelectedSurface.Orientation)
 

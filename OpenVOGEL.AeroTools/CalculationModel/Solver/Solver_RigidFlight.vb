@@ -71,11 +71,11 @@ Namespace CalculationModel.Solver
             '//////////////////////////////'
 
             Stream.Velocity.Assign(Settings.StreamVelocity)
-            Stream.Omega.Assign(Settings.StreamOmega)
+            Stream.Rotation.Assign(Settings.StreamOmega)
             Stream.Density = Settings.Density
             Stream.SquareVelocity = Stream.Velocity.SquareEuclideanNorm
             Stream.DynamicPressure = 0.5 * Stream.Density * Stream.SquareVelocity
-            WithStreamOmega = Stream.Omega.EuclideanNorm > 0
+            WithStreamRotation = Stream.Rotation.EuclideanNorm > 0
 
             Dim WakeExtension As New Vector3(Settings.StreamVelocity)
             WakeExtension.Normalize()

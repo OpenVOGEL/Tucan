@@ -73,7 +73,7 @@ Namespace CalculationModel.Solver
         ''' Indicates if the stream rotates
         ''' </summary>
         ''' <returns></returns>
-        Private WithStreamOmega As Boolean = False
+        Private WithStreamRotation As Boolean = False
 
         ''' <summary>
         ''' Gathers the instantaneus stream properties
@@ -82,7 +82,7 @@ Namespace CalculationModel.Solver
 
             Public Velocity As New Vector3
 
-            Public Omega As New Vector3
+            Public Rotation As New Vector3
 
             Public DynamicPressure As Double
 

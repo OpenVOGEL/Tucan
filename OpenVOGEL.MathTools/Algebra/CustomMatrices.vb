@@ -271,9 +271,9 @@ Namespace Algebra.CustomMatrices
             Dim c3 As Double = Math.Cos(Orientation.Fi)
             Dim s3 As Double = Math.Sin(Orientation.Fi)
 
-            Select Case Orientation.Secuence
+            Select Case Orientation.Sequence
 
-                Case EulerAngles.RotationSecuence.ZYX
+                Case EulerAngles.RotationSequence.ZYX
 
                     Item(1, 1) = c1 * c2
                     Item(1, 2) = c1 * s2 * s3 - s1 * c3
@@ -285,7 +285,7 @@ Namespace Algebra.CustomMatrices
                     Item(3, 2) = c2 * s3
                     Item(3, 3) = c2 * c3
 
-                Case EulerAngles.RotationSecuence.XYZ
+                Case EulerAngles.RotationSequence.XYZ
 
                     Item(1, 1) = c2 * c3
                     Item(1, 2) = -c2 * s3

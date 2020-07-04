@@ -123,7 +123,7 @@ Namespace CalculationModel.Solver
 
             RaiseEvent PushProgress("Building aerodynamic matrices", 0)
 
-            WithStreamOmega = True
+            WithStreamRotation = True
             BuildMatrixForDoublets()
             BuildRightHandSide1()
             InitializeWakes()
@@ -198,7 +198,7 @@ Namespace CalculationModel.Solver
                             ' NOTE: as seen from the aircraft, the stream moves in the oposite direction
 
                             Stream.Velocity.Assign(MotionIntegrator.Velocity, -1.0#)
-                            Stream.Omega.Assign(MotionIntegrator.Omega, -1.0#)
+                            Stream.Rotation.Assign(MotionIntegrator.Rotation, -1.0#)
                             Stream.SquareVelocity = Stream.Velocity.SquareEuclideanNorm
                             Stream.DynamicPressure = 0.5 * Stream.Density * Stream.SquareVelocity
 
@@ -217,7 +217,9 @@ Namespace CalculationModel.Solver
                             ' Find new circulation
                             '//////////////////////////////////////'
 
-                            RaiseEvent PushMessage("  -> Correcting motion")
+                            If Not Converged Then
+                                RaiseEvent PushMessage("  -> Correcting motion")
+                            End If
 
                             CalculateVelocityInducedByTheWakesOnBoundedLattices()
 
@@ -256,7 +258,7 @@ Namespace CalculationModel.Solver
                             Converged = MotionIntegrator.Correct(GlobalAirloads.Force, GlobalAirloads.Moment)
 
                             Stream.Velocity.Assign(MotionIntegrator.Velocity, -1.0#)
-                            Stream.Omega.Assign(MotionIntegrator.Omega, -1.0#)
+                            Stream.Rotation.Assign(MotionIntegrator.Rotation, -1.0#)
                             Stream.SquareVelocity = Stream.Velocity.SquareEuclideanNorm
                             Stream.DynamicPressure = 0.5 * Stream.Density * Stream.SquareVelocity
 

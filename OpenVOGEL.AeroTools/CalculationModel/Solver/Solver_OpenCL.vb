@@ -342,7 +342,7 @@ Namespace CalculationModel.Solver
 
                     If WithStreamOmega Then
 
-                        Ring.VelocityT.AddCrossProduct(Stream.Omega, Ring.ControlPoint) ' Add stream angular velocity
+                        Ring.VelocityT.AddCrossProduct(Stream.Rotation, Ring.ControlPoint) ' Add stream angular velocity
 
                     End If
 

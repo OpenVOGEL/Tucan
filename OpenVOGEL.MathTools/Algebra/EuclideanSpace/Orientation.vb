@@ -26,9 +26,9 @@ Namespace Algebra.EuclideanSpace
         Public Property Psi As Double
         Public Property Tita As Double
         Public Property Fi As Double
-        Public Property Secuence As RotationSecuence = RotationSecuence.ZYX
+        Public Property Sequence As RotationSequence = RotationSequence.ZYX
 
-        Public Enum RotationSecuence As Byte
+        Public Enum RotationSequence As Byte
 
             ZYX = 0
             XYZ = 1
@@ -50,7 +50,7 @@ Namespace Algebra.EuclideanSpace
             OrientationInRadians.Psi = Psi * Conversion
             OrientationInRadians.Tita = Tita * Conversion
             OrientationInRadians.Fi = Fi * Conversion
-            OrientationInRadians.Secuence = Secuence
+            OrientationInRadians.Sequence = Sequence
             Return OrientationInRadians
 
         End Function
@@ -60,7 +60,7 @@ Namespace Algebra.EuclideanSpace
             Fi = Euler.Fi
             Psi = Euler.Psi
             Tita = Euler.Tita
-            Secuence = Euler.Secuence
+            Sequence = Euler.Sequence
 
         End Sub
 

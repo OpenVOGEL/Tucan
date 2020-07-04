@@ -203,7 +203,7 @@ Namespace CalculationModel.Solver
 
                 For Each Stripe In Lattice.ChordWiseStripes
 
-                    Stripe.Compute(Stream.Velocity, Stream.Omega, Settings.Density, Settings.Viscocity)
+                    Stripe.Compute(Stream.Velocity, Stream.Rotation, Settings.Density, Settings.Viscocity)
 
                     Lattice.AirLoads.LiftForce.Add(Stripe.Lift)
                     Lattice.AirLoads.InducedDragForce.Add(Stripe.InducedDrag)

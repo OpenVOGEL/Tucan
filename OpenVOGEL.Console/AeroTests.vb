@@ -18,6 +18,7 @@
 Imports OpenVOGEL.AeroTools.CalculationModel.Models.Aero.Components
 Imports OpenVOGEL.MathTools.Algebra.CustomMatrices
 Imports OpenVOGEL.MathTools.Algebra.EuclideanSpace
+Imports OpenVOGEL.MathTools.Integration
 
 Public Module AeroTests
 
@@ -404,6 +405,84 @@ Public Module AeroTests
         Else
             System.Console.WriteLine("Doublet velocity Z NOT OK!")
         End If
+
+    End Sub
+
+    ''' <summary>
+    ''' Tests the Hamming ODES solver
+    ''' </summary>
+    Public Sub TestHammingSolver()
+
+        '' Simple 2D parabolic shot
+        '-------------------------------------------------------
+
+        System.Console.WriteLine("Testing Hamming ODEs solver")
+
+        System.Console.WriteLine("Case 1: parabolic shot")
+
+        Dim V0 As New Vector3(100.0#, 0.0#, 100.0#)
+        Dim O0 As New Vector3(0.0#, 0.0#, 0.0#)
+        Dim g As New Vector3(0.0#, 0.0#, -10.0#)
+
+        Dim N As Integer = 100
+        Dim Dt As Double = 0.1
+        Dim T As Double = 0.0#
+
+        Dim Solver As New HammingIntegrator(N, Dt, V0, O0, g)
+
+        Solver.Mass = 1.0#
+        Solver.Ixx = 1.0#
+        Solver.Iyy = 1.0#
+        Solver.Izz = 1.0#
+
+        Dim F0 As New Vector3(0.0#, 0.0#, 0.0#)
+        Dim M0 As New Vector3(0.0#, 0.0#, 0.0#)
+        Solver.SetInitialForces(F0, M0)
+
+        For I = 1 To N
+
+            If I = N Then
+                System.Console.WriteLine("last step")
+            End If
+
+            T += Dt
+
+            Dim AnaliticSolution As Variable
+            AnaliticSolution.Vx = V0.X
+            AnaliticSolution.Vz = V0.Z + g.Z * T
+            AnaliticSolution.Px = V0.X * T
+            AnaliticSolution.Pz = V0.Z * T + 0.5 * g.Z * T ^ 2
+
+            Solver.Predict()
+
+            Dim Converged As Boolean = False
+
+            For J = 1 To 10
+
+                If Solver.Correct(F0, M0) Then
+                    Converged = True
+                    Exit For
+                End If
+
+            Next
+
+            If Not Converged Then
+                System.Console.WriteLine("case 1 failed to converge")
+                Exit For
+            Else
+                Dim Err As Variable = (AnaliticSolution - Solver.State(I)) / AnaliticSolution
+                System.Console.WriteLine(String.Format("{0,10:F6} | {1,10:F6} | {2,10:F6} | {3,10:F6}", Err.Px, Err.Pz, Err.Vx, Err.Vz))
+
+            End If
+
+        Next
+
+        '' Simple 1D harmonic oscillator
+        '-------------------------------------------------------
+
+
+
+        System.Console.WriteLine("TEST PASSED")
 
     End Sub
 

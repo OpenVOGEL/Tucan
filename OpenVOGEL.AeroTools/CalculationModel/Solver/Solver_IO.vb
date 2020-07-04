@@ -53,9 +53,9 @@ Namespace CalculationModel.Solver
                 Stream.Velocity.X = IOXML.ReadDouble(reader, "VX", 1.0)
                 Stream.Velocity.Y = IOXML.ReadDouble(reader, "VY", 0.0)
                 Stream.Velocity.Z = IOXML.ReadDouble(reader, "VZ", 0.0)
-                Stream.Omega.X = IOXML.ReadDouble(reader, "OX", 0.0)
-                Stream.Omega.Y = IOXML.ReadDouble(reader, "OY", 0.0)
-                Stream.Omega.Z = IOXML.ReadDouble(reader, "OZ", 0.0)
+                Stream.Rotation.X = IOXML.ReadDouble(reader, "OX", 0.0)
+                Stream.Rotation.Y = IOXML.ReadDouble(reader, "OY", 0.0)
+                Stream.Rotation.Z = IOXML.ReadDouble(reader, "OZ", 0.0)
                 Stream.Density = IOXML.ReadDouble(reader, "Rho", 1.225)
 
                 If Stream.Density = 0 Then Stream.Density = 1.225
@@ -140,9 +140,9 @@ Namespace CalculationModel.Solver
             writer.WriteAttributeString("VX", Stream.Velocity.X)
             writer.WriteAttributeString("VY", Stream.Velocity.Y)
             writer.WriteAttributeString("VZ", Stream.Velocity.Z)
-            writer.WriteAttributeString("OX", Stream.Omega.X)
-            writer.WriteAttributeString("OY", Stream.Omega.Y)
-            writer.WriteAttributeString("OZ", Stream.Omega.Z)
+            writer.WriteAttributeString("OX", Stream.Rotation.X)
+            writer.WriteAttributeString("OY", Stream.Rotation.Y)
+            writer.WriteAttributeString("OZ", Stream.Rotation.Z)
             writer.WriteAttributeString("Rho", Stream.Density)
 
             writer.WriteAttributeString("Lattices", Lattices.Count)

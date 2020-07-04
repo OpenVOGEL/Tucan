@@ -88,6 +88,10 @@ Module Commands
 
                         TestAerodynamicSolver()
 
+                    Case "test_hamming"
+
+                        TestHammingSolver()
+
                     Case "mkl_on"
 
                         DotNumerics.LinearAlgebra.LinearEquations.UseIntelMathKernel = True

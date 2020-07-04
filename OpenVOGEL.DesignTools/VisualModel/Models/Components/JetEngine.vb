@@ -178,6 +178,8 @@ Namespace VisualModel.Models.Components
 
                         Name = reader.GetAttribute("Name")
                         ID = New Guid(IOXML.ReadString(reader, "ID", Guid.NewGuid.ToString))
+                        IncludeInCalculation = IOXML.ReadBoolean(reader, "Include", True)
+
                         Resolution = IOXML.ReadInteger(reader, "RE", 10)
                         FrontDiameter = IOXML.ReadDouble(reader, "FD", 1)
                         BackDiameter = IOXML.ReadDouble(reader, "BD", 0.5)
@@ -194,6 +196,11 @@ Namespace VisualModel.Models.Components
                         Orientation.Psi = IOXML.ReadDouble(reader, "Psi", 0)
                         Orientation.Tita = IOXML.ReadDouble(reader, "Theta", 0)
                         Orientation.Fi = IOXML.ReadDouble(reader, "Phi", 0)
+                        Orientation.Sequence = IOXML.ReadInteger(reader, "Sequence", CInt(EulerAngles.RotationSequence.ZYX))
+
+                        CenterOfRotation.X = IOXML.ReadDouble(reader, "Xcr", 0.0)
+                        CenterOfRotation.Y = IOXML.ReadDouble(reader, "Ycr", 0.0)
+                        CenterOfRotation.Z = IOXML.ReadDouble(reader, "Zcr", 0.0)
 
                     Case "VisualProperties"
 
@@ -234,11 +241,14 @@ Namespace VisualModel.Models.Components
         ''' <remarks></remarks>
         Public Overrides Sub WriteToXML(ByRef writer As XmlWriter)
 
-            ' Identity:
+            ' Identity
+            '-----------------------------------------------------
 
             writer.WriteStartElement("Identity")
             writer.WriteAttributeString("Name", Name)
             writer.WriteAttributeString("ID", ID.ToString)
+            writer.WriteAttributeString("Include", String.Format("{0}", IncludeInCalculation))
+
             writer.WriteAttributeString("FD", CDbl(FrontDiameter))
             writer.WriteAttributeString("BD", CDbl(BackDiameter))
             writer.WriteAttributeString("FL", CDbl(FrontLength))
@@ -254,17 +264,24 @@ Namespace VisualModel.Models.Components
             writer.WriteAttributeString("Psi", CDbl(Orientation.Psi))
             writer.WriteAttributeString("Theta", CDbl(Orientation.Tita))
             writer.WriteAttributeString("Phi", CDbl(Orientation.Fi))
+            writer.WriteAttributeString("Sequence", String.Format("{0}", CInt(Orientation.Sequence)))
+
+            writer.WriteAttributeString("Xcr", String.Format("{0}", Position.X))
+            writer.WriteAttributeString("Ycr", String.Format("{0}", Position.Y))
+            writer.WriteAttributeString("Zcr", String.Format("{0}", Position.Z))
 
             writer.WriteAttributeString("RE", CInt(Resolution))
             writer.WriteEndElement()
 
-            ' Visual properties:
+            ' Visual properties
+            '-----------------------------------------------------
 
             writer.WriteStartElement("VisualProperties")
             VisualProperties.WriteToXML(writer)
             writer.WriteEndElement()
 
             ' Inertia
+            '-----------------------------------------------------
 
             writer.WriteStartElement("Inertia")
 

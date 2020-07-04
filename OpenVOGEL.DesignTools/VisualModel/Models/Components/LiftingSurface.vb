@@ -1635,28 +1635,33 @@ Namespace VisualModel.Models.Components
 
                 Select Case reader.Name
 
+                    Case "Identity"
+
+                        Name = reader.GetAttribute("Name")
+                        ID = New Guid(IOXML.ReadString(reader, "ID", Guid.NewGuid.ToString))
+                        IncludeInCalculation = IOXML.ReadBoolean(reader, "Include", True)
+
                     Case "SurfaceProperties"
 
                         RootChord = IOXML.ReadDouble(reader, "RootChord", 0.0)
                         RootFlap = IOXML.ReadDouble(reader, "RootFlap", 0.2)
                         FlapPanels = IOXML.ReadInteger(reader, "FlapPanels", 3)
-                        IncludeInCalculation = IOXML.ReadBoolean(reader, "Include", True)
 
-                        Position.X = IOXML.ReadDouble(reader, "PGX", 0.0)
-                        Position.Y = IOXML.ReadDouble(reader, "PGY", 0.0)
-                        Position.Z = IOXML.ReadDouble(reader, "PGZ", 0.0)
+                        Position.X = IOXML.ReadDouble(reader, "X", 0.0)
+                        Position.Y = IOXML.ReadDouble(reader, "Y", 0.0)
+                        Position.Z = IOXML.ReadDouble(reader, "Z", 0.0)
 
-                        Orientation.Psi = IOXML.ReadDouble(reader, "OGPsi", 0.0)
-                        Orientation.Tita = IOXML.ReadDouble(reader, "OGTita", 0.0)
-                        Orientation.Fi = IOXML.ReadDouble(reader, "OGFi", 0.0)
-                        Orientation.Secuence = IOXML.ReadInteger(reader, "OGSecuence", CInt(EulerAngles.RotationSecuence.ZYX))
+                        Orientation.Psi = IOXML.ReadDouble(reader, "Psi", 0.0)
+                        Orientation.Tita = IOXML.ReadDouble(reader, "Tita", 0.0)
+                        Orientation.Fi = IOXML.ReadDouble(reader, "Fi", 0.0)
+                        Orientation.Sequence = IOXML.ReadInteger(reader, "Sequence", CInt(EulerAngles.RotationSequence.ZYX))
 
-                        CenterOfRotation.X = IOXML.ReadDouble(reader, "PCRX", 0.0)
-                        CenterOfRotation.Y = IOXML.ReadDouble(reader, "PCRY", 0.0)
-                        CenterOfRotation.Z = IOXML.ReadDouble(reader, "PCRZ", 0.0)
+                        CenterOfRotation.X = IOXML.ReadDouble(reader, "Xcr", 0.0)
+                        CenterOfRotation.Y = IOXML.ReadDouble(reader, "Ycr", 0.0)
+                        CenterOfRotation.Z = IOXML.ReadDouble(reader, "Zcr", 0.0)
 
-                        FirstPrimitiveSegment = IOXML.ReadInteger(reader, "PRIM1", 1)
-                        LastPrimitiveSegment = IOXML.ReadInteger(reader, "PRIM2", 2)
+                        FirstPrimitiveSegment = IOXML.ReadInteger(reader, "Primitive1", 1)
+                        LastPrimitiveSegment = IOXML.ReadInteger(reader, "Primitive2", 2)
                         TrailingEdgeConvection = IOXML.ReadBoolean(reader, "TrailingConvection", False)
 
                         ConvectWake = IOXML.ReadBoolean(reader, "ConvectWake", True)
@@ -1673,11 +1678,6 @@ Namespace VisualModel.Models.Components
                         RootSection.m = IOXML.ReadDouble(reader, "Rootm", 0.0)
 
                         NumberOfChordPanels = IOXML.ReadInteger(reader, "NumberChordRings", 6)
-
-                    Case "Identity"
-
-                        Name = reader.GetAttribute("Name")
-                        ID = New Guid(IOXML.ReadString(reader, "ID", Guid.NewGuid.ToString))
 
                     Case "MacroPanel", String.Format("MacroPanel{0}", count)
 
@@ -1727,37 +1727,41 @@ Namespace VisualModel.Models.Components
         ''' <remarks></remarks>
         Public Overrides Sub WriteToXML(ByRef writer As XmlWriter)
 
-            ' Identity:
+            ' Identity
+            '-----------------------------------------------------
 
             writer.WriteStartElement("Identity")
+
             writer.WriteAttributeString("Name", Name)
             writer.WriteAttributeString("ID", ID.ToString)
+            writer.WriteAttributeString("Include", String.Format("{0}", IncludeInCalculation))
+
             writer.WriteEndElement()
 
-            ' Surface properties:
+            ' Surface properties
+            '-----------------------------------------------------
 
             writer.WriteStartElement("SurfaceProperties")
 
             writer.WriteAttributeString("RootChord", String.Format("{0}", RootChord))
             writer.WriteAttributeString("RootFlap", String.Format("{0}", RootFlap))
             writer.WriteAttributeString("FlapPanels", String.Format("{0}", FlapPanels))
-            writer.WriteAttributeString("Include", String.Format("{0}", IncludeInCalculation))
 
-            writer.WriteAttributeString("PGX", String.Format("{0}", Position.X))
-            writer.WriteAttributeString("PGY", String.Format("{0}", Position.Y))
-            writer.WriteAttributeString("PGZ", String.Format("{0}", Position.Z))
+            writer.WriteAttributeString("X", String.Format("{0}", Position.X))
+            writer.WriteAttributeString("Y", String.Format("{0}", Position.Y))
+            writer.WriteAttributeString("Z", String.Format("{0}", Position.Z))
 
-            writer.WriteAttributeString("OGPsi", String.Format("{0}", Orientation.Psi))
-            writer.WriteAttributeString("OGTita", String.Format("{0}", Orientation.Tita))
-            writer.WriteAttributeString("OGFi", String.Format("{0}", Orientation.Fi))
-            writer.WriteAttributeString("OGSecuence", String.Format("{0}", CInt(Orientation.Secuence)))
+            writer.WriteAttributeString("Psi", String.Format("{0}", Orientation.Psi))
+            writer.WriteAttributeString("Tita", String.Format("{0}", Orientation.Tita))
+            writer.WriteAttributeString("Fi", String.Format("{0}", Orientation.Fi))
+            writer.WriteAttributeString("Sequence", String.Format("{0}", CInt(Orientation.Sequence)))
 
-            writer.WriteAttributeString("PCRX", String.Format("{0}", CenterOfRotation.X))
-            writer.WriteAttributeString("PCRY", String.Format("{0}", CenterOfRotation.Y))
-            writer.WriteAttributeString("PCRZ", String.Format("{0}", CenterOfRotation.Z))
+            writer.WriteAttributeString("Xcr", String.Format("{0}", CenterOfRotation.X))
+            writer.WriteAttributeString("Ycr", String.Format("{0}", CenterOfRotation.Y))
+            writer.WriteAttributeString("Zcr", String.Format("{0}", CenterOfRotation.Z))
 
-            writer.WriteAttributeString("PRIM1", String.Format("{0}", FirstPrimitiveSegment))
-            writer.WriteAttributeString("PRIM2", String.Format("{0}", LastPrimitiveSegment))
+            writer.WriteAttributeString("Primitive1", String.Format("{0}", FirstPrimitiveSegment))
+            writer.WriteAttributeString("Primitive2", String.Format("{0}", LastPrimitiveSegment))
             writer.WriteAttributeString("ConvectWake", String.Format("{0}", CInt(ConvectWake)))
             writer.WriteAttributeString("CuttingStep", String.Format("{0}", CuttingStep))
             writer.WriteAttributeString("Symmetric", String.Format("{0}", CInt(Symmetric)))
@@ -1777,7 +1781,8 @@ Namespace VisualModel.Models.Components
 
             writer.WriteEndElement()
 
-            ' Macro panels:
+            ' Macro panels
+            '-----------------------------------------------------
 
             For i = 0 To WingRegions.Count - 1
 
@@ -1789,13 +1794,15 @@ Namespace VisualModel.Models.Components
 
             Next
 
-            ' Visual properties:
+            ' Visual properties
+            '-----------------------------------------------------
 
             writer.WriteStartElement("VisualProperties")
             VisualProperties.WriteToXML(writer)
             writer.WriteEndElement()
 
             ' Inertia
+            '-----------------------------------------------------
 
             writer.WriteStartElement("Inertia")
 

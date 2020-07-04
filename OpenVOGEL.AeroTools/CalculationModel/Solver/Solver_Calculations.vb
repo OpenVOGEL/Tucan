@@ -448,11 +448,11 @@ Namespace CalculationModel.Solver
                         Dim Vy As Double = Stream.Velocity.Y
                         Dim Vz As Double = Stream.Velocity.Z
 
-                        If WithStreamOmega Then
+                        If WithStreamRotation Then
 
-                            Vx += Stream.Omega.Y * VortexRing.ControlPoint.Z - Stream.Omega.Z * VortexRing.ControlPoint.Y
-                            Vy += Stream.Omega.Z * VortexRing.ControlPoint.X - Stream.Omega.X * VortexRing.ControlPoint.Z
-                            Vz += Stream.Omega.X * VortexRing.ControlPoint.Y - Stream.Omega.Y * VortexRing.ControlPoint.X
+                            Vx += Stream.Rotation.Y * VortexRing.ControlPoint.Z - Stream.Rotation.Z * VortexRing.ControlPoint.Y
+                            Vy += Stream.Rotation.Z * VortexRing.ControlPoint.X - Stream.Rotation.X * VortexRing.ControlPoint.Z
+                            Vz += Stream.Rotation.X * VortexRing.ControlPoint.Y - Stream.Rotation.Y * VortexRing.ControlPoint.X
 
                         End If
 
@@ -490,29 +490,31 @@ Namespace CalculationModel.Solver
 
                     If VortexRing.IsSlender Then
 
-                        ' Neumann boundary conditions:
-                        ' (Missing sumation of sources)
+                        ' Neumann boundary conditions
+                        ' NOTE: missing sumation of sources
+                        '-------------------------------------------------------------
 
                         Dim Vx As Double = VortexRing.VelocityW.X + Stream.Velocity.X
                         Dim Vy As Double = VortexRing.VelocityW.Y + Stream.Velocity.Y
                         Dim Vz As Double = VortexRing.VelocityW.Z + Stream.Velocity.Z
 
-                        If WithStreamOmega Then
+                        If WithStreamRotation Then
 
-                            Vx += Stream.Omega.Y * VortexRing.ControlPoint.Z - Stream.Omega.Z * VortexRing.ControlPoint.Y
-                            Vy += Stream.Omega.Z * VortexRing.ControlPoint.X - Stream.Omega.X * VortexRing.ControlPoint.Z
-                            Vz += Stream.Omega.X * VortexRing.ControlPoint.Y - Stream.Omega.Y * VortexRing.ControlPoint.X
+                            Vx += Stream.Rotation.Y * VortexRing.ControlPoint.Z - Stream.Rotation.Z * VortexRing.ControlPoint.Y
+                            Vy += Stream.Rotation.Z * VortexRing.ControlPoint.X - Stream.Rotation.X * VortexRing.ControlPoint.Z
+                            Vz += Stream.Rotation.X * VortexRing.ControlPoint.Y - Stream.Rotation.Y * VortexRing.ControlPoint.X
 
                         End If
 
                         RHS(VortexRing.IndexG) = (VortexRing.VelocityS.X - Vx) * VortexRing.Normal.X +
-                                                                  (VortexRing.VelocityS.Y - Vy) * VortexRing.Normal.Y +
-                                                                  (VortexRing.VelocityS.Z - Vz) * VortexRing.Normal.Z
+                                                 (VortexRing.VelocityS.Y - Vy) * VortexRing.Normal.Y +
+                                                 (VortexRing.VelocityS.Z - Vz) * VortexRing.Normal.Z
 
                     Else
 
-                        ' Dirichlet boundary conditions:
-                        ' (Stream omega already taken into account in vector S)
+                        ' Dirichlet boundary conditions
+                        ' NOTE: stream rotation already taken into account in vector S
+                        '-------------------------------------------------------------
 
                         RHS(VortexRing.IndexG) = -VortexRing.PotentialW
 
@@ -606,11 +608,11 @@ Namespace CalculationModel.Solver
                         Dim Vy As Double = Stream.Velocity.Y
                         Dim Vz As Double = Stream.Velocity.Z
 
-                        If WithStreamOmega Then
+                        If WithStreamRotation Then
 
-                            Vx += Stream.Omega.Y * VortexRing.ControlPoint.Z - Stream.Omega.Z * VortexRing.ControlPoint.Y
-                            Vy += Stream.Omega.Z * VortexRing.ControlPoint.X - Stream.Omega.X * VortexRing.ControlPoint.Z
-                            Vz += Stream.Omega.X * VortexRing.ControlPoint.Y - Stream.Omega.Y * VortexRing.ControlPoint.X
+                            Vx += Stream.Rotation.Y * VortexRing.ControlPoint.Z - Stream.Rotation.Z * VortexRing.ControlPoint.Y
+                            Vy += Stream.Rotation.Z * VortexRing.ControlPoint.X - Stream.Rotation.X * VortexRing.ControlPoint.Z
+                            Vz += Stream.Rotation.X * VortexRing.ControlPoint.Y - Stream.Rotation.Y * VortexRing.ControlPoint.X
 
                         End If
 
@@ -680,53 +682,53 @@ Namespace CalculationModel.Solver
         ''' <remarks></remarks>
         Private Sub CalculatePotentialInducedByTheWakeOnThickBoundedLattices()
 
-                ' Warning! If this is done, we have to convect wake rings appart from vortices.
+            ' Warning! If this is done, we have to convect wake rings appart from vortices.
 
-                For Each OtherLattice As BoundedLattice In Lattices
+            For Each OtherLattice As BoundedLattice In Lattices
 
-                    For Each Wake As Wake In OtherLattice.Wakes
+                For Each Wake As Wake In OtherLattice.Wakes
 
-                        For Each VortexRing In Wake.VortexRings
+                    For Each VortexRing In Wake.VortexRings
 
-                            'This needs to be fixed
+                        'This needs to be fixed
 
-                            VortexRing.RecalculateBasis()
-
-                        Next
+                        VortexRing.RecalculateBasis()
 
                     Next
 
                 Next
 
-                For Each Lattice As BoundedLattice In Lattices
+            Next
 
-                    For Each VortexRing In Lattice.VortexRings
+            For Each Lattice As BoundedLattice In Lattices
 
-                        VortexRing.PotentialW = 0
+                For Each VortexRing In Lattice.VortexRings
 
-                        If Not VortexRing.IsSlender Then
+                    VortexRing.PotentialW = 0
 
-                            For Each OtherLattice As BoundedLattice In Lattices
+                    If Not VortexRing.IsSlender Then
 
-                                For Each Wake As Wake In OtherLattice.Wakes
+                        For Each OtherLattice As BoundedLattice In Lattices
 
-                                    For Each WakeVortexRing In Wake.VortexRings
+                            For Each Wake As Wake In OtherLattice.Wakes
 
-                                        VortexRing.PotentialW += WakeVortexRing.GetDoubletPotentialInfluence(VortexRing.ControlPoint, True)
+                                For Each WakeVortexRing In Wake.VortexRings
 
-                                    Next
+                                    VortexRing.PotentialW += WakeVortexRing.GetDoubletPotentialInfluence(VortexRing.ControlPoint, True)
 
                                 Next
 
                             Next
 
-                        End If
+                        Next
 
-                    Next
+                    End If
 
                 Next
 
-            End Sub
+            Next
+
+        End Sub
 
         ''' <summary>
         ''' Calculates rings VelocityT (total local velocity) by adding the StreamVelocity, VelocityW and the velocity induced by the bounded lattices.
@@ -745,11 +747,11 @@ Namespace CalculationModel.Solver
                         Ring.VelocityT.Y = Stream.Velocity.Y
                         Ring.VelocityT.Z = Stream.Velocity.Z
 
-                        If WithStreamOmega Then
+                        If WithStreamRotation Then
 
                             ' Add stream angular velocity
 
-                            Ring.VelocityT.AddCrossProduct(Stream.Omega, Ring.ControlPoint)
+                            Ring.VelocityT.AddCrossProduct(Stream.Rotation, Ring.ControlPoint)
 
                         End If
 
@@ -769,11 +771,11 @@ Namespace CalculationModel.Solver
 
                         Dim Velocity As New Vector3(Stream.Velocity)
 
-                        If WithStreamOmega Then
+                        If WithStreamRotation Then
 
                             ' Add stream angular velocity
 
-                            Velocity.AddCrossProduct(Stream.Omega, Ring.ControlPoint)
+                            Velocity.AddCrossProduct(Stream.Rotation, Ring.ControlPoint)
 
                         End If
 
@@ -799,29 +801,29 @@ Namespace CalculationModel.Solver
                 For Each Wake As Wake In Lattice.Wakes
 
                     Parallel.ForEach(Wake.Nodes,
-                                     Sub(NodalPoint As Node)
+                    Sub(NodalPoint As Node)
 
-                                         NodalPoint.Velocity.Assign(Stream.Velocity)
+                        NodalPoint.Velocity.Assign(Stream.Velocity)
 
-                                         If WithStreamOmega Then
+                        If WithStreamRotation Then
 
-                                             NodalPoint.Velocity.AddCrossProduct(Stream.Omega, NodalPoint.Position)
+                            NodalPoint.Velocity.AddCrossProduct(Stream.Rotation, NodalPoint.Position)
 
-                                         End If
+                        End If
 
-                                         For Each OtherLattice As BoundedLattice In Lattices
+                        For Each OtherLattice As BoundedLattice In Lattices
 
-                                             OtherLattice.AddInducedVelocity(NodalPoint.Velocity, NodalPoint.Position, CutOff)
+                            OtherLattice.AddInducedVelocity(NodalPoint.Velocity, NodalPoint.Position, CutOff)
 
-                                             For Each OtherWake As Wake In OtherLattice.Wakes
+                            For Each OtherWake As Wake In OtherLattice.Wakes
 
-                                                 OtherWake.AddInducedVelocity(NodalPoint.Velocity, NodalPoint.Position, CutOff)
+                                OtherWake.AddInducedVelocity(NodalPoint.Velocity, NodalPoint.Position, CutOff)
 
-                                             Next
+                            Next
 
-                                         Next
+                        Next
 
-                                     End Sub)
+                    End Sub)
 
                 Next
 
@@ -841,9 +843,9 @@ Namespace CalculationModel.Solver
 
                 Velocity.Assign(Stream.Velocity)
 
-                If WithStreamOmega Then
+                If WithStreamRotation Then
 
-                    Velocity.AddCrossProduct(Stream.Omega, Point)
+                    Velocity.AddCrossProduct(Stream.Rotation, Point)
 
                 End If
 

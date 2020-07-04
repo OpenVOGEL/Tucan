@@ -238,7 +238,7 @@ Namespace Integration
         Public Sub New(N As Integer, T As Double, V0 As Vector3, O0 As Vector3, Gravity As Vector3)
 
             _Velocity = New Vector3
-            _Omega = New Vector3
+            _Rotation = New Vector3
 
             ReDim X(N)
             ReDim TE(N)
@@ -296,7 +296,7 @@ Namespace Integration
         ''' The current angular velocity
         ''' </summary>
         ''' <returns></returns>
-        Public ReadOnly Property Omega As Vector3
+        Public ReadOnly Property Rotation As Vector3
 
         ''' <summary>
         ''' Stores the current state in the output variables
@@ -307,9 +307,9 @@ Namespace Integration
             _Velocity.Y = X(S).Vy
             _Velocity.Z = X(S).Vz
 
-            _Omega.X = X(S).Ox
-            _Omega.Y = X(S).Oy
-            _Omega.Z = X(S).Oz
+            _Rotation.X = X(S).Ox
+            _Rotation.Y = X(S).Oy
+            _Rotation.Z = X(S).Oz
 
         End Sub
 
@@ -545,6 +545,22 @@ Namespace Integration
             E.Absolute()
 
             Return E < Epsilon
+
+        End Function
+
+        ''' <summary>
+        ''' Sets the startup forces
+        ''' </summary>
+        ''' <param name="F"></param>
+        ''' <param name="M"></param>
+        Public Function State(I As Integer) As Variable
+
+            If I >= LBound(X) And I <= UBound(X) Then
+                Return X(I)
+            Else
+                Dim NoVariable As Variable
+                Return NoVariable
+            End If
 
         End Function
 
