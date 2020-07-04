@@ -413,12 +413,23 @@ Public Module AeroTests
     ''' </summary>
     Public Sub TestHammingSolver()
 
+        System.Console.WriteLine("Testing Hamming ODEs solver")
+
+        TestParabolicShot()
+
+        TestHarmonicOscillator()
+
+    End Sub
+
+    ''' <summary>
+    ''' Tests the Hamming ODES solver
+    ''' </summary>
+    Private Sub TestParabolicShot()
+
         '' Simple 2D parabolic shot
         '-------------------------------------------------------
 
-        System.Console.WriteLine("Testing Hamming ODEs solver")
-
-        System.Console.WriteLine("Case 1: parabolic shot")
+        System.Console.WriteLine("Test case: parabolic shot")
 
         Dim V0 As New Vector3(100.0#, 0.0#, 100.0#)
         Dim O0 As New Vector3(0.0#, 0.0#, 0.0#)
@@ -467,8 +478,8 @@ Public Module AeroTests
             Next
 
             If Not Converged Then
-                System.Console.WriteLine("case 1 failed to converge")
-                Exit For
+                System.Console.WriteLine("FAILED to converge")
+                Return
             Else
                 Dim Err As Variable = (AnaliticSolution - Solver.State(I)) / AnaliticSolution
                 System.Console.WriteLine(String.Format("{0,10:F6} | {1,10:F6} | {2,10:F6} | {3,10:F6}", Err.Px, Err.Pz, Err.Vx, Err.Vz))
@@ -477,10 +488,86 @@ Public Module AeroTests
 
         Next
 
+        System.Console.WriteLine("TEST PASSED")
+
+    End Sub
+
+    ''' <summary>
+    ''' Tests the Hamming ODES solver
+    ''' </summary>
+    Private Sub TestHarmonicOscillator()
+
         '' Simple 1D harmonic oscillator
         '-------------------------------------------------------
 
+        System.Console.WriteLine("Test case: harmonic oscillator")
 
+        Dim V0 As New Vector3(0.0#, 0.0#, 0.0#)
+        Dim O0 As New Vector3(0.0#, 0.0#, 0.0#)
+        Dim g As New Vector3(0.0#, 0.0#, 0.0#)
+
+        Dim N As Integer = 100
+        Dim Dt As Double = 0.1
+        Dim T As Double = 0.0#
+
+        Dim Solver As New HammingIntegrator(N, Dt, V0, O0, g)
+
+        Solver.Mass = 1.0#
+        Solver.Ixx = 1.0#
+        Solver.Iyy = 1.0#
+        Solver.Izz = 1.0#
+
+        Dim K As Double = 1.0#
+        Dim C As Double = 1.0#
+
+        Dim F0 As New Vector3(1.0#, 0.0#, 0.0#)
+        Dim M0 As New Vector3(0.0#, 0.0#, 0.0#)
+        Solver.SetInitialForces(F0, M0)
+
+        Dim Epsilon As Variable
+        Epsilon.Px = 0.01
+        Epsilon.Vx = 0.01
+        Solver.Epsilon = Epsilon
+
+        For I = 1 To N
+
+            If I = N Then
+                System.Console.WriteLine("last step")
+            End If
+
+            T += Dt
+
+            Dim AnaliticSolution As Variable
+            'AnaliticSolution.Vx = 
+            'AnaliticSolution.Px = 
+
+            Solver.Predict()
+
+            Dim Converged As Boolean = False
+
+            For J = 1 To 20
+
+                Dim State As Variable = Solver.State(I)
+
+                F0.X = -K * State.Px - C * State.Vx
+
+                If Solver.Correct(F0, M0) Then
+                    Converged = True
+                    Exit For
+                End If
+
+            Next
+
+            If Not Converged Then
+                System.Console.WriteLine("FAILED to converge")
+                Return
+            Else
+                Dim Err As Variable = (AnaliticSolution - Solver.State(I)) / AnaliticSolution
+                System.Console.WriteLine(String.Format("{0,10:F6} | {1,10:F6} | {2,10:F6} | {3,10:F6}", Err.Px, Err.Pz, Err.Vx, Err.Vz))
+
+            End If
+
+        Next
 
         System.Console.WriteLine("TEST PASSED")
 

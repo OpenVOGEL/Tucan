@@ -144,39 +144,39 @@ Namespace Integration
 
         End Operator
 
-        Public Shared Operator <(X1 As Variable, X2 As Variable) As Boolean
+        Public Shared Operator <=(X1 As Variable, X2 As Variable) As Boolean
 
             Return _
-            X1.Gx < X2.Gx AndAlso
-            X1.Gy < X2.Gy AndAlso
-            X1.Gz < X2.Gz AndAlso
-            X1.Px < X2.Px AndAlso
-            X1.Py < X2.Py AndAlso
-            X1.Pz < X2.Pz AndAlso
-            X1.Vx < X2.Vx AndAlso
-            X1.Vy < X2.Vy AndAlso
-            X1.Vz < X2.Vz AndAlso
-            X1.Ox < X2.Ox AndAlso
-            X1.Oy < X2.Oy AndAlso
-            X1.Oz < X2.Oz
+            X1.Gx <= X2.Gx AndAlso
+            X1.Gy <= X2.Gy AndAlso
+            X1.Gz <= X2.Gz AndAlso
+            X1.Px <= X2.Px AndAlso
+            X1.Py <= X2.Py AndAlso
+            X1.Pz <= X2.Pz AndAlso
+            X1.Vx <= X2.Vx AndAlso
+            X1.Vy <= X2.Vy AndAlso
+            X1.Vz <= X2.Vz AndAlso
+            X1.Ox <= X2.Ox AndAlso
+            X1.Oy <= X2.Oy AndAlso
+            X1.Oz <= X2.Oz
 
         End Operator
 
-        Public Shared Operator >(X1 As Variable, X2 As Variable) As Boolean
+        Public Shared Operator >=(X1 As Variable, X2 As Variable) As Boolean
 
             Return _
-            X1.Gx > X2.Gx AndAlso
-            X1.Gy > X2.Gy AndAlso
-            X1.Gz > X2.Gz AndAlso
-            X1.Px > X2.Px AndAlso
-            X1.Py > X2.Py AndAlso
-            X1.Pz > X2.Pz AndAlso
-            X1.Vx > X2.Vx AndAlso
-            X1.Vy > X2.Vy AndAlso
-            X1.Vz > X2.Vz AndAlso
-            X1.Ox > X2.Ox AndAlso
-            X1.Oy > X2.Oy AndAlso
-            X1.Oz > X2.Oz
+            X1.Gx >= X2.Gx AndAlso
+            X1.Gy >= X2.Gy AndAlso
+            X1.Gz >= X2.Gz AndAlso
+            X1.Px >= X2.Px AndAlso
+            X1.Py >= X2.Py AndAlso
+            X1.Pz >= X2.Pz AndAlso
+            X1.Vx >= X2.Vx AndAlso
+            X1.Vy >= X2.Vy AndAlso
+            X1.Vz >= X2.Vz AndAlso
+            X1.Ox >= X2.Ox AndAlso
+            X1.Oy >= X2.Oy AndAlso
+            X1.Oz >= X2.Oz
 
         End Operator
 
@@ -544,7 +544,7 @@ Namespace Integration
 
             E.Absolute()
 
-            Return E < Epsilon
+            Return E <= Epsilon
 
         End Function
 
