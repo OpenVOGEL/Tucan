@@ -452,10 +452,6 @@ Public Module AeroTests
 
         For I = 1 To N
 
-            If I = N Then
-                System.Console.WriteLine("last step")
-            End If
-
             T += Dt
 
             Dim AnaliticSolution As Variable
@@ -502,44 +498,49 @@ Public Module AeroTests
 
         System.Console.WriteLine("Test case: harmonic oscillator")
 
-        Dim V0 As New Vector3(0.0#, 0.0#, 0.0#)
+        Dim V0 As New Vector3(1.0#, 0.0#, 0.0#)
         Dim O0 As New Vector3(0.0#, 0.0#, 0.0#)
         Dim g As New Vector3(0.0#, 0.0#, 0.0#)
 
-        Dim N As Integer = 100
-        Dim Dt As Double = 0.1
+        Dim N As Integer = 400
+        Dim Dt As Double = 0.025
         Dim T As Double = 0.0#
+
+        Dim M As Double = 1.0#
+        Dim K As Double = 1.0#
+        Dim C As Double = 1.0#
+
+        Dim Cc As Double = 2.0# * Math.Sqrt(K * M)
+        Dim Psi As Double = C / Cc
+        Dim W As Double = Math.Sqrt(K / M)
+        Dim Wd As Double = W * Math.Sqrt(1 - Psi ^ 2.0#)
+
+        System.Console.WriteLine(String.Format("Oscillation period = {0,10:E6}s", 1 / Wd))
+        System.Console.WriteLine(String.Format("Test period =        {0,10:E6}s ({1,4:F2} cicles)", N * Dt, N * Dt * Wd))
 
         Dim Solver As New HammingIntegrator(N, Dt, V0, O0, g)
 
-        Solver.Mass = 1.0#
+        Solver.Mass = M
         Solver.Ixx = 1.0#
         Solver.Iyy = 1.0#
         Solver.Izz = 1.0#
 
-        Dim K As Double = 1.0#
-        Dim C As Double = 1.0#
-
-        Dim F0 As New Vector3(1.0#, 0.0#, 0.0#)
-        Dim M0 As New Vector3(0.0#, 0.0#, 0.0#)
-        Solver.SetInitialForces(F0, M0)
+        Dim F As New Vector3(0.0#, 0.0#, 0.0#)
+        Dim Q As New Vector3(0.0#, 0.0#, 0.0#)
+        Solver.SetInitialForces(F, Q)
 
         Dim Epsilon As Variable
-        Epsilon.Px = 0.01
-        Epsilon.Vx = 0.01
+        Epsilon.Px = 0.005
+        Epsilon.Vx = 0.005
         Solver.Epsilon = Epsilon
 
         For I = 1 To N
 
-            If I = N Then
-                System.Console.WriteLine("last step")
-            End If
-
             T += Dt
 
             Dim AnaliticSolution As Variable
-            'AnaliticSolution.Vx = 
-            'AnaliticSolution.Px = 
+            AnaliticSolution.Vx = V0.X * Math.Exp(-Psi * W * T) * (Math.Cos(Wd * T) - Psi / Math.Sqrt(1 - Psi ^ 2) * Math.Sin(Wd * T))
+            AnaliticSolution.Px = Math.Exp(-Psi * W * T) * (V0.X / Wd) * Math.Sin(Wd * T)
 
             Solver.Predict()
 
@@ -549,9 +550,9 @@ Public Module AeroTests
 
                 Dim State As Variable = Solver.State(I)
 
-                F0.X = -K * State.Px - C * State.Vx
+                F.X = -K * State.Px - C * State.Vx
 
-                If Solver.Correct(F0, M0) Then
+                If Solver.Correct(F, Q) Then
                     Converged = True
                     Exit For
                 End If
@@ -562,8 +563,9 @@ Public Module AeroTests
                 System.Console.WriteLine("FAILED to converge")
                 Return
             Else
-                Dim Err As Variable = (AnaliticSolution - Solver.State(I)) / AnaliticSolution
-                System.Console.WriteLine(String.Format("{0,10:F6} | {1,10:F6} | {2,10:F6} | {3,10:F6}", Err.Px, Err.Pz, Err.Vx, Err.Vz))
+                Dim State As Variable = Solver.State(I)
+                Dim Err As Variable = (AnaliticSolution - State) / AnaliticSolution
+                System.Console.WriteLine(String.Format("{0,11:F6} | {1,11:F6} | {2,11:F6} | {3,11:F6}", State.Px, Err.Px, State.Vx, Err.Vx))
 
             End If
 
