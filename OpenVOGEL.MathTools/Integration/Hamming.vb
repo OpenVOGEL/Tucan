@@ -181,7 +181,7 @@ Namespace Integration
         End Operator
 
         ''' <summary>
-        ''' Returns the maximum absolute of the velocity and angular velocity.
+        ''' Convertes all variables to absolute values
         ''' </summary>
         ''' <returns></returns>
         Public Sub Absolute()

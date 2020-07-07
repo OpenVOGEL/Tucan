@@ -498,6 +498,9 @@ Public Module AeroTests
 
         System.Console.WriteLine("Test case: harmonic oscillator")
 
+        Dim FileId As Integer = FreeFile()
+        FileOpen(FileId, "\oscillator.txt", OpenMode.Output)
+
         Dim V0 As New Vector3(1.0#, 0.0#, 0.0#)
         Dim O0 As New Vector3(0.0#, 0.0#, 0.0#)
         Dim g As New Vector3(0.0#, 0.0#, 0.0#)
@@ -508,15 +511,17 @@ Public Module AeroTests
 
         Dim M As Double = 1.0#
         Dim K As Double = 1.0#
-        Dim C As Double = 1.0#
+        Dim C As Double = 0.1#
 
         Dim Cc As Double = 2.0# * Math.Sqrt(K * M)
         Dim Psi As Double = C / Cc
         Dim W As Double = Math.Sqrt(K / M)
         Dim Wd As Double = W * Math.Sqrt(1 - Psi ^ 2.0#)
+        Dim Td As Double = 2.0# * Math.PI / Wd
 
-        System.Console.WriteLine(String.Format("Oscillation period = {0,10:E6}s", 1 / Wd))
-        System.Console.WriteLine(String.Format("Test period =        {0,10:E6}s ({1,4:F2} cicles)", N * Dt, N * Dt * Wd))
+        System.Console.WriteLine(String.Format("Damping ratio      = {0,10:E6}", Psi))
+        System.Console.WriteLine(String.Format("Oscillation period = {0,10:E6}s", Td))
+        System.Console.WriteLine(String.Format("Test period        = {0,10:E6}s ({1,4:F2} cicles)", N * Dt, N * Dt / Td))
 
         Dim Solver As New HammingIntegrator(N, Dt, V0, O0, g)
 
@@ -533,6 +538,8 @@ Public Module AeroTests
         Epsilon.Px = 0.005
         Epsilon.Vx = 0.005
         Solver.Epsilon = Epsilon
+
+        Dim MaximumError As Variable
 
         For I = 1 To N
 
@@ -565,11 +572,12 @@ Public Module AeroTests
             Else
                 Dim State As Variable = Solver.State(I)
                 Dim Err As Variable = (AnaliticSolution - State) / AnaliticSolution
-                System.Console.WriteLine(String.Format("{0,11:F6} | {1,11:F6} | {2,11:F6} | {3,11:F6}", State.Px, Err.Px, State.Vx, Err.Vx))
-
+                PrintLine(FileId, String.Format("{0,11:F6} | {1,11:F6} | {2,11:F6} | {3,11:F6} | {4,11:F6} | {5,11:F6}", State.Px, AnaliticSolution.Px, Err.Px, State.Vx, AnaliticSolution.Vx, Err.Vx))
             End If
 
         Next
+
+        FileClose(FileId)
 
         System.Console.WriteLine("TEST PASSED")
 
