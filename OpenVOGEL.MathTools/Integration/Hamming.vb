@@ -321,9 +321,9 @@ Namespace Integration
             ' Gravity
             '-------------------
 
-            DX(J).Gx = X(J).Oy * X(J).Gz - X(J).Oz * X(J).Gy
-            DX(J).Gy = X(J).Oz * X(J).Gx - X(J).Ox * X(J).Gz
-            DX(J).Gz = X(J).Ox * X(J).Gy - X(J).Oy * X(J).Gx
+            DX(J).Gx = X(J).Oz * X(J).Gy - X(J).Oy * X(J).Gz
+            DX(J).Gy = X(J).Ox * X(J).Gz - X(J).Oz * X(J).Gx
+            DX(J).Gz = X(J).Oy * X(J).Gx - X(J).Ox * X(J).Gy
 
             ' Position
             '-------------------

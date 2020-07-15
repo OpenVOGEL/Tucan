@@ -539,8 +539,6 @@ Public Module AeroTests
         Epsilon.Vx = 0.005
         Solver.Epsilon = Epsilon
 
-        Dim MaximumError As Variable
-
         For I = 1 To N
 
             T += Dt

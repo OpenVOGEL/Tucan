@@ -436,6 +436,7 @@ Partial Class FormInertia
         Me.Name = "FormInertia"
         Me.ShowIcon = False
         Me.ShowInTaskbar = False
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
         Me.Text = "Inertial properties"
         CType(Me.nudIxz, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.nudIxy, System.ComponentModel.ISupportInitialize).EndInit()

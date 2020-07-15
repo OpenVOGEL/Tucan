@@ -98,7 +98,8 @@ Namespace CalculationModel.Solver
             '#############################################
 
             RaiseEvent PushMessage("Building integrator")
-            Dim MotionIntegrator As New HammingIntegrator(Settings.SimulationSteps,
+            Dim MotionSteps As Integer = Settings.SimulationSteps - Settings.FreeFlightStartStep + 1
+            Dim MotionIntegrator As New HammingIntegrator(MotionSteps,
                                                           Settings.Interval,
                                                          -Settings.StreamVelocity,
                                                           Settings.StreamOmega,
@@ -329,6 +330,26 @@ Namespace CalculationModel.Solver
             Next
 
             RaiseEvent PushProgress("Calculation finished", 100)
+
+            '//////////////////////////////////'
+            ' Output time response             '
+            '//////////////////////////////////'
+
+            RaiseEvent PushProgress("Writting motion to file...", 100)
+
+            Dim FileId As Integer = FreeFile()
+            FileOpen(FileId, System.IO.Path.Combine(FreeFlightPath, "response.txt"), OpenMode.Output)
+            PrintLine(FileId, String.Format("{0:11} | {1:11} | {2:11} | {3:11} | {4:11} | {5:11} | {6:11} | {7:11} | {8:11} | {9:11}", "Time", "Px", "Py", "Pz", "Vx", "Vy", "Vz", "Ox", "Oy", "Oz"))
+            Dim Time As Double = 0.0#
+
+            For I = 0 To MotionSteps
+                Dim State As Variable = MotionIntegrator.State(I)
+                PrintLine(FileId, String.Format("{0,11:F6} | {1,11:F6} | {2,11:F6} | {3,11:F6} | {4,11:F6} | {5,11:F6} | {6,11:F6} | {7,11:F6} | {8,11:F6} | {9,11:F6}", Time, State.Px, State.Py, State.Pz, State.Vx, State.Vy, State.Vz, State.Ox, State.Oy, State.Oz))
+                Time += Settings.Interval
+            Next
+
+            FileClose(FileId)
+
             RaiseEvent PushMessage("Finished")
             RaiseEvent CalculationDone()
 
