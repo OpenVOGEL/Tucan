@@ -69,7 +69,8 @@ Partial Class FormInertia
         '
         Me.Label13.AutoSize = True
         Me.Label13.Font = New System.Drawing.Font("Segoe UI", 8.25!)
-        Me.Label13.Location = New System.Drawing.Point(146, 123)
+        Me.Label13.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.Label13.Location = New System.Drawing.Point(143, 123)
         Me.Label13.Name = "Label13"
         Me.Label13.Size = New System.Drawing.Size(36, 13)
         Me.Label13.TabIndex = 180
@@ -101,7 +102,8 @@ Partial Class FormInertia
         '
         Me.Label15.AutoSize = True
         Me.Label15.Font = New System.Drawing.Font("Segoe UI", 8.25!)
-        Me.Label15.Location = New System.Drawing.Point(146, 100)
+        Me.Label15.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.Label15.Location = New System.Drawing.Point(143, 100)
         Me.Label15.Name = "Label15"
         Me.Label15.Size = New System.Drawing.Size(36, 13)
         Me.Label15.TabIndex = 177
@@ -133,7 +135,8 @@ Partial Class FormInertia
         '
         Me.Label11.AutoSize = True
         Me.Label11.Font = New System.Drawing.Font("Segoe UI", 8.25!)
-        Me.Label11.Location = New System.Drawing.Point(146, 77)
+        Me.Label11.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.Label11.Location = New System.Drawing.Point(143, 77)
         Me.Label11.Name = "Label11"
         Me.Label11.Size = New System.Drawing.Size(36, 13)
         Me.Label11.TabIndex = 174
@@ -164,7 +167,8 @@ Partial Class FormInertia
         '
         Me.Label9.AutoSize = True
         Me.Label9.Font = New System.Drawing.Font("Segoe UI", 8.25!)
-        Me.Label9.Location = New System.Drawing.Point(146, 54)
+        Me.Label9.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.Label9.Location = New System.Drawing.Point(143, 54)
         Me.Label9.Name = "Label9"
         Me.Label9.Size = New System.Drawing.Size(36, 13)
         Me.Label9.TabIndex = 171
@@ -195,7 +199,8 @@ Partial Class FormInertia
         '
         Me.Label7.AutoSize = True
         Me.Label7.Font = New System.Drawing.Font("Segoe UI", 8.25!)
-        Me.Label7.Location = New System.Drawing.Point(146, 31)
+        Me.Label7.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.Label7.Location = New System.Drawing.Point(143, 31)
         Me.Label7.Name = "Label7"
         Me.Label7.Size = New System.Drawing.Size(36, 13)
         Me.Label7.TabIndex = 168
@@ -226,7 +231,8 @@ Partial Class FormInertia
         '
         Me.Label6.AutoSize = True
         Me.Label6.Font = New System.Drawing.Font("Segoe UI", 8.25!)
-        Me.Label6.Location = New System.Drawing.Point(146, 8)
+        Me.Label6.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.Label6.Location = New System.Drawing.Point(143, 8)
         Me.Label6.Name = "Label6"
         Me.Label6.Size = New System.Drawing.Size(20, 13)
         Me.Label6.TabIndex = 165
@@ -264,7 +270,7 @@ Partial Class FormInertia
         Me.btnOK.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DeepSkyBlue
         Me.btnOK.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.btnOK.Font = New System.Drawing.Font("Segoe UI", 8.25!)
-        Me.btnOK.Location = New System.Drawing.Point(253, 144)
+        Me.btnOK.Location = New System.Drawing.Point(258, 144)
         Me.btnOK.Name = "btnOK"
         Me.btnOK.Size = New System.Drawing.Size(77, 23)
         Me.btnOK.TabIndex = 181
@@ -275,7 +281,8 @@ Partial Class FormInertia
         '
         Me.Label1.AutoSize = True
         Me.Label1.Font = New System.Drawing.Font("Segoe UI", 8.25!)
-        Me.Label1.Location = New System.Drawing.Point(146, 146)
+        Me.Label1.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.Label1.Location = New System.Drawing.Point(143, 146)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(36, 13)
         Me.Label1.TabIndex = 184
@@ -307,7 +314,8 @@ Partial Class FormInertia
         '
         Me.Label3.AutoSize = True
         Me.Label3.Font = New System.Drawing.Font("Segoe UI", 8.25!)
-        Me.Label3.Location = New System.Drawing.Point(317, 54)
+        Me.Label3.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.Label3.Location = New System.Drawing.Point(314, 54)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(16, 13)
         Me.Label3.TabIndex = 193
@@ -338,7 +346,8 @@ Partial Class FormInertia
         '
         Me.Label17.AutoSize = True
         Me.Label17.Font = New System.Drawing.Font("Segoe UI", 8.25!)
-        Me.Label17.Location = New System.Drawing.Point(317, 31)
+        Me.Label17.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.Label17.Location = New System.Drawing.Point(314, 31)
         Me.Label17.Name = "Label17"
         Me.Label17.Size = New System.Drawing.Size(16, 13)
         Me.Label17.TabIndex = 190
@@ -369,7 +378,8 @@ Partial Class FormInertia
         '
         Me.Label19.AutoSize = True
         Me.Label19.Font = New System.Drawing.Font("Segoe UI", 8.25!)
-        Me.Label19.Location = New System.Drawing.Point(317, 8)
+        Me.Label19.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.Label19.Location = New System.Drawing.Point(314, 8)
         Me.Label19.Name = "Label19"
         Me.Label19.Size = New System.Drawing.Size(16, 13)
         Me.Label19.TabIndex = 187
@@ -400,7 +410,7 @@ Partial Class FormInertia
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(335, 173)
+        Me.ClientSize = New System.Drawing.Size(340, 173)
         Me.Controls.Add(Me.Label3)
         Me.Controls.Add(Me.nudZcg)
         Me.Controls.Add(Me.Label4)
@@ -432,6 +442,7 @@ Partial Class FormInertia
         Me.Controls.Add(Me.Label6)
         Me.Controls.Add(Me.nudMass)
         Me.Controls.Add(Me.Label5)
+        Me.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow
         Me.Name = "FormInertia"
         Me.ShowIcon = False

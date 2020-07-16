@@ -19,6 +19,24 @@ Imports OpenVOGEL.AeroTools.CalculationModel.Settings
 
 Public Class FormInertia
 
+    Public Sub SetReadOnly(Read As Boolean)
+
+        nudMass.Enabled = Not Read
+
+        nudIxx.Enabled = Not Read
+        nudIyy.Enabled = Not Read
+        nudIzz.Enabled = Not Read
+
+        nudIxy.Enabled = Not Read
+        nudIxz.Enabled = Not Read
+        nudIyz.Enabled = Not Read
+
+        nudXcg.Enabled = Not Read
+        nudYcg.Enabled = Not Read
+        nudZcg.Enabled = Not Read
+
+    End Sub
+
     Public Sub SetInertia(ByRef Inertia As InertialProperties)
 
         nudMass.Value = Inertia.Mass

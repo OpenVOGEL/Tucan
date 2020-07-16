@@ -1821,6 +1821,17 @@ ErrSub:
 
     End Sub
 
+    Private Sub butInertia_Click(sender As Object, e As EventArgs) Handles butInertia.Click
+
+        If Model IsNot Nothing Then
+            FormInertia.SetReadOnly(True)
+            FormInertia.SetInertia(Model.GetGlobalInertia)
+            FormInertia.ShowDialog()
+            FormInertia.SetReadOnly(False)
+        End If
+
+    End Sub
+
 #End Region
 
 End Class

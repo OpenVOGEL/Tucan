@@ -297,7 +297,7 @@ Namespace VisualModel.Models
         ''' Returns the global inertia of the model
         ''' </summary>
         ''' <returns></returns>
-        Friend Function GetGlobalInertia() As InertialProperties
+        Public Function GetGlobalInertia() As InertialProperties
 
             Dim Inertia As InertialProperties
 
