@@ -318,9 +318,6 @@
     <EmbeddedResource Include="GraphicInterface\Forms\FormExport.resx">
       <DependentUpon>FormExport.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="GraphicInterface\Forms\FormInertia.resx">
-      <DependentUpon>FormInertia.vb</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="GraphicInterface\Forms\FormISA.resx">
       <DependentUpon>FormISA.vb</DependentUpon>
     </EmbeddedResource>

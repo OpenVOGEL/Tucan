@@ -222,7 +222,7 @@ Namespace VisualModel.Models.Components
 
                         I.Ixy = IOXML.ReadDouble(reader, "Ixy", 0.0)
                         I.Ixz = IOXML.ReadDouble(reader, "Ixz", 0.0)
-                        I.Iyz = IOXML.ReadDouble(reader, "Izx", 0.0)
+                        I.Iyz = IOXML.ReadDouble(reader, "Iyz", 0.0)
 
                         Inertia = I
 
@@ -297,7 +297,7 @@ Namespace VisualModel.Models.Components
 
             writer.WriteAttributeString("Ixy", String.Format("{0,14:E6}", Inertia.Ixy))
             writer.WriteAttributeString("Ixz", String.Format("{0,14:E6}", Inertia.Ixz))
-            writer.WriteAttributeString("Izx", String.Format("{0,14:E6}", Inertia.Iyz))
+            writer.WriteAttributeString("Iyz", String.Format("{0,14:E6}", Inertia.Iyz))
 
             writer.WriteEndElement()
 
