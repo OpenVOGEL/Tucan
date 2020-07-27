@@ -38,11 +38,11 @@ Public Class FormSettings
         nudAdjacencyTolerance.Value = LocalSettings.SurveyTolerance
 
         If Not _AllowFlowRotation Then
-            LocalSettings.StreamOmega.SetToCero()
+            LocalSettings.StreamRotation.SetToCero()
         End If
-        nudOmegax.Value = LocalSettings.StreamOmega.X
-        nudOmegay.Value = LocalSettings.StreamOmega.Y
-        nudOmagaz.Value = LocalSettings.StreamOmega.Z
+        nudOmegax.Value = LocalSettings.StreamRotation.X
+        nudOmegay.Value = LocalSettings.StreamRotation.Y
+        nudOmagaz.Value = LocalSettings.StreamRotation.Z
         nudOmegax.Enabled = _AllowFlowRotation
         nudOmegay.Enabled = _AllowFlowRotation
         nudOmagaz.Enabled = _AllowFlowRotation
@@ -57,7 +57,7 @@ Public Class FormSettings
 
         ' Structural:
 
-        If LocalSettings.AnalysisType = CalculationType.ctAeroelastic Then
+        If LocalSettings.AnalysisType = CalculationType.Aeroelastic Then
 
             nudStructureStart.Enabled = True
             nudnModes.Enabled = True
@@ -94,11 +94,11 @@ Public Class FormSettings
         LocalSettings.Cutoff = nudCutoff.Value
         LocalSettings.SurveyTolerance = nudAdjacencyTolerance.Value
         If _AllowFlowRotation Then
-            LocalSettings.StreamOmega.X = nudOmegax.Value
-            LocalSettings.StreamOmega.Y = nudOmegay.Value
-            LocalSettings.StreamOmega.Z = nudOmagaz.Value
+            LocalSettings.StreamRotation.X = nudOmegax.Value
+            LocalSettings.StreamRotation.Y = nudOmegay.Value
+            LocalSettings.StreamRotation.Z = nudOmagaz.Value
         Else
-            LocalSettings.StreamOmega.SetToCero()
+            LocalSettings.StreamRotation.SetToCero()
         End If
         LocalSettings.CalculateCutoff = cbAutoCutOff.Checked
         LocalSettings.ExtendWakes = cbExtendWakes.Checked

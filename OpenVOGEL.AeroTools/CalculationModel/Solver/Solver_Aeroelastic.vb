@@ -18,6 +18,7 @@
 Imports OpenVOGEL.AeroTools.CalculationModel.Models.Structural
 Imports DotNumerics.LinearAlgebra
 Imports OpenVOGEL.AeroTools.CalculationModel.Models.Structural.Library
+Imports OpenVOGEL.AeroTools.CalculationModel.Settings
 
 Namespace CalculationModel.Solver
 
@@ -27,7 +28,7 @@ Namespace CalculationModel.Solver
         ''' Calculates the unsteady aeroelastic transit provided a velocity profile and a structural model.
         ''' The implicit Nemark algorithm is used.
         ''' </summary>
-        Public Sub AeroelasticUnsteadyTransit(ByVal DataBasePath As String)
+        Public Sub AeroelasticUnsteadyTransit(ByVal ReferenceFilePath As String)
 
             If WithSources Then
 
@@ -55,11 +56,7 @@ Namespace CalculationModel.Solver
 
             RaiseEvent PushMessage("Creating database structure")
 
-            CreateSubFoldersNames(DataBasePath)
-            CreateSubFolder(DataBaseSection.Aeroelastic)
-            CleanDirectory(DataBaseSection.Aeroelastic)
-            CreateSubFolder(DataBaseSection.Structural)
-            CleanDirectory(DataBaseSection.Structural)
+            CreateSubFolder(CalculationType.Aeroelastic, ReferenceFilePath)
 
             RaiseEvent PushMessage("Generating stream velocity histogram")
 
@@ -106,10 +103,10 @@ Namespace CalculationModel.Solver
                 RaiseEvent PushMessage(String.Format("Creating structural link {0}", L))
 
                 RaiseEvent PushMessage("Creating mass and stiffness matrices...")
-                StructuralLink.StructuralCore.CreateMatrices(StructurePath, True)
+                StructuralLink.StructuralCore.CreateMatrices(BaseDirectoryPath, True)
 
                 RaiseEvent PushMessage("Finding modes...")
-                StructuralLink.StructuralCore.FindModes(StructurePath, L)
+                StructuralLink.StructuralCore.FindModes(BaseDirectoryPath, L)
 
                 ' Update the minimum modal period:
 
@@ -140,6 +137,8 @@ Namespace CalculationModel.Solver
                 StructuralLink.Initialize(StructuralDt)
 
             Next
+
+            Dim FrameIndex As Integer = 0
 
             RaiseEvent PushMessage("All links have been succesfully created")
 
@@ -271,6 +270,14 @@ Namespace CalculationModel.Solver
 
                         K += 1
 
+                        If Converged Then
+
+                            WriteLattices(BaseDirectoryPath, FrameIndex)
+
+                            FrameIndex += 1
+
+                        End If
+
                     Else
 
                         Converged = True
@@ -320,7 +327,21 @@ Namespace CalculationModel.Solver
 
             RaiseEvent PushMessage("Writing binaries")
 
-            WriteToXML(AeroelasticResFile(Settings.SimulationSteps))
+            ' Settings
+            '------------------------------------------
+            Settings.WriteToXML(IO.Path.Combine(BaseDirectoryPath, "Settings.xml"))
+
+            ' Polars
+            '------------------------------------------
+            PolarDataBase.WriteBinary(IO.Path.Combine(BaseDirectoryPath, "Polars.bin"))
+
+            ' Dynamic links
+            '------------------------------------------
+            WriteStructuralLinks(BaseDirectoryPath)
+
+            ' Info
+            '------------------------------------------
+            WriteInfoFile(BaseDirectoryPath, CalculationType.Aeroelastic)
 
             RaiseEvent CalculationDone()
 

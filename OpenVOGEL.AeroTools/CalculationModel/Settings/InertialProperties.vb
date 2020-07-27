@@ -149,6 +149,24 @@ Namespace CalculationModel.Settings
                                  ByRef I_yy As Double,
                                  ByRef I_zz As Double)
 
+            If Ixx = 0 Or Iyy = 0 Or Izz = 0 Then
+
+                Basis.U.X = 1.0#
+                Basis.U.Y = 0.0#
+                Basis.U.Z = 0.0#
+
+                Basis.V.X = 0.0#
+                Basis.V.Y = 1.0#
+                Basis.V.Z = 0.0#
+
+                Basis.W.X = 0.0#
+                Basis.W.Y = 0.0#
+                Basis.W.Z = 1.0#
+
+                Return
+
+            End If
+
             Dim E As New EigenSystem()
             Dim M As New SymmetricMatrix(3)
 

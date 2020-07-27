@@ -214,7 +214,10 @@ Namespace CalculationModel.Models.Aero.Components
         ''' does provide more consistent results, specially in the case of rotating wings where the incidence varies considerably.
         ''' </summary>
         ''' <remarks></remarks>
-        Public Sub Compute(StreamVelocity As Vector3, Omega As Vector3, Density As Double, Viscosity As Double)
+        Public Sub Compute(StreamVelocity As Vector3,
+                           StreamRotation As Vector3,
+                           Density As Double,
+                           Viscosity As Double)
 
             ' Calculate local chordwise direction and chord:
 
@@ -233,7 +236,7 @@ Namespace CalculationModel.Models.Aero.Components
 
             Dim DynamicPressure As Double = 0.5 * StreamVelocity.SquareEuclideanNorm * Density
             Dim StreamDirection As New Vector3(StreamVelocity)
-            StreamDirection.AddCrossProduct(Omega, _CenterPoint)
+            StreamDirection.AddCrossProduct(StreamRotation, _CenterPoint)
             StreamDirection.Normalize()
 
             _Area = 0.0#
@@ -326,11 +329,20 @@ Namespace CalculationModel.Models.Aero.Components
         ''' <param name="PolarDB"></param>
         Sub ReadBinary(ByRef r As BinaryReader, ByRef Rings As List(Of VortexRing), ByRef PolarDB As PolarDatabase)
             Try
+                ' Rings
+                '-----------------------------------
                 For i = 1 To r.ReadInt32
                     Me.Rings.Add(Rings(r.ReadInt32))
                 Next
+
+                ' Polar id
+                '-----------------------------------
                 Dim polarID = New Guid(r.ReadString())
                 Polars = PolarDB.GetFamilyFromID(polarID)
+
+                ' Forces
+                '-----------------------------------
+
             Catch ex As Exception
                 Me.Rings.Clear()
             End Try
@@ -342,17 +354,55 @@ Namespace CalculationModel.Models.Aero.Components
         ''' <param name="w"></param>
         Sub WriteBinary(ByRef w As BinaryWriter)
 
+            ' Rings
+            '-----------------------------------
             w.Write(Rings.Count)
 
             For Each Ring In Rings
                 w.Write(Ring.IndexL)
             Next
 
+            ' Polar id
+            '-----------------------------------
             If IsNothing(Polars) Then
                 w.Write(Guid.Empty.ToString)
             Else
                 w.Write(Polars.ID.ToString)
             End If
+
+            ' Forces
+            '-----------------------------------
+
+            'w.Write(CenterPoint.X)
+            'w.Write(CenterPoint.Y)
+            'w.Write(CenterPoint.Z)
+            '
+            'w.Write(Lift.X)
+            'w.Write(Lift.Y)
+            'w.Write(Lift.Z)
+            'w.Write(LiftCoefficient)
+            '
+            'w.Write(InducedDrag.X)
+            'w.Write(InducedDrag.Y)
+            'w.Write(InducedDrag.Z)
+            'w.Write(InducedDragCoefficient)
+            '
+            'w.Write(SkinDrag.X)
+            'w.Write(SkinDrag.Y)
+            'w.Write(SkinDrag.Z)
+            'w.Write(SkinDragCoefficient)
+            '
+            'w.Write(LiftMoment.X)
+            'w.Write(LiftMoment.Y)
+            'w.Write(LiftMoment.Z)
+            '
+            'w.Write(InducedDragMoment.X)
+            'w.Write(InducedDragMoment.Y)
+            'w.Write(InducedDragMoment.Z)
+            '
+            'w.Write(SkinDragMoment.X)
+            'w.Write(SkinDragMoment.Y)
+            'w.Write(SkinDragMoment.Z)
 
         End Sub
 

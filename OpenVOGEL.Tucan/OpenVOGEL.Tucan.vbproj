@@ -272,12 +272,6 @@
     <Compile Include="GraphicInterface\UserControls\TotalForcePanel.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="GraphicInterface\UserControls\VelocityControl.Designer.vb">
-      <DependentUpon>VelocityControl.vb</DependentUpon>
-    </Compile>
-    <Compile Include="GraphicInterface\UserControls\VelocityControl.vb">
-      <SubType>UserControl</SubType>
-    </Compile>
     <Compile Include="GraphicInterface\UserControls\WingControl.Designer.vb">
       <DependentUpon>WingControl.vb</DependentUpon>
     </Compile>
@@ -390,9 +384,6 @@
     <EmbeddedResource Include="GraphicInterface\UserControls\TotalForcePanel.resx">
       <DependentUpon>TotalForcePanel.vb</DependentUpon>
       <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="GraphicInterface\UserControls\VelocityControl.resx">
-      <DependentUpon>VelocityControl.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GraphicInterface\UserControls\WingControl.resx">
       <DependentUpon>WingControl.vb</DependentUpon>

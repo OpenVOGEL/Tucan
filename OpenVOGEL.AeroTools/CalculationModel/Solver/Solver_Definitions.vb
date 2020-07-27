@@ -21,6 +21,7 @@ Imports OpenVOGEL.MathTools.Algebra.EuclideanSpace
 Imports OpenVOGEL.AeroTools.CalculationModel.Models.Aero
 Imports DotNumerics.LinearAlgebra
 Imports OpenVOGEL.AeroTools.CalculationModel.Models.Aero.Components
+Imports OpenVOGEL.MathTools.Integration
 
 Namespace CalculationModel.Solver
 
@@ -34,7 +35,7 @@ Namespace CalculationModel.Solver
         ''' <summary>
         ''' Contains all parameters required to run a complete simulation
         ''' </summary>
-        Public Property Settings As New SimulationSettings
+        Public Property Settings As SimulationSettings
 
         ''' <summary>
         ''' Contains all bounded lattices
@@ -43,10 +44,16 @@ Namespace CalculationModel.Solver
         Public Property Lattices As List(Of BoundedLattice)
 
         ''' <summary>
-        ''' Stores links between the structure and the aerodynamic lattices
+        ''' Stores the links between the structure and the aerodynamic lattices
         ''' </summary>
         ''' <remarks></remarks>
         Public Property StructuralLinks As List(Of StructuralLink)
+
+        ''' <summary>
+        ''' Stores the dynamic response of the model
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property Motion As MotionIntegrator
 
         ''' <summary>
         ''' Gathers all polar curves necessary for the calculation.

@@ -26,6 +26,7 @@ Namespace CalculationModel.Models.Aero
     ''' </summary>
     Public Class Lattice
 
+        Public Name As String
         Public Nodes As New List(Of Node)
         Public VortexRings As New List(Of VortexRing)
         Public Vortices As New List(Of Vortex)
@@ -275,6 +276,10 @@ Namespace CalculationModel.Models.Aero
 
 #Region " Forces and moments "
 
+        ''' <summary>
+        ''' The lattice airloads
+        ''' </summary>
+        ''' <returns></returns>
         Public Property AirLoads As New AirLoads
 
 #End Region
@@ -362,7 +367,7 @@ Namespace CalculationModel.Models.Aero
 
                 If ReferencePosition Then
 
-                    If IsNothing(Nodes(i).OriginalPosition) Then
+                    If Nodes(i).OriginalPosition Is Nothing Then
                         w.Write(Nodes(i).Position.X)
                         w.Write(Nodes(i).Position.Y)
                         w.Write(Nodes(i).Position.Z)
@@ -372,7 +377,7 @@ Namespace CalculationModel.Models.Aero
                         w.Write(Nodes(i).OriginalPosition.Z)
                     End If
 
-                    If IsNothing(Nodes(i).Displacement) Then
+                    If Nodes(i).Displacement Is Nothing Then
                         w.Write(0.0#)
                         w.Write(0.0#)
                         w.Write(0.0#)

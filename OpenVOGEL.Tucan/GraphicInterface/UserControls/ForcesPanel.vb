@@ -15,8 +15,11 @@
 'You should have received a copy Of the GNU General Public License
 'along with this program.  If Not, see < http:  //www.gnu.org/licenses/>.
 
+Imports OpenVOGEL.AeroTools.CalculationModel.Models.Aero
 Imports OpenVOGEL.AeroTools.CalculationModel.Models.Aero.Components
 Imports OpenVOGEL.DesignTools.DataStore
+Imports OpenVOGEL.DesignTools.VisualModel.Models
+Imports OpenVOGEL.DesignTools.VisualModel.Models.Components
 Imports OpenVOGEL.MathTools.Magnitudes
 
 Public Class ForcesPanel
@@ -285,15 +288,17 @@ Public Class ForcesPanel
 
     Private Sub LoadResultsData()
 
-        If CalculationCore IsNot Nothing Then
+        If ProjectRoot.Results.ActiveFrame IsNot Nothing Then
 
-            rbVelocity.Value = CalculationCore.StreamVelocity.EuclideanNorm
-            rbDensity.Value = CalculationCore.StreamDensity
-            rbAlpha.Value = Math.Asin(CalculationCore.StreamVelocity.Z / CalculationCore.StreamVelocity.EuclideanNorm)
-            rbBeta.Value = Math.Asin(CalculationCore.StreamVelocity.Y / CalculationCore.StreamVelocity.EuclideanNorm)
+            Dim Frame As ResultFrame = ProjectRoot.Results.ActiveFrame
+
+            rbVelocity.Value = ProjectRoot.Results.ActiveFrame.StreamVelocity.EuclideanNorm
+            rbDensity.Value = ProjectRoot.Results.SimulationSettings.Density
+            rbAlpha.Value = Frame.TotalAirLoads.Alfa * 180 / Math.PI
+            rbBeta.Value = Frame.TotalAirLoads.Beta * 180 / Math.PI
             cbLattices.Items.Clear()
 
-            For i = 0 To CalculationCore.Lattices.Count - 1
+            For i = 0 To Frame.PartialAirLoads.Count - 1
 
                 cbLattices.Items.Add(String.Format("Lattice {0}", i))
 
@@ -308,44 +313,47 @@ Public Class ForcesPanel
 
     Private Sub LoadLattice()
 
-        If CalculationCore IsNot Nothing Then
+        If ProjectRoot.Results.ActiveFrame IsNot Nothing Then
+
+            Dim Frame As ResultFrame = ProjectRoot.Results.ActiveFrame
 
             Dim Index As Integer = cbLattices.SelectedIndex
 
-            If Index >= 0 And Index < CalculationCore.Lattices.Count Then
+            If Index >= 0 And Index < Frame.PartialAirLoads.Count Then
 
-                Dim q As Double = CalculationCore.Lattices(Index).AirLoads.DynamicPressure
-                Dim S As Double = CalculationCore.Lattices(Index).AirLoads.Area
+                Dim AirLoad As AirLoads = Frame.PartialAirLoads(Index).AirLoads
+                Dim q As Double = AirLoad.DynamicPressure
+                Dim S As Double = AirLoad.Area
                 Dim qS As Double = q * S
-                Dim qSc As Double = qS * CalculationCore.Lattices(Index).AirLoads.Length
+                Dim qSc As Double = qS * AirLoad.Length
 
                 rbArea.Value = S
 
-                rbCL.Value = CalculationCore.Lattices(Index).AirLoads.LiftCoefficient
-                rbCDp.Value = CalculationCore.Lattices(Index).AirLoads.SkinDragCoefficient
-                rbCDi.Value = CalculationCore.Lattices(Index).AirLoads.InducedDragCoefficient
+                rbCL.Value = AirLoad.LiftCoefficient
+                rbCDp.Value = AirLoad.SkinDragCoefficient
+                rbCDi.Value = AirLoad.InducedDragCoefficient
 
-                rbCFx.Value = CalculationCore.Lattices(Index).AirLoads.Force.X / qS
-                rbCFy.Value = CalculationCore.Lattices(Index).AirLoads.Force.Y / qS
-                rbCFz.Value = CalculationCore.Lattices(Index).AirLoads.Force.Z / qS
+                rbCFx.Value = AirLoad.Force.X / qS
+                rbCFy.Value = AirLoad.Force.Y / qS
+                rbCFz.Value = AirLoad.Force.Z / qS
 
-                rbCMx.Value = CalculationCore.Lattices(Index).AirLoads.Moment.X / qSc
-                rbCMy.Value = CalculationCore.Lattices(Index).AirLoads.Moment.Y / qSc
-                rbCMz.Value = CalculationCore.Lattices(Index).AirLoads.Moment.Z / qSc
+                rbCMx.Value = AirLoad.Moment.X / qSc
+                rbCMy.Value = AirLoad.Moment.Y / qSc
+                rbCMz.Value = AirLoad.Moment.Z / qSc
 
                 ' Net forces:
 
-                rbL.Value = CalculationCore.Lattices(Index).AirLoads.LiftCoefficient * qS
-                rbDp.Value = CalculationCore.Lattices(Index).AirLoads.SkinDragCoefficient * qS
-                rbDi.Value = CalculationCore.Lattices(Index).AirLoads.InducedDragCoefficient * qS
+                rbL.Value = AirLoad.LiftCoefficient * qS
+                rbDp.Value = AirLoad.SkinDragCoefficient * qS
+                rbDi.Value = AirLoad.InducedDragCoefficient * qS
 
-                rbFx.Value = CalculationCore.Lattices(Index).AirLoads.Force.X
-                rbFy.Value = CalculationCore.Lattices(Index).AirLoads.Force.Y
-                rbFz.Value = CalculationCore.Lattices(Index).AirLoads.Force.Z
+                rbFx.Value = AirLoad.Force.X
+                rbFy.Value = AirLoad.Force.Y
+                rbFz.Value = AirLoad.Force.Z
 
-                rbMx.Value = CalculationCore.Lattices(Index).AirLoads.Moment.X
-                rbMy.Value = CalculationCore.Lattices(Index).AirLoads.Moment.Y
-                rbMz.Value = CalculationCore.Lattices(Index).AirLoads.Moment.Z
+                rbMx.Value = AirLoad.Moment.X
+                rbMy.Value = AirLoad.Moment.Y
+                rbMz.Value = AirLoad.Moment.Z
 
                 pbLoadingGraph.Refresh()
 
@@ -369,46 +377,52 @@ Public Class ForcesPanel
 
     Private Sub DrawLoad(sender As Object, e As PaintEventArgs)
 
-        If CalculationCore IsNot Nothing Then
+        If ProjectRoot.Results.ActiveFrame IsNot Nothing Then
+
+            Dim Frame As ResultFrame = ProjectRoot.Results.ActiveFrame
 
             Dim Index As Integer = cbLattices.SelectedIndex
 
-            If Index >= 0 And Index < CalculationCore.Lattices.Count Then
+            If Index >= 0 And Index < Frame.PartialAirLoads.Count Then
 
-                If CalculationCore.Lattices(Index).ChordWiseStripes.Count > 0 Then
+                Dim Loads As PartialAirLoads = Frame.PartialAirLoads(Index)
 
-                    Dim Stripes As List(Of ChorwiseStripe) = CalculationCore.Lattices(Index).ChordWiseStripes
+                Dim Vectors As List(Of FixedVector) = Nothing
+
+                Select Case cbResultType.SelectedIndex
+
+                    Case 0
+                        Vectors = Loads.LiftVectors
+
+                    Case 1
+                        Vectors = Loads.SkinDragVectors
+
+                    Case 2
+                        Vectors = Loads.InducedDragVectors
+
+                End Select
+
+                If Vectors.Count > 0 Then
 
                     Dim ymax As Single
 
-                    Dim Data(Stripes.Count - 1) As PointF
+                    Dim Data(Vectors.Count - 1) As PointF
 
-                    For i = 0 To Stripes.Count - 1
+                    For I = 0 To Vectors.Count - 1
 
-                        Select Case cbResultType.SelectedIndex
+                        Data(I).Y = Vectors(I).Vector.EuclideanNorm
 
-                            Case 0
-                                Data(i).Y = Stripes(i).LiftCoefficient
-
-                            Case 1
-                                Data(i).Y = Stripes(i).SkinDragCoefficient
-
-                            Case 2
-                                Data(i).Y = Stripes(i).InducedDragCoefficient
-
-                        End Select
-
-                        If i = 0 Then
-                            ymax = Data(i).Y
+                        If I = 0 Then
+                            ymax = Data(I).Y
                         Else
-                            ymax = Math.Max(ymax, Data(i).Y)
+                            ymax = Math.Max(ymax, Data(I).Y)
                         End If
 
-                        If i > 0 Then Data(i).X = Data(i - 1).X + Stripes(i - 1).CenterPoint.DistanceTo(Stripes(i).CenterPoint)
+                        If I > 0 Then Data(I).X = Data(I - 1).X + Vectors(I - 1).Point.DistanceTo(Vectors(I).Point)
 
                     Next
 
-                    Dim xmax As Single = Data(Stripes.Count - 1).X
+                    Dim xmax As Single = Data(Vectors.Count - 1).X
 
                     If xmax > 0 And ymax > 0 Then
 
@@ -446,11 +460,11 @@ Public Class ForcesPanel
 
                         Next
 
-                        Dim pnts(Stripes.Count) As Point
+                        Dim pnts(Vectors.Count) As Point
 
                         ' convert to screen coordinates
 
-                        For i = 0 To Stripes.Count - 1
+                        For i = 0 To Vectors.Count - 1
 
                             pnts(i).X = gO.X + gW * (Data(i).X / xmax)
                             pnts(i).Y = gO.Y + gH * (1 - Data(i).Y / ymax)
@@ -459,7 +473,7 @@ Public Class ForcesPanel
 
                         ' draw lines:
 
-                        For i = 1 To Stripes.Count - 1
+                        For i = 1 To Vectors.Count - 1
 
                             g.DrawLine(Pens.Blue, pnts(i - 1), pnts(i))
 
@@ -471,7 +485,7 @@ Public Class ForcesPanel
 
                         Dim pnt As Point
 
-                        For i = 0 To Stripes.Count - 1
+                        For i = 0 To Vectors.Count - 1
 
                             pnt = pnts(i)
 

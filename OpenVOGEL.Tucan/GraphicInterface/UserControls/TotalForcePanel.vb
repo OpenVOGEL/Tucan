@@ -233,13 +233,14 @@ Public Class TotalForcePanel
 
     Private Sub LoadResultsData()
 
-        If CalculationCore IsNot Nothing Then
+        If ProjectRoot.Results.ActiveFrame IsNot Nothing Then
 
-            rbVelocity.Value = CalculationCore.StreamVelocity.EuclideanNorm
-            rbDensity.Value = CalculationCore.StreamDensity
-            rbAlpha.Value = CalculationCore.GlobalAirloads.Alfa
-            rbBeta.Value = CalculationCore.GlobalAirloads.Beta
-            nudSurface.Value = CalculationCore.GlobalAirloads.Area
+            Dim Frame = ProjectRoot.Results.ActiveFrame
+            rbVelocity.Value = ProjectRoot.Results.ActiveFrame.StreamVelocity.EuclideanNorm
+            rbDensity.Value = ProjectRoot.Results.SimulationSettings.Density
+            rbAlpha.Value = Frame.TotalAirLoads.Alfa
+            rbBeta.Value = Frame.TotalAirLoads.Beta
+            nudSurface.Value = Frame.TotalAirLoads.Area
 
             RecalculateLoads()
 
@@ -249,9 +250,9 @@ Public Class TotalForcePanel
 
     Private Sub RecalculateLoads()
 
-        If CalculationCore IsNot Nothing Then
+        If ProjectRoot.Results.ActiveFrame IsNot Nothing Then
 
-            Dim TotalAirloads As AirLoads = CalculationCore.GlobalAirloads
+            Dim TotalAirloads As AirLoads = ProjectRoot.Results.ActiveFrame.TotalAirLoads
 
             rbq.Value = TotalAirloads.DynamicPressure
 
@@ -303,9 +304,9 @@ Public Class TotalForcePanel
 
             Dim Basis As New Base3
 
-            Basis.U.X = CalculationCore.StreamVelocity.X
-            Basis.U.Y = CalculationCore.StreamVelocity.Y
-            Basis.U.Z = CalculationCore.StreamVelocity.Z
+            Basis.U.X = ProjectRoot.Results.ActiveFrame.StreamVelocity.X
+            Basis.U.Y = ProjectRoot.Results.ActiveFrame.StreamVelocity.Y
+            Basis.U.Z = ProjectRoot.Results.ActiveFrame.StreamVelocity.Z
             Basis.U.Normalize()
 
             Basis.W.X = Basis.U.X

@@ -16,6 +16,7 @@
 'along with this program.  If Not, see < http:  //www.gnu.org/licenses/>.
 
 Imports DotNumerics.LinearAlgebra
+Imports OpenVOGEL.AeroTools.CalculationModel.Settings
 Imports OpenVOGEL.MathTools.Algebra.EuclideanSpace
 
 Namespace CalculationModel.Solver
@@ -30,7 +31,7 @@ Namespace CalculationModel.Solver
         ''' will be reached.
         ''' Loads are only calculated at the last time step.
         ''' </summary>
-        Public Sub RigidFlight(ByVal DataBasePath As String)
+        Public Sub RigidFlight(ByVal ReferenceFilePath As String)
 
             RaiseEvent PushMessage("Starting steady analysis")
             RaiseEvent PushMessage("Solver version: " & Version)
@@ -39,9 +40,7 @@ Namespace CalculationModel.Solver
             ' Initialize output directories '
             '///////////////////////////////'
 
-            CreateSubFoldersNames(DataBasePath)
-            CreateSubFolder(DataBaseSection.RigidFlight)
-            CleanDirectory(DataBaseSection.RigidFlight)
+            CreateSubFolder(CalculationType.SteadyState, ReferenceFilePath)
 
             CheckForSources()
 
@@ -52,7 +51,7 @@ Namespace CalculationModel.Solver
             If Not WithSources AndAlso Settings.UseGpu AndAlso TestOpenCL() Then
 
                 GpuVortexSolver = New GpuTools.VortexSolver
-                GpuVortexSolver.Initialize(Settings.GpuDeviceId, RigidFlightPath)
+                GpuVortexSolver.Initialize(Settings.GpuDeviceId, BaseDirectoryPath)
 
                 RaiseEvent PushMessage("GPU enabled")
 
@@ -71,7 +70,7 @@ Namespace CalculationModel.Solver
             '//////////////////////////////'
 
             Stream.Velocity.Assign(Settings.StreamVelocity)
-            Stream.Rotation.Assign(Settings.StreamOmega)
+            Stream.Rotation.Assign(Settings.StreamRotation)
             Stream.Density = Settings.Density
             Stream.SquareVelocity = Stream.Velocity.SquareEuclideanNorm
             Stream.DynamicPressure = 0.5 * Stream.Density * Stream.SquareVelocity
@@ -206,9 +205,23 @@ Namespace CalculationModel.Solver
             ' Announce ready and finish '
             '///////////////////////////'
 
-            RaiseEvent PushMessage("Writing to database")
+            RaiseEvent PushMessage("Writing results data...")
 
-            Me.WriteToXML(System.IO.Path.Combine(RigidFlightPath, "Steady.res"), True)
+            ' Lattices from the last step (frame 0)
+            '------------------------------------------
+            WriteLattices(BaseDirectoryPath, 0)
+
+            ' Settings
+            '------------------------------------------
+            Settings.WriteToXML(IO.Path.Combine(BaseDirectoryPath, "Settings.xml"))
+
+            ' Polars
+            '------------------------------------------
+            PolarDataBase.WriteBinary(IO.Path.Combine(BaseDirectoryPath, "Polars.bin"))
+
+            ' Info
+            '------------------------------------------
+            WriteInfoFile(BaseDirectoryPath, CalculationType.SteadyState)
 
             Dim Interval As TimeSpan = Now - StartingTime
             Dim Message As String = String.Format("Calculation finished. Elapsed time: {0}m {1}.{2}s", Interval.Minutes, Interval.Seconds, Interval.Milliseconds)

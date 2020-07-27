@@ -21,6 +21,8 @@ Imports OpenVOGEL.AeroTools.CalculationModel.Models.Aero.Components
 Imports OpenVOGEL.AeroTools.CalculationModel.Models.Structural
 Imports System.Xml
 Imports OpenVOGEL.AeroTools.IoHelper
+Imports OpenVOGEL.MathTools.Integration
+Imports OpenVOGEL.AeroTools.CalculationModel.Settings
 
 Namespace CalculationModel.Solver
 
@@ -32,7 +34,7 @@ Namespace CalculationModel.Solver
         Public Shared ReadOnly Property Version As String = "4.0-2020.06"
 
         ''' <summary>
-        ''' Read a written step
+        ''' Read a written snapshot
         ''' </summary>
         ''' <param name="FilePath"></param>
         ''' <remarks></remarks>
@@ -50,12 +52,12 @@ Namespace CalculationModel.Solver
                 Dim nLattices As Integer = reader.GetAttribute("Lattices")
                 Dim nLinks As Integer = reader.GetAttribute("Links")
 
-                Stream.Velocity.X = IOXML.ReadDouble(reader, "VX", 1.0)
-                Stream.Velocity.Y = IOXML.ReadDouble(reader, "VY", 0.0)
-                Stream.Velocity.Z = IOXML.ReadDouble(reader, "VZ", 0.0)
-                Stream.Rotation.X = IOXML.ReadDouble(reader, "OX", 0.0)
-                Stream.Rotation.Y = IOXML.ReadDouble(reader, "OY", 0.0)
-                Stream.Rotation.Z = IOXML.ReadDouble(reader, "OZ", 0.0)
+                Stream.Velocity.X = IOXML.ReadDouble(reader, "Vx", 1.0)
+                Stream.Velocity.Y = IOXML.ReadDouble(reader, "Vy", 0.0)
+                Stream.Velocity.Z = IOXML.ReadDouble(reader, "Vz", 0.0)
+                Stream.Rotation.X = IOXML.ReadDouble(reader, "Ox", 0.0)
+                Stream.Rotation.Y = IOXML.ReadDouble(reader, "Oy", 0.0)
+                Stream.Rotation.Z = IOXML.ReadDouble(reader, "Oz", 0.0)
                 Stream.Density = IOXML.ReadDouble(reader, "Rho", 1.225)
 
                 If Stream.Density = 0 Then Stream.Density = 1.225
@@ -69,13 +71,13 @@ Namespace CalculationModel.Solver
                         End If
                         PolarDataBase.ReadBinary(FilePath & ".Polars.bin")
                     End If
-                Catch ex As Exception
+                Catch
                     PolarDataBase = Nothing
                 End Try
 
                 For i = 1 To nLattices
                     Lattices.Add(New BoundedLattice())
-                    Lattices(i - 1).ReadBinary(FilePath & String.Format(".lat_{0}.bin", i), PolarDataBase)
+                    Lattices(i - 1).ReadBinary(FilePath & String.Format(".Lattice_{0}.bin", i), PolarDataBase)
                 Next
 
                 If (nLinks > 0) Then
@@ -101,12 +103,22 @@ Namespace CalculationModel.Solver
 
                     StructuralLinks = New List(Of StructuralLink)
 
-                    For i = 1 To nLinks
+                    For i = 0 To nLinks - 1
                         StructuralLinks.Add(New StructuralLink())
-                        StructuralLinks(i - 1).ReadBinary(FilePath & String.Format(".link_{0}.bin", i), NodalStak, RingStak)
+                        StructuralLinks(i).ReadBinary(FilePath & String.Format(".Link_{0}.bin", i), NodalStak, RingStak)
                     Next
 
                 End If
+
+                Try
+                    If File.Exists(FilePath & ".Response.bin") Then
+                        If Motion Is Nothing Then
+                            Motion = New MotionIntegrator(FilePath & ".Response.bin")
+                        End If
+                    End If
+                Catch
+                    Motion = Nothing
+                End Try
 
                 If reader.ReadToFollowing("Settings") Then
                     Settings.ReadFromXML(reader.ReadSubtree)
@@ -125,7 +137,7 @@ Namespace CalculationModel.Solver
         End Sub
 
         ''' <summary>
-        ''' Writes the current step
+        ''' Writes a snapshot of the current solver
         ''' </summary>
         ''' <param name="FilePath"></param>
         ''' <remarks></remarks>
@@ -137,106 +149,262 @@ Namespace CalculationModel.Solver
 
             writer.WriteAttributeString("Version", Version)
 
-            writer.WriteAttributeString("VX", Stream.Velocity.X)
-            writer.WriteAttributeString("VY", Stream.Velocity.Y)
-            writer.WriteAttributeString("VZ", Stream.Velocity.Z)
-            writer.WriteAttributeString("OX", Stream.Rotation.X)
-            writer.WriteAttributeString("OY", Stream.Rotation.Y)
-            writer.WriteAttributeString("OZ", Stream.Rotation.Z)
+            writer.WriteAttributeString("Vx", Stream.Velocity.X)
+            writer.WriteAttributeString("Vy", Stream.Velocity.Y)
+            writer.WriteAttributeString("Vz", Stream.Velocity.Z)
+            writer.WriteAttributeString("Ox", Stream.Rotation.X)
+            writer.WriteAttributeString("Oy", Stream.Rotation.Y)
+            writer.WriteAttributeString("Oz", Stream.Rotation.Z)
             writer.WriteAttributeString("Rho", Stream.Density)
 
+            ' Lattices
+            '------------------------------------------
             writer.WriteAttributeString("Lattices", Lattices.Count)
 
-            For i = 1 To Lattices.Count
-                Lattices(i - 1).WriteBinary(FilePath & String.Format(".lat_{0}.bin", i), WakesNodalVelocity)
+            For i = 0 To Lattices.Count - 1
+                Lattices(i).WriteBinary(FilePath & String.Format(".Lattice_{0}.bin", i), WakesNodalVelocity)
             Next
 
-            If IsNothing(StructuralLinks) Then
+            ' Dynamic links
+            '------------------------------------------
+            If StructuralLinks Is Nothing Then
                 writer.WriteAttributeString("Links", 0)
             Else
                 writer.WriteAttributeString("Links", StructuralLinks.Count)
-                For i = 1 To StructuralLinks.Count
-                    StructuralLinks(i - 1).WriteBinary(FilePath & String.Format(".link_{0}.bin", i))
+                For i = 0 To StructuralLinks.Count - 1
+                    StructuralLinks(i).WriteBinary(FilePath & String.Format(".Link_{0}.bin", i))
                 Next
             End If
 
+            ' Settings
+            '------------------------------------------
             writer.WriteStartElement("Settings")
             Settings.SaveToXML(writer)
             writer.WriteEndElement()
 
+            ' Polars
+            '------------------------------------------
             PolarDataBase.WriteBinary(FilePath & ".Polars.bin")
 
             writer.WriteEndElement()
-
             writer.Close()
+
+        End Sub
+
+        ''' <summary>
+        ''' Writes all lattices to the given directory using the FrameIndex for the name
+        ''' </summary>
+        ''' <param name="DirectoryPath"></param>
+        ''' <param name="FrameIndex"></param>
+        Public Sub WriteLattices(ByVal DirectoryPath As String, FrameIndex As Integer)
+
+            For I = 0 To Lattices.Count - 1
+                Lattices(I).WriteBinary(System.IO.Path.Combine(DirectoryPath, String.Format("Lattice_{0}_{1}.bin", FrameIndex, I)), False)
+            Next
+
+        End Sub
+
+        ''' <summary>
+        ''' Reads all the lattices named for the given FrameIndex in the given directory.
+        ''' </summary>
+        ''' <param name="DirectoryPath"></param>
+        ''' <param name="FrameIndex"></param>
+        Public Shared Sub ReadLattices(ByVal DirectoryPath As String,
+                                       ByVal FrameIndex As Integer,
+                                       ByRef Lattices As List(Of BoundedLattice),
+                                       ByRef PolarDatabase As PolarDatabase)
+
+            Dim LatticeIndex = 0
+            Dim KeepReading As Boolean = True
+
+            If Lattices IsNot Nothing Then
+                Lattices.Clear()
+            End If
+
+            While KeepReading
+                Dim File As String = System.IO.Path.Combine(DirectoryPath, String.Format("Lattice_{0}_{1}.bin", FrameIndex, LatticeIndex))
+                If System.IO.File.Exists(File) Then
+
+                    If Lattices Is Nothing Then
+                        Lattices = New List(Of BoundedLattice)
+                    End If
+
+                    Dim Lattice As New BoundedLattice
+                    Lattice.ReadBinary(File, PolarDatabase, True)
+                    Lattices.Add(Lattice)
+                    LatticeIndex += 1
+
+                Else
+                    KeepReading = False
+                End If
+            End While
+
+        End Sub
+
+        ''' <summary>
+        ''' Loads all the lattices named for the given FrameIndex in the given directory.
+        ''' </summary>
+        ''' <param name="DirectoryPath"></param>
+        ''' <param name="FrameIndex"></param>
+        Public Sub LoadLattices(ByVal DirectoryPath As String, FrameIndex As Integer)
+
+            ReadLattices(DirectoryPath,
+                         FrameIndex,
+                         Lattices,
+                         PolarDataBase)
+        End Sub
+
+        ''' <summary>
+        ''' Writes the structural links to the given directory
+        ''' </summary>
+        ''' <param name="DirectoryPath"></param>
+        Public Sub WriteStructuralLinks(ByVal DirectoryPath As String)
+
+            For i = 0 To StructuralLinks.Count - 1
+
+                StructuralLinks(i).WriteBinary(Path.Combine(DirectoryPath, String.Format("Link_{0}.bin", i)))
+
+            Next
+
+        End Sub
+
+        ''' <summary>
+        ''' Reads the structural links from the given directory
+        ''' </summary>
+        ''' <param name="DirectoryPath"></param>
+        Public Shared Sub ReadStructuralLinks(ByVal DirectoryPath As String,
+                                              ByRef Lattices As List(Of BoundedLattice),
+                                              ByRef StructuralLinks As List(Of StructuralLink))
+
+            Dim NodalStack As New List(Of Node)
+            Dim RingStack As New List(Of VortexRing)
+
+            Dim First As Boolean = True
+            Dim LinkIndex = 0
+            Dim KeepReading As Boolean = True
+
+            While KeepReading
+
+                Dim FilePath As String = Path.Combine(DirectoryPath, String.Format("Link_{0}.bin", LinkIndex))
+
+                If File.Exists(FilePath) Then
+
+                    If First Then
+
+                        ' Initialize the stacks
+                        '--------------------------------------------
+
+                        StructuralLinks = New List(Of StructuralLink)
+                        NodalStack = New List(Of Node)
+                        RingStack = New List(Of VortexRing)
+
+                        Dim nIndex As Integer = 0
+                        Dim eIndex As Integer = 0
+
+                        For Each Lattice In Lattices
+                            For Each Node In Lattice.Nodes
+                                Node.IndexG = nIndex
+                                NodalStack.Add(Node)
+                                nIndex += 1
+                            Next
+                            For Each Ring In Lattice.VortexRings
+                                Ring.IndexG = eIndex
+                                RingStack.Add(Ring)
+                                eIndex += 1
+                            Next
+                        Next
+
+                        First = False
+
+                    End If
+
+                    StructuralLinks.Add(New StructuralLink())
+
+                    StructuralLinks(LinkIndex).ReadBinary(FilePath, NodalStack, RingStack)
+
+                    LinkIndex += 1
+
+                Else
+                    KeepReading = False
+
+                End If
+
+            End While
+
+        End Sub
+
+        ''' <summary>
+        ''' Loads the structural links from the given directory
+        ''' </summary>
+        ''' <param name="DirectoryPath"></param>
+        Public Sub LoadStructuralLinks(ByVal DirectoryPath As String)
+
+            ReadStructuralLinks(DirectoryPath,
+                                Lattices,
+                                StructuralLinks)
+
+        End Sub
+
+        ''' <summary>
+        ''' Writes a file for the information of the data
+        ''' </summary>
+        ''' <param name="DirectoryPath"></param>
+        Private Sub WriteInfoFile(DirectoryPath As String,
+                                  CalculationMode As CalculationType)
+
+            Dim FileId As Integer = FreeFile()
+            FileOpen(FileId, IO.Path.Combine(DirectoryPath, "Info.vri"), OpenMode.Output)
+
+            PrintLine(FileId, "OpenVOGEL database directory")
+            PrintLine(FileId, String.Format("Kernel version:     {0}", Version))
+            PrintLine(FileId, String.Format("Calculation date:   {0}", DateAndTime.Now.ToShortDateString))
+            PrintLine(FileId, String.Format("Calculation kind:   {0}", CalculationMode.ToString))
+            PrintLine(FileId, String.Format("Number of lattices: {0}", Lattices.Count))
+
+            FileClose(FileId)
 
         End Sub
 
 #Region "Sub folders"
 
-        Private Enum DataBaseSection As Byte
-
-            Base = 0
-            Structural = 1
-            Aeroelastic = 2
-            RigidFlight = 3
-            FreeFlight = 4
-
-        End Enum
-
-        Const DatabaseFileStructure = "_Structural"
-        Const DatabaseFileAeroelastic = "_Aeroelastic"
-        Const DatabaseFileSteady = "_Steady"
-        Const DatabaseFileTransit = "_Unsteady"
-
-        Public BasePath As String
-        Public StructurePath As String
-        Public AeroelasticPath As String
-        Public RigidFlightPath As String
-        Public FreeFlightPath As String
+        Const DirectoryNameSteadyState = "_SteadyState"
+        Const DirectoryNameAeroelastic = "_Aeroelastic"
+        Const DirectoryNameFreeFlight = "_FreeFlight"
 
         ''' <summary>
-        ''' Creates the subfolders where results are stored
+        ''' The working directory
         ''' </summary>
-        ''' <remarks></remarks>
-        Private Sub CreateSubFoldersNames(ByVal DataBasePath As String)
+        ''' <returns></returns>
+        Public Property BaseDirectoryPath As String
 
-            If DataBasePath IsNot Nothing AndAlso DataBasePath <> "" Then
-
-                BasePath = Path.Combine(Path.GetDirectoryName(DataBasePath), Path.GetFileNameWithoutExtension(DataBasePath))
-                StructurePath = BasePath + DatabaseFileStructure
-                AeroelasticPath = BasePath + DatabaseFileAeroelastic
-                RigidFlightPath = BasePath + DatabaseFileSteady
-                FreeFlightPath = BasePath + FreeFlightPath
-
-            Else
-
-                RaiseEvent PushMessage("Database path not defined. Cancellation requested.")
-                RequestCancellation()
-
-            End If
-
-        End Sub
-
-        Private Sub CreateSubFolder(ByVal DataBaseSection As DataBaseSection)
+        ''' <summary>
+        ''' Creates the subfolder for the results
+        ''' </summary>
+        ''' <param name="DataBaseSection"></param>
+        ''' <param name="ReferenceFilePath"></param>
+        Private Sub CreateSubFolder(ByVal DataBaseSection As CalculationType, ByVal ReferenceFilePath As String)
 
             Try
 
+                BaseDirectoryPath = Path.Combine(Path.GetDirectoryName(ReferenceFilePath), Path.GetFileNameWithoutExtension(ReferenceFilePath))
+
                 Select Case DataBaseSection
 
-                    Case Solver.DataBaseSection.Aeroelastic
-                        System.IO.Directory.CreateDirectory(AeroelasticPath)
+                    Case CalculationType.SteadyState
+                        BaseDirectoryPath += DirectoryNameSteadyState
+                        System.IO.Directory.CreateDirectory(BaseDirectoryPath)
 
-                    Case Solver.DataBaseSection.RigidFlight
-                        System.IO.Directory.CreateDirectory(RigidFlightPath)
+                    Case CalculationType.Aeroelastic
+                        BaseDirectoryPath += DirectoryNameAeroelastic
+                        System.IO.Directory.CreateDirectory(BaseDirectoryPath)
 
-                    Case Solver.DataBaseSection.Structural
-                        System.IO.Directory.CreateDirectory(StructurePath)
-
-                    Case Solver.DataBaseSection.FreeFlight
-                        System.IO.Directory.CreateDirectory(FreeFlightPath)
+                    Case CalculationType.FreeFlight
+                        BaseDirectoryPath += DirectoryNameFreeFlight
+                        System.IO.Directory.CreateDirectory(BaseDirectoryPath)
 
                 End Select
+
+                CleanDirectory()
 
             Catch e As Exception
 
@@ -248,62 +416,14 @@ Namespace CalculationModel.Solver
         End Sub
 
         ''' <summary>
-        ''' The file where the steady state results are written
-        ''' </summary>
-        ''' <returns></returns>
-        Public ReadOnly Property RigidFlightResFile As String
-            Get
-                Return System.IO.Path.Combine(RigidFlightPath, "RigidFlight.res")
-            End Get
-        End Property
-
-        ''' <summary>
-        ''' The file where the aeroelastic results are written
-        ''' </summary>
-        ''' <returns></returns>
-        Public ReadOnly Property AeroelasticResFile(TimeStep As Integer) As String
-            Get
-                Return System.IO.Path.Combine(AeroelasticPath, String.Format("Aeroelastic_{0}.res", TimeStep))
-            End Get
-        End Property
-
-        ''' <summary>
-        ''' The file where the transit results are written
-        ''' </summary>
-        ''' <returns></returns>
-        Public ReadOnly Property FreeFlightResFile(TimeStep As Integer) As String
-            Get
-                Return System.IO.Path.Combine(FreeFlightPath, String.Format("FreeFlight_{0}.res", TimeStep))
-            End Get
-        End Property
-
-        ''' <summary>
         ''' Removes all calculation files from the selected path
         ''' </summary>
         ''' <remarks></remarks>
-        Private Sub CleanDirectory(ByVal DataBaseSection As DataBaseSection)
-
-            Dim path As String = ""
-
-            Select Case DataBaseSection
-
-                Case Solver.DataBaseSection.Aeroelastic
-                    path = AeroelasticPath
-
-                Case Solver.DataBaseSection.RigidFlight
-                    path = RigidFlightPath
-
-                Case Solver.DataBaseSection.Structural
-                    path = StructurePath
-
-                Case Solver.DataBaseSection.FreeFlight
-                    path = FreeFlightPath
-
-            End Select
+        Private Sub CleanDirectory()
 
             Try
 
-                Dim Files As String() = System.IO.Directory.GetFiles(path)
+                Dim Files As String() = System.IO.Directory.GetFiles(BaseDirectoryPath)
 
                 For Each FileName In Files
 
@@ -311,7 +431,7 @@ Namespace CalculationModel.Solver
 
                 Next
 
-            Catch ex As Exception
+            Catch
 
             End Try
 
@@ -323,7 +443,7 @@ Namespace CalculationModel.Solver
         Public Sub ReportResults()
 
             RaiseEvent PushResultLine("RESULS OF THE AERODYNAMIC ANALYSIS")
-            RaiseEvent PushResultLine(String.Format("OpenVOGEL kernel: {0}", Version))
+            RaiseEvent PushResultLine(String.Format("OpenVOGEL kernel:  {0}", Version))
             RaiseEvent PushResultLine("")
 
             RaiseEvent PushResultLine("# Reference velocity [m/s]")

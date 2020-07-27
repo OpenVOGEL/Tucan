@@ -439,7 +439,7 @@ Public Module AeroTests
         Dim Dt As Double = 0.1
         Dim T As Double = 0.0#
 
-        Dim Solver As New HammingIntegrator(N, Dt, V0, O0, g)
+        Dim Solver As New MotionIntegrator(N, Dt, V0, O0, g)
 
         Solver.Mass = 1.0#
         Solver.Ixx = 1.0#
@@ -523,7 +523,7 @@ Public Module AeroTests
         System.Console.WriteLine(String.Format("Oscillation period = {0,10:E6}s", Td))
         System.Console.WriteLine(String.Format("Test period        = {0,10:E6}s ({1,4:F2} cicles)", N * Dt, N * Dt / Td))
 
-        Dim Solver As New HammingIntegrator(N, Dt, V0, O0, g)
+        Dim Solver As New MotionIntegrator(N, Dt, V0, O0, g)
 
         Solver.Mass = M
         Solver.Ixx = 1.0#

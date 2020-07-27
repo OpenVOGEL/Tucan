@@ -16,6 +16,8 @@
 'along with this program.  If Not, see < http:  //www.gnu.org/licenses/>.
 
 Imports DotNumerics.LinearAlgebra
+Imports OpenVOGEL.AeroTools.CalculationModel.Settings
+Imports OpenVOGEL.MathTools.Algebra.EuclideanSpace
 Imports OpenVOGEL.MathTools.Integration
 
 Namespace CalculationModel.Solver
@@ -33,7 +35,7 @@ Namespace CalculationModel.Solver
         ''' It is reccomended to use the Console to run a static equilibrium analysis
         ''' before any free flight simulation.
         ''' </summary>
-        Public Sub FreeFlight(ByVal DataBasePath As String)
+        Public Sub FreeFlight(ByVal ReferenceFilePath As String)
 
             '#############################################
             ' Prechecks
@@ -57,9 +59,7 @@ Namespace CalculationModel.Solver
 
             End If
 
-            CreateSubFoldersNames(DataBasePath)
-            CreateSubFolder(DataBaseSection.FreeFlight)
-            CleanDirectory(DataBaseSection.FreeFlight)
+            CreateSubFolder(CalculationType.FreeFlight, ReferenceFilePath)
 
             '#############################################
             ' Transform the model to the main inertia axes
@@ -74,7 +74,7 @@ Namespace CalculationModel.Solver
                 For Each Node In Lattice.Nodes
 
                     Node.Position.Substract(Settings.CenterOfGravity)
-                    Node.Position.Transform(Settings.MainInertialAxes)
+                    Node.Position.Transform(Settings.InertialBasis)
 
                 Next
 
@@ -85,13 +85,13 @@ Namespace CalculationModel.Solver
             ' Stream
             '----------------------------
 
-            Settings.StreamVelocity.Transform(Settings.MainInertialAxes)
-            Settings.StreamOmega.SetToCero()
+            Settings.StreamVelocity.Transform(Settings.InertialBasis)
+            Settings.StreamRotation.SetToCero()
 
             ' Gravity
             '----------------------------
 
-            Settings.Gravity.Transform(Settings.MainInertialAxes)
+            Settings.Gravity.Transform(Settings.InertialBasis)
 
             '#############################################
             ' Build integrator
@@ -99,15 +99,16 @@ Namespace CalculationModel.Solver
 
             RaiseEvent PushMessage("Building integrator")
             Dim MotionSteps As Integer = Settings.SimulationSteps - Settings.FreeFlightStartStep + 1
-            Dim MotionIntegrator As New HammingIntegrator(MotionSteps,
-                                                          Settings.Interval,
-                                                         -Settings.StreamVelocity,
-                                                          Settings.StreamOmega,
-                                                          Settings.Gravity)
-            MotionIntegrator.Mass = Settings.Mass
-            MotionIntegrator.Ixx = Settings.Ixx
-            MotionIntegrator.Iyy = Settings.Iyy
-            MotionIntegrator.Izz = Settings.Izz
+            Motion = New MotionIntegrator(MotionSteps,
+                                          Settings.Interval,
+                                         -Settings.StreamVelocity,
+                                          Settings.StreamRotation,
+                                          Settings.Gravity)
+
+            Motion.Mass = Settings.Mass
+            Motion.Ixx = Settings.Ixx
+            Motion.Iyy = Settings.Iyy
+            Motion.Izz = Settings.Izz
 
             '#############################################
             ' Setup initial stream
@@ -132,6 +133,7 @@ Namespace CalculationModel.Solver
             Dim AerodynamicEquations As New LinearEquations
             AerodynamicEquations.ComputeLU(MatrixDoublets)
             G = New Vector(Dimension)
+            Dim FrameIndex As Integer = 0
 
             For TimeStep = 1 To Settings.SimulationSteps
 
@@ -167,7 +169,7 @@ Namespace CalculationModel.Solver
 
                         CalculateAirloads()
 
-                        MotionIntegrator.SetInitialForces(GlobalAirloads.Force, GlobalAirloads.Moment)
+                        Motion.SetInitialForces(GlobalAirloads.Force, GlobalAirloads.Moment)
 
                     End If
 
@@ -194,12 +196,12 @@ Namespace CalculationModel.Solver
 
                             RaiseEvent PushMessage("  -> Predicting motion")
 
-                            MotionIntegrator.Predict()
+                            Motion.Predict()
 
                             ' NOTE: as seen from the aircraft, the stream moves in the oposite direction
 
-                            Stream.Velocity.Assign(MotionIntegrator.Velocity, -1.0#)
-                            Stream.Rotation.Assign(MotionIntegrator.Rotation, -1.0#)
+                            Stream.Velocity.Assign(Motion.Velocity, -1.0#)
+                            Stream.Rotation.Assign(Motion.Rotation, -1.0#)
                             Stream.SquareVelocity = Stream.Velocity.SquareEuclideanNorm
                             Stream.DynamicPressure = 0.5 * Stream.Density * Stream.SquareVelocity
 
@@ -248,6 +250,8 @@ Namespace CalculationModel.Solver
 
                             If Converged Then
                                 RaiseEvent PushMessage(" > Convergence reached")
+                                WriteLattices(BaseDirectoryPath, FrameIndex)
+                                FrameIndex += 1
                                 Finalized = True
                                 Exit For
                             End If
@@ -256,10 +260,10 @@ Namespace CalculationModel.Solver
                             ' Calculate new kinematic state
                             '//////////////////////////////////'
 
-                            Converged = MotionIntegrator.Correct(GlobalAirloads.Force, GlobalAirloads.Moment)
+                            Converged = Motion.Correct(GlobalAirloads.Force, GlobalAirloads.Moment)
 
-                            Stream.Velocity.Assign(MotionIntegrator.Velocity, -1.0#)
-                            Stream.Rotation.Assign(MotionIntegrator.Rotation, -1.0#)
+                            Stream.Velocity.Assign(Motion.Velocity, -1.0#)
+                            Stream.Rotation.Assign(Motion.Rotation, -1.0#)
                             Stream.SquareVelocity = Stream.Velocity.SquareEuclideanNorm
                             Stream.DynamicPressure = 0.5 * Stream.Density * Stream.SquareVelocity
 
@@ -282,14 +286,6 @@ Namespace CalculationModel.Solver
                         RaiseEvent CalculationDone()
                         Exit Sub
                     End If
-
-                    '//////////////////////////////////'
-                    ' Save current step
-                    '//////////////////////////////////'
-
-                    RaiseEvent PushMessage(" > Writing binaries")
-
-                    WriteToXML(FreeFlightResFile(TimeStep))
 
                 Else
 
@@ -332,25 +328,31 @@ Namespace CalculationModel.Solver
             RaiseEvent PushProgress("Calculation finished", 100)
 
             '//////////////////////////////////'
-            ' Output time response             '
+            ' Save the remaining data
             '//////////////////////////////////'
 
-            RaiseEvent PushProgress("Writting motion to file...", 100)
+            RaiseEvent PushMessage("Writing results data...")
 
-            Dim FileId As Integer = FreeFile()
-            FileOpen(FileId, System.IO.Path.Combine(FreeFlightPath, "response.txt"), OpenMode.Output)
-            PrintLine(FileId, String.Format("{0:11} | {1:11} | {2:11} | {3:11} | {4:11} | {5:11} | {6:11} | {7:11} | {8:11} | {9:11}", "Time", "Px", "Py", "Pz", "Vx", "Vy", "Vz", "Ox", "Oy", "Oz"))
-            Dim Time As Double = 0.0#
+            ' Settings
+            '------------------------------------------
+            Settings.WriteToXML(IO.Path.Combine(BaseDirectoryPath, "Settings.xml"))
 
-            For I = 0 To MotionSteps
-                Dim State As Variable = MotionIntegrator.State(I)
-                PrintLine(FileId, String.Format("{0,11:F6} | {1,11:F6} | {2,11:F6} | {3,11:F6} | {4,11:F6} | {5,11:F6} | {6,11:F6} | {7,11:F6} | {8,11:F6} | {9,11:F6}", Time, State.Px, State.Py, State.Pz, State.Vx, State.Vy, State.Vz, State.Ox, State.Oy, State.Oz))
-                Time += Settings.Interval
-            Next
+            ' Polars
+            '------------------------------------------
+            PolarDataBase.WriteBinary(IO.Path.Combine(BaseDirectoryPath, "Polars.bin"))
 
-            FileClose(FileId)
+            ' Response
+            '------------------------------------------
+            Motion.WriteBinary(IO.Path.Combine(BaseDirectoryPath, "Motion.bin"))
+
+            Motion.WriteAscii(IO.Path.Combine(BaseDirectoryPath, "Motion.txt"))
+
+            ' Info
+            '------------------------------------------
+            WriteInfoFile(BaseDirectoryPath, CalculationType.FreeFlight)
 
             RaiseEvent PushMessage("Finished")
+
             RaiseEvent CalculationDone()
 
         End Sub

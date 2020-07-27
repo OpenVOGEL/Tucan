@@ -179,11 +179,13 @@ Namespace Tucan.Utility
         ''' <remarks></remarks>
         Public Sub RepresentOnGL()
 
-            ' Don't do it if there is a simulation on course:
+            If Simulating Then
 
-            If Simulating Then Return
+                ' Don't do it if there is a simulation on course
 
-            'FastRefreshOnGL()
+                Return
+
+            End If
 
             ControlGL.ClearColor(Visualization.ScreenColor.R / 255, Visualization.ScreenColor.G / 255, Visualization.ScreenColor.B / 255, Visualization.ScreenColor.A / 255)
 
@@ -219,8 +221,8 @@ Namespace Tucan.Utility
 
             For Each List In ListOfSurfacesToDraw
                 If Not Visualization.Panning And Not Visualization.Rotating Or
-               (Visualization.Panning And List.ShowOnPan) Or
-               (Visualization.Rotating And List.ShowOnRotate) Then
+                   (Visualization.Panning And List.ShowOnPan) Or
+                   (Visualization.Rotating And List.ShowOnRotate) Then
                     ControlGL.CallList(List.Name)
                 End If
             Next
@@ -282,7 +284,8 @@ Namespace Tucan.Utility
             Visualization.Axes.GenerateWireFrame(ControlGL)
             Visualization.ReferenceFrame.GenerateWireFrame(ControlGL)
 
-            ' Model:
+            ' Model
+            '---------------------------------------------------------
             Select Case InterfaceMode
 
                 Case InterfaceModes.Design
@@ -299,23 +302,19 @@ Namespace Tucan.Utility
 
                 Case InterfaceModes.Postprocess
 
-                    ' Results:
+                    ' Results
+                    '---------------------------------------------------------
 
                     If Results.ActiveFrame IsNot Nothing Then
 
-                        If Results.ActiveFrame.Model.VisualProperties.ShowSurface Then
+                        Results.ActiveFrame.Model.Refresh3DModel(ControlGL)
+                        Results.ActiveFrame.Refresh3DModel(ControlGL)
 
-                            Results.ActiveFrame.Model.Refresh3DModel(ControlGL)
-
-                        End If
-
-                        If Not IsNothing(Results.ActiveFrame.Wakes) Then
+                        If Results.ActiveFrame.Wakes IsNot Nothing Then
 
                             Results.ActiveFrame.Wakes.Refresh3DModel(ControlGL)
 
                         End If
-
-                        ProjectRoot.VelocityPlane.Updte3DModel(ControlGL)
 
                     End If
 
@@ -403,10 +402,11 @@ Namespace Tucan.Utility
                             ListOfSurfacesToDraw.Add(List)
                             ControlGL.NewList(List.Name, OpenGL.GL_COMPILE)
                             Results.ActiveFrame.Model.Refresh3DModel(ControlGL)
+                            Results.ActiveFrame.Refresh3DModel(ControlGL)
                             ControlGL.EndList()
                         End If
 
-                        If Not IsNothing(Results.ActiveFrame.Wakes) Then
+                        If Results.ActiveFrame.Wakes IsNot Nothing Then
                             Dim List As GLElement
                             List.Name = ControlGL.GenLists(1)
                             List.ShowOnPan = False
@@ -423,7 +423,6 @@ Namespace Tucan.Utility
                         Plane.ShowOnRotate = False
                         ListOfSurfacesToDraw.Add(Plane)
                         ControlGL.NewList(Plane.Name, OpenGL.GL_COMPILE)
-                        ProjectRoot.VelocityPlane.Updte3DModel(ControlGL)
                         ControlGL.EndList()
 
                     End If

@@ -32,13 +32,12 @@ Public Class MainRibbon
     Public Event ProjectCleared()
 
     Private CalculationBussy As Boolean = False
-    Private FormReport As New FormReport
 
     Public Sub New()
 
         InitializeComponent()
 
-        cbxSimulationMode.Items.Add("Constrained")
+        cbxSimulationMode.Items.Add("Steady state")
         cbxSimulationMode.Items.Add("Free flight")
         cbxSimulationMode.Items.Add("Aeroelastic")
         cbxSimulationMode.SelectedIndex = 0
@@ -479,7 +478,7 @@ ErrSub:
 
     Private niNotification As New NotifyIcon()
 
-    Public Sub Calculate(Optional ByVal CalculationType As CalculationType = CalculationType.ctConstrained)
+    Public Sub Calculate(Optional ByVal CalculationType As CalculationType = CalculationType.SteadyState)
 
         If Not System.IO.File.Exists(ProjectRoot.FilePath) Then
 
@@ -502,17 +501,17 @@ ErrSub:
 
             Select Case CalculationType
 
-                Case CalculationType.ctConstrained
+                Case CalculationType.SteadyState
 
                     niNotification.BalloonTipText = "Calculating steady state"
                     niNotification.ShowBalloonTip(3000)
 
-                Case CalculationType.ctFreeFlight
+                Case CalculationType.FreeFlight
 
                     niNotification.BalloonTipText = "Calculating unsteady transit"
                     niNotification.ShowBalloonTip(3000)
 
-                Case CalculationType.ctAeroelastic
+                Case CalculationType.Aeroelastic
 
                     niNotification.BalloonTipText = "Calculating aeroelastic transit"
                     niNotification.ShowBalloonTip(3000)
@@ -570,9 +569,9 @@ ErrSub:
             nudVy.Value = ProjectRoot.SimulationSettings.StreamVelocity.Y
             nudVz.Value = ProjectRoot.SimulationSettings.StreamVelocity.Z
 
-            nudOx.Value = ProjectRoot.SimulationSettings.StreamOmega.X
-            nudOy.Value = ProjectRoot.SimulationSettings.StreamOmega.Y
-            nudOz.Value = ProjectRoot.SimulationSettings.StreamOmega.Z
+            nudOx.Value = ProjectRoot.SimulationSettings.StreamRotation.X
+            nudOy.Value = ProjectRoot.SimulationSettings.StreamRotation.Y
+            nudOz.Value = ProjectRoot.SimulationSettings.StreamRotation.Z
 
             nudDensity.Value = ProjectRoot.SimulationSettings.Density
             nudViscosity.Value = ProjectRoot.SimulationSettings.Viscocity
@@ -619,7 +618,7 @@ ErrSub:
 
         If ProjectRoot.Initialized AndAlso Not _LockSettingsEvents Then
 
-            ProjectRoot.SimulationSettings.StreamOmega.X = nudOx.Value
+            ProjectRoot.SimulationSettings.StreamRotation.X = nudOx.Value
 
         End If
 
@@ -629,7 +628,7 @@ ErrSub:
 
         If ProjectRoot.Initialized AndAlso Not _LockSettingsEvents Then
 
-            ProjectRoot.SimulationSettings.StreamOmega.Y = nudOy.Value
+            ProjectRoot.SimulationSettings.StreamRotation.Y = nudOy.Value
 
         End If
 
@@ -639,7 +638,7 @@ ErrSub:
 
         If ProjectRoot.Initialized AndAlso Not _LockSettingsEvents Then
 
-            ProjectRoot.SimulationSettings.StreamOmega.Z = nudOz.Value
+            ProjectRoot.SimulationSettings.StreamRotation.Z = nudOz.Value
 
         End If
 
@@ -1056,10 +1055,10 @@ ErrSub:
 
 #Region "Load results and transit"
 
-    Public Sub LoadResults(File As String)
+    Public Sub LoadResults(FilePath As String)
 
         Try
-            ProjectRoot.ReadResults(File)
+            ProjectRoot.ReadResults(FilePath)
             ModelInterface.PostprocessMode()
             FormReport.ReportResults()
             LoadResultProperties()
@@ -1077,7 +1076,7 @@ ErrSub:
 
         Dim dlgOpenFile As New OpenFileDialog
 
-        dlgOpenFile.Filter = "Vogel result files (*.res)|*.res"
+        dlgOpenFile.Filter = "Vogel result info (*.vri)|*.vri"
 
         Dim Respuesta2 As MsgBoxResult = dlgOpenFile.ShowDialog()
 
@@ -1131,6 +1130,7 @@ ErrSub:
 
                 ProjectRoot.Results.ActiveFrame = ProjectRoot.Results.Frames(cbxFrames.SelectedIndex)
                 LoadResultProperties()
+                FormReport.UpdateLoads()
                 ModelInterface.RefreshOnGL()
 
             End If
@@ -1170,7 +1170,8 @@ ErrSub:
             If ProjectRoot.Results.Frames.Count > 1 Then
 
                 If Not ModelInterface.Simulating Then
-                    _timer.Interval = ProjectRoot.Results.SimulationSettings.Interval * 1000 / ProjectRoot.Results.SimulationSettings.StructuralSettings.SubSteps
+
+                    _timer.Interval = ProjectRoot.Results.SimulationSettings.Interval * 1000
                     ModelInterface.Simulating = True
                     _timer.Start()
                     btnPlayStop.Text = "Stop"
@@ -1255,8 +1256,6 @@ ErrSub:
             pnlWakeSurfaceColor.BackColor = Wakes.VisualProperties.ColorSurface
             pnlWakeMeshColor.BackColor = Wakes.VisualProperties.ColorMesh
             pnlWakeNodeColor.BackColor = Wakes.VisualProperties.ColorNodes
-
-            cbxShowVelocityPlane.Checked = ProjectRoot.VelocityPlane.Visible
 
             gbxAeroelastic.Enabled = True
             nudModeScale.Enabled = ProjectRoot.Results.ActiveFrame.FrameKind = DesignTools.VisualModel.Models.ResultFrameKinds.DynamicMode
@@ -1555,18 +1554,6 @@ ErrSub:
 
     End Sub
 
-    Private Sub cbxShowVelocityPlane_CheckedChanged(sender As Object, e As EventArgs) Handles cbxShowVelocityPlane.CheckedChanged
-
-        If (Not _LockResultPropsEvents) And ProjectRoot.Initialized Then
-
-            ProjectRoot.VelocityPlane.Visible = cbxShowVelocityPlane.Checked
-
-            ModelInterface.RefreshOnGL()
-
-        End If
-
-    End Sub
-
     Private Sub btnEditVelocityPlane_Click(sender As Object, e As EventArgs) Handles btnEditVelocityPlane.Click
 
         RaiseEvent EditVelocityPlane()
@@ -1582,11 +1569,21 @@ ErrSub:
                 If CalculationBussy Then
                     MsgBox("Please, wait until the calculation is done.")
                 Else
-                    If (Not ProjectRoot.CalculationCore Is Nothing) Then
-                        FormReport.Show(ParentForm)
-                    Else
+                    If Results.Frames.Count = 0 Then
+
                         MsgBox("Results are not available. Load a results file or execute the calculation first.")
+
+                    ElseIf Results.ActiveFrame IsNot Nothing AndAlso
+                           Results.ActiveFrame.FrameKind <> DesignTools.VisualModel.Models.ResultFrameKinds.DynamicMode Then
+
+                        FormReport.Show(ParentForm)
+
+                    Else
+
+                        MsgBox("Results are not available for the selected frame.")
+
                     End If
+
                 End If
             End If
         End If

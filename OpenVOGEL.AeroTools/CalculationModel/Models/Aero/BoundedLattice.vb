@@ -500,23 +500,33 @@ Namespace CalculationModel.Models.Aero
 
             Dim w As New BinaryWriter(New FileStream(FilePath, FileMode.Create))
 
-            Me.WriteBinary(w, True) ' Use the overrided method
+            ' Base
+            '--------------------------
 
-            ' Wakes:
+            Me.WriteBinary(w, True)
+
+            ' Wakes
+            '--------------------------
 
             w.Write(Wakes.Count)
 
-            For i = 1 To Wakes.Count
-                Wakes(i - 1).WriteBinary(w, WakesNodalVelocity)
+            For i = 0 To Wakes.Count - 1
+                Wakes(i).WriteBinary(w, WakesNodalVelocity)
             Next
 
-            ' Chordwise links:
+            ' Chordwise links
+            '--------------------------
 
             w.Write(ChordWiseStripes.Count)
 
-            For i = 1 To ChordWiseStripes.Count
-                ChordWiseStripes(i - 1).WriteBinary(w)
+            For i = 0 To ChordWiseStripes.Count - 1
+                ChordWiseStripes(i).WriteBinary(w)
             Next
+
+            ' Air-loads
+            '--------------------------
+
+            AirLoads.WriteBinary(w)
 
             w.Close()
 
@@ -528,34 +538,44 @@ Namespace CalculationModel.Models.Aero
 
                 Dim r As New BinaryReader(New FileStream(FilePath, FileMode.Open))
 
-                Me.ReadBinary(r) ' Use the overrided method
+                ' Base
+                '--------------------------
+
+                Me.ReadBinary(r)
 
                 CalculateLatticeParameters()
 
-                ' Wakes:
+                ' Wakes
+                '--------------------------
 
                 Wakes.Clear()
 
                 If WithWakes Then
 
-                    For i = 1 To r.ReadInt32
+                    For i = 0 To r.ReadInt32 - 1
                         Wakes.Add(New Wake)
-                        Wakes(i - 1).ReadBinary(r)
+                        Wakes(i).ReadBinary(r)
                     Next
 
                 End If
 
-                ' Chordwise links:
+                ' Chordwise links
+                '--------------------------
 
                 Try
-                    For i = 1 To r.ReadInt32
+                    For i = 0 To r.ReadInt32 - 1
                         ChordWiseStripes.Add(New ChorwiseStripe)
-                        ChordWiseStripes(i - 1).ReadBinary(r, VortexRings, Polars)
+                        ChordWiseStripes(i).ReadBinary(r, VortexRings, Polars)
                     Next
-                Catch ex As Exception
-                    ' no links were found
+                Catch
+                    ' No links were found
                     ChordWiseStripes.Clear()
                 End Try
+
+                ' Air-loads
+                '--------------------------
+
+                AirLoads.ReadBinary(r)
 
                 r.Close()
 

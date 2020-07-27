@@ -51,39 +51,6 @@ Namespace VisualModel.Models.Components
         Inherits Surface
 
         ''' <summary>
-        ''' All lift vectors
-        ''' </summary>
-        Public Property LiftVectors As New List(Of FixedVector)
-
-        ''' <summary>
-        ''' The maximum lift
-        ''' </summary>
-        ''' <returns></returns>
-        Public Property MaximumLift As Double = 0
-
-        ''' <summary>
-        ''' All induced drag vectors
-        ''' </summary>
-        Public Property InducedDragVectors As New List(Of FixedVector)
-
-        ''' <summary>
-        ''' The maximum induced drag
-        ''' </summary>
-        ''' <returns></returns>
-        Public Property MaximumInducedDrag As Double = 0
-
-        ''' <summary>
-        ''' All skin drag vectors
-        ''' </summary>
-        Public Property SkinDragVectors As New List(Of FixedVector)
-
-        ''' <summary>
-        ''' The maximum skin drag
-        ''' </summary>
-        ''' <returns></returns>
-        Public Property MaximumSkinDrag As Double = 0
-
-        ''' <summary>
         ''' The different kind of results
         ''' </summary>
         Public Enum ResultKinds
@@ -115,6 +82,14 @@ Namespace VisualModel.Models.Components
         ''' </summary>
         ''' <returns></returns>
         Public Property ActiveResult As ResultKinds
+
+        Public Sub New(Visuals As VisualProperties)
+
+            ActiveResult = ResultKinds.None
+            Mesh = New Mesh()
+            VisualProperties = Visuals
+
+        End Sub
 
         Public Sub New()
 

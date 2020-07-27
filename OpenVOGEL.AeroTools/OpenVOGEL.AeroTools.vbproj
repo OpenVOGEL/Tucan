@@ -136,7 +136,7 @@
     <Compile Include="CalculationModel\Solver\Solver_OpenCL.vb" />
     <Compile Include="CalculationModel\Solver\Solver_Definitions.vb" />
     <Compile Include="CalculationModel\Solver\Solver_IO.vb" />
-    <Compile Include="CalculationModel\Solver\Solver_RigidFlight.vb" />
+    <Compile Include="CalculationModel\Solver\Solver_SteadyState.vb" />
     <Compile Include="CalculationModel\Solver\Solver_FreeFlight.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">

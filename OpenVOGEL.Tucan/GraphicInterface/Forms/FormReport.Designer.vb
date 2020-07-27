@@ -57,7 +57,7 @@ Partial Class FormReport
         Me.cModalResponse.Legends.Add(Legend1)
         Me.cModalResponse.Location = New System.Drawing.Point(0, 30)
         Me.cModalResponse.Name = "cModalResponse"
-        Me.cModalResponse.Size = New System.Drawing.Size(784, 397)
+        Me.cModalResponse.Size = New System.Drawing.Size(613, 299)
         Me.cModalResponse.TabIndex = 0
         Me.cModalResponse.Text = "Chart1"
         '
@@ -74,7 +74,7 @@ Partial Class FormReport
         Me.pPlot.Dock = System.Windows.Forms.DockStyle.Fill
         Me.pPlot.Location = New System.Drawing.Point(3, 3)
         Me.pPlot.Name = "pPlot"
-        Me.pPlot.Size = New System.Drawing.Size(789, 428)
+        Me.pPlot.Size = New System.Drawing.Size(618, 330)
         Me.pPlot.TabIndex = 7
         '
         'cbLink
@@ -101,7 +101,7 @@ Partial Class FormReport
         Me.tcResults.Controls.Add(Me.tbLoads)
         Me.tcResults.Controls.Add(Me.tbRaw)
         Me.tcResults.Controls.Add(Me.tbModalResponse)
-        Me.tcResults.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.tcResults.Dock = System.Windows.Forms.DockStyle.Top
         Me.tcResults.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.tcResults.Location = New System.Drawing.Point(2, 2)
         Me.tcResults.Name = "tcResults"
@@ -125,7 +125,7 @@ Partial Class FormReport
         Me.tbLoads.Location = New System.Drawing.Point(4, 22)
         Me.tbLoads.Name = "tbLoads"
         Me.tbLoads.Padding = New System.Windows.Forms.Padding(3)
-        Me.tbLoads.Size = New System.Drawing.Size(795, 434)
+        Me.tbLoads.Size = New System.Drawing.Size(624, 336)
         Me.tbLoads.TabIndex = 0
         Me.tbLoads.Text = "By component"
         '
@@ -135,7 +135,7 @@ Partial Class FormReport
         Me.tbRaw.Location = New System.Drawing.Point(4, 22)
         Me.tbRaw.Name = "tbRaw"
         Me.tbRaw.Padding = New System.Windows.Forms.Padding(3)
-        Me.tbRaw.Size = New System.Drawing.Size(795, 434)
+        Me.tbRaw.Size = New System.Drawing.Size(624, 336)
         Me.tbRaw.TabIndex = 2
         Me.tbRaw.Text = "Raw data"
         Me.tbRaw.UseVisualStyleBackColor = True
@@ -149,7 +149,7 @@ Partial Class FormReport
         Me.tbRawData.Location = New System.Drawing.Point(3, 3)
         Me.tbRawData.Margin = New System.Windows.Forms.Padding(60)
         Me.tbRawData.Name = "tbRawData"
-        Me.tbRawData.Size = New System.Drawing.Size(789, 428)
+        Me.tbRawData.Size = New System.Drawing.Size(618, 330)
         Me.tbRawData.TabIndex = 3
         Me.tbRawData.Text = ""
         '
@@ -159,7 +159,7 @@ Partial Class FormReport
         Me.tbModalResponse.Location = New System.Drawing.Point(4, 22)
         Me.tbModalResponse.Name = "tbModalResponse"
         Me.tbModalResponse.Padding = New System.Windows.Forms.Padding(3)
-        Me.tbModalResponse.Size = New System.Drawing.Size(795, 434)
+        Me.tbModalResponse.Size = New System.Drawing.Size(624, 336)
         Me.tbModalResponse.TabIndex = 1
         Me.tbModalResponse.Text = "Modal response"
         Me.tbModalResponse.UseVisualStyleBackColor = True
@@ -170,8 +170,8 @@ Partial Class FormReport
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.SystemColors.Control
         Me.ClientSize = New System.Drawing.Size(636, 381)
-        Me.ControlBox = False
         Me.Controls.Add(Me.tcResults)
+        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Name = "FormReport"
         Me.Padding = New System.Windows.Forms.Padding(2)

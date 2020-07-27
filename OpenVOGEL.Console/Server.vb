@@ -18,6 +18,7 @@
 Imports System.Net
 Imports System.Net.Sockets
 Imports System.Text
+Imports OpenVOGEL.AeroTools.CalculationModel
 Imports OpenVOGEL.DesignTools
 
 Public Module Server
@@ -68,6 +69,7 @@ Public Module Server
                         If Commands.Count > 1 Then
 
                             Dim Squeaker As New UdpClient
+                            Dim CalculationCore As New Solver.Solver
 
                             Try
 
@@ -79,11 +81,11 @@ Public Module Server
                                 DataStore.FilePath = Commands(1)
                                 DataStore.ProjectRoot.RestartProject()
                                 DataStore.ProjectRoot.ReadFromXML()
-                                DataStore.StartCalculation(AeroTools.CalculationModel.Settings.CalculationType.ctConstrained)
+                                DataStore.StartCalculation(Settings.CalculationType.SteadyState, CalculationCore)
 
                             Finally
 
-                                Squeak(Squeaker, "done;" & System.IO.Path.Combine(DataStore.CalculationCore.RigidFlightPath, "Steady.res"))
+                                Squeak(Squeaker, "done;" & CalculationCore.BaseDirectoryPath)
                                 Squeaker.Close()
 
                             End Try

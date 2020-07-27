@@ -16,6 +16,7 @@
 'along with this program.  If Not, see < http:  //www.gnu.org/licenses/>.
 
 Imports System.IO
+Imports OpenVOGEL.AeroTools.CalculationModel
 Imports OpenVOGEL.AeroTools.CalculationModel.Models.Aero
 Imports OpenVOGEL.AeroTools.CalculationModel.Settings
 Imports OpenVOGEL.DesignTools.DataStore
@@ -53,9 +54,11 @@ Module BatchAnalysis
             ProjectRoot.SimulationSettings.StreamVelocity.X = V * Math.Cos(Alfa)
             ProjectRoot.SimulationSettings.StreamVelocity.Z = V * Math.Sin(Alfa)
 
-            ProjectRoot.StartCalculation(CalculationType.ctConstrained)
+            Dim Kernel As New Solver.Solver
 
-            Loads.Add(CalculationCore.GlobalAirloads)
+            ProjectRoot.StartCalculation(CalculationType.SteadyState, Kernel)
+
+            Loads.Add(Kernel.GlobalAirloads)
 
         Next
 
@@ -64,13 +67,13 @@ Module BatchAnalysis
         FileOpen(FileId, Path.Combine(Path.GetDirectoryName(FilePath), Path.GetFileNameWithoutExtension(FilePath)) & "_batch.dat", OpenMode.Output)
 
         PrintLine(FileId, "OpenVOGEL alfa scan")
-        PrintLine(FileId, "Kernel version: " & CalculationCore.Version)
+        PrintLine(FileId, "Kernel version: " & Solver.Solver.Version)
         PrintLine(FileId, "Original model: " & ProjectRoot.FilePath)
         PrintLine(FileId, "")
 
-        PrintLine(FileId, String.Format("L = {0,12:E6}m", CalculationCore.GlobalAirloads.Length))
-        PrintLine(FileId, String.Format("A = {0,12:E6}m²", CalculationCore.GlobalAirloads.Area))
-        PrintLine(FileId, String.Format("q = {0,12:E6}Pa", CalculationCore.GlobalAirloads.DynamicPressure))
+        PrintLine(FileId, String.Format("L = {0,12:E6}m", Loads(0).Length))
+        PrintLine(FileId, String.Format("A = {0,12:E6}m²", Loads(0).Area))
+        PrintLine(FileId, String.Format("q = {0,12:E6}Pa", Loads(0).DynamicPressure))
 
         PrintLine(FileId, "")
         PrintLine(FileId, "# Force coefficients")
@@ -200,9 +203,11 @@ Module BatchAnalysis
 
             LiftingSurface.GenerateMesh()
 
-            ProjectRoot.StartCalculation(CalculationType.ctConstrained)
+            Dim Kernel As New Solver.Solver
 
-            Loads.Add(CalculationCore.GlobalAirloads)
+            ProjectRoot.StartCalculation(CalculationType.SteadyState, Kernel)
+
+            Loads.Add(Kernel.GlobalAirloads)
 
         Next
 
@@ -216,14 +221,14 @@ Module BatchAnalysis
         FileOpen(FileId, Path.Combine(Path.GetDirectoryName(FilePath), Path.GetFileNameWithoutExtension(FilePath)) & "_batch.dat", OpenMode.Output)
 
         PrintLine(FileId, "OpenVOGEL delta scan")
-        PrintLine(FileId, "Kernel version: " & CalculationCore.Version)
+        PrintLine(FileId, "Kernel version: " & Solver.Solver.Version)
         PrintLine(FileId, "Original model: " & ProjectRoot.FilePath)
         PrintLine(FileId, "")
 
-        PrintLine(FileId, String.Format("L = {0,12:E6}m", CalculationCore.GlobalAirloads.Length))
-        PrintLine(FileId, String.Format("A = {0,12:E6}m²", CalculationCore.GlobalAirloads.Area))
-        PrintLine(FileId, String.Format("q = {0,12:E6}Pa", CalculationCore.GlobalAirloads.DynamicPressure))
-        PrintLine(FileId, String.Format("a = {0,12:E6}°", CalculationCore.GlobalAirloads.Alfa))
+        PrintLine(FileId, String.Format("L = {0,12:E6}m", Loads(0).Length))
+        PrintLine(FileId, String.Format("A = {0,12:E6}m²", Loads(0).Area))
+        PrintLine(FileId, String.Format("q = {0,12:E6}Pa", Loads(0).DynamicPressure))
+        PrintLine(FileId, String.Format("a = {0,12:E6}°", Loads(0).Alfa))
 
         PrintLine(FileId, "")
         PrintLine(FileId, "# Force coefficients")
@@ -378,9 +383,11 @@ Module BatchAnalysis
 
                 LiftingSurface.GenerateMesh()
 
-                ProjectRoot.StartCalculation(CalculationType.ctConstrained)
+                Dim Kernel As New Solver.Solver
 
-                Loads.Add(CalculationCore.GlobalAirloads)
+                ProjectRoot.StartCalculation(CalculationType.SteadyState, Kernel)
+
+                Loads.Add(Kernel.GlobalAirloads)
 
             Next
 
@@ -395,14 +402,14 @@ Module BatchAnalysis
         FileOpen(FileId, Path.Combine(Path.GetDirectoryName(FilePath), Path.GetFileNameWithoutExtension(FilePath)) & "_batch.dat", OpenMode.Output)
 
         PrintLine(FileId, "OpenVOGEL alfa delta scan")
-        PrintLine(FileId, "Kernel version: " & CalculationCore.Version)
+        PrintLine(FileId, "Kernel version: " & Solver.Solver.Version)
         PrintLine(FileId, "Original model: " & ProjectRoot.FilePath)
         PrintLine(FileId, "")
 
-        PrintLine(FileId, String.Format("L = {0,12:E6}m", CalculationCore.GlobalAirloads.Length))
-        PrintLine(FileId, String.Format("A = {0,12:E6}m²", CalculationCore.GlobalAirloads.Area))
-        PrintLine(FileId, String.Format("q = {0,12:E6}Pa", CalculationCore.GlobalAirloads.DynamicPressure))
-        PrintLine(FileId, String.Format("a = {0,12:E6}°", CalculationCore.GlobalAirloads.Alfa))
+        PrintLine(FileId, String.Format("L = {0,12:E6}m", Loads(0).Length))
+        PrintLine(FileId, String.Format("A = {0,12:E6}m²", Loads(0).Area))
+        PrintLine(FileId, String.Format("q = {0,12:E6}Pa", Loads(0).DynamicPressure))
+        PrintLine(FileId, String.Format("a = {0,12:E6}°", Loads(0).Alfa))
 
         PrintLine(FileId, "")
         PrintLine(FileId, "# Force coefficients")
@@ -481,7 +488,7 @@ Module BatchAnalysis
         FileId = FreeFile()
         FileOpen(FileId, Path.Combine(Path.GetDirectoryName(FilePath), Path.GetFileNameWithoutExtension(FilePath)) & "_script.sce", OpenMode.Output)
         PrintLine(FileId, "// OpenVOGEL automatic script for alfa-delta scan")
-        PrintLine(FileId, "// Kernel version: " & CalculationCore.Version)
+        PrintLine(FileId, "// Kernel version: " & Solver.Solver.Version)
         PrintLine(FileId, "// Original model: " & ProjectRoot.FilePath)
         PrintLine(FileId, "")
 
@@ -650,11 +657,13 @@ Module BatchAnalysis
 
             System.Console.WriteLine(String.Format("STEP {0} of {1}", I, No))
 
-            ProjectRoot.SimulationSettings.StreamOmega.Y = -OmegaMax * I / No
+            ProjectRoot.SimulationSettings.StreamRotation.Y = -OmegaMax * I / No
 
-            ProjectRoot.StartCalculation(CalculationType.ctConstrained)
+            Dim Kernel As New Solver.Solver
 
-            Loads.Add(CalculationCore.GlobalAirloads)
+            ProjectRoot.StartCalculation(CalculationType.SteadyState, Kernel)
+
+            Loads.Add(Kernel.GlobalAirloads)
 
         Next
 
@@ -663,14 +672,14 @@ Module BatchAnalysis
         FileOpen(FileId, Path.Combine(Path.GetDirectoryName(FilePath), Path.GetFileNameWithoutExtension(FilePath)) & "_batch.dat", OpenMode.Output)
 
         PrintLine(FileId, "OpenVOGEL omega scan")
-        PrintLine(FileId, "Kernel version: " & CalculationCore.Version)
+        PrintLine(FileId, "Kernel version: " & Solver.Solver.Version)
         PrintLine(FileId, "Original model: " & ProjectRoot.FilePath)
         PrintLine(FileId, "")
 
-        PrintLine(FileId, String.Format("L = {0,12:E6}m", CalculationCore.GlobalAirloads.Length))
-        PrintLine(FileId, String.Format("A = {0,12:E6}m²", CalculationCore.GlobalAirloads.Area))
-        PrintLine(FileId, String.Format("q = {0,12:E6}Pa", CalculationCore.GlobalAirloads.DynamicPressure))
-        PrintLine(FileId, String.Format("a = {0,12:E6}deg", CalculationCore.GlobalAirloads.Alfa * 180 / Math.PI))
+        PrintLine(FileId, String.Format("L = {0,12:E6}m", Loads(0).Length))
+        PrintLine(FileId, String.Format("A = {0,12:E6}m²", Loads(0).Area))
+        PrintLine(FileId, String.Format("q = {0,12:E6}Pa", Loads(0).DynamicPressure))
+        PrintLine(FileId, String.Format("a = {0,12:E6}deg", Loads(0).Alfa * 180 / Math.PI))
 
         PrintLine(FileId, "")
         PrintLine(FileId, "# Force coefficients")
@@ -726,13 +735,13 @@ Module BatchAnalysis
         FileId = FreeFile()
         FileOpen(FileId, Path.Combine(Path.GetDirectoryName(FilePath), Path.GetFileNameWithoutExtension(FilePath)) & "_script.sce", OpenMode.Output)
         PrintLine(FileId, "// OpenVOGEL automatic script for omega scan")
-        PrintLine(FileId, "// Kernel version: " & CalculationCore.Version)
+        PrintLine(FileId, "// Kernel version: " & Solver.Solver.Version)
         PrintLine(FileId, "// Original model: " & ProjectRoot.FilePath)
         PrintLine(FileId, "")
 
         Dim Velocity As Double = ProjectRoot.SimulationSettings.StreamVelocity.EuclideanNorm
         Dim Density As Double = ProjectRoot.SimulationSettings.Density
-        Dim Area As Double = CalculationCore.GlobalAirloads.Area
+        Dim Area As Double = Loads(0).Area
 
         ' M vector (mass, limited to Mcrit)
         '----------------------------------------------------------------

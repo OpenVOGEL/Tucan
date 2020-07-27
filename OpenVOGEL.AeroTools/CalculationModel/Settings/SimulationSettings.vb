@@ -51,9 +51,9 @@ Namespace CalculationModel.Settings
     ''' The possible kind of simulation.
     ''' </summary>
     Public Enum CalculationType As Byte
-        ctConstrained = 0
-        ctFreeFlight = 1
-        ctAeroelastic = 2
+        SteadyState = 0
+        FreeFlight = 1
+        Aeroelastic = 2
     End Enum
 
     ''' <summary>
@@ -73,7 +73,7 @@ Namespace CalculationModel.Settings
         ''' Angular velocity of the aircraft reference frame in rad/s.
         ''' </summary>
         ''' <remarks></remarks>
-        Public Property StreamOmega As New Vector3
+        Public Property StreamRotation As New Vector3
 
         ''' <summary>
         ''' Free stream density in kg/m³.
@@ -139,7 +139,7 @@ Namespace CalculationModel.Settings
         ''' The main directions of inertia
         ''' </summary>
         ''' <returns></returns>
-        Public Property MainInertialAxes As New Base3
+        Public Property InertialBasis As New Base3
 
         ''' <summary>
         ''' The number of rigid steps in a free flight simulation
@@ -193,7 +193,7 @@ Namespace CalculationModel.Settings
         ''' The type of analysis to be performed.
         ''' </summary>
         ''' <returns></returns>
-        Public Property AnalysisType As CalculationType = CalculationType.ctConstrained
+        Public Property AnalysisType As CalculationType = CalculationType.SteadyState
 
         ''' <summary>
         ''' Maximum distance between two rings to be considered as adjacent, in meters.
@@ -242,10 +242,10 @@ Namespace CalculationModel.Settings
             StreamVelocity.Y = 0
             StreamVelocity.Z = 0
 
-            StreamOmega = New Vector3
-            StreamOmega.X = 0
-            StreamOmega.Y = 0
-            StreamOmega.Z = 0
+            StreamRotation = New Vector3
+            StreamRotation.X = 0
+            StreamRotation.Y = 0
+            StreamRotation.Z = 0
 
             Density = 1.225
             Viscocity = 0.0000178
@@ -261,6 +261,16 @@ Namespace CalculationModel.Settings
             CalculateCutoff = False
             ExtendWakes = False
 
+            InertialBasis.U.X = 1.0
+            InertialBasis.U.Y = 0.0
+            InertialBasis.U.Z = 0.0
+            InertialBasis.V.X = 0.0
+            InertialBasis.V.Y = 1.0
+            InertialBasis.V.Z = 0.0
+            InertialBasis.W.X = 0.0
+            InertialBasis.W.Y = 0.0
+            InertialBasis.W.Z = 1.0
+
         End Sub
 
         ''' <summary>
@@ -273,7 +283,7 @@ Namespace CalculationModel.Settings
             AnalysisType = SimuData.AnalysisType
             Cutoff = SimuData.Cutoff
             StreamVelocity.Assign(SimuData.StreamVelocity)
-            StreamOmega.Assign(SimuData.StreamOmega)
+            StreamRotation.Assign(SimuData.StreamRotation)
             SimulationSteps = SimuData.SimulationSteps
             Interval = SimuData.Interval
             Viscocity = SimuData.Viscocity
@@ -339,11 +349,11 @@ Namespace CalculationModel.Settings
 
             Select Case AnalysisType
 
-                Case Settings.CalculationType.ctFreeFlight
+                Case Settings.CalculationType.FreeFlight
                     UnsteadyVelocity.BaseVelocity.Assign(StreamVelocity)
                     UnsteadyVelocity.GeneratePerturbation(SimulationSteps)
 
-                Case Settings.CalculationType.ctAeroelastic
+                Case Settings.CalculationType.Aeroelastic
                     If Not IsNothing(AeroelasticHistogram) Then
                         AeroelasticHistogram.Generate(StreamVelocity, Interval, SimulationSteps)
                     End If
@@ -365,9 +375,9 @@ Namespace CalculationModel.Settings
             writer.WriteEndElement()
 
             writer.WriteStartElement("StreamOmega")
-            writer.WriteAttributeString("X", String.Format("{0}", StreamOmega.X))
-            writer.WriteAttributeString("Y", String.Format("{0}", StreamOmega.Y))
-            writer.WriteAttributeString("Z", String.Format("{0}", StreamOmega.Z))
+            writer.WriteAttributeString("X", String.Format("{0}", StreamRotation.X))
+            writer.WriteAttributeString("Y", String.Format("{0}", StreamRotation.Y))
+            writer.WriteAttributeString("Z", String.Format("{0}", StreamRotation.Z))
             writer.WriteEndElement()
 
             writer.WriteStartElement("Parameters")
@@ -385,6 +395,25 @@ Namespace CalculationModel.Settings
             writer.WriteAttributeString("Density", String.Format("{0}", Density))
             writer.WriteAttributeString("Viscocity", String.Format("{0}", Viscocity))
             writer.WriteAttributeString("Po", String.Format("{0}", StaticPressure))
+            writer.WriteEndElement()
+
+            writer.WriteStartElement("Inertia")
+            writer.WriteAttributeString("Mass", String.Format("{0}", Mass))
+            writer.WriteAttributeString("Cgx", String.Format("{0}", CenterOfGravity.X))
+            writer.WriteAttributeString("Cgy", String.Format("{0}", CenterOfGravity.Y))
+            writer.WriteAttributeString("Cgz", String.Format("{0}", CenterOfGravity.Z))
+            writer.WriteAttributeString("Ixx", String.Format("{0}", Ixx))
+            writer.WriteAttributeString("Iyy", String.Format("{0}", Iyy))
+            writer.WriteAttributeString("Izz", String.Format("{0}", Izz))
+            writer.WriteAttributeString("Ux", String.Format("{0}", InertialBasis.U.X))
+            writer.WriteAttributeString("Uy", String.Format("{0}", InertialBasis.U.Y))
+            writer.WriteAttributeString("Uz", String.Format("{0}", InertialBasis.U.Z))
+            writer.WriteAttributeString("Vx", String.Format("{0}", InertialBasis.V.X))
+            writer.WriteAttributeString("Vy", String.Format("{0}", InertialBasis.V.Y))
+            writer.WriteAttributeString("Vz", String.Format("{0}", InertialBasis.V.Z))
+            writer.WriteAttributeString("Wx", String.Format("{0}", InertialBasis.W.X))
+            writer.WriteAttributeString("Wy", String.Format("{0}", InertialBasis.W.Y))
+            writer.WriteAttributeString("Wz", String.Format("{0}", InertialBasis.W.Z))
             writer.WriteEndElement()
 
             writer.WriteStartElement("Structure")
@@ -426,12 +455,12 @@ Namespace CalculationModel.Settings
                             StreamVelocity.Z = IOXML.ReadDouble(reader, "Z", 0.0)
 
                         Case "StreamOmega"
-                            StreamOmega.X = IOXML.ReadDouble(reader, "X", 0.0)
-                            StreamOmega.Y = IOXML.ReadDouble(reader, "Y", 0.0)
-                            StreamOmega.Z = IOXML.ReadDouble(reader, "Z", 0.0)
+                            StreamRotation.X = IOXML.ReadDouble(reader, "X", 0.0)
+                            StreamRotation.Y = IOXML.ReadDouble(reader, "Y", 0.0)
+                            StreamRotation.Z = IOXML.ReadDouble(reader, "Z", 0.0)
 
                         Case "Parameters"
-                            AnalysisType = IOXML.ReadInteger(reader, "Analysis", CalculationType.ctConstrained)
+                            AnalysisType = IOXML.ReadInteger(reader, "Analysis", CalculationType.SteadyState)
                             Interval = IOXML.ReadDouble(reader, "Interval", 0.1)
                             SimulationSteps = IOXML.ReadInteger(reader, "Steps", 15)
                             Cutoff = IOXML.ReadDouble(reader, "Cutoff", 0.0001)
@@ -444,6 +473,25 @@ Namespace CalculationModel.Settings
                             Density = IOXML.ReadDouble(reader, "Density", 1.225)
                             Viscocity = IOXML.ReadDouble(reader, "Viscocity", 0.0000178)
                             StaticPressure = IOXML.ReadDouble(reader, "Po", 101300)
+
+                        Case "Inertia"
+
+                            Mass = IOXML.ReadDouble(reader, "Mass", 0.0)
+                            CenterOfGravity.X = IOXML.ReadDouble(reader, "Cgx", 0.0)
+                            CenterOfGravity.Y = IOXML.ReadDouble(reader, "Cgy", 0.0)
+                            CenterOfGravity.Z = IOXML.ReadDouble(reader, "Cgz", 0.0)
+                            Ixx = IOXML.ReadDouble(reader, "Ixx", 0.0)
+                            Iyy = IOXML.ReadDouble(reader, "Iyy", 0.0)
+                            Izz = IOXML.ReadDouble(reader, "Izz", 0.0)
+                            InertialBasis.U.X = IOXML.ReadDouble(reader, "Ux", 1.0)
+                            InertialBasis.U.Y = IOXML.ReadDouble(reader, "Uy", 0.0)
+                            InertialBasis.U.Z = IOXML.ReadDouble(reader, "Uz", 0.0)
+                            InertialBasis.V.X = IOXML.ReadDouble(reader, "Vx", 0.0)
+                            InertialBasis.V.Y = IOXML.ReadDouble(reader, "Vy", 1.0)
+                            InertialBasis.V.Z = IOXML.ReadDouble(reader, "Vz", 0.0)
+                            InertialBasis.W.X = IOXML.ReadDouble(reader, "Wx", 0.0)
+                            InertialBasis.W.Y = IOXML.ReadDouble(reader, "Wy", 0.0)
+                            InertialBasis.W.Z = IOXML.ReadDouble(reader, "Wz", 1.0)
 
                         Case "Structure"
                             StructuralSettings.NumberOfModes = IOXML.ReadInteger(reader, "Modes", 6)
@@ -465,6 +513,44 @@ Namespace CalculationModel.Settings
 
         End Sub
 
+        ''' <summary>
+        ''' Writes the settings to an XML file 
+        ''' </summary>
+        ''' <param name="FilePath"></param>
+        Public Sub WriteToXML(FilePath As String)
+
+            Dim writer As XmlWriter = XmlWriter.Create(FilePath)
+
+            writer.WriteStartElement("Settings")
+
+            SaveToXML(writer)
+
+            writer.WriteEndElement()
+
+            writer.Close()
+
+        End Sub
+
+        ''' <summary>
+        ''' Reads the settings from an XML file 
+        ''' </summary>
+        ''' <param name="FilePath"></param>
+        Public Sub ReadFromXML(FilePath As String)
+
+            If IO.File.Exists(FilePath) Then
+
+                Dim Reader As XmlReader = XmlReader.Create(FilePath)
+
+                ReadFromXML(Reader)
+
+            End If
+
+        End Sub
+
+        ''' <summary>
+        ''' Assigns the standard atmosphere to the fluid properties
+        ''' </summary>
+        ''' <param name="Altitude"></param>
         Public Sub AssignStandardAtmosphere(Altitude As Double)
 
             Dim ISA As New StandardAtmosphere(Altitude)
@@ -478,6 +564,7 @@ Namespace CalculationModel.Settings
         Protected Overrides Sub Finalize()
             MyBase.Finalize()
         End Sub
+
     End Class
 
 End Namespace

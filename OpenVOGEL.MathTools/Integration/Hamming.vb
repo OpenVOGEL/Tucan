@@ -15,6 +15,7 @@
 'You should have received a copy Of the GNU General Public License
 'along with this program.  If Not, see < http:  //www.gnu.org/licenses/>.
 
+Imports System.IO
 Imports OpenVOGEL.MathTools.Algebra.EuclideanSpace
 
 Namespace Integration
@@ -23,6 +24,16 @@ Namespace Integration
     ''' A 6-DOF dynamics variable
     ''' </summary>
     Public Structure Variable
+
+        ' Reference vectors 
+        '------------------
+        Public Ix As Double
+        Public Iy As Double
+        Public Iz As Double
+
+        Public Jx As Double
+        Public Jy As Double
+        Public Jz As Double
 
         ' Gravity 
         '------------------
@@ -52,6 +63,14 @@ Namespace Integration
 
             Dim S As Variable
 
+            S.Ix = X1.Ix + X2.Ix
+            S.Iy = X1.Iy + X2.Iy
+            S.Iz = X1.Iz + X2.Iz
+
+            S.Jx = X1.Jx + X2.Jx
+            S.Jy = X1.Jy + X2.Jy
+            S.Jz = X1.Jz + X2.Jz
+
             S.Gx = X1.Gx + X2.Gx
             S.Gy = X1.Gy + X2.Gy
             S.Gz = X1.Gz + X2.Gz
@@ -75,6 +94,14 @@ Namespace Integration
         Public Shared Operator -(X1 As Variable, X2 As Variable) As Variable
 
             Dim S As Variable
+
+            S.Ix = X1.Ix - X2.Ix
+            S.Iy = X1.Iy - X2.Iy
+            S.Iz = X1.Iz - X2.Iz
+
+            S.Jx = X1.Jx - X2.Jx
+            S.Jy = X1.Jy - X2.Jy
+            S.Jz = X1.Jz - X2.Jz
 
             S.Gx = X1.Gx - X2.Gx
             S.Gy = X1.Gy - X2.Gy
@@ -100,6 +127,14 @@ Namespace Integration
 
             Dim P As Variable
 
+            P.Ix = K * X.Ix
+            P.Iy = K * X.Iy
+            P.Iz = K * X.Iz
+
+            P.Jx = K * X.Jx
+            P.Jy = K * X.Jy
+            P.Jz = K * X.Jz
+
             P.Gx = K * X.Gx
             P.Gy = K * X.Gy
             P.Gz = K * X.Gz
@@ -124,6 +159,14 @@ Namespace Integration
 
             Dim D As Variable
 
+            D.Ix = X1.Ix / X2.Ix
+            D.Iy = X1.Iy / X2.Iy
+            D.Iz = X1.Iz / X2.Iz
+
+            D.Jx = X1.Jx / X2.Jx
+            D.Jy = X1.Jy / X2.Jy
+            D.Jz = X1.Jz / X2.Jz
+
             D.Gx = X1.Gx / X2.Gx
             D.Gy = X1.Gy / X2.Gy
             D.Gz = X1.Gz / X2.Gz
@@ -147,6 +190,12 @@ Namespace Integration
         Public Shared Operator <=(X1 As Variable, X2 As Variable) As Boolean
 
             Return _
+            X1.Ix <= X2.Ix AndAlso
+            X1.Iy <= X2.Iy AndAlso
+            X1.Iz <= X2.Iz AndAlso
+            X1.Jx <= X2.Jx AndAlso
+            X1.Jy <= X2.Jy AndAlso
+            X1.Jz <= X2.Jz AndAlso
             X1.Gx <= X2.Gx AndAlso
             X1.Gy <= X2.Gy AndAlso
             X1.Gz <= X2.Gz AndAlso
@@ -165,6 +214,12 @@ Namespace Integration
         Public Shared Operator >=(X1 As Variable, X2 As Variable) As Boolean
 
             Return _
+            X1.Ix >= X2.Ix AndAlso
+            X1.Iy >= X2.Iy AndAlso
+            X1.Iz >= X2.Iz AndAlso
+            X1.Jx >= X2.Jx AndAlso
+            X1.Jy >= X2.Jy AndAlso
+            X1.Jz >= X2.Jz AndAlso
             X1.Gx >= X2.Gx AndAlso
             X1.Gy >= X2.Gy AndAlso
             X1.Gz >= X2.Gz AndAlso
@@ -185,6 +240,14 @@ Namespace Integration
         ''' </summary>
         ''' <returns></returns>
         Public Sub Absolute()
+
+            Ix = Math.Abs(Ix)
+            Iy = Math.Abs(Iy)
+            Iz = Math.Abs(Iz)
+
+            Jx = Math.Abs(Jx)
+            Jy = Math.Abs(Jy)
+            Jz = Math.Abs(Jz)
 
             Gx = Math.Abs(Gx)
             Gy = Math.Abs(Gy)
@@ -227,7 +290,17 @@ Namespace Integration
     '''         predicted or already corrected state variables.
     '''       > "Correct" with the new forces.
     ''' </summary>
-    Public Class HammingIntegrator
+    Public Class MotionIntegrator
+
+        ''' <summary>
+        ''' Initializes the integrator using stored data.
+        ''' </summary>
+        ''' <param name="Path"></param>
+        Public Sub New(Path As String)
+
+            ReadBinary(Path)
+
+        End Sub
 
         ''' <summary>
         ''' Creates a new integrator for N time steps and the given initial conditions.
@@ -258,6 +331,14 @@ Namespace Integration
             X(0).Gy = Gravity.Y
             X(0).Gz = Gravity.Z
 
+            X(0).Ix = 1.0#
+            X(0).Iy = 0.0#
+            X(0).Iz = 0.0#
+
+            X(0).Jx = 0.0#
+            X(0).Jy = 1.0#
+            X(0).Jz = 0.0#
+
             S = 0
             I = 0
 
@@ -269,6 +350,14 @@ Namespace Integration
             E.Gx = 0.01
             E.Gy = 0.01
             E.Gz = 0.01
+
+            E.Ix = 0.01
+            E.Iy = 0.01
+            E.Iz = 0.01
+
+            E.Jx = 0.01
+            E.Jy = 0.01
+            E.Jz = 0.01
 
             E.Px = 0.01
             E.Py = 0.01
@@ -324,6 +413,17 @@ Namespace Integration
             DX(J).Gx = X(J).Oz * X(J).Gy - X(J).Oy * X(J).Gz
             DX(J).Gy = X(J).Ox * X(J).Gz - X(J).Oz * X(J).Gx
             DX(J).Gz = X(J).Oy * X(J).Gx - X(J).Ox * X(J).Gy
+
+            ' Reference vectors
+            '-------------------
+
+            DX(J).Ix = X(J).Oz * X(J).Iy - X(J).Oy * X(J).Iz
+            DX(J).Iy = X(J).Ox * X(J).Iz - X(J).Oz * X(J).Ix
+            DX(J).Iz = X(J).Oy * X(J).Ix - X(J).Ox * X(J).Iy
+
+            DX(J).Jx = X(J).Oz * X(J).Jy - X(J).Oy * X(J).Jz
+            DX(J).Jy = X(J).Ox * X(J).Jz - X(J).Oz * X(J).Jx
+            DX(J).Jz = X(J).Oy * X(J).Jx - X(J).Ox * X(J).Jy
 
             ' Position
             '-------------------
@@ -563,6 +663,119 @@ Namespace Integration
             End If
 
         End Function
+
+        ''' <summary>
+        ''' Writes the response to a binary file.
+        ''' </summary>
+        ''' <param name="Path"></param>
+        ''' <remarks></remarks>
+        Public Sub WriteBinary(ByVal Path As String)
+
+            Dim W As BinaryWriter = New BinaryWriter(File.Open(Path, FileMode.Create))
+
+            W.Write(UBound(X))
+
+            For I = 0 To UBound(X)
+
+                W.Write(X(I).Ix)
+                W.Write(X(I).Iy)
+                W.Write(X(I).Iz)
+
+                W.Write(X(I).Jx)
+                W.Write(X(I).Jy)
+                W.Write(X(I).Jz)
+
+                W.Write(X(I).Px)
+                W.Write(X(I).Py)
+                W.Write(X(I).Pz)
+
+                W.Write(X(I).Gx)
+                W.Write(X(I).Gy)
+                W.Write(X(I).Gz)
+
+                W.Write(X(I).Vx)
+                W.Write(X(I).Vy)
+                W.Write(X(I).Vz)
+
+                W.Write(X(I).Ox)
+                W.Write(X(I).Oy)
+                W.Write(X(I).Oz)
+
+            Next
+
+            W.Close()
+
+        End Sub
+
+        ''' <summary>
+        ''' Reads the integrator from a binary file.
+        ''' </summary>
+        ''' <param name="Path"></param>
+        ''' <remarks></remarks>
+        Public Sub ReadBinary(ByVal Path As String)
+
+            Dim R As BinaryReader = New BinaryReader(File.Open(Path, FileMode.Open))
+
+            ' Read nodes:
+
+            Dim N As Integer = R.ReadInt32
+
+            ReDim X(N)
+            ReDim DX(0)
+            ReDim TE(0)
+
+            For I = 0 To N
+
+                X(I).Ix = R.ReadDouble
+                X(I).Iy = R.ReadDouble
+                X(I).Iz = R.ReadDouble
+
+                X(I).Jx = R.ReadDouble
+                X(I).Jy = R.ReadDouble
+                X(I).Jz = R.ReadDouble
+
+                X(I).Px = R.ReadDouble
+                X(I).Py = R.ReadDouble
+                X(I).Pz = R.ReadDouble
+
+                X(I).Gx = R.ReadDouble
+                X(I).Gy = R.ReadDouble
+                X(I).Gz = R.ReadDouble
+
+                X(I).Vx = R.ReadDouble
+                X(I).Vy = R.ReadDouble
+                X(I).Vz = R.ReadDouble
+
+                X(I).Ox = R.ReadDouble
+                X(I).Oy = R.ReadDouble
+                X(I).Oz = R.ReadDouble
+
+            Next
+
+            R.Close()
+
+        End Sub
+
+        ''' <summary>
+        ''' Writes the content of the integrator in plain text
+        ''' </summary>
+        ''' <param name="FilePath"></param>
+        Public Sub WriteAscii(FilePath As String)
+
+            Dim FileId As Integer = FreeFile()
+            FileOpen(FileId, FilePath, OpenMode.Output)
+            PrintLine(FileId, String.Format("{0:11} | {1:11} | {2:11} | {3:11} | {4:11} | {5:11} | {6:11} | {7:11} | {8:11} | {9:11}", "Time", "Px", "Py", "Pz", "Vx", "Vy", "Vz", "Ox", "Oy", "Oz"))
+            Dim Time As Double = 0.0#
+
+            For I = LBound(X) To UBound(X)
+                Dim State As Variable = X(I)
+                PrintLine(FileId, String.Format("{0,11:F6} | {1,11:F6} | {2,11:F6} | {3,11:F6} | {4,11:F6} | {5,11:F6} | {6,11:F6} | {7,11:F6} | {8,11:F6} | {9,11:F6}", Time, State.Px, State.Py, State.Pz, State.Vx, State.Vy, State.Vz, State.Ox, State.Oy, State.Oz))
+                Time += Dt
+            Next
+
+            FileClose(FileId)
+
+        End Sub
 
     End Class
 

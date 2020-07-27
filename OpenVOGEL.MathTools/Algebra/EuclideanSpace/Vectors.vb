@@ -618,15 +618,27 @@ Namespace Algebra.EuclideanSpace
 
         End Sub
 
-        Public Sub Transform(B As Base3)
+        Public Sub Transform(Base As Base3)
 
             Dim _X As Double = X
             Dim _Y As Double = Y
             Dim _Z As Double = Z
 
-            X = _X * B.U.X + _Y * B.U.Y + _Z * B.U.Z
-            Y = _X * B.V.X + _Y * B.V.Y + _Z * B.V.Z
-            Z = _X * B.W.X + _Y * B.W.Y + _Z * B.W.Z
+            X = _X * Base.U.X + _Y * Base.U.Y + _Z * Base.U.Z
+            Y = _X * Base.V.X + _Y * Base.V.Y + _Z * Base.V.Z
+            Z = _X * Base.W.X + _Y * Base.W.Y + _Z * Base.W.Z
+
+        End Sub
+
+        Public Sub AntiTransform(Base As Base3)
+
+            Dim _X As Double = X
+            Dim _Y As Double = Y
+            Dim _Z As Double = Z
+
+            X = _X * Base.U.X + _Y * Base.V.X + _Z * Base.W.X
+            Y = _X * Base.U.Y + _Y * Base.V.Y + _Z * Base.W.Y
+            Z = _X * Base.U.Z + _Y * Base.V.Z + _Z * Base.W.Z
 
         End Sub
 

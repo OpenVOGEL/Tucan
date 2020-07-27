@@ -54,7 +54,6 @@ Public Class MainForm
 
         AddHandler mrRibbon.PushMessage, AddressOf PushMessage
         AddHandler mrRibbon.EditSurface, AddressOf ShowEditor
-        AddHandler mrRibbon.EditVelocityPlane, AddressOf ShowVelocityPlaneFrame
         AddHandler mrRibbon.SwitchToDesignMode, AddressOf SwitchToDesignMode
         AddHandler mrRibbon.SwitchToResultsMode, AddressOf SwitchToPostprocessMode
         AddHandler mrRibbon.ProjectCleared, AddressOf CloseEditors
@@ -79,7 +78,7 @@ Public Class MainForm
 
                             Exit For
 
-                        ElseIf IO.Path.GetExtension(Argument) = ".res" Then
+                        ElseIf IO.Path.GetExtension(Argument) = ".vri" Then
 
                             mrRibbon.LoadResults(Argument)
 
@@ -123,10 +122,6 @@ Public Class MainForm
 
         SetUpLiftingSurfaceEditor()
 
-        If VelocityControlPanel IsNot Nothing Then
-            VelocityControlPanel.Visible = False
-        End If
-
         WingControlPanel.Visible = False
 
         ContractLeftPanel()
@@ -145,13 +140,9 @@ Public Class MainForm
 
         Try
 
-            SetUpVelocityPlaneFrame()
-
             If WingControlPanel IsNot Nothing Then
                 WingControlPanel.Visible = False
             End If
-
-            VelocityControlPanel.Visible = False
 
             ContractLeftPanel()
 
@@ -171,8 +162,6 @@ Public Class MainForm
 
     Private WingControlPanel As WingControl
 
-    Private VelocityControlPanel As VelocityControl
-
     Private Sub SetUpLiftingSurfaceEditor()
 
         If WingControlPanel Is Nothing Then
@@ -180,28 +169,6 @@ Public Class MainForm
             AddHandler WingControlPanel.RefreshGL, AddressOf ModelInterface.RefreshOnGL
             AddHandler WingControlPanel.OnClose, AddressOf ContractLeftPanel
         End If
-
-    End Sub
-
-    Private Sub SetUpVelocityPlaneFrame()
-
-        If VelocityControlPanel Is Nothing Then
-            VelocityControlPanel = New VelocityControl
-            AddHandler VelocityControlPanel.RefreshGL, AddressOf ModelInterface.RefreshOnGL
-            AddHandler VelocityControlPanel.OnClose, AddressOf ContractLeftPanel
-        End If
-
-    End Sub
-
-    Public Sub ShowVelocityPlaneFrame()
-
-        SetUpVelocityPlaneFrame()
-        VelocityControlPanel.Initialize()
-        VelocityControlPanel.Parent = scMain.Panel1
-        scMain.Panel1Collapsed = False
-        scMain.SplitterDistance = VelocityControlPanel.Width
-        VelocityControlPanel.Dock = DockStyle.Top
-        VelocityControlPanel.Show()
 
     End Sub
 

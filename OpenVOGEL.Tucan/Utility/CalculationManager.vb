@@ -31,6 +31,8 @@ Namespace Tucan.Utility
     ''' </summary>
     Module CalculationManager
 
+        Private CalculationCore As AeroTools.CalculationModel.Solver.Solver = Nothing
+
         ''' <summary>
         ''' The background procedure performing the calculation in a different thread.
         ''' </summary>
@@ -49,64 +51,64 @@ Namespace Tucan.Utility
             End If
 
             If Not IsNothing(CalculationWorker) Then
-                    If CalculationWorker.IsBusy Then
-                        Return
-                    Else
-                        CalculationWorker.Dispose()
-                    End If
-                End If
-
-                FormProgress.ClearMessages()
-                If Not IsNothing(Parent) Then FormProgress.Owner = Parent
-                FormProgress.ClearMessages()
-                FormProgress.Show()
-                FormProgress.PushMessage("Preparing calculation cell")
-                ProjectRoot.SimulationSettings.AnalysisType = Type
-
-                Try
-
-                    CalculationCore = New AeroTools.CalculationModel.Solver.Solver
-                    CalculationCore.GenerateFromExistingModel(Model, ProjectRoot.SimulationSettings, Type = CalculationType.ctAeroelastic)
-
-                    AddHandler CalculationCore.PushProgress, AddressOf FormProgress.PushMessageWithProgress
-                    AddHandler CalculationCore.PushMessage, AddressOf FormProgress.PushMessage
-                    AddHandler CalculationCore.CalculationDone, AddressOf CalculationFinished
-                    AddHandler CalculationCore.CalculationDone, AddressOf FormProgress.ChangeToCloseModus
-                    AddHandler CalculationCore.CalculationAborted, AddressOf CalculationAborted
-
-                    Dim StartingTime As Date = Now
-                    Results.SimulationSettings = CalculationCore.Settings
-                    FormProgress.PushMessage("Calculating with parallel solver")
-
-                    CalculationWorker = New BackgroundWorker
-                    CalculationWorker.WorkerSupportsCancellation = True
-                    CalculationWorker.WorkerReportsProgress = True
-                    AddHandler FormProgress.CancellationRequested, AddressOf CalculationCore.RequestCancellation
-
-                    Select Case Type
-
-                        Case CalculationType.ctConstrained
-
-                            AddHandler CalculationWorker.DoWork, AddressOf StartWakeConvection
-
-                        Case CalculationType.ctFreeFlight
-
-                            AddHandler CalculationWorker.DoWork, AddressOf StartUnsteadyTransit
-
-                        Case CalculationType.ctAeroelastic
-
-                            AddHandler CalculationWorker.DoWork, AddressOf StartAeroelsaticTransit
-
-                    End Select
-
-                    CalculationWorker.RunWorkerAsync()
-
-                Catch ex As Exception
-                    CalculationWorker.CancelAsync()
-                    FormProgress.PushMessage(String.Format("Calculation exited with exception: ""{0}"".", ex.Message))
-                    FormProgress.ChangeToCloseModus()
+                If CalculationWorker.IsBusy Then
                     Return
-                End Try
+                Else
+                    CalculationWorker.Dispose()
+                End If
+            End If
+
+            FormProgress.ClearMessages()
+            If Not IsNothing(Parent) Then FormProgress.Owner = Parent
+            FormProgress.ClearMessages()
+            FormProgress.Show()
+            FormProgress.PushMessage("Preparing calculation cell")
+            ProjectRoot.SimulationSettings.AnalysisType = Type
+
+            Try
+
+                CalculationCore = New AeroTools.CalculationModel.Solver.Solver
+                CalculationCore.GenerateFromExistingModel(Model, ProjectRoot.SimulationSettings, Type = CalculationType.Aeroelastic)
+
+                AddHandler CalculationCore.PushProgress, AddressOf FormProgress.PushMessageWithProgress
+                AddHandler CalculationCore.PushMessage, AddressOf FormProgress.PushMessage
+                AddHandler CalculationCore.CalculationDone, AddressOf CalculationFinished
+                AddHandler CalculationCore.CalculationDone, AddressOf FormProgress.ChangeToCloseModus
+                AddHandler CalculationCore.CalculationAborted, AddressOf CalculationAborted
+
+                Dim StartingTime As Date = Now
+
+                FormProgress.PushMessage("Calculating with parallel solver")
+
+                CalculationWorker = New BackgroundWorker
+                CalculationWorker.WorkerSupportsCancellation = True
+                CalculationWorker.WorkerReportsProgress = True
+                AddHandler FormProgress.CancellationRequested, AddressOf CalculationCore.RequestCancellation
+
+                Select Case Type
+
+                    Case CalculationType.SteadyState
+
+                        AddHandler CalculationWorker.DoWork, AddressOf StartSteadyStateTransit
+
+                    Case CalculationType.Aeroelastic
+
+                        AddHandler CalculationWorker.DoWork, AddressOf StartAeroelsaticTransit
+
+                    Case CalculationType.FreeFlight
+
+                        AddHandler CalculationWorker.DoWork, AddressOf StartFreeFlightTransit
+
+                End Select
+
+                CalculationWorker.RunWorkerAsync()
+
+            Catch ex As Exception
+                CalculationWorker.CancelAsync()
+                FormProgress.PushMessage(String.Format("Calculation exited with exception: ""{0}"".", ex.Message))
+                FormProgress.ChangeToCloseModus()
+                Return
+            End Try
 
         End Sub
 
@@ -116,8 +118,8 @@ Namespace Tucan.Utility
         Private Sub CalculationFinished()
 
             FormProgress.PushMessage("Loading results")
-            Results.Clear()
-            CalculationCore.SetCompleteModelOnResults(Results)
+            Results.LoadFromDirectory(CalculationCore.BaseDirectoryPath)
+            CalculationCore = Nothing
             FormProgress.PushMessage("Ready")
             RaiseEvent CalculationDone()
 
@@ -143,7 +145,7 @@ Namespace Tucan.Utility
         ''' <summary>
         ''' Callback to start the steady state analysis.
         ''' </summary>
-        Private Sub StartWakeConvection(ByVal sender As Object, ByVal e As DoWorkEventArgs)
+        Private Sub StartSteadyStateTransit(ByVal sender As Object, ByVal e As DoWorkEventArgs)
 
             CalculationCore.RigidFlight(FilePath)
 
@@ -152,7 +154,7 @@ Namespace Tucan.Utility
         ''' <summary>
         ''' Callback to start the unsteady analysis.
         ''' </summary>
-        Private Sub StartUnsteadyTransit(ByVal sender As Object, ByVal e As DoWorkEventArgs)
+        Private Sub StartFreeFlightTransit(ByVal sender As Object, ByVal e As DoWorkEventArgs)
 
             CalculationCore.FreeFlight(FilePath)
 
@@ -226,10 +228,9 @@ Namespace Tucan.Utility
 
                             Done = True
                             If Commands.Count > 1 Then
-                                Dim File As String = Commands(1)
-                                If IO.File.Exists(File) Then
-                                    CalculationCore = New AeroTools.CalculationModel.Solver.Solver
-                                    CalculationCore.ReadFromXML(File)
+                                Dim DirectoryPath As String = Commands(1)
+                                If IO.Directory.Exists(DirectoryPath) Then
+                                    ProjectRoot.Results.LoadFromDirectory(DirectoryPath)
                                     CalculationFinished()
                                 End If
                             End If

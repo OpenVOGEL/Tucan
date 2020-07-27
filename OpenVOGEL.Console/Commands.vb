@@ -16,6 +16,7 @@
 'along with this program.  If Not, see < http:  //www.gnu.org/licenses/>.
 
 Imports System.IO
+Imports OpenVOGEL.AeroTools.CalculationModel
 Imports OpenVOGEL.DesignTools
 Imports OpenVOGEL.DesignTools.VisualModel.Models.Components
 Imports OpenVOGEL.DesignTools.VisualModel.Models.Components.Basics
@@ -150,7 +151,8 @@ Module Commands
 
                     Case "steady"
 
-                        DataStore.StartCalculation(AeroTools.CalculationModel.Settings.CalculationType.ctConstrained)
+                        Dim CalculationCore As New Solver.Solver
+                        DataStore.StartCalculation(Settings.CalculationType.SteadyState, CalculationCore)
 
                     Case "alfa_scan"
 
@@ -221,24 +223,24 @@ Module Commands
                     Case "set_omega"
 
                         If Commands.Length > 1 Then
-                            DataStore.ProjectRoot.SimulationSettings.StreamOmega.X = CDbl(Commands(1))
-                            DataStore.ProjectRoot.SimulationSettings.StreamOmega.Y = 0
-                            DataStore.ProjectRoot.SimulationSettings.StreamOmega.Z = 0
+                            DataStore.ProjectRoot.SimulationSettings.StreamRotation.X = CDbl(Commands(1))
+                            DataStore.ProjectRoot.SimulationSettings.StreamRotation.Y = 0
+                            DataStore.ProjectRoot.SimulationSettings.StreamRotation.Z = 0
                         End If
 
                         If Commands.Length > 2 Then
-                            DataStore.ProjectRoot.SimulationSettings.StreamOmega.Y = CDbl(Commands(2))
-                            DataStore.ProjectRoot.SimulationSettings.StreamOmega.Z = 0
+                            DataStore.ProjectRoot.SimulationSettings.StreamRotation.Y = CDbl(Commands(2))
+                            DataStore.ProjectRoot.SimulationSettings.StreamRotation.Z = 0
                         End If
 
                         If Commands.Length > 3 Then
-                            DataStore.ProjectRoot.SimulationSettings.StreamOmega.Z = CDbl(Commands(3))
+                            DataStore.ProjectRoot.SimulationSettings.StreamRotation.Z = CDbl(Commands(3))
                         End If
 
                         If ReadBack Then
-                            System.Console.WriteLine(String.Format("OX = {0,14:E6}", DataStore.ProjectRoot.SimulationSettings.StreamOmega.X))
-                            System.Console.WriteLine(String.Format("OY = {0,14:E6}", DataStore.ProjectRoot.SimulationSettings.StreamOmega.Y))
-                            System.Console.WriteLine(String.Format("OZ = {0,14:E6}", DataStore.ProjectRoot.SimulationSettings.StreamOmega.Z))
+                            System.Console.WriteLine(String.Format("OX = {0,14:E6}", DataStore.ProjectRoot.SimulationSettings.StreamRotation.X))
+                            System.Console.WriteLine(String.Format("OY = {0,14:E6}", DataStore.ProjectRoot.SimulationSettings.StreamRotation.Y))
+                            System.Console.WriteLine(String.Format("OZ = {0,14:E6}", DataStore.ProjectRoot.SimulationSettings.StreamRotation.Z))
                         End If
 
                     Case "set_alfa"
@@ -340,44 +342,6 @@ Module Commands
                                 System.Console.WriteLine(String.Format("density = {0,14:E6}", DataStore.ProjectRoot.SimulationSettings.Density))
                                 System.Console.WriteLine(String.Format("viscosity = {0,14:E6}", DataStore.ProjectRoot.SimulationSettings.Viscocity))
                             End If
-                        End If
-
-                    Case "print_report"
-
-                        If DataStore.ProjectRoot.CalculationCore IsNot Nothing Then
-
-                            DataStore.ProjectRoot.CalculationCore.ReportResults()
-
-                        End If
-
-                    Case "save_report"
-
-                        If DataStore.ProjectRoot.CalculationCore IsNot Nothing Then
-
-                            Dim FileName As String = ""
-                            If Interactive Then
-                                System.Console.WriteLine("enter destination file:")
-                                FileName = System.Console.ReadLine
-                            ElseIf Commands.Length > 1
-                                FileName = Commands(1).Trim
-                            End If
-
-                            Dim Append As Boolean = True
-                            If File.Exists(FileName) Then
-                                System.Console.WriteLine("the file already exists, append?")
-                                If System.Console.ReadLine = "n" Then
-                                    Append = False
-                                End If
-                            End If
-                            System.Console.WriteLine("Writing results to file")
-                            OutputFile = My.Computer.FileSystem.OpenTextFileWriter(FileName, Append)
-                            OutputFile.WriteLine("----------------------------------------------")
-                            OutputFile.WriteLine("|            OpenVOGEL results               |")
-                            OutputFile.WriteLine("----------------------------------------------")
-                            AddHandler DataStore.ProjectRoot.CalculationCore.PushResultLine, AddressOf WriteToFile
-                            DataStore.ProjectRoot.CalculationCore.ReportResults()
-                            System.Console.WriteLine("Done")
-
                         End If
 
                     Case "server"

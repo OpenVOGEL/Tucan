@@ -17,6 +17,7 @@
 
 Imports OpenVOGEL.AeroTools
 Imports OpenVOGEL.AeroTools.CalculationModel.Models.Structural
+Imports OpenVOGEL.AeroTools.CalculationModel.Models.Structural.Library
 Imports OpenVOGEL.DesignTools.DataStore
 
 Public Class FormReport
@@ -50,11 +51,25 @@ Public Class FormReport
         RawResults.AppendLine(Line)
     End Sub
 
-    Public Sub ReportResults()
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    Public Sub UpdateLoads()
 
-        If CalculationCore Is Nothing Then
-            Return
-        End If
+        ' Load the total forces panels
+
+        TotalForcePanel.LoadResults()
+
+        ' Load the forces by component
+
+        ForcesPanel.LoadResults()
+
+    End Sub
+
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    Public Sub ReportResults()
 
         ' Load the total forces panels
 
@@ -68,29 +83,18 @@ Public Class FormReport
 
         RawResults.Clear()
 
-        If Not IsNothing(CalculationCore) Then
-
-            RemoveHandler CalculationCore.PushResultLine, AddressOf AppendLine
-            AddHandler CalculationCore.PushResultLine, AddressOf AppendLine
-
-            CalculationCore.ReportResults()
-
-        Else
-
-            RawResults.AppendLine("« Calculation core is not available »")
-
-        End If
+        RawResults.AppendLine("« Calculation core data not available »")
 
         tbRawData.Text = RawResults.ToString
 
-        If Not IsNothing(CalculationCore.StructuralLinks) Then
+        If Not IsNothing(Results.AeroelasticResult) Then
 
             cbLink.Items.Clear()
             cbModes.Items.Clear()
 
             Dim slCount As Integer = 0
 
-            For Each sl As StructuralLink In CalculationCore.StructuralLinks
+            For Each Link In Results.AeroelasticResult.Links
 
                 cbLink.Items.Add(String.Format("Structural link {0}", slCount))
                 slCount += 1
@@ -110,50 +114,60 @@ Public Class FormReport
 
     End Sub
 
-
-
+    ''' <summary>
+    ''' Loads the active link
+    ''' </summary>
     Private Sub LoadLink()
 
-        If (Not IsNothing(CalculationCore)) And cbLink.SelectedIndex >= 0 And cbLink.SelectedIndex < CalculationCore.StructuralLinks.Count Then
+        If Results.AeroelasticResult IsNot Nothing And cbLink.SelectedIndex >= 0 And cbLink.SelectedIndex < Results.AeroelasticResult.Links.Count Then
 
-            Dim sl As StructuralLink = CalculationCore.StructuralLinks(cbLink.SelectedIndex)
+            Dim LinkResult = Results.AeroelasticResult.Links(cbLink.SelectedIndex)
             cbModes.Items.Clear()
 
-            For Mode = 0 To sl.StructuralCore.Modes.Count - 1
-                Dim f As Double = sl.StructuralCore.Modes(Mode).W / 2 / Math.PI
-                cbModes.Items.Add(String.Format("Mode {0} - {1,10:F4}Hz", Mode, f))
+            Dim Index As Integer = 1
+            For Each Mode In LinkResult.Modes
+                Dim Frequency As Double = Mode.W / 2 / Math.PI
+                cbModes.Items.Add(String.Format("Mode {0} - {1,10:F4}Hz", Index, Frequency))
+                Index += 1
             Next
 
-            If sl.StructuralCore.Modes.Count > 0 Then cbModes.SelectedIndex = 0
+            If LinkResult.Modes.Count > 0 Then cbModes.SelectedIndex = 0
 
         End If
 
     End Sub
 
+    ''' <summary>
+    ''' Loads the active mode
+    ''' </summary>
+    ''' <param name="obj"></param>
+    ''' <param name="e"></param>
     Private Sub LoadMode(obj As Object, e As EventArgs)
 
-        If (Not IsNothing(CalculationCore)) And cbLink.SelectedIndex >= 0 And cbLink.SelectedIndex < CalculationCore.StructuralLinks.Count Then
+        If Results.AeroelasticResult IsNot Nothing And cbLink.SelectedIndex >= 0 And cbLink.SelectedIndex < Results.AeroelasticResult.Links.Count Then
 
-            Dim sl As StructuralLink = CalculationCore.StructuralLinks(cbLink.SelectedIndex)
+            Dim LinkResult = Results.AeroelasticResult.Links(cbLink.SelectedIndex)
 
-            If cbModes.SelectedIndex >= 0 And cbModes.SelectedIndex < sl.StructuralCore.Modes.Count Then
+            If cbModes.SelectedIndex >= 0 And cbModes.SelectedIndex < LinkResult.Modes.Count Then
 
-                Dim Mode As Integer = cbModes.SelectedIndex
+                Dim ModeIndex As Integer = cbModes.SelectedIndex
 
-                Dim f As Double = sl.StructuralCore.Modes(Mode).W / 2 / Math.PI
+                Dim Frequency As Double = LinkResult.Modes(ModeIndex).W / 2 / Math.PI
 
                 cModalResponse.Series.Clear()
 
-                cModalResponse.Series.Add(String.Format("Mode {0} - P - @ {1,10:F4}Hz", Mode, f))
+                cModalResponse.Series.Add(String.Format("Mode {0} - P - @ {1,10:F4}Hz", ModeIndex, Frequency))
                 cModalResponse.Series(0).ChartType = DataVisualization.Charting.SeriesChartType.Spline
 
-                cModalResponse.Series.Add(String.Format("Mode {0} - V - @ {1,10:F4}Hz", Mode, f))
+                cModalResponse.Series.Add(String.Format("Mode {0} - V - @ {1,10:F4}Hz", ModeIndex, Frequency))
                 cModalResponse.Series(1).ChartType = DataVisualization.Charting.SeriesChartType.Line
 
-                For s = 0 To sl.ModalResponse.Count - 1
+                Dim TimeIndex As Integer = 0
+                For Each Coordinate In LinkResult.Modes(ModeIndex).Response
 
-                    cModalResponse.Series(0).Points.AddXY(s, sl.ModalResponse(s).Item(Mode).P) ' position
-                    cModalResponse.Series(1).Points.AddXY(s, sl.ModalResponse(s).Item(Mode).V) ' velocity
+                    cModalResponse.Series(0).Points.AddXY(TimeIndex, Coordinate.P) ' position
+                    cModalResponse.Series(1).Points.AddXY(TimeIndex, Coordinate.V) ' velocity
+                    TimeIndex += 1
 
                 Next
 

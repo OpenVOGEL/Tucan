@@ -55,18 +55,6 @@ Namespace DataStore
         ''' <returns></returns>
         Public Property Results As New ResultModel
 
-        ''' <summary>
-        ''' The calculation core
-        ''' </summary>
-        ''' <returns></returns>
-        Public Property CalculationCore As Solver
-
-        ''' <summary>
-        ''' A set of coplanar points where the velocity can be evaluated using the calculation core
-        ''' </summary>
-        ''' <returns></returns>
-        Public Property VelocityPlane As New VelocityPlane
-
         Private _Initialized As Boolean = False
 
         ''' <summary>
@@ -99,7 +87,6 @@ Namespace DataStore
             Model.Objects.Clear()
             SimulationSettings.InitializaParameters()
             Results.Clear()
-            CalculationCore = Nothing
 
         End Sub
 
@@ -120,15 +107,14 @@ Namespace DataStore
         ''' This call is used for the console, but is less sutable for an animated GUI.
         ''' </summary>
         ''' <param name="Type"></param>
-        Public Sub StartCalculation(ByVal Type As CalculationType)
+        Public Sub StartCalculation(ByVal Type As CalculationType, ByRef CalculationCore As Solver)
 
             SimulationSettings.AnalysisType = Type
 
             Try
 
                 RaiseEvent PushMessage("Preparing calculation cell")
-                Dim BuildStructure As Boolean = Type = CalculationType.ctAeroelastic
-                CalculationCore = New Solver
+                Dim BuildStructure As Boolean = Type = CalculationType.Aeroelastic
                 CalculationCore.GenerateFromExistingModel(Model, SimulationSettings, BuildStructure)
 
                 AddHandler CalculationCore.PushProgress, AddressOf HandleProgress
@@ -137,20 +123,20 @@ Namespace DataStore
                 AddHandler CalculationCore.CalculationAborted, AddressOf CalculationAborted
 
                 Dim StartingTime As Date = Now
-                Results.SimulationSettings = CalculationCore.Settings
+
                 RaiseEvent PushMessage("Calculating with parallel solver")
 
                 Select Case Type
 
-                    Case CalculationType.ctConstrained
+                    Case CalculationType.SteadyState
 
                         CalculationCore.RigidFlight(FilePath)
 
-                    Case CalculationType.ctFreeFlight
+                    Case CalculationType.FreeFlight
 
                         CalculationCore.FreeFlight(FilePath)
 
-                    Case CalculationType.ctAeroelastic
+                    Case CalculationType.Aeroelastic
                         CalculationCore.AeroelasticUnsteadyTransit(FilePath)
 
                 End Select
@@ -169,11 +155,9 @@ Namespace DataStore
         ''' </summary>
         Private Sub CalculationFinished()
 
-            If CalculationCore IsNot Nothing Then
-                RaiseEvent PushMessage("Ready")
-                RaiseEvent PushMessage("Calculation done")
-                RaiseEvent CalculationDone()
-            End If
+            RaiseEvent PushMessage("Ready")
+            RaiseEvent PushMessage("Calculation done")
+            RaiseEvent CalculationDone()
 
         End Sub
 
@@ -266,9 +250,6 @@ Namespace DataStore
                     Case "Simulacion"
                         SimulationSettings.ReadFromXML(Reader.ReadSubtree)
 
-                    Case "VelocityPlane"
-                        VelocityPlane.ReadFromXML(Reader.ReadSubtree)
-
                 End Select
 
             End While
@@ -309,22 +290,16 @@ Namespace DataStore
             SimulationSettings.SaveToXML(Writer)
             Writer.WriteEndElement()
 
-            Writer.WriteStartElement("VelocityPlane")
-            VelocityPlane.SaveToXML(Writer)
-            Writer.WriteEndElement()
-
         End Sub
 
         ''' <summary>
         ''' Loads the results from an XML results file
         ''' </summary>
-        ''' <param name="FilePath"></param>
-        Public Sub ReadResults(ByVal FilePath As String)
+        ''' <param name="ReferenceFilePath"></param>
+        Public Sub ReadResults(ByVal ReferenceFilePath As String)
 
-            Results.Frames.Clear()
-            CalculationCore = New Solver()
-            CalculationCore.ReadFromXML(FilePath)
-            CalculationCore.SetCompleteModelOnResults(Results)
+            Results.Clear()
+            Results.LoadFromDirectory(IO.Path.GetDirectoryName(ReferenceFilePath))
 
         End Sub
 

@@ -15,6 +15,7 @@
 'You should have received a copy Of the GNU General Public License
 'along with this program.  If Not, see < http:  //www.gnu.org/licenses/>.
 
+Imports System.IO
 Imports OpenVOGEL.MathTools.Algebra.EuclideanSpace
 
 Namespace CalculationModel.Models.Aero
@@ -25,6 +26,9 @@ Namespace CalculationModel.Models.Aero
     ''' </summary>
     ''' <remarks></remarks>
     Public Class AirLoads
+
+        ' Related data
+        '------------------------------------------
 
         ''' <summary>
         ''' The reference area (the default value is 1.0) [m²].
@@ -180,6 +184,160 @@ Namespace CalculationModel.Models.Aero
 
             BodyForce.SetToCero()
             BodyMoment.SetToCero()
+
+        End Sub
+
+        Public Sub Transform(Base As Base3)
+
+            Force.Transform(Base)
+            Moment.Transform(Base)
+
+            LiftForce.Transform(Base)
+            LiftMoment.Transform(Base)
+
+            InducedDragForce.Transform(Base)
+            InducedDragMoment.Transform(Base)
+
+            SkinDragForce.Transform(Base)
+            SkinDragMoment.Transform(Base)
+
+            BodyForce.Transform(Base)
+            BodyMoment.Transform(Base)
+
+        End Sub
+
+        Public Sub AntiTransform(Base As Base3)
+
+            Force.AntiTransform(Base)
+            Moment.AntiTransform(Base)
+
+            LiftForce.AntiTransform(Base)
+            LiftMoment.AntiTransform(Base)
+
+            InducedDragForce.AntiTransform(Base)
+            InducedDragMoment.AntiTransform(Base)
+
+            SkinDragForce.AntiTransform(Base)
+            SkinDragMoment.AntiTransform(Base)
+
+            BodyForce.AntiTransform(Base)
+            BodyMoment.AntiTransform(Base)
+
+        End Sub
+
+        ''' <summary>
+        ''' Writes the airloads data to a binary stream.
+        ''' </summary>
+        ''' <param name="w"></param>
+        Public Sub WriteBinary(ByRef w As BinaryWriter)
+
+            w.Write(Force.X)
+            w.Write(Force.Y)
+            w.Write(Force.Z)
+
+            w.Write(Moment.X)
+            w.Write(Moment.Y)
+            w.Write(Moment.Z)
+
+            w.Write(LiftCoefficient)
+            w.Write(InducedDragCoefficient)
+            w.Write(SkinDragCoefficient)
+
+            w.Write(LiftForce.X)
+            w.Write(LiftForce.Y)
+            w.Write(LiftForce.Z)
+
+            w.Write(LiftMoment.X)
+            w.Write(LiftMoment.Y)
+            w.Write(LiftMoment.Z)
+
+            w.Write(InducedDragForce.X)
+            w.Write(InducedDragForce.Y)
+            w.Write(InducedDragForce.Z)
+
+            w.Write(InducedDragMoment.X)
+            w.Write(InducedDragMoment.Y)
+            w.Write(InducedDragMoment.Z)
+
+            w.Write(SkinDragForce.X)
+            w.Write(SkinDragForce.Y)
+            w.Write(SkinDragForce.Z)
+
+            w.Write(SkinDragMoment.X)
+            w.Write(SkinDragMoment.Y)
+            w.Write(SkinDragMoment.Z)
+
+            w.Write(BodyForce.X)
+            w.Write(BodyForce.Y)
+            w.Write(BodyForce.Z)
+
+            w.Write(BodyMoment.X)
+            w.Write(BodyMoment.Y)
+            w.Write(BodyMoment.Z)
+
+            w.Write(Area)
+            w.Write(Length)
+            w.Write(DynamicPressure)
+            w.Write(Alfa)
+            w.Write(Beta)
+
+        End Sub
+
+        ''' <summary>
+        ''' Reads the airloads data from a binary stream.
+        ''' </summary>
+        ''' <param name="w"></param>
+        Public Sub ReadBinary(ByRef r As System.IO.BinaryReader)
+
+            Force.X = r.ReadDouble
+            Force.Y = r.ReadDouble
+            Force.Z = r.ReadDouble
+
+            Moment.X = r.ReadDouble
+            Moment.Y = r.ReadDouble
+            Moment.Z = r.ReadDouble
+
+            LiftCoefficient = r.ReadDouble
+            InducedDragCoefficient = r.ReadDouble
+            SkinDragCoefficient = r.ReadDouble
+
+            LiftForce.X = r.ReadDouble
+            LiftForce.Y = r.ReadDouble
+            LiftForce.Z = r.ReadDouble
+
+            LiftMoment.X = r.ReadDouble
+            LiftMoment.Y = r.ReadDouble
+            LiftMoment.Z = r.ReadDouble
+
+            InducedDragForce.X = r.ReadDouble
+            InducedDragForce.Y = r.ReadDouble
+            InducedDragForce.Z = r.ReadDouble
+
+            InducedDragMoment.X = r.ReadDouble
+            InducedDragMoment.Y = r.ReadDouble
+            InducedDragMoment.Z = r.ReadDouble
+
+            SkinDragForce.X = r.ReadDouble
+            SkinDragForce.Y = r.ReadDouble
+            SkinDragForce.Z = r.ReadDouble
+
+            SkinDragMoment.X = r.ReadDouble
+            SkinDragMoment.Y = r.ReadDouble
+            SkinDragMoment.Z = r.ReadDouble
+
+            BodyForce.X = r.ReadDouble
+            BodyForce.Y = r.ReadDouble
+            BodyForce.Z = r.ReadDouble
+
+            BodyMoment.X = r.ReadDouble
+            BodyMoment.Y = r.ReadDouble
+            BodyMoment.Z = r.ReadDouble
+
+            Area = r.ReadDouble
+            Length = r.ReadDouble
+            DynamicPressure = r.ReadDouble
+            Alfa = r.ReadDouble
+            Beta = r.ReadDouble
 
         End Sub
 
