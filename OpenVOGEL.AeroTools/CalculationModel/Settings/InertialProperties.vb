@@ -97,9 +97,15 @@ Namespace CalculationModel.Settings
 
             I.Mass = I1.Mass + I2.Mass
 
-            I.Xcg = (I1.Xcg * I1.Mass + I2.Xcg * I2.Mass) / I.Mass
-            I.Ycg = (I1.Ycg * I1.Mass + I2.Ycg * I2.Mass) / I.Mass
-            I.Zcg = (I1.Zcg * I1.Mass + I2.Zcg * I2.Mass) / I.Mass
+            If I.Mass > 0.0# Then
+                I.Xcg = (I1.Xcg * I1.Mass + I2.Xcg * I2.Mass) / I.Mass
+                I.Ycg = (I1.Ycg * I1.Mass + I2.Ycg * I2.Mass) / I.Mass
+                I.Zcg = (I1.Zcg * I1.Mass + I2.Zcg * I2.Mass) / I.Mass
+            Else
+                I.Xcg = 0.0#
+                I.Ycg = 0.0#
+                I.Zcg = 0.0#
+            End If
 
             Dim I1_Xcg As Double = I1.Xcg - I.Xcg
             Dim I1_Ycg As Double = I1.Ycg - I.Ycg
@@ -149,6 +155,9 @@ Namespace CalculationModel.Settings
                                  ByRef I_yy As Double,
                                  ByRef I_zz As Double)
 
+            ' Return the standard basis for singular inertia
+            '-----------------------------------------------
+
             If Ixx = 0 Or Iyy = 0 Or Izz = 0 Then
 
                 Basis.U.X = 1.0#
@@ -166,6 +175,9 @@ Namespace CalculationModel.Settings
                 Return
 
             End If
+
+            ' Solve the eigen system
+            '-----------------------------------------------
 
             Dim E As New EigenSystem()
             Dim M As New SymmetricMatrix(3)
@@ -199,6 +211,23 @@ Namespace CalculationModel.Settings
             '--------------------------------------
 
             Basis.W.FromVectorProduct(Basis.U, Basis.V)
+
+        End Sub
+
+        Public Sub SetToZero()
+
+            Mass = 0.0#
+            Xcg = 0.0#
+            Ycg = 0.0#
+            Zcg = 0.0#
+
+            Ixx = 0.0#
+            Iyy = 0.0#
+            Izz = 0.0#
+
+            Ixy = 0.0#
+            Ixz = 0.0#
+            Iyz = 0.0#
 
         End Sub
 

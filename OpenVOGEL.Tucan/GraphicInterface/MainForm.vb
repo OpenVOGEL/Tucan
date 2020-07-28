@@ -572,19 +572,6 @@ Public Class MainForm
         End If
     End Sub
 
-    Private Sub btnUnsteadyHistogram_Click(sender As Object, e As EventArgs)
-
-        Select Case ModelInterface.InterfaceMode
-            Case Tucan.Utility.InterfaceModes.Design
-                Dim Dialog As New FormUnsteadyVelocity
-                Dialog.ShowProfile(ProjectRoot.SimulationSettings, True)
-            Case Tucan.Utility.InterfaceModes.Postprocess
-                Dim Dialog As New FormUnsteadyVelocity
-                Dialog.ShowProfile(ProjectRoot.Results.SimulationSettings, False)
-        End Select
-
-    End Sub
-
     Private Sub btnAeroelasticHistogram_Click(sender As Object, e As EventArgs)
 
         Select Case ModelInterface.InterfaceMode

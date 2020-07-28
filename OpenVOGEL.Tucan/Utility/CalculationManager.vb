@@ -104,7 +104,9 @@ Namespace Tucan.Utility
                 CalculationWorker.RunWorkerAsync()
 
             Catch ex As Exception
-                CalculationWorker.CancelAsync()
+                If CalculationWorker IsNot Nothing Then
+                    CalculationWorker.CancelAsync()
+                End If
                 FormProgress.PushMessage(String.Format("Calculation exited with exception: ""{0}"".", ex.Message))
                 FormProgress.ChangeToCloseModus()
                 Return

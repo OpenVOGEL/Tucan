@@ -85,7 +85,7 @@ Namespace CalculationModel.Solver
             ' Initialize structural model '
             '/////////////////////////////'
 
-            Dim L As Integer = 0
+            Dim LinkIndex As Integer = 0
 
             Dim StructuralDt As Double = Double.MaxValue
 
@@ -98,17 +98,18 @@ Namespace CalculationModel.Solver
                     Return
                 End If
 
-                L += 1
+                LinkIndex += 1
 
-                RaiseEvent PushMessage(String.Format("Creating structural link {0}", L))
+                RaiseEvent PushMessage(String.Format("Creating structural link {0}", LinkIndex))
 
                 RaiseEvent PushMessage("Creating mass and stiffness matrices...")
-                StructuralLink.StructuralCore.CreateMatrices(BaseDirectoryPath, True)
+                StructuralLink.StructuralCore.CreateMatrices(BaseDirectoryPath, DebugSolver, LinkIndex)
 
                 RaiseEvent PushMessage("Finding modes...")
-                StructuralLink.StructuralCore.FindModes(BaseDirectoryPath, L)
+                StructuralLink.StructuralCore.FindModes(LinkIndex)
 
-                ' Update the minimum modal period:
+                ' Update the minimum modal period
+                '--------------------------------
 
                 For Each Mode In StructuralLink.StructuralCore.Modes
 
@@ -119,7 +120,8 @@ Namespace CalculationModel.Solver
 
             Next
 
-            ' Calculate the structural step interval:
+            ' Calculate the structural step sub partition (at least 1/10 of the interval)
+            '----------------------------------------------------------------------------
 
             Dim StructuralSteps As Integer = Math.Max(1, Math.Round(Settings.Interval / StructuralDt) * 10)
 
@@ -129,12 +131,13 @@ Namespace CalculationModel.Solver
 
             Settings.StructuralSettings.SubSteps = StructuralSteps
 
-            ' Initialize the links with the selected step interval:
+            ' Initialize the links with the sub partition
+            '--------------------------------------------
 
             For Each StructuralLink As StructuralLink In StructuralLinks
 
                 RaiseEvent PushMessage("Initializing links...")
-                StructuralLink.Initialize(StructuralDt)
+                StructuralLink.Initialize(StructuralDt, StructuralSteps)
 
             Next
 
@@ -236,21 +239,17 @@ Namespace CalculationModel.Solver
 
                         Next
 
+                        CalculateAirloads()
+
                         ' Update structural displacement with the new loads
 
                         Converged = True
 
-                        For P = 0 To StructuralSteps
+                        For Each StructuralLink As StructuralLink In StructuralLinks
 
-                            For Each StructuralLink As StructuralLink In StructuralLinks
+                            ' Compute one step in the fixed point iteration
 
-                                ' NOTE: this could be done in parallel
-
-                                ' Compute one step in the fixed point iteration
-
-                                Converged = Converged And StructuralLink.ImplicitIntegration(Stream.Velocity, Stream.Density, Level, K, 0.005)
-
-                            Next
+                            Converged = Converged And StructuralLink.ImplicitIntegration(Stream.Velocity, Stream.Density, Level, K = 0, 0.005)
 
                         Next
 

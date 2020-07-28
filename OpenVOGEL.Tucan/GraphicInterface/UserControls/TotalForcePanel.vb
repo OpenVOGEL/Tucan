@@ -236,8 +236,8 @@ Public Class TotalForcePanel
         If ProjectRoot.Results.ActiveFrame IsNot Nothing Then
 
             Dim Frame = ProjectRoot.Results.ActiveFrame
-            rbVelocity.Value = ProjectRoot.Results.ActiveFrame.StreamVelocity.EuclideanNorm
-            rbDensity.Value = ProjectRoot.Results.SimulationSettings.Density
+            rbVelocity.Value = Frame.StreamVelocity.EuclideanNorm
+            rbDensity.Value = ProjectRoot.Results.Settings.Density
             rbAlpha.Value = Frame.TotalAirLoads.Alfa
             rbBeta.Value = Frame.TotalAirLoads.Beta
             nudSurface.Value = Frame.TotalAirLoads.Area

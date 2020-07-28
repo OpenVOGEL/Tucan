@@ -100,12 +100,12 @@ Namespace CalculationModel.Models.Structural.Library.Nodes
         ''' <remarks></remarks>
         Public Function VirtualWork(ByVal Displacement As NodalDisplacement) As Double
 
-            Dim vw As Double = 0.0#
-            For i = 0 To 5
-                vw += Me.Values(i) * Displacement.Values(i)
+            Dim Work As Double = 0.0#
+            For I = 0 To 5
+                Work += Values(I) * Displacement.Values(I)
             Next
 
-            Return vw
+            Return Work
 
         End Function
 

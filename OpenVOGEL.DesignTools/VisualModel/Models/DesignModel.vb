@@ -301,6 +301,8 @@ Namespace VisualModel.Models
 
             Dim Inertia As InertialProperties
 
+            Inertia.SetToZero()
+
             For Each Surface In Objects
 
                 Dim LocalInertia As InertialProperties = Surface.Inertia

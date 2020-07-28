@@ -284,30 +284,70 @@ Public Class ForcesPanel
 
     End Sub
 
-    ' Results object:
-
     Private Sub LoadResultsData()
 
         If ProjectRoot.Results.ActiveFrame IsNot Nothing Then
 
             Dim Frame As ResultFrame = ProjectRoot.Results.ActiveFrame
 
-            rbVelocity.Value = ProjectRoot.Results.ActiveFrame.StreamVelocity.EuclideanNorm
-            rbDensity.Value = ProjectRoot.Results.SimulationSettings.Density
+            rbVelocity.Value = Frame.StreamVelocity.EuclideanNorm
+            rbDensity.Value = ProjectRoot.Results.Settings.Density
             rbAlpha.Value = Frame.TotalAirLoads.Alfa * 180 / Math.PI
             rbBeta.Value = Frame.TotalAirLoads.Beta * 180 / Math.PI
             cbLattices.Items.Clear()
 
-            For i = 0 To Frame.PartialAirLoads.Count - 1
+            If Frame.PartialAirLoads.Count > 0 Then
 
-                cbLattices.Items.Add(String.Format("Lattice {0}", i))
+                cbLattices.Enabled = True
+                cbResultType.Enabled = True
 
-            Next
+                For i = 0 To Frame.PartialAirLoads.Count - 1
 
-            cbLattices.SelectedIndex = 0
-            cbResultType.SelectedIndex = 0
+                    cbLattices.Items.Add(String.Format("Lattice {0}", i))
+
+                Next
+
+                cbLattices.SelectedIndex = 0
+                cbResultType.SelectedIndex = 0
+
+            Else
+                cbLattices.Enabled = False
+                cbResultType.Enabled = False
+            End If
 
         End If
+
+        pbLoadingGraph.Refresh()
+
+    End Sub
+
+    Private Sub ClearData()
+
+        rbArea.Value = 0.0#
+
+        rbCL.Value = 0.0#
+        rbCDp.Value = 0.0#
+        rbCDi.Value = 0.0#
+
+        rbCFx.Value = 0.0#
+        rbCFy.Value = 0.0#
+        rbCFz.Value = 0.0#
+
+        rbCMx.Value = 0.0#
+        rbCMy.Value = 0.0#
+        rbCMz.Value = 0.0#
+
+        rbL.Value = 0.0#
+        rbDp.Value = 0.0#
+        rbDi.Value = 0.0#
+
+        rbFx.Value = 0.0#
+        rbFy.Value = 0.0#
+        rbFz.Value = 0.0#
+
+        rbMx.Value = 0.0#
+        rbMy.Value = 0.0#
+        rbMz.Value = 0.0#
 
     End Sub
 
@@ -355,11 +395,17 @@ Public Class ForcesPanel
                 rbMy.Value = AirLoad.Moment.Y
                 rbMz.Value = AirLoad.Moment.Z
 
-                pbLoadingGraph.Refresh()
+            Else
+                ClearData()
 
             End If
 
+        Else
+            ClearData()
+
         End If
+
+        pbLoadingGraph.Refresh()
 
     End Sub
 
@@ -376,6 +422,8 @@ Public Class ForcesPanel
     Private MousePoint As New PointF(Single.MinValue, Single.MinValue)
 
     Private Sub DrawLoad(sender As Object, e As PaintEventArgs)
+
+        e.Graphics.DrawRectangle(Pens.DarkGray, 0, 0, e.ClipRectangle.Width - 1, e.ClipRectangle.Height - 1)
 
         If ProjectRoot.Results.ActiveFrame IsNot Nothing Then
 
@@ -427,8 +475,6 @@ Public Class ForcesPanel
                     If xmax > 0 And ymax > 0 Then
 
                         Dim g As Graphics = e.Graphics
-
-                        g.DrawRectangle(Pens.DarkGray, 0, 0, e.ClipRectangle.Width - 1, e.ClipRectangle.Height - 1)
 
                         g.SmoothingMode = Drawing2D.SmoothingMode.HighQuality
 

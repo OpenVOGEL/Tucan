@@ -45,6 +45,10 @@ Public Class FormReport
         TotalForcePanel.Dock = DockStyle.Fill
         TotalForcePanel.BorderStyle = BorderStyle.Fixed3D
 
+        Dim Title As New DataVisualization.Charting.Title
+        Title.Text = "Modal response"
+        cModalResponse.Titles.Add(Title)
+
     End Sub
 
     Private Sub AppendLine(Line As String)
@@ -157,17 +161,39 @@ Public Class FormReport
                 cModalResponse.Series.Clear()
 
                 cModalResponse.Series.Add(String.Format("Mode {0} - P - @ {1,10:F4}Hz", ModeIndex, Frequency))
-                cModalResponse.Series(0).ChartType = DataVisualization.Charting.SeriesChartType.Spline
+                cModalResponse.Series(0).ChartType = DataVisualization.Charting.SeriesChartType.Line
+                cModalResponse.Series(0).Color = Color.Blue
+                cModalResponse.Series(0).MarkerStyle = DataVisualization.Charting.MarkerStyle.Circle
+                cModalResponse.Series(0).MarkerSize = 3
+                cModalResponse.Series(0).MarkerColor = Color.Blue
 
                 cModalResponse.Series.Add(String.Format("Mode {0} - V - @ {1,10:F4}Hz", ModeIndex, Frequency))
                 cModalResponse.Series(1).ChartType = DataVisualization.Charting.SeriesChartType.Line
+                cModalResponse.Series(1).Color = Color.Green
+                cModalResponse.Series(1).MarkerStyle = DataVisualization.Charting.MarkerStyle.Circle
+                cModalResponse.Series(1).MarkerSize = 3
+                cModalResponse.Series(1).MarkerColor = Color.Green
 
-                Dim TimeIndex As Integer = 0
+                cModalResponse.ChartAreas(0).AxisX.Title = "Time [s]"
+                Dim Space As Double = 10.0# * Results.Settings.Interval
+                Dim Decimals As Double = Math.Round(Math.Log10(Space), MidpointRounding.AwayFromZero)
+                cModalResponse.ChartAreas(0).AxisX.MajorGrid.Interval = Math.Pow(10, Decimals) * Math.Round(Space * Math.Pow(10, -Decimals))
+                cModalResponse.ChartAreas(0).AxisX.MinorGrid.Interval = cModalResponse.ChartAreas(0).AxisX.MajorGrid.Interval / 10.0
+                cModalResponse.ChartAreas(0).AxisX.LineWidth = 2
+
+                cModalResponse.ChartAreas(0).AxisY.Title = "Displacement [-]"
+                cModalResponse.ChartAreas(0).AxisY.LineWidth = 2
+
+                cModalResponse.Legends(0).BackColor = Color.DimGray
+                cModalResponse.Legends(0).Position.X = 40.0
+                cModalResponse.Legends(0).Position.Y = 20.0
+
+                Dim TimeIndex As Double = 0.0#
                 For Each Coordinate In LinkResult.Modes(ModeIndex).Response
 
-                    cModalResponse.Series(0).Points.AddXY(TimeIndex, Coordinate.P) ' position
-                    cModalResponse.Series(1).Points.AddXY(TimeIndex, Coordinate.V) ' velocity
-                    TimeIndex += 1
+                    cModalResponse.Series(0).Points.AddXY(TimeIndex, Coordinate.P)
+                    cModalResponse.Series(1).Points.AddXY(TimeIndex, Coordinate.V)
+                    TimeIndex += Results.Settings.Interval
 
                 Next
 

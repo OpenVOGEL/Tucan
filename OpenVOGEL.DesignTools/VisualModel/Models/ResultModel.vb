@@ -137,7 +137,7 @@ Namespace VisualModel.Models
         ''' </summary>
         Public Sub New()
             _Frames = New List(Of ResultFrame)
-            _SimulationSettings = New SimulationSettings
+            _Settings = New SimulationSettings
         End Sub
 
         ''' <summary>
@@ -170,7 +170,7 @@ Namespace VisualModel.Models
         ''' The simulation settings that where used for this results.
         ''' </summary>
         ''' <returns></returns>
-        Public ReadOnly Property SimulationSettings As SimulationSettings
+        Public ReadOnly Property Settings As SimulationSettings
 
         ''' <summary>
         ''' The collection of polars that where used for the analysis
@@ -192,7 +192,7 @@ Namespace VisualModel.Models
         Public Sub Clear()
 
             _Frames.Clear()
-            _SimulationSettings = Nothing
+            _Settings = Nothing
             _PolarDatabase = Nothing
             _FreeMotion = Nothing
             _AeroelasticResult = Nothing
@@ -216,8 +216,14 @@ Namespace VisualModel.Models
             ' Read settings
             '----------------------------------------
 
-            _SimulationSettings = New SimulationSettings
-            SimulationSettings.ReadFromXML(IO.Path.Combine(DirectoryPath, "Settings.xml"))
+            _Settings = New SimulationSettings
+            Settings.ReadFromXML(IO.Path.Combine(DirectoryPath, "Settings.xml"))
+
+            If Settings.AnalysisType = CalculationType.Aeroelastic Then
+                Settings.AeroelasticHistogram.Generate(Settings.StreamVelocity,
+                                                                 Settings.Interval,
+                                                                 Settings.SimulationSteps)
+            End If
 
             ' Read motion
             '----------------------------------------
@@ -302,14 +308,14 @@ Namespace VisualModel.Models
 
                 Dim FrameKind As ResultFrameKinds = ResultFrameKinds.EndState
 
-                If SimulationSettings.AnalysisType = CalculationType.Aeroelastic Or
-                   SimulationSettings.AnalysisType = CalculationType.FreeFlight Then
+                If Settings.AnalysisType = CalculationType.Aeroelastic Or
+                   Settings.AnalysisType = CalculationType.FreeFlight Then
                     FrameKind = ResultFrameKinds.Transit
                 End If
 
                 Dim Frame As New ResultFrame(FrameKind,
-                                             SimulationSettings.StreamVelocity,
-                                             SimulationSettings.StreamRotation,
+                                             Settings.StreamVelocity,
+                                             Settings.StreamRotation,
                                              ModelVisuals, WakesVisuals)
 
                 Frame.Model.Name = "Frame " & FrameIndex
@@ -324,12 +330,12 @@ Namespace VisualModel.Models
                 ' Complete the frame info
                 '-----------------------------------------------
 
-                Select Case SimulationSettings.AnalysisType
+                Select Case Settings.AnalysisType
 
                     Case CalculationType.SteadyState
 
-                        Frame.StreamVelocity.Assign(SimulationSettings.StreamVelocity)
-                        Frame.StreamRotation.Assign(SimulationSettings.StreamRotation)
+                        Frame.StreamVelocity.Assign(Settings.StreamVelocity)
+                        Frame.StreamRotation.Assign(Settings.StreamRotation)
 
                     Case CalculationType.FreeFlight
 
@@ -338,24 +344,24 @@ Namespace VisualModel.Models
                             Frame.StreamVelocity.X = State.Vx
                             Frame.StreamVelocity.Y = State.Vy
                             Frame.StreamVelocity.Z = State.Vz
-                            Frame.StreamVelocity.AntiTransform(SimulationSettings.InertialBasis)
+                            Frame.StreamVelocity.AntiTransform(Settings.InertialBasis)
                             Frame.StreamRotation.X = State.Ox
                             Frame.StreamRotation.Y = State.Oy
                             Frame.StreamRotation.Z = State.Oz
-                            Frame.StreamRotation.AntiTransform(SimulationSettings.InertialBasis)
+                            Frame.StreamRotation.AntiTransform(Settings.InertialBasis)
                         End If
 
                     Case CalculationType.Aeroelastic
 
-                        Dim Offset As Integer = FrameIndex + SimulationSettings.StructuralSettings.StructuralLinkingStep
-                        Frame.StreamVelocity.Assign(SimulationSettings.AeroelasticHistogram.State(Offset).Velocity)
-                        Frame.StreamRotation.Assign(SimulationSettings.StreamRotation)
+                        Dim Offset As Integer = FrameIndex + Settings.StructuralSettings.StructuralLinkingStep
+                        Frame.StreamVelocity.Assign(Settings.AeroelasticHistogram.State(Offset).Velocity)
+                        Frame.StreamRotation.Assign(Settings.StreamRotation)
 
                 End Select
 
                 Frame.TotalAirLoads.Area = 1.0#
                 Frame.TotalAirLoads.Length = 1.0#
-                Frame.TotalAirLoads.DynamicPressure = 0.5 * SimulationSettings.Density * Frame.StreamVelocity.SquareEuclideanNorm
+                Frame.TotalAirLoads.DynamicPressure = 0.5 * Settings.Density * Frame.StreamVelocity.SquareEuclideanNorm
 
                 FrameIndex += 1
 
@@ -502,7 +508,7 @@ Namespace VisualModel.Models
 
                     GlobalIndexNodes += 1
                     NodalPoint.IndexG = GlobalIndexNodes
-                    NodalPoint.Position.AntiTransform(SimulationSettings.InertialBasis)
+                    NodalPoint.Position.AntiTransform(Settings.InertialBasis)
                     Frame.Model.AddNodalPoint(NodalPoint.Position)
 
                 Next
@@ -531,9 +537,9 @@ Namespace VisualModel.Models
 
                     End If
 
-                    VortexRing.Normal.AntiTransform(SimulationSettings.InertialBasis)
-                    VortexRing.VelocityT.AntiTransform(SimulationSettings.InertialBasis)
-                    VortexRing.ControlPoint.AntiTransform(SimulationSettings.InertialBasis)
+                    VortexRing.Normal.AntiTransform(Settings.InertialBasis)
+                    VortexRing.VelocityT.AntiTransform(Settings.InertialBasis)
+                    VortexRing.ControlPoint.AntiTransform(Settings.InertialBasis)
 
                     Frame.Model.Mesh.Panels(GlobalIndexRings).Circulation = VortexRing.G
                     Frame.Model.Mesh.Panels(GlobalIndexRings).SourceStrength = VortexRing.S
@@ -554,7 +560,7 @@ Namespace VisualModel.Models
                 Frame.PartialAirLoads.Add(Loads)
                 Loads.Name = Lattice.Name
 
-                Lattice.AirLoads.AntiTransform(SimulationSettings.InertialBasis)
+                Lattice.AirLoads.AntiTransform(Settings.InertialBasis)
                 Loads.AirLoads = Lattice.AirLoads
                 Frame.TotalAirLoads.Add(Lattice.AirLoads)
 
@@ -562,25 +568,27 @@ Namespace VisualModel.Models
 
                     Stripe.Compute(Frame.StreamVelocity,
                                    Frame.StreamRotation,
-                                   SimulationSettings.Density,
-                                   SimulationSettings.Viscocity)
+                                   Settings.Density,
+                                   Settings.Viscocity)
 
-                    Stripe.Lift.AntiTransform(SimulationSettings.InertialBasis)
-                    Stripe.InducedDrag.AntiTransform(SimulationSettings.InertialBasis)
-                    Stripe.SkinDrag.AntiTransform(SimulationSettings.InertialBasis)
+                    Stripe.Lift.AntiTransform(Settings.InertialBasis)
+                    Stripe.InducedDrag.AntiTransform(Settings.InertialBasis)
+                    Stripe.SkinDrag.AntiTransform(Settings.InertialBasis)
 
-                    Stripe.LiftMoment.AntiTransform(SimulationSettings.InertialBasis)
-                    Stripe.InducedDragMoment.AntiTransform(SimulationSettings.InertialBasis)
-                    Stripe.SkinDragMoment.AntiTransform(SimulationSettings.InertialBasis)
+                    Stripe.LiftMoment.AntiTransform(Settings.InertialBasis)
+                    Stripe.InducedDragMoment.AntiTransform(Settings.InertialBasis)
+                    Stripe.SkinDragMoment.AntiTransform(Settings.InertialBasis)
 
                     ' Lift vectors
                     '-----------------------------------
                     If Stripe.Lift.EuclideanNorm > 0.0 Then
                         Dim LiftVector As New FixedVector
                         LiftVector.Vector.Assign(Stripe.Lift)
+                        LiftVector.Vector.Normalize()
+                        LiftVector.Vector.Scale(Stripe.LiftCoefficient)
                         LiftVector.Point.Assign(Stripe.CenterPoint)
                         Loads.LiftVectors.Add(LiftVector)
-                        Loads.MaximumLift = Math.Max(Loads.MaximumLift, Stripe.Lift.EuclideanNorm)
+                        Loads.MaximumLift = Math.Max(Loads.MaximumLift, Stripe.LiftCoefficient)
                     End If
 
                     ' Induced drag vectors
@@ -588,19 +596,23 @@ Namespace VisualModel.Models
                     If Stripe.InducedDrag.EuclideanNorm > 0.0 Then
                         Dim DragVector As New FixedVector
                         DragVector.Vector.Assign(Stripe.InducedDrag)
+                        DragVector.Vector.Normalize()
+                        DragVector.Vector.Scale(Stripe.InducedDragCoefficient)
                         DragVector.Point.Assign(Stripe.CenterPoint)
                         Loads.InducedDragVectors.Add(DragVector)
-                        Loads.MaximumInducedDrag = Math.Max(Loads.MaximumInducedDrag, Stripe.InducedDrag.EuclideanNorm)
+                        Loads.MaximumInducedDrag = Math.Max(Loads.MaximumInducedDrag, Stripe.InducedDragCoefficient)
                     End If
 
                     ' Skin drag vectors
                     '-----------------------------------
                     If Stripe.SkinDrag.EuclideanNorm > 0.0 Then
                         Dim DragVector As New FixedVector
+                        DragVector.Vector.Normalize()
+                        DragVector.Vector.Scale(Stripe.SkinDragCoefficient)
                         DragVector.Vector.Assign(Stripe.SkinDrag)
                         DragVector.Point.Assign(Stripe.CenterPoint)
                         Loads.SkinDragVectors.Add(DragVector)
-                        Loads.MaximumSkinDrag = Math.Max(Loads.MaximumSkinDrag, Stripe.SkinDrag.EuclideanNorm)
+                        Loads.MaximumSkinDrag = Math.Max(Loads.MaximumSkinDrag, Stripe.SkinDragCoefficient)
                     End If
 
                 Next
@@ -633,7 +645,7 @@ Namespace VisualModel.Models
 
                         GlobalIndexNodes += 1
                         NodalPoint.IndexG = GlobalIndexNodes
-                        NodalPoint.Position.AntiTransform(SimulationSettings.InertialBasis)
+                        NodalPoint.Position.AntiTransform(Settings.InertialBasis)
                         Frame.Wakes.AddNodalPoint(NodalPoint.Position)
 
                     Next

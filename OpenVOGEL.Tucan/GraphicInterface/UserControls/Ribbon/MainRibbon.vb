@@ -1104,7 +1104,7 @@ ErrSub:
                     cbxFrames.Items.Add(ProjectRoot.Results.Frames(i).Model.Name)
                 Next
 
-                cbxFrames.SelectedIndex = 0
+                cbxFrames.SelectedIndex = ProjectRoot.Results.Frames.Count - 1
 
             Else
 
@@ -1171,13 +1171,13 @@ ErrSub:
 
                 If Not ModelInterface.Simulating Then
 
-                    _timer.Interval = ProjectRoot.Results.SimulationSettings.Interval * 1000
+                    _timer.Interval = ProjectRoot.Results.Settings.Interval * 1000
                     ModelInterface.Simulating = True
                     _timer.Start()
                     btnPlayStop.Text = "Stop"
                     RaiseEvent PushMessage(String.Format("Simulating. Rate {0}f/{1}s",
-                                                         ProjectRoot.Results.SimulationSettings.StructuralSettings.SubSteps,
-                                                         ProjectRoot.Results.SimulationSettings.Interval))
+                                                         ProjectRoot.Results.Settings.StructuralSettings.SubSteps,
+                                                         ProjectRoot.Results.Settings.Interval))
                 Else
                     ModelInterface.Simulating = False
                     _timer.Stop()
@@ -1749,15 +1749,7 @@ ErrSub:
 
     Private Sub btnHistogram_Click(sender As Object, e As EventArgs) Handles btnHistogram.Click
 
-        If cbxSimulationMode.SelectedIndex = 1 Then
-
-            Dim Dialog As New FormUnsteadyVelocity
-
-            Dialog.StartPosition = FormStartPosition.CenterParent
-
-            Dialog.ShowProfile(ProjectRoot.SimulationSettings, True)
-
-        ElseIf cbxSimulationMode.SelectedIndex = 2 Then
+        If cbxSimulationMode.SelectedIndex = 2 Then
 
             Dim Dialog As New FormHistogram
 

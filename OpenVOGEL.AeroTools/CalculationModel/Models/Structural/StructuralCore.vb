@@ -76,7 +76,7 @@ Namespace CalculationModel.Models.Structural
         ''' Generates the structure global stiffness and mass matrices
         ''' </summary>
         ''' <remarks></remarks>
-        Public Sub CreateMatrices(ByVal Path As String, Optional ByVal PrintAsTxt As Boolean = False)
+        Public Sub CreateMatrices(ByVal Path As String, Optional ByVal PrintAsTxt As Boolean = False, ByVal Optional Index As Integer = 0)
 
             '-----------------------------------------------------------------------------
             ' Generates structure mass and stiffness matrices
@@ -100,54 +100,48 @@ Namespace CalculationModel.Models.Structural
 
                 If PrintAsTxt Then
 
-                    Try
+                    Dim FileK As Integer = 1
+                    FileOpen(FileK, String.Format("{0}\KE_{1}_{2}.txt", Path, Index, ElementCount), OpenMode.Output, OpenAccess.Write)
+                    Print(FileK, String.Format("{0,12:F8};", Element.K.MatrixToString))
+                    FileClose(FileK)
 
-                        Dim FileK As Integer = 1
-                        FileOpen(FileK, Path & String.Format("\KG_{0}.txt", ElementCount), OpenMode.Output, OpenAccess.Write)
-                        Print(FileK, String.Format("{0,12:F8};", Element.K.ToString))
-                        FileClose(FileK)
-
-                        Dim FileM As Integer = 2
-                        FileOpen(FileM, Path & String.Format("\MG_{0}.txt", ElementCount), OpenMode.Output, OpenAccess.Write)
-                        Print(FileM, String.Format("{0,12:F8};", Element.M.ToString))
-                        FileClose(FileM)
-
-                    Catch ex As Exception
-
-                    End Try
+                    Dim FileM As Integer = 2
+                    FileOpen(FileM, String.Format("{0}\ME_{1}_{2}.txt", Path, Index, ElementCount), OpenMode.Output, OpenAccess.Write)
+                    Print(FileM, String.Format("{0,12:F8};", Element.M.MatrixToString))
+                    FileClose(FileM)
 
                 End If
 
                 Dim BaseIndexA As Integer = 6 * Element.NodeA.Index
                 Dim BaseIndexB As Integer = 6 * Element.NodeB.Index
 
-                For i = 0 To 5
+                For I = 0 To 5
 
-                    For j = 0 To 5
+                    For J = 0 To 5
 
-                        Dim rA = BaseIndexA + i
-                        Dim cA = BaseIndexA + j
-                        Dim rB = BaseIndexB + i
-                        Dim cB = BaseIndexB + j
+                        Dim rA = BaseIndexA + I
+                        Dim cA = BaseIndexA + J
+                        Dim rB = BaseIndexB + I
+                        Dim cB = BaseIndexB + J
 
                         If cA >= rA Then
-                            K(rA, cA) += Element.K(i, j)
-                            M(rA, cA) += Element.M(i, j)
+                            K(rA, cA) += Element.K(I, J)
+                            M(rA, cA) += Element.M(I, J)
                         End If
 
                         If cB >= rA Then
-                            K(rA, cB) += Element.K(i, j + 6)
-                            M(rA, cB) += Element.M(i, j + 6)
+                            K(rA, cB) += Element.K(I, J + 6)
+                            M(rA, cB) += Element.M(I, J + 6)
                         End If
 
                         If cA >= rB Then
-                            K(rB, cA) += Element.K(i + 6, j)
-                            M(rB, cA) += Element.M(i + 6, j)
+                            K(rB, cA) += Element.K(I + 6, J)
+                            M(rB, cA) += Element.M(I + 6, J)
                         End If
 
                         If cB >= rB Then
-                            K(rB, cB) += Element.K(i + 6, j + 6)
-                            M(rB, cB) += Element.M(i + 6, j + 6)
+                            K(rB, cB) += Element.K(I + 6, J + 6)
+                            M(rB, cB) += Element.M(I + 6, J + 6)
                         End If
                     Next
 
@@ -171,21 +165,15 @@ Namespace CalculationModel.Models.Structural
 
             If PrintAsTxt Then
 
-                Try
+                Dim FileK As Integer = 1
+                FileOpen(FileK, String.Format("{0}\KG_{1}.txt", Path, Index), OpenMode.Output, OpenAccess.Write)
+                Print(FileK, K.MatrixToString)
+                FileClose(FileK)
 
-                    Dim FileK As Integer = 1
-                    FileOpen(FileK, Path & "\KG.txt", OpenMode.Output, OpenAccess.Write)
-                    Print(FileK, K.ToString)
-                    FileClose(FileK)
-
-                    Dim FileM As Integer = 2
-                    FileOpen(FileM, Path & "\MG.txt", OpenMode.Output, OpenAccess.Write)
-                    Print(FileM, M.ToString)
-                    FileClose(FileM)
-
-                Catch ex As Exception
-
-                End Try
+                Dim FileM As Integer = 2
+                FileOpen(FileM, String.Format("{0}\MG_{1}.txt", Path, Index), OpenMode.Output, OpenAccess.Write)
+                Print(FileM, M.MatrixToString)
+                FileClose(FileM)
 
             End If
 
@@ -195,7 +183,7 @@ Namespace CalculationModel.Models.Structural
         ''' Calculates structure dynamic modes using Subspace iteration and/or Jacobi.
         ''' </summary>
         ''' <remarks></remarks>
-        Public Sub FindModes(ByVal Path As String, ByVal LinkID As Integer)
+        Public Sub FindModes(ByVal LinkId As Integer)
 
             TestEigenValues()
 

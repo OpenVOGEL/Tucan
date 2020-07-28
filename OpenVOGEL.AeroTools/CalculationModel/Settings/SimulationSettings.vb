@@ -109,7 +109,7 @@ Namespace CalculationModel.Settings
         ''' The model mass in kg
         ''' </summary>
         ''' <returns></returns>
-        Public Property Mass As Double
+        Public Property Mass As Double = 0.0#
 
         ''' <summary>
         ''' The model center of grvity
@@ -121,19 +121,19 @@ Namespace CalculationModel.Settings
         ''' The model second moment of inertia about the X axis in kg.m²
         ''' </summary>
         ''' <returns></returns>
-        Public Property Ixx As Double
+        Public Property Ixx As Double = 0.0#
 
         ''' <summary>
         ''' The model second moment of inertia about the Y axis  in kg.m²
         ''' </summary>
         ''' <returns></returns>
-        Public Property Iyy As Double
+        Public Property Iyy As Double = 0.0#
 
         ''' <summary>
         ''' The model second moment of inerti about the Z axis a in kg.m²
         ''' </summary>
         ''' <returns></returns>
-        Public Property Izz As Double
+        Public Property Izz As Double = 0.0#
 
         ''' <summary>
         ''' The main directions of inertia
@@ -338,6 +338,12 @@ Namespace CalculationModel.Settings
         ''' </summary>
         ''' <returns></returns>
         Public Property IncludeAproximateBodyFriction As Boolean = False
+
+        ''' <summary>
+        ''' Indicates if the induced drag should be included in the calculation
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property IncludeInducedDrag As Boolean = True
 
         ''' <summary>
         ''' Generates a vector containing the velocity at each time step.

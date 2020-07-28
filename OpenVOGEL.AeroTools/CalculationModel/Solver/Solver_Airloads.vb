@@ -40,7 +40,11 @@ Namespace CalculationModel.Solver
         ''' <remarks></remarks>
         Public Sub CalculateAirloads()
 
-            ComputeInducedDrag()
+            If Settings.IncludeInducedDrag Then
+
+                ComputeInducedDrag()
+
+            End If
 
             ComputeForcesAndMoments()
 

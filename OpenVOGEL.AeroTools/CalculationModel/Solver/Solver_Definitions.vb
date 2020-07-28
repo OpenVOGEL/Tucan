@@ -27,6 +27,12 @@ Namespace CalculationModel.Solver
 
     Partial Public Class Solver
 
+#If DEBUG Then
+        Private Const DebugSolver = True
+#Else
+        Private Const DebugSolver = False
+#End If
+
         Public Sub New()
             Lattices = New List(Of BoundedLattice)
             Settings = New SimulationSettings

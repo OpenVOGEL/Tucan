@@ -476,6 +476,7 @@ Namespace CalculationModel.Models.Aero
                 VortexRings(i).VelocityT.X = r.ReadDouble
                 VortexRings(i).VelocityT.Y = r.ReadDouble
                 VortexRings(i).VelocityT.Z = r.ReadDouble
+                VortexRings(i).Cdi = r.ReadDouble
             Next
 
         End Sub
@@ -492,6 +493,7 @@ Namespace CalculationModel.Models.Aero
                 w.Write(VortexRings(i).VelocityT.X)
                 w.Write(VortexRings(i).VelocityT.Y)
                 w.Write(VortexRings(i).VelocityT.Z)
+                w.Write(VortexRings(i).Cdi)
             Next
 
         End Sub

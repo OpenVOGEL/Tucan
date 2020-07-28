@@ -337,6 +337,11 @@ Namespace CalculationModel.Models.Structural
         Private Dt As Double
 
         ''' <summary>
+        ''' 
+        ''' </summary>
+        Private Repetition As Integer = 1
+
+        ''' <summary>
         ''' Indicates if the linker has been initialized
         ''' </summary>
         ''' <remarks></remarks>
@@ -346,7 +351,7 @@ Namespace CalculationModel.Models.Structural
         ''' Sets initial conditions for each ODE
         ''' </summary>
         ''' <remarks></remarks>
-        Public Sub Initialize(ByVal Dt As Double)
+        Public Sub Initialize(ByVal Dt As Double, Repetition As Integer)
 
             ' System starts always from cero position, velocity and acceleration, and the first item represents this state:
 
@@ -362,8 +367,9 @@ Namespace CalculationModel.Models.Structural
 
             Next
 
+            Me.T = 0
             Me.Dt = Dt
-            Me.T = 0.0#
+            Me.Repetition = Repetition
 
             Initialized = True
 
@@ -479,10 +485,10 @@ Namespace CalculationModel.Models.Structural
         ''' <param name="Velocity">Reference velocity used to calculate aerodinamic loads</param>
         ''' <param name="Level">Keeps track on the worst level of convergence</param>
         ''' <param name="K">Implicit step counter</param>
-        ''' <param name="E">Convergence threshold</param>
+        ''' <param name="Delta">Convergence threshold</param>
         ''' <remarks>This method integrates the uncoupled ecuations of motion</remarks>
         ''' <returns>True when the relative increment of the new prediction in all modal displacements is less than e.</returns>
-        Public Function ImplicitIntegration(ByVal Velocity As Vector3, ByVal Density As Double, ByRef Level As Double, K As Integer, Optional E As Double = 0.01) As Boolean
+        Public Function ImplicitIntegration(ByVal Velocity As Vector3, ByVal Density As Double, ByRef Level As Double, AdvanceStep As Boolean, Delta As Double) As Boolean
 
             If Not Initialized Then Throw New Exception("Attempting to integrate with non initialized link")
 
@@ -500,9 +506,9 @@ Namespace CalculationModel.Models.Structural
                 Node.Velocity.Clear()
             Next
 
-            ' If this is the first iteration loop (k = 0), add new response element and advance one time step:
+            ' Add new response element and advance one time step when requested
 
-            If (K = 0) Then
+            If AdvanceStep Then
 
                 T += 1 ' From 1 to ... (t = 0 are the initial conditions, known in advance)
 
@@ -520,27 +526,73 @@ Namespace CalculationModel.Models.Structural
 
                 ' 1) Solve each uncoupled ODE by the Newmark method:
 
-                Dim P As Double = 0
+                'Dim FileId = FreeFile()
+                'FileOpen(FileId, "C:\Users\Guillermo\Documents\OpenVOGEL\Examples\Aeroelastic\Flapped_2_Aeroelastic\Loads.txt", FileMode.Create)
+
+                Dim Work As Double = 0
 
                 For Each Node In StructuralCore.Nodes
-                    P += Mode.Shape(Node.Index).VirtualWork(Node.Load)
+
+                    Work += Mode.Shape(Node.Index).VirtualWork(Node.Load)
+
+                    'Print(FileId, String.Format("{0,14:E5} ", Mode.Shape(Node.Index).VirtualWork(Node.Load)))
+                    'Print(FileId, String.Format("{0,14:E5} ", Mode.Shape(Node.Index).Dx))
+                    'Print(FileId, String.Format("{0,14:E5} ", Mode.Shape(Node.Index).Dy))
+                    'Print(FileId, String.Format("{0,14:E5} ", Mode.Shape(Node.Index).Dz))
+                    'Print(FileId, String.Format("{0,14:E5} ", Mode.Shape(Node.Index).Rx))
+                    'Print(FileId, String.Format("{0,14:E5} ", Mode.Shape(Node.Index).Ry))
+                    'Print(FileId, String.Format("{0,14:E5} ", Mode.Shape(Node.Index).Rz))
+                    'Print(FileId, String.Format("{0,14:E5} ", Node.Load.Px))
+                    'Print(FileId, String.Format("{0,14:E5} ", Node.Load.Py))
+                    'Print(FileId, String.Format("{0,14:E5} ", Node.Load.Pz))
+                    'Print(FileId, String.Format("{0,14:E5} ", Node.Load.Tx))
+                    'Print(FileId, String.Format("{0,14:E5} ", Node.Load.Ty))
+                    'Print(FileId, String.Format("{0,14:E5} ", Node.Load.Tz))
+                    'PrintLine(FileId, "")
+
                 Next
 
-                Dim ni As NewmarkIntegrator = NewmarkIntegrators(M)
+                'FileClose(FileId)
+
+                Dim Int As NewmarkIntegrator = NewmarkIntegrators(M)
 
                 Dim P0 As Double = ModalResponse(T - 1)(M).P
                 Dim V0 As Double = ModalResponse(T - 1)(M).V
                 Dim A0 As Double = ModalResponse(T - 1)(M).A
 
-                Dim pp As Double = ModalResponse(T)(M).P
+                ' Cache last predicted position
 
-                ModalResponse(T)(M).A = ni.A(0, 0) * A0 + ni.A(0, 1) * V0 + ni.A(0, 2) * P0 + ni.L(0) * P
-                ModalResponse(T)(M).V = ni.A(1, 0) * A0 + ni.A(1, 1) * V0 + ni.A(1, 2) * P0 + ni.L(1) * P
-                ModalResponse(T)(M).P = ni.A(2, 0) * A0 + ni.A(2, 1) * V0 + ni.A(2, 2) * P0 + ni.L(2) * P
+                Dim PreviousP As Double
 
-                If pp <> 0 Then
-                    Dim c As Double = (ModalResponse(T)(M).P - pp) / pp
-                    Converged = Converged And c < E
+                If AdvanceStep Then
+                    PreviousP = P0
+                Else
+                    PreviousP = ModalResponse(T)(M).P
+                End If
+
+                ' Complete the time step using the sub partition (constant load durig the small interval)
+
+                ModalResponse(T)(M).A = 0.0#
+                ModalResponse(T)(M).V = 0.0#
+                ModalResponse(T)(M).P = 0.0#
+
+                For R = 1 To Repetition
+
+                    ModalResponse(T)(M).A = Int.A(0, 0) * A0 + Int.A(0, 1) * V0 + Int.A(0, 2) * P0 + Int.L(0) * Work
+                    ModalResponse(T)(M).V = Int.A(1, 0) * A0 + Int.A(1, 1) * V0 + Int.A(1, 2) * P0 + Int.L(1) * Work
+                    ModalResponse(T)(M).P = Int.A(2, 0) * A0 + Int.A(2, 1) * V0 + Int.A(2, 2) * P0 + Int.L(2) * Work
+
+                    P0 = ModalResponse(T)(M).A
+                    V0 = ModalResponse(T)(M).V
+                    A0 = ModalResponse(T)(M).P
+
+                Next
+
+                ' Check converence using previous prediction
+
+                If PreviousP <> 0 Then
+                    Dim c As Double = (ModalResponse(T)(M).P - PreviousP) / PreviousP
+                    Converged = Converged And c < Delta
                     Level = Math.Max(Level, c)
                 End If
 
@@ -548,26 +600,26 @@ Namespace CalculationModel.Models.Structural
 
                 Dim n As Integer = 0
 
-                For Each Node In StructuralCore.Nodes
+                    For Each Node In StructuralCore.Nodes
 
-                    n = Node.Index
+                        n = Node.Index
 
-                    ' Calculate new displacements and velocities:
+                        ' Calculate new displacements and velocities:
 
-                    For j = 0 To 5
+                        For j = 0 To 5
 
-                        Node.Displacement.Values(j) += ModalResponse(T)(M).P * Mode.Shape(n).Values(j)
-                        Node.Velocity.Values(j) += ModalResponse(T)(M).V * Mode.Shape(n).Values(j)
+                            Node.Displacement.Values(j) += ModalResponse(T)(M).P * Mode.Shape(n).Values(j)
+                            Node.Velocity.Values(j) += ModalResponse(T)(M).V * Mode.Shape(n).Values(j)
+
+                        Next
 
                     Next
 
                 Next
 
-            Next
+                ' Transfer motion (position and velocity) to lattices nodal points:
 
-            ' Transfer motion (position and velocity) to lattices nodal points:
-
-            For Each Link As KinematicLink In KinematicLinks
+                For Each Link As KinematicLink In KinematicLinks
                 Link.TransferMotion()
             Next
 

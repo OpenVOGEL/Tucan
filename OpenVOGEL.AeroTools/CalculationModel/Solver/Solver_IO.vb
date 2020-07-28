@@ -45,20 +45,20 @@ Namespace CalculationModel.Solver
                 Exit Sub
             End If
 
-            Dim reader As XmlReader = XmlReader.Create(FilePath)
+            Dim Reader As XmlReader = XmlReader.Create(FilePath)
 
-            If reader.ReadToFollowing("Solver") Then
+            If Reader.ReadToFollowing("Solver") Then
 
-                Dim nLattices As Integer = reader.GetAttribute("Lattices")
-                Dim nLinks As Integer = reader.GetAttribute("Links")
+                Dim nLattices As Integer = Reader.GetAttribute("Lattices")
+                Dim nLinks As Integer = Reader.GetAttribute("Links")
 
-                Stream.Velocity.X = IOXML.ReadDouble(reader, "Vx", 1.0)
-                Stream.Velocity.Y = IOXML.ReadDouble(reader, "Vy", 0.0)
-                Stream.Velocity.Z = IOXML.ReadDouble(reader, "Vz", 0.0)
-                Stream.Rotation.X = IOXML.ReadDouble(reader, "Ox", 0.0)
-                Stream.Rotation.Y = IOXML.ReadDouble(reader, "Oy", 0.0)
-                Stream.Rotation.Z = IOXML.ReadDouble(reader, "Oz", 0.0)
-                Stream.Density = IOXML.ReadDouble(reader, "Rho", 1.225)
+                Stream.Velocity.X = IOXML.ReadDouble(Reader, "Vx", 1.0)
+                Stream.Velocity.Y = IOXML.ReadDouble(Reader, "Vy", 0.0)
+                Stream.Velocity.Z = IOXML.ReadDouble(Reader, "Vz", 0.0)
+                Stream.Rotation.X = IOXML.ReadDouble(Reader, "Ox", 0.0)
+                Stream.Rotation.Y = IOXML.ReadDouble(Reader, "Oy", 0.0)
+                Stream.Rotation.Z = IOXML.ReadDouble(Reader, "Oz", 0.0)
+                Stream.Density = IOXML.ReadDouble(Reader, "Rho", 1.225)
 
                 If Stream.Density = 0 Then Stream.Density = 1.225
 
@@ -120,15 +120,15 @@ Namespace CalculationModel.Solver
                     Motion = Nothing
                 End Try
 
-                If reader.ReadToFollowing("Settings") Then
-                    Settings.ReadFromXML(reader.ReadSubtree)
+                If Reader.ReadToFollowing("Settings") Then
+                    Settings.ReadFromXML(Reader.ReadSubtree)
                 Else
                     RaiseEvent PushMessage("Warning: unable to read settings")
                 End If
 
             End If
 
-            reader.Close()
+            Reader.Close()
 
             Settings.GenerateVelocityHistogram()
 
@@ -143,23 +143,23 @@ Namespace CalculationModel.Solver
         ''' <remarks></remarks>
         Public Sub WriteToXML(ByVal FilePath As String, Optional ByVal WakesNodalVelocity As Boolean = False)
 
-            Dim writer As XmlWriter = XmlWriter.Create(FilePath)
+            Dim Writer As XmlWriter = XmlWriter.Create(FilePath)
 
-            writer.WriteStartElement("Solver")
+            Writer.WriteStartElement("Solver")
 
-            writer.WriteAttributeString("Version", Version)
+            Writer.WriteAttributeString("Version", Version)
 
-            writer.WriteAttributeString("Vx", Stream.Velocity.X)
-            writer.WriteAttributeString("Vy", Stream.Velocity.Y)
-            writer.WriteAttributeString("Vz", Stream.Velocity.Z)
-            writer.WriteAttributeString("Ox", Stream.Rotation.X)
-            writer.WriteAttributeString("Oy", Stream.Rotation.Y)
-            writer.WriteAttributeString("Oz", Stream.Rotation.Z)
-            writer.WriteAttributeString("Rho", Stream.Density)
+            Writer.WriteAttributeString("Vx", Stream.Velocity.X)
+            Writer.WriteAttributeString("Vy", Stream.Velocity.Y)
+            Writer.WriteAttributeString("Vz", Stream.Velocity.Z)
+            Writer.WriteAttributeString("Ox", Stream.Rotation.X)
+            Writer.WriteAttributeString("Oy", Stream.Rotation.Y)
+            Writer.WriteAttributeString("Oz", Stream.Rotation.Z)
+            Writer.WriteAttributeString("Rho", Stream.Density)
 
             ' Lattices
             '------------------------------------------
-            writer.WriteAttributeString("Lattices", Lattices.Count)
+            Writer.WriteAttributeString("Lattices", Lattices.Count)
 
             For i = 0 To Lattices.Count - 1
                 Lattices(i).WriteBinary(FilePath & String.Format(".Lattice_{0}.bin", i), WakesNodalVelocity)
@@ -168,9 +168,9 @@ Namespace CalculationModel.Solver
             ' Dynamic links
             '------------------------------------------
             If StructuralLinks Is Nothing Then
-                writer.WriteAttributeString("Links", 0)
+                Writer.WriteAttributeString("Links", 0)
             Else
-                writer.WriteAttributeString("Links", StructuralLinks.Count)
+                Writer.WriteAttributeString("Links", StructuralLinks.Count)
                 For i = 0 To StructuralLinks.Count - 1
                     StructuralLinks(i).WriteBinary(FilePath & String.Format(".Link_{0}.bin", i))
                 Next
@@ -178,16 +178,16 @@ Namespace CalculationModel.Solver
 
             ' Settings
             '------------------------------------------
-            writer.WriteStartElement("Settings")
-            Settings.SaveToXML(writer)
-            writer.WriteEndElement()
+            Writer.WriteStartElement("Settings")
+            Settings.SaveToXML(Writer)
+            Writer.WriteEndElement()
 
             ' Polars
             '------------------------------------------
             PolarDataBase.WriteBinary(FilePath & ".Polars.bin")
 
-            writer.WriteEndElement()
-            writer.Close()
+            Writer.WriteEndElement()
+            Writer.Close()
 
         End Sub
 

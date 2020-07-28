@@ -100,12 +100,12 @@ Namespace CalculationModel.Models.Structural.Library.Nodes
         ''' <remarks></remarks>
         Public Function VirtualWork(ByVal Load As NodalLoad) As Double
 
-            Dim vw As Double = 0.0#
-            For i = 0 To 5
-                vw += Me.Values(i) * Load.Values(i)
+            Dim Work As Double = 0.0#
+            For I = 0 To 5
+                Work += Values(I) * Load.Values(I)
             Next
 
-            Return vw
+            Return Work
 
         End Function
 

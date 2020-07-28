@@ -200,22 +200,10 @@
     <Compile Include="GraphicInterface\Forms\FormReport.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="GraphicInterface\Forms\FormResults.Designer.vb">
-      <DependentUpon>FormResults.vb</DependentUpon>
-    </Compile>
-    <Compile Include="GraphicInterface\Forms\FormResults.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="GraphicInterface\Forms\FormSettings.Designer.vb">
       <DependentUpon>FormSettings.vb</DependentUpon>
     </Compile>
     <Compile Include="GraphicInterface\Forms\FormSettings.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="GraphicInterface\Forms\FormUnsteadyVelocity.Designer.vb">
-      <DependentUpon>FormUnsteadyVelocity.vb</DependentUpon>
-    </Compile>
-    <Compile Include="GraphicInterface\Forms\FormUnsteadyVelocity.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="GraphicInterface\UserControls\ForcesPanel.Designer.vb">
@@ -345,14 +333,8 @@
     <EmbeddedResource Include="GraphicInterface\Forms\FormReport.resx">
       <DependentUpon>FormReport.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="GraphicInterface\Forms\FormResults.resx">
-      <DependentUpon>FormResults.vb</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="GraphicInterface\Forms\FormSettings.resx">
       <DependentUpon>FormSettings.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="GraphicInterface\Forms\FormUnsteadyVelocity.resx">
-      <DependentUpon>FormUnsteadyVelocity.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GraphicInterface\UserControls\ForcesPanel.resx">
       <DependentUpon>ForcesPanel.vb</DependentUpon>
