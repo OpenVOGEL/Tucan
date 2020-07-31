@@ -25,6 +25,12 @@ Partial Class MainRibbon
         Me.tcRibbon = New System.Windows.Forms.TabControl()
         Me.tpModel = New System.Windows.Forms.TabPage()
         Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
+        Me.GroupBox7 = New System.Windows.Forms.GroupBox()
+        Me.btnExport = New System.Windows.Forms.Button()
+        Me.btnNew = New System.Windows.Forms.Button()
+        Me.btnOpen = New System.Windows.Forms.Button()
+        Me.btnSaveAs = New System.Windows.Forms.Button()
+        Me.btnSave = New System.Windows.Forms.Button()
         Me.GroupBox2 = New System.Windows.Forms.GroupBox()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.cbSecuence = New System.Windows.Forms.ComboBox()
@@ -61,6 +67,7 @@ Partial Class MainRibbon
         Me.pnlMeshColor = New System.Windows.Forms.Panel()
         Me.pnlSurfaceColor = New System.Windows.Forms.Panel()
         Me.pnlIO = New System.Windows.Forms.GroupBox()
+        Me.butInertia = New System.Windows.Forms.Button()
         Me.tpCalculation = New System.Windows.Forms.TabPage()
         Me.TableLayoutPanel2 = New System.Windows.Forms.TableLayoutPanel()
         Me.GroupBox12 = New System.Windows.Forms.GroupBox()
@@ -93,22 +100,21 @@ Partial Class MainRibbon
         Me.cbxSimulationMode = New System.Windows.Forms.ComboBox()
         Me.tpResults = New System.Windows.Forms.TabPage()
         Me.TableLayoutPanel3 = New System.Windows.Forms.TableLayoutPanel()
-        Me.gbxAeroelastic = New System.Windows.Forms.GroupBox()
+        Me.gbFrames = New System.Windows.Forms.GroupBox()
         Me.btnPlayStop = New System.Windows.Forms.Button()
         Me.Label19 = New System.Windows.Forms.Label()
         Me.nudModeScale = New System.Windows.Forms.NumericUpDown()
         Me.cbxFrames = New System.Windows.Forms.ComboBox()
-        Me.GroupBox5 = New System.Windows.Forms.GroupBox()
-        Me.btnEditVelocityPlane = New System.Windows.Forms.Button()
-        Me.cbxShowVelocityPlane = New System.Windows.Forms.CheckBox()
-        Me.GroupBox10 = New System.Windows.Forms.GroupBox()
+        Me.gbGauges = New System.Windows.Forms.GroupBox()
+        Me.btnShowAttitude = New System.Windows.Forms.Button()
+        Me.gbVectors = New System.Windows.Forms.GroupBox()
         Me.nudScaleForce = New System.Windows.Forms.NumericUpDown()
         Me.cbxShowVelocity = New System.Windows.Forms.CheckBox()
         Me.nudScaleVelocity = New System.Windows.Forms.NumericUpDown()
         Me.pnlVelocityColor = New System.Windows.Forms.Panel()
         Me.cbxShowForce = New System.Windows.Forms.CheckBox()
         Me.pnlForceColor = New System.Windows.Forms.Panel()
-        Me.GroupBox9 = New System.Windows.Forms.GroupBox()
+        Me.gbColormap = New System.Windows.Forms.GroupBox()
         Me.Label29 = New System.Windows.Forms.Label()
         Me.nudCpmin = New System.Windows.Forms.NumericUpDown()
         Me.Label30 = New System.Windows.Forms.Label()
@@ -119,19 +125,19 @@ Partial Class MainRibbon
         Me.nudDCpmin = New System.Windows.Forms.NumericUpDown()
         Me.Label17 = New System.Windows.Forms.Label()
         Me.nudDCpmax = New System.Windows.Forms.NumericUpDown()
-        Me.GroupBox8 = New System.Windows.Forms.GroupBox()
+        Me.gbWakes = New System.Windows.Forms.GroupBox()
         Me.cbxShowWakeNodes = New System.Windows.Forms.CheckBox()
         Me.pnlWakeNodeColor = New System.Windows.Forms.Panel()
         Me.cbxShowWakeMesh = New System.Windows.Forms.CheckBox()
         Me.cbxShowWakeSurface = New System.Windows.Forms.CheckBox()
         Me.pnlWakeMeshColor = New System.Windows.Forms.Panel()
         Me.pnlWakeSurfaceColor = New System.Windows.Forms.Panel()
-        Me.GroupBox4 = New System.Windows.Forms.GroupBox()
+        Me.gbBoundedLattices = New System.Windows.Forms.GroupBox()
         Me.cbxShowResMesh = New System.Windows.Forms.CheckBox()
         Me.cbxShowResSurface = New System.Windows.Forms.CheckBox()
         Me.pnlResultMeshColor = New System.Windows.Forms.Panel()
         Me.pnlResultSurfaceColor = New System.Windows.Forms.Panel()
-        Me.GroupBox6 = New System.Windows.Forms.GroupBox()
+        Me.gbIo = New System.Windows.Forms.GroupBox()
         Me.btnReport = New System.Windows.Forms.Button()
         Me.btnLoadResults = New System.Windows.Forms.Button()
         Me.GroupBox3 = New System.Windows.Forms.GroupBox()
@@ -155,16 +161,10 @@ Partial Class MainRibbon
         Me.cbxShowRulers = New System.Windows.Forms.CheckBox()
         Me.pnlScreenColor = New System.Windows.Forms.Panel()
         Me.TableLayoutPanel4 = New System.Windows.Forms.TableLayoutPanel()
-        Me.butInertia = New System.Windows.Forms.Button()
-        Me.GroupBox7 = New System.Windows.Forms.GroupBox()
-        Me.btnExport = New System.Windows.Forms.Button()
-        Me.btnNew = New System.Windows.Forms.Button()
-        Me.btnOpen = New System.Windows.Forms.Button()
-        Me.btnSaveAs = New System.Windows.Forms.Button()
-        Me.btnSave = New System.Windows.Forms.Button()
         Me.tcRibbon.SuspendLayout()
         Me.tpModel.SuspendLayout()
         Me.TableLayoutPanel1.SuspendLayout()
+        Me.GroupBox7.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
         CType(Me.nudFi, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.nudTita, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -194,27 +194,26 @@ Partial Class MainRibbon
         Me.gbxCalculationType.SuspendLayout()
         Me.tpResults.SuspendLayout()
         Me.TableLayoutPanel3.SuspendLayout()
-        Me.gbxAeroelastic.SuspendLayout()
+        Me.gbFrames.SuspendLayout()
         CType(Me.nudModeScale, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.GroupBox5.SuspendLayout()
-        Me.GroupBox10.SuspendLayout()
+        Me.gbGauges.SuspendLayout()
+        Me.gbVectors.SuspendLayout()
         CType(Me.nudScaleForce, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.nudScaleVelocity, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.GroupBox9.SuspendLayout()
+        Me.gbColormap.SuspendLayout()
         CType(Me.nudCpmin, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.nudCpmax, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.nudDCpmin, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.nudDCpmax, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.GroupBox8.SuspendLayout()
-        Me.GroupBox4.SuspendLayout()
-        Me.GroupBox6.SuspendLayout()
+        Me.gbWakes.SuspendLayout()
+        Me.gbBoundedLattices.SuspendLayout()
+        Me.gbIo.SuspendLayout()
         Me.GroupBox3.SuspendLayout()
         CType(Me.nudYmin, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.nudYmax, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.nudXmin, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.nudXmax, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TableLayoutPanel4.SuspendLayout()
-        Me.GroupBox7.SuspendLayout()
         Me.SuspendLayout()
         '
         'tcRibbon
@@ -247,7 +246,7 @@ Partial Class MainRibbon
         Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 140.0!))
         Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 360.0!))
         Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 300.0!))
-        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100.0!))
+        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 212.0!))
         Me.TableLayoutPanel1.Controls.Add(Me.GroupBox7, 0, 0)
         Me.TableLayoutPanel1.Controls.Add(Me.GroupBox2, 2, 0)
         Me.TableLayoutPanel1.Controls.Add(Me.GroupBox1, 1, 0)
@@ -259,6 +258,114 @@ Partial Class MainRibbon
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
         Me.TableLayoutPanel1.Size = New System.Drawing.Size(1012, 143)
         Me.TableLayoutPanel1.TabIndex = 2
+        '
+        'GroupBox7
+        '
+        Me.GroupBox7.BackColor = System.Drawing.Color.Transparent
+        Me.GroupBox7.Controls.Add(Me.btnExport)
+        Me.GroupBox7.Controls.Add(Me.btnNew)
+        Me.GroupBox7.Controls.Add(Me.btnOpen)
+        Me.GroupBox7.Controls.Add(Me.btnSaveAs)
+        Me.GroupBox7.Controls.Add(Me.btnSave)
+        Me.GroupBox7.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.GroupBox7.Font = New System.Drawing.Font("Segoe UI", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.GroupBox7.Location = New System.Drawing.Point(3, 3)
+        Me.GroupBox7.Margin = New System.Windows.Forms.Padding(3, 3, 3, 1)
+        Me.GroupBox7.Name = "GroupBox7"
+        Me.GroupBox7.Size = New System.Drawing.Size(134, 139)
+        Me.GroupBox7.TabIndex = 507
+        Me.GroupBox7.TabStop = False
+        Me.GroupBox7.Text = "IO"
+        '
+        'btnExport
+        '
+        Me.btnExport.BackColor = System.Drawing.Color.Gainsboro
+        Me.btnExport.FlatAppearance.BorderColor = System.Drawing.Color.Gray
+        Me.btnExport.FlatAppearance.CheckedBackColor = System.Drawing.SystemColors.ButtonFace
+        Me.btnExport.FlatAppearance.MouseDownBackColor = System.Drawing.Color.PaleGreen
+        Me.btnExport.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DeepSkyBlue
+        Me.btnExport.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnExport.Font = New System.Drawing.Font("Segoe UI", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnExport.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.btnExport.ImeMode = System.Windows.Forms.ImeMode.NoControl
+        Me.btnExport.Location = New System.Drawing.Point(6, 63)
+        Me.btnExport.Name = "btnExport"
+        Me.btnExport.Size = New System.Drawing.Size(60, 22)
+        Me.btnExport.TabIndex = 64
+        Me.btnExport.Text = "Export..."
+        Me.btnExport.UseVisualStyleBackColor = False
+        '
+        'btnNew
+        '
+        Me.btnNew.BackColor = System.Drawing.Color.Gainsboro
+        Me.btnNew.FlatAppearance.BorderColor = System.Drawing.Color.Gray
+        Me.btnNew.FlatAppearance.CheckedBackColor = System.Drawing.SystemColors.ButtonFace
+        Me.btnNew.FlatAppearance.MouseDownBackColor = System.Drawing.Color.PaleGreen
+        Me.btnNew.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DeepSkyBlue
+        Me.btnNew.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnNew.Font = New System.Drawing.Font("Segoe UI", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnNew.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.btnNew.ImeMode = System.Windows.Forms.ImeMode.NoControl
+        Me.btnNew.Location = New System.Drawing.Point(6, 17)
+        Me.btnNew.Name = "btnNew"
+        Me.btnNew.Size = New System.Drawing.Size(60, 22)
+        Me.btnNew.TabIndex = 63
+        Me.btnNew.Text = "New"
+        Me.btnNew.UseVisualStyleBackColor = False
+        '
+        'btnOpen
+        '
+        Me.btnOpen.BackColor = System.Drawing.Color.Gainsboro
+        Me.btnOpen.FlatAppearance.BorderColor = System.Drawing.Color.Gray
+        Me.btnOpen.FlatAppearance.CheckedBackColor = System.Drawing.SystemColors.ButtonFace
+        Me.btnOpen.FlatAppearance.MouseDownBackColor = System.Drawing.Color.PaleGreen
+        Me.btnOpen.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DeepSkyBlue
+        Me.btnOpen.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnOpen.Font = New System.Drawing.Font("Segoe UI", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnOpen.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.btnOpen.ImeMode = System.Windows.Forms.ImeMode.NoControl
+        Me.btnOpen.Location = New System.Drawing.Point(67, 17)
+        Me.btnOpen.Name = "btnOpen"
+        Me.btnOpen.Size = New System.Drawing.Size(60, 22)
+        Me.btnOpen.TabIndex = 60
+        Me.btnOpen.Text = "Open"
+        Me.btnOpen.UseVisualStyleBackColor = False
+        '
+        'btnSaveAs
+        '
+        Me.btnSaveAs.BackColor = System.Drawing.Color.Gainsboro
+        Me.btnSaveAs.FlatAppearance.BorderColor = System.Drawing.Color.Gray
+        Me.btnSaveAs.FlatAppearance.CheckedBackColor = System.Drawing.SystemColors.ButtonFace
+        Me.btnSaveAs.FlatAppearance.MouseDownBackColor = System.Drawing.Color.PaleGreen
+        Me.btnSaveAs.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DeepSkyBlue
+        Me.btnSaveAs.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnSaveAs.Font = New System.Drawing.Font("Segoe UI", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnSaveAs.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.btnSaveAs.ImeMode = System.Windows.Forms.ImeMode.NoControl
+        Me.btnSaveAs.Location = New System.Drawing.Point(67, 40)
+        Me.btnSaveAs.Name = "btnSaveAs"
+        Me.btnSaveAs.Size = New System.Drawing.Size(60, 22)
+        Me.btnSaveAs.TabIndex = 62
+        Me.btnSaveAs.Text = "Save as..."
+        Me.btnSaveAs.UseVisualStyleBackColor = False
+        '
+        'btnSave
+        '
+        Me.btnSave.BackColor = System.Drawing.Color.Gainsboro
+        Me.btnSave.FlatAppearance.BorderColor = System.Drawing.Color.Gray
+        Me.btnSave.FlatAppearance.CheckedBackColor = System.Drawing.SystemColors.ButtonFace
+        Me.btnSave.FlatAppearance.MouseDownBackColor = System.Drawing.Color.PaleGreen
+        Me.btnSave.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DeepSkyBlue
+        Me.btnSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnSave.Font = New System.Drawing.Font("Segoe UI", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnSave.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.btnSave.ImeMode = System.Windows.Forms.ImeMode.NoControl
+        Me.btnSave.Location = New System.Drawing.Point(6, 40)
+        Me.btnSave.Name = "btnSave"
+        Me.btnSave.Size = New System.Drawing.Size(60, 22)
+        Me.btnSave.TabIndex = 61
+        Me.btnSave.Text = "Save"
+        Me.btnSave.UseVisualStyleBackColor = False
         '
         'GroupBox2
         '
@@ -718,12 +825,29 @@ Partial Class MainRibbon
         Me.pnlIO.TabStop = False
         Me.pnlIO.Text = "Inertia"
         '
+        'butInertia
+        '
+        Me.butInertia.BackColor = System.Drawing.Color.White
+        Me.butInertia.FlatAppearance.BorderColor = System.Drawing.Color.Gray
+        Me.butInertia.FlatAppearance.CheckedBackColor = System.Drawing.SystemColors.ButtonFace
+        Me.butInertia.FlatAppearance.MouseDownBackColor = System.Drawing.Color.PaleGreen
+        Me.butInertia.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DeepSkyBlue
+        Me.butInertia.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.butInertia.Font = New System.Drawing.Font("Segoe UI", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.butInertia.ImeMode = System.Windows.Forms.ImeMode.NoControl
+        Me.butInertia.Location = New System.Drawing.Point(6, 19)
+        Me.butInertia.Name = "butInertia"
+        Me.butInertia.Size = New System.Drawing.Size(60, 22)
+        Me.butInertia.TabIndex = 108
+        Me.butInertia.Text = "Inertia"
+        Me.butInertia.UseVisualStyleBackColor = False
+        '
         'tpCalculation
         '
         Me.tpCalculation.Controls.Add(Me.TableLayoutPanel2)
         Me.tpCalculation.Location = New System.Drawing.Point(4, 22)
         Me.tpCalculation.Name = "tpCalculation"
-        Me.tpCalculation.Size = New System.Drawing.Size(904, 143)
+        Me.tpCalculation.Size = New System.Drawing.Size(1012, 143)
         Me.tpCalculation.TabIndex = 2
         Me.tpCalculation.Text = "Simulation"
         Me.tpCalculation.UseVisualStyleBackColor = True
@@ -742,7 +866,7 @@ Partial Class MainRibbon
         Me.TableLayoutPanel2.Name = "TableLayoutPanel2"
         Me.TableLayoutPanel2.RowCount = 1
         Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel2.Size = New System.Drawing.Size(904, 143)
+        Me.TableLayoutPanel2.Size = New System.Drawing.Size(1012, 143)
         Me.TableLayoutPanel2.TabIndex = 522
         '
         'GroupBox12
@@ -1099,7 +1223,7 @@ Partial Class MainRibbon
         Me.tpResults.Controls.Add(Me.TableLayoutPanel3)
         Me.tpResults.Location = New System.Drawing.Point(4, 22)
         Me.tpResults.Name = "tpResults"
-        Me.tpResults.Size = New System.Drawing.Size(904, 143)
+        Me.tpResults.Size = New System.Drawing.Size(1012, 143)
         Me.tpResults.TabIndex = 3
         Me.tpResults.Text = "Results"
         '
@@ -1113,37 +1237,37 @@ Partial Class MainRibbon
         Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle())
         Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle())
         Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle())
-        Me.TableLayoutPanel3.Controls.Add(Me.gbxAeroelastic, 6, 0)
-        Me.TableLayoutPanel3.Controls.Add(Me.GroupBox5, 5, 0)
-        Me.TableLayoutPanel3.Controls.Add(Me.GroupBox10, 4, 0)
-        Me.TableLayoutPanel3.Controls.Add(Me.GroupBox9, 3, 0)
-        Me.TableLayoutPanel3.Controls.Add(Me.GroupBox8, 2, 0)
-        Me.TableLayoutPanel3.Controls.Add(Me.GroupBox4, 1, 0)
-        Me.TableLayoutPanel3.Controls.Add(Me.GroupBox6, 0, 0)
+        Me.TableLayoutPanel3.Controls.Add(Me.gbFrames, 6, 0)
+        Me.TableLayoutPanel3.Controls.Add(Me.gbGauges, 5, 0)
+        Me.TableLayoutPanel3.Controls.Add(Me.gbVectors, 4, 0)
+        Me.TableLayoutPanel3.Controls.Add(Me.gbColormap, 3, 0)
+        Me.TableLayoutPanel3.Controls.Add(Me.gbWakes, 2, 0)
+        Me.TableLayoutPanel3.Controls.Add(Me.gbBoundedLattices, 1, 0)
+        Me.TableLayoutPanel3.Controls.Add(Me.gbIo, 0, 0)
         Me.TableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TableLayoutPanel3.Location = New System.Drawing.Point(0, 0)
         Me.TableLayoutPanel3.Name = "TableLayoutPanel3"
         Me.TableLayoutPanel3.RowCount = 1
         Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
         Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 143.0!))
-        Me.TableLayoutPanel3.Size = New System.Drawing.Size(904, 143)
+        Me.TableLayoutPanel3.Size = New System.Drawing.Size(1012, 143)
         Me.TableLayoutPanel3.TabIndex = 519
         '
-        'gbxAeroelastic
+        'gbFrames
         '
-        Me.gbxAeroelastic.Controls.Add(Me.btnPlayStop)
-        Me.gbxAeroelastic.Controls.Add(Me.Label19)
-        Me.gbxAeroelastic.Controls.Add(Me.nudModeScale)
-        Me.gbxAeroelastic.Controls.Add(Me.cbxFrames)
-        Me.gbxAeroelastic.Dock = System.Windows.Forms.DockStyle.Left
-        Me.gbxAeroelastic.Font = New System.Drawing.Font("Segoe UI", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.gbxAeroelastic.Location = New System.Drawing.Point(771, 3)
-        Me.gbxAeroelastic.Margin = New System.Windows.Forms.Padding(3, 3, 3, 1)
-        Me.gbxAeroelastic.Name = "gbxAeroelastic"
-        Me.gbxAeroelastic.Size = New System.Drawing.Size(128, 139)
-        Me.gbxAeroelastic.TabIndex = 519
-        Me.gbxAeroelastic.TabStop = False
-        Me.gbxAeroelastic.Text = "Frames"
+        Me.gbFrames.Controls.Add(Me.btnPlayStop)
+        Me.gbFrames.Controls.Add(Me.Label19)
+        Me.gbFrames.Controls.Add(Me.nudModeScale)
+        Me.gbFrames.Controls.Add(Me.cbxFrames)
+        Me.gbFrames.Dock = System.Windows.Forms.DockStyle.Left
+        Me.gbFrames.Font = New System.Drawing.Font("Segoe UI", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.gbFrames.Location = New System.Drawing.Point(771, 3)
+        Me.gbFrames.Margin = New System.Windows.Forms.Padding(3, 3, 3, 1)
+        Me.gbFrames.Name = "gbFrames"
+        Me.gbFrames.Size = New System.Drawing.Size(128, 139)
+        Me.gbFrames.TabIndex = 519
+        Me.gbFrames.TabStop = False
+        Me.gbFrames.Text = "Frames"
         '
         'btnPlayStop
         '
@@ -1194,66 +1318,53 @@ Partial Class MainRibbon
         Me.cbxFrames.Size = New System.Drawing.Size(116, 21)
         Me.cbxFrames.TabIndex = 63
         '
-        'GroupBox5
+        'gbGauges
         '
-        Me.GroupBox5.Controls.Add(Me.btnEditVelocityPlane)
-        Me.GroupBox5.Controls.Add(Me.cbxShowVelocityPlane)
-        Me.GroupBox5.Dock = System.Windows.Forms.DockStyle.Left
-        Me.GroupBox5.Font = New System.Drawing.Font("Segoe UI", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.GroupBox5.Location = New System.Drawing.Point(690, 3)
-        Me.GroupBox5.Margin = New System.Windows.Forms.Padding(3, 3, 3, 1)
-        Me.GroupBox5.Name = "GroupBox5"
-        Me.GroupBox5.Size = New System.Drawing.Size(75, 139)
-        Me.GroupBox5.TabIndex = 518
-        Me.GroupBox5.TabStop = False
-        Me.GroupBox5.Text = "Velocity plane"
+        Me.gbGauges.Controls.Add(Me.btnShowAttitude)
+        Me.gbGauges.Dock = System.Windows.Forms.DockStyle.Left
+        Me.gbGauges.Font = New System.Drawing.Font("Segoe UI", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.gbGauges.Location = New System.Drawing.Point(690, 3)
+        Me.gbGauges.Margin = New System.Windows.Forms.Padding(3, 3, 3, 1)
+        Me.gbGauges.Name = "gbGauges"
+        Me.gbGauges.Size = New System.Drawing.Size(75, 139)
+        Me.gbGauges.TabIndex = 518
+        Me.gbGauges.TabStop = False
+        Me.gbGauges.Text = "Gauges"
         '
-        'btnEditVelocityPlane
+        'btnShowAttitude
         '
-        Me.btnEditVelocityPlane.BackColor = System.Drawing.Color.White
-        Me.btnEditVelocityPlane.FlatAppearance.BorderColor = System.Drawing.Color.Gray
-        Me.btnEditVelocityPlane.FlatAppearance.CheckedBackColor = System.Drawing.SystemColors.ButtonFace
-        Me.btnEditVelocityPlane.FlatAppearance.MouseDownBackColor = System.Drawing.Color.PaleGreen
-        Me.btnEditVelocityPlane.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DeepSkyBlue
-        Me.btnEditVelocityPlane.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btnEditVelocityPlane.Font = New System.Drawing.Font("Segoe UI", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnEditVelocityPlane.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.btnEditVelocityPlane.Location = New System.Drawing.Point(6, 17)
-        Me.btnEditVelocityPlane.Name = "btnEditVelocityPlane"
-        Me.btnEditVelocityPlane.Size = New System.Drawing.Size(60, 22)
-        Me.btnEditVelocityPlane.TabIndex = 66
-        Me.btnEditVelocityPlane.Text = "Edit"
-        Me.btnEditVelocityPlane.UseVisualStyleBackColor = False
+        Me.btnShowAttitude.BackColor = System.Drawing.Color.White
+        Me.btnShowAttitude.FlatAppearance.BorderColor = System.Drawing.Color.Gray
+        Me.btnShowAttitude.FlatAppearance.CheckedBackColor = System.Drawing.SystemColors.ButtonFace
+        Me.btnShowAttitude.FlatAppearance.MouseDownBackColor = System.Drawing.Color.PaleGreen
+        Me.btnShowAttitude.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DeepSkyBlue
+        Me.btnShowAttitude.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnShowAttitude.Font = New System.Drawing.Font("Segoe UI", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnShowAttitude.ImeMode = System.Windows.Forms.ImeMode.NoControl
+        Me.btnShowAttitude.Location = New System.Drawing.Point(6, 17)
+        Me.btnShowAttitude.Name = "btnShowAttitude"
+        Me.btnShowAttitude.Size = New System.Drawing.Size(60, 22)
+        Me.btnShowAttitude.TabIndex = 66
+        Me.btnShowAttitude.Text = "Attitude"
+        Me.btnShowAttitude.UseVisualStyleBackColor = False
         '
-        'cbxShowVelocityPlane
+        'gbVectors
         '
-        Me.cbxShowVelocityPlane.AutoSize = True
-        Me.cbxShowVelocityPlane.Checked = True
-        Me.cbxShowVelocityPlane.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.cbxShowVelocityPlane.Location = New System.Drawing.Point(6, 45)
-        Me.cbxShowVelocityPlane.Name = "cbxShowVelocityPlane"
-        Me.cbxShowVelocityPlane.Size = New System.Drawing.Size(46, 16)
-        Me.cbxShowVelocityPlane.TabIndex = 69
-        Me.cbxShowVelocityPlane.Text = "Show"
-        Me.cbxShowVelocityPlane.UseVisualStyleBackColor = True
-        '
-        'GroupBox10
-        '
-        Me.GroupBox10.Controls.Add(Me.nudScaleForce)
-        Me.GroupBox10.Controls.Add(Me.cbxShowVelocity)
-        Me.GroupBox10.Controls.Add(Me.nudScaleVelocity)
-        Me.GroupBox10.Controls.Add(Me.pnlVelocityColor)
-        Me.GroupBox10.Controls.Add(Me.cbxShowForce)
-        Me.GroupBox10.Controls.Add(Me.pnlForceColor)
-        Me.GroupBox10.Dock = System.Windows.Forms.DockStyle.Left
-        Me.GroupBox10.Font = New System.Drawing.Font("Segoe UI", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.GroupBox10.Location = New System.Drawing.Point(516, 3)
-        Me.GroupBox10.Margin = New System.Windows.Forms.Padding(3, 3, 3, 1)
-        Me.GroupBox10.Name = "GroupBox10"
-        Me.GroupBox10.Size = New System.Drawing.Size(168, 139)
-        Me.GroupBox10.TabIndex = 517
-        Me.GroupBox10.TabStop = False
-        Me.GroupBox10.Text = "Vectors"
+        Me.gbVectors.Controls.Add(Me.nudScaleForce)
+        Me.gbVectors.Controls.Add(Me.cbxShowVelocity)
+        Me.gbVectors.Controls.Add(Me.nudScaleVelocity)
+        Me.gbVectors.Controls.Add(Me.pnlVelocityColor)
+        Me.gbVectors.Controls.Add(Me.cbxShowForce)
+        Me.gbVectors.Controls.Add(Me.pnlForceColor)
+        Me.gbVectors.Dock = System.Windows.Forms.DockStyle.Left
+        Me.gbVectors.Font = New System.Drawing.Font("Segoe UI", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.gbVectors.Location = New System.Drawing.Point(516, 3)
+        Me.gbVectors.Margin = New System.Windows.Forms.Padding(3, 3, 3, 1)
+        Me.gbVectors.Name = "gbVectors"
+        Me.gbVectors.Size = New System.Drawing.Size(168, 139)
+        Me.gbVectors.TabIndex = 517
+        Me.gbVectors.TabStop = False
+        Me.gbVectors.Text = "Vectors"
         '
         'nudScaleForce
         '
@@ -1317,27 +1428,27 @@ Partial Class MainRibbon
         Me.pnlForceColor.Size = New System.Drawing.Size(20, 20)
         Me.pnlForceColor.TabIndex = 74
         '
-        'GroupBox9
+        'gbColormap
         '
-        Me.GroupBox9.Controls.Add(Me.Label29)
-        Me.GroupBox9.Controls.Add(Me.nudCpmin)
-        Me.GroupBox9.Controls.Add(Me.Label30)
-        Me.GroupBox9.Controls.Add(Me.nudCpmax)
-        Me.GroupBox9.Controls.Add(Me.cbxShowColormap)
-        Me.GroupBox9.Controls.Add(Me.Label18)
-        Me.GroupBox9.Controls.Add(Me.btnResetColormap)
-        Me.GroupBox9.Controls.Add(Me.nudDCpmin)
-        Me.GroupBox9.Controls.Add(Me.Label17)
-        Me.GroupBox9.Controls.Add(Me.nudDCpmax)
-        Me.GroupBox9.Dock = System.Windows.Forms.DockStyle.Left
-        Me.GroupBox9.Font = New System.Drawing.Font("Segoe UI", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.GroupBox9.Location = New System.Drawing.Point(312, 3)
-        Me.GroupBox9.Margin = New System.Windows.Forms.Padding(3, 3, 3, 1)
-        Me.GroupBox9.Name = "GroupBox9"
-        Me.GroupBox9.Size = New System.Drawing.Size(198, 139)
-        Me.GroupBox9.TabIndex = 516
-        Me.GroupBox9.TabStop = False
-        Me.GroupBox9.Text = "Colormap"
+        Me.gbColormap.Controls.Add(Me.Label29)
+        Me.gbColormap.Controls.Add(Me.nudCpmin)
+        Me.gbColormap.Controls.Add(Me.Label30)
+        Me.gbColormap.Controls.Add(Me.nudCpmax)
+        Me.gbColormap.Controls.Add(Me.cbxShowColormap)
+        Me.gbColormap.Controls.Add(Me.Label18)
+        Me.gbColormap.Controls.Add(Me.btnResetColormap)
+        Me.gbColormap.Controls.Add(Me.nudDCpmin)
+        Me.gbColormap.Controls.Add(Me.Label17)
+        Me.gbColormap.Controls.Add(Me.nudDCpmax)
+        Me.gbColormap.Dock = System.Windows.Forms.DockStyle.Left
+        Me.gbColormap.Font = New System.Drawing.Font("Segoe UI", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.gbColormap.Location = New System.Drawing.Point(312, 3)
+        Me.gbColormap.Margin = New System.Windows.Forms.Padding(3, 3, 3, 1)
+        Me.gbColormap.Name = "gbColormap"
+        Me.gbColormap.Size = New System.Drawing.Size(198, 139)
+        Me.gbColormap.TabIndex = 516
+        Me.gbColormap.TabStop = False
+        Me.gbColormap.Text = "Colormap"
         '
         'Label29
         '
@@ -1460,23 +1571,23 @@ Partial Class MainRibbon
         Me.nudDCpmax.TabIndex = 100
         Me.nudDCpmax.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
-        'GroupBox8
+        'gbWakes
         '
-        Me.GroupBox8.Controls.Add(Me.cbxShowWakeNodes)
-        Me.GroupBox8.Controls.Add(Me.pnlWakeNodeColor)
-        Me.GroupBox8.Controls.Add(Me.cbxShowWakeMesh)
-        Me.GroupBox8.Controls.Add(Me.cbxShowWakeSurface)
-        Me.GroupBox8.Controls.Add(Me.pnlWakeMeshColor)
-        Me.GroupBox8.Controls.Add(Me.pnlWakeSurfaceColor)
-        Me.GroupBox8.Dock = System.Windows.Forms.DockStyle.Left
-        Me.GroupBox8.Font = New System.Drawing.Font("Segoe UI", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.GroupBox8.Location = New System.Drawing.Point(197, 3)
-        Me.GroupBox8.Margin = New System.Windows.Forms.Padding(3, 3, 3, 1)
-        Me.GroupBox8.Name = "GroupBox8"
-        Me.GroupBox8.Size = New System.Drawing.Size(109, 139)
-        Me.GroupBox8.TabIndex = 513
-        Me.GroupBox8.TabStop = False
-        Me.GroupBox8.Text = "Wakes"
+        Me.gbWakes.Controls.Add(Me.cbxShowWakeNodes)
+        Me.gbWakes.Controls.Add(Me.pnlWakeNodeColor)
+        Me.gbWakes.Controls.Add(Me.cbxShowWakeMesh)
+        Me.gbWakes.Controls.Add(Me.cbxShowWakeSurface)
+        Me.gbWakes.Controls.Add(Me.pnlWakeMeshColor)
+        Me.gbWakes.Controls.Add(Me.pnlWakeSurfaceColor)
+        Me.gbWakes.Dock = System.Windows.Forms.DockStyle.Left
+        Me.gbWakes.Font = New System.Drawing.Font("Segoe UI", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.gbWakes.Location = New System.Drawing.Point(197, 3)
+        Me.gbWakes.Margin = New System.Windows.Forms.Padding(3, 3, 3, 1)
+        Me.gbWakes.Name = "gbWakes"
+        Me.gbWakes.Size = New System.Drawing.Size(109, 139)
+        Me.gbWakes.TabIndex = 513
+        Me.gbWakes.TabStop = False
+        Me.gbWakes.Text = "Wakes"
         '
         'cbxShowWakeNodes
         '
@@ -1538,21 +1649,21 @@ Partial Class MainRibbon
         Me.pnlWakeSurfaceColor.Size = New System.Drawing.Size(20, 20)
         Me.pnlWakeSurfaceColor.TabIndex = 67
         '
-        'GroupBox4
+        'gbBoundedLattices
         '
-        Me.GroupBox4.Controls.Add(Me.cbxShowResMesh)
-        Me.GroupBox4.Controls.Add(Me.cbxShowResSurface)
-        Me.GroupBox4.Controls.Add(Me.pnlResultMeshColor)
-        Me.GroupBox4.Controls.Add(Me.pnlResultSurfaceColor)
-        Me.GroupBox4.Dock = System.Windows.Forms.DockStyle.Left
-        Me.GroupBox4.Font = New System.Drawing.Font("Segoe UI", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.GroupBox4.Location = New System.Drawing.Point(82, 3)
-        Me.GroupBox4.Margin = New System.Windows.Forms.Padding(3, 3, 3, 1)
-        Me.GroupBox4.Name = "GroupBox4"
-        Me.GroupBox4.Size = New System.Drawing.Size(109, 139)
-        Me.GroupBox4.TabIndex = 512
-        Me.GroupBox4.TabStop = False
-        Me.GroupBox4.Text = "Bounded lattices"
+        Me.gbBoundedLattices.Controls.Add(Me.cbxShowResMesh)
+        Me.gbBoundedLattices.Controls.Add(Me.cbxShowResSurface)
+        Me.gbBoundedLattices.Controls.Add(Me.pnlResultMeshColor)
+        Me.gbBoundedLattices.Controls.Add(Me.pnlResultSurfaceColor)
+        Me.gbBoundedLattices.Dock = System.Windows.Forms.DockStyle.Left
+        Me.gbBoundedLattices.Font = New System.Drawing.Font("Segoe UI", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.gbBoundedLattices.Location = New System.Drawing.Point(82, 3)
+        Me.gbBoundedLattices.Margin = New System.Windows.Forms.Padding(3, 3, 3, 1)
+        Me.gbBoundedLattices.Name = "gbBoundedLattices"
+        Me.gbBoundedLattices.Size = New System.Drawing.Size(109, 139)
+        Me.gbBoundedLattices.TabIndex = 512
+        Me.gbBoundedLattices.TabStop = False
+        Me.gbBoundedLattices.Text = "Bounded lattices"
         '
         'cbxShowResMesh
         '
@@ -1594,20 +1705,20 @@ Partial Class MainRibbon
         Me.pnlResultSurfaceColor.Size = New System.Drawing.Size(20, 20)
         Me.pnlResultSurfaceColor.TabIndex = 67
         '
-        'GroupBox6
+        'gbIo
         '
-        Me.GroupBox6.BackColor = System.Drawing.Color.Transparent
-        Me.GroupBox6.Controls.Add(Me.btnReport)
-        Me.GroupBox6.Controls.Add(Me.btnLoadResults)
-        Me.GroupBox6.Dock = System.Windows.Forms.DockStyle.Left
-        Me.GroupBox6.Font = New System.Drawing.Font("Segoe UI", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.GroupBox6.Location = New System.Drawing.Point(3, 3)
-        Me.GroupBox6.Margin = New System.Windows.Forms.Padding(3, 3, 3, 1)
-        Me.GroupBox6.Name = "GroupBox6"
-        Me.GroupBox6.Size = New System.Drawing.Size(73, 139)
-        Me.GroupBox6.TabIndex = 511
-        Me.GroupBox6.TabStop = False
-        Me.GroupBox6.Text = "IO"
+        Me.gbIo.BackColor = System.Drawing.Color.Transparent
+        Me.gbIo.Controls.Add(Me.btnReport)
+        Me.gbIo.Controls.Add(Me.btnLoadResults)
+        Me.gbIo.Dock = System.Windows.Forms.DockStyle.Left
+        Me.gbIo.Font = New System.Drawing.Font("Segoe UI", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.gbIo.Location = New System.Drawing.Point(3, 3)
+        Me.gbIo.Margin = New System.Windows.Forms.Padding(3, 3, 3, 1)
+        Me.gbIo.Name = "gbIo"
+        Me.gbIo.Size = New System.Drawing.Size(73, 139)
+        Me.gbIo.TabIndex = 511
+        Me.gbIo.TabStop = False
+        Me.gbIo.Text = "IO"
         '
         'btnReport
         '
@@ -1931,131 +2042,6 @@ Partial Class MainRibbon
         Me.TableLayoutPanel4.Size = New System.Drawing.Size(1346, 175)
         Me.TableLayoutPanel4.TabIndex = 508
         '
-        'butInertia
-        '
-        Me.butInertia.BackColor = System.Drawing.Color.White
-        Me.butInertia.FlatAppearance.BorderColor = System.Drawing.Color.Gray
-        Me.butInertia.FlatAppearance.CheckedBackColor = System.Drawing.SystemColors.ButtonFace
-        Me.butInertia.FlatAppearance.MouseDownBackColor = System.Drawing.Color.PaleGreen
-        Me.butInertia.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DeepSkyBlue
-        Me.butInertia.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.butInertia.Font = New System.Drawing.Font("Segoe UI", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.butInertia.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.butInertia.Location = New System.Drawing.Point(6, 19)
-        Me.butInertia.Name = "butInertia"
-        Me.butInertia.Size = New System.Drawing.Size(60, 22)
-        Me.butInertia.TabIndex = 108
-        Me.butInertia.Text = "Inertia"
-        Me.butInertia.UseVisualStyleBackColor = False
-        '
-        'GroupBox7
-        '
-        Me.GroupBox7.BackColor = System.Drawing.Color.Transparent
-        Me.GroupBox7.Controls.Add(Me.btnExport)
-        Me.GroupBox7.Controls.Add(Me.btnNew)
-        Me.GroupBox7.Controls.Add(Me.btnOpen)
-        Me.GroupBox7.Controls.Add(Me.btnSaveAs)
-        Me.GroupBox7.Controls.Add(Me.btnSave)
-        Me.GroupBox7.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.GroupBox7.Font = New System.Drawing.Font("Segoe UI", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.GroupBox7.Location = New System.Drawing.Point(3, 3)
-        Me.GroupBox7.Margin = New System.Windows.Forms.Padding(3, 3, 3, 1)
-        Me.GroupBox7.Name = "GroupBox7"
-        Me.GroupBox7.Size = New System.Drawing.Size(134, 139)
-        Me.GroupBox7.TabIndex = 507
-        Me.GroupBox7.TabStop = False
-        Me.GroupBox7.Text = "IO"
-        '
-        'btnExport
-        '
-        Me.btnExport.BackColor = System.Drawing.Color.Gainsboro
-        Me.btnExport.FlatAppearance.BorderColor = System.Drawing.Color.Gray
-        Me.btnExport.FlatAppearance.CheckedBackColor = System.Drawing.SystemColors.ButtonFace
-        Me.btnExport.FlatAppearance.MouseDownBackColor = System.Drawing.Color.PaleGreen
-        Me.btnExport.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DeepSkyBlue
-        Me.btnExport.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btnExport.Font = New System.Drawing.Font("Segoe UI", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnExport.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        Me.btnExport.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.btnExport.Location = New System.Drawing.Point(6, 63)
-        Me.btnExport.Name = "btnExport"
-        Me.btnExport.Size = New System.Drawing.Size(60, 22)
-        Me.btnExport.TabIndex = 64
-        Me.btnExport.Text = "Export..."
-        Me.btnExport.UseVisualStyleBackColor = False
-        '
-        'btnNew
-        '
-        Me.btnNew.BackColor = System.Drawing.Color.Gainsboro
-        Me.btnNew.FlatAppearance.BorderColor = System.Drawing.Color.Gray
-        Me.btnNew.FlatAppearance.CheckedBackColor = System.Drawing.SystemColors.ButtonFace
-        Me.btnNew.FlatAppearance.MouseDownBackColor = System.Drawing.Color.PaleGreen
-        Me.btnNew.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DeepSkyBlue
-        Me.btnNew.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btnNew.Font = New System.Drawing.Font("Segoe UI", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnNew.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        Me.btnNew.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.btnNew.Location = New System.Drawing.Point(6, 17)
-        Me.btnNew.Name = "btnNew"
-        Me.btnNew.Size = New System.Drawing.Size(60, 22)
-        Me.btnNew.TabIndex = 63
-        Me.btnNew.Text = "New"
-        Me.btnNew.UseVisualStyleBackColor = False
-        '
-        'btnOpen
-        '
-        Me.btnOpen.BackColor = System.Drawing.Color.Gainsboro
-        Me.btnOpen.FlatAppearance.BorderColor = System.Drawing.Color.Gray
-        Me.btnOpen.FlatAppearance.CheckedBackColor = System.Drawing.SystemColors.ButtonFace
-        Me.btnOpen.FlatAppearance.MouseDownBackColor = System.Drawing.Color.PaleGreen
-        Me.btnOpen.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DeepSkyBlue
-        Me.btnOpen.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btnOpen.Font = New System.Drawing.Font("Segoe UI", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnOpen.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        Me.btnOpen.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.btnOpen.Location = New System.Drawing.Point(67, 17)
-        Me.btnOpen.Name = "btnOpen"
-        Me.btnOpen.Size = New System.Drawing.Size(60, 22)
-        Me.btnOpen.TabIndex = 60
-        Me.btnOpen.Text = "Open"
-        Me.btnOpen.UseVisualStyleBackColor = False
-        '
-        'btnSaveAs
-        '
-        Me.btnSaveAs.BackColor = System.Drawing.Color.Gainsboro
-        Me.btnSaveAs.FlatAppearance.BorderColor = System.Drawing.Color.Gray
-        Me.btnSaveAs.FlatAppearance.CheckedBackColor = System.Drawing.SystemColors.ButtonFace
-        Me.btnSaveAs.FlatAppearance.MouseDownBackColor = System.Drawing.Color.PaleGreen
-        Me.btnSaveAs.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DeepSkyBlue
-        Me.btnSaveAs.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btnSaveAs.Font = New System.Drawing.Font("Segoe UI", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnSaveAs.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        Me.btnSaveAs.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.btnSaveAs.Location = New System.Drawing.Point(67, 40)
-        Me.btnSaveAs.Name = "btnSaveAs"
-        Me.btnSaveAs.Size = New System.Drawing.Size(60, 22)
-        Me.btnSaveAs.TabIndex = 62
-        Me.btnSaveAs.Text = "Save as..."
-        Me.btnSaveAs.UseVisualStyleBackColor = False
-        '
-        'btnSave
-        '
-        Me.btnSave.BackColor = System.Drawing.Color.Gainsboro
-        Me.btnSave.FlatAppearance.BorderColor = System.Drawing.Color.Gray
-        Me.btnSave.FlatAppearance.CheckedBackColor = System.Drawing.SystemColors.ButtonFace
-        Me.btnSave.FlatAppearance.MouseDownBackColor = System.Drawing.Color.PaleGreen
-        Me.btnSave.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DeepSkyBlue
-        Me.btnSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btnSave.Font = New System.Drawing.Font("Segoe UI", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnSave.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        Me.btnSave.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.btnSave.Location = New System.Drawing.Point(6, 40)
-        Me.btnSave.Name = "btnSave"
-        Me.btnSave.Size = New System.Drawing.Size(60, 22)
-        Me.btnSave.TabIndex = 61
-        Me.btnSave.Text = "Save"
-        Me.btnSave.UseVisualStyleBackColor = False
-        '
         'MainRibbon
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -2067,6 +2053,7 @@ Partial Class MainRibbon
         Me.tcRibbon.ResumeLayout(False)
         Me.tpModel.ResumeLayout(False)
         Me.TableLayoutPanel1.ResumeLayout(False)
+        Me.GroupBox7.ResumeLayout(False)
         Me.GroupBox2.ResumeLayout(False)
         Me.GroupBox2.PerformLayout()
         CType(Me.nudFi, System.ComponentModel.ISupportInitialize).EndInit()
@@ -2101,26 +2088,25 @@ Partial Class MainRibbon
         Me.gbxCalculationType.PerformLayout()
         Me.tpResults.ResumeLayout(False)
         Me.TableLayoutPanel3.ResumeLayout(False)
-        Me.gbxAeroelastic.ResumeLayout(False)
-        Me.gbxAeroelastic.PerformLayout()
+        Me.gbFrames.ResumeLayout(False)
+        Me.gbFrames.PerformLayout()
         CType(Me.nudModeScale, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.GroupBox5.ResumeLayout(False)
-        Me.GroupBox5.PerformLayout()
-        Me.GroupBox10.ResumeLayout(False)
-        Me.GroupBox10.PerformLayout()
+        Me.gbGauges.ResumeLayout(False)
+        Me.gbVectors.ResumeLayout(False)
+        Me.gbVectors.PerformLayout()
         CType(Me.nudScaleForce, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.nudScaleVelocity, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.GroupBox9.ResumeLayout(False)
-        Me.GroupBox9.PerformLayout()
+        Me.gbColormap.ResumeLayout(False)
+        Me.gbColormap.PerformLayout()
         CType(Me.nudCpmin, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.nudCpmax, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.nudDCpmin, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.nudDCpmax, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.GroupBox8.ResumeLayout(False)
-        Me.GroupBox8.PerformLayout()
-        Me.GroupBox4.ResumeLayout(False)
-        Me.GroupBox4.PerformLayout()
-        Me.GroupBox6.ResumeLayout(False)
+        Me.gbWakes.ResumeLayout(False)
+        Me.gbWakes.PerformLayout()
+        Me.gbBoundedLattices.ResumeLayout(False)
+        Me.gbBoundedLattices.PerformLayout()
+        Me.gbIo.ResumeLayout(False)
         Me.GroupBox3.ResumeLayout(False)
         Me.GroupBox3.PerformLayout()
         CType(Me.nudYmin, System.ComponentModel.ISupportInitialize).EndInit()
@@ -2128,7 +2114,6 @@ Partial Class MainRibbon
         CType(Me.nudXmin, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.nudXmax, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TableLayoutPanel4.ResumeLayout(False)
-        Me.GroupBox7.ResumeLayout(False)
         Me.ResumeLayout(False)
 
     End Sub
@@ -2216,41 +2201,40 @@ Partial Class MainRibbon
     Friend WithEvents btnStartCalculation As System.Windows.Forms.Button
     Friend WithEvents cbxSimulationMode As System.Windows.Forms.ComboBox
     Friend WithEvents TableLayoutPanel3 As System.Windows.Forms.TableLayoutPanel
-    Friend WithEvents gbxAeroelastic As System.Windows.Forms.GroupBox
+    Friend WithEvents gbFrames As System.Windows.Forms.GroupBox
     Friend WithEvents btnPlayStop As System.Windows.Forms.Button
     Friend WithEvents Label19 As System.Windows.Forms.Label
     Friend WithEvents nudModeScale As System.Windows.Forms.NumericUpDown
     Friend WithEvents cbxFrames As System.Windows.Forms.ComboBox
-    Friend WithEvents GroupBox5 As System.Windows.Forms.GroupBox
-    Friend WithEvents btnEditVelocityPlane As System.Windows.Forms.Button
-    Friend WithEvents cbxShowVelocityPlane As System.Windows.Forms.CheckBox
-    Friend WithEvents GroupBox10 As System.Windows.Forms.GroupBox
+    Friend WithEvents gbGauges As System.Windows.Forms.GroupBox
+    Friend WithEvents btnShowAttitude As System.Windows.Forms.Button
+    Friend WithEvents gbVectors As System.Windows.Forms.GroupBox
     Friend WithEvents nudScaleForce As System.Windows.Forms.NumericUpDown
     Friend WithEvents cbxShowVelocity As System.Windows.Forms.CheckBox
     Friend WithEvents nudScaleVelocity As System.Windows.Forms.NumericUpDown
     Friend WithEvents pnlVelocityColor As System.Windows.Forms.Panel
     Friend WithEvents cbxShowForce As System.Windows.Forms.CheckBox
     Friend WithEvents pnlForceColor As System.Windows.Forms.Panel
-    Friend WithEvents GroupBox9 As System.Windows.Forms.GroupBox
+    Friend WithEvents gbColormap As System.Windows.Forms.GroupBox
     Friend WithEvents cbxShowColormap As System.Windows.Forms.CheckBox
     Friend WithEvents Label18 As System.Windows.Forms.Label
     Friend WithEvents btnResetColormap As System.Windows.Forms.Button
     Friend WithEvents nudDCpmin As System.Windows.Forms.NumericUpDown
     Friend WithEvents Label17 As System.Windows.Forms.Label
     Friend WithEvents nudDCpmax As System.Windows.Forms.NumericUpDown
-    Friend WithEvents GroupBox8 As System.Windows.Forms.GroupBox
+    Friend WithEvents gbWakes As System.Windows.Forms.GroupBox
     Friend WithEvents cbxShowWakeNodes As System.Windows.Forms.CheckBox
     Friend WithEvents pnlWakeNodeColor As System.Windows.Forms.Panel
     Friend WithEvents cbxShowWakeMesh As System.Windows.Forms.CheckBox
     Friend WithEvents cbxShowWakeSurface As System.Windows.Forms.CheckBox
     Friend WithEvents pnlWakeMeshColor As System.Windows.Forms.Panel
     Friend WithEvents pnlWakeSurfaceColor As System.Windows.Forms.Panel
-    Friend WithEvents GroupBox4 As System.Windows.Forms.GroupBox
+    Friend WithEvents gbBoundedLattices As System.Windows.Forms.GroupBox
     Friend WithEvents cbxShowResMesh As System.Windows.Forms.CheckBox
     Friend WithEvents cbxShowResSurface As System.Windows.Forms.CheckBox
     Friend WithEvents pnlResultMeshColor As System.Windows.Forms.Panel
     Friend WithEvents pnlResultSurfaceColor As System.Windows.Forms.Panel
-    Friend WithEvents GroupBox6 As System.Windows.Forms.GroupBox
+    Friend WithEvents gbIo As System.Windows.Forms.GroupBox
     Friend WithEvents btnReport As System.Windows.Forms.Button
     Friend WithEvents btnLoadResults As System.Windows.Forms.Button
     Friend WithEvents cbxInclude As System.Windows.Forms.CheckBox

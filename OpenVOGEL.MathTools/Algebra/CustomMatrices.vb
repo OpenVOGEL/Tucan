@@ -260,20 +260,20 @@ Namespace Algebra.CustomMatrices
 
         End Sub
 
-        Public Sub Generate(ByVal Orientation As EulerAngles)
+        Public Sub Generate(ByVal Orientation As OrientationAngles)
 
-            Dim c1 As Double = Math.Cos(Orientation.Psi)
-            Dim s1 As Double = Math.Sin(Orientation.Psi)
+            Dim c1 As Double = Math.Cos(Orientation.R1)
+            Dim s1 As Double = Math.Sin(Orientation.R1)
 
-            Dim c2 As Double = Math.Cos(Orientation.Tita)
-            Dim s2 As Double = Math.Sin(Orientation.Tita)
+            Dim c2 As Double = Math.Cos(Orientation.R2)
+            Dim s2 As Double = Math.Sin(Orientation.R2)
 
-            Dim c3 As Double = Math.Cos(Orientation.Fi)
-            Dim s3 As Double = Math.Sin(Orientation.Fi)
+            Dim c3 As Double = Math.Cos(Orientation.R3)
+            Dim s3 As Double = Math.Sin(Orientation.R3)
 
             Select Case Orientation.Sequence
 
-                Case EulerAngles.RotationSequence.ZYX
+                Case RotationSequence.ZYX
 
                     Item(1, 1) = c1 * c2
                     Item(1, 2) = c1 * s2 * s3 - s1 * c3
@@ -285,7 +285,7 @@ Namespace Algebra.CustomMatrices
                     Item(3, 2) = c2 * s3
                     Item(3, 3) = c2 * c3
 
-                Case EulerAngles.RotationSequence.XYZ
+                Case RotationSequence.XYZ
 
                     Item(1, 1) = c2 * c3
                     Item(1, 2) = -c2 * s3

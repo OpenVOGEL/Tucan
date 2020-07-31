@@ -23,7 +23,7 @@ Namespace Tucan.Utility
 
     Public Class VisualizationParameters
 
-        Public Property CameraOrientation As EulerAngles
+        Public Property CameraOrientation As OrientationAngles
         Public Property CameraPosition As Vector3
         Public Property Proximity As Double = 1
         Public Property OrthoProjection As Boolean
@@ -38,10 +38,10 @@ Namespace Tucan.Utility
 
         Public Sub Initialize()
 
-            CameraOrientation = New EulerAngles
-            CameraOrientation.Psi = 0.0
-            CameraOrientation.Tita = 0.0
-            CameraOrientation.Fi = 0.0
+            CameraOrientation = New OrientationAngles
+            CameraOrientation.R1 = 0.0
+            CameraOrientation.R2 = 0.0
+            CameraOrientation.R3 = 0.0
 
             CameraPosition = New Vector3
             CameraPosition.X = 0
@@ -63,9 +63,9 @@ Namespace Tucan.Utility
         Public Sub SaveToXML(ByRef writer As XmlWriter)
 
             writer.WriteStartElement("Camera")
-            writer.WriteAttributeString("Psi", String.Format("{0}", CameraOrientation.Psi))
-            writer.WriteAttributeString("Tita", String.Format("{0}", CameraOrientation.Tita))
-            writer.WriteAttributeString("Fi", String.Format("{0}", CameraOrientation.Fi))
+            writer.WriteAttributeString("Psi", String.Format("{0}", CameraOrientation.R1))
+            writer.WriteAttributeString("Tita", String.Format("{0}", CameraOrientation.R2))
+            writer.WriteAttributeString("Fi", String.Format("{0}", CameraOrientation.R3))
             writer.WriteAttributeString("X", String.Format("{0}", CameraPosition.X))
             writer.WriteAttributeString("Y", String.Format("{0}", CameraPosition.Y))
             writer.WriteAttributeString("Z", String.Format("{0}", CameraPosition.Z))
@@ -96,9 +96,9 @@ Namespace Tucan.Utility
 
                         Case "Camera"
 
-                            CameraOrientation.Psi = IOXML.ReadDouble(reader, "Psi", 0)
-                            CameraOrientation.Tita = IOXML.ReadDouble(reader, "Tita", 0)
-                            CameraOrientation.Fi = IOXML.ReadDouble(reader, "Fi", 0)
+                            CameraOrientation.R1 = IOXML.ReadDouble(reader, "Psi", 0)
+                            CameraOrientation.R2 = IOXML.ReadDouble(reader, "Tita", 0)
+                            CameraOrientation.R3 = IOXML.ReadDouble(reader, "Fi", 0)
                             CameraPosition.X = IOXML.ReadDouble(reader, "X", 0)
                             CameraPosition.Y = IOXML.ReadDouble(reader, "Y", 0)
                             CameraPosition.Z = IOXML.ReadDouble(reader, "Z", 0)

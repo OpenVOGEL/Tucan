@@ -762,14 +762,53 @@ Namespace Integration
         ''' <param name="FilePath"></param>
         Public Sub WriteAscii(FilePath As String)
 
+            Dim Time As Double = 0.0#
+
             Dim FileId As Integer = FreeFile()
             FileOpen(FileId, FilePath, OpenMode.Output)
-            PrintLine(FileId, String.Format("{0:11} | {1:11} | {2:11} | {3:11} | {4:11} | {5:11} | {6:11} | {7:11} | {8:11} | {9:11}", "Time", "Px", "Py", "Pz", "Vx", "Vy", "Vz", "Ox", "Oy", "Oz"))
-            Dim Time As Double = 0.0#
+
+            ' Position
+            '-----------------------------------------------
+            PrintLine(FileId, "Position")
+            PrintLine(FileId, String.Format("{0,-11} | {1,-11} | {2,-11} | {3,-11}", "Time", "Px", "Py", "Pz"))
 
             For I = LBound(X) To UBound(X)
                 Dim State As Variable = X(I)
-                PrintLine(FileId, String.Format("{0,11:F6} | {1,11:F6} | {2,11:F6} | {3,11:F6} | {4,11:F6} | {5,11:F6} | {6,11:F6} | {7,11:F6} | {8,11:F6} | {9,11:F6}", Time, State.Px, State.Py, State.Pz, State.Vx, State.Vy, State.Vz, State.Ox, State.Oy, State.Oz))
+                PrintLine(FileId, String.Format("{0,11:F6} | {1,11:F6} | {2,11:F6} | {3,11:F6}", Time, State.Px, State.Py, State.Pz))
+                Time += Dt
+            Next
+
+            ' Velocity
+            '-----------------------------------------------
+            Time = 0.0#
+            PrintLine(FileId, "Velocity")
+            PrintLine(FileId, String.Format("{0,-11} | {1,-11} | {2,-11} | {3,-11}", "Time", "Vx", "Vy", "Vz"))
+
+            For I = LBound(X) To UBound(X)
+                Dim State As Variable = X(I)
+                PrintLine(FileId, String.Format("{0,11:F6} | {1,11:F6} | {2,11:F6} | {3,11:F6}", Time, State.Vx, State.Vy, State.Vz))
+                Time += Dt
+            Next
+
+            ' Angular velocity
+            '-----------------------------------------------
+            PrintLine(FileId, "Omega")
+            PrintLine(FileId, String.Format("{0,-11} | {1,-11} | {2,-11} | {3,-11}", "Time", "Ox", "Oy", "Oz"))
+
+            For I = LBound(X) To UBound(X)
+                Dim State As Variable = X(I)
+                PrintLine(FileId, String.Format("{0,11:F6} | {1,11:F6} | {2,11:F6} | {3,11:F6}", Time, State.Ox, State.Oy, State.Oz))
+                Time += Dt
+            Next
+
+            ' Attitude
+            '-----------------------------------------------
+            PrintLine(FileId, "Attitude")
+            PrintLine(FileId, String.Format("{0,-11} | {1,-11} | {2,-11} | {3,-11} | {4,-11} | {5,-11} | {6,-11}", "Time", "Ix", "Iy", "Iz", "Jx", "Jy", "Jz"))
+
+            For I = LBound(X) To UBound(X)
+                Dim State As Variable = X(I)
+                PrintLine(FileId, String.Format("{0,11:F6} | {1,11:F6} | {2,11:F6} | {3,11:F6} | {4,11:F6} | {5,11:F6} | {6,11:F6}", Time, State.Ix, State.Iy, State.Iz, State.Jx, State.Jy, State.Jz))
                 Time += Dt
             Next
 

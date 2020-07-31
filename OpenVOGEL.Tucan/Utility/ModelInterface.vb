@@ -206,7 +206,7 @@ Namespace Tucan.Utility
 
             Dim Origen As New Vector3
             Dim Punto As Vector3 = Visualization.CameraPosition
-            Dim Orientacion As EulerAngles = Visualization.CameraOrientation
+            Dim Orientacion As OrientationAngles = Visualization.CameraOrientation
 
             ControlGL.RenderMode(OpenGL.GL_RENDER)
             ControlGL.MatrixMode(OpenGL.GL_PROJECTION)
@@ -216,7 +216,7 @@ Namespace Tucan.Utility
             ControlGL.Ortho(-0.5 * ControlGLWidth, 0.5 * ControlGLWidth, -0.5 * ControlGLHeight, 0.5 * ControlGLHeight, -100000, 100000)
 
             ControlGL.Translate(Visualization.CameraPosition.X, Visualization.CameraPosition.Y, 0)
-            ControlGL.Rotate(Orientacion.Fi, Orientacion.Tita, Orientacion.Psi)
+            ControlGL.Rotate(Orientacion.R3, Orientacion.R2, Orientacion.R1)
             ControlGL.Scale(Visualization.Proximity, Visualization.Proximity, Visualization.Proximity)
 
             For Each List In ListOfSurfacesToDraw
@@ -267,7 +267,7 @@ Namespace Tucan.Utility
 
             Dim Origen As New Vector3
             Dim Punto As Vector3 = Visualization.CameraPosition
-            Dim Orientacion As EulerAngles = Visualization.CameraOrientation
+            Dim Orientacion As OrientationAngles = Visualization.CameraOrientation
 
             ControlGL.RenderMode(OpenGL.GL_RENDER)
             ControlGL.MatrixMode(OpenGL.GL_PROJECTION)
@@ -277,7 +277,7 @@ Namespace Tucan.Utility
             ControlGL.Ortho(-0.5 * Width, 0.5 * Width, -0.5 * Height, 0.5 * Height, -100000, 100000)
 
             ControlGL.Translate(Visualization.CameraPosition.X, Visualization.CameraPosition.Y, 0)
-            ControlGL.Rotate(Orientacion.Fi, Orientacion.Tita, Orientacion.Psi)
+            ControlGL.Rotate(Orientacion.R3, Orientacion.R2, Orientacion.R1)
             ControlGL.Scale(Visualization.Proximity, Visualization.Proximity, Visualization.Proximity)
 
             Visualization.Axes.Extension = 1.0
@@ -453,7 +453,7 @@ Namespace Tucan.Utility
 
             Dim Origin As New Vector3
             Dim Punto As Vector3 = Visualization.CameraPosition
-            Dim Orientacion As EulerAngles = Visualization.CameraOrientation
+            Dim Orientacion As OrientationAngles = Visualization.CameraOrientation
 
             ControlGL.RenderMode(OpenGL.GL_RENDER)
             ControlGL.MatrixMode(OpenGL.GL_PROJECTION)
@@ -463,7 +463,7 @@ Namespace Tucan.Utility
             ControlGL.Ortho(-0.5 * ControlGLWidth, 0.5 * ControlGLWidth, -0.5 * ControlGLHeight, 0.5 * ControlGLHeight, -100000, 100000)
 
             ControlGL.Translate(Visualization.CameraPosition.X, Visualization.CameraPosition.Y, 0)
-            ControlGL.Rotate(Orientacion.Fi, Orientacion.Tita, Orientacion.Psi)
+            ControlGL.Rotate(Orientacion.R3, Orientacion.R2, Orientacion.R1)
             ControlGL.Scale(Visualization.Proximity, Visualization.Proximity, Visualization.Proximity)
 
             Visualization.Axes.Extension = 1.0
@@ -505,10 +505,10 @@ Namespace Tucan.Utility
 
             Dim Origin As New Vector3
             Dim Point As Vector3 = Visualization.CameraPosition
-            Dim Orientation As EulerAngles = Visualization.CameraOrientation
+            Dim Orientation As OrientationAngles = Visualization.CameraOrientation
 
             ControlGL.Translate(Visualization.CameraPosition.X, Visualization.CameraPosition.Y, 0)
-            ControlGL.Rotate(Orientation.Fi, Orientation.Tita, Orientation.Psi)
+            ControlGL.Rotate(Orientation.R3, Orientation.R2, Orientation.R1)
             ControlGL.Scale(Visualization.Proximity, Visualization.Proximity, Visualization.Proximity)
 
             Select Case InterfaceMode
@@ -576,7 +576,7 @@ Namespace Tucan.Utility
                 Dim EyeVector As New Vector3
 
                 EyeVector.Z = 1.0
-                EyeVector.Rotate(-Orientation.Psi, -Orientation.Tita, -Orientation.Fi)
+                EyeVector.Rotate(-Orientation.R1, -Orientation.R2, -Orientation.R3)
 
                 For i = 1 To Hits
 

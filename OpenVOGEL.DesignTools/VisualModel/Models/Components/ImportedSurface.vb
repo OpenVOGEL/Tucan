@@ -409,7 +409,7 @@ CheckInvalid:
 
             Next
 
-            Mesh.Rotate(CenterOfRotation, Orientation.ToRadians)
+            Mesh.Rotate(CenterOfRotation, Orientation.InRadians)
 
             Mesh.Translate(Position)
 
@@ -446,9 +446,9 @@ CheckInvalid:
                         Position.Y = IOXML.ReadDouble(reader, "Y", 0.0)
                         Position.Z = IOXML.ReadDouble(reader, "Z", 0.0)
 
-                        Orientation.Psi = IOXML.ReadDouble(reader, "Psi", 0)
-                        Orientation.Tita = IOXML.ReadDouble(reader, "Theta", 0)
-                        Orientation.Fi = IOXML.ReadDouble(reader, "Phi", 0)
+                        Orientation.R1 = IOXML.ReadDouble(reader, "Psi", 0)
+                        Orientation.R2 = IOXML.ReadDouble(reader, "Theta", 0)
+                        Orientation.R3 = IOXML.ReadDouble(reader, "Phi", 0)
 
                     Case "Mesh"
 
@@ -539,9 +539,9 @@ CheckInvalid:
             writer.WriteAttributeString("Y", CDbl(Position.Y))
             writer.WriteAttributeString("Z", CDbl(Position.Z))
 
-            writer.WriteAttributeString("Psi", CDbl(Orientation.Psi))
-            writer.WriteAttributeString("Theta", CDbl(Orientation.Tita))
-            writer.WriteAttributeString("Phi", CDbl(Orientation.Fi))
+            writer.WriteAttributeString("Psi", CDbl(Orientation.R1))
+            writer.WriteAttributeString("Theta", CDbl(Orientation.R2))
+            writer.WriteAttributeString("Phi", CDbl(Orientation.R3))
 
             writer.WriteEndElement()
 
@@ -629,9 +629,9 @@ CheckInvalid:
             Position.Y = Surface.Position.Y
             Position.Z = Surface.Position.Z
 
-            Orientation.Psi = Surface.Orientation.Psi
-            Orientation.Tita = Surface.Orientation.Tita
-            Orientation.Fi = Surface.Orientation.Fi
+            Orientation.R1 = Surface.Orientation.R1
+            Orientation.R2 = Surface.Orientation.R2
+            Orientation.R3 = Surface.Orientation.R3
 
             GenerateMesh()
 

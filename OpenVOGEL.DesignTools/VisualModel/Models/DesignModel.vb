@@ -76,7 +76,7 @@ Namespace VisualModel.Models
             NewFuselage.IncludeInCalculation = True
             NewFuselage.Position.SetToCero()
             NewFuselage.CenterOfRotation.SetToCero()
-            NewFuselage.Orientation.SetToCero()
+            NewFuselage.Orientation.SetToZero()
             NewFuselage.VisualProperties.ShowColormap = False
             NewFuselage.VisualProperties.ShowLoadVectors = False
             NewFuselage.VisualProperties.ShowNodes = False

@@ -74,6 +74,19 @@ Namespace VisualModel.Models
         Public ReadOnly Property PartialAirLoads As New List(Of PartialAirLoads)
 
         ''' <summary>
+        ''' The orientation of the model in the inertial reference frame.
+        ''' This property is assigned in free flight.
+        ''' </summary>
+        Public ReadOnly Property Orientation As New OrientationAngles
+
+        ''' <summary>
+        ''' The position the model respect to the original position in the inertial reference frame.
+        ''' This property is assigned in free flight.
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property Position As New Vector3
+
+        ''' <summary>
         ''' The kind of frame
         ''' </summary>
         ''' <returns></returns>
@@ -349,6 +362,21 @@ Namespace VisualModel.Models
                             Frame.StreamRotation.Y = State.Oy
                             Frame.StreamRotation.Z = State.Oz
                             Frame.StreamRotation.AntiTransform(Settings.InertialBasis)
+
+                            ' Assign the orientation in Tait-Bryan angles
+                            ' (yaw, pitch, roll)
+                            '------------------------------------------------
+
+                            Frame.Orientation.Sequence = RotationSequence.XYZ
+                            Frame.Orientation.R1 = Math.Asin(State.Iy / Math.Sqrt(1 - State.Iz ^ 2))
+                            Frame.Orientation.R2 = Math.Asin(-State.Iz)
+                            Frame.Orientation.R3 = Math.Asin(State.Jz / Math.Sqrt(1 - State.Iz ^ 2))
+                            Frame.Orientation.ToDegrees()
+
+                            Frame.Position.X = State.Px
+                            Frame.Position.Y = State.Py
+                            Frame.Position.Z = State.Pz
+
                         End If
 
                     Case CalculationType.Aeroelastic
@@ -366,6 +394,32 @@ Namespace VisualModel.Models
                 FrameIndex += 1
 
             End While
+
+            ' Transform the position to the inertial reference frame
+            '-------------------------------------------------------
+            If MotionData IsNot Nothing Then
+
+                Dim State As Variable = MotionData.State(FrameIndex - 1)
+
+                Dim Basis As New Base3
+
+                Basis.U.X = State.Ix
+                Basis.U.Y = State.Iy
+                Basis.U.Z = State.Iz
+                Basis.U.Normalize()
+
+                Basis.V.X = State.Jx
+                Basis.V.Y = State.Jy
+                Basis.V.Z = State.Jz
+                Basis.V.Normalize()
+
+                Basis.W.FromVectorProduct(Basis.U, Basis.V)
+
+                For Each Frame In Frames
+                    Frame.Position.AntiTransform(Basis)
+                Next
+
+            End If
 
             If Frames.Count > 0 Then
                 ActiveFrame = Frames.Last

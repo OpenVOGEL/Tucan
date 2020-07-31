@@ -18,49 +18,107 @@
 Namespace Algebra.EuclideanSpace
 
     ''' <summary>
+    ''' The available rotation sequences.
+    ''' Other secuences can be added here, but you have to add the transformation matrix.
+    ''' </summary>
+    Public Enum RotationSequence As Byte
+
+        'Euler sequence
+        ZYX = 0
+
+        'Tait-Bryan sequence (yaw/pitch/roll)
+        XYZ = 1
+
+    End Enum
+
+    ''' <summary>
     ''' Represents an orientation in Euler angles
     ''' </summary>
     ''' <remarks></remarks>
-    Public Class EulerAngles
+    Public Class OrientationAngles
 
-        Public Property Psi As Double
-        Public Property Tita As Double
-        Public Property Fi As Double
+        ''' <summary>
+        ''' Pi divided by 180.0#
+        ''' </summary>
+        Public Const PiDiv180 As Double = Math.PI / 180.0#
+
+        ''' <summary>
+        ''' Yaw angle
+        ''' </summary>
+        Public Property R1 As Double
+
+        ''' <summary>
+        ''' Pitch angle
+        ''' </summary>
+        Public Property R2 As Double
+
+        ''' <summary>
+        ''' Roll angle
+        ''' </summary>
+        Public Property R3 As Double
+
+        ''' <summary>
+        ''' The rotation sequence
+        ''' </summary>
+        ''' <returns></returns>
         Public Property Sequence As RotationSequence = RotationSequence.ZYX
 
-        Public Enum RotationSequence As Byte
-
-            ZYX = 0
-            XYZ = 1
-
-            ' Other secuences can be added here, but you have to add the transformation matrix.
-
-        End Enum
-
-        Public Sub SetToCero()
-            Psi = 0
-            Tita = 0
-            Fi = 0
+        ''' <summary>
+        ''' Resets the orientation to zero.
+        ''' </summary>
+        Public Sub SetToZero()
+            R1 = 0
+            R2 = 0
+            R3 = 0
         End Sub
 
-        Public Function ToRadians() As EulerAngles
+        ''' <summary>
+        ''' Converts the angles to radians (assuming they are in degrees)
+        ''' </summary>
+        ''' <returns></returns>
+        Public Sub ToRadians()
 
-            Dim OrientationInRadians As New EulerAngles
-            Dim Conversion As Double = Math.PI / 180
-            OrientationInRadians.Psi = Psi * Conversion
-            OrientationInRadians.Tita = Tita * Conversion
-            OrientationInRadians.Fi = Fi * Conversion
-            OrientationInRadians.Sequence = Sequence
-            Return OrientationInRadians
+            R1 *= PiDiv180
+            R2 *= PiDiv180
+            R3 *= PiDiv180
+
+        End Sub
+
+        ''' <summary>
+        ''' Converts the angles to radians (assuming they are in degrees)
+        ''' </summary>
+        ''' <returns></returns>
+        Public Function InRadians() As OrientationAngles
+
+            Dim NewOrientation As New OrientationAngles
+            NewOrientation.Assign(Me)
+            NewOrientation.ToRadians()
+            Return NewOrientation
 
         End Function
 
-        Public Sub Assign(ByVal Euler As EulerAngles)
+        ''' <summary>
+        ''' Converts the angles to degrees (assuming they are in radians)
+        ''' </summary>
+        ''' <returns></returns>
+        Public Sub ToDegrees()
 
-            Fi = Euler.Fi
-            Psi = Euler.Psi
-            Tita = Euler.Tita
-            Sequence = Euler.Sequence
+            R1 /= PiDiv180
+            R2 /= PiDiv180
+            R3 /= PiDiv180
+
+        End Sub
+
+        ''' <summary>
+        ''' Assigns the same value.
+        ''' </summary>
+        ''' <param name="Orientation"></param>
+        Public Sub Assign(ByVal Orientation As OrientationAngles)
+
+            R3 = Orientation.R3
+            R1 = Orientation.R1
+            R2 = Orientation.R2
+            Sequence = Orientation.Sequence
 
         End Sub
 

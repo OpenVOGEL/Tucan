@@ -756,9 +756,9 @@ ErrSub:
             nudCRy.Value = _SelectedSurface.CenterOfRotation.Y
             nudCRz.Value = _SelectedSurface.CenterOfRotation.Z
 
-            nudPsi.Value = _SelectedSurface.Orientation.Psi
-            nudTita.Value = _SelectedSurface.Orientation.Tita
-            nudFi.Value = _SelectedSurface.Orientation.Fi
+            nudPsi.Value = _SelectedSurface.Orientation.R1
+            nudTita.Value = _SelectedSurface.Orientation.R2
+            nudFi.Value = _SelectedSurface.Orientation.R3
 
             cbSecuence.SelectedIndex = _SelectedSurface.Orientation.Sequence
 
@@ -989,7 +989,7 @@ ErrSub:
 
         If _SelectedSurface IsNot Nothing AndAlso Not _LockPropsEvents Then
 
-            _SelectedSurface.Orientation.Psi = nudPsi.Value
+            _SelectedSurface.Orientation.R1 = nudPsi.Value
 
             _SelectedSurface.Orientate(_SelectedSurface.CenterOfRotation, _SelectedSurface.Orientation)
 
@@ -1003,7 +1003,7 @@ ErrSub:
 
         If _SelectedSurface IsNot Nothing AndAlso Not _LockPropsEvents Then
 
-            _SelectedSurface.Orientation.Tita = nudTita.Value
+            _SelectedSurface.Orientation.R2 = nudTita.Value
 
             _SelectedSurface.Orientate(_SelectedSurface.CenterOfRotation, _SelectedSurface.Orientation)
 
@@ -1017,7 +1017,7 @@ ErrSub:
 
         If _SelectedSurface IsNot Nothing AndAlso Not _LockPropsEvents Then
 
-            _SelectedSurface.Orientation.Fi = nudFi.Value
+            _SelectedSurface.Orientation.R3 = nudFi.Value
 
             _SelectedSurface.Orientate(_SelectedSurface.CenterOfRotation, _SelectedSurface.Orientation)
 
@@ -1132,6 +1132,7 @@ ErrSub:
                 LoadResultProperties()
                 FormReport.UpdateLoads()
                 ModelInterface.RefreshOnGL()
+                FormAttitude.Refresh()
 
             End If
 
@@ -1257,7 +1258,7 @@ ErrSub:
             pnlWakeMeshColor.BackColor = Wakes.VisualProperties.ColorMesh
             pnlWakeNodeColor.BackColor = Wakes.VisualProperties.ColorNodes
 
-            gbxAeroelastic.Enabled = True
+            gbFrames.Enabled = True
             nudModeScale.Enabled = ProjectRoot.Results.ActiveFrame.FrameKind = DesignTools.VisualModel.Models.ResultFrameKinds.DynamicMode
 
         End If
@@ -1554,9 +1555,9 @@ ErrSub:
 
     End Sub
 
-    Private Sub btnEditVelocityPlane_Click(sender As Object, e As EventArgs) Handles btnEditVelocityPlane.Click
+    Private Sub btnEditVelocityPlane_Click(sender As Object, e As EventArgs) Handles btnShowAttitude.Click
 
-        RaiseEvent EditVelocityPlane()
+        FormAttitude.Show()
 
     End Sub
 
@@ -1681,23 +1682,23 @@ ErrSub:
             Select Case Vista
 
                 Case "XY"
-                    ModelInterface.Visualization.CameraOrientation.Psi = 0
-                    ModelInterface.Visualization.CameraOrientation.Fi = 0
+                    ModelInterface.Visualization.CameraOrientation.R1 = 0
+                    ModelInterface.Visualization.CameraOrientation.R3 = 0
                     RaiseEvent PushMessage("XY view")
 
                 Case "ZY"
-                    ModelInterface.Visualization.CameraOrientation.Psi = 90
-                    ModelInterface.Visualization.CameraOrientation.Fi = -90
+                    ModelInterface.Visualization.CameraOrientation.R1 = 90
+                    ModelInterface.Visualization.CameraOrientation.R3 = -90
                     RaiseEvent PushMessage("ZY view")
 
                 Case "ZX"
-                    ModelInterface.Visualization.CameraOrientation.Psi = 0
-                    ModelInterface.Visualization.CameraOrientation.Fi = -90
+                    ModelInterface.Visualization.CameraOrientation.R1 = 0
+                    ModelInterface.Visualization.CameraOrientation.R3 = -90
                     RaiseEvent PushMessage("ZX view")
 
                 Case "Isometrica"
-                    ModelInterface.Visualization.CameraOrientation.Psi = 30
-                    ModelInterface.Visualization.CameraOrientation.Fi = -60
+                    ModelInterface.Visualization.CameraOrientation.R1 = 30
+                    ModelInterface.Visualization.CameraOrientation.R3 = -60
                     RaiseEvent PushMessage("Free view")
 
                 Case "Center"

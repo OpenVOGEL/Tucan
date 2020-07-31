@@ -149,7 +149,7 @@ Namespace VisualModel.Models.Components
 
             Next
 
-            Mesh.Rotate(CenterOfRotation, Orientation.ToRadians)
+            Mesh.Rotate(CenterOfRotation, Orientation.InRadians)
 
             Mesh.Translate(Position)
 
@@ -193,10 +193,10 @@ Namespace VisualModel.Models.Components
                         Position.Y = IOXML.ReadDouble(reader, "Y", 0.0)
                         Position.Z = IOXML.ReadDouble(reader, "Z", 0.0)
 
-                        Orientation.Psi = IOXML.ReadDouble(reader, "Psi", 0)
-                        Orientation.Tita = IOXML.ReadDouble(reader, "Theta", 0)
-                        Orientation.Fi = IOXML.ReadDouble(reader, "Phi", 0)
-                        Orientation.Sequence = IOXML.ReadInteger(reader, "Sequence", CInt(EulerAngles.RotationSequence.ZYX))
+                        Orientation.R1 = IOXML.ReadDouble(reader, "Psi", 0)
+                        Orientation.R2 = IOXML.ReadDouble(reader, "Theta", 0)
+                        Orientation.R3 = IOXML.ReadDouble(reader, "Phi", 0)
+                        Orientation.Sequence = IOXML.ReadInteger(reader, "Sequence", CInt(RotationSequence.ZYX))
 
                         CenterOfRotation.X = IOXML.ReadDouble(reader, "Xcr", 0.0)
                         CenterOfRotation.Y = IOXML.ReadDouble(reader, "Ycr", 0.0)
@@ -261,9 +261,9 @@ Namespace VisualModel.Models.Components
             writer.WriteAttributeString("Y", CDbl(Position.Y))
             writer.WriteAttributeString("Z", CDbl(Position.Z))
 
-            writer.WriteAttributeString("Psi", CDbl(Orientation.Psi))
-            writer.WriteAttributeString("Theta", CDbl(Orientation.Tita))
-            writer.WriteAttributeString("Phi", CDbl(Orientation.Fi))
+            writer.WriteAttributeString("Psi", CDbl(Orientation.R1))
+            writer.WriteAttributeString("Theta", CDbl(Orientation.R2))
+            writer.WriteAttributeString("Phi", CDbl(Orientation.R3))
             writer.WriteAttributeString("Sequence", String.Format("{0}", CInt(Orientation.Sequence)))
 
             writer.WriteAttributeString("Xcr", String.Format("{0}", Position.X))
@@ -317,9 +317,9 @@ Namespace VisualModel.Models.Components
             Position.Y = Engine.Position.Y
             Position.Z = Engine.Position.Z
 
-            Orientation.Psi = Engine.Orientation.Psi
-            Orientation.Tita = Engine.Orientation.Tita
-            Orientation.Fi = Engine.Orientation.Fi
+            Orientation.R1 = Engine.Orientation.R1
+            Orientation.R2 = Engine.Orientation.R2
+            Orientation.R3 = Engine.Orientation.R3
 
             GenerateMesh()
 

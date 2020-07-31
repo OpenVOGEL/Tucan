@@ -130,7 +130,7 @@ Namespace VisualModel.Models.Components.Basics
         ''' Orientation of the surface.
         ''' </summary>
         ''' <returns></returns>
-        Public Property Orientation As New EulerAngles
+        Public Property Orientation As New OrientationAngles
 
         ''' <summary>
         ''' Scale of this surface.
@@ -165,11 +165,11 @@ Namespace VisualModel.Models.Components.Basics
         ''' </summary>
         ''' <param name="Point"></param>
         ''' <param name="Ori"></param>
-        Public Overridable Sub Orientate(ByVal Point As Vector3, ByVal Ori As EulerAngles) Implements IOperational.Orientate
+        Public Overridable Sub Orientate(ByVal Point As Vector3, ByVal Ori As OrientationAngles) Implements IOperational.Orientate
 
-            Orientation.Psi = Ori.Psi
-            Orientation.Tita = Ori.Tita
-            Orientation.Fi = Ori.Fi
+            Orientation.R1 = Ori.R1
+            Orientation.R2 = Ori.R2
+            Orientation.R3 = Ori.R3
 
             CenterOfRotation.X = Point.X
             CenterOfRotation.Y = Point.Y

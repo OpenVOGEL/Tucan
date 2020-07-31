@@ -269,7 +269,7 @@ Public Class MainForm
 
     Private MouseDownPosition As New Drawing.Point
     Private CameraStartPosition As New Vector3
-    Private CameraOrientation As New EulerAngles
+    Private CameraOrientation As New OrientationAngles
 
     Private Sub ControlOpenGL_MouseMove(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles ControlOpenGL.MouseMove
 
@@ -279,8 +279,8 @@ Public Class MainForm
         End If
 
         If ModelInterface.Visualization.Rotating Then
-            ModelInterface.Visualization.CameraOrientation.Psi = CameraOrientation.Psi + 0.25 * (e.Location.X - MouseDownPosition.X)
-            ModelInterface.Visualization.CameraOrientation.Fi = CameraOrientation.Fi + 0.25 * (e.Location.Y - MouseDownPosition.Y)
+            ModelInterface.Visualization.CameraOrientation.R1 = CameraOrientation.R1 + 0.25 * (e.Location.X - MouseDownPosition.X)
+            ModelInterface.Visualization.CameraOrientation.R3 = CameraOrientation.R3 + 0.25 * (e.Location.Y - MouseDownPosition.Y)
         End If
 
     End Sub
@@ -296,8 +296,8 @@ Public Class MainForm
         If e.Button = MouseButtons.Right Then
             ModelInterface.Visualization.Rotating = True
             MouseDownPosition = e.Location
-            CameraOrientation.Psi = ModelInterface.Visualization.CameraOrientation.Psi
-            CameraOrientation.Fi = ModelInterface.Visualization.CameraOrientation.Fi
+            CameraOrientation.R1 = ModelInterface.Visualization.CameraOrientation.R1
+            CameraOrientation.R3 = ModelInterface.Visualization.CameraOrientation.R3
         End If
 
         If e.Button = MouseButtons.Left Then
@@ -516,23 +516,23 @@ Public Class MainForm
         Select Case Vista
 
             Case "XY"
-                ModelInterface.Visualization.CameraOrientation.Psi = 0
-                ModelInterface.Visualization.CameraOrientation.Fi = 0
+                ModelInterface.Visualization.CameraOrientation.R1 = 0
+                ModelInterface.Visualization.CameraOrientation.R3 = 0
                 lblStatus.Text = "XY view"
 
             Case "ZY"
-                ModelInterface.Visualization.CameraOrientation.Psi = 90
-                ModelInterface.Visualization.CameraOrientation.Fi = -90
+                ModelInterface.Visualization.CameraOrientation.R1 = 90
+                ModelInterface.Visualization.CameraOrientation.R3 = -90
                 lblStatus.Text = "ZY view"
 
             Case "ZX"
-                ModelInterface.Visualization.CameraOrientation.Psi = 0
-                ModelInterface.Visualization.CameraOrientation.Fi = -90
+                ModelInterface.Visualization.CameraOrientation.R1 = 0
+                ModelInterface.Visualization.CameraOrientation.R3 = -90
                 lblStatus.Text = "ZX view"
 
             Case "Isometrica"
-                ModelInterface.Visualization.CameraOrientation.Psi = 30
-                ModelInterface.Visualization.CameraOrientation.Fi = -60
+                ModelInterface.Visualization.CameraOrientation.R1 = 30
+                ModelInterface.Visualization.CameraOrientation.R3 = -60
                 lblStatus.Text = "Free view"
 
             Case "Center"
@@ -551,12 +551,12 @@ Public Class MainForm
 #Region " Other event handlers "
 
     Private Sub sbHorizontal_Scroll(ByVal sender As System.Object, ByVal e As System.Windows.Forms.ScrollEventArgs) Handles sbHorizontal.Scroll
-        ModelInterface.Visualization.CameraOrientation.Psi = Me.sbHorizontal.Value
+        ModelInterface.Visualization.CameraOrientation.R1 = Me.sbHorizontal.Value
         ModelInterface.RepresentOnGL()
     End Sub
 
     Private Sub sbVertical_Scroll(ByVal sender As System.Object, ByVal e As System.Windows.Forms.ScrollEventArgs) Handles sbVertical.Scroll
-        ModelInterface.Visualization.CameraOrientation.Fi = Me.sbVertical.Value
+        ModelInterface.Visualization.CameraOrientation.R3 = Me.sbVertical.Value
         ModelInterface.RepresentOnGL()
     End Sub
 

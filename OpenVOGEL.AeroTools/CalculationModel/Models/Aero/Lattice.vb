@@ -302,7 +302,7 @@ Namespace CalculationModel.Models.Aero
         ''' </summary>
         ''' <param name="Orientation">Euler angles providing the orientation</param>
         ''' <remarks></remarks>
-        Public Sub Rotate(ByVal Orientation As EulerAngles)
+        Public Sub Rotate(ByVal Orientation As OrientationAngles)
 
             Dim m As New MathTools.Algebra.CustomMatrices.RotationMatrix
             m.Generate(Orientation)
@@ -321,7 +321,7 @@ Namespace CalculationModel.Models.Aero
         ''' <param name="Orientation"></param>
         ''' <param name="Point"></param>
         ''' <remarks></remarks>
-        Public Sub RotateAbout(ByVal Orientation As EulerAngles, ByVal Point As Vector3)
+        Public Sub RotateAbout(ByVal Orientation As OrientationAngles, ByVal Point As Vector3)
 
             Dim m As New MathTools.Algebra.CustomMatrices.RotationMatrix
             m.Generate(Orientation)

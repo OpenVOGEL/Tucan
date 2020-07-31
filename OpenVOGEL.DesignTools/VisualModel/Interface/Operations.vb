@@ -35,7 +35,7 @@ Namespace VisualModel.Interface
         ''' </summary>
         ''' <param name="Point">Center of rotation</param>
         ''' <param name="Orientation">The orientation</param>
-        Sub Orientate(ByVal Point As Vector3, ByVal Orientation As EulerAngles)
+        Sub Orientate(ByVal Point As Vector3, ByVal Orientation As OrientationAngles)
 
         ''' <summary>
         ''' Scales the object by the given factor.
@@ -75,7 +75,7 @@ Namespace VisualModel.Interface
         Public Event OnTaskReady()
 
         Private _Scalars As New List(Of Double)
-        Private _Orientations As New List(Of EulerAngles)
+        Private _Orientations As New List(Of OrientationAngles)
         Private _DestinationObject As IOperational
         Private _StatusFlag As String
         Private _Operation As Operations = Operations.NoOperation
@@ -130,7 +130,7 @@ Namespace VisualModel.Interface
                 Points.Add(Entity)
             End If
 
-            If TypeOf Entity Is EulerAngles Then
+            If TypeOf Entity Is OrientationAngles Then
                 _Orientations.Add(Entity)
             End If
 

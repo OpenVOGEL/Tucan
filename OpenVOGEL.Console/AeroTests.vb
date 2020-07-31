@@ -47,7 +47,7 @@ Public Module AeroTests
         Dim N4 As New Node
         Dim P As New Vector3
         Dim M As New RotationMatrix
-        Dim A As New EulerAngles
+        Dim A As New OrientationAngles
 
         N1.Position.X = 0.0
         N1.Position.Y = 0.0
@@ -69,7 +69,7 @@ Public Module AeroTests
         P.Y = 0.5
         P.Z = 1.0
 
-        A.Psi = Math.PI / 5
+        A.R1 = Math.PI / 5
         M.Generate(A)
         N1.Position.Rotate(M)
         N2.Position.Rotate(M)
@@ -231,7 +231,7 @@ Public Module AeroTests
         Dim N4 As New Node
         Dim P As New Vector3
         Dim M As New RotationMatrix
-        Dim A As New EulerAngles
+        Dim A As New OrientationAngles
 
         Dim SourcePotentials1(180) As Double
         Dim DoubletPotentials1(180) As Double
