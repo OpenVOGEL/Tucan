@@ -18,68 +18,19 @@ Namespace IndicationTools.Indicators
         Public Property Roll As Single
         Public Property Pitch As Single
         Public Property Yaw As Single
-        Public Property Sliding As Single
+        Public Property Slide As Single
 
-        Private _StaticPressure As Single       ' [Pa]
-        Private _Altitude As Single             ' [m]
-        Private _GroundAltitude As Single       ' [m]
-        Private _StaticPressureRate As Single   ' [Pa/s]
-        Private _VerticalSpeed As Single        ' [m/s]
+        Public Property StaticPressure As Single       ' [Pa]
+        Public Property Altitude As Single             ' [m]
+        Public Property VerticalSpeed As Single        ' [m/s]
 
-        Public Property StaticPressure As Single
-            Set(ByVal value As Single)
-                _StaticPressure = Math.Max(0.0001, value)
-                _Altitude = 44330 * (1 - Math.Pow(_StaticPressure / 101325, 1 / 5.255))
-                If _Altitude - _GroundAltitude < WarningAltitud Then
-                    bipperAltitude.Start()
-                Else
-                    bipperAltitude.Stop()
-                End If
-            End Set
-            Get
-                Return _StaticPressure
-            End Get
-        End Property
-
-        Public Property StaticPressureRate As Single
-            Set(ByVal value As Single)
-                _StaticPressureRate = value
-                _VerticalSpeed = -940.941 * (Math.Pow(_StaticPressure, 1 / 5.255 - 1)) * _StaticPressureRate
-                If _VerticalSpeed < WarningSinkRate Then
-                    bipperSinkRate.Start()
-                Else
-                    bipperSinkRate.Stop()
-                End If
-            End Set
-            Get
-                Return _StaticPressureRate
-            End Get
-        End Property
-
-        ' Settings:
-
-        Private _Baro As Single
-
-        Public Property Baro As Single
-            Set(ByVal value As Single)
-                _Baro = value
-                _GroundAltitude = 44330 * (1 - Math.Pow(Baro / 101325, 1 / 5.255))
-            End Set
-            Get
-                Return _Baro
-            End Get
-        End Property
-
-        Public WarningAltitud As Single = 10 '[m]
-        Public AltitudeResolution As Single = 5 ' [m]
-        Public AltitudMarks As Short = 4
-        Public AltitudeAlarm As Boolean = False
-        Public RelativeAltitude As Boolean = True
-        Public WarningSinkRate As Single = -4 '[m/s]
-        Public SinkRateAlarm As Boolean = False
-        Public VarioResolution As Single = 2
-        Public PitchResolution As Single = 5 ' [⁰]
-        Public PitchMarks As Short = 4
+        Public Property AltitudeResolution As Single = 5 ' [m]
+        Public Property AltitudMarks As Short = 4
+        Public Property RelativeAltitude As Boolean = True
+        Public Property VarioResolution As Single = 2
+        Public Property PitchResolution As Single = 5   ' [⁰]
+        Public Property PitchMarks As Short = 4
+        Public Property GroundAltitude As Single = 0.0
 
         Public Temperature As Single
 
@@ -97,7 +48,7 @@ Namespace IndicationTools.Indicators
         Private r_att As Rectangle
         Private r_asp As Rectangle
         Private r_hor As Rectangle
-        Private r_var As Rectangle ' for the variometer
+        Private r_var As Rectangle
         Private center As PointF
         Private SkyBrush As New SolidBrush(Color.FromArgb(33, 151, 248))
         Private unit As Single
@@ -107,7 +58,6 @@ Namespace IndicationTools.Indicators
         Public Sub New()
 
             StaticPressure = 101325
-            Baro = 101325
             AddHandler bipperAltitude.Elapsed, AddressOf PlayAltitudeAlarm
             AddHandler bipperSinkRate.Elapsed, AddressOf PlaySinkRateAlarm
 
@@ -118,10 +68,7 @@ Namespace IndicationTools.Indicators
 
                 _Region = value
 
-                r_att.X = Region.X + Math.Round(0.05 * Region.Width)
-                r_att.Y = Region.Y + Math.Round(0.05 * Region.Height)
-                r_att.Height = Math.Round(0.9 * Region.Height)
-                r_att.Width = Math.Round(0.9 * Region.Width)
+                r_att = Region
 
                 center.X = r_att.Left + 0.5 * r_att.Width
                 center.Y = r_att.Top + 0.5 * r_att.Height
@@ -247,11 +194,7 @@ Namespace IndicationTools.Indicators
             Dim pa As PointF
             Dim pb As PointF
 
-            ' sliding (side acceleration):
-
-            'pa = New PointF(0, -0.45 * r_att.Height)
-            'pb = New PointF(0.5 * Sliding * r_att.Width, -0.45 * r_att.Height)
-            'g.DrawLine(pen3, pa, pb)
+            ' sliding (side velocity):
 
             g.TranslateTransform(-center.X, -center.Y)
             g.SetClip(_Region)
@@ -289,7 +232,7 @@ Namespace IndicationTools.Indicators
             rec.Width = 0.8 * r_asp.Width
             rec.Height = 0.4 * r_asp.Width
             g.FillRectangle(brush1, rec)
-            g.DrawString(String.Format("{0:F1}m/s", AirSpeed), f1, Brushes.White, rec.Right, rec.Top, sfh)
+            g.DrawString(String.Format("{0:F1}", AirSpeed), f1, Brushes.White, rec.Right, rec.Top, sfh)
 
             ' altitude:
 
@@ -347,14 +290,7 @@ Namespace IndicationTools.Indicators
             rec.Width = 0.8 * r_alt.Width
             rec.Height = 0.4 * r_alt.Width
             g.FillRectangle(brush1, rec)
-            g.DrawString(String.Format("{0:F0}m", dispAlt), f1, Brushes.White, rec.Right, rec.Top, sfh)
-
-            ' low altittude warning:
-
-            If Not RelativeAltitude Then g.DrawString(String.Format("GA →{0:F1}m", _GroundAltitude), f2, Brushes.White, rec.X, r_alt.Bottom)
-            If _Altitude - _GroundAltitude < WarningAltitud Then
-                g.DrawString("LOW ALT", f4, Brushes.Red, rec.X, rec.Y + 1.5 * f1.Size)
-            End If
+            g.DrawString(String.Format("{0:F0}", dispAlt), f1, Brushes.White, rec.Right, rec.Top, sfh)
 
             ' wing reference bars:
 
@@ -369,14 +305,14 @@ Namespace IndicationTools.Indicators
             pen3.StartCap = LineCap.Round
             pen3.EndCap = LineCap.Round
 
-            p1.X = center.X - 0.8 * unit
+            p1.X = center.X - 0.7 * unit
             p1.Y = center.Y
             p2.X = center.X - 0.2 * unit
             p2.Y = center.Y
             g.DrawLine(pen2, p1, p2)
             g.DrawLine(pen3, p1, p2)
 
-            p1.X = center.X + 0.8 * unit
+            p1.X = center.X + 0.7 * unit
             p1.Y = center.Y
             p2.X = center.X + 0.2 * unit
             p2.Y = center.Y
@@ -415,7 +351,7 @@ Namespace IndicationTools.Indicators
             rec.Width = 0.7 * r_var.Width
             rec.Height = 0.2 * r_var.Width
             g.FillRectangle(brush1, rec)
-            g.DrawString(String.Format("{0:F1}m/s", _VerticalSpeed), f2, Brushes.White, rec.Right, rec.Top, sfh)
+            g.DrawString(String.Format("{0:F1}", _VerticalSpeed), f2, Brushes.White, rec.Right, rec.Top, sfh)
 
             g.TranslateTransform(-r_var.X, -r_var.Y)
 

@@ -1198,10 +1198,14 @@ ErrSub:
 
     Private Sub _timer_Tick(ByVal sender As System.Object, ByVal e As System.EventArgs)
 
-        If ModelInterface.Initialized Then
-            If _CurrentFrame > ProjectRoot.Results.Frames.Count Then _CurrentFrame = 0
+        If ModelInterface.Initialized And ProjectRoot.Results.Frames.Count > 0 Then
+
+            If _CurrentFrame >= ProjectRoot.Results.Frames.Count Then _CurrentFrame = 0
+            ProjectRoot.Results.ActiveFrame = ProjectRoot.Results.Frames(_CurrentFrame)
             ModelInterface.RepresentResultsTransitWithOpenGL(_CurrentFrame)
+            FormAttitude.Refresh()
             _CurrentFrame += 1
+
         End If
 
     End Sub
