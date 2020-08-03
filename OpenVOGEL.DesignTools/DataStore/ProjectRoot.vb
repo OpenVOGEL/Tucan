@@ -130,14 +130,14 @@ Namespace DataStore
 
                     Case CalculationType.SteadyState
 
-                        CalculationCore.RigidFlight(FilePath)
+                        CalculationCore.SteadyStateTransit(FilePath)
 
                     Case CalculationType.FreeFlight
 
                         CalculationCore.FreeFlight(FilePath)
 
                     Case CalculationType.Aeroelastic
-                        CalculationCore.AeroelasticUnsteadyTransit(FilePath)
+                        CalculationCore.AeroelasticTransit(FilePath)
 
                 End Select
 

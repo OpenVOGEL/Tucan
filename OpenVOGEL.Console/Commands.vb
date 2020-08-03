@@ -154,6 +154,16 @@ Module Commands
                         Dim CalculationCore As New Solver.Solver
                         DataStore.StartCalculation(Settings.CalculationType.SteadyState, CalculationCore)
 
+                    Case "free_flight"
+
+                        Dim CalculationCore As New Solver.Solver
+                        DataStore.StartCalculation(Settings.CalculationType.FreeFlight, CalculationCore)
+
+                    Case "aeroelastic"
+
+                        Dim CalculationCore As New Solver.Solver
+                        DataStore.StartCalculation(Settings.CalculationType.Aeroelastic, CalculationCore)
+
                     Case "alfa_scan"
 
                         If Commands.Length > 3 Then

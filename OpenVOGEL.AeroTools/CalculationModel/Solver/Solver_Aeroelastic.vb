@@ -28,7 +28,7 @@ Namespace CalculationModel.Solver
         ''' Calculates the unsteady aeroelastic transit provided a velocity profile and a structural model.
         ''' The implicit Nemark algorithm is used.
         ''' </summary>
-        Public Sub AeroelasticUnsteadyTransit(ByVal ReferenceFilePath As String)
+        Public Sub AeroelasticTransit(ByVal ReferenceFilePath As String)
 
             If WithSources Then
 

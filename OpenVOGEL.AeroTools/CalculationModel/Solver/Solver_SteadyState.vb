@@ -31,7 +31,7 @@ Namespace CalculationModel.Solver
         ''' will be reached.
         ''' Loads are only calculated at the last time step.
         ''' </summary>
-        Public Sub RigidFlight(ByVal ReferenceFilePath As String)
+        Public Sub SteadyStateTransit(ByVal ReferenceFilePath As String)
 
             RaiseEvent PushMessage("Starting steady analysis")
             RaiseEvent PushMessage("Solver version: " & Version)

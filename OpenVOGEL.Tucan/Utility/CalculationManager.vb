@@ -45,6 +45,8 @@ Namespace Tucan.Utility
         ''' <param name="Parent"></param>
         Public Sub StartCalculation(ByVal Type As CalculationType, OnServer As Boolean, ByRef Parent As Control)
 
+            ProjectRoot.SimulationSettings.AnalysisType = Type
+
             If OnServer Then
                 RequestCalculationToServer()
                 Exit Sub
@@ -59,11 +61,12 @@ Namespace Tucan.Utility
             End If
 
             FormProgress.ClearMessages()
+            FormProgress.PushMessage("Saving the model")
+            ProjectRoot.WriteToXML()
             If Not IsNothing(Parent) Then FormProgress.Owner = Parent
             FormProgress.ClearMessages()
             FormProgress.Show()
             FormProgress.PushMessage("Preparing calculation cell")
-            ProjectRoot.SimulationSettings.AnalysisType = Type
 
             Try
 
@@ -149,7 +152,7 @@ Namespace Tucan.Utility
         ''' </summary>
         Private Sub StartSteadyStateTransit(ByVal sender As Object, ByVal e As DoWorkEventArgs)
 
-            CalculationCore.RigidFlight(FilePath)
+            CalculationCore.SteadyStateTransit(FilePath)
 
         End Sub
 
@@ -167,7 +170,7 @@ Namespace Tucan.Utility
         ''' </summary>
         Private Sub StartAeroelsaticTransit(ByVal sender As Object, ByVal e As DoWorkEventArgs)
 
-            CalculationCore.AeroelasticUnsteadyTransit(FilePath)
+            CalculationCore.AeroelasticTransit(FilePath)
 
         End Sub
 
@@ -187,15 +190,26 @@ Namespace Tucan.Utility
             End If
             CalculationWorker = New BackgroundWorker
 
-            AddHandler CalculationWorker.DoWork, AddressOf RequestServerSteady
+            AddHandler CalculationWorker.DoWork, AddressOf RequestCalculationAsychronously
+            AddHandler CalculationWorker.RunWorkerCompleted, AddressOf ServerCalculationFinished
             CalculationWorker.RunWorkerAsync()
+
+        End Sub
+
+        ''' <summary>
+        ''' Callback for when the calculation is done.
+        ''' </summary>
+        Private Sub ServerCalculationFinished()
+
+            FormProgress.PushMessage("Ready")
+            RaiseEvent CalculationDone()
 
         End Sub
 
         ''' <summary>
         ''' Requests a steady analisis to the server
         ''' </summary>
-        Private Sub RequestServerSteady()
+        Private Sub RequestCalculationAsychronously()
 
             ' Connect to the server squekear to publish the messages and know when the calculation is over
 
@@ -211,7 +225,14 @@ Namespace Tucan.Utility
 
             ' Request the calculation and start listening
 
-            Squeak(Squeaker, "steady;" & FilePath)
+            Select Case ProjectRoot.SimulationSettings.AnalysisType
+                Case CalculationType.SteadyState
+                    Squeak(Squeaker, "steady;" & FilePath)
+                Case CalculationType.FreeFlight
+                    Squeak(Squeaker, "free_flight;" & FilePath)
+                Case CalculationType.Aeroelastic
+                    Squeak(Squeaker, "aeroelastic;" & FilePath)
+            End Select
 
             Dim Done As Boolean = False
 
@@ -233,7 +254,6 @@ Namespace Tucan.Utility
                                 Dim DirectoryPath As String = Commands(1)
                                 If IO.Directory.Exists(DirectoryPath) Then
                                     ProjectRoot.Results.LoadFromDirectory(DirectoryPath)
-                                    CalculationFinished()
                                 End If
                             End If
 
