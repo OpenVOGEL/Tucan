@@ -21,7 +21,8 @@ Imports DotNumerics.LinearAlgebra
 Namespace CalculationModel.Settings
 
     ''' <summary>
-    ''' Represent the inertial properties of a body
+    ''' Represent the inertial properties of a body.
+    ''' The axes are assumed to cross the body CG.
     ''' </summary>
     Public Structure InertialProperties
 
@@ -142,6 +143,48 @@ Namespace CalculationModel.Settings
             Return I
 
         End Operator
+
+        ''' <summary>
+        ''' Transforms the inertial properties to the given axes. This also will align the CG 
+        ''' coordinates and add the CG offset.
+        ''' </summary>
+        ''' <param name="Inertia"></param>
+        ''' <param name="Basis"></param>
+        Public Sub Transform(Offset As Vector3, ByVal Basis As Base3)
+
+            Dim X As Double = Xcg
+            Dim Y As Double = Ycg
+            Dim Z As Double = Zcg
+
+            Xcg = Offset.X + X * Basis.U.X + Xcg + Y * Basis.U.Y + Xcg + Z * Basis.U.Z
+            Ycg = Offset.Y + X * Basis.V.X + Xcg + Y * Basis.V.Y + Xcg + Z * Basis.V.Z
+            Zcg = Offset.Z + X * Basis.W.X + Xcg + Y * Basis.W.Y + Xcg + Z * Basis.W.Z
+
+            Dim I As InertialProperties
+
+            ' Premultiply
+
+            I.Ixx = Ixx * Basis.U.X + Ixy * Basis.V.X + Ixz * Basis.W.X
+            I.Ixy = Ixx * Basis.U.Y + Ixy * Basis.V.Y + Ixz * Basis.W.Y
+            I.Ixz = Ixx * Basis.U.Z + Ixy * Basis.V.Z + Ixz * Basis.W.Z
+
+            I.Iyy = Ixy * Basis.U.Y + Iyy * Basis.V.Y + Iyz * Basis.W.Y
+            I.Iyz = Ixy * Basis.U.Z + Iyy * Basis.V.Z + Iyz * Basis.W.Z
+
+            I.Izz = Ixz * Basis.U.Z + Ixz * Basis.V.Z + Izz * Basis.W.Z
+
+            ' Posmultiply
+
+            Ixx = I.Ixx * Basis.U.X + I.Ixy * Basis.U.Y + I.Ixz * Basis.U.Z
+            Ixy = I.Ixx * Basis.V.X + I.Ixy * Basis.V.Y + I.Ixz * Basis.V.Z
+            Ixz = I.Ixx * Basis.W.X + I.Ixy * Basis.W.Y + I.Ixz * Basis.W.Z
+
+            Iyy = I.Ixy * Basis.V.X + I.Iyy * Basis.V.Y + I.Iyz * Basis.V.Z
+            Iyz = I.Ixy * Basis.W.X + I.Iyy * Basis.W.Y + I.Iyz * Basis.W.Z
+
+            Izz = I.Ixz * Basis.W.X + I.Ixz * Basis.W.Y + I.Izz * Basis.W.Z
+
+        End Sub
 
         ''' <summary>
         ''' Convertes the general tensor of inertia to a the main axes of inertia

@@ -307,14 +307,13 @@ Namespace VisualModel.Models
 
                 Dim LocalInertia As InertialProperties = Surface.Inertia
 
-                ' Move CG to global coordinates
+                ' Transform to global coordinates
                 '-------------------------------------
 
-                LocalInertia.Xcg += Surface.Position.X
-                LocalInertia.Ycg += Surface.Position.Y
-                LocalInertia.Zcg += Surface.Position.Z
+                LocalInertia.Transform(Surface.Position, Surface.LocalDirections)
 
-                ' Take into account complementing parts
+                ' Take into account complementary part
+                ' in lifting surfaces
                 '-------------------------------------
 
                 If TypeOf Surface Is LiftingSurface Then
@@ -323,13 +322,13 @@ Namespace VisualModel.Models
 
                     If Wing.Symmetric Then
 
-                        Dim ComplementInertia As InertialProperties = LocalInertia
+                        Dim ComplementaryInertia As InertialProperties = LocalInertia
 
-                        ComplementInertia.Ixy *= -1.0
-                        ComplementInertia.Iyz *= -1.0
-                        ComplementInertia.Ycg *= -1.0
+                        ComplementaryInertia.Ixy *= -1.0
+                        ComplementaryInertia.Iyz *= -1.0
+                        ComplementaryInertia.Ycg *= -1.0
 
-                        LocalInertia += ComplementInertia
+                        LocalInertia += ComplementaryInertia
 
                     End If
 

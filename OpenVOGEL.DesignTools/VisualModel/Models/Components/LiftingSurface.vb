@@ -1239,19 +1239,19 @@ Namespace VisualModel.Models.Components
 
             ' Local base:
 
-            LocalDirections.U.X = 0.5
+            LocalDirections.U.X = 1.0
             LocalDirections.U.Y = 0.0
             LocalDirections.U.Z = 0.0
             LocalDirections.U.Rotate(LocalRotationMatrix)
 
             LocalDirections.V.X = 0.0
-            LocalDirections.V.Y = 0.5
+            LocalDirections.V.Y = 1.0
             LocalDirections.V.Z = 0.0
             LocalDirections.V.Rotate(LocalRotationMatrix)
 
             LocalDirections.W.X = 0.0
             LocalDirections.W.Y = 0.0
-            LocalDirections.W.Z = 0.5
+            LocalDirections.W.Z = 1.0
             LocalDirections.W.Rotate(LocalRotationMatrix)
 
             ' Direction points:
@@ -1280,7 +1280,7 @@ Namespace VisualModel.Models.Components
             DirectionPoints.W.Add(CenterOfRotation)
             DirectionPoints.W.Add(Position)
 
-            ' Local origin²
+            ' Local origin
 
             LocalOrigin.SetToCero()
             LocalOrigin.Substract(CenterOfRotation)

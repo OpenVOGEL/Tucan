@@ -22,6 +22,7 @@ Imports OpenVOGEL.DesignTools.VisualModel.Models.Components.Basics
 Imports OpenVOGEL.DesignTools.VisualModel.Interface
 Imports OpenVOGEL.MathTools.Algebra.EuclideanSpace
 Imports System.Xml
+Imports OpenVOGEL.MathTools.Algebra.CustomMatrices
 
 Namespace VisualModel.Models.Components
 
@@ -1249,6 +1250,27 @@ Namespace VisualModel.Models.Components
 
                 Mesh.Rotate(CenterOfRotation, Orientation.InRadians)
                 Mesh.Translate(Position)
+
+                ' Local base:
+
+                Dim LocalRotationMatrix As New RotationMatrix
+
+                LocalRotationMatrix.Generate(Orientation.InRadians)
+
+                LocalDirections.U.X = 1.0
+                LocalDirections.U.Y = 0.0
+                LocalDirections.U.Z = 0.0
+                LocalDirections.U.Rotate(LocalRotationMatrix)
+
+                LocalDirections.V.X = 0.0
+                LocalDirections.V.Y = 1.0
+                LocalDirections.V.Z = 0.0
+                LocalDirections.V.Rotate(LocalRotationMatrix)
+
+                LocalDirections.W.X = 0.0
+                LocalDirections.W.Y = 0.0
+                LocalDirections.W.Z = 1.0
+                LocalDirections.W.Rotate(LocalRotationMatrix)
 
                 ' Generate cross sections to display:
 
