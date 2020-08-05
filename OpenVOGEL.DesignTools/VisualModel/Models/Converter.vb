@@ -233,18 +233,26 @@ Namespace VisualModel.Models
             ' Global inertial properties
             '---------------------------------------------------
 
-            Dim Inertia As InertialProperties = Model.GetGlobalInertia
+            If Settings.AnalysisType = CalculationType.FreeFlight Then
 
-            This.Settings.Mass = Inertia.Mass
+                Dim Inertia As InertialProperties = Model.GetGlobalInertia
 
-            This.Settings.CenterOfGravity.X = Inertia.Xcg
-            This.Settings.CenterOfGravity.Y = Inertia.Ycg
-            This.Settings.CenterOfGravity.Z = Inertia.Zcg
+                This.Settings.Mass = Inertia.Mass
 
-            Inertia.ToMainInertia(This.Settings.InertialBasis,
-                                  This.Settings.Ixx,
-                                  This.Settings.Iyy,
-                                  This.Settings.Izz)
+                This.Settings.CenterOfGravity.X = Inertia.Xcg
+                This.Settings.CenterOfGravity.Y = Inertia.Ycg
+                This.Settings.CenterOfGravity.Z = Inertia.Zcg
+
+                Inertia.ToMainInertia(This.Settings.InertialBasis,
+                                      This.Settings.Ixx,
+                                      This.Settings.Iyy,
+                                      This.Settings.Izz)
+
+            Else
+
+                This.Settings.InertialBasis.CanonicalBase()
+
+            End If
 
         End Sub
 

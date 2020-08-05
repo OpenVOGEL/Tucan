@@ -730,6 +730,25 @@ Namespace Algebra.EuclideanSpace
         Public V As New Vector3
         Public W As New Vector3
 
+        ''' <summary>
+        ''' Sets the standard vectors.
+        ''' </summary>
+        Public Sub CanonicalBase()
+
+            U.X = 1.0
+            U.Y = 0.0
+            U.Z = 0.0
+
+            V.X = 0.0
+            V.Y = 1.0
+            V.Z = 0.0
+
+            W.X = 0.0
+            W.Y = 0.0
+            W.Z = 1.0
+
+        End Sub
+
     End Class
 
     ''' <summary>
