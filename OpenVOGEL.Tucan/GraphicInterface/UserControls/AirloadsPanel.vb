@@ -22,7 +22,7 @@ Imports OpenVOGEL.DesignTools.VisualModel.Models
 Imports OpenVOGEL.DesignTools.VisualModel.Models.Components
 Imports OpenVOGEL.MathTools.Magnitudes
 
-Public Class ForcesPanel
+Public Class AirloadsPanel
 
     ' Components:
 

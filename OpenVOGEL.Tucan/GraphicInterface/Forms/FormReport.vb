@@ -24,7 +24,7 @@ Public Class FormReport
 
     'Private Result As String
 
-    Private ForcesPanel As ForcesPanel
+    Private AirloadsPanel As AirloadsPanel
     Private TotalForcePanel As TotalForcePanel
     Private RawResults As New Text.StringBuilder
 
@@ -35,10 +35,10 @@ Public Class FormReport
 
         ' Add any initialization after the InitializeComponent() call.
 
-        ForcesPanel = New ForcesPanel
-        ForcesPanel.Parent = tbLoads
-        ForcesPanel.Dock = DockStyle.Fill
-        ForcesPanel.BorderStyle = BorderStyle.Fixed3D
+        AirloadsPanel = New AirloadsPanel
+        AirloadsPanel.Parent = tbLoads
+        AirloadsPanel.Dock = DockStyle.Fill
+        AirloadsPanel.BorderStyle = BorderStyle.Fixed3D
 
         TotalForcePanel = New TotalForcePanel
         TotalForcePanel.Parent = tbTotalLoads
@@ -66,7 +66,7 @@ Public Class FormReport
 
         ' Load the forces by component
 
-        ForcesPanel.LoadResults()
+        AirloadsPanel.LoadResults()
 
     End Sub
 
@@ -81,7 +81,7 @@ Public Class FormReport
 
         ' Load the forces by component
 
-        ForcesPanel.LoadResults()
+        AirloadsPanel.LoadResults()
 
         ' Write the raw results text block
 

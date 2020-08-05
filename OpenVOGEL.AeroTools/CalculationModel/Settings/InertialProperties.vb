@@ -156,9 +156,9 @@ Namespace CalculationModel.Settings
             Dim Y As Double = Ycg
             Dim Z As Double = Zcg
 
-            Xcg = Offset.X + X * Basis.U.X + Xcg + Y * Basis.U.Y + Xcg + Z * Basis.U.Z
-            Ycg = Offset.Y + X * Basis.V.X + Xcg + Y * Basis.V.Y + Xcg + Z * Basis.V.Z
-            Zcg = Offset.Z + X * Basis.W.X + Xcg + Y * Basis.W.Y + Xcg + Z * Basis.W.Z
+            Xcg = Offset.X + X * Basis.U.X + Y * Basis.U.Y + Z * Basis.U.Z
+            Ycg = Offset.Y + X * Basis.V.X + Y * Basis.V.Y + Z * Basis.V.Z
+            Zcg = Offset.Z + X * Basis.W.X + Y * Basis.W.Y + Z * Basis.W.Z
 
             Dim I As InertialProperties
 

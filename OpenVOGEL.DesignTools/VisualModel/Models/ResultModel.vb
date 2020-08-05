@@ -234,8 +234,8 @@ Namespace VisualModel.Models
 
             If Settings.AnalysisType = CalculationType.Aeroelastic Then
                 Settings.AeroelasticHistogram.Generate(Settings.StreamVelocity,
-                                                                 Settings.Interval,
-                                                                 Settings.SimulationSteps)
+                                                       Settings.Interval,
+                                                       Settings.SimulationSteps)
             End If
 
             ' Read motion

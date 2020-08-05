@@ -212,10 +212,10 @@
     <Compile Include="GraphicInterface\Forms\FormSettings.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="GraphicInterface\UserControls\ForcesPanel.Designer.vb">
-      <DependentUpon>ForcesPanel.vb</DependentUpon>
+    <Compile Include="GraphicInterface\UserControls\AirloadsPanel.Designer.vb">
+      <DependentUpon>AirloadsPanel.vb</DependentUpon>
     </Compile>
-    <Compile Include="GraphicInterface\UserControls\ForcesPanel.vb">
+    <Compile Include="GraphicInterface\UserControls\AirloadsPanel.vb">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="GraphicInterface\UserControls\GroupPanel.Designer.vb">
@@ -349,8 +349,8 @@
     <EmbeddedResource Include="GraphicInterface\Forms\FormSettings.resx">
       <DependentUpon>FormSettings.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="GraphicInterface\UserControls\ForcesPanel.resx">
-      <DependentUpon>ForcesPanel.vb</DependentUpon>
+    <EmbeddedResource Include="GraphicInterface\UserControls\AirloadsPanel.resx">
+      <DependentUpon>AirloadsPanel.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GraphicInterface\UserControls\GroupPanel.resx">
       <DependentUpon>GroupPanel.vb</DependentUpon>

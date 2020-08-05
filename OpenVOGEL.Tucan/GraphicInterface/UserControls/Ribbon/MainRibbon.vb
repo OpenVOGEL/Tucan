@@ -1568,9 +1568,11 @@ ErrSub:
     Private Sub btnReport_Click(sender As Object, e As EventArgs) Handles btnReport.Click
 
         If ProjectRoot.Initialized Then
+
             If FormReport.Visible Then
                 FormReport.Hide()
             Else
+
                 If CalculationBussy Then
                     MsgBox("Please, wait until the calculation is done.")
                 Else
@@ -1590,7 +1592,9 @@ ErrSub:
                     End If
 
                 End If
+
             End If
+
         End If
 
     End Sub
