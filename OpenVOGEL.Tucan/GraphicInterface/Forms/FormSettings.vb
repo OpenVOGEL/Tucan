@@ -133,8 +133,8 @@ Public Class FormSettings
 
     Private Sub btnISA_Click(sender As Object, e As EventArgs) Handles btnISA.Click
 
-        If FormISA.ShowDialog = DialogResult.OK Then
-            FormISA.GetSettings(LocalSettings)
+        If FormAtmosphere.ShowDialog = DialogResult.OK Then
+            FormAtmosphere.GetSettings(LocalSettings)
             SetSettings()
         End If
 

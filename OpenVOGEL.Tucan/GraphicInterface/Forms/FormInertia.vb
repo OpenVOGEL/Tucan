@@ -77,4 +77,13 @@ Public Class FormInertia
 
     End Function
 
+    Private Sub FormInertia_FormClosing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
+
+        If e.CloseReason = CloseReason.UserClosing Then
+            e.Cancel = True
+            Hide()
+        End If
+
+    End Sub
+
 End Class

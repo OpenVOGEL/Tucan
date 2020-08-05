@@ -116,7 +116,7 @@ Partial Class FormReport
         '
         Me.tbTotalLoads.Location = New System.Drawing.Point(4, 22)
         Me.tbTotalLoads.Name = "tbTotalLoads"
-        Me.tbTotalLoads.Size = New System.Drawing.Size(624, 351)
+        Me.tbTotalLoads.Size = New System.Drawing.Size(624, 388)
         Me.tbTotalLoads.TabIndex = 3
         Me.tbTotalLoads.Text = "Total aerodynamic loads"
         Me.tbTotalLoads.UseVisualStyleBackColor = True
@@ -128,7 +128,7 @@ Partial Class FormReport
         Me.tbLoads.Location = New System.Drawing.Point(4, 22)
         Me.tbLoads.Name = "tbLoads"
         Me.tbLoads.Padding = New System.Windows.Forms.Padding(3)
-        Me.tbLoads.Size = New System.Drawing.Size(624, 351)
+        Me.tbLoads.Size = New System.Drawing.Size(624, 388)
         Me.tbLoads.TabIndex = 0
         Me.tbLoads.Text = "By component"
         '
@@ -138,7 +138,7 @@ Partial Class FormReport
         Me.tbRaw.Location = New System.Drawing.Point(4, 22)
         Me.tbRaw.Name = "tbRaw"
         Me.tbRaw.Padding = New System.Windows.Forms.Padding(3)
-        Me.tbRaw.Size = New System.Drawing.Size(624, 351)
+        Me.tbRaw.Size = New System.Drawing.Size(624, 388)
         Me.tbRaw.TabIndex = 2
         Me.tbRaw.Text = "Raw data"
         Me.tbRaw.UseVisualStyleBackColor = True
@@ -152,7 +152,7 @@ Partial Class FormReport
         Me.tbRawData.Location = New System.Drawing.Point(3, 3)
         Me.tbRawData.Margin = New System.Windows.Forms.Padding(60)
         Me.tbRawData.Name = "tbRawData"
-        Me.tbRawData.Size = New System.Drawing.Size(618, 345)
+        Me.tbRawData.Size = New System.Drawing.Size(618, 382)
         Me.tbRawData.TabIndex = 3
         Me.tbRawData.Text = ""
         '
@@ -176,6 +176,8 @@ Partial Class FormReport
         Me.Controls.Add(Me.tcResults)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
+        Me.MaximizeBox = False
+        Me.MinimizeBox = False
         Me.Name = "FormReport"
         Me.Padding = New System.Windows.Forms.Padding(2)
         Me.ShowIcon = False

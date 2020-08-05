@@ -146,10 +146,10 @@
     <Compile Include="GraphicInterface\Forms\FormInertia.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="GraphicInterface\Forms\FormISA.Designer.vb">
-      <DependentUpon>FormISA.vb</DependentUpon>
+    <Compile Include="GraphicInterface\Forms\FormAtmosphere.Designer.vb">
+      <DependentUpon>FormAtmosphere.vb</DependentUpon>
     </Compile>
-    <Compile Include="GraphicInterface\Forms\FormISA.vb">
+    <Compile Include="GraphicInterface\Forms\FormAtmosphere.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="GraphicInterface\Forms\StartupScreen.designer.vb">
@@ -313,8 +313,11 @@
     <EmbeddedResource Include="GraphicInterface\Forms\FormAttitude.resx">
       <DependentUpon>FormAttitude.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="GraphicInterface\Forms\FormISA.resx">
-      <DependentUpon>FormISA.vb</DependentUpon>
+    <EmbeddedResource Include="GraphicInterface\Forms\FormInertia.resx">
+      <DependentUpon>FormInertia.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GraphicInterface\Forms\FormAtmosphere.resx">
+      <DependentUpon>FormAtmosphere.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GraphicInterface\Forms\StartupScreen.ig.resx">
       <DependentUpon>StartupScreen.vb</DependentUpon>

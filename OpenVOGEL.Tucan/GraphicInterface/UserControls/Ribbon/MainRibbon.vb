@@ -1809,7 +1809,7 @@ ErrSub:
 
     Private Sub btnISA_Click(sender As Object, e As EventArgs) Handles btnISA.Click
 
-        Dim FormISA As New FormISA
+        Dim FormISA As New FormAtmosphere
         If (FormISA.ShowDialog()) = DialogResult.OK Then
 
             FormISA.GetSettings(ProjectRoot.SimulationSettings)

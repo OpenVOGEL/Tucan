@@ -19,7 +19,7 @@ Imports OpenVOGEL.AeroTools.CalculationModel.Settings
 Imports OpenVOGEL.DesignTools.DataStore
 Imports OpenVOGEL.MathTools.Magnitudes
 
-Public Class FormISA
+Public Class FormAtmosphere
 
     Private rbPressure As ResultBox
     Private rbDensity As ResultBox
@@ -127,6 +127,15 @@ Public Class FormISA
         Catch ex As Exception
             MessageBox.Show("Enter a valid Altitude setting")
         End Try
+
+    End Sub
+
+    Private Sub FormAtmosphere_FormClosing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
+
+        If e.CloseReason = CloseReason.UserClosing Then
+            e.Cancel = True
+            Hide()
+        End If
 
     End Sub
 

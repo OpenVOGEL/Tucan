@@ -203,4 +203,13 @@ Public Class FormReport
 
     End Sub
 
+    Private Sub FormReport_FormClosing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
+
+        If e.CloseReason = CloseReason.UserClosing Then
+            e.Cancel = True
+            Hide()
+        End If
+
+    End Sub
+
 End Class
