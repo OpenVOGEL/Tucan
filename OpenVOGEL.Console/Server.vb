@@ -67,30 +67,27 @@ Public Module Server
                     Case "steady"
 
                         If Commands.Count > 1 Then
+                            System.Console.WriteLine("Steady state requested")
+                            DataStore.FilePath = Commands(1)
+                            RunCalculation(Settings.CalculationType.SteadyState)
+                        End If
 
-                            Dim Squeaker As New UdpClient
-                            Dim CalculationCore As New Solver.Solver
+                    ' Run free flight simulation
+                    Case "free_flight"
 
-                            Try
+                        If Commands.Count > 1 Then
+                            System.Console.WriteLine("Free flight simulation requested")
+                            DataStore.FilePath = Commands(1)
+                            RunCalculation(Settings.CalculationType.FreeFlight)
+                        End If
 
-                                Squeaker.Client.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, True)
-                                Squeaker.Connect("localhost", 11001)
+                    ' Run free flight simulation
+                    Case "aeroelastic"
 
-                                ' Perform calculation
-                                System.Console.WriteLine("Steady state requested")
-                                DataStore.FilePath = Commands(1)
-                                DataStore.ProjectRoot.RestartProject()
-                                DataStore.ProjectRoot.ReadFromXML()
-                                DataStore.StartCalculation(Settings.CalculationType.SteadyState, CalculationCore)
-
-                            Finally
-
-                                Squeak(Squeaker, "done;" & CalculationCore.BaseDirectoryPath)
-                                Squeaker.Close()
-
-                            End Try
-
-
+                        If Commands.Count > 1 Then
+                            System.Console.WriteLine("Aeroelastic simulation requested")
+                            DataStore.FilePath = Commands(1)
+                            RunCalculation(Settings.CalculationType.Aeroelastic)
                         End If
 
                 End Select
@@ -100,6 +97,31 @@ Public Module Server
         End While
 
         Receiver.Close()
+
+    End Sub
+
+    Private Sub RunCalculation(Type As Settings.CalculationType)
+
+        Dim Squeaker As New UdpClient
+        Dim CalculationCore As New Solver.Solver
+
+        Try
+
+            Squeaker.Client.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, True)
+            Squeaker.Connect("localhost", 11001)
+
+            ' Perform calculation
+
+            DataStore.ProjectRoot.RestartProject()
+            DataStore.ProjectRoot.ReadFromXML()
+            DataStore.StartCalculation(Type, CalculationCore)
+
+        Finally
+
+            Squeak(Squeaker, "done;" & CalculationCore.BaseDirectoryPath)
+            Squeaker.Close()
+
+        End Try
 
     End Sub
 
