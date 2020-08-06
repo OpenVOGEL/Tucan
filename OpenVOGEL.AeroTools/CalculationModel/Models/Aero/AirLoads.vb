@@ -187,6 +187,10 @@ Namespace CalculationModel.Models.Aero
 
         End Sub
 
+        ''' <summary>
+        ''' Applies the transformation to all vectors
+        ''' </summary>
+        ''' <param name="Base"></param>
         Public Sub Transform(Base As Base3)
 
             Force.Transform(Base)
@@ -206,6 +210,10 @@ Namespace CalculationModel.Models.Aero
 
         End Sub
 
+        ''' <summary>
+        ''' Applies the anti transformation to all vectors
+        ''' </summary>
+        ''' <param name="Base"></param>
         Public Sub AntiTransform(Base As Base3)
 
             Force.AntiTransform(Base)
@@ -226,7 +234,7 @@ Namespace CalculationModel.Models.Aero
         End Sub
 
         ''' <summary>
-        ''' Writes the airloads data to a binary stream.
+        ''' Writes the airloads data to a binary stream
         ''' </summary>
         ''' <param name="w"></param>
         Public Sub WriteBinary(ByRef w As BinaryWriter)

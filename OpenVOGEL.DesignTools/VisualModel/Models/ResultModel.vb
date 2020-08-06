@@ -353,14 +353,15 @@ Namespace VisualModel.Models
                     Case CalculationType.FreeFlight
 
                         If MotionData IsNot Nothing Then
+
                             Dim State As Variable = MotionData.State(FrameIndex)
-                            Frame.StreamVelocity.X = State.Vx
-                            Frame.StreamVelocity.Y = State.Vy
-                            Frame.StreamVelocity.Z = State.Vz
+                            Frame.StreamVelocity.X = -State.Vx
+                            Frame.StreamVelocity.Y = -State.Vy
+                            Frame.StreamVelocity.Z = -State.Vz
                             Frame.StreamVelocity.AntiTransform(Settings.InertialBasis)
-                            Frame.StreamRotation.X = State.Ox
-                            Frame.StreamRotation.Y = State.Oy
-                            Frame.StreamRotation.Z = State.Oz
+                            Frame.StreamRotation.X = -State.Ox
+                            Frame.StreamRotation.Y = -State.Oy
+                            Frame.StreamRotation.Z = -State.Oz
                             Frame.StreamRotation.AntiTransform(Settings.InertialBasis)
 
                             ' Assign the orientation in Tait-Bryan angles
@@ -407,6 +408,8 @@ Namespace VisualModel.Models
                 Frame.TotalAirLoads.Area = 1.0#
                 Frame.TotalAirLoads.Length = 1.0#
                 Frame.TotalAirLoads.DynamicPressure = 0.5 * Settings.Density * Frame.StreamVelocity.SquareEuclideanNorm
+                Frame.TotalAirLoads.Alfa = Math.Atan2(Frame.StreamVelocity.Z, Frame.StreamVelocity.X)
+                Frame.TotalAirLoads.Beta = Math.Atan2(Frame.StreamVelocity.Y, Frame.StreamVelocity.X)
 
                 FrameIndex += 1
 
@@ -626,7 +629,7 @@ Namespace VisualModel.Models
                 Next
 
                 '------------------------'
-                ' Load the fixed vectors '
+                ' Load the airloads      '
                 '------------------------'
 
                 Dim Loads As New PartialAirLoads
@@ -637,14 +640,14 @@ Namespace VisualModel.Models
                 Loads.AirLoads = Lattice.AirLoads
                 Frame.TotalAirLoads.Add(Lattice.AirLoads)
 
+                '------------------------'
+                ' Load the fixed vectors '
+                '------------------------'
+
                 For Each Stripe In Lattice.ChordWiseStripes
 
-                    'Stripe.Compute(Frame.StreamVelocity,
-                    '               Frame.StreamRotation,
-                    '               Settings.Density,
-                    '               Settings.Viscocity)
-
                     Stripe.CenterPoint.AntiTransform(Settings.InertialBasis)
+                    Stripe.ChordWiseVector.AntiTransform(Settings.InertialBasis)
 
                     Stripe.Lift.AntiTransform(Settings.InertialBasis)
                     Stripe.InducedDrag.AntiTransform(Settings.InertialBasis)
