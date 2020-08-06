@@ -100,10 +100,10 @@ Namespace CalculationModel.Settings
         Public Property SimulationSteps As Integer = 1
 
         ''' <summary>
-        ''' The gravity vector
+        ''' The gravity intensity (assumed in the global Z direction)
         ''' </summary>
         ''' <returns></returns>
-        Public Property Gravity As New Vector3(0.0, 0.0, -9.8)
+        Public Property Gravity As Double = -9.8
 
         ''' <summary>
         ''' The model mass in kg

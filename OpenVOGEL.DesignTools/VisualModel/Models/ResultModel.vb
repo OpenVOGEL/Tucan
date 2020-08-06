@@ -367,15 +367,32 @@ Namespace VisualModel.Models
                             ' (yaw, pitch, roll)
                             '------------------------------------------------
 
+                            Dim I As New Vector3
+                            I.X = State.Ix
+                            I.Y = State.Iy
+                            I.Z = State.Iz
+                            I.AntiTransform(Settings.InertialBasis)
+
+                            Dim J As New Vector3
+                            J.X = State.Jx
+                            J.Y = State.Jy
+                            J.Z = State.Jz
+                            J.AntiTransform(Settings.InertialBasis)
+
                             Frame.Orientation.Sequence = RotationSequence.XYZ
-                            Frame.Orientation.R1 = Math.Asin(State.Iy / Math.Sqrt(1 - State.Iz ^ 2))
-                            Frame.Orientation.R2 = Math.Asin(-State.Iz)
-                            Frame.Orientation.R3 = Math.Asin(State.Jz / Math.Sqrt(1 - State.Iz ^ 2))
+                            Frame.Orientation.R1 = Math.Asin(I.Y / Math.Sqrt(1 - I.Z ^ 2))
+                            Frame.Orientation.R2 = Math.Asin(-I.Z)
+                            Frame.Orientation.R3 = Math.Asin(J.Z / Math.Sqrt(1 - I.Z ^ 2))
                             Frame.Orientation.ToDegrees()
+
+                            ' Load position
+                            '--------------------------------------------------
 
                             Frame.Position.X = State.Px
                             Frame.Position.Y = State.Py
                             Frame.Position.Z = State.Pz
+
+                            Frame.Position.AntiTransform(Settings.InertialBasis)
 
                         End If
 
@@ -396,7 +413,9 @@ Namespace VisualModel.Models
             End While
 
             ' Transform the position to the inertial reference frame
+            ' Todo: check this
             '-------------------------------------------------------
+
             If MotionData IsNot Nothing Then
 
                 Dim State As Variable = MotionData.State(FrameIndex - 1)
@@ -406,17 +425,17 @@ Namespace VisualModel.Models
                 Basis.U.X = State.Ix
                 Basis.U.Y = State.Iy
                 Basis.U.Z = State.Iz
-                Basis.U.Normalize()
+                Basis.U.AntiTransform(Settings.InertialBasis)
 
                 Basis.V.X = State.Jx
                 Basis.V.Y = State.Jy
                 Basis.V.Z = State.Jz
-                Basis.V.Normalize()
+                Basis.V.AntiTransform(Settings.InertialBasis)
 
                 Basis.W.FromVectorProduct(Basis.U, Basis.V)
 
                 For Each Frame In Frames
-                    Frame.Position.AntiTransform(Basis)
+                    Frame.Position.Transform(Basis)
                 Next
 
             End If
@@ -620,10 +639,12 @@ Namespace VisualModel.Models
 
                 For Each Stripe In Lattice.ChordWiseStripes
 
-                    Stripe.Compute(Frame.StreamVelocity,
-                                   Frame.StreamRotation,
-                                   Settings.Density,
-                                   Settings.Viscocity)
+                    'Stripe.Compute(Frame.StreamVelocity,
+                    '               Frame.StreamRotation,
+                    '               Settings.Density,
+                    '               Settings.Viscocity)
+
+                    Stripe.CenterPoint.AntiTransform(Settings.InertialBasis)
 
                     Stripe.Lift.AntiTransform(Settings.InertialBasis)
                     Stripe.InducedDrag.AntiTransform(Settings.InertialBasis)
@@ -657,7 +678,7 @@ Namespace VisualModel.Models
                         Loads.MaximumInducedDrag = Math.Max(Loads.MaximumInducedDrag, Stripe.InducedDragCoefficient)
                     End If
 
-                    ' Skin drag vectors
+                    ' Skin drag  vectors
                     '-----------------------------------
                     If Stripe.SkinDrag.EuclideanNorm > 0.0 Then
                         Dim DragVector As New FixedVector

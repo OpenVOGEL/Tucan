@@ -69,6 +69,7 @@ Namespace CalculationModel.Solver
 
             ' Lattices
             '----------------------------
+
             For Each Lattice In Lattices
 
                 For Each Node In Lattice.Nodes
@@ -88,10 +89,14 @@ Namespace CalculationModel.Solver
             Settings.StreamVelocity.Transform(Settings.InertialBasis)
             Settings.StreamRotation.SetToCero()
 
-            ' Gravity
-            '----------------------------
+            ' Reference basis (horizontal plane)
+            '-----------------------------------
 
-            Settings.Gravity.Transform(Settings.InertialBasis)
+            Dim ReferenceBasis As New Base3
+            ReferenceBasis.CanonicalBase()
+            ReferenceBasis.U.Transform(Settings.InertialBasis)
+            ReferenceBasis.V.Transform(Settings.InertialBasis)
+            ReferenceBasis.W.Transform(Settings.InertialBasis)
 
             '#############################################
             ' Build integrator
@@ -103,7 +108,8 @@ Namespace CalculationModel.Solver
                                           Settings.Interval,
                                          -Settings.StreamVelocity,
                                           Settings.StreamRotation,
-                                          Settings.Gravity)
+                                          Settings.Gravity,
+                                          ReferenceBasis)
 
             Motion.Mass = Settings.Mass
             Motion.Ixx = Settings.Ixx

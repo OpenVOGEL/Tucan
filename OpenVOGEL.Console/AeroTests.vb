@@ -433,13 +433,15 @@ Public Module AeroTests
 
         Dim V0 As New Vector3(100.0#, 0.0#, 100.0#)
         Dim O0 As New Vector3(0.0#, 0.0#, 0.0#)
-        Dim g As New Vector3(0.0#, 0.0#, -10.0#)
+        Dim g As Double = -10.0#
+        Dim B As New Base3
+        B.CanonicalBase()
 
         Dim N As Integer = 100
         Dim Dt As Double = 0.1
         Dim T As Double = 0.0#
 
-        Dim Solver As New MotionIntegrator(N, Dt, V0, O0, g)
+        Dim Solver As New MotionIntegrator(N, Dt, V0, O0, g, B)
 
         Solver.Mass = 1.0#
         Solver.Ixx = 1.0#
@@ -456,9 +458,9 @@ Public Module AeroTests
 
             Dim AnaliticSolution As Variable
             AnaliticSolution.Vx = V0.X
-            AnaliticSolution.Vz = V0.Z + g.Z * T
+            AnaliticSolution.Vz = V0.Z + g * T
             AnaliticSolution.Px = V0.X * T
-            AnaliticSolution.Pz = V0.Z * T + 0.5 * g.Z * T ^ 2
+            AnaliticSolution.Pz = V0.Z * T + 0.5 * g * T ^ 2
 
             Solver.Predict()
 
@@ -503,7 +505,8 @@ Public Module AeroTests
 
         Dim V0 As New Vector3(1.0#, 0.0#, 0.0#)
         Dim O0 As New Vector3(0.0#, 0.0#, 0.0#)
-        Dim g As New Vector3(0.0#, 0.0#, 0.0#)
+        Dim B As New Base3
+        B.CanonicalBase()
 
         Dim N As Integer = 400
         Dim Dt As Double = 0.025
@@ -523,7 +526,7 @@ Public Module AeroTests
         System.Console.WriteLine(String.Format("Oscillation period = {0,10:E6}s", Td))
         System.Console.WriteLine(String.Format("Test period        = {0,10:E6}s ({1,4:F2} cicles)", N * Dt, N * Dt / Td))
 
-        Dim Solver As New MotionIntegrator(N, Dt, V0, O0, g)
+        Dim Solver As New MotionIntegrator(N, Dt, V0, O0, 0.0#, B)
 
         Solver.Mass = M
         Solver.Ixx = 1.0#

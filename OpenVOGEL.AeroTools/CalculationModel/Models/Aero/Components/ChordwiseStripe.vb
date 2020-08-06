@@ -42,127 +42,65 @@ Namespace CalculationModel.Models.Aero.Components
             Rings = New List(Of VortexRing)
         End Sub
 
-        Private _Area As Double
-
         ''' <summary>
         ''' Returns the area of this portion of wing in m².
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property Area As Double
-            Get
-                Return _Area
-            End Get
-        End Property
-
-        Private _LiftCoefficient As Double
 
         ''' <summary>
         ''' Local lift coefficient in this portion of wing.
         ''' </summary>
         ''' <remarks></remarks>
         Public ReadOnly Property LiftCoefficient As Double
-            Get
-                Return _LiftCoefficient
-            End Get
-        End Property
-
-        Private _InducedDragCoefficient As Double
 
         ''' <summary>
         ''' Local induced drag coefficient in this portion of wing.
         ''' </summary>
         ''' <remarks></remarks>
         Public ReadOnly Property InducedDragCoefficient As Double
-            Get
-                Return _InducedDragCoefficient
-            End Get
-        End Property
-
-        Private _SkinDragCoefficient As Double
 
         ''' <summary>
         ''' Skin drag coefficient in this portion of wing.
         ''' </summary>
         ''' <remarks></remarks>
         Public ReadOnly Property SkinDragCoefficient As Double
-            Get
-                Return _SkinDragCoefficient
-            End Get
-        End Property
-
-        Public _Lift As New Vector3
 
         ''' <summary>
         ''' Total stripe lift in N.
         ''' </summary>
         ''' <remarks></remarks>
-        Public ReadOnly Property Lift As Vector3
-            Get
-                Return _Lift
-            End Get
-        End Property
-
-        Public _InducedDrag As New Vector3
+        Public ReadOnly Property Lift As New Vector3
 
         ''' <summary>
         ''' Total stripe induced drag in N.
         ''' </summary>
         ''' <remarks></remarks>
-        Public ReadOnly Property InducedDrag As Vector3
-            Get
-                Return _InducedDrag
-            End Get
-        End Property
-
-        Public _SkinDrag As New Vector3
+        Public ReadOnly Property InducedDrag As New Vector3
 
         ''' <summary>
         ''' Total stripe induced drag in N.
         ''' </summary>
         ''' <remarks></remarks>
-        Public ReadOnly Property SkinDrag As Vector3
-            Get
-                Return _SkinDrag
-            End Get
-        End Property
-
-        Public _LiftMoment As New Vector3
+        Public ReadOnly Property SkinDrag As New Vector3
 
         ''' <summary>
         ''' Total stripe moment (with respect to the origin) in N.m.
         ''' </summary>
         ''' <remarks></remarks>
-        Public ReadOnly Property LiftMoment As Vector3
-            Get
-                Return _LiftMoment
-            End Get
-        End Property
-
-        Public _InducedDragMoment As New Vector3
+        Public ReadOnly Property LiftMoment As New Vector3
 
         ''' <summary>
         ''' Total stripe moment (with respect to the origin) in N.m.
         ''' </summary>
         ''' <remarks></remarks>
-        Public ReadOnly Property InducedDragMoment As Vector3
-            Get
-                Return _InducedDragMoment
-            End Get
-        End Property
-
-        Public _SkinDragMoment As New Vector3
+        Public ReadOnly Property InducedDragMoment As New Vector3
 
         ''' <summary>
         ''' Total stripe moment (with respect to the origin) in N.m.
         ''' </summary>
         ''' <remarks></remarks>
-        Public ReadOnly Property SkinDragMoment As Vector3
-            Get
-                Return _SkinDragMoment
-            End Get
-        End Property
-
-        Private _Chord As Double
+        Public ReadOnly Property SkinDragMoment As New Vector3
 
         ''' <summary>
         ''' Stripe chord in meters.
@@ -171,12 +109,6 @@ Namespace CalculationModel.Models.Aero.Components
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public ReadOnly Property Chord As Double
-            Get
-                Return _Chord
-            End Get
-        End Property
-
-        Private _ChordWiseVector As New Vector3
 
         ''' <summary>
         ''' Vector having the direction of the chord.
@@ -184,13 +116,7 @@ Namespace CalculationModel.Models.Aero.Components
         ''' <value></value>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public ReadOnly Property ChordWiseVector
-            Get
-                Return _ChordWiseVector
-            End Get
-        End Property
-
-        Private _CenterPoint As New Vector3
+        Public ReadOnly Property ChordWiseVector As New Vector3
 
         ''' <summary>
         ''' Point located at the geometric center of the chordwise stripe.
@@ -198,11 +124,7 @@ Namespace CalculationModel.Models.Aero.Components
         ''' <value></value>
         ''' <returns></returns>
         ''' <remarks>Coordinates are always in meters.</remarks>
-        Public ReadOnly Property CenterPoint As Vector3
-            Get
-                Return _CenterPoint
-            End Get
-        End Property
+        Public ReadOnly Property CenterPoint As New Vector3
 
         ''' <summary>
         ''' Calculates the stripe lift, drag and area. 
@@ -324,85 +246,137 @@ Namespace CalculationModel.Models.Aero.Components
         ''' <summary>
         ''' Reads the chordwise link data from a binary stream.
         ''' </summary>
-        ''' <param name="r"></param>
+        ''' <param name="Reader"></param>
         ''' <param name="Rings"></param>
-        ''' <param name="PolarDB"></param>
-        Sub ReadBinary(ByRef r As BinaryReader, ByRef Rings As List(Of VortexRing), ByRef PolarDB As PolarDatabase)
+        ''' <param name="PolarData"></param>
+        Sub ReadBinary(ByRef Reader As BinaryReader, ByRef Rings As List(Of VortexRing), ByRef PolarData As PolarDatabase)
             Try
                 ' Rings
                 '-----------------------------------
-                For i = 1 To r.ReadInt32
-                    Me.Rings.Add(Rings(r.ReadInt32))
+                For i = 1 To Reader.ReadInt32
+                    Me.Rings.Add(Rings(Reader.ReadInt32))
                 Next
 
                 ' Polar id
                 '-----------------------------------
-                Dim polarID = New Guid(r.ReadString())
-                Polars = PolarDB.GetFamilyFromID(polarID)
+                Dim PolarId = New Guid(Reader.ReadString())
+                Polars = PolarData.GetFamilyFromID(PolarId)
 
-                ' Forces
+                ' Geometric properties
                 '-----------------------------------
+
+                _Chord = Reader.ReadDouble
+                _Area = Reader.ReadDouble
+
+                _ChordWiseVector.X = Reader.ReadDouble
+                _ChordWiseVector.Y = Reader.ReadDouble
+                _ChordWiseVector.Z = Reader.ReadDouble
+
+                _CenterPoint.X = Reader.ReadDouble
+                _CenterPoint.Y = Reader.ReadDouble
+                _CenterPoint.Z = Reader.ReadDouble
+
+                ' Forces and moments
+                '-----------------------------------
+
+                _Lift.X = Reader.ReadDouble
+                _Lift.Y = Reader.ReadDouble
+                _Lift.Z = Reader.ReadDouble
+                _LiftCoefficient = Reader.ReadDouble
+
+                _InducedDrag.X = Reader.ReadDouble
+                _InducedDrag.Y = Reader.ReadDouble
+                _InducedDrag.Z = Reader.ReadDouble
+                _InducedDragCoefficient = Reader.ReadDouble
+
+                _SkinDrag.X = Reader.ReadDouble
+                _SkinDrag.Y = Reader.ReadDouble
+                _SkinDrag.Z = Reader.ReadDouble
+                _SkinDragCoefficient = Reader.ReadDouble
+
+                _LiftMoment.X = Reader.ReadDouble
+                _LiftMoment.Y = Reader.ReadDouble
+                _LiftMoment.Z = Reader.ReadDouble
+
+                _InducedDragMoment.X = Reader.ReadDouble
+                _InducedDragMoment.Y = Reader.ReadDouble
+                _InducedDragMoment.Z = Reader.ReadDouble
+
+                _SkinDragMoment.X = Reader.ReadDouble
+                _SkinDragMoment.Y = Reader.ReadDouble
+                _SkinDragMoment.Z = Reader.ReadDouble
 
             Catch ex As Exception
                 Me.Rings.Clear()
             End Try
+
         End Sub
 
         ''' <summary>
         ''' Writes the chordwise link data to a binary stream.
         ''' </summary>
-        ''' <param name="w"></param>
-        Sub WriteBinary(ByRef w As BinaryWriter)
+        ''' <param name="Writer"></param>
+        Sub WriteBinary(ByRef Writer As BinaryWriter)
 
             ' Rings
             '-----------------------------------
-            w.Write(Rings.Count)
+            Writer.Write(Rings.Count)
 
             For Each Ring In Rings
-                w.Write(Ring.IndexL)
+                Writer.Write(Ring.IndexL)
             Next
 
             ' Polar id
             '-----------------------------------
             If IsNothing(Polars) Then
-                w.Write(Guid.Empty.ToString)
+                Writer.Write(Guid.Empty.ToString)
             Else
-                w.Write(Polars.ID.ToString)
+                Writer.Write(Polars.ID.ToString)
             End If
 
-            ' Forces
+            ' Geometric properties
             '-----------------------------------
 
-            'w.Write(CenterPoint.X)
-            'w.Write(CenterPoint.Y)
-            'w.Write(CenterPoint.Z)
-            '
-            'w.Write(Lift.X)
-            'w.Write(Lift.Y)
-            'w.Write(Lift.Z)
-            'w.Write(LiftCoefficient)
-            '
-            'w.Write(InducedDrag.X)
-            'w.Write(InducedDrag.Y)
-            'w.Write(InducedDrag.Z)
-            'w.Write(InducedDragCoefficient)
-            '
-            'w.Write(SkinDrag.X)
-            'w.Write(SkinDrag.Y)
-            'w.Write(SkinDrag.Z)
-            'w.Write(SkinDragCoefficient)
-            '
-            'w.Write(LiftMoment.X)
-            'w.Write(LiftMoment.Y)
-            'w.Write(LiftMoment.Z)
-            '
-            'w.Write(InducedDragMoment.X)
-            'w.Write(InducedDragMoment.Y)
-            'w.Write(InducedDragMoment.Z)
-            '
-            'w.Write(SkinDragMoment.X)
-            'w.Write(SkinDragMoment.Y)
-            'w.Write(SkinDragMoment.Z)
+            Writer.Write(Chord)
+            Writer.Write(Area)
+
+            Writer.Write(ChordWiseVector.X)
+            Writer.Write(ChordWiseVector.Y)
+            Writer.Write(ChordWiseVector.Z)
+
+            Writer.Write(CenterPoint.X)
+            Writer.Write(CenterPoint.Y)
+            Writer.Write(CenterPoint.Z)
+
+            ' Forces and moments
+            '-----------------------------------
+
+            Writer.Write(Lift.X)
+            Writer.Write(Lift.Y)
+            Writer.Write(Lift.Z)
+            Writer.Write(LiftCoefficient)
+
+            Writer.Write(InducedDrag.X)
+            Writer.Write(InducedDrag.Y)
+            Writer.Write(InducedDrag.Z)
+            Writer.Write(InducedDragCoefficient)
+
+            Writer.Write(SkinDrag.X)
+            Writer.Write(SkinDrag.Y)
+            Writer.Write(SkinDrag.Z)
+            Writer.Write(SkinDragCoefficient)
+
+            Writer.Write(LiftMoment.X)
+            Writer.Write(LiftMoment.Y)
+            Writer.Write(LiftMoment.Z)
+
+            Writer.Write(InducedDragMoment.X)
+            Writer.Write(InducedDragMoment.Y)
+            Writer.Write(InducedDragMoment.Z)
+
+            Writer.Write(SkinDragMoment.X)
+            Writer.Write(SkinDragMoment.Y)
+            Writer.Write(SkinDragMoment.Z)
 
         End Sub
 

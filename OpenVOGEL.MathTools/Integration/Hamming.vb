@@ -305,39 +305,46 @@ Namespace Integration
         ''' <summary>
         ''' Creates a new integrator for N time steps and the given initial conditions.
         ''' </summary>
-        ''' <param name="N">Number of time steps</param>
-        ''' <param name="V0"></param>
-        ''' <param name="O0"></param>
-        Public Sub New(N As Integer, T As Double, V0 As Vector3, O0 As Vector3, Gravity As Vector3)
+        ''' <param name="Size">Number of time steps</param>
+        ''' <param name="InitialVelocity"></param>
+        ''' <param name="InitialRotation"></param>
+        ''' <param name="Gravity"></param>
+        ''' <param name="Basis"></param>
+        Public Sub New(Size As Integer,
+                       Interval As Double,
+                       InitialVelocity As Vector3,
+                       InitialRotation As Vector3,
+                       Gravity As Double,
+                       Basis As Base3)
 
             _Velocity = New Vector3
             _Rotation = New Vector3
 
-            ReDim X(N)
-            ReDim TE(N)
-            ReDim DX(N)
+            ReDim X(Size)
+            ReDim TE(Size)
+            ReDim DX(Size)
 
-            Dt = T
+            Dt = Interval
 
-            X(0).Vx = V0.X
-            X(0).Vy = V0.Y
-            X(0).Vz = V0.Z
+            X(0).Vx = InitialVelocity.X
+            X(0).Vy = InitialVelocity.Y
+            X(0).Vz = InitialVelocity.Z
 
-            X(0).Ox = O0.X
-            X(0).Oy = O0.Y
-            X(0).Oz = O0.Z
+            X(0).Ox = InitialRotation.X
+            X(0).Oy = InitialRotation.Y
+            X(0).Oz = InitialRotation.Z
 
-            X(0).Gx = Gravity.X
-            X(0).Gy = Gravity.Y
-            X(0).Gz = Gravity.Z
+            X(0).Gx = Gravity * Basis.W.X
+            X(0).Gy = Gravity * Basis.W.Y
+            X(0).Gz = Gravity * Basis.W.Z
 
-            X(0).Ix = 1.0#
-            X(0).Iy = 0.0#
-            X(0).Iz = 0.0#
+            X(0).Ix = Basis.U.X
+            X(0).Iy = Basis.U.Y
+            X(0).Iz = Basis.U.Z
 
-            X(0).Jx = 0.0#
-            X(0).Jy = 1.0#
-            X(0).Jz = 0.0#
+            X(0).Jx = Basis.V.X
+            X(0).Jy = Basis.V.Y
+            X(0).Jz = Basis.V.Z
 
             S = 0
             I = 0
