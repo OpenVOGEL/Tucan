@@ -992,7 +992,7 @@ Namespace VisualModel.Models.Components
 
                                 For j = 0 To nps
 
-                                    Dim s As Double = Grids(i).Nodes(o + j).Y + (Grids(i + 1).Nodes(j).Y - Grids(i).Nodes(o + j).Y) * j / nps
+                                    Dim s As Double = Grids(i).Nodes(o + j).Y + (Grids(i + 1).Nodes(j).Y - Grids(i).Nodes(o + j).Y) * k / nz
 
                                     Mesh.Nodes.Add(New NodalPoint(GetPoint(z, s)))
 

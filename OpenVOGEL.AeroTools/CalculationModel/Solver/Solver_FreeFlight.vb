@@ -182,7 +182,7 @@ Namespace CalculationModel.Solver
                     Dim Converged As Boolean = False
                     Dim Finalized As Boolean = False
 
-                    For IterStep = 0 To Settings.CorrectionSteps ' (replace with maximum number of iterations)
+                    For IterStep = 0 To Settings.CorrectionSteps
 
                         If IterStep = 0 Then
 

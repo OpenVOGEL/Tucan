@@ -525,7 +525,7 @@ Namespace CalculationModel.Models.Aero.Components
                                        ByVal Point As Vector3,
                                        Optional ByVal WithS As Boolean = True) Implements VortexRing.AddSourceVelocityInfluence
 
-            ' Convert the point to local coordinates (center on the control point and using the local basis)
+            ' Convert the point to local coordinates (center on the control point + using the local basis)
 
             Dim dx = Point.X - _MidleControlPoint.X
             Dim dy = Point.Y - _MidleControlPoint.Y
