@@ -166,7 +166,7 @@ Public Class MainForm
 
         If WingControlPanel Is Nothing Then
             WingControlPanel = New WingControl
-            AddHandler WingControlPanel.RefreshGL, AddressOf ModelInterface.RefreshOnGL
+            AddHandler WingControlPanel.RefreshModelView, AddressOf ModelInterface.RefreshOnGL
             AddHandler WingControlPanel.OnClose, AddressOf ContractLeftPanel
         End If
 
@@ -175,7 +175,7 @@ Public Class MainForm
     Public Sub ShowLiftingSurfaceEditor(Surface As LiftingSurface)
 
         SetUpLiftingSurfaceEditor()
-        WingControlPanel.InitializeControl(Surface, ProjectRoot.Model.PolarDataBase)
+        WingControlPanel.InitializeControl(Surface)
         WingControlPanel.Parent = scMain.Panel1
         scMain.Panel1Collapsed = False
         scMain.SplitterDistance = WingControlPanel.Width
@@ -405,6 +405,18 @@ Public Class MainForm
                                                            ProjectRoot.Model.Objects(SelectedItem.ComponentIndex).Name,
                                                            ProjectRoot.Model.Objects(SelectedItem.ComponentIndex).Mesh.Panels(SelectedItem.EntityIndex).IsSlender,
                                                            ProjectRoot.Model.Objects(SelectedItem.ComponentIndex).Mesh.Panels(SelectedItem.EntityIndex).IsPrimitive)
+
+                            If SelectedItem.ComponentType = ComponentTypes.etLiftingSurface And WingControlPanel IsNot Nothing Then
+
+                                WingControlPanel.InitializeControl(ProjectRoot.Model.Objects(SelectedItem.ComponentIndex))
+
+                            Else
+
+                                ContractLeftPanel()
+
+                            End If
+
+                            KeepSearching = False
 
                             Exit For
 

@@ -15,8 +15,8 @@
 'You should have received a copy Of the GNU General Public License
 'along with this program.  If Not, see < http:  //www.gnu.org/licenses/>.
 
-Imports OpenVOGEL.AeroTools.CalculationModel.Models.Structural
 Imports DotNumerics.LinearAlgebra
+Imports OpenVOGEL.AeroTools.CalculationModel.Models.Structural
 Imports OpenVOGEL.AeroTools.CalculationModel.Models.Structural.Library
 Imports OpenVOGEL.AeroTools.CalculationModel.Settings
 
@@ -293,7 +293,7 @@ Namespace CalculationModel.Solver
 
                     ' The system is in dynamic equilibrium
 
-                    RaiseEvent PushMessage(String.Format("Convergence reached {0:P3}", Level))
+                    RaiseEvent PushMessage(String.Format("Convergence reached {0:P5}", Level))
 
                     '//////////////'
                     ' Convect wake '

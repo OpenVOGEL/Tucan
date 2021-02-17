@@ -70,6 +70,12 @@ Namespace CalculationModel.Models.Structural.Library
         ''' <remarks></remarks>
         Public A As Double
 
+        ''' <summary>
+        ''' The virtual work
+        ''' </summary>
+        ''' <remarks></remarks>
+        Public W As Double
+
     End Class
 
     Public Class ModalCoordinates

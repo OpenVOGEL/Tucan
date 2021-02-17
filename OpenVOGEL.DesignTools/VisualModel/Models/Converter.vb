@@ -377,6 +377,7 @@ Namespace VisualModel.Models
                     StrElement.NodeA = StructuralLink.StructuralCore.Nodes(StrNodeCount - 1)
                     StrElement.NodeB = StructuralLink.StructuralCore.Nodes(StrNodeCount)
                     StrElement.Section.Assign(Surface.StructuralPartition(StrElementCount).LocalSection)
+                    If (Mirror) Then StrElement.Section.CMy *= -1.0
                     StructuralLink.StructuralCore.Elements.Add(StrElement)
 
                     ' Add kinematic link:
@@ -426,7 +427,9 @@ Namespace VisualModel.Models
                     StrElement.Basis.W.FromVectorProduct(ChordVector, StrElement.Basis.U)
                     StrElement.Basis.W.Normalize()
 
-                    ' NOTE: V is normal to W and U, and points to the trailing edge
+                    ' NOTE: V is normal to W and U, and points to the trailing edge for the 
+                    ' original part and to the leading edge on the mirror.
+                    ' That is why CMy is opposed for the mirror.
 
                     StrElement.Basis.V.FromVectorProduct(StrElement.Basis.W, StrElement.Basis.U)
 

@@ -15,8 +15,6 @@
 'You should have received a copy Of the GNU General Public License
 'along with this program.  If Not, see < http:  //www.gnu.org/licenses/>.
 
-Imports OpenVOGEL.AeroTools
-Imports OpenVOGEL.AeroTools.CalculationModel.Models.Structural
 Imports OpenVOGEL.AeroTools.CalculationModel.Models.Structural.Library
 Imports OpenVOGEL.DesignTools.DataStore
 
@@ -47,7 +45,7 @@ Public Class FormReport
 
         Dim Title As New DataVisualization.Charting.Title
         Title.Text = "Modal response"
-        cModalResponse.Titles.Add(Title)
+        ChrtModalResponse.Titles.Add(Title)
 
     End Sub
 
@@ -89,30 +87,32 @@ Public Class FormReport
 
         RawResults.AppendLine("« Calculation core data not available »")
 
-        tbRawData.Text = RawResults.ToString
+        TbRawData.Text = RawResults.ToString
 
         If Not IsNothing(Results.AeroelasticResult) Then
 
-            cbLink.Items.Clear()
-            cbModes.Items.Clear()
+            CbLink.Items.Clear()
+            CbModes.Items.Clear()
 
-            Dim slCount As Integer = 0
+            Dim LinksCount As Integer = 0
 
             For Each Link In Results.AeroelasticResult.Links
 
-                cbLink.Items.Add(String.Format("Structural link {0}", slCount))
-                slCount += 1
+                CbLink.Items.Add(String.Format("Structural link {0}", LinksCount))
+                LinksCount += 1
 
             Next
 
-            AddHandler cbLink.SelectedIndexChanged, AddressOf LoadLink
-            AddHandler cbModes.SelectedIndexChanged, AddressOf LoadMode
+            AddHandler CbLink.SelectedIndexChanged, AddressOf LoadLink
+            AddHandler CbModes.SelectedIndexChanged, AddressOf LoadMode
 
-            cbLink.SelectedIndex = 0
+            CbLink.SelectedIndex = 0
+
+            TbModalResponse.Enabled = True
 
         Else
 
-            tbModalResponse.Enabled = False
+            TbModalResponse.Enabled = False
 
         End If
 
@@ -123,19 +123,19 @@ Public Class FormReport
     ''' </summary>
     Private Sub LoadLink()
 
-        If Results.AeroelasticResult IsNot Nothing And cbLink.SelectedIndex >= 0 And cbLink.SelectedIndex < Results.AeroelasticResult.Links.Count Then
+        If Results.AeroelasticResult IsNot Nothing And CbLink.SelectedIndex >= 0 And CbLink.SelectedIndex < Results.AeroelasticResult.Links.Count Then
 
-            Dim LinkResult = Results.AeroelasticResult.Links(cbLink.SelectedIndex)
-            cbModes.Items.Clear()
+            Dim LinkResult = Results.AeroelasticResult.Links(CbLink.SelectedIndex)
+            CbModes.Items.Clear()
 
             Dim Index As Integer = 1
             For Each Mode In LinkResult.Modes
                 Dim Frequency As Double = Mode.W / 2 / Math.PI
-                cbModes.Items.Add(String.Format("Mode {0} - {1,10:F4}Hz", Index, Frequency))
+                CbModes.Items.Add(String.Format("Mode {0} - {1,10:F4}Hz", Index, Frequency))
                 Index += 1
             Next
 
-            If LinkResult.Modes.Count > 0 Then cbModes.SelectedIndex = 0
+            If LinkResult.Modes.Count > 0 Then CbModes.SelectedIndex = 0
 
         End If
 
@@ -148,51 +148,51 @@ Public Class FormReport
     ''' <param name="e"></param>
     Private Sub LoadMode(obj As Object, e As EventArgs)
 
-        If Results.AeroelasticResult IsNot Nothing And cbLink.SelectedIndex >= 0 And cbLink.SelectedIndex < Results.AeroelasticResult.Links.Count Then
+        If Results.AeroelasticResult IsNot Nothing And CbLink.SelectedIndex >= 0 And CbLink.SelectedIndex < Results.AeroelasticResult.Links.Count Then
 
-            Dim LinkResult = Results.AeroelasticResult.Links(cbLink.SelectedIndex)
+            Dim LinkResult = Results.AeroelasticResult.Links(CbLink.SelectedIndex)
 
-            If cbModes.SelectedIndex >= 0 And cbModes.SelectedIndex < LinkResult.Modes.Count Then
+            If CbModes.SelectedIndex >= 0 And CbModes.SelectedIndex < LinkResult.Modes.Count Then
 
-                Dim ModeIndex As Integer = cbModes.SelectedIndex
+                Dim ModeIndex As Integer = CbModes.SelectedIndex
 
                 Dim Frequency As Double = LinkResult.Modes(ModeIndex).W / 2 / Math.PI
 
-                cModalResponse.Series.Clear()
+                ChrtModalResponse.Series.Clear()
 
-                cModalResponse.Series.Add(String.Format("Mode {0} - P - @ {1,10:F4}Hz", ModeIndex, Frequency))
-                cModalResponse.Series(0).ChartType = DataVisualization.Charting.SeriesChartType.Line
-                cModalResponse.Series(0).Color = Color.Blue
-                cModalResponse.Series(0).MarkerStyle = DataVisualization.Charting.MarkerStyle.Circle
-                cModalResponse.Series(0).MarkerSize = 3
-                cModalResponse.Series(0).MarkerColor = Color.Blue
+                ChrtModalResponse.Series.Add(String.Format("Mode {0} - P - @ {1,10:F4}Hz", ModeIndex, Frequency))
+                ChrtModalResponse.Series(0).ChartType = DataVisualization.Charting.SeriesChartType.Line
+                ChrtModalResponse.Series(0).Color = Color.Blue
+                ChrtModalResponse.Series(0).MarkerStyle = DataVisualization.Charting.MarkerStyle.Circle
+                ChrtModalResponse.Series(0).MarkerSize = 3
+                ChrtModalResponse.Series(0).MarkerColor = Color.Blue
 
-                cModalResponse.Series.Add(String.Format("Mode {0} - V - @ {1,10:F4}Hz", ModeIndex, Frequency))
-                cModalResponse.Series(1).ChartType = DataVisualization.Charting.SeriesChartType.Line
-                cModalResponse.Series(1).Color = Color.Green
-                cModalResponse.Series(1).MarkerStyle = DataVisualization.Charting.MarkerStyle.Circle
-                cModalResponse.Series(1).MarkerSize = 3
-                cModalResponse.Series(1).MarkerColor = Color.Green
+                ChrtModalResponse.Series.Add(String.Format("Mode {0} - V - @ {1,10:F4}Hz", ModeIndex, Frequency))
+                ChrtModalResponse.Series(1).ChartType = DataVisualization.Charting.SeriesChartType.Line
+                ChrtModalResponse.Series(1).Color = Color.Green
+                ChrtModalResponse.Series(1).MarkerStyle = DataVisualization.Charting.MarkerStyle.Circle
+                ChrtModalResponse.Series(1).MarkerSize = 3
+                ChrtModalResponse.Series(1).MarkerColor = Color.Green
 
-                cModalResponse.ChartAreas(0).AxisX.Title = "Time [s]"
+                ChrtModalResponse.ChartAreas(0).AxisX.Title = "Time [s]"
                 Dim Space As Double = 10.0# * Results.Settings.Interval
                 Dim Decimals As Double = Math.Round(Math.Log10(Space), MidpointRounding.AwayFromZero)
-                cModalResponse.ChartAreas(0).AxisX.MajorGrid.Interval = Math.Pow(10, Decimals) * Math.Round(Space * Math.Pow(10, -Decimals))
-                cModalResponse.ChartAreas(0).AxisX.MinorGrid.Interval = cModalResponse.ChartAreas(0).AxisX.MajorGrid.Interval / 10.0
-                cModalResponse.ChartAreas(0).AxisX.LineWidth = 2
+                ChrtModalResponse.ChartAreas(0).AxisX.MajorGrid.Interval = Math.Pow(10, Decimals) * Math.Round(Space * Math.Pow(10, -Decimals))
+                ChrtModalResponse.ChartAreas(0).AxisX.MinorGrid.Interval = ChrtModalResponse.ChartAreas(0).AxisX.MajorGrid.Interval / 10.0
+                ChrtModalResponse.ChartAreas(0).AxisX.LineWidth = 2
 
-                cModalResponse.ChartAreas(0).AxisY.Title = "Displacement [-]"
-                cModalResponse.ChartAreas(0).AxisY.LineWidth = 2
+                ChrtModalResponse.ChartAreas(0).AxisY.Title = "Displacement [-]"
+                ChrtModalResponse.ChartAreas(0).AxisY.LineWidth = 2
 
-                cModalResponse.Legends(0).BackColor = Color.DimGray
-                cModalResponse.Legends(0).Position.X = 40.0
-                cModalResponse.Legends(0).Position.Y = 20.0
+                ChrtModalResponse.Legends(0).BackColor = Color.DimGray
+                ChrtModalResponse.Legends(0).Position.X = 40.0
+                ChrtModalResponse.Legends(0).Position.Y = 20.0
 
                 Dim TimeIndex As Double = 0.0#
                 For Each Coordinate In LinkResult.Modes(ModeIndex).Response
 
-                    cModalResponse.Series(0).Points.AddXY(TimeIndex, Coordinate.P)
-                    cModalResponse.Series(1).Points.AddXY(TimeIndex, Coordinate.V)
+                    ChrtModalResponse.Series(0).Points.AddXY(TimeIndex, Coordinate.P)
+                    ChrtModalResponse.Series(1).Points.AddXY(TimeIndex, Coordinate.V)
                     TimeIndex += Results.Settings.Interval
 
                 Next

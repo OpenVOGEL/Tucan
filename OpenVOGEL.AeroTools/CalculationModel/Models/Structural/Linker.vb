@@ -348,6 +348,11 @@ Namespace CalculationModel.Models.Structural
         Private Initialized As Boolean = False
 
         ''' <summary>
+        ''' Indicates if the velocity has to be checked for convergence
+        ''' </summary>
+        Public ConvergeOnVelocity As Boolean = True
+
+        ''' <summary>
         ''' Sets initial conditions for each ODE
         ''' </summary>
         ''' <remarks></remarks>
@@ -426,10 +431,10 @@ Namespace CalculationModel.Models.Structural
 
                 ' 1) Solve each uncoupled ODE by the central difference method:
 
-                Dim P As Double = 0
+                Dim L As Double = 0.0#
 
                 For Each Node In StructuralCore.Nodes
-                    P += Mode.Shape(Node.Index).VirtualWork(Node.Load)
+                    L += Mode.Shape(Node.Index).VirtualWork(Node.Load)
                 Next
 
                 Dim Itegrator As NewmarkIntegrator = NewmarkIntegrators(m)
@@ -438,9 +443,9 @@ Namespace CalculationModel.Models.Structural
                 Dim V0 As Double = ModalResponse(T - 1)(m).V
                 Dim A0 As Double = ModalResponse(T - 1)(m).A
 
-                ModalResponse(T)(m).A = Itegrator.A(0, 0) * A0 + Itegrator.A(0, 1) * V0 + Itegrator.A(0, 2) * P0 + Itegrator.L(0) * P
-                ModalResponse(T)(m).V = Itegrator.A(1, 0) * A0 + Itegrator.A(1, 1) * V0 + Itegrator.A(1, 2) * P0 + Itegrator.L(1) * P
-                ModalResponse(T)(m).P = Itegrator.A(2, 0) * A0 + Itegrator.A(2, 1) * V0 + Itegrator.A(2, 2) * P0 + Itegrator.L(2) * P
+                ModalResponse(T)(m).A = Itegrator.A(0, 0) * A0 + Itegrator.A(0, 1) * V0 + Itegrator.A(0, 2) * P0 + Itegrator.L(0) * L
+                ModalResponse(T)(m).V = Itegrator.A(1, 0) * A0 + Itegrator.A(1, 1) * V0 + Itegrator.A(1, 2) * P0 + Itegrator.L(1) * L
+                ModalResponse(T)(m).P = Itegrator.A(2, 0) * A0 + Itegrator.A(2, 1) * V0 + Itegrator.A(2, 2) * P0 + Itegrator.L(2) * L
 
                 ' 2) Calculate nodal displacements by modal superposition:
 
@@ -526,33 +531,13 @@ Namespace CalculationModel.Models.Structural
 
                 ' 1) Solve each uncoupled ODE by the Newmark method:
 
-                'Dim FileId = FreeFile()
-                'FileOpen(FileId, "C:\Users\Guillermo\Documents\OpenVOGEL\Examples\Aeroelastic\Flapped_2_Aeroelastic\Loads.txt", FileMode.Create)
-
-                Dim Work As Double = 0
+                Dim Work As Double = 0.0#
 
                 For Each Node In StructuralCore.Nodes
 
                     Work += Mode.Shape(Node.Index).VirtualWork(Node.Load)
 
-                    'Print(FileId, String.Format("{0,14:E5} ", Mode.Shape(Node.Index).VirtualWork(Node.Load)))
-                    'Print(FileId, String.Format("{0,14:E5} ", Mode.Shape(Node.Index).Dx))
-                    'Print(FileId, String.Format("{0,14:E5} ", Mode.Shape(Node.Index).Dy))
-                    'Print(FileId, String.Format("{0,14:E5} ", Mode.Shape(Node.Index).Dz))
-                    'Print(FileId, String.Format("{0,14:E5} ", Mode.Shape(Node.Index).Rx))
-                    'Print(FileId, String.Format("{0,14:E5} ", Mode.Shape(Node.Index).Ry))
-                    'Print(FileId, String.Format("{0,14:E5} ", Mode.Shape(Node.Index).Rz))
-                    'Print(FileId, String.Format("{0,14:E5} ", Node.Load.Px))
-                    'Print(FileId, String.Format("{0,14:E5} ", Node.Load.Py))
-                    'Print(FileId, String.Format("{0,14:E5} ", Node.Load.Pz))
-                    'Print(FileId, String.Format("{0,14:E5} ", Node.Load.Tx))
-                    'Print(FileId, String.Format("{0,14:E5} ", Node.Load.Ty))
-                    'Print(FileId, String.Format("{0,14:E5} ", Node.Load.Tz))
-                    'PrintLine(FileId, "")
-
                 Next
-
-                'FileClose(FileId)
 
                 Dim Int As NewmarkIntegrator = NewmarkIntegrators(M)
 
@@ -563,11 +548,14 @@ Namespace CalculationModel.Models.Structural
                 ' Cache last predicted position
 
                 Dim PreviousP As Double
+                Dim PreviousV As Double
 
                 If AdvanceStep Then
                     PreviousP = P0
+                    PreviousV = V0
                 Else
                     PreviousP = ModalResponse(T)(M).P
+                    PreviousV = ModalResponse(T)(M).V
                 End If
 
                 ' Complete the time step using the sub partition (constant load durig the small interval)
@@ -575,6 +563,7 @@ Namespace CalculationModel.Models.Structural
                 ModalResponse(T)(M).A = 0.0#
                 ModalResponse(T)(M).V = 0.0#
                 ModalResponse(T)(M).P = 0.0#
+                ModalResponse(T)(M).W = Work
 
                 For R = 1 To Repetition
 
@@ -591,36 +580,50 @@ Namespace CalculationModel.Models.Structural
                 ' Check converence using previous prediction
 
                 If PreviousP <> 0 Then
-                    Dim c As Double = (ModalResponse(T)(M).P - PreviousP) / PreviousP
-                    Converged = Converged And c < Delta
-                    Level = Math.Max(Level, c)
+
+                    Dim ConvergenceP As Double = (ModalResponse(T)(M).P - PreviousP) / PreviousP
+                    Converged = Converged And ConvergenceP < Delta
+                    Level = Math.Max(Level, ConvergenceP)
+
+                End If
+
+                If ConvergeOnVelocity Then
+
+                    If PreviousV <> 0 Then
+                        Dim ConvergenceV As Double = (ModalResponse(T)(M).V - PreviousV) / PreviousV
+                        Converged = Converged And ConvergenceV < Delta
+                        Level = Math.Max(Level, ConvergenceV)
+                    End If
+
                 End If
 
                 ' 2) Calculate nodal displacements by modal superposition:
 
                 Dim n As Integer = 0
 
-                    For Each Node In StructuralCore.Nodes
+                For Each Node In StructuralCore.Nodes
 
-                        n = Node.Index
+                    n = Node.Index
 
-                        ' Calculate new displacements and velocities:
+                    ' Calculate new displacements and velocities:
 
-                        For j = 0 To 5
+                    For j = 0 To 5
 
-                            Node.Displacement.Values(j) += ModalResponse(T)(M).P * Mode.Shape(n).Values(j)
-                            Node.Velocity.Values(j) += ModalResponse(T)(M).V * Mode.Shape(n).Values(j)
-
-                        Next
+                        Node.Displacement.Values(j) += ModalResponse(T)(M).P * Mode.Shape(n).Values(j)
+                        Node.Velocity.Values(j) += ModalResponse(T)(M).V * Mode.Shape(n).Values(j)
 
                     Next
 
                 Next
 
-                ' Transfer motion (position and velocity) to lattices nodal points:
+            Next
 
-                For Each Link As KinematicLink In KinematicLinks
+            ' Transfer motion (position and velocity) to lattices nodal points:
+
+            For Each Link As KinematicLink In KinematicLinks
+
                 Link.TransferMotion()
+
             Next
 
             ' Recalculate geometric entities at each lattice control point (CPs, normal, surface velocity)

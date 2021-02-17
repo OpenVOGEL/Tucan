@@ -34,25 +34,25 @@ Namespace CalculationModel.Models.Structural.Library.Elements
         Public AE As Double = 1
 
         ''' <summary>
-        ''' Torsional rigidity [Nm/rad]
+        ''' Torsional rigidity [N.m/rad]
         ''' </summary>
         ''' <remarks></remarks>
         Public GJ As Double = 10
 
         ''' <summary>
-        ''' Flexional rigidity of inertia around local axis y [Nm/rad]
+        ''' Flexional rigidity of inertia around local axis y [N.m/rad]
         ''' </summary>
         ''' <remarks></remarks>
         Public EIy As Double = 10
 
         ''' <summary>
-        ''' Flexional rigidity of inertia around local axis z [Nm/rad]
+        ''' Flexional rigidity of inertia around local axis z [N.m/rad]
         ''' </summary>
         ''' <remarks></remarks>
         Public EIz As Double = 10
 
         ''' <summary>
-        ''' Torsional moment of inertia [kgm²]
+        ''' Torsional moment of inertia [kg.m]
         ''' </summary>
         ''' <remarks></remarks>
         Public rIp As Double = 1.0
@@ -75,6 +75,10 @@ Namespace CalculationModel.Models.Structural.Library.Elements
         ''' <remarks></remarks>
         Public CMz As Double = 0.0
 
+        ''' <summary>
+        ''' Copies the section properties
+        ''' </summary>
+        ''' <param name="Section"></param>
         Public Sub Assign(ByVal Section As Section)
 
             AE = Section.AE
@@ -206,59 +210,58 @@ Namespace CalculationModel.Models.Structural.Library.Elements
 
             M(11, 11) = m_L3 / 105
 
-            ' Excentrical mass:
+            ' Eccentrical component
 
             If Math.Abs(Section.CMy) > 0 Or Math.Abs(Section.CMz) > 0 Then
 
-                Dim Sy As Double = Section.m * Section.CMy
-                Dim Sy_L1 As Double = Section.m * Section.CMy * L
-                Dim Sy_L2 As Double = Section.m * Section.CMy * L * L
+                Dim Sy As Double = Section.m * Section.CMz
+                Dim Sy_L1 As Double = Section.m * Section.CMz * L
+                Dim Sy_L2 As Double = Section.m * Section.CMz * L * L
 
-                Dim Sz As Double = Section.m * Section.CMz
-                Dim Sz_L1 As Double = Section.m * Section.CMz * L
-                Dim Sz_L2 As Double = Section.m * Section.CMz * L * L
+                Dim Sz As Double = Section.m * Section.CMy
+                Dim Sz_L1 As Double = Section.m * Section.CMy * L
+                Dim Sz_L2 As Double = Section.m * Section.CMy * L * L
 
-                M(0, 1) = Sy / 2
-                M(0, 2) = -Sz / 2
-                M(0, 4) = Sz_L1 / 12
-                M(0, 5) = -Sy_L1 / 12
-                M(0, 7) = -Sy / 2
-                M(0, 8) = Sz / 2
-                M(0, 10) = -Sz_L1 / 12
-                M(0, 11) = Sy_L1 / 12
+                M(0, 1) = Sz / 2.0
+                M(0, 2) = Sy / 2.0
+                M(0, 4) = Sy_L1 / 12.0
+                M(0, 5) = -Sz_L1 / 12.0
+                M(0, 7) = Sz / 2.0
+                M(0, 8) = Sy / 2.0
+                M(0, 10) = -Sy_L1 / 12.0
+                M(0, 11) = Sz_L1 / 12.0
 
-                M(1, 3) = -7 * Sz_L1 / 20
-                M(1, 6) = Sy / 2
-                M(1, 9) = -3 * Sz_L1 / 20
+                M(1, 3) = -Sy_L1 * 7.0 / 20.0
+                M(1, 6) = -Sz / 2.0
+                M(1, 9) = -Sy_L1 * 3.0 / 20.0
 
-                M(2, 3) = 7 * Sy_L1 / 20
-                M(2, 6) = -Sz / 2
-                M(2, 9) = 3 * Sy_L1 / 20
+                M(2, 3) = Sz_L1 * 7.0 / 20.0
+                M(2, 6) = -Sy / 2.0
+                M(2, 9) = Sz_L1 * 3.0 / 20.0
 
-                M(3, 4) = -Sy_L2 / 20
-                M(3, 5) = -Sz_L2 / 20
-                M(3, 7) = -3 * Sz_L1 / 20
-                M(3, 8) = 3 * Sy_L1 / 20
-                M(3, 10) = Sy_L2 / 30
-                M(3, 11) = Sz_L2 / 30
+                M(3, 4) = -Sz_L2 / 20.0
+                M(3, 5) = -Sy_L2
+                M(3, 7) = -Sy_L1 * 3.0 / 20.0
+                M(3, 8) = Sz_L1 * 3.0 / 20.0
+                M(3, 10) = -Sz_L2 / 30.0
+                M(3, 11) = -Sy_L2 / 30.0
 
-                M(4, 6) = -Sz_L1 / 12
-                M(4, 9) = Sy_L2 / 30
+                M(4, 6) = -Sy_L1 / 12.0
+                M(4, 9) = Sz_L2 / 30.0
 
-                M(5, 6) = Sy_L1 / 12
-                M(5, 9) = -Sz_L2 / 30
+                M(5, 6) = Sz_L1 / 12.0
+                M(5, 9) = Sy_L2 / 30.0
 
-                M(6, 7) = -Sy / 2
-                M(6, 8) = Sz / 2
-                M(6, 10) = Sz_L1 / 12
-                M(6, 11) = -Sy_L1 / 12
+                M(6, 7) = -Sz / 2.0
+                M(6, 8) = -Sy / 2.0
+                M(6, 10) = Sy_L1 / 12.0
+                M(6, 11) = -Sz_L1 / 12.0
 
-                M(7, 9) = -7 * Sz_L1 / 20
+                M(7, 9) = -Sy_L1 * 7.0 / 20.0
+                M(7, 9) = Sz_L1 * 7.0 / 20.0
 
-                M(8, 9) = 7 * Sy_L1 / 20
-
-                M(9, 10) = Sy_L2 / 20
-                M(9, 11) = Sz_L2 / 20
+                M(9, 10) = Sz_L2 / 20.0
+                M(9, 11) = Sy_L2 / 20.0
 
             End If
 

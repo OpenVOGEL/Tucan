@@ -357,6 +357,7 @@ namespace DotNumerics.LinearAlgebra
             return EigenVals;
         }
 
+        public double EVecError_Subspace = 1E-5;
         public double EValError_Subspace = 1E-7;
         public double EValError_Jacobi = 1E-7;
 
@@ -676,7 +677,7 @@ namespace DotNumerics.LinearAlgebra
             Matrix MV = new Matrix(nDOF, nSubSpace);
             Matrix MX = new Matrix(nDOF, nSubSpace);
             Matrix X = new Matrix(nDOF, nSubSpace);
-
+            
             //------------------------------------------------------------------------------------
             // Set starting vectors
             //------------------------------------------------------------------------------------
@@ -815,9 +816,11 @@ namespace DotNumerics.LinearAlgebra
                 // Apply Ritz transformation -> V = X.Q
                 // V should tend to the truncated modal basis (subspace).
                 //--------------------------------------------------------------------------------
-                
+
+                double deltaEvec = 0.0;
+
                 for (int i = 0; i < nDOF; i++)
-                {
+                {                    
                     for (int j = 0; j < nSubSpace; j++)
                     {
                         double p = 0;
@@ -825,6 +828,7 @@ namespace DotNumerics.LinearAlgebra
                         {
                             p += X[i, k] * Q[k, j];
                         }
+                        if (Math.Abs (p) > 0) deltaEvec = Math.Max(deltaEvec, (p - V[i, j]) / p);
                         V[i, j] = p;
                     }
                 }
@@ -834,7 +838,7 @@ namespace DotNumerics.LinearAlgebra
                 // Only the required values are cheked for convergence (not the entire subspace)
                 //--------------------------------------------------------------------------------
 
-                Converged = true;
+                Converged = deltaEvec <= EVecError_Subspace;
 
                 for (int i = 0; i < nModes && Converged; i++)
                 {

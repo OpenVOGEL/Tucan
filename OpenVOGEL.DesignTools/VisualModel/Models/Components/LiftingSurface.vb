@@ -366,6 +366,18 @@ Namespace VisualModel.Models.Components
         End Property
 
         ''' <summary>
+        ''' The index of the first panel in the current region
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property CurrentRegionStartPanel As Integer
+
+        ''' <summary>
+        ''' The index of the first panel in the current region
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property CurrentRegionEndPanel As Integer
+
+        ''' <summary>
         ''' Indicates at which time-step the wake has to be trimmed.
         ''' </summary>
         ''' <value></value>
@@ -425,6 +437,9 @@ Namespace VisualModel.Models.Components
 
             FirstPrimitiveSegment = NumberOfChordPanels + 1
             LastPrimitiveSegment = FirstPrimitiveSegment + WingRegions(0).SpanPanelsCount - 1
+
+            _CurrentRegionStartPanel = 0
+            _CurrentRegionEndPanel = 0
 
             GenerateMesh()
 
@@ -523,11 +538,22 @@ Namespace VisualModel.Models.Components
             Set(ByVal value As Integer)
                 If value >= 1 And value <= WingRegions.Count Then
                     _CurrentWingRegion = value - 1
-                Else
-                    'FMacroPanelActual = 0
                 End If
+                UpdateLimitPanels()
             End Set
         End Property
+
+        ''' <summary>
+        ''' Indicates if the panel index is contained in the current region
+        ''' </summary>
+        ''' <param name="PanelIndex"></param>
+        ''' <returns></returns>
+        Public ReadOnly Property OnCurrentRegion(PanelIndex) As Boolean
+            Get
+                Return PanelIndex >= CurrentRegionStartPanel And PanelIndex <= CurrentRegionEndPanel
+            End Get
+        End Property
+
 
 #End Region
 
@@ -710,6 +736,34 @@ Namespace VisualModel.Models.Components
 #End Region
 
 #Region " Wing regions management "
+
+        ''' <summary>
+        ''' Recalculates the limits of the current region
+        ''' </summary>
+        Private Sub UpdateLimitPanels()
+
+            _CurrentRegionStartPanel = 0
+            _CurrentRegionEndPanel = 0
+
+            For Each Region In WingRegions
+
+                If Region IsNot CurrentRegion Then
+
+                    _CurrentRegionStartPanel += NumberOfChordPanels * Region.SpanPanelsCount
+
+                Else
+
+                    _CurrentRegionEndPanel = _CurrentRegionStartPanel + NumberOfChordPanels * Region.SpanPanelsCount
+
+                    _CurrentRegionStartPanel += 1
+
+                    Return
+
+                End If
+
+            Next
+
+        End Sub
 
         ''' <summary>
         ''' Loads a simple wing region.
@@ -1289,6 +1343,10 @@ Namespace VisualModel.Models.Components
             LocalOrigin.Add(Position)
 
             GenerateStructure()
+
+            ' Region limits
+
+            UpdateLimitPanels()
 
             ' Launch base sub to raise update event.
 

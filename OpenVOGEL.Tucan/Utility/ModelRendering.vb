@@ -81,7 +81,8 @@ Namespace Tucan.Utility
 
                 ' Panels:
 
-                If .VisualProperties.VisualizationMode = VisualizationMode.Lattice Then
+                If .VisualProperties.VisualizationMode = VisualizationMode.Lattice Or
+                   .VisualProperties.VisualizationMode = VisualizationMode.Structural Then
 
                     Dim Nodo As Vector3
 
@@ -94,15 +95,15 @@ Namespace Tucan.Utility
                     PrimitiveColor.Y = .VisualProperties.ColorPrimitives.G / 255
                     PrimitiveColor.Z = .VisualProperties.ColorPrimitives.B / 255
 
-                    Dim SelectedColor As New Vector3
+                    Dim SurfaceColor As New Vector3
                     If Not .Active Then
-                        SelectedColor.X = .VisualProperties.ColorSurface.R / 255
-                        SelectedColor.Y = .VisualProperties.ColorSurface.G / 255
-                        SelectedColor.Z = .VisualProperties.ColorSurface.B / 255
+                        SurfaceColor.X = .VisualProperties.ColorSurface.R / 255
+                        SurfaceColor.Y = .VisualProperties.ColorSurface.G / 255
+                        SurfaceColor.Z = .VisualProperties.ColorSurface.B / 255
                     Else
-                        SelectedColor.X = 1.0
-                        SelectedColor.Y = 0.8
-                        SelectedColor.Z = 0.0
+                        SurfaceColor.X = 1.0
+                        SurfaceColor.Y = 0.8
+                        SurfaceColor.Z = 0.0
                     End If
 
                     Dim Transparency As Double
@@ -112,19 +113,32 @@ Namespace Tucan.Utility
                         Transparency = 0.4
                     End If
 
+                    Dim n As Integer = 0
+
                     For Each Panel In .Mesh.Panels
 
                         gl.PushName(Code)
                         Code += 1
+                        n += 1
 
                         gl.Begin(OpenGL.GL_TRIANGLES)
 
                         If Panel.Active Then
+
                             gl.Color(1.0, 0.0, 0.5)
+
                         ElseIf Panel.IsPrimitive And .VisualProperties.ShowPrimitives Then
+
                             gl.Color(PrimitiveColor.X, PrimitiveColor.Y, PrimitiveColor.Z, Transparency)
+
                         Else
-                            gl.Color(SelectedColor.X, SelectedColor.Y, SelectedColor.Z, Transparency)
+
+                            If .Active AndAlso This.OnCurrentRegion(n) Then
+                                gl.Color(SurfaceColor.X, 0.5 * SurfaceColor.Y, 0.5 * SurfaceColor.Z, Transparency)
+                            Else
+                                gl.Color(SurfaceColor.X, SurfaceColor.Y, SurfaceColor.Z, Transparency)
+                            End If
+
                         End If
 
                         ' First triangle:
@@ -224,16 +238,16 @@ Namespace Tucan.Utility
                     .VisualProperties.VisualizationMode = VisualizationMode.Lattice Or
                     .VisualProperties.VisualizationMode = VisualizationMode.Structural Then
 
-                    Dim SColor As New Vector3
-                    SColor.X = 0.75
-                    SColor.Y = 0.75
-                    SColor.Z = 0.75
+                    Dim SurfaceColor As New Vector3
+                    SurfaceColor.X = 0.75
+                    SurfaceColor.Y = 0.75
+                    SurfaceColor.Z = 0.75
                     Dim Thickness As Double = 1.0
 
                     If (.VisualProperties.VisualizationMode = VisualizationMode.Lattice) Then
-                        SColor.X = .VisualProperties.ColorMesh.R / 255
-                        SColor.Y = .VisualProperties.ColorMesh.G / 255
-                        SColor.Z = .VisualProperties.ColorMesh.B / 255
+                        SurfaceColor.X = .VisualProperties.ColorMesh.R / 255
+                        SurfaceColor.Y = .VisualProperties.ColorMesh.G / 255
+                        SurfaceColor.Z = .VisualProperties.ColorMesh.B / 255
                         Thickness = .VisualProperties.ThicknessMesh
                     End If
 
@@ -245,7 +259,7 @@ Namespace Tucan.Utility
                         Dim Nodo2 As Vector3
 
                         gl.LineWidth(Thickness)
-                        gl.Color(SColor.X, SColor.Y, SColor.Z)
+                        gl.Color(SurfaceColor.X, SurfaceColor.Y, SurfaceColor.Z)
 
                         Code = Selection.GetSelectionCode(ComponentTypes.etLiftingSurface, ElementIndex, EntityTypes.etSegment, 0)
 

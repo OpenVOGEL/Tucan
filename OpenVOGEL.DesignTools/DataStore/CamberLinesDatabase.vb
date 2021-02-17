@@ -20,6 +20,9 @@ Imports OpenVOGEL.DesignTools.VisualModel.Models.Components.Basics
 
 Namespace DataStore
 
+    ''' <summary>
+    '''  The database of chamber lines
+    ''' </summary>
     Public Module CamberLinesDatabase
 
         Public CamberLines As New List(Of CamberLine)

@@ -26,27 +26,27 @@ Partial Class FormReport
         Dim Legend1 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FormReport))
         Me.DialogoGuardarReporte = New System.Windows.Forms.SaveFileDialog()
-        Me.cModalResponse = New System.Windows.Forms.DataVisualization.Charting.Chart()
+        Me.ChrtModalResponse = New System.Windows.Forms.DataVisualization.Charting.Chart()
         Me.DialogoAbrir = New System.Windows.Forms.OpenFileDialog()
         Me.pPlot = New System.Windows.Forms.Panel()
-        Me.cbLink = New System.Windows.Forms.ComboBox()
-        Me.cbModes = New System.Windows.Forms.ComboBox()
+        Me.CbLink = New System.Windows.Forms.ComboBox()
+        Me.CbModes = New System.Windows.Forms.ComboBox()
         Me.tcResults = New System.Windows.Forms.TabControl()
         Me.tbTotalLoads = New System.Windows.Forms.TabPage()
         Me.tbLoads = New System.Windows.Forms.TabPage()
         Me.tbRaw = New System.Windows.Forms.TabPage()
-        Me.tbRawData = New System.Windows.Forms.RichTextBox()
-        Me.tbModalResponse = New System.Windows.Forms.TabPage()
-        CType(Me.cModalResponse, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.TbRawData = New System.Windows.Forms.RichTextBox()
+        Me.TbModalResponse = New System.Windows.Forms.TabPage()
+        CType(Me.ChrtModalResponse, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.pPlot.SuspendLayout()
         Me.tcResults.SuspendLayout()
         Me.tbRaw.SuspendLayout()
-        Me.tbModalResponse.SuspendLayout()
+        Me.TbModalResponse.SuspendLayout()
         Me.SuspendLayout()
         '
         'cModalResponse
         '
-        Me.cModalResponse.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+        Me.ChrtModalResponse.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         ChartArea1.AxisX.LineWidth = 2
@@ -55,14 +55,14 @@ Partial Class FormReport
         ChartArea1.AxisY.LineWidth = 2
         ChartArea1.AxisY.TitleFont = New System.Drawing.Font("Segoe UI", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         ChartArea1.Name = "ModalResponse"
-        Me.cModalResponse.ChartAreas.Add(ChartArea1)
+        Me.ChrtModalResponse.ChartAreas.Add(ChartArea1)
         Legend1.Name = "Legend1"
-        Me.cModalResponse.Legends.Add(Legend1)
-        Me.cModalResponse.Location = New System.Drawing.Point(0, 30)
-        Me.cModalResponse.Name = "cModalResponse"
-        Me.cModalResponse.Size = New System.Drawing.Size(613, 351)
-        Me.cModalResponse.TabIndex = 0
-        Me.cModalResponse.Text = "Chart1"
+        Me.ChrtModalResponse.Legends.Add(Legend1)
+        Me.ChrtModalResponse.Location = New System.Drawing.Point(0, 30)
+        Me.ChrtModalResponse.Name = "cModalResponse"
+        Me.ChrtModalResponse.Size = New System.Drawing.Size(613, 351)
+        Me.ChrtModalResponse.TabIndex = 0
+        Me.ChrtModalResponse.Text = "Chart1"
         '
         'DialogoAbrir
         '
@@ -71,9 +71,9 @@ Partial Class FormReport
         'pPlot
         '
         Me.pPlot.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
-        Me.pPlot.Controls.Add(Me.cbLink)
-        Me.pPlot.Controls.Add(Me.cbModes)
-        Me.pPlot.Controls.Add(Me.cModalResponse)
+        Me.pPlot.Controls.Add(Me.CbLink)
+        Me.pPlot.Controls.Add(Me.CbModes)
+        Me.pPlot.Controls.Add(Me.ChrtModalResponse)
         Me.pPlot.Dock = System.Windows.Forms.DockStyle.Fill
         Me.pPlot.Location = New System.Drawing.Point(3, 3)
         Me.pPlot.Name = "pPlot"
@@ -82,28 +82,28 @@ Partial Class FormReport
         '
         'cbLink
         '
-        Me.cbLink.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.cbLink.FormattingEnabled = True
-        Me.cbLink.Location = New System.Drawing.Point(3, 3)
-        Me.cbLink.Name = "cbLink"
-        Me.cbLink.Size = New System.Drawing.Size(180, 21)
-        Me.cbLink.TabIndex = 2
+        Me.CbLink.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.CbLink.FormattingEnabled = True
+        Me.CbLink.Location = New System.Drawing.Point(3, 3)
+        Me.CbLink.Name = "cbLink"
+        Me.CbLink.Size = New System.Drawing.Size(180, 21)
+        Me.CbLink.TabIndex = 2
         '
         'cbModes
         '
-        Me.cbModes.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.cbModes.FormattingEnabled = True
-        Me.cbModes.Location = New System.Drawing.Point(189, 3)
-        Me.cbModes.Name = "cbModes"
-        Me.cbModes.Size = New System.Drawing.Size(180, 21)
-        Me.cbModes.TabIndex = 1
+        Me.CbModes.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.CbModes.FormattingEnabled = True
+        Me.CbModes.Location = New System.Drawing.Point(189, 3)
+        Me.CbModes.Name = "cbModes"
+        Me.CbModes.Size = New System.Drawing.Size(180, 21)
+        Me.CbModes.TabIndex = 1
         '
         'tcResults
         '
         Me.tcResults.Controls.Add(Me.tbTotalLoads)
         Me.tcResults.Controls.Add(Me.tbLoads)
         Me.tcResults.Controls.Add(Me.tbRaw)
-        Me.tcResults.Controls.Add(Me.tbModalResponse)
+        Me.tcResults.Controls.Add(Me.TbModalResponse)
         Me.tcResults.Dock = System.Windows.Forms.DockStyle.Fill
         Me.tcResults.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.tcResults.Location = New System.Drawing.Point(2, 2)
@@ -134,7 +134,7 @@ Partial Class FormReport
         '
         'tbRaw
         '
-        Me.tbRaw.Controls.Add(Me.tbRawData)
+        Me.tbRaw.Controls.Add(Me.TbRawData)
         Me.tbRaw.Location = New System.Drawing.Point(4, 22)
         Me.tbRaw.Name = "tbRaw"
         Me.tbRaw.Padding = New System.Windows.Forms.Padding(3)
@@ -145,27 +145,27 @@ Partial Class FormReport
         '
         'tbRawData
         '
-        Me.tbRawData.BackColor = System.Drawing.Color.White
-        Me.tbRawData.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.tbRawData.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.tbRawData.Font = New System.Drawing.Font("Consolas", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.tbRawData.Location = New System.Drawing.Point(3, 3)
-        Me.tbRawData.Margin = New System.Windows.Forms.Padding(60)
-        Me.tbRawData.Name = "tbRawData"
-        Me.tbRawData.Size = New System.Drawing.Size(618, 382)
-        Me.tbRawData.TabIndex = 3
-        Me.tbRawData.Text = ""
+        Me.TbRawData.BackColor = System.Drawing.Color.White
+        Me.TbRawData.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.TbRawData.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TbRawData.Font = New System.Drawing.Font("Consolas", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.TbRawData.Location = New System.Drawing.Point(3, 3)
+        Me.TbRawData.Margin = New System.Windows.Forms.Padding(60)
+        Me.TbRawData.Name = "tbRawData"
+        Me.TbRawData.Size = New System.Drawing.Size(618, 382)
+        Me.TbRawData.TabIndex = 3
+        Me.TbRawData.Text = ""
         '
         'tbModalResponse
         '
-        Me.tbModalResponse.Controls.Add(Me.pPlot)
-        Me.tbModalResponse.Location = New System.Drawing.Point(4, 22)
-        Me.tbModalResponse.Name = "tbModalResponse"
-        Me.tbModalResponse.Padding = New System.Windows.Forms.Padding(3)
-        Me.tbModalResponse.Size = New System.Drawing.Size(624, 388)
-        Me.tbModalResponse.TabIndex = 1
-        Me.tbModalResponse.Text = "Modal response"
-        Me.tbModalResponse.UseVisualStyleBackColor = True
+        Me.TbModalResponse.Controls.Add(Me.pPlot)
+        Me.TbModalResponse.Location = New System.Drawing.Point(4, 22)
+        Me.TbModalResponse.Name = "tbModalResponse"
+        Me.TbModalResponse.Padding = New System.Windows.Forms.Padding(3)
+        Me.TbModalResponse.Size = New System.Drawing.Size(624, 388)
+        Me.TbModalResponse.TabIndex = 1
+        Me.TbModalResponse.Text = "Modal response"
+        Me.TbModalResponse.UseVisualStyleBackColor = True
         '
         'FormReport
         '
@@ -184,24 +184,24 @@ Partial Class FormReport
         Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
         Me.Text = "Output panel"
-        CType(Me.cModalResponse, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.ChrtModalResponse, System.ComponentModel.ISupportInitialize).EndInit()
         Me.pPlot.ResumeLayout(False)
         Me.tcResults.ResumeLayout(False)
         Me.tbRaw.ResumeLayout(False)
-        Me.tbModalResponse.ResumeLayout(False)
+        Me.TbModalResponse.ResumeLayout(False)
         Me.ResumeLayout(False)
 
     End Sub
     Friend WithEvents DialogoGuardarReporte As System.Windows.Forms.SaveFileDialog
-    Friend WithEvents cModalResponse As System.Windows.Forms.DataVisualization.Charting.Chart
+    Friend WithEvents ChrtModalResponse As System.Windows.Forms.DataVisualization.Charting.Chart
     Friend WithEvents DialogoAbrir As System.Windows.Forms.OpenFileDialog
     Friend WithEvents pPlot As System.Windows.Forms.Panel
     Friend WithEvents tcResults As System.Windows.Forms.TabControl
     Friend WithEvents tbLoads As System.Windows.Forms.TabPage
-    Friend WithEvents tbModalResponse As System.Windows.Forms.TabPage
-    Friend WithEvents cbModes As System.Windows.Forms.ComboBox
-    Friend WithEvents cbLink As System.Windows.Forms.ComboBox
+    Friend WithEvents TbModalResponse As System.Windows.Forms.TabPage
+    Friend WithEvents CbModes As System.Windows.Forms.ComboBox
+    Friend WithEvents CbLink As System.Windows.Forms.ComboBox
     Friend WithEvents tbRaw As System.Windows.Forms.TabPage
-    Friend WithEvents tbRawData As System.Windows.Forms.RichTextBox
+    Friend WithEvents TbRawData As System.Windows.Forms.RichTextBox
     Friend WithEvents tbTotalLoads As System.Windows.Forms.TabPage
 End Class

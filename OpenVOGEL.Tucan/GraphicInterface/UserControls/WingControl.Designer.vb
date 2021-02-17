@@ -22,33 +22,33 @@ Partial Class WingControl
     'No lo modifique con el editor de código.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        Me.btnLockSurface = New System.Windows.Forms.Button()
-        Me.btnHideSurface = New System.Windows.Forms.Button()
+        Me.BtnLockSurface = New System.Windows.Forms.Button()
+        Me.BtnHideSurface = New System.Windows.Forms.Button()
         Me.PanelDeEdicion = New System.Windows.Forms.TabControl()
         Me.tbDesign = New System.Windows.Forms.TabPage()
         Me.Panel1 = New System.Windows.Forms.Panel()
-        Me.btnDeletePanel = New System.Windows.Forms.Button()
-        Me.btnAddPanel = New System.Windows.Forms.Button()
+        Me.BtnDeletePanel = New System.Windows.Forms.Button()
+        Me.BtnAddPanel = New System.Windows.Forms.Button()
         Me.Label4 = New System.Windows.Forms.Label()
-        Me.nudSelectRegion = New System.Windows.Forms.NumericUpDown()
-        Me.btnInsertPanel = New System.Windows.Forms.Button()
+        Me.NudSelectRegion = New System.Windows.Forms.NumericUpDown()
+        Me.BtnInsertPanel = New System.Windows.Forms.Button()
         Me.tcMacroPanelProperties = New System.Windows.Forms.TabControl()
         Me.TabPage6 = New System.Windows.Forms.TabPage()
         Me.Label14 = New System.Windows.Forms.Label()
         Me.Label13 = New System.Windows.Forms.Label()
-        Me.nudChordwisePanels = New System.Windows.Forms.NumericUpDown()
+        Me.NudChordwisePanels = New System.Windows.Forms.NumericUpDown()
         Me.Label2 = New System.Windows.Forms.Label()
-        Me.rbLinearSpacement = New System.Windows.Forms.RadioButton()
-        Me.rbConstantSpacement = New System.Windows.Forms.RadioButton()
-        Me.cbSymetricWing = New System.Windows.Forms.CheckBox()
+        Me.RbLinearSpacement = New System.Windows.Forms.RadioButton()
+        Me.RbConstantSpacement = New System.Windows.Forms.RadioButton()
+        Me.CbSymetricWing = New System.Windows.Forms.CheckBox()
         Me.Label40 = New System.Windows.Forms.Label()
         Me.Label39 = New System.Windows.Forms.Label()
-        Me.nudTwistingAxis = New System.Windows.Forms.NumericUpDown()
-        Me.nudTwist = New System.Windows.Forms.NumericUpDown()
-        Me.nudDihedral = New System.Windows.Forms.NumericUpDown()
-        Me.nudSweepback = New System.Windows.Forms.NumericUpDown()
-        Me.nudLength = New System.Windows.Forms.NumericUpDown()
-        Me.nudTipChord = New System.Windows.Forms.NumericUpDown()
+        Me.NudTwistingAxis = New System.Windows.Forms.NumericUpDown()
+        Me.NudTwist = New System.Windows.Forms.NumericUpDown()
+        Me.NudDihedral = New System.Windows.Forms.NumericUpDown()
+        Me.NudSweepback = New System.Windows.Forms.NumericUpDown()
+        Me.NudLength = New System.Windows.Forms.NumericUpDown()
+        Me.NudTipChord = New System.Windows.Forms.NumericUpDown()
         Me.Label5 = New System.Windows.Forms.Label()
         Me.Label27 = New System.Windows.Forms.Label()
         Me.Label7 = New System.Windows.Forms.Label()
@@ -60,8 +60,8 @@ Partial Class WingControl
         Me.Label11 = New System.Windows.Forms.Label()
         Me.Label17 = New System.Windows.Forms.Label()
         Me.Label12 = New System.Windows.Forms.Label()
-        Me.nudSpanwiseRings = New System.Windows.Forms.NumericUpDown()
-        Me.nudRootChord = New System.Windows.Forms.NumericUpDown()
+        Me.NudSpanwiseRings = New System.Windows.Forms.NumericUpDown()
+        Me.NudRootChord = New System.Windows.Forms.NumericUpDown()
         Me.Label6 = New System.Windows.Forms.Label()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.TabPage7 = New System.Windows.Forms.TabPage()
@@ -75,36 +75,36 @@ Partial Class WingControl
         Me.TabPage8 = New System.Windows.Forms.TabPage()
         Me.cbTrailingEdge = New System.Windows.Forms.CheckBox()
         Me.Label18 = New System.Windows.Forms.Label()
-        Me.nudCuttingStep = New System.Windows.Forms.NumericUpDown()
-        Me.cbConvectWake = New System.Windows.Forms.CheckBox()
+        Me.NudCuttingStep = New System.Windows.Forms.NumericUpDown()
+        Me.CbConvectWake = New System.Windows.Forms.CheckBox()
         Me.Label29 = New System.Windows.Forms.Label()
-        Me.cbShowPriitives = New System.Windows.Forms.CheckBox()
+        Me.CbShowPriitives = New System.Windows.Forms.CheckBox()
         Me.Label32 = New System.Windows.Forms.Label()
         Me.Label31 = New System.Windows.Forms.Label()
-        Me.nudLastPrimitive = New System.Windows.Forms.NumericUpDown()
-        Me.nudFirstPrimitive = New System.Windows.Forms.NumericUpDown()
+        Me.NudLastPrimitive = New System.Windows.Forms.NumericUpDown()
+        Me.NudFirstPrimitive = New System.Windows.Forms.NumericUpDown()
         Me.TabPage10 = New System.Windows.Forms.TabPage()
         Me.Label73 = New System.Windows.Forms.Label()
-        Me.nudFlapPanels = New System.Windows.Forms.NumericUpDown()
+        Me.NudFlapPanels = New System.Windows.Forms.NumericUpDown()
         Me.Label67 = New System.Windows.Forms.Label()
         Me.Label71 = New System.Windows.Forms.Label()
-        Me.nudRootFlap = New System.Windows.Forms.NumericUpDown()
+        Me.NudRootFlap = New System.Windows.Forms.NumericUpDown()
         Me.Label66 = New System.Windows.Forms.Label()
         Me.Label65 = New System.Windows.Forms.Label()
         Me.Label61 = New System.Windows.Forms.Label()
         Me.Label60 = New System.Windows.Forms.Label()
-        Me.nudFlapDeflection = New System.Windows.Forms.NumericUpDown()
-        Me.nudFlapChord = New System.Windows.Forms.NumericUpDown()
-        Me.cbFlapped = New System.Windows.Forms.CheckBox()
+        Me.NudFlapDeflection = New System.Windows.Forms.NumericUpDown()
+        Me.NudFlapChord = New System.Windows.Forms.NumericUpDown()
+        Me.CbFlapped = New System.Windows.Forms.CheckBox()
         Me.TabPage3 = New System.Windows.Forms.TabPage()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.rbTipSection = New System.Windows.Forms.RadioButton()
         Me.rbRootSection = New System.Windows.Forms.RadioButton()
         Me.Label38 = New System.Windows.Forms.Label()
-        Me.nudCMz = New System.Windows.Forms.NumericUpDown()
+        Me.NudCMz = New System.Windows.Forms.NumericUpDown()
         Me.Label41 = New System.Windows.Forms.Label()
         Me.Label36 = New System.Windows.Forms.Label()
-        Me.nudCMy = New System.Windows.Forms.NumericUpDown()
+        Me.NudCMy = New System.Windows.Forms.NumericUpDown()
         Me.Label37 = New System.Windows.Forms.Label()
         Me.Label52 = New System.Windows.Forms.Label()
         Me.Label76 = New System.Windows.Forms.Label()
@@ -115,97 +115,97 @@ Partial Class WingControl
         Me.Label21 = New System.Windows.Forms.Label()
         Me.Label22 = New System.Windows.Forms.Label()
         Me.Label26 = New System.Windows.Forms.Label()
-        Me.nudCS = New System.Windows.Forms.NumericUpDown()
+        Me.NudCS = New System.Windows.Forms.NumericUpDown()
         Me.Label75 = New System.Windows.Forms.Label()
         Me.Label54 = New System.Windows.Forms.Label()
-        Me.nudM = New System.Windows.Forms.NumericUpDown()
+        Me.NudM = New System.Windows.Forms.NumericUpDown()
         Me.Label55 = New System.Windows.Forms.Label()
-        Me.nudJ = New System.Windows.Forms.NumericUpDown()
+        Me.NudJ = New System.Windows.Forms.NumericUpDown()
         Me.Label53 = New System.Windows.Forms.Label()
-        Me.nudIw = New System.Windows.Forms.NumericUpDown()
-        Me.nudIv = New System.Windows.Forms.NumericUpDown()
-        Me.nudIu = New System.Windows.Forms.NumericUpDown()
+        Me.NudIw = New System.Windows.Forms.NumericUpDown()
+        Me.NudIv = New System.Windows.Forms.NumericUpDown()
+        Me.NudIu = New System.Windows.Forms.NumericUpDown()
         Me.Label20 = New System.Windows.Forms.Label()
-        Me.nudArea = New System.Windows.Forms.NumericUpDown()
+        Me.NudArea = New System.Windows.Forms.NumericUpDown()
         Me.Label19 = New System.Windows.Forms.Label()
         Me.tbInquire = New System.Windows.Forms.TabPage()
         Me.tbSurfaceData = New System.Windows.Forms.TextBox()
-        Me.btSurfaceData = New System.Windows.Forms.Button()
-        Me.tbSurfaceName = New System.Windows.Forms.TextBox()
+        Me.BtnSurfaceData = New System.Windows.Forms.Button()
+        Me.TabSurfaceName = New System.Windows.Forms.TextBox()
         Me.btnOk = New System.Windows.Forms.Button()
         Me.btnInertia = New System.Windows.Forms.Button()
         Me.PanelDeEdicion.SuspendLayout()
         Me.tbDesign.SuspendLayout()
         Me.Panel1.SuspendLayout()
-        CType(Me.nudSelectRegion, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.NudSelectRegion, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.tcMacroPanelProperties.SuspendLayout()
         Me.TabPage6.SuspendLayout()
-        CType(Me.nudChordwisePanels, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.nudTwistingAxis, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.nudTwist, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.nudDihedral, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.nudSweepback, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.nudLength, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.nudTipChord, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.nudSpanwiseRings, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.nudRootChord, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.NudChordwisePanels, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.NudTwistingAxis, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.NudTwist, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.NudDihedral, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.NudSweepback, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.NudLength, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.NudTipChord, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.NudSpanwiseRings, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.NudRootChord, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabPage7.SuspendLayout()
         CType(Me.pbProfileSketch, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabPage8.SuspendLayout()
-        CType(Me.nudCuttingStep, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.nudLastPrimitive, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.nudFirstPrimitive, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.NudCuttingStep, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.NudLastPrimitive, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.NudFirstPrimitive, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabPage10.SuspendLayout()
-        CType(Me.nudFlapPanels, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.nudRootFlap, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.nudFlapDeflection, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.nudFlapChord, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.NudFlapPanels, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.NudRootFlap, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.NudFlapDeflection, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.NudFlapChord, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabPage3.SuspendLayout()
-        CType(Me.nudCMz, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.nudCMy, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.nudCS, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.nudM, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.nudJ, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.nudIw, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.nudIv, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.nudIu, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.nudArea, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.NudCMz, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.NudCMy, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.NudCS, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.NudM, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.NudJ, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.NudIw, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.NudIv, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.NudIu, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.NudArea, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.tbInquire.SuspendLayout()
         Me.SuspendLayout()
         '
-        'btnLockSurface
+        'BtnLockSurface
         '
-        Me.btnLockSurface.BackColor = System.Drawing.Color.White
-        Me.btnLockSurface.FlatAppearance.BorderColor = System.Drawing.Color.Gray
-        Me.btnLockSurface.FlatAppearance.CheckedBackColor = System.Drawing.Color.Gold
-        Me.btnLockSurface.FlatAppearance.MouseDownBackColor = System.Drawing.Color.PaleGreen
-        Me.btnLockSurface.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DeepSkyBlue
-        Me.btnLockSurface.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btnLockSurface.Font = New System.Drawing.Font("Microsoft Sans Serif", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnLockSurface.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.btnLockSurface.Location = New System.Drawing.Point(249, 29)
-        Me.btnLockSurface.Name = "btnLockSurface"
-        Me.btnLockSurface.Size = New System.Drawing.Size(59, 22)
-        Me.btnLockSurface.TabIndex = 69
-        Me.btnLockSurface.Text = "Lock"
-        Me.btnLockSurface.UseVisualStyleBackColor = False
+        Me.BtnLockSurface.BackColor = System.Drawing.Color.White
+        Me.BtnLockSurface.FlatAppearance.BorderColor = System.Drawing.Color.Gray
+        Me.BtnLockSurface.FlatAppearance.CheckedBackColor = System.Drawing.Color.Gold
+        Me.BtnLockSurface.FlatAppearance.MouseDownBackColor = System.Drawing.Color.PaleGreen
+        Me.BtnLockSurface.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DeepSkyBlue
+        Me.BtnLockSurface.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.BtnLockSurface.Font = New System.Drawing.Font("Microsoft Sans Serif", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.BtnLockSurface.ImeMode = System.Windows.Forms.ImeMode.NoControl
+        Me.BtnLockSurface.Location = New System.Drawing.Point(249, 29)
+        Me.BtnLockSurface.Name = "BtnLockSurface"
+        Me.BtnLockSurface.Size = New System.Drawing.Size(59, 22)
+        Me.BtnLockSurface.TabIndex = 69
+        Me.BtnLockSurface.Text = "Lock"
+        Me.BtnLockSurface.UseVisualStyleBackColor = False
         '
-        'btnHideSurface
+        'BtnHideSurface
         '
-        Me.btnHideSurface.BackColor = System.Drawing.Color.White
-        Me.btnHideSurface.FlatAppearance.BorderColor = System.Drawing.Color.Gray
-        Me.btnHideSurface.FlatAppearance.CheckedBackColor = System.Drawing.Color.Gold
-        Me.btnHideSurface.FlatAppearance.MouseDownBackColor = System.Drawing.Color.PaleGreen
-        Me.btnHideSurface.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DeepSkyBlue
-        Me.btnHideSurface.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btnHideSurface.Font = New System.Drawing.Font("Microsoft Sans Serif", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnHideSurface.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.btnHideSurface.Location = New System.Drawing.Point(249, 6)
-        Me.btnHideSurface.Name = "btnHideSurface"
-        Me.btnHideSurface.Size = New System.Drawing.Size(59, 22)
-        Me.btnHideSurface.TabIndex = 68
-        Me.btnHideSurface.Text = "Hide"
-        Me.btnHideSurface.UseVisualStyleBackColor = False
+        Me.BtnHideSurface.BackColor = System.Drawing.Color.White
+        Me.BtnHideSurface.FlatAppearance.BorderColor = System.Drawing.Color.Gray
+        Me.BtnHideSurface.FlatAppearance.CheckedBackColor = System.Drawing.Color.Gold
+        Me.BtnHideSurface.FlatAppearance.MouseDownBackColor = System.Drawing.Color.PaleGreen
+        Me.BtnHideSurface.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DeepSkyBlue
+        Me.BtnHideSurface.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.BtnHideSurface.Font = New System.Drawing.Font("Microsoft Sans Serif", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.BtnHideSurface.ImeMode = System.Windows.Forms.ImeMode.NoControl
+        Me.BtnHideSurface.Location = New System.Drawing.Point(249, 6)
+        Me.BtnHideSurface.Name = "BtnHideSurface"
+        Me.BtnHideSurface.Size = New System.Drawing.Size(59, 22)
+        Me.BtnHideSurface.TabIndex = 68
+        Me.BtnHideSurface.Text = "Hide"
+        Me.BtnHideSurface.UseVisualStyleBackColor = False
         '
         'PanelDeEdicion
         '
@@ -233,58 +233,58 @@ Partial Class WingControl
         '
         'Panel1
         '
-        Me.Panel1.Controls.Add(Me.btnDeletePanel)
-        Me.Panel1.Controls.Add(Me.btnAddPanel)
+        Me.Panel1.Controls.Add(Me.BtnDeletePanel)
+        Me.Panel1.Controls.Add(Me.BtnAddPanel)
         Me.Panel1.Controls.Add(Me.Label4)
-        Me.Panel1.Controls.Add(Me.nudSelectRegion)
-        Me.Panel1.Controls.Add(Me.btnInsertPanel)
+        Me.Panel1.Controls.Add(Me.NudSelectRegion)
+        Me.Panel1.Controls.Add(Me.BtnInsertPanel)
         Me.Panel1.Dock = System.Windows.Forms.DockStyle.Top
         Me.Panel1.Location = New System.Drawing.Point(3, 3)
         Me.Panel1.Name = "Panel1"
         Me.Panel1.Size = New System.Drawing.Size(293, 29)
         Me.Panel1.TabIndex = 60
         '
-        'btnDeletePanel
+        'BtnDeletePanel
         '
-        Me.btnDeletePanel.BackColor = System.Drawing.Color.White
-        Me.btnDeletePanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None
-        Me.btnDeletePanel.FlatAppearance.BorderColor = System.Drawing.Color.Gray
-        Me.btnDeletePanel.FlatAppearance.CheckedBackColor = System.Drawing.SystemColors.ButtonFace
-        Me.btnDeletePanel.FlatAppearance.MouseDownBackColor = System.Drawing.Color.PaleGreen
-        Me.btnDeletePanel.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DeepSkyBlue
-        Me.btnDeletePanel.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btnDeletePanel.Font = New System.Drawing.Font("Segoe UI", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnDeletePanel.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.btnDeletePanel.Location = New System.Drawing.Point(247, 3)
-        Me.btnDeletePanel.Name = "btnDeletePanel"
-        Me.btnDeletePanel.Size = New System.Drawing.Size(42, 22)
-        Me.btnDeletePanel.TabIndex = 57
-        Me.btnDeletePanel.Text = "Delete"
-        Me.btnDeletePanel.UseVisualStyleBackColor = False
+        Me.BtnDeletePanel.BackColor = System.Drawing.Color.White
+        Me.BtnDeletePanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None
+        Me.BtnDeletePanel.FlatAppearance.BorderColor = System.Drawing.Color.Gray
+        Me.BtnDeletePanel.FlatAppearance.CheckedBackColor = System.Drawing.SystemColors.ButtonFace
+        Me.BtnDeletePanel.FlatAppearance.MouseDownBackColor = System.Drawing.Color.PaleGreen
+        Me.BtnDeletePanel.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DeepSkyBlue
+        Me.BtnDeletePanel.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.BtnDeletePanel.Font = New System.Drawing.Font("Segoe UI", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.BtnDeletePanel.ImeMode = System.Windows.Forms.ImeMode.NoControl
+        Me.BtnDeletePanel.Location = New System.Drawing.Point(247, 3)
+        Me.BtnDeletePanel.Name = "BtnDeletePanel"
+        Me.BtnDeletePanel.Size = New System.Drawing.Size(42, 22)
+        Me.BtnDeletePanel.TabIndex = 57
+        Me.BtnDeletePanel.Text = "Delete"
+        Me.BtnDeletePanel.UseVisualStyleBackColor = False
         '
-        'btnAddPanel
+        'BtnAddPanel
         '
-        Me.btnAddPanel.BackColor = System.Drawing.Color.White
-        Me.btnAddPanel.FlatAppearance.BorderColor = System.Drawing.Color.Gray
-        Me.btnAddPanel.FlatAppearance.CheckedBackColor = System.Drawing.SystemColors.ButtonFace
-        Me.btnAddPanel.FlatAppearance.MouseDownBackColor = System.Drawing.Color.PaleGreen
-        Me.btnAddPanel.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DeepSkyBlue
-        Me.btnAddPanel.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btnAddPanel.Font = New System.Drawing.Font("Segoe UI", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnAddPanel.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.btnAddPanel.Location = New System.Drawing.Point(159, 3)
-        Me.btnAddPanel.Name = "btnAddPanel"
-        Me.btnAddPanel.Size = New System.Drawing.Size(42, 22)
-        Me.btnAddPanel.TabIndex = 59
-        Me.btnAddPanel.Text = "Add"
-        Me.btnAddPanel.UseVisualStyleBackColor = False
+        Me.BtnAddPanel.BackColor = System.Drawing.Color.White
+        Me.BtnAddPanel.FlatAppearance.BorderColor = System.Drawing.Color.Gray
+        Me.BtnAddPanel.FlatAppearance.CheckedBackColor = System.Drawing.SystemColors.ButtonFace
+        Me.BtnAddPanel.FlatAppearance.MouseDownBackColor = System.Drawing.Color.PaleGreen
+        Me.BtnAddPanel.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DeepSkyBlue
+        Me.BtnAddPanel.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.BtnAddPanel.Font = New System.Drawing.Font("Segoe UI", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.BtnAddPanel.ImeMode = System.Windows.Forms.ImeMode.NoControl
+        Me.BtnAddPanel.Location = New System.Drawing.Point(159, 3)
+        Me.BtnAddPanel.Name = "BtnAddPanel"
+        Me.BtnAddPanel.Size = New System.Drawing.Size(42, 22)
+        Me.BtnAddPanel.TabIndex = 59
+        Me.BtnAddPanel.Text = "Add"
+        Me.BtnAddPanel.UseVisualStyleBackColor = False
         '
         'Label4
         '
         Me.Label4.AutoSize = True
         Me.Label4.BackColor = System.Drawing.Color.Transparent
         Me.Label4.Font = New System.Drawing.Font("Segoe UI", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label4.ForeColor = System.Drawing.Color.DimGray
+        Me.Label4.ForeColor = System.Drawing.Color.Black
         Me.Label4.ImeMode = System.Windows.Forms.ImeMode.NoControl
         Me.Label4.Location = New System.Drawing.Point(3, 5)
         Me.Label4.Name = "Label4"
@@ -292,35 +292,35 @@ Partial Class WingControl
         Me.Label4.TabIndex = 11
         Me.Label4.Text = "Region:"
         '
-        'nudSelectRegion
+        'NudSelectRegion
         '
-        Me.nudSelectRegion.Font = New System.Drawing.Font("Segoe UI", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.nudSelectRegion.ForeColor = System.Drawing.Color.Black
-        Me.nudSelectRegion.Location = New System.Drawing.Point(63, 2)
-        Me.nudSelectRegion.Maximum = New Decimal(New Integer() {10, 0, 0, 0})
-        Me.nudSelectRegion.Minimum = New Decimal(New Integer() {1, 0, 0, 0})
-        Me.nudSelectRegion.Name = "nudSelectRegion"
-        Me.nudSelectRegion.Size = New System.Drawing.Size(48, 25)
-        Me.nudSelectRegion.TabIndex = 51
-        Me.nudSelectRegion.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        Me.nudSelectRegion.Value = New Decimal(New Integer() {1, 0, 0, 0})
+        Me.NudSelectRegion.Font = New System.Drawing.Font("Segoe UI", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.NudSelectRegion.ForeColor = System.Drawing.Color.Black
+        Me.NudSelectRegion.Location = New System.Drawing.Point(63, 2)
+        Me.NudSelectRegion.Maximum = New Decimal(New Integer() {10, 0, 0, 0})
+        Me.NudSelectRegion.Minimum = New Decimal(New Integer() {1, 0, 0, 0})
+        Me.NudSelectRegion.Name = "NudSelectRegion"
+        Me.NudSelectRegion.Size = New System.Drawing.Size(48, 25)
+        Me.NudSelectRegion.TabIndex = 51
+        Me.NudSelectRegion.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.NudSelectRegion.Value = New Decimal(New Integer() {1, 0, 0, 0})
         '
-        'btnInsertPanel
+        'BtnInsertPanel
         '
-        Me.btnInsertPanel.BackColor = System.Drawing.Color.White
-        Me.btnInsertPanel.FlatAppearance.BorderColor = System.Drawing.Color.Gray
-        Me.btnInsertPanel.FlatAppearance.CheckedBackColor = System.Drawing.SystemColors.ButtonFace
-        Me.btnInsertPanel.FlatAppearance.MouseDownBackColor = System.Drawing.Color.PaleGreen
-        Me.btnInsertPanel.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DeepSkyBlue
-        Me.btnInsertPanel.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btnInsertPanel.Font = New System.Drawing.Font("Segoe UI", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnInsertPanel.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.btnInsertPanel.Location = New System.Drawing.Point(203, 3)
-        Me.btnInsertPanel.Name = "btnInsertPanel"
-        Me.btnInsertPanel.Size = New System.Drawing.Size(42, 22)
-        Me.btnInsertPanel.TabIndex = 56
-        Me.btnInsertPanel.Text = "Insert"
-        Me.btnInsertPanel.UseVisualStyleBackColor = False
+        Me.BtnInsertPanel.BackColor = System.Drawing.Color.White
+        Me.BtnInsertPanel.FlatAppearance.BorderColor = System.Drawing.Color.Gray
+        Me.BtnInsertPanel.FlatAppearance.CheckedBackColor = System.Drawing.SystemColors.ButtonFace
+        Me.BtnInsertPanel.FlatAppearance.MouseDownBackColor = System.Drawing.Color.PaleGreen
+        Me.BtnInsertPanel.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DeepSkyBlue
+        Me.BtnInsertPanel.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.BtnInsertPanel.Font = New System.Drawing.Font("Segoe UI", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.BtnInsertPanel.ImeMode = System.Windows.Forms.ImeMode.NoControl
+        Me.BtnInsertPanel.Location = New System.Drawing.Point(203, 3)
+        Me.BtnInsertPanel.Name = "BtnInsertPanel"
+        Me.BtnInsertPanel.Size = New System.Drawing.Size(42, 22)
+        Me.BtnInsertPanel.TabIndex = 56
+        Me.BtnInsertPanel.Text = "Insert"
+        Me.BtnInsertPanel.UseVisualStyleBackColor = False
         '
         'tcMacroPanelProperties
         '
@@ -342,19 +342,19 @@ Partial Class WingControl
         Me.TabPage6.BackColor = System.Drawing.Color.White
         Me.TabPage6.Controls.Add(Me.Label14)
         Me.TabPage6.Controls.Add(Me.Label13)
-        Me.TabPage6.Controls.Add(Me.nudChordwisePanels)
+        Me.TabPage6.Controls.Add(Me.NudChordwisePanels)
         Me.TabPage6.Controls.Add(Me.Label2)
-        Me.TabPage6.Controls.Add(Me.rbLinearSpacement)
-        Me.TabPage6.Controls.Add(Me.rbConstantSpacement)
-        Me.TabPage6.Controls.Add(Me.cbSymetricWing)
+        Me.TabPage6.Controls.Add(Me.RbLinearSpacement)
+        Me.TabPage6.Controls.Add(Me.RbConstantSpacement)
+        Me.TabPage6.Controls.Add(Me.CbSymetricWing)
         Me.TabPage6.Controls.Add(Me.Label40)
         Me.TabPage6.Controls.Add(Me.Label39)
-        Me.TabPage6.Controls.Add(Me.nudTwistingAxis)
-        Me.TabPage6.Controls.Add(Me.nudTwist)
-        Me.TabPage6.Controls.Add(Me.nudDihedral)
-        Me.TabPage6.Controls.Add(Me.nudSweepback)
-        Me.TabPage6.Controls.Add(Me.nudLength)
-        Me.TabPage6.Controls.Add(Me.nudTipChord)
+        Me.TabPage6.Controls.Add(Me.NudTwistingAxis)
+        Me.TabPage6.Controls.Add(Me.NudTwist)
+        Me.TabPage6.Controls.Add(Me.NudDihedral)
+        Me.TabPage6.Controls.Add(Me.NudSweepback)
+        Me.TabPage6.Controls.Add(Me.NudLength)
+        Me.TabPage6.Controls.Add(Me.NudTipChord)
         Me.TabPage6.Controls.Add(Me.Label5)
         Me.TabPage6.Controls.Add(Me.Label27)
         Me.TabPage6.Controls.Add(Me.Label7)
@@ -366,8 +366,8 @@ Partial Class WingControl
         Me.TabPage6.Controls.Add(Me.Label11)
         Me.TabPage6.Controls.Add(Me.Label17)
         Me.TabPage6.Controls.Add(Me.Label12)
-        Me.TabPage6.Controls.Add(Me.nudSpanwiseRings)
-        Me.TabPage6.Controls.Add(Me.nudRootChord)
+        Me.TabPage6.Controls.Add(Me.NudSpanwiseRings)
+        Me.TabPage6.Controls.Add(Me.NudRootChord)
         Me.TabPage6.Controls.Add(Me.Label6)
         Me.TabPage6.Controls.Add(Me.Label3)
         Me.TabPage6.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -403,17 +403,17 @@ Partial Class WingControl
         Me.Label13.Text = "Mesh:"
         Me.Label13.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         '
-        'nudChordwisePanels
+        'NudChordwisePanels
         '
-        Me.nudChordwisePanels.Font = New System.Drawing.Font("Segoe UI", 8.25!)
-        Me.nudChordwisePanels.ForeColor = System.Drawing.Color.Black
-        Me.nudChordwisePanels.Location = New System.Drawing.Point(109, 26)
-        Me.nudChordwisePanels.Minimum = New Decimal(New Integer() {1, 0, 0, 0})
-        Me.nudChordwisePanels.Name = "nudChordwisePanels"
-        Me.nudChordwisePanels.Size = New System.Drawing.Size(82, 22)
-        Me.nudChordwisePanels.TabIndex = 58
-        Me.nudChordwisePanels.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        Me.nudChordwisePanels.Value = New Decimal(New Integer() {5, 0, 0, 0})
+        Me.NudChordwisePanels.Font = New System.Drawing.Font("Segoe UI", 8.25!)
+        Me.NudChordwisePanels.ForeColor = System.Drawing.Color.Black
+        Me.NudChordwisePanels.Location = New System.Drawing.Point(109, 26)
+        Me.NudChordwisePanels.Minimum = New Decimal(New Integer() {1, 0, 0, 0})
+        Me.NudChordwisePanels.Name = "NudChordwisePanels"
+        Me.NudChordwisePanels.Size = New System.Drawing.Size(82, 22)
+        Me.NudChordwisePanels.TabIndex = 58
+        Me.NudChordwisePanels.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.NudChordwisePanels.Value = New Decimal(New Integer() {5, 0, 0, 0})
         '
         'Label2
         '
@@ -429,36 +429,36 @@ Partial Class WingControl
         '
         'rbLinearSpacement
         '
-        Me.rbLinearSpacement.AutoSize = True
-        Me.rbLinearSpacement.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.rbLinearSpacement.Location = New System.Drawing.Point(199, 49)
-        Me.rbLinearSpacement.Name = "rbLinearSpacement"
-        Me.rbLinearSpacement.Size = New System.Drawing.Size(56, 17)
-        Me.rbLinearSpacement.TabIndex = 53
-        Me.rbLinearSpacement.Text = "Linear"
-        Me.rbLinearSpacement.UseVisualStyleBackColor = True
+        Me.RbLinearSpacement.AutoSize = True
+        Me.RbLinearSpacement.ImeMode = System.Windows.Forms.ImeMode.NoControl
+        Me.RbLinearSpacement.Location = New System.Drawing.Point(199, 49)
+        Me.RbLinearSpacement.Name = "rbLinearSpacement"
+        Me.RbLinearSpacement.Size = New System.Drawing.Size(56, 17)
+        Me.RbLinearSpacement.TabIndex = 53
+        Me.RbLinearSpacement.Text = "Linear"
+        Me.RbLinearSpacement.UseVisualStyleBackColor = True
         '
         'rbConstantSpacement
         '
-        Me.rbConstantSpacement.AutoSize = True
-        Me.rbConstantSpacement.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.rbConstantSpacement.Location = New System.Drawing.Point(199, 29)
-        Me.rbConstantSpacement.Name = "rbConstantSpacement"
-        Me.rbConstantSpacement.Size = New System.Drawing.Size(72, 17)
-        Me.rbConstantSpacement.TabIndex = 52
-        Me.rbConstantSpacement.Text = "Constant"
-        Me.rbConstantSpacement.UseVisualStyleBackColor = True
+        Me.RbConstantSpacement.AutoSize = True
+        Me.RbConstantSpacement.ImeMode = System.Windows.Forms.ImeMode.NoControl
+        Me.RbConstantSpacement.Location = New System.Drawing.Point(199, 29)
+        Me.RbConstantSpacement.Name = "rbConstantSpacement"
+        Me.RbConstantSpacement.Size = New System.Drawing.Size(72, 17)
+        Me.RbConstantSpacement.TabIndex = 52
+        Me.RbConstantSpacement.Text = "Constant"
+        Me.RbConstantSpacement.UseVisualStyleBackColor = True
         '
         'cbSymetricWing
         '
-        Me.cbSymetricWing.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.cbSymetricWing.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.cbSymetricWing.Location = New System.Drawing.Point(7, 251)
-        Me.cbSymetricWing.Name = "cbSymetricWing"
-        Me.cbSymetricWing.Size = New System.Drawing.Size(212, 24)
-        Me.cbSymetricWing.TabIndex = 59
-        Me.cbSymetricWing.Text = "Symmetric about [ Y = 0 ] plane"
-        Me.cbSymetricWing.UseVisualStyleBackColor = True
+        Me.CbSymetricWing.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.CbSymetricWing.ImeMode = System.Windows.Forms.ImeMode.NoControl
+        Me.CbSymetricWing.Location = New System.Drawing.Point(7, 251)
+        Me.CbSymetricWing.Name = "cbSymetricWing"
+        Me.CbSymetricWing.Size = New System.Drawing.Size(212, 24)
+        Me.CbSymetricWing.TabIndex = 59
+        Me.CbSymetricWing.Text = "Symmetric about [ Y = 0 ] plane"
+        Me.CbSymetricWing.UseVisualStyleBackColor = True
         '
         'Label40
         '
@@ -482,73 +482,73 @@ Partial Class WingControl
         '
         'nudTwistingAxis
         '
-        Me.nudTwistingAxis.DecimalPlaces = 4
-        Me.nudTwistingAxis.Increment = New Decimal(New Integer() {1, 0, 0, 131072})
-        Me.nudTwistingAxis.Location = New System.Drawing.Point(109, 221)
-        Me.nudTwistingAxis.Maximum = New Decimal(New Integer() {1, 0, 0, 0})
-        Me.nudTwistingAxis.Name = "nudTwistingAxis"
-        Me.nudTwistingAxis.Size = New System.Drawing.Size(82, 22)
-        Me.nudTwistingAxis.TabIndex = 51
-        Me.nudTwistingAxis.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        Me.nudTwistingAxis.Value = New Decimal(New Integer() {5, 0, 0, 65536})
+        Me.NudTwistingAxis.DecimalPlaces = 4
+        Me.NudTwistingAxis.Increment = New Decimal(New Integer() {1, 0, 0, 131072})
+        Me.NudTwistingAxis.Location = New System.Drawing.Point(109, 221)
+        Me.NudTwistingAxis.Maximum = New Decimal(New Integer() {1, 0, 0, 0})
+        Me.NudTwistingAxis.Name = "nudTwistingAxis"
+        Me.NudTwistingAxis.Size = New System.Drawing.Size(82, 22)
+        Me.NudTwistingAxis.TabIndex = 51
+        Me.NudTwistingAxis.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.NudTwistingAxis.Value = New Decimal(New Integer() {5, 0, 0, 65536})
         '
         'nudTwist
         '
-        Me.nudTwist.DecimalPlaces = 4
-        Me.nudTwist.Increment = New Decimal(New Integer() {1, 0, 0, 131072})
-        Me.nudTwist.Location = New System.Drawing.Point(109, 200)
-        Me.nudTwist.Maximum = New Decimal(New Integer() {90, 0, 0, 0})
-        Me.nudTwist.Minimum = New Decimal(New Integer() {90, 0, 0, -2147483648})
-        Me.nudTwist.Name = "nudTwist"
-        Me.nudTwist.Size = New System.Drawing.Size(82, 22)
-        Me.nudTwist.TabIndex = 50
-        Me.nudTwist.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.NudTwist.DecimalPlaces = 4
+        Me.NudTwist.Increment = New Decimal(New Integer() {1, 0, 0, 131072})
+        Me.NudTwist.Location = New System.Drawing.Point(109, 200)
+        Me.NudTwist.Maximum = New Decimal(New Integer() {90, 0, 0, 0})
+        Me.NudTwist.Minimum = New Decimal(New Integer() {90, 0, 0, -2147483648})
+        Me.NudTwist.Name = "nudTwist"
+        Me.NudTwist.Size = New System.Drawing.Size(82, 22)
+        Me.NudTwist.TabIndex = 50
+        Me.NudTwist.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
-        'nudDihedral
+        'NudDihedral
         '
-        Me.nudDihedral.DecimalPlaces = 4
-        Me.nudDihedral.Increment = New Decimal(New Integer() {5, 0, 0, 65536})
-        Me.nudDihedral.Location = New System.Drawing.Point(109, 179)
-        Me.nudDihedral.Maximum = New Decimal(New Integer() {360, 0, 0, 0})
-        Me.nudDihedral.Minimum = New Decimal(New Integer() {90, 0, 0, -2147483648})
-        Me.nudDihedral.Name = "nudDihedral"
-        Me.nudDihedral.Size = New System.Drawing.Size(82, 22)
-        Me.nudDihedral.TabIndex = 49
-        Me.nudDihedral.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.NudDihedral.DecimalPlaces = 4
+        Me.NudDihedral.Increment = New Decimal(New Integer() {5, 0, 0, 65536})
+        Me.NudDihedral.Location = New System.Drawing.Point(109, 179)
+        Me.NudDihedral.Maximum = New Decimal(New Integer() {360, 0, 0, 0})
+        Me.NudDihedral.Minimum = New Decimal(New Integer() {90, 0, 0, -2147483648})
+        Me.NudDihedral.Name = "NudDihedral"
+        Me.NudDihedral.Size = New System.Drawing.Size(82, 22)
+        Me.NudDihedral.TabIndex = 49
+        Me.NudDihedral.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
-        'nudSweepback
+        'NudSweepback
         '
-        Me.nudSweepback.DecimalPlaces = 4
-        Me.nudSweepback.Location = New System.Drawing.Point(109, 158)
-        Me.nudSweepback.Maximum = New Decimal(New Integer() {90, 0, 0, 0})
-        Me.nudSweepback.Minimum = New Decimal(New Integer() {90, 0, 0, -2147483648})
-        Me.nudSweepback.Name = "nudSweepback"
-        Me.nudSweepback.Size = New System.Drawing.Size(82, 22)
-        Me.nudSweepback.TabIndex = 48
-        Me.nudSweepback.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.NudSweepback.DecimalPlaces = 4
+        Me.NudSweepback.Location = New System.Drawing.Point(109, 158)
+        Me.NudSweepback.Maximum = New Decimal(New Integer() {90, 0, 0, 0})
+        Me.NudSweepback.Minimum = New Decimal(New Integer() {90, 0, 0, -2147483648})
+        Me.NudSweepback.Name = "NudSweepback"
+        Me.NudSweepback.Size = New System.Drawing.Size(82, 22)
+        Me.NudSweepback.TabIndex = 48
+        Me.NudSweepback.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
-        'nudLength
+        'NudLength
         '
-        Me.nudLength.DecimalPlaces = 4
-        Me.nudLength.Increment = New Decimal(New Integer() {5, 0, 0, 131072})
-        Me.nudLength.Location = New System.Drawing.Point(109, 137)
-        Me.nudLength.Maximum = New Decimal(New Integer() {200, 0, 0, 0})
-        Me.nudLength.Name = "nudLength"
-        Me.nudLength.Size = New System.Drawing.Size(82, 22)
-        Me.nudLength.TabIndex = 47
-        Me.nudLength.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        Me.nudLength.Value = New Decimal(New Integer() {1, 0, 0, 0})
+        Me.NudLength.DecimalPlaces = 4
+        Me.NudLength.Increment = New Decimal(New Integer() {5, 0, 0, 131072})
+        Me.NudLength.Location = New System.Drawing.Point(109, 137)
+        Me.NudLength.Maximum = New Decimal(New Integer() {200, 0, 0, 0})
+        Me.NudLength.Name = "NudLength"
+        Me.NudLength.Size = New System.Drawing.Size(82, 22)
+        Me.NudLength.TabIndex = 47
+        Me.NudLength.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.NudLength.Value = New Decimal(New Integer() {1, 0, 0, 0})
         '
-        'nudTipChord
+        'NudTipChord
         '
-        Me.nudTipChord.DecimalPlaces = 4
-        Me.nudTipChord.Increment = New Decimal(New Integer() {5, 0, 0, 131072})
-        Me.nudTipChord.Location = New System.Drawing.Point(109, 116)
-        Me.nudTipChord.Name = "nudTipChord"
-        Me.nudTipChord.Size = New System.Drawing.Size(82, 22)
-        Me.nudTipChord.TabIndex = 46
-        Me.nudTipChord.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        Me.nudTipChord.Value = New Decimal(New Integer() {1, 0, 0, 0})
+        Me.NudTipChord.DecimalPlaces = 4
+        Me.NudTipChord.Increment = New Decimal(New Integer() {5, 0, 0, 131072})
+        Me.NudTipChord.Location = New System.Drawing.Point(109, 116)
+        Me.NudTipChord.Name = "NudTipChord"
+        Me.NudTipChord.Size = New System.Drawing.Size(82, 22)
+        Me.NudTipChord.TabIndex = 46
+        Me.NudTipChord.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.NudTipChord.Value = New Decimal(New Integer() {1, 0, 0, 0})
         '
         'Label5
         '
@@ -667,29 +667,29 @@ Partial Class WingControl
         Me.Label12.Text = "Twisting axis:"
         Me.Label12.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         '
-        'nudSpanwiseRings
+        'NudSpanwiseRings
         '
-        Me.nudSpanwiseRings.Location = New System.Drawing.Point(109, 47)
-        Me.nudSpanwiseRings.Minimum = New Decimal(New Integer() {1, 0, 0, 0})
-        Me.nudSpanwiseRings.Name = "nudSpanwiseRings"
-        Me.nudSpanwiseRings.Size = New System.Drawing.Size(82, 22)
-        Me.nudSpanwiseRings.TabIndex = 58
-        Me.nudSpanwiseRings.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        Me.nudSpanwiseRings.Value = New Decimal(New Integer() {5, 0, 0, 0})
+        Me.NudSpanwiseRings.Location = New System.Drawing.Point(109, 47)
+        Me.NudSpanwiseRings.Minimum = New Decimal(New Integer() {1, 0, 0, 0})
+        Me.NudSpanwiseRings.Name = "NudSpanwiseRings"
+        Me.NudSpanwiseRings.Size = New System.Drawing.Size(82, 22)
+        Me.NudSpanwiseRings.TabIndex = 58
+        Me.NudSpanwiseRings.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.NudSpanwiseRings.Value = New Decimal(New Integer() {5, 0, 0, 0})
         '
-        'nudRootChord
+        'NudRootChord
         '
-        Me.nudRootChord.DecimalPlaces = 4
-        Me.nudRootChord.Font = New System.Drawing.Font("Segoe UI", 8.25!)
-        Me.nudRootChord.ForeColor = System.Drawing.Color.Black
-        Me.nudRootChord.Increment = New Decimal(New Integer() {5, 0, 0, 131072})
-        Me.nudRootChord.Location = New System.Drawing.Point(109, 95)
-        Me.nudRootChord.Maximum = New Decimal(New Integer() {99, 0, 0, 0})
-        Me.nudRootChord.Name = "nudRootChord"
-        Me.nudRootChord.Size = New System.Drawing.Size(82, 22)
-        Me.nudRootChord.TabIndex = 44
-        Me.nudRootChord.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        Me.nudRootChord.Value = New Decimal(New Integer() {1, 0, 0, 0})
+        Me.NudRootChord.DecimalPlaces = 4
+        Me.NudRootChord.Font = New System.Drawing.Font("Segoe UI", 8.25!)
+        Me.NudRootChord.ForeColor = System.Drawing.Color.Black
+        Me.NudRootChord.Increment = New Decimal(New Integer() {5, 0, 0, 131072})
+        Me.NudRootChord.Location = New System.Drawing.Point(109, 95)
+        Me.NudRootChord.Maximum = New Decimal(New Integer() {99, 0, 0, 0})
+        Me.NudRootChord.Name = "NudRootChord"
+        Me.NudRootChord.Size = New System.Drawing.Size(82, 22)
+        Me.NudRootChord.TabIndex = 44
+        Me.NudRootChord.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.NudRootChord.Value = New Decimal(New Integer() {1, 0, 0, 0})
         '
         'Label6
         '
@@ -822,14 +822,14 @@ Partial Class WingControl
         Me.TabPage8.BackColor = System.Drawing.Color.White
         Me.TabPage8.Controls.Add(Me.cbTrailingEdge)
         Me.TabPage8.Controls.Add(Me.Label18)
-        Me.TabPage8.Controls.Add(Me.nudCuttingStep)
-        Me.TabPage8.Controls.Add(Me.cbConvectWake)
+        Me.TabPage8.Controls.Add(Me.NudCuttingStep)
+        Me.TabPage8.Controls.Add(Me.CbConvectWake)
         Me.TabPage8.Controls.Add(Me.Label29)
-        Me.TabPage8.Controls.Add(Me.cbShowPriitives)
+        Me.TabPage8.Controls.Add(Me.CbShowPriitives)
         Me.TabPage8.Controls.Add(Me.Label32)
         Me.TabPage8.Controls.Add(Me.Label31)
-        Me.TabPage8.Controls.Add(Me.nudLastPrimitive)
-        Me.TabPage8.Controls.Add(Me.nudFirstPrimitive)
+        Me.TabPage8.Controls.Add(Me.NudLastPrimitive)
+        Me.TabPage8.Controls.Add(Me.NudFirstPrimitive)
         Me.TabPage8.Location = New System.Drawing.Point(4, 22)
         Me.TabPage8.Name = "TabPage8"
         Me.TabPage8.Size = New System.Drawing.Size(285, 281)
@@ -863,28 +863,28 @@ Partial Class WingControl
         '
         'nudCuttingStep
         '
-        Me.nudCuttingStep.Location = New System.Drawing.Point(120, 126)
-        Me.nudCuttingStep.Maximum = New Decimal(New Integer() {10000, 0, 0, 0})
-        Me.nudCuttingStep.Minimum = New Decimal(New Integer() {1, 0, 0, 0})
-        Me.nudCuttingStep.Name = "nudCuttingStep"
-        Me.nudCuttingStep.Size = New System.Drawing.Size(57, 22)
-        Me.nudCuttingStep.TabIndex = 59
-        Me.nudCuttingStep.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        Me.nudCuttingStep.Value = New Decimal(New Integer() {100, 0, 0, 0})
+        Me.NudCuttingStep.Location = New System.Drawing.Point(120, 126)
+        Me.NudCuttingStep.Maximum = New Decimal(New Integer() {10000, 0, 0, 0})
+        Me.NudCuttingStep.Minimum = New Decimal(New Integer() {1, 0, 0, 0})
+        Me.NudCuttingStep.Name = "nudCuttingStep"
+        Me.NudCuttingStep.Size = New System.Drawing.Size(57, 22)
+        Me.NudCuttingStep.TabIndex = 59
+        Me.NudCuttingStep.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.NudCuttingStep.Value = New Decimal(New Integer() {100, 0, 0, 0})
         '
-        'cbConvectWake
+        'CbConvectWake
         '
-        Me.cbConvectWake.AutoSize = True
-        Me.cbConvectWake.Checked = True
-        Me.cbConvectWake.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.cbConvectWake.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.cbConvectWake.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.cbConvectWake.Location = New System.Drawing.Point(9, 10)
-        Me.cbConvectWake.Name = "cbConvectWake"
-        Me.cbConvectWake.Size = New System.Drawing.Size(98, 17)
-        Me.cbConvectWake.TabIndex = 58
-        Me.cbConvectWake.Text = "Convect wake"
-        Me.cbConvectWake.UseVisualStyleBackColor = True
+        Me.CbConvectWake.AutoSize = True
+        Me.CbConvectWake.Checked = True
+        Me.CbConvectWake.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.CbConvectWake.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.CbConvectWake.ImeMode = System.Windows.Forms.ImeMode.NoControl
+        Me.CbConvectWake.Location = New System.Drawing.Point(9, 10)
+        Me.CbConvectWake.Name = "CbConvectWake"
+        Me.CbConvectWake.Size = New System.Drawing.Size(98, 17)
+        Me.CbConvectWake.TabIndex = 58
+        Me.CbConvectWake.Text = "Convect wake"
+        Me.CbConvectWake.UseVisualStyleBackColor = True
         '
         'Label29
         '
@@ -898,19 +898,19 @@ Partial Class WingControl
         Me.Label29.TabIndex = 48
         Me.Label29.Text = "Primitive panels for wake convection:"
         '
-        'cbShowPriitives
+        'CbShowPriitives
         '
-        Me.cbShowPriitives.AutoSize = True
-        Me.cbShowPriitives.Checked = True
-        Me.cbShowPriitives.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.cbShowPriitives.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.cbShowPriitives.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.cbShowPriitives.Location = New System.Drawing.Point(9, 162)
-        Me.cbShowPriitives.Name = "cbShowPriitives"
-        Me.cbShowPriitives.Size = New System.Drawing.Size(109, 17)
-        Me.cbShowPriitives.TabIndex = 54
-        Me.cbShowPriitives.Text = "Show primitives"
-        Me.cbShowPriitives.UseVisualStyleBackColor = True
+        Me.CbShowPriitives.AutoSize = True
+        Me.CbShowPriitives.Checked = True
+        Me.CbShowPriitives.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.CbShowPriitives.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.CbShowPriitives.ImeMode = System.Windows.Forms.ImeMode.NoControl
+        Me.CbShowPriitives.Location = New System.Drawing.Point(9, 162)
+        Me.CbShowPriitives.Name = "CbShowPriitives"
+        Me.CbShowPriitives.Size = New System.Drawing.Size(109, 17)
+        Me.CbShowPriitives.TabIndex = 54
+        Me.CbShowPriitives.Text = "Show primitives"
+        Me.CbShowPriitives.UseVisualStyleBackColor = True
         '
         'Label32
         '
@@ -936,42 +936,42 @@ Partial Class WingControl
         Me.Label31.Text = "From segment:"
         Me.Label31.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         '
-        'nudLastPrimitive
+        'NudLastPrimitive
         '
-        Me.nudLastPrimitive.Location = New System.Drawing.Point(120, 98)
-        Me.nudLastPrimitive.Maximum = New Decimal(New Integer() {4, 0, 0, 0})
-        Me.nudLastPrimitive.Minimum = New Decimal(New Integer() {1, 0, 0, 0})
-        Me.nudLastPrimitive.Name = "nudLastPrimitive"
-        Me.nudLastPrimitive.Size = New System.Drawing.Size(57, 22)
-        Me.nudLastPrimitive.TabIndex = 50
-        Me.nudLastPrimitive.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        Me.nudLastPrimitive.Value = New Decimal(New Integer() {1, 0, 0, 0})
+        Me.NudLastPrimitive.Location = New System.Drawing.Point(120, 98)
+        Me.NudLastPrimitive.Maximum = New Decimal(New Integer() {4, 0, 0, 0})
+        Me.NudLastPrimitive.Minimum = New Decimal(New Integer() {1, 0, 0, 0})
+        Me.NudLastPrimitive.Name = "NudLastPrimitive"
+        Me.NudLastPrimitive.Size = New System.Drawing.Size(57, 22)
+        Me.NudLastPrimitive.TabIndex = 50
+        Me.NudLastPrimitive.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.NudLastPrimitive.Value = New Decimal(New Integer() {1, 0, 0, 0})
         '
-        'nudFirstPrimitive
+        'NudFirstPrimitive
         '
-        Me.nudFirstPrimitive.Location = New System.Drawing.Point(120, 77)
-        Me.nudFirstPrimitive.Minimum = New Decimal(New Integer() {1, 0, 0, 0})
-        Me.nudFirstPrimitive.Name = "nudFirstPrimitive"
-        Me.nudFirstPrimitive.Size = New System.Drawing.Size(57, 22)
-        Me.nudFirstPrimitive.TabIndex = 49
-        Me.nudFirstPrimitive.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        Me.nudFirstPrimitive.Value = New Decimal(New Integer() {1, 0, 0, 0})
+        Me.NudFirstPrimitive.Location = New System.Drawing.Point(120, 77)
+        Me.NudFirstPrimitive.Minimum = New Decimal(New Integer() {1, 0, 0, 0})
+        Me.NudFirstPrimitive.Name = "NudFirstPrimitive"
+        Me.NudFirstPrimitive.Size = New System.Drawing.Size(57, 22)
+        Me.NudFirstPrimitive.TabIndex = 49
+        Me.NudFirstPrimitive.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.NudFirstPrimitive.Value = New Decimal(New Integer() {1, 0, 0, 0})
         '
         'TabPage10
         '
         Me.TabPage10.BackColor = System.Drawing.Color.White
         Me.TabPage10.Controls.Add(Me.Label73)
-        Me.TabPage10.Controls.Add(Me.nudFlapPanels)
+        Me.TabPage10.Controls.Add(Me.NudFlapPanels)
         Me.TabPage10.Controls.Add(Me.Label67)
         Me.TabPage10.Controls.Add(Me.Label71)
-        Me.TabPage10.Controls.Add(Me.nudRootFlap)
+        Me.TabPage10.Controls.Add(Me.NudRootFlap)
         Me.TabPage10.Controls.Add(Me.Label66)
         Me.TabPage10.Controls.Add(Me.Label65)
         Me.TabPage10.Controls.Add(Me.Label61)
         Me.TabPage10.Controls.Add(Me.Label60)
-        Me.TabPage10.Controls.Add(Me.nudFlapDeflection)
-        Me.TabPage10.Controls.Add(Me.nudFlapChord)
-        Me.TabPage10.Controls.Add(Me.cbFlapped)
+        Me.TabPage10.Controls.Add(Me.NudFlapDeflection)
+        Me.TabPage10.Controls.Add(Me.NudFlapChord)
+        Me.TabPage10.Controls.Add(Me.CbFlapped)
         Me.TabPage10.Location = New System.Drawing.Point(4, 22)
         Me.TabPage10.Name = "TabPage10"
         Me.TabPage10.Padding = New System.Windows.Forms.Padding(3)
@@ -993,12 +993,12 @@ Partial Class WingControl
         '
         'nudFlapPanels
         '
-        Me.nudFlapPanels.Location = New System.Drawing.Point(111, 120)
-        Me.nudFlapPanels.Minimum = New Decimal(New Integer() {100, 0, 0, -2147483648})
-        Me.nudFlapPanels.Name = "nudFlapPanels"
-        Me.nudFlapPanels.Size = New System.Drawing.Size(72, 22)
-        Me.nudFlapPanels.TabIndex = 59
-        Me.nudFlapPanels.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.NudFlapPanels.Location = New System.Drawing.Point(111, 120)
+        Me.NudFlapPanels.Minimum = New Decimal(New Integer() {100, 0, 0, -2147483648})
+        Me.NudFlapPanels.Name = "nudFlapPanels"
+        Me.NudFlapPanels.Size = New System.Drawing.Size(72, 22)
+        Me.NudFlapPanels.TabIndex = 59
+        Me.NudFlapPanels.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'Label67
         '
@@ -1025,13 +1025,13 @@ Partial Class WingControl
         '
         'nudRootFlap
         '
-        Me.nudRootFlap.DecimalPlaces = 4
-        Me.nudRootFlap.Increment = New Decimal(New Integer() {5, 0, 0, 131072})
-        Me.nudRootFlap.Location = New System.Drawing.Point(111, 99)
-        Me.nudRootFlap.Name = "nudRootFlap"
-        Me.nudRootFlap.Size = New System.Drawing.Size(72, 22)
-        Me.nudRootFlap.TabIndex = 56
-        Me.nudRootFlap.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.NudRootFlap.DecimalPlaces = 4
+        Me.NudRootFlap.Increment = New Decimal(New Integer() {5, 0, 0, 131072})
+        Me.NudRootFlap.Location = New System.Drawing.Point(111, 99)
+        Me.NudRootFlap.Name = "nudRootFlap"
+        Me.NudRootFlap.Size = New System.Drawing.Size(72, 22)
+        Me.NudRootFlap.TabIndex = 56
+        Me.NudRootFlap.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'Label66
         '
@@ -1081,33 +1081,33 @@ Partial Class WingControl
         '
         'nudFlapDeflection
         '
-        Me.nudFlapDeflection.Location = New System.Drawing.Point(111, 58)
-        Me.nudFlapDeflection.Minimum = New Decimal(New Integer() {100, 0, 0, -2147483648})
-        Me.nudFlapDeflection.Name = "nudFlapDeflection"
-        Me.nudFlapDeflection.Size = New System.Drawing.Size(72, 22)
-        Me.nudFlapDeflection.TabIndex = 2
-        Me.nudFlapDeflection.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.NudFlapDeflection.Location = New System.Drawing.Point(111, 58)
+        Me.NudFlapDeflection.Minimum = New Decimal(New Integer() {100, 0, 0, -2147483648})
+        Me.NudFlapDeflection.Name = "nudFlapDeflection"
+        Me.NudFlapDeflection.Size = New System.Drawing.Size(72, 22)
+        Me.NudFlapDeflection.TabIndex = 2
+        Me.NudFlapDeflection.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'nudFlapChord
         '
-        Me.nudFlapChord.DecimalPlaces = 4
-        Me.nudFlapChord.Increment = New Decimal(New Integer() {5, 0, 0, 131072})
-        Me.nudFlapChord.Location = New System.Drawing.Point(111, 37)
-        Me.nudFlapChord.Name = "nudFlapChord"
-        Me.nudFlapChord.Size = New System.Drawing.Size(72, 22)
-        Me.nudFlapChord.TabIndex = 1
-        Me.nudFlapChord.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.NudFlapChord.DecimalPlaces = 4
+        Me.NudFlapChord.Increment = New Decimal(New Integer() {5, 0, 0, 131072})
+        Me.NudFlapChord.Location = New System.Drawing.Point(111, 37)
+        Me.NudFlapChord.Name = "nudFlapChord"
+        Me.NudFlapChord.Size = New System.Drawing.Size(72, 22)
+        Me.NudFlapChord.TabIndex = 1
+        Me.NudFlapChord.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'cbFlapped
         '
-        Me.cbFlapped.AutoSize = True
-        Me.cbFlapped.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.cbFlapped.Location = New System.Drawing.Point(12, 10)
-        Me.cbFlapped.Name = "cbFlapped"
-        Me.cbFlapped.Size = New System.Drawing.Size(68, 17)
-        Me.cbFlapped.TabIndex = 0
-        Me.cbFlapped.Text = "Flapped"
-        Me.cbFlapped.UseVisualStyleBackColor = True
+        Me.CbFlapped.AutoSize = True
+        Me.CbFlapped.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.CbFlapped.Location = New System.Drawing.Point(12, 10)
+        Me.CbFlapped.Name = "cbFlapped"
+        Me.CbFlapped.Size = New System.Drawing.Size(68, 17)
+        Me.CbFlapped.TabIndex = 0
+        Me.CbFlapped.Text = "Flapped"
+        Me.CbFlapped.UseVisualStyleBackColor = True
         '
         'TabPage3
         '
@@ -1116,10 +1116,10 @@ Partial Class WingControl
         Me.TabPage3.Controls.Add(Me.rbTipSection)
         Me.TabPage3.Controls.Add(Me.rbRootSection)
         Me.TabPage3.Controls.Add(Me.Label38)
-        Me.TabPage3.Controls.Add(Me.nudCMz)
+        Me.TabPage3.Controls.Add(Me.NudCMz)
         Me.TabPage3.Controls.Add(Me.Label41)
         Me.TabPage3.Controls.Add(Me.Label36)
-        Me.TabPage3.Controls.Add(Me.nudCMy)
+        Me.TabPage3.Controls.Add(Me.NudCMy)
         Me.TabPage3.Controls.Add(Me.Label37)
         Me.TabPage3.Controls.Add(Me.Label52)
         Me.TabPage3.Controls.Add(Me.Label76)
@@ -1130,18 +1130,18 @@ Partial Class WingControl
         Me.TabPage3.Controls.Add(Me.Label21)
         Me.TabPage3.Controls.Add(Me.Label22)
         Me.TabPage3.Controls.Add(Me.Label26)
-        Me.TabPage3.Controls.Add(Me.nudCS)
+        Me.TabPage3.Controls.Add(Me.NudCS)
         Me.TabPage3.Controls.Add(Me.Label75)
         Me.TabPage3.Controls.Add(Me.Label54)
-        Me.TabPage3.Controls.Add(Me.nudM)
+        Me.TabPage3.Controls.Add(Me.NudM)
         Me.TabPage3.Controls.Add(Me.Label55)
-        Me.TabPage3.Controls.Add(Me.nudJ)
+        Me.TabPage3.Controls.Add(Me.NudJ)
         Me.TabPage3.Controls.Add(Me.Label53)
-        Me.TabPage3.Controls.Add(Me.nudIw)
-        Me.TabPage3.Controls.Add(Me.nudIv)
-        Me.TabPage3.Controls.Add(Me.nudIu)
+        Me.TabPage3.Controls.Add(Me.NudIw)
+        Me.TabPage3.Controls.Add(Me.NudIv)
+        Me.TabPage3.Controls.Add(Me.NudIu)
         Me.TabPage3.Controls.Add(Me.Label20)
-        Me.TabPage3.Controls.Add(Me.nudArea)
+        Me.TabPage3.Controls.Add(Me.NudArea)
         Me.TabPage3.Controls.Add(Me.Label19)
         Me.TabPage3.Location = New System.Drawing.Point(4, 22)
         Me.TabPage3.Name = "TabPage3"
@@ -1196,14 +1196,14 @@ Partial Class WingControl
         '
         'nudCMz
         '
-        Me.nudCMz.DecimalPlaces = 5
-        Me.nudCMz.Location = New System.Drawing.Point(40, 229)
-        Me.nudCMz.Maximum = New Decimal(New Integer() {100000, 0, 0, 0})
-        Me.nudCMz.Minimum = New Decimal(New Integer() {100000, 0, 0, -2147483648})
-        Me.nudCMz.Name = "nudCMz"
-        Me.nudCMz.Size = New System.Drawing.Size(146, 22)
-        Me.nudCMz.TabIndex = 81
-        Me.nudCMz.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.NudCMz.DecimalPlaces = 5
+        Me.NudCMz.Location = New System.Drawing.Point(40, 229)
+        Me.NudCMz.Maximum = New Decimal(New Integer() {100000, 0, 0, 0})
+        Me.NudCMz.Minimum = New Decimal(New Integer() {100000, 0, 0, -2147483648})
+        Me.NudCMz.Name = "nudCMz"
+        Me.NudCMz.Size = New System.Drawing.Size(146, 22)
+        Me.NudCMz.TabIndex = 81
+        Me.NudCMz.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'Label41
         '
@@ -1230,14 +1230,14 @@ Partial Class WingControl
         '
         'nudCMy
         '
-        Me.nudCMy.DecimalPlaces = 5
-        Me.nudCMy.Location = New System.Drawing.Point(40, 208)
-        Me.nudCMy.Maximum = New Decimal(New Integer() {100000, 0, 0, 0})
-        Me.nudCMy.Minimum = New Decimal(New Integer() {100000, 0, 0, -2147483648})
-        Me.nudCMy.Name = "nudCMy"
-        Me.nudCMy.Size = New System.Drawing.Size(146, 22)
-        Me.nudCMy.TabIndex = 78
-        Me.nudCMy.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.NudCMy.DecimalPlaces = 5
+        Me.NudCMy.Location = New System.Drawing.Point(40, 208)
+        Me.NudCMy.Maximum = New Decimal(New Integer() {100000, 0, 0, 0})
+        Me.NudCMy.Minimum = New Decimal(New Integer() {100000, 0, 0, -2147483648})
+        Me.NudCMy.Name = "nudCMy"
+        Me.NudCMy.Size = New System.Drawing.Size(146, 22)
+        Me.NudCMy.TabIndex = 78
+        Me.NudCMy.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'Label37
         '
@@ -1258,9 +1258,9 @@ Partial Class WingControl
         Me.Label52.ImeMode = System.Windows.Forms.ImeMode.NoControl
         Me.Label52.Location = New System.Drawing.Point(192, 182)
         Me.Label52.Name = "Label52"
-        Me.Label52.Size = New System.Drawing.Size(33, 13)
+        Me.Label52.Size = New System.Drawing.Size(32, 13)
         Me.Label52.TabIndex = 76
-        Me.Label52.Text = "Kgm²"
+        Me.Label52.Text = "kg.m"
         '
         'Label76
         '
@@ -1280,9 +1280,9 @@ Partial Class WingControl
         Me.Label30.ImeMode = System.Windows.Forms.ImeMode.NoControl
         Me.Label30.Location = New System.Drawing.Point(192, 115)
         Me.Label30.Name = "Label30"
-        Me.Label30.Size = New System.Drawing.Size(28, 13)
+        Me.Label30.Size = New System.Drawing.Size(31, 13)
         Me.Label30.TabIndex = 74
-        Me.Label30.Text = "Nm²"
+        Me.Label30.Text = "N.m²"
         '
         'Label33
         '
@@ -1291,9 +1291,9 @@ Partial Class WingControl
         Me.Label33.ImeMode = System.Windows.Forms.ImeMode.NoControl
         Me.Label33.Location = New System.Drawing.Point(192, 94)
         Me.Label33.Name = "Label33"
-        Me.Label33.Size = New System.Drawing.Size(28, 13)
+        Me.Label33.Size = New System.Drawing.Size(31, 13)
         Me.Label33.TabIndex = 73
-        Me.Label33.Text = "Nm²"
+        Me.Label33.Text = "N.m²"
         '
         'Label34
         '
@@ -1302,9 +1302,9 @@ Partial Class WingControl
         Me.Label34.ImeMode = System.Windows.Forms.ImeMode.NoControl
         Me.Label34.Location = New System.Drawing.Point(192, 73)
         Me.Label34.Name = "Label34"
-        Me.Label34.Size = New System.Drawing.Size(28, 13)
+        Me.Label34.Size = New System.Drawing.Size(31, 13)
         Me.Label34.TabIndex = 72
-        Me.Label34.Text = "Nm²"
+        Me.Label34.Text = "N.m²"
         '
         'Label35
         '
@@ -1313,9 +1313,9 @@ Partial Class WingControl
         Me.Label35.ImeMode = System.Windows.Forms.ImeMode.NoControl
         Me.Label35.Location = New System.Drawing.Point(192, 52)
         Me.Label35.Name = "Label35"
-        Me.Label35.Size = New System.Drawing.Size(34, 13)
+        Me.Label35.Size = New System.Drawing.Size(15, 13)
         Me.Label35.TabIndex = 71
-        Me.Label35.Text = "kN/m"
+        Me.Label35.Text = "N"
         '
         'Label21
         '
@@ -1352,15 +1352,15 @@ Partial Class WingControl
         '
         'nudCS
         '
-        Me.nudCS.DecimalPlaces = 2
-        Me.nudCS.Increment = New Decimal(New Integer() {1, 0, 0, 131072})
-        Me.nudCS.Location = New System.Drawing.Point(133, 255)
-        Me.nudCS.Minimum = New Decimal(New Integer() {100, 0, 0, -2147483648})
-        Me.nudCS.Name = "nudCS"
-        Me.nudCS.Size = New System.Drawing.Size(53, 22)
-        Me.nudCS.TabIndex = 67
-        Me.nudCS.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        Me.nudCS.Value = New Decimal(New Integer() {3, 0, 0, 65536})
+        Me.NudCS.DecimalPlaces = 2
+        Me.NudCS.Increment = New Decimal(New Integer() {1, 0, 0, 131072})
+        Me.NudCS.Location = New System.Drawing.Point(133, 255)
+        Me.NudCS.Minimum = New Decimal(New Integer() {100, 0, 0, -2147483648})
+        Me.NudCS.Name = "nudCS"
+        Me.NudCS.Size = New System.Drawing.Size(53, 22)
+        Me.NudCS.TabIndex = 67
+        Me.NudCS.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.NudCS.Value = New Decimal(New Integer() {3, 0, 0, 65536})
         '
         'Label75
         '
@@ -1387,13 +1387,13 @@ Partial Class WingControl
         '
         'nudM
         '
-        Me.nudM.DecimalPlaces = 2
-        Me.nudM.Location = New System.Drawing.Point(40, 159)
-        Me.nudM.Maximum = New Decimal(New Integer() {100000, 0, 0, 0})
-        Me.nudM.Name = "nudM"
-        Me.nudM.Size = New System.Drawing.Size(146, 22)
-        Me.nudM.TabIndex = 64
-        Me.nudM.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.NudM.DecimalPlaces = 2
+        Me.NudM.Location = New System.Drawing.Point(40, 159)
+        Me.NudM.Maximum = New Decimal(New Integer() {100000, 0, 0, 0})
+        Me.NudM.Name = "nudM"
+        Me.NudM.Size = New System.Drawing.Size(146, 22)
+        Me.NudM.TabIndex = 64
+        Me.NudM.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'Label55
         '
@@ -1409,14 +1409,14 @@ Partial Class WingControl
         '
         'nudJ
         '
-        Me.nudJ.DecimalPlaces = 2
-        Me.nudJ.Increment = New Decimal(New Integer() {10000, 0, 0, 0})
-        Me.nudJ.Location = New System.Drawing.Point(40, 180)
-        Me.nudJ.Maximum = New Decimal(New Integer() {-559939584, 902409669, 54, 0})
-        Me.nudJ.Name = "nudJ"
-        Me.nudJ.Size = New System.Drawing.Size(146, 22)
-        Me.nudJ.TabIndex = 61
-        Me.nudJ.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.NudJ.DecimalPlaces = 2
+        Me.NudJ.Increment = New Decimal(New Integer() {10000, 0, 0, 0})
+        Me.NudJ.Location = New System.Drawing.Point(40, 180)
+        Me.NudJ.Maximum = New Decimal(New Integer() {-559939584, 902409669, 54, 0})
+        Me.NudJ.Name = "nudJ"
+        Me.NudJ.Size = New System.Drawing.Size(146, 22)
+        Me.NudJ.TabIndex = 61
+        Me.NudJ.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'Label53
         '
@@ -1432,36 +1432,36 @@ Partial Class WingControl
         '
         'nudIw
         '
-        Me.nudIw.DecimalPlaces = 2
-        Me.nudIw.Increment = New Decimal(New Integer() {10000, 0, 0, 0})
-        Me.nudIw.Location = New System.Drawing.Point(40, 113)
-        Me.nudIw.Maximum = New Decimal(New Integer() {-559939584, 902409669, 54, 0})
-        Me.nudIw.Name = "nudIw"
-        Me.nudIw.Size = New System.Drawing.Size(146, 22)
-        Me.nudIw.TabIndex = 46
-        Me.nudIw.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.NudIw.DecimalPlaces = 2
+        Me.NudIw.Increment = New Decimal(New Integer() {10000, 0, 0, 0})
+        Me.NudIw.Location = New System.Drawing.Point(40, 113)
+        Me.NudIw.Maximum = New Decimal(New Integer() {-559939584, 902409669, 54, 0})
+        Me.NudIw.Name = "nudIw"
+        Me.NudIw.Size = New System.Drawing.Size(146, 22)
+        Me.NudIw.TabIndex = 46
+        Me.NudIw.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'nudIv
         '
-        Me.nudIv.DecimalPlaces = 2
-        Me.nudIv.Increment = New Decimal(New Integer() {10000, 0, 0, 0})
-        Me.nudIv.Location = New System.Drawing.Point(40, 92)
-        Me.nudIv.Maximum = New Decimal(New Integer() {-559939584, 902409669, 54, 0})
-        Me.nudIv.Name = "nudIv"
-        Me.nudIv.Size = New System.Drawing.Size(146, 22)
-        Me.nudIv.TabIndex = 44
-        Me.nudIv.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.NudIv.DecimalPlaces = 2
+        Me.NudIv.Increment = New Decimal(New Integer() {10000, 0, 0, 0})
+        Me.NudIv.Location = New System.Drawing.Point(40, 92)
+        Me.NudIv.Maximum = New Decimal(New Integer() {-559939584, 902409669, 54, 0})
+        Me.NudIv.Name = "nudIv"
+        Me.NudIv.Size = New System.Drawing.Size(146, 22)
+        Me.NudIv.TabIndex = 44
+        Me.NudIv.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'nudIu
         '
-        Me.nudIu.DecimalPlaces = 2
-        Me.nudIu.Increment = New Decimal(New Integer() {10000, 0, 0, 0})
-        Me.nudIu.Location = New System.Drawing.Point(40, 71)
-        Me.nudIu.Maximum = New Decimal(New Integer() {-559939584, 902409669, 54, 0})
-        Me.nudIu.Name = "nudIu"
-        Me.nudIu.Size = New System.Drawing.Size(146, 22)
-        Me.nudIu.TabIndex = 42
-        Me.nudIu.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.NudIu.DecimalPlaces = 2
+        Me.NudIu.Increment = New Decimal(New Integer() {10000, 0, 0, 0})
+        Me.NudIu.Location = New System.Drawing.Point(40, 71)
+        Me.NudIu.Maximum = New Decimal(New Integer() {-559939584, 902409669, 54, 0})
+        Me.NudIu.Name = "nudIu"
+        Me.NudIu.Size = New System.Drawing.Size(146, 22)
+        Me.NudIu.TabIndex = 42
+        Me.NudIu.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'Label20
         '
@@ -1474,16 +1474,16 @@ Partial Class WingControl
         Me.Label20.TabIndex = 40
         Me.Label20.Text = "Elastic properties:"
         '
-        'nudArea
+        'NudArea
         '
-        Me.nudArea.DecimalPlaces = 2
-        Me.nudArea.Increment = New Decimal(New Integer() {100, 0, 0, 0})
-        Me.nudArea.Location = New System.Drawing.Point(40, 50)
-        Me.nudArea.Maximum = New Decimal(New Integer() {-559939584, 902409669, 54, 0})
-        Me.nudArea.Name = "nudArea"
-        Me.nudArea.Size = New System.Drawing.Size(146, 22)
-        Me.nudArea.TabIndex = 39
-        Me.nudArea.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.NudArea.DecimalPlaces = 2
+        Me.NudArea.Increment = New Decimal(New Integer() {100, 0, 0, 0})
+        Me.NudArea.Location = New System.Drawing.Point(40, 50)
+        Me.NudArea.Maximum = New Decimal(New Integer() {-559939584, 902409669, 54, 0})
+        Me.NudArea.Name = "NudArea"
+        Me.NudArea.Size = New System.Drawing.Size(146, 22)
+        Me.NudArea.TabIndex = 39
+        Me.NudArea.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'Label19
         '
@@ -1500,7 +1500,7 @@ Partial Class WingControl
         'tbInquire
         '
         Me.tbInquire.Controls.Add(Me.tbSurfaceData)
-        Me.tbInquire.Controls.Add(Me.btSurfaceData)
+        Me.tbInquire.Controls.Add(Me.BtnSurfaceData)
         Me.tbInquire.Location = New System.Drawing.Point(4, 22)
         Me.tbInquire.Name = "tbInquire"
         Me.tbInquire.Padding = New System.Windows.Forms.Padding(3)
@@ -1523,27 +1523,27 @@ Partial Class WingControl
         '
         'btSurfaceData
         '
-        Me.btSurfaceData.BackColor = System.Drawing.Color.White
-        Me.btSurfaceData.FlatAppearance.MouseDownBackColor = System.Drawing.Color.PaleGreen
-        Me.btSurfaceData.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DeepSkyBlue
-        Me.btSurfaceData.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btSurfaceData.Font = New System.Drawing.Font("Segoe UI", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btSurfaceData.Location = New System.Drawing.Point(6, 6)
-        Me.btSurfaceData.Name = "btSurfaceData"
-        Me.btSurfaceData.Size = New System.Drawing.Size(107, 22)
-        Me.btSurfaceData.TabIndex = 85
-        Me.btSurfaceData.Text = "Request surface data"
-        Me.btSurfaceData.UseVisualStyleBackColor = False
+        Me.BtnSurfaceData.BackColor = System.Drawing.Color.White
+        Me.BtnSurfaceData.FlatAppearance.MouseDownBackColor = System.Drawing.Color.PaleGreen
+        Me.BtnSurfaceData.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DeepSkyBlue
+        Me.BtnSurfaceData.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.BtnSurfaceData.Font = New System.Drawing.Font("Segoe UI", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.BtnSurfaceData.Location = New System.Drawing.Point(6, 6)
+        Me.BtnSurfaceData.Name = "btSurfaceData"
+        Me.BtnSurfaceData.Size = New System.Drawing.Size(107, 22)
+        Me.BtnSurfaceData.TabIndex = 85
+        Me.BtnSurfaceData.Text = "Request surface data"
+        Me.BtnSurfaceData.UseVisualStyleBackColor = False
         '
-        'tbSurfaceName
+        'TabSurfaceName
         '
-        Me.tbSurfaceName.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.tbSurfaceName.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        Me.tbSurfaceName.Location = New System.Drawing.Point(5, 6)
-        Me.tbSurfaceName.Name = "tbSurfaceName"
-        Me.tbSurfaceName.Size = New System.Drawing.Size(238, 22)
-        Me.tbSurfaceName.TabIndex = 66
-        Me.tbSurfaceName.Text = "Name"
+        Me.TabSurfaceName.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.TabSurfaceName.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.TabSurfaceName.Location = New System.Drawing.Point(5, 6)
+        Me.TabSurfaceName.Name = "TabSurfaceName"
+        Me.TabSurfaceName.Size = New System.Drawing.Size(238, 22)
+        Me.TabSurfaceName.TabIndex = 66
+        Me.TabSurfaceName.Text = "Name"
         '
         'btnOk
         '
@@ -1583,83 +1583,83 @@ Partial Class WingControl
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.Controls.Add(Me.btnInertia)
         Me.Controls.Add(Me.btnOk)
-        Me.Controls.Add(Me.btnLockSurface)
-        Me.Controls.Add(Me.btnHideSurface)
+        Me.Controls.Add(Me.BtnLockSurface)
+        Me.Controls.Add(Me.BtnHideSurface)
         Me.Controls.Add(Me.PanelDeEdicion)
-        Me.Controls.Add(Me.tbSurfaceName)
+        Me.Controls.Add(Me.TabSurfaceName)
         Me.Name = "WingControl"
         Me.Size = New System.Drawing.Size(312, 434)
         Me.PanelDeEdicion.ResumeLayout(False)
         Me.tbDesign.ResumeLayout(False)
         Me.Panel1.ResumeLayout(False)
         Me.Panel1.PerformLayout()
-        CType(Me.nudSelectRegion, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.NudSelectRegion, System.ComponentModel.ISupportInitialize).EndInit()
         Me.tcMacroPanelProperties.ResumeLayout(False)
         Me.TabPage6.ResumeLayout(False)
         Me.TabPage6.PerformLayout()
-        CType(Me.nudChordwisePanels, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.nudTwistingAxis, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.nudTwist, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.nudDihedral, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.nudSweepback, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.nudLength, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.nudTipChord, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.nudSpanwiseRings, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.nudRootChord, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.NudChordwisePanels, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.NudTwistingAxis, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.NudTwist, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.NudDihedral, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.NudSweepback, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.NudLength, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.NudTipChord, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.NudSpanwiseRings, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.NudRootChord, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TabPage7.ResumeLayout(False)
         Me.TabPage7.PerformLayout()
         CType(Me.pbProfileSketch, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TabPage8.ResumeLayout(False)
         Me.TabPage8.PerformLayout()
-        CType(Me.nudCuttingStep, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.nudLastPrimitive, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.nudFirstPrimitive, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.NudCuttingStep, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.NudLastPrimitive, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.NudFirstPrimitive, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TabPage10.ResumeLayout(False)
         Me.TabPage10.PerformLayout()
-        CType(Me.nudFlapPanels, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.nudRootFlap, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.nudFlapDeflection, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.nudFlapChord, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.NudFlapPanels, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.NudRootFlap, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.NudFlapDeflection, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.NudFlapChord, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TabPage3.ResumeLayout(False)
         Me.TabPage3.PerformLayout()
-        CType(Me.nudCMz, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.nudCMy, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.nudCS, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.nudM, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.nudJ, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.nudIw, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.nudIv, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.nudIu, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.nudArea, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.NudCMz, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.NudCMy, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.NudCS, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.NudM, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.NudJ, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.NudIw, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.NudIv, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.NudIu, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.NudArea, System.ComponentModel.ISupportInitialize).EndInit()
         Me.tbInquire.ResumeLayout(False)
         Me.tbInquire.PerformLayout()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
     End Sub
-    Friend WithEvents btnLockSurface As System.Windows.Forms.Button
-    Friend WithEvents btnHideSurface As System.Windows.Forms.Button
+    Friend WithEvents BtnLockSurface As System.Windows.Forms.Button
+    Friend WithEvents BtnHideSurface As System.Windows.Forms.Button
     Friend WithEvents PanelDeEdicion As System.Windows.Forms.TabControl
     Friend WithEvents tbDesign As System.Windows.Forms.TabPage
-    Friend WithEvents btnAddPanel As System.Windows.Forms.Button
-    Friend WithEvents nudChordwisePanels As System.Windows.Forms.NumericUpDown
-    Friend WithEvents btnDeletePanel As System.Windows.Forms.Button
-    Friend WithEvents btnInsertPanel As System.Windows.Forms.Button
-    Friend WithEvents nudSelectRegion As System.Windows.Forms.NumericUpDown
+    Friend WithEvents BtnAddPanel As System.Windows.Forms.Button
+    Friend WithEvents NudChordwisePanels As System.Windows.Forms.NumericUpDown
+    Friend WithEvents BtnDeletePanel As System.Windows.Forms.Button
+    Friend WithEvents BtnInsertPanel As System.Windows.Forms.Button
+    Friend WithEvents NudSelectRegion As System.Windows.Forms.NumericUpDown
     Friend WithEvents tcMacroPanelProperties As System.Windows.Forms.TabControl
     Friend WithEvents TabPage6 As System.Windows.Forms.TabPage
-    Friend WithEvents cbSymetricWing As System.Windows.Forms.CheckBox
-    Friend WithEvents rbConstantSpacement As System.Windows.Forms.RadioButton
-    Friend WithEvents rbLinearSpacement As System.Windows.Forms.RadioButton
-    Friend WithEvents nudSpanwiseRings As System.Windows.Forms.NumericUpDown
+    Friend WithEvents CbSymetricWing As System.Windows.Forms.CheckBox
+    Friend WithEvents RbConstantSpacement As System.Windows.Forms.RadioButton
+    Friend WithEvents RbLinearSpacement As System.Windows.Forms.RadioButton
+    Friend WithEvents NudSpanwiseRings As System.Windows.Forms.NumericUpDown
     Friend WithEvents Label40 As System.Windows.Forms.Label
     Friend WithEvents Label39 As System.Windows.Forms.Label
-    Friend WithEvents nudTwistingAxis As System.Windows.Forms.NumericUpDown
-    Friend WithEvents nudTwist As System.Windows.Forms.NumericUpDown
-    Friend WithEvents nudDihedral As System.Windows.Forms.NumericUpDown
-    Friend WithEvents nudSweepback As System.Windows.Forms.NumericUpDown
-    Friend WithEvents nudLength As System.Windows.Forms.NumericUpDown
-    Friend WithEvents nudTipChord As System.Windows.Forms.NumericUpDown
+    Friend WithEvents NudTwistingAxis As System.Windows.Forms.NumericUpDown
+    Friend WithEvents NudTwist As System.Windows.Forms.NumericUpDown
+    Friend WithEvents NudDihedral As System.Windows.Forms.NumericUpDown
+    Friend WithEvents NudSweepback As System.Windows.Forms.NumericUpDown
+    Friend WithEvents NudLength As System.Windows.Forms.NumericUpDown
+    Friend WithEvents NudTipChord As System.Windows.Forms.NumericUpDown
     Friend WithEvents Label5 As System.Windows.Forms.Label
     Friend WithEvents Label27 As System.Windows.Forms.Label
     Friend WithEvents Label7 As System.Windows.Forms.Label
@@ -1674,53 +1674,53 @@ Partial Class WingControl
     Friend WithEvents TabPage7 As System.Windows.Forms.TabPage
     Friend WithEvents pbProfileSketch As System.Windows.Forms.PictureBox
     Friend WithEvents TabPage8 As System.Windows.Forms.TabPage
-    Friend WithEvents cbConvectWake As System.Windows.Forms.CheckBox
+    Friend WithEvents CbConvectWake As System.Windows.Forms.CheckBox
     Friend WithEvents Label29 As System.Windows.Forms.Label
-    Friend WithEvents cbShowPriitives As System.Windows.Forms.CheckBox
+    Friend WithEvents CbShowPriitives As System.Windows.Forms.CheckBox
     Friend WithEvents Label32 As System.Windows.Forms.Label
     Friend WithEvents Label31 As System.Windows.Forms.Label
-    Friend WithEvents nudLastPrimitive As System.Windows.Forms.NumericUpDown
-    Friend WithEvents nudFirstPrimitive As System.Windows.Forms.NumericUpDown
+    Friend WithEvents NudLastPrimitive As System.Windows.Forms.NumericUpDown
+    Friend WithEvents NudFirstPrimitive As System.Windows.Forms.NumericUpDown
     Friend WithEvents Label4 As System.Windows.Forms.Label
     Friend WithEvents Label3 As System.Windows.Forms.Label
-    Friend WithEvents nudRootChord As System.Windows.Forms.NumericUpDown
+    Friend WithEvents NudRootChord As System.Windows.Forms.NumericUpDown
     Friend WithEvents Label2 As System.Windows.Forms.Label
     Friend WithEvents Label6 As System.Windows.Forms.Label
-    Friend WithEvents tbSurfaceName As System.Windows.Forms.TextBox
+    Friend WithEvents TabSurfaceName As System.Windows.Forms.TextBox
     Friend WithEvents btnOk As System.Windows.Forms.Button
     Friend WithEvents Label18 As System.Windows.Forms.Label
-    Friend WithEvents nudCuttingStep As System.Windows.Forms.NumericUpDown
+    Friend WithEvents NudCuttingStep As System.Windows.Forms.NumericUpDown
     Friend WithEvents TabPage3 As System.Windows.Forms.TabPage
-    Friend WithEvents nudIw As System.Windows.Forms.NumericUpDown
-    Friend WithEvents nudIv As System.Windows.Forms.NumericUpDown
-    Friend WithEvents nudIu As System.Windows.Forms.NumericUpDown
+    Friend WithEvents NudIw As System.Windows.Forms.NumericUpDown
+    Friend WithEvents NudIv As System.Windows.Forms.NumericUpDown
+    Friend WithEvents NudIu As System.Windows.Forms.NumericUpDown
     Friend WithEvents Label20 As System.Windows.Forms.Label
-    Friend WithEvents nudArea As System.Windows.Forms.NumericUpDown
+    Friend WithEvents NudArea As System.Windows.Forms.NumericUpDown
     Friend WithEvents Label19 As System.Windows.Forms.Label
     Friend WithEvents tbInquire As System.Windows.Forms.TabPage
-    Friend WithEvents btSurfaceData As System.Windows.Forms.Button
+    Friend WithEvents BtnSurfaceData As System.Windows.Forms.Button
     Friend WithEvents tbSurfaceData As System.Windows.Forms.TextBox
-    Friend WithEvents nudJ As System.Windows.Forms.NumericUpDown
+    Friend WithEvents NudJ As System.Windows.Forms.NumericUpDown
     Friend WithEvents Label53 As System.Windows.Forms.Label
     Friend WithEvents Label54 As System.Windows.Forms.Label
-    Friend WithEvents nudM As System.Windows.Forms.NumericUpDown
+    Friend WithEvents NudM As System.Windows.Forms.NumericUpDown
     Friend WithEvents Label55 As System.Windows.Forms.Label
     Friend WithEvents TabPage10 As System.Windows.Forms.TabPage
-    Friend WithEvents cbFlapped As System.Windows.Forms.CheckBox
-    Friend WithEvents nudFlapDeflection As System.Windows.Forms.NumericUpDown
-    Friend WithEvents nudFlapChord As System.Windows.Forms.NumericUpDown
+    Friend WithEvents CbFlapped As System.Windows.Forms.CheckBox
+    Friend WithEvents NudFlapDeflection As System.Windows.Forms.NumericUpDown
+    Friend WithEvents NudFlapChord As System.Windows.Forms.NumericUpDown
     Friend WithEvents Label61 As System.Windows.Forms.Label
     Friend WithEvents Label60 As System.Windows.Forms.Label
     Friend WithEvents Label66 As System.Windows.Forms.Label
     Friend WithEvents Label65 As System.Windows.Forms.Label
     Friend WithEvents Label67 As System.Windows.Forms.Label
     Friend WithEvents Label71 As System.Windows.Forms.Label
-    Friend WithEvents nudRootFlap As System.Windows.Forms.NumericUpDown
+    Friend WithEvents NudRootFlap As System.Windows.Forms.NumericUpDown
     Friend WithEvents Label73 As System.Windows.Forms.Label
-    Friend WithEvents nudFlapPanels As System.Windows.Forms.NumericUpDown
+    Friend WithEvents NudFlapPanels As System.Windows.Forms.NumericUpDown
     Friend WithEvents Label72 As System.Windows.Forms.Label
     Friend WithEvents btnPolarCurves As System.Windows.Forms.Button
-    Friend WithEvents nudCS As System.Windows.Forms.NumericUpDown
+    Friend WithEvents NudCS As System.Windows.Forms.NumericUpDown
     Friend WithEvents Label75 As System.Windows.Forms.Label
     Friend WithEvents Label21 As System.Windows.Forms.Label
     Friend WithEvents Label22 As System.Windows.Forms.Label
@@ -1732,10 +1732,10 @@ Partial Class WingControl
     Friend WithEvents Label76 As System.Windows.Forms.Label
     Friend WithEvents Label52 As System.Windows.Forms.Label
     Friend WithEvents Label38 As System.Windows.Forms.Label
-    Friend WithEvents nudCMz As System.Windows.Forms.NumericUpDown
+    Friend WithEvents NudCMz As System.Windows.Forms.NumericUpDown
     Friend WithEvents Label41 As System.Windows.Forms.Label
     Friend WithEvents Label36 As System.Windows.Forms.Label
-    Friend WithEvents nudCMy As System.Windows.Forms.NumericUpDown
+    Friend WithEvents NudCMy As System.Windows.Forms.NumericUpDown
     Friend WithEvents Label37 As System.Windows.Forms.Label
     Friend WithEvents cbTrailingEdge As System.Windows.Forms.CheckBox
     Friend WithEvents btnCamberLines As System.Windows.Forms.Button
