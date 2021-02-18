@@ -372,8 +372,8 @@ Namespace CalculationModel.Models.Structural
             Beam.Section.EIz = 1.0
             Beam.Section.GJ = 1000.0
 
-            Beam.Section.m = 1.0
-            Beam.Section.rIp = 1.0
+            Beam.Section.M = 1.0
+            Beam.Section.Ip = 1.0
 
             Beam.GenerateGlobalMatrices()
 

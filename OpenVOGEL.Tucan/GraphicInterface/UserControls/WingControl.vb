@@ -109,7 +109,7 @@ Public Class WingControl
     ''' </summary>
     Private Sub PointToCurrentRegion()
 
-        Wing.CurrentRegionID = Me.NudSelectRegion.Value
+        Wing.CurrentRegionID = Me.NudSelectedRegion.Value
 
         RaiseEvent RefreshModelView()
 
@@ -157,23 +157,23 @@ Public Class WingControl
             Wing.CurrentRegion.TipSection.GJ = NudIu.Value
             Wing.CurrentRegion.TipSection.EIy = NudIv.Value
             Wing.CurrentRegion.TipSection.EIz = NudIw.Value
-            Wing.CurrentRegion.TipSection.rIp = NudJ.Value
-            Wing.CurrentRegion.TipSection.m = NudM.Value
-            Wing.CurrentRegion.TipSection.CMy = NudCMy.Value
-            Wing.CurrentRegion.TipSection.CMz = NudCMz.Value
+            Wing.CurrentRegion.TipSection.Ip = NudJ.Value
+            Wing.CurrentRegion.TipSection.M = NudM.Value
+            Wing.CurrentRegion.TipSection.Cmy = NudCmy.Value
+            Wing.CurrentRegion.TipSection.Cmz = NudCmz.Value
 
         Else
 
-            If NudSelectRegion.Value = 1 Then
+            If NudSelectedRegion.Value = 1 Then
 
                 Wing.RootSection.AE = NudArea.Value
                 Wing.RootSection.GJ = NudIu.Value
                 Wing.RootSection.EIy = NudIv.Value
                 Wing.RootSection.EIz = NudIw.Value
-                Wing.RootSection.rIp = NudJ.Value
-                Wing.RootSection.m = NudM.Value
-                Wing.RootSection.CMy = NudCMy.Value
-                Wing.RootSection.CMz = NudCMz.Value
+                Wing.RootSection.Ip = NudJ.Value
+                Wing.RootSection.M = NudM.Value
+                Wing.RootSection.Cmy = NudCmy.Value
+                Wing.RootSection.Cmz = NudCmz.Value
 
             End If
 
@@ -181,7 +181,7 @@ Public Class WingControl
 
         Wing.CurrentRegion.CenterOfShear = NudCS.Value
 
-        If NudSelectRegion.Value = 1 Then
+        If NudSelectedRegion.Value = 1 Then
             Wing.RootChord = NudRootChord.Value
         End If
 
@@ -211,9 +211,9 @@ Public Class WingControl
         Loaded = False
 
         TabSurfaceName.Text = Wing.Name
-        NudSelectRegion.Maximum = Wing.WingRegions.Count
-        NudSelectRegion.Minimum = 1
-        NudSelectRegion.Value = Wing.CurrentRegionID
+        NudSelectedRegion.Maximum = Wing.WingRegions.Count
+        NudSelectedRegion.Minimum = 1
+        NudSelectedRegion.Value = Wing.CurrentRegionID
         NudRootChord.Value = Wing.RootChord
         NudRootFlap.Value = Wing.RootFlap
         NudFlapPanels.Value = Wing.FlapPanels
@@ -242,8 +242,8 @@ Public Class WingControl
         NudIw.Enabled = Enabled
         NudJ.Enabled = Enabled
         NudM.Enabled = Enabled
-        NudCMy.Enabled = Enabled
-        NudCMz.Enabled = Enabled
+        NudCmy.Enabled = Enabled
+        NudCmz.Enabled = Enabled
 
     End Sub
 
@@ -252,7 +252,7 @@ Public Class WingControl
     ''' </summary>
     Function ThereIsPreviousRegion() As Boolean
 
-        Return NudSelectRegion.Value > 1 And NudSelectRegion.Value <= Wing.WingRegions.Count
+        Return NudSelectedRegion.Value > 1 And NudSelectedRegion.Value <= Wing.WingRegions.Count
 
     End Function
 
@@ -262,7 +262,7 @@ Public Class WingControl
     Function GetPreviousRegion() As WingRegion
 
         If ThereIsPreviousRegion() Then
-            Return Wing.WingRegions(NudSelectRegion.Value - 2)
+            Return Wing.WingRegions(NudSelectedRegion.Value - 2)
         Else
             Return Nothing
         End If
@@ -299,7 +299,7 @@ Public Class WingControl
         NudFlapChord.Value = Wing.CurrentRegion.FlapChord
         NudFlapDeflection.Value = Math.Max(-90, Math.Min(Wing.CurrentRegion.FlapDeflection / Math.PI * 180, 90))
 
-        NudRootChord.Enabled = NudSelectRegion.Value = 1
+        NudRootChord.Enabled = NudSelectedRegion.Value = 1
         If ThereIsPreviousRegion() Then
             Dim PreviousRegion As WingRegion = GetPreviousRegion()
             NudRootChord.Value = PreviousRegion.TipChord
@@ -309,27 +309,35 @@ Public Class WingControl
 
         If rbRootSection.Checked Then
 
-            If NudSelectRegion.Value = 1 Then
+            If NudSelectedRegion.Value = 1 Then
 
                 SwitchSectionEdition(True)
+
                 NudArea.Value = Wing.RootSection.AE
                 NudIu.Value = Wing.RootSection.GJ
                 NudIv.Value = Wing.RootSection.EIy
                 NudIw.Value = Wing.RootSection.EIz
-                NudJ.Value = Wing.RootSection.rIp
-                NudM.Value = Wing.RootSection.m
+                NudJ.Value = Wing.RootSection.Ip
+                NudM.Value = Wing.RootSection.M
+                NudCmy.Value = Wing.RootSection.Cmy
+                NudCmz.Value = Wing.RootSection.Cmz
 
             Else
 
                 SwitchSectionEdition(False)
+
                 If ThereIsPreviousRegion() Then
+
                     Dim PreviousRegion As WingRegion = GetPreviousRegion()
                     NudArea.Value = PreviousRegion.TipSection.AE
                     NudIu.Value = PreviousRegion.TipSection.GJ
                     NudIv.Value = PreviousRegion.TipSection.EIy
                     NudIw.Value = PreviousRegion.TipSection.EIz
-                    NudJ.Value = PreviousRegion.TipSection.rIp
-                    NudM.Value = PreviousRegion.TipSection.m
+                    NudJ.Value = PreviousRegion.TipSection.Ip
+                    NudM.Value = PreviousRegion.TipSection.M
+                    NudCmy.Value = PreviousRegion.TipSection.Cmy
+                    NudCmz.Value = PreviousRegion.TipSection.Cmz
+
                 End If
 
             End If
@@ -337,18 +345,19 @@ Public Class WingControl
         Else
 
             SwitchSectionEdition(True)
+
             NudArea.Value = Wing.CurrentRegion.TipSection.AE
             NudIu.Value = Wing.CurrentRegion.TipSection.GJ
             NudIv.Value = Wing.CurrentRegion.TipSection.EIy
             NudIw.Value = Wing.CurrentRegion.TipSection.EIz
-            NudJ.Value = Wing.CurrentRegion.TipSection.rIp
-            NudM.Value = Wing.CurrentRegion.TipSection.m
+            NudJ.Value = Wing.CurrentRegion.TipSection.Ip
+            NudM.Value = Wing.CurrentRegion.TipSection.M
+            NudCmy.Value = Wing.CurrentRegion.TipSection.Cmy
+            NudCmz.Value = Wing.CurrentRegion.TipSection.Cmz
 
         End If
 
         NudCS.Value = Wing.CurrentRegion.CenterOfShear
-        NudCMy.Value = Wing.CurrentRegion.TipSection.CMy
-        NudCMz.Value = Wing.CurrentRegion.TipSection.CMz
 
         Dim camber As CamberLine = CamberLinesDatabase.GetCamberLineFromId(Wing.CurrentRegion.CamberLineId)
 
@@ -373,7 +382,7 @@ Public Class WingControl
     ''' <summary>
     ''' 
     ''' </summary>
-    Private Sub NudSelectRegion_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles NudSelectRegion.ValueChanged
+    Private Sub NudSelectRegion_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles NudSelectedRegion.ValueChanged
 
         If Not Loaded Then Exit Sub
 
@@ -395,9 +404,9 @@ Public Class WingControl
         Wing.AddRegion()
 
         Loaded = False
-        NudSelectRegion.Maximum = Wing.WingRegions.Count
-        NudSelectRegion.Minimum = 1
-        NudSelectRegion.Value = Wing.CurrentRegionID
+        NudSelectedRegion.Maximum = Wing.WingRegions.Count
+        NudSelectedRegion.Minimum = 1
+        NudSelectedRegion.Value = Wing.CurrentRegionID
         Loaded = True
 
         LoadRegionToForm()
@@ -420,9 +429,9 @@ Public Class WingControl
         Wing.InsertRegion()
 
         Loaded = False
-        Me.NudSelectRegion.Maximum = Wing.WingRegions.Count
-        Me.NudSelectRegion.Minimum = 1
-        Me.NudSelectRegion.Value = Wing.CurrentRegionID
+        Me.NudSelectedRegion.Maximum = Wing.WingRegions.Count
+        Me.NudSelectedRegion.Minimum = 1
+        Me.NudSelectedRegion.Value = Wing.CurrentRegionID
         Loaded = True
 
         LoadRegionToForm()
@@ -878,14 +887,14 @@ Public Class WingControl
     ''' <summary>
     ''' 
     ''' </summary>
-    Private Sub NudCMy_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles NudCMy.ValueChanged
+    Private Sub NudCMy_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles NudCmy.ValueChanged
         Me.CollectSurfaceData(False)
     End Sub
 
     ''' <summary>
     ''' 
     ''' </summary>
-    Private Sub NudCMz_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles NudCMz.ValueChanged
+    Private Sub NudCMz_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles NudCmz.ValueChanged
         Me.CollectSurfaceData(False)
     End Sub
 

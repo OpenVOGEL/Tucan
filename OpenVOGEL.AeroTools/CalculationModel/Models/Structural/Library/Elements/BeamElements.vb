@@ -55,25 +55,25 @@ Namespace CalculationModel.Models.Structural.Library.Elements
         ''' Torsional moment of inertia [kg.m]
         ''' </summary>
         ''' <remarks></remarks>
-        Public rIp As Double = 1.0
+        Public Ip As Double = 1.0
 
         ''' <summary>
         ''' Mass per unit length [kg/m]
         ''' </summary>
         ''' <remarks></remarks>
-        Public m As Double = 1.0
+        Public M As Double = 1.0
 
         ''' <summary>
         ''' Y coordinate of center of mass [m]
         ''' </summary>
         ''' <remarks></remarks>
-        Public CMy As Double = 0.0
+        Public Cmy As Double = 0.0
 
         ''' <summary>
         ''' Z coordinate of center of mass [m]
         ''' </summary>
         ''' <remarks></remarks>
-        Public CMz As Double = 0.0
+        Public Cmz As Double = 0.0
 
         ''' <summary>
         ''' Copies the section properties
@@ -82,13 +82,31 @@ Namespace CalculationModel.Models.Structural.Library.Elements
         Public Sub Assign(ByVal Section As Section)
 
             AE = Section.AE
-            CMy = Section.CMy
-            CMz = Section.CMz
             GJ = Section.GJ
             EIy = Section.EIy
             EIz = Section.EIz
-            rIp = Section.rIp
-            m = Section.m
+            Ip = Section.Ip
+            M = Section.M
+            Cmy = Section.Cmy
+            Cmz = Section.Cmz
+
+        End Sub
+
+        ''' <summary>
+        ''' Obtains the mean properties of two sections
+        ''' </summary>
+        ''' <param name="Section1"></param>
+        ''' <param name="Section2"></param>
+        Public Sub Combine(Section1 As Section, Section2 As Section)
+
+            AE = 0.5 * (Section1.AE + Section2.AE)
+            GJ = 0.5 * (Section1.GJ + Section2.GJ)
+            EIy = 0.5 * (Section1.EIy + Section2.EIy)
+            EIz = 0.5 * (Section1.EIz + Section2.EIz)
+            Ip = 0.5 * (Section1.Ip + Section2.Ip)
+            M = 0.5 * (Section1.M + Section2.M)
+            Cmy = 0.5 * (Section1.Cmy + Section2.Cmy)
+            Cmz = 0.5 * (Section1.Cmz + Section2.Cmz)
 
         End Sub
 
@@ -167,10 +185,10 @@ Namespace CalculationModel.Models.Structural.Library.Elements
 
             Dim L As Double = NodeA.Position.DistanceTo(NodeB.Position)
 
-            Dim m_L1 As Double = Section.m * L
-            Dim m_L2 As Double = Section.m * L ^ 2
-            Dim m_L3 As Double = Section.m * L ^ 3
-            Dim r_J_L As Double = Section.rIp * L
+            Dim m_L1 As Double = Section.M * L
+            Dim m_L2 As Double = Section.M * L ^ 2
+            Dim m_L3 As Double = Section.M * L ^ 3
+            Dim r_J_L As Double = Section.Ip * L
 
             M(0, 0) = m_L1 / 3
             M(0, 6) = m_L1 / 6
@@ -212,15 +230,15 @@ Namespace CalculationModel.Models.Structural.Library.Elements
 
             ' Eccentrical component
 
-            If Math.Abs(Section.CMy) > 0 Or Math.Abs(Section.CMz) > 0 Then
+            If Math.Abs(Section.Cmy) > 0 Or Math.Abs(Section.Cmz) > 0 Then
 
-                Dim Sy As Double = Section.m * Section.CMz
-                Dim Sy_L1 As Double = Section.m * Section.CMz * L
-                Dim Sy_L2 As Double = Section.m * Section.CMz * L * L
+                Dim Sy As Double = Section.M * Section.Cmz
+                Dim Sy_L1 As Double = Section.M * Section.Cmz * L
+                Dim Sy_L2 As Double = Section.M * Section.Cmz * L * L
 
-                Dim Sz As Double = Section.m * Section.CMy
-                Dim Sz_L1 As Double = Section.m * Section.CMy * L
-                Dim Sz_L2 As Double = Section.m * Section.CMy * L * L
+                Dim Sz As Double = Section.M * Section.Cmy
+                Dim Sz_L1 As Double = Section.M * Section.Cmy * L
+                Dim Sz_L2 As Double = Section.M * Section.Cmy * L * L
 
                 M(0, 1) = Sz / 2.0
                 M(0, 2) = Sy / 2.0

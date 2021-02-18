@@ -16,10 +16,10 @@
 'along with this program.  If Not, see < http:  //www.gnu.org/licenses/>.
 
 Imports System.IO
+Imports System.Xml
 Imports OpenVOGEL.AeroTools.CalculationModel.Models.Aero
 Imports OpenVOGEL.AeroTools.CalculationModel.Models.Aero.Components
 Imports OpenVOGEL.AeroTools.CalculationModel.Models.Structural
-Imports System.Xml
 Imports OpenVOGEL.AeroTools.IoHelper
 Imports OpenVOGEL.MathTools.Integration
 Imports OpenVOGEL.AeroTools.CalculationModel.Settings
@@ -31,7 +31,7 @@ Namespace CalculationModel.Solver
         ''' <summary>
         ''' The version of the solver
         ''' </summary>
-        Public Shared ReadOnly Property Version As String = "4.0-2020.06"
+        Public Shared ReadOnly Property Version As String = "4.1-2021.02"
 
         ''' <summary>
         ''' Read a written snapshot

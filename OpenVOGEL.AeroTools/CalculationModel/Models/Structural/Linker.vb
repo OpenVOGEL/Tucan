@@ -705,8 +705,8 @@ Namespace CalculationModel.Models.Structural
                 w.Write(e.Section.EIy)
                 w.Write(e.Section.EIz)
                 w.Write(e.Section.GJ)
-                w.Write(e.Section.m)
-                w.Write(e.Section.rIp)
+                w.Write(e.Section.M)
+                w.Write(e.Section.Ip)
 
             Next
 
@@ -856,8 +856,8 @@ Namespace CalculationModel.Models.Structural
                 element.Section.EIy = r.ReadDouble
                 element.Section.EIz = r.ReadDouble
                 element.Section.GJ = r.ReadDouble
-                element.Section.m = r.ReadDouble
-                element.Section.rIp = r.ReadDouble
+                element.Section.M = r.ReadDouble
+                element.Section.Ip = r.ReadDouble
 
                 StructuralCore.Elements.Add(element)
 

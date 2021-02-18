@@ -32,27 +32,51 @@ Namespace VisualModel.Models.Components.Basics
         ''' <remarks></remarks>
         Public P As Vector3
 
+        ''' <summary>
+        ''' The center of mass
+        ''' </summary>
+        ''' <remarks></remarks>
+        Public M As Vector3
+
+        ''' <summary>
+        ''' The local system of coordinates
+        ''' </summary>
         Public Basis As Base3
 
         ''' <summary>
-        ''' Section associated to this partition
+        ''' Section associated to this partition point
         ''' </summary>
         ''' <remarks></remarks>
         Public LocalSection As Section
 
+        ''' <summary>
+        ''' Chord associated to this partition
+        ''' </summary>
         Public LocalChord As Double
 
+        ''' <summary>
+        ''' Creates a new partition with the given position
+        ''' </summary>
+        ''' <param name="p"></param>
+        ''' <param name="section"></param>
         Public Sub New(ByVal p As Vector3, ByVal section As Section)
 
             Me.P = New Vector3(p.X, p.Y, p.Z)
+            Me.M = New Vector3(p.X, p.Y, p.Z)
+
             LocalSection = New Section
             LocalSection.Assign(section)
 
         End Sub
 
+        ''' <summary>
+        ''' Creates a new partition
+        ''' </summary>
         Public Sub New()
 
-            P = New Vector3()
+            Me.P = New Vector3()
+            Me.M = New Vector3()
+
             LocalSection = New Section
             Basis = New Base3()
 

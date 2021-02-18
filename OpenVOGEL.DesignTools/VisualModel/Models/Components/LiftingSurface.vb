@@ -259,10 +259,10 @@ Namespace VisualModel.Models.Components
             writer.WriteAttributeString("Iu", String.Format("{0}", TipSection.GJ))
             writer.WriteAttributeString("Iv", String.Format("{0}", TipSection.EIy))
             writer.WriteAttributeString("Iw", String.Format("{0}", TipSection.EIz))
-            writer.WriteAttributeString("Sv", String.Format("{0}", TipSection.CMy))
-            writer.WriteAttributeString("Sw", String.Format("{0}", TipSection.CMz))
-            writer.WriteAttributeString("J", String.Format("{0}", TipSection.rIp))
-            writer.WriteAttributeString("m", String.Format("{0}", TipSection.m))
+            writer.WriteAttributeString("Sv", String.Format("{0}", TipSection.Cmy))
+            writer.WriteAttributeString("Sw", String.Format("{0}", TipSection.Cmz))
+            writer.WriteAttributeString("J", String.Format("{0}", TipSection.Ip))
+            writer.WriteAttributeString("m", String.Format("{0}", TipSection.M))
 
             writer.WriteAttributeString("CenterOfShear", String.Format("{0}", CenterOfShear))
             writer.WriteAttributeString("PolarID", String.Format("{0}", PolarID))
@@ -294,10 +294,10 @@ Namespace VisualModel.Models.Components
             TipSection.GJ = IOXML.ReadDouble(reader, "Iu", 1000)
             TipSection.EIy = IOXML.ReadDouble(reader, "Iv", 1000)
             TipSection.EIz = IOXML.ReadDouble(reader, "Iw", 1000)
-            TipSection.rIp = IOXML.ReadDouble(reader, "J", 1000)
-            TipSection.CMy = IOXML.ReadDouble(reader, "Sv", 1000)
-            TipSection.CMz = IOXML.ReadDouble(reader, "Sw", 1000)
-            TipSection.m = IOXML.ReadDouble(reader, "m", 10)
+            TipSection.Ip = IOXML.ReadDouble(reader, "J", 1000)
+            TipSection.Cmy = IOXML.ReadDouble(reader, "Sv", 1000)
+            TipSection.Cmz = IOXML.ReadDouble(reader, "Sw", 1000)
+            TipSection.M = IOXML.ReadDouble(reader, "m", 10)
 
             CenterOfShear = IOXML.ReadDouble(reader, "CenterOfShear", 0.0)
             PolarID = New Guid(IOXML.ReadString(reader, "PolarID", Guid.Empty.ToString))
@@ -1420,17 +1420,19 @@ Namespace VisualModel.Models.Components
             Dim TrailingEdgePoint As Vector3
             Dim NodalStripIndex As Integer = 0
             Dim RootSection As Section = Me.RootSection
-            Dim RootChord As Double = _RootChord
+            Dim RootChord As Double = Me.RootChord
 
             ' Build partition
 
-            Dim i0 As Integer = 0
+            Dim First As Integer = 0
 
             For Each Panel As WingRegion In WingRegions
 
+                Dim Length As Double = 0.0
+
                 ' Create the partitions:
 
-                For i = i0 To Panel.SpanPanelsCount
+                For P = First To Panel.SpanPanelsCount
 
                     LeadingEdgePoint = Mesh.Nodes(NodalStripIndex * _ChordNodesCount).Position
 
@@ -1452,52 +1454,62 @@ Namespace VisualModel.Models.Components
                     LocalPartition.P.Y = StructuralNode.Y
                     LocalPartition.P.Z = StructuralNode.Z
 
-                    Dim coord As Double = i / (Panel.SpanPanelsCount - i0)
+                    If (StructuralPartition.Count > 0) Then
+                        Dim PreviousNode As Vector3 = StructuralPartition(StructuralPartition.Count - 1).P
+                        Length += PreviousNode.DistanceTo(StructuralNode)
+                    End If
 
-                    LocalPartition.LocalSection.AE = RootSection.AE + coord * (Panel.TipSection.AE - RootSection.AE)
-                    LocalPartition.LocalSection.GJ = RootSection.GJ + coord * (Panel.TipSection.GJ - RootSection.GJ)
-                    LocalPartition.LocalSection.EIy = RootSection.EIy + coord * (Panel.TipSection.EIy - RootSection.EIy)
-                    LocalPartition.LocalSection.EIz = RootSection.EIz + coord * (Panel.TipSection.EIz - RootSection.EIz)
-                    LocalPartition.LocalSection.rIp = RootSection.rIp + coord * (Panel.TipSection.rIp - RootSection.rIp)
-                    LocalPartition.LocalSection.m = RootSection.m + coord * (Panel.TipSection.m - RootSection.m)
-                    LocalPartition.LocalSection.CMy = RootSection.CMy + coord * (Panel.TipSection.CMy - RootSection.CMy)
-                    LocalPartition.LocalSection.CMz = RootSection.CMz + coord * (Panel.TipSection.CMz - RootSection.CMz)
-                    LocalPartition.LocalChord = RootChord + coord * (Panel.TipChord - RootSection.m)
+                    Dim S As Double = Length / Panel.Length
+
+                    LocalPartition.LocalSection.AE = RootSection.AE + S * (Panel.TipSection.AE - RootSection.AE)
+                    LocalPartition.LocalSection.GJ = RootSection.GJ + S * (Panel.TipSection.GJ - RootSection.GJ)
+                    LocalPartition.LocalSection.EIy = RootSection.EIy + S * (Panel.TipSection.EIy - RootSection.EIy)
+                    LocalPartition.LocalSection.EIz = RootSection.EIz + S * (Panel.TipSection.EIz - RootSection.EIz)
+                    LocalPartition.LocalSection.Ip = RootSection.Ip + S * (Panel.TipSection.Ip - RootSection.Ip)
+                    LocalPartition.LocalSection.M = RootSection.M + S * (Panel.TipSection.M - RootSection.M)
+                    LocalPartition.LocalSection.Cmy = RootSection.Cmy + S * (Panel.TipSection.Cmy - RootSection.Cmy)
+                    LocalPartition.LocalSection.Cmz = RootSection.Cmz + S * (Panel.TipSection.Cmz - RootSection.Cmz)
+                    LocalPartition.LocalChord = RootChord + S * (Panel.TipChord - RootChord)
+                    LocalPartition.LocalSection.Cmy *= LocalPartition.LocalChord
+                    LocalPartition.LocalSection.Cmz *= LocalPartition.LocalChord
+                    LocalPartition.Basis.V.FromSubstraction(TrailingEdgePoint, LeadingEdgePoint)
+                    LocalPartition.Basis.V.Normalize()
 
                     If (NodalStripIndex > 0) Then
 
-                        Dim PreviousP As Vector3 = StructuralPartition(StructuralPartition.Count - 1).P
+                        Dim PreviousNode As Vector3 = StructuralPartition(StructuralPartition.Count - 1).P
 
-                        LocalPartition.Basis.U.X = StructuralNode.X - PreviousP.X
-                        LocalPartition.Basis.U.Y = StructuralNode.Y - PreviousP.Y
-                        LocalPartition.Basis.U.Z = StructuralNode.Z - PreviousP.Z
+                        LocalPartition.Basis.U.FromSubstraction(StructuralNode, PreviousNode)
                         LocalPartition.Basis.U.Normalize()
+                        LocalPartition.Basis.W.FromVectorProduct(LocalPartition.Basis.V, LocalPartition.Basis.U)
+                        LocalPartition.Basis.W.Normalize()
+                        LocalPartition.Basis.V.FromVectorProduct(LocalPartition.Basis.U, LocalPartition.Basis.W)
+                        LocalPartition.Basis.V.Normalize()
+                        LocalPartition.M.Assign(LocalPartition.P)
+                        LocalPartition.M.Add(LocalPartition.Basis.V, LocalPartition.LocalSection.Cmy)
+                        LocalPartition.M.Add(LocalPartition.Basis.W, LocalPartition.LocalSection.Cmz)
 
                         If (NodalStripIndex = 1) Then
 
-                            StructuralPartition(0).Basis.U.X = StructuralNode.X - PreviousP.X
-                            StructuralPartition(0).Basis.U.Y = StructuralNode.Y - PreviousP.Y
-                            StructuralPartition(0).Basis.U.Z = StructuralNode.Z - PreviousP.Z
-                            StructuralPartition(0).Basis.U.Normalize()
+                            ' Go back to the first partition node
+                            '------------------------------------
+                            Dim FirstPartition As StructuralPartition = StructuralPartition(0)
 
-                            StructuralPartition(0).Basis.W.FromVectorProduct(StructuralPartition(0).Basis.V, StructuralPartition(0).Basis.U)
-                            StructuralPartition(0).Basis.V.FromVectorProduct(StructuralPartition(0).Basis.U, StructuralPartition(0).Basis.W)
+                            FirstPartition.Basis.U.FromSubstraction(StructuralNode, PreviousNode)
+                            FirstPartition.Basis.U.Normalize()
+                            FirstPartition.Basis.W.FromVectorProduct(FirstPartition.Basis.V, FirstPartition.Basis.U)
+                            FirstPartition.Basis.W.Normalize()
+                            FirstPartition.Basis.V.FromVectorProduct(FirstPartition.Basis.U, FirstPartition.Basis.W)
+                            FirstPartition.Basis.V.Normalize()
+                            FirstPartition.M.Assign(FirstPartition.P)
+                            FirstPartition.M.Add(FirstPartition.Basis.V, FirstPartition.LocalSection.Cmy)
+                            FirstPartition.M.Add(FirstPartition.Basis.W, FirstPartition.LocalSection.Cmz)
 
                         End If
 
                     End If
 
-                    LocalPartition.Basis.V.X = TrailingEdgePoint.X - LeadingEdgePoint.X
-                    LocalPartition.Basis.V.Y = TrailingEdgePoint.Y - LeadingEdgePoint.Y
-                    LocalPartition.Basis.V.Z = TrailingEdgePoint.Z - LeadingEdgePoint.Z
-                    LocalPartition.Basis.V.Normalize()
-
-                    If (NodalStripIndex > 0) Then
-                        LocalPartition.Basis.W.FromVectorProduct(LocalPartition.Basis.V, LocalPartition.Basis.U)
-                        LocalPartition.Basis.V.FromVectorProduct(LocalPartition.Basis.U, LocalPartition.Basis.W)
-                    End If
-
-                    _StructuralPartition.Add(LocalPartition)
+                    StructuralPartition.Add(LocalPartition)
 
                     NodalStripIndex += 1
 
@@ -1505,7 +1517,7 @@ Namespace VisualModel.Models.Components
 
                 RootSection = Panel.TipSection
                 RootChord = Panel.TipChord
-                i0 = 1
+                First = 1
 
             Next
 
@@ -1730,10 +1742,10 @@ Namespace VisualModel.Models.Components
                         RootSection.GJ = IOXML.ReadDouble(reader, "RootIu", 0.0)
                         RootSection.EIy = IOXML.ReadDouble(reader, "RootIv", 0.0)
                         RootSection.EIz = IOXML.ReadDouble(reader, "RootIw", 0.0)
-                        RootSection.CMy = IOXML.ReadDouble(reader, "RootSv", 0.0)
-                        RootSection.CMz = IOXML.ReadDouble(reader, "RootSw", 0.0)
-                        RootSection.rIp = IOXML.ReadDouble(reader, "RootJ", 0.0)
-                        RootSection.m = IOXML.ReadDouble(reader, "Rootm", 0.0)
+                        RootSection.Cmy = IOXML.ReadDouble(reader, "RootSv", 0.0)
+                        RootSection.Cmz = IOXML.ReadDouble(reader, "RootSw", 0.0)
+                        RootSection.Ip = IOXML.ReadDouble(reader, "RootJ", 0.0)
+                        RootSection.M = IOXML.ReadDouble(reader, "Rootm", 0.0)
 
                         NumberOfChordPanels = IOXML.ReadInteger(reader, "NumberChordRings", 6)
 
@@ -1829,10 +1841,10 @@ Namespace VisualModel.Models.Components
             writer.WriteAttributeString("RootIu", String.Format("{0}", RootSection.GJ))
             writer.WriteAttributeString("RootIv", String.Format("{0}", RootSection.EIy))
             writer.WriteAttributeString("RootIw", String.Format("{0}", RootSection.EIz))
-            writer.WriteAttributeString("RootSv", String.Format("{0}", RootSection.CMy))
-            writer.WriteAttributeString("RootSw", String.Format("{0}", RootSection.CMz))
-            writer.WriteAttributeString("RootJ", String.Format("{0}", RootSection.rIp))
-            writer.WriteAttributeString("Rootm", String.Format("{0}", RootSection.m))
+            writer.WriteAttributeString("RootSv", String.Format("{0}", RootSection.Cmy))
+            writer.WriteAttributeString("RootSw", String.Format("{0}", RootSection.Cmz))
+            writer.WriteAttributeString("RootJ", String.Format("{0}", RootSection.Ip))
+            writer.WriteAttributeString("Rootm", String.Format("{0}", RootSection.M))
 
             writer.WriteAttributeString("NumberChordRings", String.Format("{0}", NumberOfChordPanels))
             writer.WriteAttributeString("NumberMacroPanels", String.Format("{0}", WingRegions.Count))

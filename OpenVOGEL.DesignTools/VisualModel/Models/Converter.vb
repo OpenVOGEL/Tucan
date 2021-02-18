@@ -325,32 +325,29 @@ Namespace VisualModel.Models
             ' Generate structural link
             '-----------------------------------------
 
-            Dim KineLink As KinematicLink
-            Dim MechaLink As MechanicLink
-
-            Dim StrNodeCount As Integer = -1
-            Dim StrElementCount As Integer = -1
-
             If Surface.IncludeStructure And GenerateStructure Then
+
+                Dim KineLink As KinematicLink
+                Dim MechaLink As MechanicLink
+                Dim NodeCount As Integer = 0
+                Dim ElementCount As Integer = -1
 
                 ' Add root node (this node is being clamped, and it is the only one with contrains at the moment):
 
                 Dim StructuralLink As New StructuralLink
 
-                StrNodeCount = 0
-                StrElementCount = -1
                 StructuralLink.StructuralCore.StructuralSettings.Assign(This.Settings.StructuralSettings)
-                StructuralLink.StructuralCore.Nodes.Add(New StructuralNode(StrNodeCount))
-                StructuralLink.StructuralCore.Nodes(StrNodeCount).Position.Assign(Surface.StructuralPartition(0).P)
-                If (Mirror) Then StructuralLink.StructuralCore.Nodes(StrNodeCount).Position.Y *= -1
-                StructuralLink.StructuralCore.Nodes(StrNodeCount).Contrains.Clamped()
+                StructuralLink.StructuralCore.Nodes.Add(New StructuralNode(NodeCount))
+                StructuralLink.StructuralCore.Nodes(NodeCount).Position.Assign(Surface.StructuralPartition(0).P)
+                If (Mirror) Then StructuralLink.StructuralCore.Nodes(NodeCount).Position.Y *= -1
+                StructuralLink.StructuralCore.Nodes(NodeCount).Contrains.Clamped()
 
                 ' Add kinematic link
 
                 Dim LinkedVortexIndex As Integer = -1 ' > linked vortex ring
-                Dim LinkedNodeIndex As Integer = -1 ' > linked node
+                Dim LinkedNodeIndex As Integer = -1   ' > linked node
 
-                KineLink = New KinematicLink(StructuralLink.StructuralCore.Nodes(StrNodeCount))
+                KineLink = New KinematicLink(StructuralLink.StructuralCore.Nodes(NodeCount))
                 For n = 0 To Surface.NumberOfChordPanels
                     LinkedNodeIndex += 1
                     KineLink.Link(Lattice.Nodes(LinkedNodeIndex))
@@ -361,30 +358,35 @@ Namespace VisualModel.Models
 
                 For PartitionNodeIndex = 1 To Surface.StructuralPartition.Count - 1
 
-                    ' Add nodes:
+                    ' Add node:
 
-                    StrNodeCount += 1
+                    NodeCount += 1
 
-                    StructuralLink.StructuralCore.Nodes.Add(New StructuralNode(StrNodeCount))
-                    StructuralLink.StructuralCore.Nodes(StrNodeCount).Position.Assign(Surface.StructuralPartition(PartitionNodeIndex).P)
-                    If (Mirror) Then StructuralLink.StructuralCore.Nodes(StrNodeCount).Position.Y *= -1
+                    StructuralLink.StructuralCore.Nodes.Add(New StructuralNode(NodeCount))
+                    StructuralLink.StructuralCore.Nodes(NodeCount).Position.Assign(Surface.StructuralPartition(PartitionNodeIndex).P)
+                    If (Mirror) Then StructuralLink.StructuralCore.Nodes(NodeCount).Position.Y *= -1
 
                     ' Add element:
 
-                    StrElementCount += 1
+                    ElementCount += 1
 
-                    Dim StrElement As New ConstantBeamElement(StrElementCount)
-                    StrElement.NodeA = StructuralLink.StructuralCore.Nodes(StrNodeCount - 1)
-                    StrElement.NodeB = StructuralLink.StructuralCore.Nodes(StrNodeCount)
-                    StrElement.Section.Assign(Surface.StructuralPartition(StrElementCount).LocalSection)
-                    If (Mirror) Then StrElement.Section.CMy *= -1.0
-                    StructuralLink.StructuralCore.Elements.Add(StrElement)
+                    Dim Element As New ConstantBeamElement(ElementCount)
+
+                    Element.NodeA = StructuralLink.StructuralCore.Nodes(NodeCount - 1)
+                    Element.NodeB = StructuralLink.StructuralCore.Nodes(NodeCount)
+
+                    Dim SectionA As Section = Surface.StructuralPartition(PartitionNodeIndex - 1).LocalSection
+                    Dim SectionB As Section = Surface.StructuralPartition(PartitionNodeIndex).LocalSection
+                    Element.Section.Combine(SectionA, SectionB)
+                    If (Mirror) Then Element.Section.Cmy *= -1.0
+
+                    StructuralLink.StructuralCore.Elements.Add(Element)
 
                     ' Add kinematic link:
 
                     Dim LeadingEdgeNodeIndex As Integer = LinkedNodeIndex + 1 '(leading edge lattice node index)
 
-                    KineLink = New KinematicLink(StructuralLink.StructuralCore.Nodes(StrNodeCount))
+                    KineLink = New KinematicLink(StructuralLink.StructuralCore.Nodes(NodeCount))
 
                     For NodeCounter = 0 To Surface.NumberOfChordPanels
                         LinkedNodeIndex += 1
@@ -397,7 +399,7 @@ Namespace VisualModel.Models
 
                     ' Add mechanic link:
 
-                    MechaLink = New MechanicLink(StrElement)
+                    MechaLink = New MechanicLink(Element)
 
                     For PanelCounter = 0 To Surface.NumberOfChordPanels - 1
                         LinkedVortexIndex += 1
@@ -417,21 +419,21 @@ Namespace VisualModel.Models
 
                     ' NOTE: U has the direction of the element
 
-                    StrElement.Basis.U.X = StrElement.NodeB.Position.X - StrElement.NodeA.Position.X
-                    StrElement.Basis.U.Y = StrElement.NodeB.Position.Y - StrElement.NodeA.Position.Y
-                    StrElement.Basis.U.Z = StrElement.NodeB.Position.Z - StrElement.NodeA.Position.Z
-                    StrElement.Basis.U.Normalize()
+                    Element.Basis.U.X = Element.NodeB.Position.X - Element.NodeA.Position.X
+                    Element.Basis.U.Y = Element.NodeB.Position.Y - Element.NodeA.Position.Y
+                    Element.Basis.U.Z = Element.NodeB.Position.Z - Element.NodeA.Position.Z
+                    Element.Basis.U.Normalize()
 
                     ' NOTE: W is normal to the surface
 
-                    StrElement.Basis.W.FromVectorProduct(ChordVector, StrElement.Basis.U)
-                    StrElement.Basis.W.Normalize()
+                    Element.Basis.W.FromVectorProduct(ChordVector, Element.Basis.U)
+                    Element.Basis.W.Normalize()
 
                     ' NOTE: V is normal to W and U, and points to the trailing edge for the 
                     ' original part and to the leading edge on the mirror.
                     ' That is why CMy is opposed for the mirror.
 
-                    StrElement.Basis.V.FromVectorProduct(StrElement.Basis.W, StrElement.Basis.U)
+                    Element.Basis.V.FromVectorProduct(Element.Basis.W, Element.Basis.U)
 
                 Next
 

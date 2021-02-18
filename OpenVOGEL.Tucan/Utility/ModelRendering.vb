@@ -16,13 +16,13 @@
 'along with this program.  If Not, see < http:  //www.gnu.org/licenses/>.
 
 Imports System.Runtime.CompilerServices
+Imports SharpGL
 Imports OpenVOGEL.DesignTools.VisualModel.Interface
 Imports OpenVOGEL.DesignTools.VisualModel.Models
 Imports OpenVOGEL.DesignTools.VisualModel.Models.Components
 Imports OpenVOGEL.DesignTools.VisualModel.Models.Components.Basics
 Imports OpenVOGEL.DesignTools.VisualModel.Models.Components.ResultContainer
 Imports OpenVOGEL.MathTools.Algebra.EuclideanSpace
-Imports SharpGL
 
 Namespace Tucan.Utility
 
@@ -78,6 +78,119 @@ Namespace Tucan.Utility
             With This
 
                 Dim Code As Integer = 0
+
+                ' Structure
+
+                If .VisualProperties.VisualizationMode = VisualizationMode.Structural Then
+
+                    gl.Color(0, 0, 0)
+
+                    Code = Selection.GetSelectionCode(ComponentTypes.etLiftingSurface, ElementIndex, EntityTypes.etStructuralElement, 0)
+                    Dim Code2 As Integer = Selection.GetSelectionCode(ComponentTypes.etLiftingSurface, ElementIndex, EntityTypes.etStructuralNode, 0)
+
+                    For I = 0 To .StructuralPartition.Count - 1
+
+                        If (I > 0) Then
+
+                            ' Center of shear
+                            '-------------------------------
+                            gl.LineWidth(4.0)
+                            gl.Color(0.0, 0.0, 0.0, 1.0)
+                            gl.PushName(Code)
+                            Code += 1
+                            gl.Begin(OpenGL.GL_LINES)
+                            With .StructuralPartition(I - 1).P
+                                gl.Vertex(.X, .Y, .Z)
+                            End With
+                            With .StructuralPartition(I).P
+                                gl.Vertex(.X, .Y, .Z)
+                            End With
+                            gl.End()
+                            gl.PopName()
+
+                            ' Center of mass
+                            '-------------------------------
+                            gl.Enable(OpenGL.GL_LINE_STIPPLE)
+                            gl.LineStipple(2, &HC0F)
+
+                            gl.LineWidth(3.0)
+                            gl.Color(0.0, 0.0, 0.0, 1.0)
+                            gl.Begin(OpenGL.GL_LINES)
+                            With .StructuralPartition(I - 1).M
+                                gl.Vertex(.X, .Y, .Z)
+                            End With
+                            With .StructuralPartition(I).M
+                                gl.Vertex(.X, .Y, .Z)
+                            End With
+                            gl.End()
+
+                            gl.LineWidth(1.0)
+                            gl.Color(0.2, 1.0, 0.2, 1.0)
+                            gl.Begin(OpenGL.GL_LINES)
+                            With .StructuralPartition(I - 1).M
+                                gl.Vertex(.X, .Y, .Z)
+                            End With
+                            With .StructuralPartition(I).M
+                                gl.Vertex(.X, .Y, .Z)
+                            End With
+                            gl.End()
+
+                            gl.Disable(OpenGL.GL_LINE_STIPPLE)
+
+                        End If
+
+                        gl.PointSize(4.0)
+                        gl.Color(0.0, 0.0, 0.0, 1.0)
+
+                        gl.Begin(OpenGL.GL_POINTS)
+
+                        ' Structural node:
+
+                        gl.PushName(Code2 + I + 1)
+
+                        With .StructuralPartition(I).P
+                            gl.Vertex(.X, .Y, .Z)
+                        End With
+
+                        gl.PopName()
+
+                        ' Mass node:
+
+                        gl.Color(0.0, 0.0, 0.0, 1.0)
+                        gl.Vertex(.StructuralPartition(I).M.X,
+                                  .StructuralPartition(I).M.Y,
+                                  .StructuralPartition(I).M.Z)
+                        gl.End()
+
+                        If .VisualProperties.ShowLocalCoordinates Then
+
+                            Dim Base As Base3 = .StructuralPartition(I).Basis
+                            Dim l As Double = 0.2 * .StructuralPartition(I).LocalChord
+
+                            gl.LineWidth(2.0)
+                            gl.Begin(OpenGL.GL_LINES)
+
+                            gl.Color(0.0, 1.0, 0.0, 1.0)
+
+                            With .StructuralPartition(I).P
+
+                                gl.Color(1.0, 0.0, 0.0, 1.0)
+                                gl.Vertex(.X, .Y, .Z)
+                                gl.Vertex(.X + l * Base.V.X, .Y + l * Base.V.Y, .Z + l * Base.V.Z)
+
+                                gl.Color(0.0, 0.0, 1.0, 1.0)
+                                gl.Vertex(.X, .Y, .Z)
+                                gl.Vertex(.X + l * Base.W.X, .Y + l * Base.W.Y, .Z + l * Base.W.Z)
+
+                            End With
+
+                            gl.End()
+
+                        End If
+
+                    Next
+
+                End If
 
                 ' Panels:
 
@@ -292,104 +405,6 @@ Namespace Tucan.Utility
                         Next
 
                     End If
-
-                End If
-
-                If .VisualProperties.VisualizationMode = VisualizationMode.Structural Then
-
-                    gl.Color(0, 0, 0)
-
-                    Dim Nodo1 As Vector3
-                    Dim Nodo2 As Vector3
-
-                    Code = Selection.GetSelectionCode(ComponentTypes.etLiftingSurface, ElementIndex, EntityTypes.etStructuralElement, 0)
-                    Dim Code2 As Integer = Selection.GetSelectionCode(ComponentTypes.etLiftingSurface, ElementIndex, EntityTypes.etStructuralNode, 0)
-
-                    For i = 0 To .StructuralPartition.Count - 1
-
-                        Nodo2 = .StructuralPartition(i).P
-
-                        If (i > 0) Then
-
-                            gl.LineWidth(3.0)
-                            gl.Color(0.5, 0.5, 0.5, 1.0)
-                            gl.PushName(Code)
-                            Code += 1
-                            gl.Begin(OpenGL.GL_LINES)
-                            Nodo1 = .StructuralPartition(i - 1).P
-                            gl.Vertex(Nodo1.X, Nodo1.Y, Nodo1.Z)
-                            gl.Vertex(Nodo2.X, Nodo2.Y, Nodo2.Z)
-                            gl.End()
-                            gl.PopName()
-
-                            gl.LineWidth(1.0)
-                            gl.Enable(OpenGL.GL_LINE_STIPPLE)
-                            gl.LineStipple(2, &HC0F)
-                            gl.Begin(OpenGL.GL_LINES)
-                            gl.Vertex(
-                                Nodo1.X + .StructuralPartition(i - 1).Basis.V.X * .StructuralPartition(i - 1).LocalSection.CMy,
-                                Nodo1.Y + .StructuralPartition(i - 1).Basis.V.Y * .StructuralPartition(i - 1).LocalSection.CMy,
-                                Nodo1.Z + .StructuralPartition(i - 1).Basis.V.Z * .StructuralPartition(i - 1).LocalSection.CMy)
-                            gl.Vertex(
-                                Nodo2.X + .StructuralPartition(i).Basis.V.X * .StructuralPartition(i).LocalSection.CMy,
-                                Nodo2.Y + .StructuralPartition(i).Basis.V.Y * .StructuralPartition(i).LocalSection.CMy,
-                                Nodo2.Z + .StructuralPartition(i).Basis.V.Z * .StructuralPartition(i).LocalSection.CMy)
-                            gl.End()
-                            gl.Disable(OpenGL.GL_LINE_STIPPLE)
-
-                        End If
-
-                        gl.PointSize(4.0)
-                        gl.Color(0.0, 0.0, 0.0, 1.0)
-
-                        gl.Begin(OpenGL.GL_POINTS)
-
-                        ' Structural node:
-
-                        gl.PushName(Code2 + i + 1)
-                        gl.Vertex(Nodo2.X, Nodo2.Y, Nodo2.Z)
-                        gl.PopName()
-
-                        ' Mass node:
-
-                        gl.Color(0.0, 0.0, 0.0, 1.0)
-                        gl.Vertex(
-                            Nodo2.X + .StructuralPartition(i).Basis.V.X * .StructuralPartition(i).LocalSection.CMy,
-                            Nodo2.Y + .StructuralPartition(i).Basis.V.Y * .StructuralPartition(i).LocalSection.CMy,
-                            Nodo2.Z + .StructuralPartition(i).Basis.V.Z * .StructuralPartition(i).LocalSection.CMy)
-                        gl.End()
-
-                        If .VisualProperties.ShowLocalCoordinates Then
-
-                            Dim base As Base3 = .StructuralPartition(i).Basis
-                            Dim l As Double
-
-                            If (i = 0) Then
-                                l = 0.5 * .StructuralPartition(0).P.DistanceTo(.StructuralPartition(1).P)
-                            Else
-                                l = 0.5 * .StructuralPartition(i - 1).P.DistanceTo(.StructuralPartition(i).P)
-                            End If
-
-                            gl.LineWidth(2.0)
-                            gl.Begin(OpenGL.GL_LINES)
-
-                            gl.Color(0.0, 1.0, 0.0, 1.0)
-                            gl.Vertex(Nodo2.X, Nodo2.Y, Nodo2.Z)
-                            gl.Vertex(Nodo2.X + l * base.U.X, Nodo2.Y + l * base.U.Y, Nodo2.Z + l * base.U.Z)
-
-                            gl.Color(1.0, 0.0, 0.0, 1.0)
-                            gl.Vertex(Nodo2.X, Nodo2.Y, Nodo2.Z)
-                            gl.Vertex(Nodo2.X + l * base.V.X, Nodo2.Y + l * base.V.Y, Nodo2.Z + l * base.V.Z)
-
-                            gl.Color(0.0, 0.0, 1.0, 1.0)
-                            gl.Vertex(Nodo2.X, Nodo2.Y, Nodo2.Z)
-                            gl.Vertex(Nodo2.X + l * base.W.X, Nodo2.Y + l * base.W.Y, Nodo2.Z + l * base.W.Z)
-
-                            gl.End()
-
-                        End If
-
-                    Next
 
                 End If
 

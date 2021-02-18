@@ -195,8 +195,6 @@ Namespace CalculationModel.Solver
                 ' Perform the Newmark loop '
                 '//////////////////////////'
 
-                RaiseEvent PushMessage("Performing Newmark loop")
-
                 Dim Converged As Boolean = False
 
                 Dim K As Integer = 0
@@ -204,6 +202,8 @@ Namespace CalculationModel.Solver
                 Dim Level As Double = 0#
 
                 While Not Converged And K <= 10
+
+                    RaiseEvent PushMessage("Solving equations")
 
                     Level = 0#
 
@@ -227,7 +227,9 @@ Namespace CalculationModel.Solver
 
                     If TimeStep > Settings.StructuralSettings.StructuralLinkingStep Then
 
-                        RaiseEvent PushMessage("Calculating airloads")
+                        If K = 0 Then
+                            RaiseEvent PushMessage("Newmark loop")
+                        End If
 
                         ' Calculate pressure on latices
 
@@ -253,6 +255,8 @@ Namespace CalculationModel.Solver
 
                         Next
 
+                        RaiseEvent PushMessage(String.Format("Step delta {0:P5}", Level))
+
                         ' Force at least two iteration steps
 
                         If K = 0 Then Converged = False
@@ -273,6 +277,8 @@ Namespace CalculationModel.Solver
 
                             WriteLattices(BaseDirectoryPath, FrameIndex)
 
+                            RaiseEvent PushMessage("Convergence reached")
+
                             FrameIndex += 1
 
                         End If
@@ -292,8 +298,6 @@ Namespace CalculationModel.Solver
                 If Converged Then
 
                     ' The system is in dynamic equilibrium
-
-                    RaiseEvent PushMessage(String.Format("Convergence reached {0:P5}", Level))
 
                     '//////////////'
                     ' Convect wake '
