@@ -172,6 +172,14 @@ Module Commands
 
                         End If
 
+                    Case "beta_scan"
+
+                        If Commands.Length > 4 Then
+
+                            BatchAnalysis.BetaScan(CDbl(Commands(1)), CDbl(Commands(2)), CDbl(Commands(3)), CDbl(Commands(4)))
+
+                        End If
+
                     Case "delta_scan"
 
                         If Commands.Length > 5 Then

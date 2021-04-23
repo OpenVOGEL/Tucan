@@ -205,6 +205,12 @@ Namespace VisualModel.Models.Components
         Private _CenterOfShear As Double = 0.25
 
         ''' <summary>
+        ''' The length of the leading edge as computed during the meshing
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property LeadingEdgeLength As Double
+
+        ''' <summary>
         ''' Stablishes the position of the center of shear in relation to the local chord (flap not included)
         ''' </summary>
         ''' <value></value>
@@ -1068,13 +1074,16 @@ Namespace VisualModel.Models.Components
             ' Start building the geometry of each wing region
             '---------------------------------------------------------------------
 
-            Dim LeadingEdgePoint As New Vector3
+            Dim RootLeadingEdgePoint As New Vector3
+            Dim PreviousLeadingEdgePoint As Vector3 = Nothing
 
             Dim Twist As Double = 0.0#
 
             For RegionIndex = 0 To WingRegions.Count - 1
 
                 ' Initialize the common variables for this region
+
+                WingRegions(RegionIndex).LeadingEdgeLength = 0.0#
 
                 Dim Delta As Double = WingRegions(RegionIndex).Sweepback / 180.0 * Math.PI
 
@@ -1084,21 +1093,21 @@ Namespace VisualModel.Models.Components
 
                 If RegionIndex = 0 Then
 
-                    LeadingEdgePoint.X = 0.0#
+                    RootLeadingEdgePoint.X = 0.0#
 
-                    LeadingEdgePoint.Y = 0.0#
+                    RootLeadingEdgePoint.Y = 0.0#
 
-                    LeadingEdgePoint.Z = 0.0#
+                    RootLeadingEdgePoint.Z = 0.0#
 
                     Twist = 0.0#
 
                 Else
 
-                    LeadingEdgePoint.X = BasePoint.X
+                    RootLeadingEdgePoint.X = BasePoint.X
 
-                    LeadingEdgePoint.Y = BasePoint.Y
+                    RootLeadingEdgePoint.Y = BasePoint.Y
 
-                    LeadingEdgePoint.Z = BasePoint.Z
+                    RootLeadingEdgePoint.Z = BasePoint.Z
 
                     Twist = (Twist + WingRegions(RegionIndex - 1).Twist / 180.0 * Math.PI) * Math.Cos(Gamma)
 
@@ -1245,11 +1254,11 @@ Namespace VisualModel.Models.Components
 
                         Dim Node As New NodalPoint
 
-                        Node.Position.X = Pij.X * Math.Cos(Twist) + Pij.Z * Math.Sin(Twist) + LeadingEdgePoint.X
+                        Node.Position.X = Pij.X * Math.Cos(Twist) + Pij.Z * Math.Sin(Twist) + RootLeadingEdgePoint.X
 
-                        Node.Position.Y = Pij.X * Math.Sin(Gamma) * Math.Sin(Twist) + Pij.Y * Math.Cos(Gamma) - Pij.Z * Math.Sin(Gamma) * Math.Cos(Twist) + LeadingEdgePoint.Y
+                        Node.Position.Y = Pij.X * Math.Sin(Gamma) * Math.Sin(Twist) + Pij.Y * Math.Cos(Gamma) - Pij.Z * Math.Sin(Gamma) * Math.Cos(Twist) + RootLeadingEdgePoint.Y
 
-                        Node.Position.Z = -Pij.X * Math.Cos(Gamma) * Math.Sin(Twist) + Pij.Y * Math.Sin(Gamma) + Pij.Z * Math.Cos(Gamma) * Math.Cos(Twist) + LeadingEdgePoint.Z
+                        Node.Position.Z = -Pij.X * Math.Cos(Gamma) * Math.Sin(Twist) + Pij.Y * Math.Sin(Gamma) + Pij.Z * Math.Cos(Gamma) * Math.Cos(Twist) + RootLeadingEdgePoint.Z
 
                         If k = WingRegions(RegionIndex).SpanPanelsCount And l = 1 Then
 
@@ -1272,6 +1281,22 @@ Namespace VisualModel.Models.Components
                         Node.Position.Add(Position)
 
                         Mesh.Nodes.Add(Node)
+
+                        ' Increase leading edge length:
+
+                        If l = 1 Then
+
+                            If PreviousLeadingEdgePoint IsNot Nothing Then
+
+                                WingRegions(RegionIndex).LeadingEdgeLength += PreviousLeadingEdgePoint.DistanceTo(Node.Position)
+
+                            End If
+
+                            PreviousLeadingEdgePoint = Node.Position
+
+                        End If
+
+                        ' Increase node counter
 
                         NodeCounter += 1
 
@@ -1421,6 +1446,7 @@ Namespace VisualModel.Models.Components
             Dim NodalStripIndex As Integer = 0
             Dim RootSection As Section = Me.RootSection
             Dim RootChord As Double = Me.RootChord
+            Dim PreviousLeadingEdgePoint As Vector3 = Nothing
 
             ' Build partition
 
@@ -1454,12 +1480,11 @@ Namespace VisualModel.Models.Components
                     LocalPartition.P.Y = StructuralNode.Y
                     LocalPartition.P.Z = StructuralNode.Z
 
-                    If (StructuralPartition.Count > 0) Then
-                        Dim PreviousNode As Vector3 = StructuralPartition(StructuralPartition.Count - 1).P
-                        Length += PreviousNode.DistanceTo(StructuralNode)
+                    If PreviousLeadingEdgePoint IsNot Nothing Then
+                        Length += PreviousLeadingEdgePoint.DistanceTo(LeadingEdgePoint)
                     End If
 
-                    Dim S As Double = Length / Panel.Length
+                    Dim S As Double = Length / Panel.LeadingEdgeLength
 
                     LocalPartition.LocalSection.AE = RootSection.AE + S * (Panel.TipSection.AE - RootSection.AE)
                     LocalPartition.LocalSection.GJ = RootSection.GJ + S * (Panel.TipSection.GJ - RootSection.GJ)
@@ -1512,6 +1537,8 @@ Namespace VisualModel.Models.Components
                     StructuralPartition.Add(LocalPartition)
 
                     NodalStripIndex += 1
+
+                    PreviousLeadingEdgePoint = LeadingEdgePoint
 
                 Next
 
@@ -1960,11 +1987,14 @@ Namespace VisualModel.Models.Components
 
             Dim TotalWingspan As Double
             Dim ProjectedWingspan As Double
+            Dim Index As Integer = 1
 
             For Each Panel In WingRegions
 
                 TotalWingspan += Panel.Length
                 ProjectedWingspan += Panel.Length * Math.Abs(Math.Cos(Math.PI * Panel.Dihedral / 180))
+                Data += String.Format(" > region {0:D}: {1:F6}m", Index, Panel.LeadingEdgeLength) & vbNewLine
+                Index += 1
 
             Next
 
@@ -1978,6 +2008,22 @@ Namespace VisualModel.Models.Components
 
             Data += String.Format("Aparent aspect ratio: {0:F6}", TotalWingspan ^ 2 / TotalArea) & vbNewLine
             Data += String.Format("Projected aspect ratio: {0:F6}", ProjectedWingspan ^ 2 / TotalArea) & vbNewLine
+
+            Data += "Structural partition:" & vbNewLine
+
+            Index = 1
+            For Each Element In StructuralPartition
+
+                Data += String.Format(" > element {0:D}:", Index) & vbNewLine
+                Data += String.Format("    AE : {0,7:e4} N/m", Element.LocalSection.AE) & vbNewLine
+                Data += String.Format("    EIy: {0,7:e4} N.m/rad", Element.LocalSection.EIy) & vbNewLine
+                Data += String.Format("    EIz: {0,7:e4} N.m/rad", Element.LocalSection.EIy) & vbNewLine
+                Data += String.Format("    GJ : {0,7:e4} N.m/rad", Element.LocalSection.GJ) & vbNewLine
+                Data += String.Format("    m  : {0,7:e4} kg/m", Element.LocalSection.M) & vbNewLine
+                Data += String.Format("    Ip : {0,7:e4} kg.m", Element.LocalSection.Ip) & vbNewLine
+                Index += 1
+
+            Next
 
             Return Data
 

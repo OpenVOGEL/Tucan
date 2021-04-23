@@ -26,7 +26,7 @@ Imports OpenVOGEL.DesignTools.VisualModel.Models.Components.Basics
 Module BatchAnalysis
 
     ''' <summary>
-    ''' Performs a series of steady analysis between Alfa1 and Alfa2 using the AlfaStep in between.
+    ''' Performs a series of steady analysis between Alfa1 and Alfa2 using the AlfaS in between.
     ''' </summary>
     ''' <param name="Alfa1">The initial incidence angle.</param>
     ''' <param name="Alfa2">The final incidence angle.</param>
@@ -83,6 +83,97 @@ Module BatchAnalysis
 
             PrintLine(FileId, String.Format("{0,6:F3} {1,14:E6} {2,14:E6} {3,14:E6}",
                                             Load.Alfa * 180.0 / Math.PI,
+                                            Load.LiftCoefficient,
+                                            Load.InducedDragCoefficient,
+                                            Load.SkinDragCoefficient))
+
+        Next
+
+        PrintLine(FileId, "")
+        PrintLine(FileId, "# Force and moment coefficients")
+        PrintLine(FileId, String.Format("{0,-6} {1,-14} {2,-14} {3,-14} {4,-14} {5,-14} {6,-14}", "Alfa", "Fx", "Fy", "Fz", "Mx", "My", "Mz"))
+
+        For Each Load In Loads
+
+            Dim qS As Double = Load.DynamicPressure * Load.Area
+            Dim qSL As Double = Load.DynamicPressure * Load.Area * Load.Length
+
+            PrintLine(FileId, String.Format("{0,6:F3} {1,14:E6} {2,14:E6} {3,14:E6} {4,14:E6} {5,14:E6} {6,14:E6}",
+                                            Load.Alfa * 180.0 / Math.PI,
+                                            Load.Force.X / qS,
+                                            Load.Force.Y / qS,
+                                            Load.Force.Z / qS,
+                                            Load.Moment.X / qSL,
+                                            Load.Moment.Y / qSL,
+                                            Load.Moment.Z / qSL))
+        Next
+
+        FileClose(FileId)
+
+    End Sub
+
+    ''' <summary>
+    ''' Performs a series of steady analysis between Beta1 and Beta2 using the BetaS in between.
+    ''' </summary>
+    ''' <param name="Beta1">The initial side slip angle.</param>
+    ''' <param name="Beta2">The final side slip angle.</param>
+    ''' <param name="BetaS">The step.</param>
+    Public Sub BetaScan(Alfa0 As Double,
+                        Beta1 As Double,
+                        Beta2 As Double,
+                        BetaS As Double)
+
+        If Beta2 < Beta1 Then
+            System.Console.WriteLine("the first angle must be smaller than the second one")
+            Exit Sub
+        End If
+
+        Dim N As Integer = (Beta2 - Beta1) / BetaS
+        Dim Loads As New List(Of AirLoads)
+
+        Dim V As Double = ProjectRoot.SimulationSettings.StreamVelocity.EuclideanNorm
+
+        For I = 0 To N
+
+            System.Console.WriteLine(String.Format("STEP {0} of {1}", I, N))
+
+            Dim Alfa = Math.PI * Alfa0 / 180.0
+            Dim Beta = Math.PI * Math.Min(Beta1 + I * BetaS, Beta2) / 180.0
+
+            ProjectRoot.SimulationSettings.StreamVelocity.X = V * Math.Cos(Alfa)
+            ProjectRoot.SimulationSettings.StreamVelocity.Y = V * Math.Sin(Beta)
+            ProjectRoot.SimulationSettings.StreamVelocity.Z = V * Math.Sin(Alfa)
+
+            Dim Kernel As New Solver.Solver
+
+            ProjectRoot.StartCalculation(CalculationType.SteadyState, Kernel)
+
+            Loads.Add(Kernel.GlobalAirloads)
+
+        Next
+
+        Dim FileId As Integer = FreeFile()
+
+        FileOpen(FileId, Path.Combine(Path.GetDirectoryName(FilePath), Path.GetFileNameWithoutExtension(FilePath)) & "_batch.dat", OpenMode.Output)
+
+        PrintLine(FileId, "OpenVOGEL beta scan")
+        PrintLine(FileId, "Kernel version: " & Solver.Solver.Version)
+        PrintLine(FileId, "Original model: " & ProjectRoot.FilePath)
+        PrintLine(FileId, "")
+
+        PrintLine(FileId, String.Format("L = {0,12:E6}m", Loads(0).Length))
+        PrintLine(FileId, String.Format("A = {0,12:E6}m²", Loads(0).Area))
+        PrintLine(FileId, String.Format("q = {0,12:E6}Pa", Loads(0).DynamicPressure))
+        PrintLine(FileId, String.Format("a = {0,6:F3}°", Loads(0).Alfa * 180.0 / Math.PI))
+
+        PrintLine(FileId, "")
+        PrintLine(FileId, "# Force coefficients")
+        PrintLine(FileId, String.Format("{0,-6} {1,-14} {2,-14} {3,-14}", "Beta", "CL", "CDi", "CDp"))
+
+        For Each Load In Loads
+
+            PrintLine(FileId, String.Format("{0,6:F3} {1,14:E6} {2,14:E6} {3,14:E6}",
+                                            Load.Beta * 180.0 / Math.PI,
                                             Load.LiftCoefficient,
                                             Load.InducedDragCoefficient,
                                             Load.SkinDragCoefficient))

@@ -31,7 +31,7 @@ Namespace CalculationModel.Solver
         ''' <summary>
         ''' The version of the solver
         ''' </summary>
-        Public Shared ReadOnly Property Version As String = "4.1-2021.02"
+        Public Shared ReadOnly Property Version As String = "4.2-2021.03"
 
         ''' <summary>
         ''' Read a written snapshot
