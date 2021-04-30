@@ -1,4 +1,4 @@
-## Welcome to OpenVOGEL, the open source aeromecanics project!
+## Welcome to OpenVOGEL aeromechanics (in .NET)
 OpenVOGEL is a project provinding .NET computer programs useful to study mechanical systems subjected to aerodynamic loads. OpenVOGEL programs can be used, for instance, to compute approximated airloads over complex configurations of slender and thick surfaces (wings and fuselages), to compute some important aeroelastic characteristics of wings and to analyze the dynamic response of an airplane after a perturbation.
 
 The project provides three different interfaces:
