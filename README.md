@@ -38,5 +38,5 @@ Console runs directly on windows by double clikcking the executable. Under Linux
 
 #### .NET libraries
 Finally, all of our .NET libraries (shared by Tucan and Console) are available for free and can be linked to any .NET project. This gives you direct access to our parametric models and calculation algorithms. For advanced users with knowledge in .NET and numerical aerodynamics, this is probably the best way to go.
-If using Visual Studio, you can load our project libraries aling witho your project and compile all together, or you can simply link one of our compiled dll's. The second process ir more simple, but it wont let you adapt the source code.
+If using Visual Studio, you can load our project libraries along with your project and compile all together, or you can simply link one of our compiled dll's. The second process ir more simple, but it wont let you adapt the source code.
 The OpenVOGEL libraries have been split so as to avoid linking unnecessary objects. If you only need our calculation core, you don't need to link the parametric models nor the graphical stuff.
