@@ -1,0 +1,256 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<OpenVOGEL>
+  <Project Name="">
+    <Model Name="New model">
+      <PolarDataBase NumberOfFamilies="1">
+        <PolarFamily>
+          <Info NumberOfPolars="1" Name="Polar family" ID="d7669ec3-21ee-4d33-8853-8bae38c71241" />
+          <CustomPolar N="18" X0="-1.22728707987551" Y0="0.121186551970991" X1="-1.11188801661059" Y1="0.0823751676716454" X2="-1.0212173220318" Y2="0.0649496514334127" X3="-0.922303847287245" Y3="0.0487122421867002" X4="-0.790419195501951" Y4="0.0376232773078249" X5="-0.653368275037705" Y5="0.0294146482469439" X6="-0.46186130859035" Y6="0.0227162609514894" X7="-0.270354380109291" Y7="0.0189302201154872" X8="-0.120479392602372" Y8="0.0142704742792843" X9="0.104333088657999" Y9="0.0142704742792843" X10="0.262534540292334" Y10="0.020095156574538" X11="0.454041392840802" Y11="0.0235899659516902" X12="0.645548397254452" Y12="0.0302883479353191" X13="0.820402473413264" Y13="0.0384429031486743" X14="0.995256701437256" Y14="0.0477623948210802" X15="1.13924761495821" Y15="0.0633655135935734" X16="1.25031249438644" Y16="0.0823751676716454" X17="1.38263022066849" Y17="0.120762819838573" Re="2000000" ID="8762aa4c-1082-458f-ab85-b38f0256b886" Name="My polar curve" />
+        </PolarFamily>
+      </PolarDataBase>
+      <CamberLinesDatabase>
+        <CamberLine>
+          <Identity Name="Symmetric" ID="00000000-0000-0000-0000-000000000000" />
+        </CamberLine>
+        <CamberLine>
+          <Identity Name="NACA 2400" ID="6b4ef330-0ae6-409a-b54f-91a34bd9e0e9" />
+          <Node X="0" Y="0" />
+          <Node X="0.0500000007450581" Y="0.0143984220921993" />
+          <Node X="0.100000001490116" Y="0.0268244575709105" />
+          <Node X="0.150000005960464" Y="0.0372781120240688" />
+          <Node X="0.200000002980232" Y="0.0457593724131584" />
+          <Node X="0.25" Y="0.0522682443261147" />
+          <Node X="0.300000011920929" Y="0.0568047352135181" />
+          <Node X="0.349999994039536" Y="0.0593688376247883" />
+          <Node X="0.400000005960464" Y="0.0599838718771935" />
+          <Node X="0.449999988079071" Y="0.0594195164740086" />
+          <Node X="0.5" Y="0.0580489113926888" />
+          <Node X="0.550000011920929" Y="0.0558720715343952" />
+          <Node X="0.600000023841858" Y="0.0528890043497086" />
+          <Node X="0.649999976158142" Y="0.0490997061133385" />
+          <Node X="0.699999988079071" Y="0.0445041693747044" />
+          <Node X="0.75" Y="0.0391023904085159" />
+          <Node X="0.800000011920929" Y="0.0328943766653538" />
+          <Node X="0.850000023841858" Y="0.0258801355957985" />
+          <Node X="0.899999976158142" Y="0.0180596653372049" />
+          <Node X="0.949999988079071" Y="0.00943295005708933" />
+          <Node X="1" Y="0" />
+        </CamberLine>
+      </CamberLinesDatabase>
+      <ModelProperties>
+        <LiftingSurface>
+          <Identity Name="Main wing" ID="34a820c7-ccdd-4083-8c92-2bca1bec764f" Include="True" />
+          <SurfaceProperties RootChord="1.32" RootFlap="0.2" FlapPanels="3" X="1.3" Y="0.4" Z="-0.3" Psi="0" Tita="0" Fi="0" Sequence="0" Xcr="0" Ycr="0" Zcr="0" Primitive1="6" Primitive2="32" ConvectWake="-1" CuttingStep="70" Symmetric="-1" TrailingConvection="-1" RootA="1" RootIu="10" RootIv="10" RootIw="10" RootSv="0" RootSw="0" RootJ="1" Rootm="1" NumberChordRings="5" NumberMacroPanels="3" />
+          <MacroPanel SpanVortexRings="4" ExternalChord="1" Length="0.7" SweepBack="24" Diedral="-5" Torsion="0" TorsionAxis="0.5" SpacingType="Constant" Flapped="False" FlapChord="0.200000002980232" FlapDeflection="0" Area="1" Iu="10" Iv="10" Iw="10" Sv="0" Sw="0" J="1" m="1" CenterOfShear="0.33" PolarID="d7669ec3-21ee-4d33-8853-8bae38c71241" CamberLineID="6b4ef330-0ae6-409a-b54f-91a34bd9e0e9" />
+          <MacroPanel SpanVortexRings="19" ExternalChord="1" Length="4.4" SweepBack="0" Diedral="5" Torsion="1.5" TorsionAxis="0.5" SpacingType="Constant" Flapped="False" FlapChord="0.200000002980232" FlapDeflection="0" Area="1" Iu="10" Iv="10" Iw="10" Sv="0" Sw="0" J="1" m="1" CenterOfShear="0.36" PolarID="d7669ec3-21ee-4d33-8853-8bae38c71241" CamberLineID="6b4ef330-0ae6-409a-b54f-91a34bd9e0e9" />
+          <MacroPanel SpanVortexRings="4" ExternalChord="0.25" Length="0.55" SweepBack="55" Diedral="27.5" Torsion="-1.5" TorsionAxis="0.5" SpacingType="Constant" Flapped="False" FlapChord="0.200000002980232" FlapDeflection="0" Area="1" Iu="10" Iv="10" Iw="10" Sv="0" Sw="0" J="1" m="1" CenterOfShear="0.36" PolarID="d7669ec3-21ee-4d33-8853-8bae38c71241" CamberLineID="6b4ef330-0ae6-409a-b54f-91a34bd9e0e9" />
+          <VisualProperties>
+            <Visibility ShowSurface="True" ShowLattice="True" ShowPrimitives="True" ShowNodes="False" ShowCoordinates="True" ShowVelocity="True" ShowLoads="True" ShowColormap="True" Transparency="1" />
+            <Size NodeSize="1" LatticeThickness="1" ScaleVelocity="0.01" ScalePressure="1" />
+            <Colors CSR="128" CSG="128" CSB="128" CMR="0" CMG="0" CMB="0" />
+          </VisualProperties>
+          <Inertia Mass=" 0.000000E+000" Xcg=" 0.000000E+000" Ycg=" 0.000000E+000" Zcg=" 0.000000E+000" Ixx=" 0.000000E+000" Iyy=" 0.000000E+000" Izz=" 0.000000E+000" Ixy=" 0.000000E+000" Ixz=" 0.000000E+000" Iyz=" 0.000000E+000" />
+        </LiftingSurface>
+        <LiftingSurface>
+          <Identity Name="Empennage" ID="f3958c1d-98bf-45d8-9e17-0c491d377457" Include="True" />
+          <SurfaceProperties RootChord="0.75" RootFlap="0.2" FlapPanels="3" X="6" Y="0" Z="1.2" Psi="0" Tita="0" Fi="0" Sequence="0" Xcr="0" Ycr="0" Zcr="0" Primitive1="6" Primitive2="14" ConvectWake="-1" CuttingStep="40" Symmetric="-1" TrailingConvection="-1" RootA="1" RootIu="10" RootIv="10" RootIw="10" RootSv="0" RootSw="0" RootJ="1" Rootm="1" NumberChordRings="5" NumberMacroPanels="1" />
+          <MacroPanel SpanVortexRings="9" ExternalChord="0.75" Length="1.6" SweepBack="0" Diedral="0" Torsion="0" TorsionAxis="0.5" SpacingType="Constant" Flapped="False" FlapChord="0.200000002980232" FlapDeflection="0" Area="1" Iu="10" Iv="10" Iw="10" Sv="0" Sw="0" J="1" m="1" CenterOfShear="0" PolarID="00000000-0000-0000-0000-000000000000" CamberLineID="00000000-0000-0000-0000-000000000000" />
+          <VisualProperties>
+            <Visibility ShowSurface="True" ShowLattice="True" ShowPrimitives="True" ShowNodes="False" ShowCoordinates="True" ShowVelocity="True" ShowLoads="True" ShowColormap="True" Transparency="1" />
+            <Size NodeSize="1" LatticeThickness="1" ScaleVelocity="0.01" ScalePressure="1" />
+            <Colors CSR="0" CSG="255" CSB="64" CMR="0" CMG="128" CMB="0" />
+          </VisualProperties>
+          <Inertia Mass=" 0.000000E+000" Xcg=" 0.000000E+000" Ycg=" 0.000000E+000" Zcg=" 0.000000E+000" Ixx=" 0.000000E+000" Iyy=" 0.000000E+000" Izz=" 0.000000E+000" Ixy=" 0.000000E+000" Ixz=" 0.000000E+000" Iyz=" 0.000000E+000" />
+        </LiftingSurface>
+        <ExtrudedSurface>
+          <Identity Name="Fuselage" ID="5cf069c9-78ef-4987-adaf-efe2c6e587a9" Include="True" />
+          <SurfaceProperties MeshType="1" NPS="10" NPZ="50" X="0" Y="0" Z="0" Psi="0" Tita="0" Fi="0" Sequence="0" Xcr="0" Ycr="0" Zcr="0" />
+          <CrossSection Z="-1.1" BrokenEdge="True">
+            <Vertex X="0" Y="-0.0962440787891384" />
+          </CrossSection>
+          <CrossSection Z="-0.75" BrokenEdge="False">
+            <Vertex X="0" Y="0.143374380182243" />
+            <Vertex X="0.0698600039875341" Y="0.134758494932679" />
+            <Vertex X="0.124492735105762" Y="0.103364444931257" />
+            <Vertex X="0.167334030399164" Y="0.0568305158868504" />
+            <Vertex X="0.187418012114353" Y="0.00468154352125127" />
+            <Vertex X="0.198080657967522" Y="-0.0594025290119194" />
+            <Vertex X="0.195070194805276" Y="-0.130614415385648" />
+            <Vertex X="0.178052726160477" Y="-0.20170894114327" />
+            <Vertex X="0.142810979801278" Y="-0.253475563275053" />
+            <Vertex X="0.0885619251861253" Y="-0.29199121961511" />
+            <Vertex X="0" Y="-0.308872498901677" />
+          </CrossSection>
+          <CrossSection Z="-0.2" BrokenEdge="False">
+            <Vertex X="0" Y="0.41252944403491" />
+            <Vertex X="0.0948733995382371" Y="0.404133878411097" />
+            <Vertex X="0.160775416085294" Y="0.372689171145781" />
+            <Vertex X="0.221566669013355" Y="0.316429383665061" />
+            <Vertex X="0.272027210395524" Y="0.236184143880565" />
+            <Vertex X="0.302364301795123" Y="0.145832886650664" />
+            <Vertex X="0.318939512181518" Y="0.024130563804486" />
+            <Vertex X="0.325907100895731" Y="-0.0743886051657949" />
+            <Vertex X="0.325907100895731" Y="-0.149116407525226" />
+            <Vertex X="0.311624574723581" Y="-0.225285086402276" />
+            <Vertex X="0.289620571026699" Y="-0.29358938232343" />
+            <Vertex X="0.234291289428631" Y="-0.356082409241774" />
+            <Vertex X="0.181017820268798" Y="-0.393446310421489" />
+            <Vertex X="0.10023076186403" Y="-0.425747381967092" />
+            <Vertex X="0" Y="-0.440398663282394" />
+          </CrossSection>
+          <CrossSection Z="0.65" BrokenEdge="False">
+            <Vertex X="0" Y="0.630555860638435" />
+            <Vertex X="0.1166083603583" Y="0.608591075445259" />
+            <Vertex X="0.209494446679675" Y="0.549432350920396" />
+            <Vertex X="0.265410847074019" Y="0.469107919246922" />
+            <Vertex X="0.289850695445726" Y="0.401347259204655" />
+            <Vertex X="0.320385202564748" Y="0.310784285372662" />
+            <Vertex X="0.341735717005823" Y="0.212470142667545" />
+            <Vertex X="0.355184236935414" Y="0.106705851499179" />
+            <Vertex X="0.363063373953596" Y="-0.000186437097820374" />
+            <Vertex X="0.365128969149644" Y="-0.0951705111555311" />
+            <Vertex X="0.360904952012793" Y="-0.186976560797418" />
+            <Vertex X="0.341328771412111" Y="-0.269414673217182" />
+            <Vertex X="0.327189450820086" Y="-0.33572559312078" />
+            <Vertex X="0.279323132359599" Y="-0.416898083308286" />
+            <Vertex X="0.220562720236611" Y="-0.464092994170355" />
+            <Vertex X="0.152426074623457" Y="-0.493391671151383" />
+            <Vertex X="0.079660675720723" Y="-0.50733818466858" />
+            <Vertex X="0" Y="-0.523599564284086" />
+          </CrossSection>
+          <CrossSection Z="1.3" BrokenEdge="False">
+            <Vertex X="0" Y="0.713506635537997" />
+            <Vertex X="0.0766538674079586" Y="0.705745764428747" />
+            <Vertex X="0.157676357066495" Y="0.674284226307657" />
+            <Vertex X="0.221436367601162" Y="0.629901701351197" />
+            <Vertex X="0.279978465019278" Y="0.538166892771788" />
+            <Vertex X="0.311974043828252" Y="0.434558683940784" />
+            <Vertex X="0.337828798203282" Y="0.30930077756556" />
+            <Vertex X="0.358922284452556" Y="0.146253494581345" />
+            <Vertex X="0.366121570149944" Y="0.0302070698858485" />
+            <Vertex X="0.361968909265965" Y="-0.0770262323557596" />
+            <Vertex X="0.357140042896293" Y="-0.172933378334068" />
+            <Vertex X="0.346865713875112" Y="-0.256467519813737" />
+            <Vertex X="0.332460581163946" Y="-0.340751425117854" />
+            <Vertex X="0.302978412738629" Y="-0.419208916071051" />
+            <Vertex X="0.278227470798902" Y="-0.4703008519874" />
+            <Vertex X="0.233747276347879" Y="-0.509881816341969" />
+            <Vertex X="0.17527042010437" Y="-0.535736583755515" />
+            <Vertex X="0.116390256057426" Y="-0.553240204915831" />
+            <Vertex X="0.0719723818233646" Y="-0.572331504527608" />
+            <Vertex X="0" Y="-0.579736904613674" />
+          </CrossSection>
+          <CrossSection Z="2.15" BrokenEdge="True">
+            <Vertex X="0" Y="0.658056909084495" />
+            <Vertex X="0.0743069423042943" Y="0.646107514268733" />
+            <Vertex X="0.130160617719494" Y="0.626838230843978" />
+            <Vertex X="0.180338766026017" Y="0.591949935086791" />
+            <Vertex X="0.220787393608932" Y="0.541987513176383" />
+            <Vertex X="0.253577470849377" Y="0.458920025382514" />
+            <Vertex X="0.272911498088151" Y="0.376240435237907" />
+            <Vertex X="0.294334466181749" Y="0.264364917045629" />
+            <Vertex X="0.30694046841969" Y="0.13485546900468" />
+            <Vertex X="0.316679842873367" Y="-0.0694863595555647" />
+            <Vertex X="0.305473223511805" Y="-0.221136972922725" />
+            <Vertex X="0.281893940977499" Y="-0.37504160426731" />
+            <Vertex X="0.22828289392749" Y="-0.464724630855201" />
+            <Vertex X="0.134760938316535" Y="-0.513314870551979" />
+            <Vertex X="0" Y="-0.547775792947165" />
+          </CrossSection>
+          <CrossSection Z="4" BrokenEdge="True">
+            <Vertex X="0" Y="0.455657755428649" />
+            <Vertex X="0.0507531932976446" Y="0.449674178984021" />
+            <Vertex X="0.103923352388273" Y="0.420548853965435" />
+            <Vertex X="0.142998479628597" Y="0.383154297093542" />
+            <Vertex X="0.162697865763056" Y="0.33416628653948" />
+            <Vertex X="0.176376740120753" Y="0.272628779108679" />
+            <Vertex X="0.177166996146576" Y="-0.109580347714479" />
+            <Vertex X="0.168553444231984" Y="-0.176886949846032" />
+            <Vertex X="0.142927968966581" Y="-0.218973021627454" />
+            <Vertex X="0.111424516464073" Y="-0.246364151247435" />
+            <Vertex X="0.0593094877462251" Y="-0.262203345717737" />
+            <Vertex X="0" Y="-0.272653638733157" />
+          </CrossSection>
+          <CrossSection Z="5.95" BrokenEdge="True">
+            <Vertex X="0" Y="0.274327324713785" />
+            <Vertex X="0.035524026982163" Y="0.264164064749895" />
+            <Vertex X="0.0555911419719087" Y="0.237013718435729" />
+            <Vertex X="0.0653412701776884" Y="0.197932729409222" />
+            <Vertex X="0.0629244651841824" Y="0.056936212039334" />
+            <Vertex X="0.0595866535784396" Y="0.0204393613042433" />
+            <Vertex X="0.0399902645580771" Y="-0.00649094754058786" />
+            <Vertex X="0" Y="-0.016369195524944" />
+          </CrossSection>
+          <CrossSection Z="6.7" BrokenEdge="True">
+            <Vertex X="0" Y="0.209851945367395" />
+            <Vertex X="0" Y="0.0717579681918445" />
+          </CrossSection>
+          <Anchor>
+            <Line Xp="0.4" Yp="-0.3" Zp="1.3" Xd="-0.910069141369356" Yd="0.0796207328945901" Zd="-0.4067366430758" />
+            <Line Xp="0.4" Yp="-0.239597628414631" Zp="1.564" Xd="-0.9404484976533" Yd="0.100344850441207" Zd="-0.324788445378808" />
+            <Line Xp="0.4" Yp="-0.220821289122105" Zp="1.828" Xd="-0.963532646936325" Yd="0.108355445283612" Zd="-0.244671076683106" />
+            <Line Xp="0.4" Yp="-0.230186514258385" Zp="2.092" Xd="-0.980761373727417" Yd="0.107488512158376" Zd="-0.162951979301538" />
+            <Line Xp="0.4" Yp="-0.256579422801733" Zp="2.356" Xd="-0.991898516348489" Yd="0.100584464475202" Zd="-0.0775892954723918" />
+            <Line Xp="0.4" Yp="-0.3" Zp="2.62" Xd="-0.996124001949291" Yd="0.0871495576366382" Zd="0.0119133263309383" />
+            <Info ParentID="34a820c7-ccdd-4083-8c92-2bca1bec764f" Root="False" Tip="False" />
+          </Anchor>
+          <VisualProperties>
+            <Visibility ShowSurface="True" ShowLattice="True" ShowPrimitives="False" ShowNodes="False" ShowCoordinates="True" ShowVelocity="True" ShowLoads="True" ShowColormap="False" Transparency="1" />
+            <Size NodeSize="1" LatticeThickness="1" ScaleVelocity="0.01" ScalePressure="1" />
+            <Colors CSR="0" CSG="0" CSB="160" CMR="79" CMG="79" CMB="255" />
+          </VisualProperties>
+          <Inertia Mass=" 0.000000E+000" Xcg=" 0.000000E+000" Ycg=" 0.000000E+000" Zcg=" 0.000000E+000" Ixx=" 0.000000E+000" Iyy=" 0.000000E+000" Izz=" 0.000000E+000" Ixy=" 0.000000E+000" Ixz=" 0.000000E+000" Iyz=" 0.000000E+000" />
+        </ExtrudedSurface>
+        <JetEngine>
+          <Identity Name="Fan right" ID="bb0fabdf-1e4a-476d-8170-0878aca904f8" Include="True" FD="0.7" BD="0.65" FL="0.2" BL="0.2" TL="0.65" RS="11" CS="0" X="2.8" Y="0.65" Z="0.3" Psi="0" Theta="-0.0287979326579064" Phi="0" Sequence="0" Xcr="2.8" Ycr="0.65" Zcr="0.3" RE="11" />
+          <VisualProperties>
+            <Visibility ShowSurface="True" ShowLattice="True" ShowPrimitives="False" ShowNodes="False" ShowCoordinates="True" ShowVelocity="False" ShowLoads="False" ShowColormap="False" Transparency="1" />
+            <Size NodeSize="1" LatticeThickness="1" ScaleVelocity="0.01" ScalePressure="1" />
+            <Colors CSR="211" CSG="211" CSB="211" CMR="0" CMG="0" CMB="0" />
+          </VisualProperties>
+          <Inertia Mass=" 0.000000E+000" Xcg=" 0.000000E+000" Ycg=" 0.000000E+000" Zcg=" 0.000000E+000" Ixx=" 0.000000E+000" Iyy=" 0.000000E+000" Izz=" 0.000000E+000" Ixy=" 0.000000E+000" Ixz=" 0.000000E+000" Iyz=" 0.000000E+000" />
+        </JetEngine>
+        <JetEngine>
+          <Identity Name="Jet engine 1" ID="00000000-0000-0000-0000-000000000000" Include="True" FD="0.7" BD="0.65" FL="0.2" BL="0.2" TL="0.65" RS="11" CS="0" X="2.8" Y="-0.65" Z="0.3" Psi="0" Theta="-0.0287979326579064" Phi="0" Sequence="0" Xcr="2.8" Ycr="-0.65" Zcr="0.3" RE="11" />
+          <VisualProperties>
+            <Visibility ShowSurface="True" ShowLattice="True" ShowPrimitives="False" ShowNodes="False" ShowCoordinates="True" ShowVelocity="False" ShowLoads="False" ShowColormap="False" Transparency="1" />
+            <Size NodeSize="1" LatticeThickness="1" ScaleVelocity="0.01" ScalePressure="1" />
+            <Colors CSR="211" CSG="211" CSB="211" CMR="0" CMG="0" CMB="0" />
+          </VisualProperties>
+          <Inertia Mass=" 0.000000E+000" Xcg=" 0.000000E+000" Ycg=" 0.000000E+000" Zcg=" 0.000000E+000" Ixx=" 0.000000E+000" Iyy=" 0.000000E+000" Izz=" 0.000000E+000" Ixy=" 0.000000E+000" Ixz=" 0.000000E+000" Iyz=" 0.000000E+000" />
+        </JetEngine>
+      </ModelProperties>
+    </Model>
+    <Simulacion>
+      <StreamVelocity X="40" Y="0" Z="2" />
+      <StreamOmega X="0" Y="0" Z="0" />
+      <Parameters Analysis="0" Interval="0.005" Steps="30" Cutoff="1E-08" SurveyTolerance="0.001" ExtendWakes="False" UseGpu="False" GpuDeviceId="0" />
+      <Fluid Density="1.225" Viscocity="1.78E-05" Po="101300" />
+      <Inertia Mass="0" Cgx="0" Cgy="0" Cgz="0" Ixx="0" Iyy="0" Izz="0" Ux="1" Uy="0" Uz="0" Vx="0" Vy="1" Vz="0" Wx="0" Wy="0" Wz="1" />
+      <Structure StructureStartStep="5" Modes="6" ModalDamping="0.05" SubSteps="0" />
+      <VelocityProfile>
+        <Properties Type="0" />
+        <X>
+          <Time Start="1" TimeSpan="3" PeakAt="2" />
+          <Amplitude Intensity="0" FinalDrop="0" />
+        </X>
+        <Y>
+          <Time Start="1" TimeSpan="3" PeakAt="2" />
+          <Amplitude Intensity="0" FinalDrop="0" />
+        </Y>
+        <Z>
+          <Time Start="5" TimeSpan="16" PeakAt="13" />
+          <Amplitude Intensity="0.32" FinalDrop="0" />
+        </Z>
+      </VelocityProfile>
+      <AeroelasticHistogram>
+        <FlutterTestHistogram HyperDamping="6" NormalDamping="0.01" HyperDampingSpan="0.22" GustIntensityX="1.5" GustIntensityY="0" GustIntensityZ="0" GustSpan="0.22" />
+      </AeroelasticHistogram>
+    </Simulacion>
+  </Project>
+  <Visualization>
+    <Camera Psi="33.75" Tita="0" Fi="-42.75" X="-310" Y="-46" Z="0" Proximity="128" />
+    <Screen ScreenColorR="50" ScreenColorG="50" ScreenColorB="50" />
+    <Representation Orthographic="0" LineSmoothing="-1" AlphaBlending="-1" />
+  </Visualization>
+</OpenVOGEL>
