@@ -706,7 +706,7 @@ Public Class FormFuselageEditor
             For Each AnchLine In _Fuselage.AnchorLines
 
                 If Not IsNothing(AnchLine.WingAnchorInfo) Then
-                    If AnchLine.WingAnchorInfo.ParentID = _LiftingSurfaces(i).ID Then
+                    If AnchLine.WingAnchorInfo.ParentID = _LiftingSurfaces(i).Id Then
                         clbWingsToAnchor.SetItemChecked(i, True)
                         Exit For
                     End If
@@ -752,7 +752,7 @@ Public Class FormFuselageEditor
 
                 Dim Info As New WingAnchorInfo
 
-                Info.ParentID = _LiftingSurfaces(i).ID
+                Info.ParentID = _LiftingSurfaces(i).Id
 
                 AnchorLine.WingAnchorInfo = Info
 

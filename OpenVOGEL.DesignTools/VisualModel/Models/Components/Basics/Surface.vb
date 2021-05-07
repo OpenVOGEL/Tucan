@@ -38,7 +38,7 @@ Namespace VisualModel.Models.Components.Basics
         ''' Surface identifier.
         ''' </summary>
         ''' <returns></returns>
-        Public Property ID As Guid
+        Public Property Id As Guid
 
         ''' <summary>
         ''' Surface name.

@@ -440,7 +440,7 @@ CheckInvalid:
                     Case "Identity"
 
                         Name = reader.GetAttribute("Name")
-                        ID = New Guid(IOXML.ReadString(reader, "ID", Guid.NewGuid.ToString))
+                        Id = New Guid(IOXML.ReadString(reader, "ID", Guid.NewGuid.ToString))
 
                         Position.X = IOXML.ReadDouble(reader, "X", 0.0)
                         Position.Y = IOXML.ReadDouble(reader, "Y", 0.0)
@@ -533,7 +533,7 @@ CheckInvalid:
             writer.WriteStartElement("Identity")
 
             writer.WriteAttributeString("Name", Name)
-            writer.WriteAttributeString("ID", ID.ToString)
+            writer.WriteAttributeString("ID", Id.ToString)
 
             writer.WriteAttributeString("X", CDbl(Position.X))
             writer.WriteAttributeString("Y", CDbl(Position.Y))

@@ -199,7 +199,7 @@ Namespace VisualModel.Models.Components
                     Case "Identity"
 
                         Name = reader.GetAttribute("Name")
-                        ID = New Guid(IOXML.ReadString(reader, "ID", Guid.NewGuid.ToString))
+                        Id = New Guid(IOXML.ReadString(reader, "ID", Guid.NewGuid.ToString))
                         IncludeInCalculation = IOXML.ReadBoolean(reader, "Include", True)
 
                         Resolution = IOXML.ReadInteger(reader, "RE", 10)
@@ -268,7 +268,7 @@ Namespace VisualModel.Models.Components
 
             writer.WriteStartElement("Identity")
             writer.WriteAttributeString("Name", Name)
-            writer.WriteAttributeString("ID", ID.ToString)
+            writer.WriteAttributeString("ID", Id.ToString)
             writer.WriteAttributeString("Include", String.Format("{0}", IncludeInCalculation))
 
             writer.WriteAttributeString("FD", CDbl(FrontDiameter))

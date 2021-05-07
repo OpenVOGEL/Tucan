@@ -29,12 +29,15 @@ Imports OpenVOGEL.AeroTools.CalculationModel.Settings
 Namespace VisualModel.Models.Components
 
     ''' <summary>
-    ''' Represents a quadrilateral region on a wing
+    ''' Represents a spanwise region on a wing.
     ''' </summary>
     Public Class WingRegion
 
 #Region " Geometry "
 
+        ''' <summary>
+        ''' All posible kind of panel spacement along the wingspan.
+        ''' </summary>
         Public Enum Spacements As Integer
 
             Constant = 1
@@ -42,9 +45,19 @@ Namespace VisualModel.Models.Components
 
         End Enum
 
+        ''' <summary>
+        ''' Number of panels along the wingspan.
+        ''' </summary>
         Private _SpanPanels As Integer
+
+        ''' <summary>
+        ''' Number of nodes along the wingspan.
+        ''' </summary>
         Private _SpanNodes As Integer
 
+        ''' <summary>
+        ''' Generates a new wing region object with minimal default values.
+        ''' </summary>
         Public Sub New()
 
             FlapChord = 0.3
@@ -202,6 +215,10 @@ Namespace VisualModel.Models.Components
         ''' <remarks></remarks>
         Public Property TipSection As Section = New Section
 
+        ''' <summary>
+        ''' The relative position of the center of shear for this region.
+        ''' The center of shear is materialized by the position of the structural beam.
+        ''' </summary>
         Private _CenterOfShear As Double = 0.25
 
         ''' <summary>
@@ -391,16 +408,51 @@ Namespace VisualModel.Models.Components
         ''' <remarks></remarks>
         Public Property CuttingStep As Integer = 50
 
+        ''' <summary>
+        ''' The number of panels in the chorwise direction
+        ''' </summary>
         Private _ChordPanelsCount As Integer = 5
+
+        ''' <summary>
+        ''' The total number of panels in the spanwise direction
+        ''' This is obtained while generating the mesh by summing the span panels in all of the regions.
+        ''' </summary>
         Private _SpanPanelsCount As Integer
+
+        ''' <summary>
+        ''' The number of panels along the chord.
+        ''' </summary>
         Private _ChordNodesCount As Integer
+
+        ''' <summary>
+        ''' The total number of nodes in the spanwise direction.
+        ''' This is obtained while generating the mesh by summing the span panels in all of the regions.
+        ''' </summary>
         Private _SpanNodesCount As Integer
 
+        ''' <summary>
+        ''' The total number of nodes along the boundary.
+        ''' </summary>
         Private _BoundaryNodesCount As Integer
+
+        ''' <summary>
+        ''' The total number of segments along the boundary.
+        ''' </summary>
         Private _BoundarySegmentsCount As Integer
 
+        ''' <summary>
+        ''' The total number of primitive segments along the convection edge.
+        ''' </summary>
         Private _PrimitivePanelsCount As Integer
+
+        ''' <summary>
+        ''' Te total number of primitive nodes along the convection edge.
+        ''' </summary>
         Private _PrimitiveNodesCount As Integer
+
+        ''' <summary>
+        ''' When set, it will setup the convection along the primitive edge.
+        ''' </summary>
         Private _TrailingEdgeConvection As Boolean = True
 
         ''' <summary>
@@ -409,26 +461,62 @@ Namespace VisualModel.Models.Components
         ''' <returns></returns>
         Public Property WingRegions As New List(Of WingRegion)
 
-        Private Const _nMaximumWingRegions As Integer = 10
+        ''' <summary>
+        ''' The index of the active region
+        ''' </summary>
         Private _CurrentWingRegion As Integer = 0
 
+        ''' <summary>
+        ''' The wing root chord [m]
+        ''' </summary>
         Private _RootChord As Double
+
+        ''' <summary>
+        ''' The relative length of the flap relative to the wing chord
+        ''' </summary>
         Private _RootFlapChord As Double
+
+        ''' <summary>
+        ''' The number of flapped panels in chordwise direction
+        ''' </summary>
         Private _FlapPanels As Integer
 
-        Private _BoundaryNodes(1) ' Matriz de nodos del contorno
-        Private _BoundaryPanels(1) ' Matriz de paneles del contorno
+        ''' <summary>
+        ''' This dynamic array contains the boundary nodes, which for a lifting surface are
+        ''' all adjacent along the edge.
+        ''' </summary>
+        Private _BoundaryNodes(1)
+
+        ''' <summary>
+        ''' This dynamic array contains the boundary panels, which for a lifting surface are
+        ''' all adjacent along the edge.
+        ''' </summary>
+        Private _BoundaryPanels(1)
+
+        ''' <summary>
+        ''' This static array stores the indices of the panels and nodes being the limits of the convection edge.
+        ''' </summary>
         Private _PrimitiveData(2, 2) As Integer ' Comienzo y fin del borde de conveccion (paneles y nodos)
 
+        ''' <summary>
+        ''' The index of the first primirive panel
+        ''' </summary>
         Private _PrimitivePanel1 As Integer
+
+        ''' <summary>
+        ''' The index of the last primitive panel
+        ''' </summary>
         Private _PrimitivePanel2 As Integer
 
+        ''' <summary>
+        ''' Geerates a new lfting surface object with default values.
+        ''' </summary>
         Public Sub New()
 
             Mesh = New Mesh()
 
             Name = "Lifting surface"
-            ID = Guid.NewGuid
+            Id = Guid.NewGuid
 
             NumberOfChordPanels = 5
             RootChord = 1.0#
@@ -537,7 +625,7 @@ Namespace VisualModel.Models.Components
         ''' <value></value>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Property CurrentRegionID As Integer
+        Public Property CurrentRegionId As Integer
             Get
                 Return _CurrentWingRegion + 1
             End Get
@@ -571,7 +659,7 @@ Namespace VisualModel.Models.Components
         ''' <value></value>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public ReadOnly Property nBoundarySegments
+        Public ReadOnly Property NumBoundarySegments
             Get
                 Return _BoundarySegmentsCount
             End Get
@@ -583,7 +671,7 @@ Namespace VisualModel.Models.Components
         ''' <value></value>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public ReadOnly Property nBoundaryNodes
+        Public ReadOnly Property NumBoundaryNodes
             Get
                 Return _BoundaryNodesCount
             End Get
@@ -595,7 +683,7 @@ Namespace VisualModel.Models.Components
         ''' <value></value>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public ReadOnly Property nPrimitiveSegments
+        Public ReadOnly Property NumPrimitiveSegments
             Get
                 RefreshPrimitives()
                 Return _PrimitivePanelsCount
@@ -608,7 +696,7 @@ Namespace VisualModel.Models.Components
         ''' <value></value>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public ReadOnly Property nPrimitiveNodes
+        Public ReadOnly Property NumPrimitiveNodes
             Get
                 RefreshPrimitives()
                 Return _PrimitiveNodesCount
@@ -867,12 +955,9 @@ Namespace VisualModel.Models.Components
 
 #Region " 3D model and vortices generation "
 
-        Public Function GetVortex(ByVal VortexNumber As Integer) As LatticeSegment
-
-            Return Mesh.Lattice.Item(VortexNumber)
-
-        End Function
-
+        ''' <summary>
+        ''' Generates the lifting surface mesh based on the geometrical parameters.
+        ''' </summary>
         Public Overrides Sub GenerateMesh()
 
             Dim X As Double
@@ -1113,6 +1198,8 @@ Namespace VisualModel.Models.Components
 
                 End If
 
+                ' Compute chord lenghts at the base and tip of this region
+
                 If RegionIndex = 0 Then
 
                     ChordStart = _RootChord
@@ -1126,6 +1213,8 @@ Namespace VisualModel.Models.Components
                     ChordEnd = WingRegions(RegionIndex).TipChord
 
                 End If
+
+                ' Compute other helping variables
 
                 RegionSpan = WingRegions(RegionIndex).Length
 
@@ -1178,7 +1267,7 @@ Namespace VisualModel.Models.Components
 
                     If RegionIndex = 0 Then
 
-                        Ttwist = WingRegions(RegionIndex).TwistAxis '* k / NPS(i, j)
+                        Ttwist = WingRegions(RegionIndex).TwistAxis
 
                     Else
 
@@ -1316,7 +1405,8 @@ Namespace VisualModel.Models.Components
 
             Mesh.GenerateLattice()
 
-            ' Local base:
+            ' Local base
+            '------------------------
 
             LocalDirections.U.X = 1.0
             LocalDirections.U.Y = 0.0
@@ -1334,6 +1424,7 @@ Namespace VisualModel.Models.Components
             LocalDirections.W.Rotate(LocalRotationMatrix)
 
             ' Direction points:
+            '------------------------
 
             DirectionPoints.U.X = 0.5
             DirectionPoints.U.Y = 0.0
@@ -1360,6 +1451,7 @@ Namespace VisualModel.Models.Components
             DirectionPoints.W.Add(Position)
 
             ' Local origin
+            '------------------------
 
             LocalOrigin.SetToCero()
             LocalOrigin.Substract(CenterOfRotation)
@@ -1370,10 +1462,11 @@ Namespace VisualModel.Models.Components
             GenerateStructure()
 
             ' Region limits
+            '------------------------
 
             UpdateLimitPanels()
 
-            ' Launch base sub to raise update event.
+            ' Launch base sub to raise update event
 
             MyBase.GenerateMesh()
 
@@ -1449,6 +1542,7 @@ Namespace VisualModel.Models.Components
             Dim PreviousLeadingEdgePoint As Vector3 = Nothing
 
             ' Build partition
+            '-------------------------------------
 
             Dim First As Integer = 0
 
@@ -1456,7 +1550,8 @@ Namespace VisualModel.Models.Components
 
                 Dim Length As Double = 0.0
 
-                ' Create the partitions:
+                ' Create the panel partition
+                '-------------------------------------
 
                 For P = First To Panel.SpanPanelsCount
 
@@ -1735,7 +1830,7 @@ Namespace VisualModel.Models.Components
                     Case "Identity"
 
                         Name = reader.GetAttribute("Name")
-                        ID = New Guid(IOXML.ReadString(reader, "ID", Guid.NewGuid.ToString))
+                        Id = New Guid(IOXML.ReadString(reader, "ID", Guid.NewGuid.ToString))
                         IncludeInCalculation = IOXML.ReadBoolean(reader, "Include", True)
 
                     Case "SurfaceProperties"
@@ -1779,7 +1874,7 @@ Namespace VisualModel.Models.Components
                     Case "MacroPanel", String.Format("MacroPanel{0}", count)
 
                         If count > 1 Then AddRegion()
-                        CurrentRegionID = count
+                        CurrentRegionId = count
                         CurrentRegion.ReadFromXML(reader)
                         count += 1
 
@@ -1830,7 +1925,7 @@ Namespace VisualModel.Models.Components
             writer.WriteStartElement("Identity")
 
             writer.WriteAttributeString("Name", Name)
-            writer.WriteAttributeString("ID", ID.ToString)
+            writer.WriteAttributeString("ID", Id.ToString)
             writer.WriteAttributeString("Include", String.Format("{0}", IncludeInCalculation))
 
             writer.WriteEndElement()
@@ -1883,7 +1978,7 @@ Namespace VisualModel.Models.Components
 
             For i = 0 To WingRegions.Count - 1
 
-                CurrentRegionID = i
+                CurrentRegionId = i
 
                 writer.WriteStartElement("MacroPanel")
                 WingRegions(i).WriteToXML(writer)

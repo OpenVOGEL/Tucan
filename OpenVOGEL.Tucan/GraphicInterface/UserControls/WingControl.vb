@@ -109,7 +109,7 @@ Public Class WingControl
     ''' </summary>
     Private Sub PointToCurrentRegion()
 
-        Wing.CurrentRegionID = Me.NudSelectedRegion.Value
+        Wing.CurrentRegionId = Me.NudSelectedRegion.Value
 
         RaiseEvent RefreshModelView()
 
@@ -213,7 +213,7 @@ Public Class WingControl
         TabSurfaceName.Text = Wing.Name
         NudSelectedRegion.Maximum = Wing.WingRegions.Count
         NudSelectedRegion.Minimum = 1
-        NudSelectedRegion.Value = Wing.CurrentRegionID
+        NudSelectedRegion.Value = Wing.CurrentRegionId
         NudRootChord.Value = Wing.RootChord
         NudRootFlap.Value = Wing.RootFlap
         NudFlapPanels.Value = Wing.FlapPanels
@@ -406,7 +406,7 @@ Public Class WingControl
         Loaded = False
         NudSelectedRegion.Maximum = Wing.WingRegions.Count
         NudSelectedRegion.Minimum = 1
-        NudSelectedRegion.Value = Wing.CurrentRegionID
+        NudSelectedRegion.Value = Wing.CurrentRegionId
         Loaded = True
 
         LoadRegionToForm()
@@ -431,7 +431,7 @@ Public Class WingControl
         Loaded = False
         Me.NudSelectedRegion.Maximum = Wing.WingRegions.Count
         Me.NudSelectedRegion.Minimum = 1
-        Me.NudSelectedRegion.Value = Wing.CurrentRegionID
+        Me.NudSelectedRegion.Value = Wing.CurrentRegionId
         Loaded = True
 
         LoadRegionToForm()
@@ -471,7 +471,7 @@ Public Class WingControl
         End If
 
         NudLastPrimitive.Minimum = Wing.FirstPrimitiveSegment
-        NudLastPrimitive.Maximum = Wing.nBoundarySegments
+        NudLastPrimitive.Maximum = Wing.NumBoundarySegments
         NudFirstPrimitive.Minimum = 1
         NudFirstPrimitive.Maximum = Wing.LastPrimitiveSegment
 
@@ -731,7 +731,7 @@ Public Class WingControl
             Wing.FirstPrimitiveSegment = NudFirstPrimitive.Value
 
             NudLastPrimitive.Minimum = Wing.FirstPrimitiveSegment
-            NudLastPrimitive.Maximum = Wing.nBoundarySegments
+            NudLastPrimitive.Maximum = Wing.NumBoundarySegments
 
         End If
 
