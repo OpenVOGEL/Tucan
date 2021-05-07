@@ -1,6 +1,7 @@
-﻿'Open VOGEL (openvogel.org)
+﻿'#############################################################################
+'Open VOGEL (openvogel.org)
 'Open source software for aerodynamics
-'Copyright (C) 2020 Guillermo Hazebrouck (guillermo.hazebrouck@openvogel.org)
+'Copyright (C) 2021 Guillermo Hazebrouck (guillermo.hazebrouck@openvogel.org)
 
 'This program Is free software: you can redistribute it And/Or modify
 'it under the terms Of the GNU General Public License As published by
@@ -15,17 +16,29 @@
 'You should have received a copy Of the GNU General Public License
 'along with this program.  If Not, see < http:  //www.gnu.org/licenses/>.
 
+'' Standard .NET frameworks
+'-----------------------------------------------------------------------------
+Imports System.Xml
+
+'' OpenVOGEL
+'-----------------------------------------------------------------------------
 Imports OpenVOGEL.DesignTools.VisualModel.Interface
 Imports OpenVOGEL.AeroTools.CalculationModel.Models.Aero.Components
 Imports OpenVOGEL.MathTools.Algebra.EuclideanSpace
 Imports OpenVOGEL.MathTools.Algebra.CustomMatrices
-Imports System.Xml
 Imports OpenVOGEL.DesignTools.VisualModel.Models.Components.Basics
 Imports OpenVOGEL.AeroTools.CalculationModel.Models.Structural.Library.Elements
 Imports OpenVOGEL.DesignTools.DataStore
 Imports OpenVOGEL.AeroTools.IoHelper
 Imports OpenVOGEL.AeroTools.CalculationModel.Settings
 
+'#############################################################################
+' Unit: LiftingSurface
+'
+' This unit provides a lifting surface model based on the definition of 
+' spanwise regions. Inside each region the profile and polar family is
+' considered constant.
+'#############################################################################
 Namespace VisualModel.Models.Components
 
     ''' <summary>

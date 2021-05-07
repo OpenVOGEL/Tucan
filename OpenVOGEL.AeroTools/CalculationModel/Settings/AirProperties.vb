@@ -1,6 +1,6 @@
 ﻿'Open VOGEL (openvogel.org)
 'Open source software for aerodynamics
-'Copyright (C) 2020 George Lazarou (george.sp.lazarou@gmail.com)
+'Copyright (C) 2021 George Lazarou (george.sp.lazarou@gmail.com)
 
 'This program Is free software: you can redistribute it And/Or modify
 'it under the terms Of the GNU General Public License As published by

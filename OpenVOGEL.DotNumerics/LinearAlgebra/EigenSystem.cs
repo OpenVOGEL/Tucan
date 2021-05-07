@@ -376,7 +376,7 @@ namespace DotNumerics.LinearAlgebra
         /// This method has been brought here as a complement to the OpenVOGEL project publisehd on GPLv3.
         /// Open VOGEL (openvogel.org)
         /// Open source software for aerodynamics
-        /// Copyright (C) 2020 Guillermo Hazebrouck (guillermo.hazebrouck@openvogel.org)
+        /// Copyright (C) 2021 Guillermo Hazebrouck (guillermo.hazebrouck@openvogel.org)
         /// <http://www.gnu.org/licenses/>.
         /// This algorithm is a .NET interpretation of the original method published in "J. Bathe, Finite elements procedures",
         /// which was written in FORTRAN.
@@ -620,7 +620,7 @@ namespace DotNumerics.LinearAlgebra
         /// This method has been brought here as a complement to the OpenVOGEL project publisehd on GPLv3.
         /// Open VOGEL (openvogel.org)
         /// Open source software for aerodynamics
-        /// Copyright (C) 2020 Guillermo Hazebrouck (guillermo.hazebrouck@openvogel.org)
+        /// Copyright (C) 2021 Guillermo Hazebrouck (guillermo.hazebrouck@openvogel.org)
         /// <http://www.gnu.org/licenses/>.
         /// </remarks>
         public void SubspaceIteration(SymmetricMatrix M, 
