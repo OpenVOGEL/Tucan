@@ -244,31 +244,31 @@ Namespace CalculationModel.Models.Structural.Library.Elements
                 M(0, 2) = Sy / 2.0
                 M(0, 4) = Sy_L1 / 12.0
                 M(0, 5) = -Sz_L1 / 12.0
-                M(0, 7) = Sz / 2.0
-                M(0, 8) = Sy / 2.0
+                M(0, 7) = -Sz / 2.0
+                M(0, 8) = -Sy / 2.0
                 M(0, 10) = -Sy_L1 / 12.0
                 M(0, 11) = Sz_L1 / 12.0
 
                 M(1, 3) = -Sy_L1 * 7.0 / 20.0
-                M(1, 6) = -Sz / 2.0
+                M(1, 6) = Sz / 2.0
                 M(1, 9) = -Sy_L1 * 3.0 / 20.0
 
                 M(2, 3) = Sz_L1 * 7.0 / 20.0
-                M(2, 6) = -Sy / 2.0
+                M(2, 6) = Sy / 2.0
                 M(2, 9) = Sz_L1 * 3.0 / 20.0
 
                 M(3, 4) = -Sz_L2 / 20.0
                 M(3, 5) = -Sy_L2
                 M(3, 7) = -Sy_L1 * 3.0 / 20.0
                 M(3, 8) = Sz_L1 * 3.0 / 20.0
-                M(3, 10) = -Sz_L2 / 30.0
-                M(3, 11) = -Sy_L2 / 30.0
+                M(3, 10) = Sz_L2 / 30.0
+                M(3, 11) = Sy_L2 / 30.0
 
                 M(4, 6) = -Sy_L1 / 12.0
-                M(4, 9) = Sz_L2 / 30.0
+                M(4, 9) = -Sz_L2 / 30.0
 
                 M(5, 6) = Sz_L1 / 12.0
-                M(5, 9) = Sy_L2 / 30.0
+                M(5, 9) = -Sy_L2 / 30.0
 
                 M(6, 7) = -Sz / 2.0
                 M(6, 8) = -Sy / 2.0
@@ -276,7 +276,6 @@ Namespace CalculationModel.Models.Structural.Library.Elements
                 M(6, 11) = -Sz_L1 / 12.0
 
                 M(7, 9) = -Sy_L1 * 7.0 / 20.0
-                M(7, 9) = Sz_L1 * 7.0 / 20.0
 
                 M(9, 10) = Sz_L2 / 20.0
                 M(9, 11) = Sy_L2 / 20.0
