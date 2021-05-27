@@ -355,12 +355,14 @@ Namespace CalculationModel.Models.Structural.Library.Elements
         ''' <remarks></remarks>
         Public Overrides Sub GenerateGlobalMatrices()
 
-            ' The local basis has been loaded before starting the calculation.
+            ' The local basis has been loaded before starting the calculation
+            '----------------------------------------------------------------
 
             GenerateLocalMass()
             GenerateLocalStiffness()
 
-            ' Transform coordinates:
+            ' Transform coordinates to global system
+            '----------------------------------------------------------------
 
             Dim T As Matrix = New Matrix(12)
 
@@ -369,25 +371,19 @@ Namespace CalculationModel.Models.Structural.Library.Elements
                 Dim bIndx As Integer = 3 * i
 
                 T(0 + bIndx, 0 + bIndx) = Basis.U.X
-                T(0 + bIndx, 1 + bIndx) = Basis.U.Y
-                T(0 + bIndx, 2 + bIndx) = Basis.U.Z
-                T(1 + bIndx, 0 + bIndx) = Basis.V.X
+                T(0 + bIndx, 1 + bIndx) = Basis.V.X
+                T(0 + bIndx, 2 + bIndx) = Basis.W.X
+                T(1 + bIndx, 0 + bIndx) = Basis.U.Y
                 T(1 + bIndx, 1 + bIndx) = Basis.V.Y
-                T(1 + bIndx, 2 + bIndx) = Basis.V.Z
-                T(2 + bIndx, 0 + bIndx) = Basis.W.X
-                T(2 + bIndx, 1 + bIndx) = Basis.W.Y
+                T(1 + bIndx, 2 + bIndx) = Basis.W.Y
+                T(2 + bIndx, 0 + bIndx) = Basis.U.Z
+                T(2 + bIndx, 1 + bIndx) = Basis.V.Z
                 T(2 + bIndx, 2 + bIndx) = Basis.W.Z
 
             Next
 
             K = K.SymmetricTransformation(T)
             M = M.SymmetricTransformation(T)
-
-            'Dim p As String = "C:\Users\Guillermo\Documents\Vogel tests\Aeroelasticity"
-            'Dim f As Integer = 101
-            'FileOpen(f, p & "\K_element_" & ID & ".txt", OpenMode.Output, OpenAccess.Write)
-            'Print(f, K.__repr__())
-            'FileClose(f)
 
         End Sub
 

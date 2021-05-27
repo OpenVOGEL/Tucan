@@ -249,10 +249,10 @@ namespace DotNumerics.LinearAlgebra
         {
             if (RowCount == R.RowCount & RowCount == R.ColumnCount)
             {
-                // Premultiply by transponse of R:
+                // Premultiply R:
 
                 Matrix A = new Matrix(RowCount);
-                
+
                 for (int i = 0; i < RowCount; i++)
                 {
                     for (int j = 0; j < RowCount; j++)
@@ -260,13 +260,13 @@ namespace DotNumerics.LinearAlgebra
                         double S = 0.0;
                         for (int k = 0; k < A.RowCount; k++)
                         {
-                            S += this[i, k] * R[j, k];
+                            S += R[i, k] * this[k, j];
                         }
                         A[i, j] = S;
                     }
                 }
 
-                // Postmultiply by R:
+                // Postmultiply by R transposed:
 
                 SymmetricMatrix B = new SymmetricMatrix(RowCount);
 
@@ -277,15 +277,15 @@ namespace DotNumerics.LinearAlgebra
                         double S = 0.0;
                         for (int k = 0; k < A.RowCount; k++)
                         {
-                            S += R[i, k] * A[k, j];
+                            S += A[i, k] * R[j, k];
                         }
                         B[i, j] = S;
                     }
                 }
-                
+
                 return B;
             }
-            else return null;            
+            else return null;
         }
 
         #endregion

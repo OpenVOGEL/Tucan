@@ -153,15 +153,15 @@ Namespace CalculationModel.Models.Structural
             ' Add nodal stiffness due to constrains (springs)
             '-----------------------------------------------------------------------------
 
-            'For Each Node In Nodes
+            For Each Node In Nodes
 
-            '    For i = 0 To 5
+                For i = 0 To 5
 
-            '        K(6 * Node.Index + i, 6 * Node.Index + i) += Node.Contrains.K(i)
+                    K(6 * Node.Index + i, 6 * Node.Index + i) += Node.Contrains.K(i)
 
-            '    Next
+                Next
 
-            'Next
+            Next
 
             If PrintAsTxt Then
 
@@ -240,19 +240,7 @@ Namespace CalculationModel.Models.Structural
             Dim D As Vector = Nothing
             Dim V As Matrix = Nothing
 
-            '/////////////////////////////////////
-            ' Use Jacobi
-            '/////////////////////////////////////
-            'D = New Vector(nDOF)
-            'V = New Matrix(nDOF, nDOF)
-            'EigenSolver.Jacobi(_K_, _M_, V, D)
-            '/////////////////////////////////////
-
-            '/////////////////////////////////////
-            ' Use subspace iteration
-            '/////////////////////////////////////
             EigenSolver.SubspaceIteration(_M_, _K_, nSubspace, nModes, D, V)
-            '/////////////////////////////////////
 
             '-----------------------------------------------------------------------------
             ' Convert data to modal info

@@ -1,4 +1,5 @@
-﻿'Open VOGEL (openvogel.org)
+﻿'#############################################################################
+'Open VOGEL (openvogel.org)
 'Open source software for aerodynamics
 'Copyright (C) 2021 Guillermo Hazebrouck (guillermo.hazebrouck@openvogel.org)
 
@@ -15,18 +16,35 @@
 'You should have received a copy Of the GNU General Public License
 'along with this program.  If Not, see < http:  //www.gnu.org/licenses/>.
 
+'' Standard .NET frameworks
+'-----------------------------------------------------------------------------
 Imports System.Xml
+
+'' OpenVOGEL
+'-----------------------------------------------------------------------------
 Imports OpenVOGEL.DesignTools.VisualModel.Models.Components.Basics
 
+'#############################################################################
+' Unit: CamberLineDatabase
+'
+' This unit provides a central storage of camber lines to be used throughout  
+' the design process.
+'#############################################################################
 Namespace DataStore
 
     ''' <summary>
-    '''  The database of chamber lines
+    '''  The database of chamber lines used during design.
     ''' </summary>
     Public Module CamberLinesDatabase
 
+        ''' <summary>
+        ''' The actual stack containing all camber lines in the project.
+        ''' </summary>
         Public CamberLines As New List(Of CamberLine)
 
+        ''' <summary>
+        ''' Initializes the module.
+        ''' </summary>
         Sub New()
 
             CamberLines.Clear()
@@ -37,6 +55,11 @@ Namespace DataStore
 
         End Sub
 
+        ''' <summary>
+        ''' Returns a camber line of the given unique Id.
+        ''' </summary>
+        ''' <param name="ID"></param>
+        ''' <returns></returns>
         Public Function GetCamberLineFromId(ID As Guid) As CamberLine
 
             For i = 0 To CamberLines.Count - 1
@@ -55,6 +78,10 @@ Namespace DataStore
 
         End Function
 
+        ''' <summary>
+        ''' Removes the camberline given its unique Id.
+        ''' </summary>
+        ''' <param name="ID"></param>
         Public Sub RemoveCamberLine(ID As Guid)
 
             If ID <> Guid.Empty Then
@@ -75,6 +102,10 @@ Namespace DataStore
 
         End Sub
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="writer"></param>
         Public Sub WriteToXML(writer As XmlWriter)
 
             For Each line In CamberLines
