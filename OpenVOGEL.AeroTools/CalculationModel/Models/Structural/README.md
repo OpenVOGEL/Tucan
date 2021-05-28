@@ -1,12 +1,9 @@
-Note: this module is now mainly being developed at the UNC, and therefore some part of the documentation comes in Spanish. We will strive to translate these documents into English as soon as we can.
-A similar text in english can be found [here](https://sites.google.com/site/gahvogel/main/aeroelasticity).
-
-##Sobre la conexión aeroelástica de Open VOGEL (ES)
+## Sobre el modelo estructural y la conexión aeroelástica de OpenVOGEL
 
 El modelo estructural está basado en el metodo de elementos finitos, implementado a travez de "nodos" y "elementos".
 Estas dos entidades básicas están definidas en la biblioteca _OpenVOGEL.AeroTools.CalculationModel.Models.Structural.Library_.
 
-###Nodos
+### Nodos
 _OpenVOGEL.AeroTools.CalculationModel.Models.Structural.Library.Nodes.StructuralNode_
 
 Los nodos representan puntos de conexión donde uno o más elementos confluyen. Cada nodo cuenta con una serie de propiedades que definen el estado local:
@@ -18,7 +15,7 @@ Los nodos representan puntos de conexión donde uno o más elementos confluyen. 
 
 Los nodos tienen 6 grados de libertad y reciben la carga aplicada sobre la estructura.
 
-###Elementos
+### Elementos
 _OpenVOGEL.AeroTools.CalculationModel.Models.Structural.Library.Elements_
 
 Una estructura está formada por una nube de nodos interconectados por elementos, que en principio pueden ser de cualquier tipo (barra, placa, etc), mientras tengan una matriz de masa y una de rigidez que se puedan ensamblar en el sistema global. Estas propiedades y métodos están garantizados al implementar la interface `IFiniteElement`.
@@ -32,14 +29,14 @@ Las propiedades más importantes del `BeamElement` son:
 - _M_: Matriz de masa (12x12) (implementa M de `IFiniteElement`)
 - _K_: Matriz de rigidez (12x12) (implementa K de `IFiniteElement`)
 
-###Estructura
+### Estructura
 _OpenVOGEL.AeroTools.CalculationModel.Models.Structural.StructuralCore_
 
 La clase `StructuralCore` es una definición que contiene todos los nodos y elementos de la estructura.
 Este objeto se encarga de solicitar a los elementos de la estructura el ensamblaje de sus matrices locales, y con ellas de ensamblar el sistema global. También se encarga de generar la descomposición modal: ejecuta la descomposición (haciendo uso de la biblioteca de álgebra localizada en _MathTools_) y almacena los modos dinámicos con sus propiedades modales.
 >Actualmente, en esta clase se debe implementar la interface `IFiniteElement` para evitar usar solo el elemento `BeamElement` y poder incluir nuevos elementos en el futuro.
 
-###Linker
+### Linker
 _OpenVOGEL.AeroTools.CalculationModel.Models.Structural_
 
 En el archivo _Linker.vb_ se encuentran tres clases que se encargan de administrar la conexión entre la estructura y el modelo aerodinámico.
@@ -64,7 +61,7 @@ Para integrar las ecuaciones se puede usar cualquier método. Por el momento sol
 Los desplazamientos generalizados se emplean mas tarde para recomponer el movimiento mediante una combinación lineal de las formas modales.
 Una vez que se conoce el movimiento de cada nodo estructural, se llama a al método de cada `KinematicLink` para que transfiera ese movimiento a los nodos asociados del modelo estructural.
 
->####Nota 
+>#### Nota 
 >Como se puede ver, la manera en que está estructurada la conexión aeroelástica es bastante general, y es muy flexible en cuanto a:
 >
 >- La forma de transferir la carga a la estructura
