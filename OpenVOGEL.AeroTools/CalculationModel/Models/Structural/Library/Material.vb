@@ -1,4 +1,5 @@
-﻿'Open VOGEL (openvogel.org)
+﻿'#############################################################################
+'OpenVOGEL (openvogel.org)
 'Open source software for aerodynamics
 'Copyright (C) 2021 Guillermo Hazebrouck (guillermo.hazebrouck@openvogel.org)
 
@@ -15,6 +16,13 @@
 'You should have received a copy Of the GNU General Public License
 'along with this program.  If Not, see < http:  //www.gnu.org/licenses/>.
 
+'#############################################################################
+' Unit: Material
+'
+' This unit is out of service, since the section properties already include
+' the material properies.
+' This unit might be removed in the future.
+'#############################################################################
 Namespace CalculationModel.Models.Structural.Library
 
     ''' <summary>

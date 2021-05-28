@@ -1,4 +1,5 @@
-﻿'Open VOGEL (openvogel.org)
+﻿'#############################################################################
+'OpenVOGEL (openvogel.org)
 'Open source software for aerodynamics
 'Copyright (C) 2021 Guillermo Hazebrouck (guillermo.hazebrouck@openvogel.org)
 
@@ -15,9 +16,17 @@
 'You should have received a copy Of the GNU General Public License
 'along with this program.  If Not, see < http:  //www.gnu.org/licenses/>.
 
+'' OpenVOGEL dependencies
+'-----------------------------------------------------------------------------
 Imports OpenVOGEL.AeroTools.CalculationModel.Models.Aero
 Imports OpenVOGEL.AeroTools.CalculationModel.Models.Aero.Components
 
+'#############################################################################
+' Unit: Solver_OpenCL
+'
+' This unit contains the part of the kernel that enables the excecution of 
+' calculations on the GPU.
+'#############################################################################
 Namespace CalculationModel.Solver
 
     Partial Public Class Solver

@@ -1,4 +1,5 @@
-﻿'Open VOGEL (openvogel.org)
+﻿'#############################################################################
+'OpenVOGEL (openvogel.org)
 'Open source software for aerodynamics
 'Copyright (C) 2021 Guillermo Hazebrouck (guillermo.hazebrouck@openvogel.org)
 
@@ -15,10 +16,22 @@
 'You should have received a copy Of the GNU General Public License
 'along with this program.  If Not, see < http:  //www.gnu.org/licenses/>.
 
-Imports OpenVOGEL.MathTools.Algebra.EuclideanSpace
-Imports OpenVOGEL.AeroTools.CalculationModel.Models.Aero.Components
+'' Standard .NET dependencies
+'-----------------------------------------------------------------------------
 Imports System.IO
 
+'' OpenVOGEL dependencies
+'-----------------------------------------------------------------------------
+Imports OpenVOGEL.MathTools.Algebra.EuclideanSpace
+Imports OpenVOGEL.AeroTools.CalculationModel.Models.Aero.Components
+
+'#############################################################################
+' Unit: BoundedLattice
+'
+' This unit provides a declaration of a bounded lattice.
+' Bounded lattices are lattices that represent solid boundaries and can 
+' contain edges from where wakes are shed.
+'#############################################################################
 Namespace CalculationModel.Models.Aero
 
     ''' <summary>

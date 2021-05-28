@@ -1,4 +1,5 @@
-﻿'Open VOGEL (openvogel.org)
+﻿'#############################################################################
+'OpenVOGEL (openvogel.org)
 'Open source software for aerodynamics
 'Copyright (C) 2021 Guillermo Hazebrouck (guillermo.hazebrouck@openvogel.org)
 
@@ -15,9 +16,16 @@
 'You should have received a copy Of the GNU General Public License
 'along with this program.  If Not, see < http:  //www.gnu.org/licenses/>.
 
+'' OpenVOGEL dependencies
+'-----------------------------------------------------------------------------
 Imports DotNumerics.LinearAlgebra
 Imports OpenVOGEL.MathTools.Algebra.EuclideanSpace
 
+'#############################################################################
+' Unit: VortexRing3
+'
+' This unit provides the definition of a vortex ring having 3 nodes.
+'#############################################################################
 Namespace CalculationModel.Models.Aero.Components
 
     ''' <summary>

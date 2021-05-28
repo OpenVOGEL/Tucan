@@ -1,4 +1,5 @@
-﻿'Open VOGEL (openvogel.org)
+﻿'#############################################################################
+'OpenVOGEL (openvogel.org)
 'Open source software for aerodynamics
 'Copyright (C) 2021 Guillermo Hazebrouck (guillermo.hazebrouck@openvogel.org)
 
@@ -15,10 +16,15 @@
 'You should have received a copy Of the GNU General Public License
 'along with this program.  If Not, see < http:  //www.gnu.org/licenses/>.
 
+'#############################################################################
+' Unit: Primitives
+'
+' This unit provides the definition of a sheding edge.
+'#############################################################################
 Namespace CalculationModel.Models.Aero
 
     ''' <summary>
-    ''' Represents a border from which wakes will be convected.
+    ''' Represents a border from which wakes will be convected (sheding edge).
     ''' Nodes and rings should be provided in adyacent order.
     ''' </summary>
     Public Class Primitive
@@ -27,6 +33,5 @@ Namespace CalculationModel.Models.Aero
         Public Rings As New List(Of Integer)
 
     End Class
-
 
 End Namespace

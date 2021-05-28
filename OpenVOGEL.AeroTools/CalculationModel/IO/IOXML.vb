@@ -1,4 +1,5 @@
-﻿'Open VOGEL (openvogel.org)
+﻿'#############################################################################
+'OpenVOGEL (openvogel.org)
 'Open source software for aerodynamics
 'Copyright (C) 2021 Guillermo Hazebrouck (guillermo.hazebrouck@openvogel.org)
 
@@ -15,8 +16,15 @@
 'You should have received a copy Of the GNU General Public License
 'along with this program.  If Not, see < http:  //www.gnu.org/licenses/>.
 
+'' Standard .NET dependencies
+'-----------------------------------------------------------------------------
 Imports System.Xml
 
+'#############################################################################
+' Unit: IoXML
+'
+' This units is an XML helper to expand the standard functions on System.Xml.
+'#############################################################################
 Namespace IoHelper
 
     Public Class IOXML

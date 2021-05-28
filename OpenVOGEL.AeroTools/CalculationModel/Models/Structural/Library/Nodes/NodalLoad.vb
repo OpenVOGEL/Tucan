@@ -1,4 +1,5 @@
-﻿'Open VOGEL (openvogel.org)
+﻿'#############################################################################
+'OpenVOGEL (openvogel.org)
 'Open source software for aerodynamics
 'Copyright (C) 2021 Guillermo Hazebrouck (guillermo.hazebrouck@openvogel.org)
 
@@ -15,6 +16,11 @@
 'You should have received a copy Of the GNU General Public License
 'along with this program.  If Not, see < http:  //www.gnu.org/licenses/>.
 
+'#############################################################################
+' Unit: NodalLoads
+'
+' This unit declares the components of a nodal load
+'#############################################################################
 Namespace CalculationModel.Models.Structural.Library.Nodes
 
     ''' <summary>

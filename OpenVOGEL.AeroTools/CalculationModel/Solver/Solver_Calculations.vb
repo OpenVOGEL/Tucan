@@ -1,4 +1,5 @@
-﻿'Open VOGEL (openvogel.org)
+﻿'#############################################################################
+'OpenVOGEL (openvogel.org)
 'Open source software for aerodynamics
 'Copyright (C) 2021 Guillermo Hazebrouck (guillermo.hazebrouck@openvogel.org)
 
@@ -15,22 +16,29 @@
 'You should have received a copy Of the GNU General Public License
 'along with this program.  If Not, see < http:  //www.gnu.org/licenses/>.
 
-Imports DotNumerics.LinearAlgebra
+'' Standard .NET frameworks dependencies
+'-----------------------------------------------------------------------------
 Imports System.Threading.Tasks
+
+'' OpenVOGEL dependencies
+'-----------------------------------------------------------------------------
+Imports DotNumerics.LinearAlgebra
 Imports OpenVOGEL.MathTools.Algebra.EuclideanSpace
 Imports OpenVOGEL.AeroTools.CalculationModel.Models.Aero
 Imports OpenVOGEL.AeroTools.CalculationModel.Models.Aero.Components
 
-#Const WITH_BOUNDED_VORTICES = False
-#Const WITH_PARALLEL_LOOPS = False
-
+'#############################################################################
+' Unit: Solver_Calculations
+'
+' This unit does general calculations on the kernel that are used on different
+' simulations.
+'#############################################################################
 Namespace CalculationModel.Solver
 
     ''' <summary>
-    ''' Provides methods to solve aerodynamic problems through the Unsteady Vortex Lattice Method.
-    ''' Programmed by Guillermo A. Hazebrouck
-    ''' guillermo.hazebrouck@outlook.be
-    ''' </summary> 
+    ''' This is the OpenVOGEL kernel class. This class contains the whole
+    ''' calculation model and is able of doing several simulation types.
+    ''' </summary>
     Partial Public Class Solver
 
         ' This is the main part containing the UVLM method algorithm.

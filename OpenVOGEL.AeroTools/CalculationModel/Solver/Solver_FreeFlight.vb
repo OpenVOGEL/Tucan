@@ -1,4 +1,5 @@
-﻿'Open VOGEL (openvogel.org)
+﻿'#############################################################################
+'OpenVOGEL (openvogel.org)
 'Open source software for aerodynamics
 'Copyright (C) 2021 Guillermo Hazebrouck (guillermo.hazebrouck@openvogel.org)
 
@@ -15,11 +16,18 @@
 'You should have received a copy Of the GNU General Public License
 'along with this program.  If Not, see < http:  //www.gnu.org/licenses/>.
 
+'' OpenVOGEL dependencies
+'-----------------------------------------------------------------------------
 Imports DotNumerics.LinearAlgebra
 Imports OpenVOGEL.AeroTools.CalculationModel.Settings
 Imports OpenVOGEL.MathTools.Algebra.EuclideanSpace
 Imports OpenVOGEL.MathTools.Integration
 
+'#############################################################################
+' Unit: FreeFlight
+'
+' This unit does the free flight simulation
+'#############################################################################
 Namespace CalculationModel.Solver
 
     Partial Public Class Solver

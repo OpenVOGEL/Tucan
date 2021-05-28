@@ -1,4 +1,4 @@
-﻿'Open VOGEL (openvogel.org)
+﻿'OpenVOGEL (openvogel.org)
 'Open source software for aerodynamics
 'Copyright (C) 2021 George Lazarou (george.sp.lazarou@gmail.com)
 

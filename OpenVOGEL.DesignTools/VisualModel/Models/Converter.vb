@@ -1,4 +1,5 @@
-﻿'Open VOGEL (openvogel.org)
+﻿'#############################################################################
+'OpenVOGEL (openvogel.org)
 'Open source software for aerodynamics
 'Copyright (C) 2021 Guillermo Hazebrouck (guillermo.hazebrouck@openvogel.org)
 
@@ -15,20 +16,41 @@
 'You should have received a copy Of the GNU General Public License
 'along with this program.  If Not, see < http:  //www.gnu.org/licenses/>.
 
+'' Standard .NET frameworks dependencies
+'-----------------------------------------------------------------------------
+Imports System.Runtime.CompilerServices
+
+'' OpenVOGEL dependencies
+'-----------------------------------------------------------------------------
 Imports OpenVOGEL.AeroTools.CalculationModel
 Imports OpenVOGEL.AeroTools.CalculationModel.Solver
 Imports OpenVOGEL.AeroTools.CalculationModel.Models.Aero
 Imports OpenVOGEL.AeroTools.CalculationModel.Models.Aero.Components
 Imports OpenVOGEL.AeroTools.CalculationModel.Models.Structural
-Imports OpenVOGEL.AeroTools.CalculationModel.Models.Structural.Library
 Imports OpenVOGEL.AeroTools.CalculationModel.Models.Structural.Library.Nodes
 Imports OpenVOGEL.AeroTools.CalculationModel.Models.Structural.Library.Elements
 Imports OpenVOGEL.AeroTools.CalculationModel.Settings
 Imports OpenVOGEL.MathTools.Algebra.EuclideanSpace
 Imports OpenVOGEL.DesignTools.VisualModel.Models
 Imports OpenVOGEL.DesignTools.VisualModel.Models.Components
-Imports System.Runtime.CompilerServices
 
+'#############################################################################
+' Unit: Converter
+'
+' This units does the automatic conversion from the design model into the 
+' calculation model. Each component is here translated into a bounded lattice.
+' For lifting surfaces:
+'   > the wake is loaded at the shedding edge
+'   > the chorwise strips are generated using the polars
+'   > the structural model is generated based on the nodal partition and 
+'     section properties, taking into account the symmetry of the model.
+' For fuselages:
+'   > the anchors are loaded as slender panels
+'   > the kutta condition is imposed at the sheding edge of the last anchor panel
+'     by the introduction of a single vortex
+' For engine nacelles:
+'   > the wake is loaded at the shedding edge (trailing edge)
+'#############################################################################
 Namespace VisualModel.Models
 
     ''' <summary>
@@ -378,7 +400,7 @@ Namespace VisualModel.Models
                     Dim SectionA As Section = Surface.StructuralPartition(PartitionNodeIndex - 1).LocalSection
                     Dim SectionB As Section = Surface.StructuralPartition(PartitionNodeIndex).LocalSection
                     Element.Section.Combine(SectionA, SectionB)
-                    If (Mirror) Then Element.Section.Cmy *= -1.0
+                    If (Mirror) Then Element.Section.Cmz *= -1.0
 
                     StructuralLink.StructuralCore.Elements.Add(Element)
 

@@ -1,4 +1,5 @@
-﻿'Open VOGEL (openvogel.org)
+﻿'#############################################################################
+'OpenVOGEL (openvogel.org)
 'Open source software for aerodynamics
 'Copyright (C) 2021 Guillermo Hazebrouck (guillermo.hazebrouck@openvogel.org)
 
@@ -15,41 +16,44 @@
 'You should have received a copy Of the GNU General Public License
 'along with this program.  If Not, see < http:  //www.gnu.org/licenses/>.
 
+'' OpenVOGEL dependencies
+'-----------------------------------------------------------------------------
 Imports OpenVOGEL.AeroTools.CalculationModel.Models.Structural.Library
 Imports OpenVOGEL.AeroTools.CalculationModel.Models.Structural.Library.Elements
 Imports OpenVOGEL.AeroTools.CalculationModel.Models.Structural.Library.Nodes
 Imports DotNumerics.LinearAlgebra
 
+'#############################################################################
+' Unit: StructuralCore
+'
+' This unit provides a class that models a mechanical structure using finite
+' elements.
+'#############################################################################
 Namespace CalculationModel.Models.Structural
 
     ''' <summary>
     ''' The structural model containing nodes and elements
     ''' </summary>
-    ''' <remarks></remarks>
     Public Class StructuralCore
 
         ''' <summary>
         ''' The structural nodes
         ''' </summary>
-        ''' <returns></returns>
         Public ReadOnly Property Nodes As New List(Of StructuralNode)
 
         ''' <summary>
         ''' The list of structural elements
         ''' </summary>
-        ''' <returns></returns>
         Public ReadOnly Property Elements As new List(Of BeamElement)
 
         ''' <summary>
         ''' The structural settings
         ''' </summary>
-        ''' <returns></returns>
         Public ReadOnly Property StructuralSettings As New StructuralSettings
 
         ''' <summary>
         ''' The dynamic modes of the structure
         ''' </summary>
-        ''' <remarks></remarks>
         Public ReadOnly Property Modes As New List(Of Mode)
 
         ''' <summary>
@@ -73,9 +77,10 @@ Namespace CalculationModel.Models.Structural
         Private DOF As Integer = 0
 
         ''' <summary>
-        ''' Generates the structure global stiffness and mass matrices
+        ''' Generates the structure global stiffness and mass matrices by assembling all of the element matrices together.
+        ''' The final assembly still contains degrees of freedom that should be constrained. The reduction of the system to the
+        ''' actual degrees of freedom occurs in a different procedure.
         ''' </summary>
-        ''' <remarks></remarks>
         Public Sub CreateMatrices(ByVal Path As String, Optional ByVal PrintAsTxt As Boolean = False, ByVal Optional Index As Integer = 0)
 
             '-----------------------------------------------------------------------------
@@ -180,10 +185,15 @@ Namespace CalculationModel.Models.Structural
         End Sub
 
         ''' <summary>
-        ''' Calculates structure dynamic modes using Subspace iteration and/or Jacobi.
+        ''' Calculates the structure dynamic modes using the Subspace iteration method.
+        ''' The global mass and stiffness matrices are supposed to be calculated before calling this method.
+        ''' This method will reduce the size of the system by removing the constrained degrees of freedom.
         ''' </summary>
-        ''' <remarks></remarks>
         Public Sub FindModes(ByVal LinkId As Integer)
+
+            '-----------------------------------------------------------------------------
+            ' Perform a small test to check there are no bugs.
+            '-----------------------------------------------------------------------------
 
             TestEigenValues()
 
@@ -231,7 +241,7 @@ Namespace CalculationModel.Models.Structural
             Next
 
             '-----------------------------------------------------------------------------
-            ' Find eigen values using subspace iteration
+            ' Find eigen values using the subspace iteration algorithm
             '-----------------------------------------------------------------------------
 
             Dim nModes As Integer = StructuralSettings.NumberOfModes
@@ -243,7 +253,7 @@ Namespace CalculationModel.Models.Structural
             EigenSolver.SubspaceIteration(_M_, _K_, nSubspace, nModes, D, V)
 
             '-----------------------------------------------------------------------------
-            ' Convert data to modal info
+            ' Convert resulting eigen values and vectors to modal info
             '-----------------------------------------------------------------------------
 
             Modes.Clear()
@@ -278,6 +288,7 @@ Namespace CalculationModel.Models.Structural
 
         ''' <summary>
         ''' Autotest that runs a couple of well known eigen-value examples.
+        ''' This method is used to check that the there are no critical bugs (still it does not cover everything).
         ''' </summary>
         Public Shared Sub TestEigenValues()
 
@@ -327,7 +338,7 @@ Namespace CalculationModel.Models.Structural
             Next
 
             '-----------------------------------------------------------
-            ' Try solving simple structural problem
+            ' Try solving a simple structural problem
             '-----------------------------------------------------------
 
             Dim Beam As New ConstantBeamElement(0)
@@ -388,7 +399,7 @@ Namespace CalculationModel.Models.Structural
             End If
 
             '-----------------------------------------------------------
-            ' Check 90 degrees rotated beam
+            ' Check the same case by 90 degrees rotation
             '-----------------------------------------------------------
 
             Beam.Basis.U.X = 0.0
@@ -435,7 +446,7 @@ Namespace CalculationModel.Models.Structural
         End Sub
 
         ''' <summary>
-        ''' Transfers the mode shape to the nodal displacement using the given scale factor.
+        ''' Transfers the mode shape to the nodal displacement using the given amplitude factor.
         ''' </summary>
         ''' <param name="ModeIndex">The mode shape to be transferred.</param>
         ''' <param name="Scale">The amplitude of the displacemet relative to the modal shape.</param>

@@ -1,4 +1,5 @@
-﻿'Open VOGEL (openvogel.org)
+﻿'#############################################################################
+'OpenVOGEL (openvogel.org)
 'Open source software for aerodynamics
 'Copyright (C) 2021 Guillermo Hazebrouck (guillermo.hazebrouck@openvogel.org)
 
@@ -15,11 +16,22 @@
 'You should have received a copy Of the GNU General Public License
 'along with this program.  If Not, see < http:  //www.gnu.org/licenses/>.
 
+'' Standard .NET dependencies
+'-----------------------------------------------------------------------------
 Imports System.IO
 Imports System.Threading.Tasks
+
+'' OpenVOGEL dependencies
+'-----------------------------------------------------------------------------
 Imports OpenVOGEL.AeroTools.CalculationModel.Models.Aero.Components
 Imports OpenVOGEL.MathTools.Algebra.EuclideanSpace
 
+'#############################################################################
+' Unit: Wake
+'
+' This unit provides the declaration of a generic wake.
+' The wakes are free lattices that move with the stream.
+'#############################################################################
 Namespace CalculationModel.Models.Aero
 
     ''' <summary>

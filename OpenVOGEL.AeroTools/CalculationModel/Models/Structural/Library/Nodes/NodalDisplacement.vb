@@ -1,4 +1,5 @@
-﻿'Open VOGEL (openvogel.org)
+﻿'#############################################################################
+'OpenVOGEL (openvogel.org)
 'Open source software for aerodynamics
 'Copyright (C) 2021 Guillermo Hazebrouck (guillermo.hazebrouck@openvogel.org)
 
@@ -15,6 +16,11 @@
 'You should have received a copy Of the GNU General Public License
 'along with this program.  If Not, see < http:  //www.gnu.org/licenses/>.
 
+'#############################################################################
+' Unit: NodalDisplacement
+'
+' This unit declares the coordinates of a nodal displacement
+'#############################################################################
 Namespace CalculationModel.Models.Structural.Library.Nodes
 
     ''' <summary>

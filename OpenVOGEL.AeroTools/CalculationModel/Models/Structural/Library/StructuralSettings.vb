@@ -1,4 +1,5 @@
-﻿'Open VOGEL (openvogel.org)
+﻿'#############################################################################
+'OpenVOGEL (openvogel.org)
 'Open source software for aerodynamics
 'Copyright (C) 2021 Guillermo Hazebrouck (guillermo.hazebrouck@openvogel.org)
 
@@ -15,11 +16,18 @@
 'You should have received a copy Of the GNU General Public License
 'along with this program.  If Not, see < http:  //www.gnu.org/licenses/>.
 
+'#############################################################################
+' Unit: StructuralSettings
+'
+' This unit provides the settings that are specific for the structural
+' analysis (number of modes, damping, etc).
+'#############################################################################
 Namespace CalculationModel.Models.Structural.Library
 
     Public Class StructuralSettings
 
         Private _ModalDamping As Double = 0.05
+
         ''' <summary>
         ''' Damping associated to the structural modes
         ''' </summary>
@@ -36,6 +44,7 @@ Namespace CalculationModel.Models.Structural.Library
         End Property
 
         Private _NumberOfModes As Integer = 6
+
         ''' <summary>
         ''' Specifies the number of dynamic modes to be used
         ''' </summary>
@@ -50,6 +59,7 @@ Namespace CalculationModel.Models.Structural.Library
         End Property
 
         Private _StructuralLinkingStep As Integer = 20
+
         ''' <summary>
         ''' Specifies when at which instant the structure is coupled to the model.
         ''' (use it when a steady state is required as start condition).
@@ -72,11 +82,11 @@ Namespace CalculationModel.Models.Structural.Library
         ''' <remarks></remarks>
         Public Property SubSteps As Integer = 1
 
-        Public Sub Assign(ByVal ss As StructuralSettings)
-            ModalDamping = ss.ModalDamping
-            SubSteps = ss.SubSteps
-            _NumberOfModes = ss._NumberOfModes
-            _StructuralLinkingStep = ss._StructuralLinkingStep
+        Public Sub Assign(ByVal Other As StructuralSettings)
+            ModalDamping = Other.ModalDamping
+            SubSteps = Other.SubSteps
+            _NumberOfModes = Other._NumberOfModes
+            _StructuralLinkingStep = Other._StructuralLinkingStep
         End Sub
 
     End Class

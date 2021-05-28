@@ -1,4 +1,5 @@
-﻿'Open VOGEL (openvogel.org)
+﻿'#############################################################################
+'OpenVOGEL (openvogel.org)
 'Open source software for aerodynamics
 'Copyright (C) 2021 Guillermo Hazebrouck (guillermo.hazebrouck@openvogel.org)
 
@@ -15,9 +16,21 @@
 'You should have received a copy Of the GNU General Public License
 'along with this program.  If Not, see < http:  //www.gnu.org/licenses/>.
 
+'' Standard .NET dependencies
+'-----------------------------------------------------------------------------
 Imports System.IO
+
+'' OpenVOGEL dependencies
+'-----------------------------------------------------------------------------
 Imports OpenVOGEL.MathTools.Algebra.EuclideanSpace
 
+'#############################################################################
+' Unit: ChordWiseStripe
+'
+' This unit provides a class that represents a collection of chordwise panels
+' in a slender surface. Each stripe contains a polar curve that is used to
+' predict the local skin drag based on the local lift.
+'#############################################################################
 Namespace CalculationModel.Models.Aero.Components
 
     ''' <summary>

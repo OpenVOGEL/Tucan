@@ -1,4 +1,5 @@
-﻿'Open VOGEL (openvogel.org)
+﻿'#############################################################################
+'OpenVOGEL (openvogel.org)
 'Open source software for aerodynamics
 'Copyright (C) 2021 Guillermo Hazebrouck (guillermo.hazebrouck@openvogel.org)
 
@@ -15,8 +16,15 @@
 'You should have received a copy Of the GNU General Public License
 'along with this program.  If Not, see < http:  //www.gnu.org/licenses/>.
 
+'' OpenVOGEL dependencies
+'-----------------------------------------------------------------------------
 Imports OpenVOGEL.MathTools.Algebra.EuclideanSpace
 
+'#############################################################################
+' Unit: StructualNode
+'
+' This unit declares a 6-DOF nodal point in the structual model.
+'#############################################################################
 Namespace CalculationModel.Models.Structural.Library.Nodes
 
     ''' <summary>
@@ -25,17 +33,35 @@ Namespace CalculationModel.Models.Structural.Library.Nodes
     ''' <remarks></remarks>
     Public Class StructuralNode
 
+        ''' <summary>
+        ''' The position of the node.
+        ''' </summary>
         Public Position As Vector3
 
+        ''' <summary>
+        ''' The contrains (or stiffness)
+        ''' </summary>
         Public Contrains As Constrains
+
+        ''' <summary>
+        ''' The point load.
+        ''' </summary>
         Public Load As NodalLoad
+
+        ''' <summary>
+        ''' The displacement relative to the original position.
+        ''' </summary>
         Public Displacement As NodalDisplacement
+
+        ''' <summary>
+        ''' The velocity of the node.
+        ''' </summary>
         Public Velocity As NodalDisplacement
 
         Private _Index As Integer
 
         ''' <summary>
-        ''' Node global index
+        ''' Node global index (used to build the finite element matrices).
         ''' </summary>
         ''' <value></value>
         ''' <returns></returns>

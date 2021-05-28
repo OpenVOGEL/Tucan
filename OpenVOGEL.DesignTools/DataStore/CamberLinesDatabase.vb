@@ -1,5 +1,5 @@
 ﻿'#############################################################################
-'Open VOGEL (openvogel.org)
+'OpenVOGEL (openvogel.org)
 'Open source software for aerodynamics
 'Copyright (C) 2021 Guillermo Hazebrouck (guillermo.hazebrouck@openvogel.org)
 
@@ -27,7 +27,7 @@ Imports OpenVOGEL.DesignTools.VisualModel.Models.Components.Basics
 '#############################################################################
 ' Unit: CamberLineDatabase
 '
-' This unit provides a central storage of camber lines to be used throughout  
+' This unit provides a central storage for camber lines to be used throughout  
 ' the design process.
 '#############################################################################
 Namespace DataStore
@@ -103,16 +103,16 @@ Namespace DataStore
         End Sub
 
         ''' <summary>
-        ''' 
+        ''' Writes the database in an XML file
         ''' </summary>
         ''' <param name="writer"></param>
         Public Sub WriteToXML(writer As XmlWriter)
 
-            For Each line In CamberLines
+            For Each Line In CamberLines
 
                 writer.WriteStartElement("CamberLine")
 
-                line.WriteToXML(writer)
+                Line.WriteToXML(writer)
 
                 writer.WriteEndElement()
 
@@ -120,6 +120,10 @@ Namespace DataStore
 
         End Sub
 
+        ''' <summary>
+        ''' Writes the database in an XML file
+        ''' </summary>
+        ''' <param name="reader"></param>
         Public Sub ReadFromXML(reader As XmlReader)
 
             CamberLines.Clear()
@@ -132,11 +136,11 @@ Namespace DataStore
 
                     Case "CamberLine"
 
-                        Dim line As New CamberLine()
+                        Dim Line As New CamberLine()
 
-                        line.ReadFromXML(reader.ReadSubtree())
+                        Line.ReadFromXML(reader.ReadSubtree())
 
-                        CamberLines.Add(line)
+                        CamberLines.Add(Line)
 
                 End Select
 

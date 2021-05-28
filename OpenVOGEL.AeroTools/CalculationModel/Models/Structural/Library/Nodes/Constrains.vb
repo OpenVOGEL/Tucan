@@ -1,4 +1,5 @@
-﻿'Open VOGEL (openvogel.org)
+﻿'#############################################################################
+'OpenVOGEL (openvogel.org)
 'Open source software for aerodynamics
 'Copyright (C) 2021 Guillermo Hazebrouck (guillermo.hazebrouck@openvogel.org)
 
@@ -15,6 +16,11 @@
 'You should have received a copy Of the GNU General Public License
 'along with this program.  If Not, see < http:  //www.gnu.org/licenses/>.
 
+'#############################################################################
+' Unit: Constraints
+'
+' This unit declares the contrains that can be imposed on a structural node
+'#############################################################################
 Namespace CalculationModel.Models.Structural.Library.Nodes
 
     ''' <summary>
@@ -23,9 +29,20 @@ Namespace CalculationModel.Models.Structural.Library.Nodes
     ''' <remarks></remarks>
     Public Class Constrains
 
+        ''' <summary>
+        ''' Indicates which degrees of freedom in the node are fixed to the inertial reference frame.
+        ''' </summary>
         Public Fixed(5) As Boolean
+
+        ''' <summary>
+        ''' Indicates which degrees of freedom in the node are attached to a spring
+        ''' on the inertial reference frame.
+        ''' </summary>
         Public K(5) As Double
 
+        ''' <summary>
+        ''' Indicates if the displacement in the X direction is restrained.
+        ''' </summary>
         Public Property FixedDx As Boolean
             Set(ByVal value As Boolean)
                 Fixed(0) = value
@@ -35,6 +52,9 @@ Namespace CalculationModel.Models.Structural.Library.Nodes
             End Get
         End Property
 
+        ''' <summary>
+        ''' Indicates if the displacement in the Y direction is restrained.
+        ''' </summary>
         Public Property FixedDy As Boolean
             Set(ByVal value As Boolean)
                 Fixed(1) = value
@@ -44,6 +64,9 @@ Namespace CalculationModel.Models.Structural.Library.Nodes
             End Get
         End Property
 
+        ''' <summary>
+        ''' Indicates if the displacement in the Z direction is restrained.
+        ''' </summary>
         Public Property FixedDz As Boolean
             Set(ByVal value As Boolean)
                 Fixed(2) = value
@@ -53,6 +76,9 @@ Namespace CalculationModel.Models.Structural.Library.Nodes
             End Get
         End Property
 
+        ''' <summary>
+        ''' Indicates if the rotation about the X axis is restrained.
+        ''' </summary>
         Public Property FixedRx As Boolean
             Set(ByVal value As Boolean)
                 Fixed(3) = value
@@ -62,6 +88,9 @@ Namespace CalculationModel.Models.Structural.Library.Nodes
             End Get
         End Property
 
+        ''' <summary>
+        ''' Indicates if the rotation about the Y axis is restrained.
+        ''' </summary>
         Public Property FixedRy As Boolean
             Set(ByVal value As Boolean)
                 Fixed(4) = value
@@ -71,6 +100,9 @@ Namespace CalculationModel.Models.Structural.Library.Nodes
             End Get
         End Property
 
+        ''' <summary>
+        ''' Indicates if the rotation about the Z axis is restrained.
+        ''' </summary>
         Public Property FixedRz As Boolean
             Set(ByVal value As Boolean)
                 Fixed(5) = value

@@ -1,4 +1,5 @@
-﻿'Open VOGEL (openvogel.org)
+﻿'#############################################################################
+'OpenVOGEL (openvogel.org)
 'Open source software for aerodynamics
 'Copyright (C) 2021 Guillermo Hazebrouck (guillermo.hazebrouck@openvogel.org)
 
@@ -15,8 +16,13 @@
 'You should have received a copy Of the GNU General Public License
 'along with this program.  If Not, see < http:  //www.gnu.org/licenses/>.
 
+'' Standard .NET dependencies
+'-----------------------------------------------------------------------------
 Imports System.IO
 Imports System.Xml
+
+'' OpenVOGEL dependencies
+'-----------------------------------------------------------------------------
 Imports OpenVOGEL.AeroTools.CalculationModel.Models.Aero
 Imports OpenVOGEL.AeroTools.CalculationModel.Models.Aero.Components
 Imports OpenVOGEL.AeroTools.CalculationModel.Models.Structural
@@ -24,14 +30,22 @@ Imports OpenVOGEL.AeroTools.IoHelper
 Imports OpenVOGEL.MathTools.Integration
 Imports OpenVOGEL.AeroTools.CalculationModel.Settings
 
+'#############################################################################
+' Unit: Solver_IO
+'
+' This units provides methods to read and write the model in binary and XML
+' formats.
+''#############################################################################
 Namespace CalculationModel.Solver
 
     Partial Public Class Solver
 
         ''' <summary>
-        ''' The version of the solver
+        ''' The version of the solver.
+        ''' The first number is increased when functionality changes are introduced.
+        ''' The second number is increased when there are fixes without touching the basic features.
         ''' </summary>
-        Public Shared ReadOnly Property Version As String = "4.2-2021.03"
+        Public Shared ReadOnly Property Version As String = "4.3-2021.05"
 
         ''' <summary>
         ''' Read a written snapshot
@@ -374,7 +388,6 @@ Namespace CalculationModel.Solver
         ''' <summary>
         ''' The working directory
         ''' </summary>
-        ''' <returns></returns>
         Public Property BaseDirectoryPath As String
 
         ''' <summary>
@@ -418,7 +431,6 @@ Namespace CalculationModel.Solver
         ''' <summary>
         ''' Removes all calculation files from the selected path
         ''' </summary>
-        ''' <remarks></remarks>
         Private Sub CleanDirectory()
 
             Try
@@ -440,6 +452,10 @@ Namespace CalculationModel.Solver
 
 #End Region
 
+        ''' <summary>
+        ''' Generates an standard output providing data on the current solver state.
+        ''' To get the data connect a handler to the "PushResultLine" event.
+        ''' </summary>
         Public Sub ReportResults()
 
             RaiseEvent PushResultLine("RESULS OF THE AERODYNAMIC ANALYSIS")

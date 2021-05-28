@@ -1,4 +1,5 @@
-﻿'Open VOGEL (openvogel.org)
+﻿'#############################################################################
+'OpenVOGEL (openvogel.org)
 'Open source software for aerodynamics
 'Copyright (C) 2021 Guillermo Hazebrouck (guillermo.hazebrouck@openvogel.org)
 
@@ -15,12 +16,26 @@
 'You should have received a copy Of the GNU General Public License
 'along with this program.  If Not, see < http:  //www.gnu.org/licenses/>.
 
-Imports OpenVOGEL.MathTools.Algebra.EuclideanSpace
-Imports OpenVOGEL.AeroTools.IoHelper
+'' Standard .NET dependencies
+'-----------------------------------------------------------------------------
 Imports System.Xml
 
+'' OpenVOGEL dependencies
+'-----------------------------------------------------------------------------
+Imports OpenVOGEL.MathTools.Algebra.EuclideanSpace
+Imports OpenVOGEL.AeroTools.IoHelper
+
+'#############################################################################
+' Unit: UsteadyPerturbation
+'
+' This unit is temporarily out of service.
+' It provides the definition of an unsteady stream perturbation (gust).
+'#############################################################################
 Namespace CalculationModel.Settings
 
+    ''' <summary>
+    ''' Represents a stream gust
+    ''' </summary>
     Public Class UnsteadyPerturbation
 
         Private _Start As Integer

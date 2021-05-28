@@ -1,4 +1,5 @@
-﻿'Open VOGEL (openvogel.org)
+﻿'#############################################################################
+'OpenVOGEL (openvogel.org)
 'Open source software for aerodynamics
 'Copyright (C) 2021 Guillermo Hazebrouck (guillermo.hazebrouck@openvogel.org)
 
@@ -15,11 +16,18 @@
 'You should have received a copy Of the GNU General Public License
 'along with this program.  If Not, see < http:  //www.gnu.org/licenses/>.
 
+'' OpenVOGEL dependencies
+'-----------------------------------------------------------------------------
 Imports DotNumerics.LinearAlgebra
 Imports OpenVOGEL.AeroTools.CalculationModel.Models.Structural
 Imports OpenVOGEL.AeroTools.CalculationModel.Models.Structural.Library
 Imports OpenVOGEL.AeroTools.CalculationModel.Settings
 
+'#############################################################################
+' Unit: Solver_Aeroelastic
+'
+' This unit is the part of the kernel that does the aeroelastic simulation.
+'#############################################################################
 Namespace CalculationModel.Solver
 
     Partial Public Class Solver

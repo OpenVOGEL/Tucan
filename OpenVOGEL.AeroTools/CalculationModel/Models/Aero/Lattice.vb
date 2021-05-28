@@ -1,4 +1,5 @@
-﻿'Open VOGEL (openvogel.org)
+﻿'#############################################################################
+'OpenVOGEL (openvogel.org)
 'Open source software for aerodynamics
 'Copyright (C) 2021 Guillermo Hazebrouck (guillermo.hazebrouck@openvogel.org)
 
@@ -15,10 +16,22 @@
 'You should have received a copy Of the GNU General Public License
 'along with this program.  If Not, see < http:  //www.gnu.org/licenses/>.
 
+'' Standard .NET dependencies
+'-----------------------------------------------------------------------------
 Imports System.IO
+
+'' OpenVOGEL dependencies
+'-----------------------------------------------------------------------------
 Imports OpenVOGEL.MathTools.Algebra.EuclideanSpace
 Imports OpenVOGEL.AeroTools.CalculationModel.Models.Aero.Components
 
+'#############################################################################
+' Unit: Lattice
+'
+' This unit provides the declaration of a generic lattice.
+' Lattices are an interconnected network of vortex rings and serve as
+' solid surface or wake.
+'#############################################################################
 Namespace CalculationModel.Models.Aero
 
     ''' <summary>

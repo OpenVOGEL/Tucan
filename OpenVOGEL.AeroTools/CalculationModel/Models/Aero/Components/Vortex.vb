@@ -1,4 +1,5 @@
-﻿'Open VOGEL (openvogel.org)
+﻿'#############################################################################
+'OpenVOGEL (openvogel.org)
 'Open source software for aerodynamics
 'Copyright (C) 2021 Guillermo Hazebrouck (guillermo.hazebrouck@openvogel.org)
 
@@ -15,8 +16,20 @@
 'You should have received a copy Of the GNU General Public License
 'along with this program.  If Not, see < http:  //www.gnu.org/licenses/>.
 
+'' OpenVOGEL dependencies
+'-----------------------------------------------------------------------------
 Imports OpenVOGEL.MathTools.Algebra.EuclideanSpace
 
+'#############################################################################
+' Unit: Vortex
+'
+' This unit provides the definition of a vortex.
+' Vortices are used as alternative to vortex rings to reduce the calculation
+' effort (in a lattice, the number of vortices is larger than the number of
+' rings, but all rings together require 2 or 3 times more computations for the
+' influence functions).
+' Vortices are also used to simulate the kutta condition.
+'#############################################################################
 Namespace CalculationModel.Models.Aero.Components
 
     ''' <summary>

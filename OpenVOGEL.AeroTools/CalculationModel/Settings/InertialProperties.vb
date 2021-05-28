@@ -1,4 +1,5 @@
-﻿'Open VOGEL (openvogel.org)
+﻿'#############################################################################
+'OpenVOGEL (openvogel.org)
 'Open source software for aerodynamics
 'Copyright (C) 2021 Guillermo Hazebrouck (guillermo.hazebrouck@openvogel.org)
 
@@ -15,9 +16,20 @@
 'You should have received a copy Of the GNU General Public License
 'along with this program.  If Not, see < http:  //www.gnu.org/licenses/>.
 
+'' OpenVOGEL dependencies
+'-----------------------------------------------------------------------------
 Imports OpenVOGEL.MathTools.Algebra.EuclideanSpace
 Imports DotNumerics.LinearAlgebra
 
+'#############################################################################
+' Unit: InertialProperties
+'
+' This unit provides a definition of inertial properties, mainly used for the
+' rigid body simulations.
+' Operators are provided to easly sum the inertial properties of the model
+' components.
+' Main axes of inertia are calculated through an eigen values problem.
+'#############################################################################
 Namespace CalculationModel.Settings
 
     ''' <summary>

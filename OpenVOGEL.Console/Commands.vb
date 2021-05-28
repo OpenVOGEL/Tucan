@@ -1,4 +1,5 @@
-﻿'Open VOGEL (openvogel.org)
+﻿'#############################################################################
+'OpenVOGEL (openvogel.org)
 'Open source software for aerodynamics
 'Copyright (C) 2021 Guillermo Hazebrouck (guillermo.hazebrouck@openvogel.org)
 
@@ -15,18 +16,28 @@
 'You should have received a copy Of the GNU General Public License
 'along with this program.  If Not, see < http:  //www.gnu.org/licenses/>.
 
+'' Standard .NET dependencies
+'-----------------------------------------------------------------------------
 Imports System.IO
+
+'' OpenVOGEL dependencies
+'-----------------------------------------------------------------------------
 Imports OpenVOGEL.AeroTools.CalculationModel
 Imports OpenVOGEL.DesignTools
 Imports OpenVOGEL.DesignTools.VisualModel.Models.Components
 Imports OpenVOGEL.DesignTools.VisualModel.Models.Components.Basics
 
+'#############################################################################
+' Unit: Commands
+'
+' This unit provides all of the Console commands.
+'#############################################################################
 Module Commands
 
     Sub Main(Arguments As String())
 
         System.Console.WriteLine("** OpenVOGEL **")
-        System.Console.WriteLine("Console version: 3.1")
+        System.Console.WriteLine("Console version: 3.3")
         System.Console.WriteLine("Solver  version: " & AeroTools.CalculationModel.Solver.Solver.Version)
 
         MklSetup.Initialize()

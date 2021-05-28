@@ -1,4 +1,5 @@
-﻿'Open VOGEL (openvogel.org)
+﻿'#############################################################################
+'OpenVOGEL (openvogel.org)
 'Open source software for aerodynamics
 'Copyright (C) 2021 Guillermo Hazebrouck (guillermo.hazebrouck@openvogel.org)
 
@@ -15,10 +16,21 @@
 'You should have received a copy Of the GNU General Public License
 'along with this program.  If Not, see < http:  //www.gnu.org/licenses/>.
 
-Imports OpenVOGEL.MathTools.Algebra.EuclideanSpace
-Imports OpenVOGEL.AeroTools.IoHelper
+'' Standard .NET dependencies
+'-----------------------------------------------------------------------------
 Imports System.Xml
 
+'' OpenVOGEL dependencies
+'-----------------------------------------------------------------------------
+Imports OpenVOGEL.MathTools.Algebra.EuclideanSpace
+Imports OpenVOGEL.AeroTools.IoHelper
+
+'#############################################################################
+' Unit: SimulationSettings
+'
+' This unit provides the class that gathers all simulation settings necessary
+' for the calculations.
+'#############################################################################
 Namespace CalculationModel.Settings
 
     ''' <summary>
@@ -112,7 +124,7 @@ Namespace CalculationModel.Settings
         Public Property Mass As Double = 0.0#
 
         ''' <summary>
-        ''' The model center of grvity
+        ''' The model center of gravity
         ''' </summary>
         ''' <returns></returns>
         Public Property CenterOfGravity As New Vector3

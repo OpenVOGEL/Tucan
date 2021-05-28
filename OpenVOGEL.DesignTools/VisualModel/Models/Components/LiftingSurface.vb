@@ -1,5 +1,5 @@
 ﻿'#############################################################################
-'Open VOGEL (openvogel.org)
+'OpenVOGEL (openvogel.org)
 'Open source software for aerodynamics
 'Copyright (C) 2021 Guillermo Hazebrouck (guillermo.hazebrouck@openvogel.org)
 
@@ -16,11 +16,11 @@
 'You should have received a copy Of the GNU General Public License
 'along with this program.  If Not, see < http:  //www.gnu.org/licenses/>.
 
-'' Standard .NET frameworks
+'' Standard .NET frameworks dependencies
 '-----------------------------------------------------------------------------
 Imports System.Xml
 
-'' OpenVOGEL
+'' OpenVOGEL dependencies
 '-----------------------------------------------------------------------------
 Imports OpenVOGEL.DesignTools.VisualModel.Interface
 Imports OpenVOGEL.AeroTools.CalculationModel.Models.Aero.Components

@@ -1,4 +1,5 @@
-﻿'Open VOGEL (openvogel.org)
+﻿'#############################################################################
+'OpenVOGEL (openvogel.org)
 'Open source software for aerodynamics
 'Copyright (C) 2021 Guillermo Hazebrouck (guillermo.hazebrouck@openvogel.org)
 
@@ -15,34 +16,61 @@
 'You should have received a copy Of the GNU General Public License
 'along with this program.  If Not, see < http:  //www.gnu.org/licenses/>.
 
+'' OpenVOGEL dependencies
+'-----------------------------------------------------------------------------
 Imports OpenVOGEL.AeroTools.CalculationModel.Models.Structural.Library.Nodes
 
+'#############################################################################
+' Unit: Modal
+'
+' This unit provides a representation of modal shapes.
+'#############################################################################
 Namespace CalculationModel.Models.Structural.Library
 
+    ''' <summary>
+    ''' Represents a modal shape.
+    ''' </summary>
     Public Class Mode
 
+        ''' <summary>
+        ''' The displacements of the shape at each node.
+        ''' </summary>
         Public Shape As List(Of NodalDisplacement)
 
+        ''' <summary>
+        ''' The angular frequency
+        ''' </summary>
         Public W As Double
-        Public K As Double
-        Public M As Double
-        Public C As Double
-        Public Cc As Double
-
-        Private _Index As Integer = 0
 
         ''' <summary>
-        ''' Mode index
+        ''' The modal stiffness.
         ''' </summary>
-        ''' <value></value>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
-        Public ReadOnly Property Index As Integer
-            Get
-                Return _Index
-            End Get
-        End Property
+        Public K As Double
 
+        ''' <summary>
+        ''' The modal mass.
+        ''' </summary>
+        Public M As Double
+
+        ''' <summary>
+        ''' The modal damping (absolute)
+        ''' </summary>
+        Public C As Double
+
+        ''' <summary>
+        ''' The critical modal damping
+        ''' </summary>
+        Public Cc As Double
+
+        ''' <summary>
+        ''' The mode index
+        ''' </summary>
+        Public ReadOnly Property Index As Integer
+
+        ''' <summary>
+        ''' Generates a new mode with the given index.
+        ''' </summary>
+        ''' <param name="Index">Index of the mode in the external stack.</param>
         Public Sub New(ByVal Index As Integer)
             Shape = New List(Of NodalDisplacement)
             _Index = Index
@@ -50,6 +78,9 @@ Namespace CalculationModel.Models.Structural.Library
 
     End Class
 
+    ''' <summary>
+    ''' Represents an instantaneous state of the modal shape.
+    ''' </summary>
     Public Class ModalCoordinate
 
         ''' <summary>
@@ -78,37 +109,44 @@ Namespace CalculationModel.Models.Structural.Library
 
     End Class
 
+    ''' <summary>
+    ''' Represents a set of modal coordinates (one for each mode at a given time step).
+    ''' </summary>
     Public Class ModalCoordinates
 
         Private _ModalCoordinates As List(Of ModalCoordinate)
 
         ''' <summary>
-        ''' Modal coordinates for mode a given mode
+        ''' Modal coordinates for mode a given mode.
         ''' </summary>
-        ''' <param name="mode"></param>
-        ''' <value></value>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
-        Default Public Property Item(ByVal mode As Integer) As ModalCoordinate
+        ''' <param name="Size">The number of modes</param>
+        Default Public Property Item(ByVal Size As Integer) As ModalCoordinate
             Get
-                Return _ModalCoordinates(mode)
+                Return _ModalCoordinates(Size)
             End Get
             Set(ByVal value As ModalCoordinate)
-                _ModalCoordinates(mode) = value
+                _ModalCoordinates(Size) = value
             End Set
         End Property
 
+        ''' <summary>
+        ''' Returns the size of the stack (the number of tracked modes).
+        ''' </summary>
         Public ReadOnly Property Count As Integer
             Get
                 Return _ModalCoordinates.Count
             End Get
         End Property
 
-        Public Sub New(ByVal modes As Integer)
+        ''' <summary>
+        ''' Generates a stack of modal coordinates (one for each mode)
+        ''' </summary>
+        ''' <param name="Size">The number of modes</param>
+        Public Sub New(ByVal Size As Integer)
 
-            _ModalCoordinates = New List(Of ModalCoordinate)(modes)
+            _ModalCoordinates = New List(Of ModalCoordinate)(Size)
 
-            For i = 1 To modes
+            For I = 1 To Size
                 _ModalCoordinates.Add(New ModalCoordinate)
             Next
 

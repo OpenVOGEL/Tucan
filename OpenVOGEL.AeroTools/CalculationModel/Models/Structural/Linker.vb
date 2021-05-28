@@ -1,4 +1,5 @@
-﻿'Open VOGEL (openvogel.org)
+﻿'#############################################################################
+'OpenVOGEL (openvogel.org)
 'Open source software for aerodynamics
 'Copyright (C) 2021 Guillermo Hazebrouck (guillermo.hazebrouck@openvogel.org)
 
@@ -15,7 +16,12 @@
 'You should have received a copy Of the GNU General Public License
 'along with this program.  If Not, see < http:  //www.gnu.org/licenses/>.
 
+'' Standard .NET dependencies
+'-----------------------------------------------------------------------------
 Imports System.IO
+
+'' OpenVOGEL dependencies
+'-----------------------------------------------------------------------------
 Imports OpenVOGEL.MathTools.Algebra.EuclideanSpace
 Imports OpenVOGEL.AeroTools.CalculationModel.Models.Structural.Library
 Imports OpenVOGEL.AeroTools.CalculationModel.Models.Aero.Components
@@ -23,6 +29,12 @@ Imports OpenVOGEL.MathTools.Integration
 Imports OpenVOGEL.AeroTools.CalculationModel.Models.Structural.Library.Nodes
 Imports OpenVOGEL.AeroTools.CalculationModel.Models.Structural.Library.Elements
 
+'#############################################################################
+' Unit: Linker
+'
+' This unit is where the structural model is linked to the aerodynamic model.
+' This is done by the introduction of kinematic and mechanic links.
+'#############################################################################
 Namespace CalculationModel.Models.Structural
 
     ''' <summary>

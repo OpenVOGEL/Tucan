@@ -1,4 +1,5 @@
-﻿'Open VOGEL (openvogel.org)
+﻿'#############################################################################
+'OpenVOGEL (openvogel.org)
 'Open source software for aerodynamics
 'Copyright (C) 2021 Guillermo Hazebrouck (guillermo.hazebrouck@openvogel.org)
 
@@ -15,12 +16,24 @@
 'You should have received a copy Of the GNU General Public License
 'along with this program.  If Not, see < http:  //www.gnu.org/licenses/>.
 
+'' OpenVOGEL dependencies
+'-----------------------------------------------------------------------------
 Imports OpenVOGEL.MathTools.Algebra.EuclideanSpace
 Imports OpenVOGEL.AeroTools.IoHelper
 Imports System.Xml
 
+'#############################################################################
+' Unit: AeroelasticHistogram
+'
+' This unit contains the definition of an histogram to be used on aeroelastic
+' simulations. It gives the stream velocity and modal damping as a function
+' of time.
+'#############################################################################
 Namespace CalculationModel.Settings
 
+    ''' <summary>
+    ''' The data on a particular time step
+    ''' </summary>
     Public Class StepData
 
         Public Property Time As Double
@@ -29,10 +42,20 @@ Namespace CalculationModel.Settings
 
     End Class
 
+    ''' <summary>
+    ''' Contains the velocity and damping functions in the time domain.
+    ''' The aeroelastic histogram is used to simulate a stream perturbation (gust)
+    ''' starting from a steady state condition.
+    ''' </summary>
     Public Class AeroelasticHistogram
 
         Private _HyperDamping As Double
 
+        ''' <summary>
+        ''' The hyper damping is the value of damping that will be imposed at the
+        ''' beginning of the simulation so that convergence is reached before the
+        ''' gust is applied.
+        ''' </summary>
         Public Property HyperDamping As Double
             Set(value As Double)
                 _HyperDamping = value
@@ -45,6 +68,9 @@ Namespace CalculationModel.Settings
 
         Private _HyperDampingSpan As Double
 
+        ''' <summary>
+        ''' The duration of the hyper damping, from the beginning of the simulation.
+        ''' </summary>
         Public Property HyperDampingSpan As Double
             Set(value As Double)
                 _HyperDampingSpan = value
@@ -57,6 +83,9 @@ Namespace CalculationModel.Settings
 
         Private _NormalDamping As Double
 
+        ''' <summary>
+        ''' The damping that will be applied after the hyper damping and before the gust.
+        ''' </summary>
         Public Property NormalDamping As Double
             Set(value As Double)
                 _NormalDamping = value
@@ -69,6 +98,9 @@ Namespace CalculationModel.Settings
 
         Private _GustX As Double
 
+        ''' <summary>
+        ''' The intensity of the stream perturbation in the X direction
+        ''' </summary>
         Public Property GustX As Double
             Set(value As Double)
                 _GustX = value
@@ -81,6 +113,9 @@ Namespace CalculationModel.Settings
 
         Private _GustY As Double
 
+        ''' <summary>
+        ''' The intensity of the stream perturbation in the Y direction
+        ''' </summary>
         Public Property GustY As Double
             Set(value As Double)
                 _GustY = value
@@ -93,6 +128,9 @@ Namespace CalculationModel.Settings
 
         Private _GustZ As Double
 
+        ''' <summary>
+        ''' The intensity of the stream perturbation in the Z direction
+        ''' </summary>
         Public Property GustZ As Double
             Set(value As Double)
                 _GustZ = value
@@ -105,6 +143,10 @@ Namespace CalculationModel.Settings
 
         Private _GustSpan As Double
 
+        ''' <summary>
+        ''' The duration of the gust (after the hyper damping period).
+        ''' </summary>
+        ''' <returns></returns>
         Public Property GustSpan As Double
             Set(value As Double)
                 _GustSpan = value
@@ -117,14 +159,29 @@ Namespace CalculationModel.Settings
 
         Private _Steps As New List(Of StepData)
 
+        ''' <summary>
+        '''Event triggerd when a value changes. This can be used in a graphical interface.
+        ''' </summary>
         Public Event ValueChanged()
 
+        ''' <summary>
+        ''' Returns the gust and damping at the given time step.
+        ''' </summary>
+        ''' <param name="TimeStep"></param>
+        ''' <returns></returns>
         Public ReadOnly Property State(TimeStep As Integer) As StepData
             Get
                 Return _Steps(TimeStep)
             End Get
         End Property
 
+        ''' <summary>
+        ''' Generates the gust and daming functions for the given number of steps and
+        ''' interval between steps.
+        ''' </summary>
+        ''' <param name="Velocity">The reference stream velocity</param>
+        ''' <param name="TimeStep">The interval between two steps (must be constant on the simulation)</param>
+        ''' <param name="Steps">The total number of time steps</param>
         Public Sub Generate(Velocity As Vector3, TimeStep As Double, Steps As Integer)
 
             _Steps.Clear()
@@ -189,6 +246,9 @@ Namespace CalculationModel.Settings
 
         End Sub
 
+        ''' <summary>
+        ''' Deep copy of the object
+        ''' </summary>
         Public Function Clone()
 
             Dim ClonedHistogram As AeroelasticHistogram = New AeroelasticHistogram
@@ -216,6 +276,9 @@ Namespace CalculationModel.Settings
 
         End Sub
 
+        ''' <summary>
+        ''' Writes the histogram parameters in an XML node
+        ''' </summary>
         Sub SaveToXML(ByRef writer As XmlWriter)
 
             writer.WriteStartElement("FlutterTestHistogram")
@@ -230,6 +293,9 @@ Namespace CalculationModel.Settings
 
         End Sub
 
+        ''' <summary>
+        ''' Reads the histogram parameters from an XML node
+        ''' </summary>
         Public Sub ReadFromXML(ByRef reader As XmlReader)
 
             While reader.Read

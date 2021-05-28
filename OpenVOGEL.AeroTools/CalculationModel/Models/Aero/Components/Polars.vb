@@ -1,4 +1,5 @@
-﻿'Open VOGEL (openvogel.org)
+﻿'#############################################################################
+'OpenVOGEL (openvogel.org)
 'Open source software for aerodynamics
 'Copyright (C) 2021 Guillermo Hazebrouck (guillermo.hazebrouck@openvogel.org)
 
@@ -15,13 +16,32 @@
 'You should have received a copy Of the GNU General Public License
 'along with this program.  If Not, see < http:  //www.gnu.org/licenses/>.
 
-Imports OpenVOGEL.MathTools.Algebra.EuclideanSpace
+'' Standard .NET dependencies
+'-----------------------------------------------------------------------------
 Imports System.IO
 Imports System.Xml
+
+'' OpenVOGEL dependencies
+'-----------------------------------------------------------------------------
+Imports OpenVOGEL.MathTools.Algebra.EuclideanSpace
 Imports OpenVOGEL.AeroTools.IoHelper
 
+'#############################################################################
+' Unit: Polars
+'
+' This unit provides the difinition of a polar curve, a polar family and a
+' polar database.
+' Each polar curve lives in a family of curves. Within a family, the curves
+' represet different Reynods number for a same airfoil.
+' Polar curves can be simply quadratic (basic model) or generic.
+' Generic polars use linear interpolation between the provided nodes to
+' get intermediate friction drag values.
+'#############################################################################
 Namespace CalculationModel.Models.Aero.Components
 
+    ''' <summary>
+    ''' A generic polar curve.
+    ''' </summary>
     Public Interface IPolarCurve
 
         Function SkinDrag(ByRef Cl) As Double
