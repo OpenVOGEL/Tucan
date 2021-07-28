@@ -292,8 +292,8 @@ Public Class AirloadsPanel
 
             rbVelocity.Value = Frame.StreamVelocity.EuclideanNorm
             rbDensity.Value = ProjectRoot.Results.Settings.Density
-            rbAlpha.Value = Frame.TotalAirLoads.Alfa * 180 / Math.PI
-            rbBeta.Value = Frame.TotalAirLoads.Beta * 180 / Math.PI
+            rbAlpha.Value = Frame.TotalAirLoads.Alfa
+            rbBeta.Value = Frame.TotalAirLoads.Beta
             cbLattices.Items.Clear()
 
             If Frame.PartialAirLoads.Count > 0 Then

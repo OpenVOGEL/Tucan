@@ -685,9 +685,9 @@ Namespace VisualModel.Models
                     '-----------------------------------
                     If Stripe.SkinDrag.EuclideanNorm > 0.0 Then
                         Dim DragVector As New FixedVector
+                        DragVector.Vector.Assign(Stripe.SkinDrag)
                         DragVector.Vector.Normalize()
                         DragVector.Vector.Scale(Stripe.SkinDragCoefficient)
-                        DragVector.Vector.Assign(Stripe.SkinDrag)
                         DragVector.Point.Assign(Stripe.CenterPoint)
                         Loads.SkinDragVectors.Add(DragVector)
                         Loads.MaximumSkinDrag = Math.Max(Loads.MaximumSkinDrag, Stripe.SkinDragCoefficient)
