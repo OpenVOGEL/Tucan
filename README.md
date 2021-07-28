@@ -1,5 +1,3 @@
-`New` Events are being organized to promote the project. The first planned meeting is on Saturday 19/06/2021 at 19:00-UTC. Subscribe [here](https://www.openvogel.org/main/Events)!
-
 ## Welcome to OpenVOGEL aeromechanics (in .NET)
 OpenVOGEL is a project providing .NET computer programs useful to study some characteristics of mechanical systems subjected to aerodynamic loads. OpenVOGEL programs can be used, for instance, to compute approximated airloads over complex configurations of slender and thick surfaces (wings and fuselages), to compute some important aeroelastic characteristics of wings and to analyze the dynamic response of an airplane to a gust.
 
