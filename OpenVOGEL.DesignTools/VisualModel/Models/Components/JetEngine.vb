@@ -31,9 +31,10 @@ Namespace VisualModel.Models.Components
 
         Public Sub New()
 
-            Mesh = New Mesh()
-
             VisualProperties = New VisualProperties(ComponentTypes.etJetEngine)
+            VisualProperties.ShowSurface = True
+            VisualProperties.ShowMesh = True
+            IncludeInCalculation = True
 
             Length = 2
             FrontDiameter = 1
@@ -42,12 +43,9 @@ Namespace VisualModel.Models.Components
             BackLength = 0.4
             Resolution = 15
 
+            Mesh = New Mesh()
+
             GenerateMesh()
-
-            VisualProperties.ShowSurface = True
-            VisualProperties.ShowMesh = True
-            IncludeInCalculation = True
-
 
         End Sub
 

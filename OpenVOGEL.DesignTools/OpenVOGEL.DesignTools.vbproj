@@ -99,6 +99,7 @@
     <Compile Include="VisualModel\Models\Components\ImportedSurface.vb" />
     <Compile Include="VisualModel\Models\Components\JetEngine.vb" />
     <Compile Include="VisualModel\Models\Components\LiftingSurface.vb" />
+    <Compile Include="VisualModel\Models\Components\Propeller.vb" />
     <Compile Include="VisualModel\Models\Components\ResultContainer.vb" />
     <Compile Include="VisualModel\Models\Components\VelocityPlane.vb" />
     <Compile Include="VisualModel\Models\Converter.vb" />

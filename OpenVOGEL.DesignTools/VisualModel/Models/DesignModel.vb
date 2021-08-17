@@ -112,6 +112,27 @@ Namespace VisualModel.Models
         End Sub
 
         ''' <summary>
+        ''' Adds a jet engine
+        ''' </summary>
+        ''' <remarks></remarks>
+        Public Sub AddPropeller()
+
+            Dim Propeller As New Propeller
+            Propeller.Name = String.Format("Propeller - {0}", Objects.Count)
+            Propeller.IncludeInCalculation = True
+            Propeller.VisualProperties.ShowColormap = False
+            Propeller.VisualProperties.ShowLoadVectors = False
+            Propeller.VisualProperties.ShowNodes = False
+            Propeller.VisualProperties.ShowVelocityVectors = False
+            Propeller.VisualProperties.ShowPrimitives = False
+            Propeller.VisualProperties.ShowSurface = True
+            Propeller.VisualProperties.ShowMesh = True
+
+            Objects.Add(Propeller)
+
+        End Sub
+
+        ''' <summary>
         ''' Adds an imported surface and sets it as current.
         ''' </summary>
         ''' <remarks></remarks>
@@ -180,9 +201,9 @@ Namespace VisualModel.Models
 
                                         Dim Region As WingRegion = LiftingSurface.WingRegions(i)
 
-                                        If Not Region.PolarID.Equals(Guid.Empty) Then
+                                        If Not Region.PolarId.Equals(Guid.Empty) Then
 
-                                            Region.PolarFamiliy = PolarDataBase.GetFamilyFromID(Region.PolarID)
+                                            Region.PolarFamiliy = PolarDataBase.GetFamilyFromID(Region.PolarId)
 
                                         End If
 

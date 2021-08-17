@@ -25,10 +25,11 @@ Partial Class FormSelectObject
         Me.btnCancel = New System.Windows.Forms.Button()
         Me.btnAddObject = New System.Windows.Forms.Button()
         Me.gbElementsToAdd = New System.Windows.Forms.GroupBox()
+        Me.rbImported = New System.Windows.Forms.RadioButton()
         Me.rbJetEngine = New System.Windows.Forms.RadioButton()
         Me.rbFuselage = New System.Windows.Forms.RadioButton()
         Me.rbLiftingSurface = New System.Windows.Forms.RadioButton()
-        Me.rbImported = New System.Windows.Forms.RadioButton()
+        Me.rbPropeller = New System.Windows.Forms.RadioButton()
         Me.gbElementsToAdd.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -43,7 +44,7 @@ Partial Class FormSelectObject
         Me.btnCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.btnCancel.Font = New System.Drawing.Font("Segoe UI", 6.75!)
         Me.btnCancel.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.btnCancel.Location = New System.Drawing.Point(151, 94)
+        Me.btnCancel.Location = New System.Drawing.Point(151, 120)
         Me.btnCancel.Name = "btnCancel"
         Me.btnCancel.Size = New System.Drawing.Size(60, 22)
         Me.btnCancel.TabIndex = 66
@@ -61,7 +62,7 @@ Partial Class FormSelectObject
         Me.btnAddObject.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.btnAddObject.Font = New System.Drawing.Font("Segoe UI", 6.75!)
         Me.btnAddObject.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.btnAddObject.Location = New System.Drawing.Point(217, 94)
+        Me.btnAddObject.Location = New System.Drawing.Point(217, 120)
         Me.btnAddObject.Name = "btnAddObject"
         Me.btnAddObject.Size = New System.Drawing.Size(60, 22)
         Me.btnAddObject.TabIndex = 65
@@ -70,22 +71,34 @@ Partial Class FormSelectObject
         '
         'gbElementsToAdd
         '
+        Me.gbElementsToAdd.Controls.Add(Me.rbPropeller)
         Me.gbElementsToAdd.Controls.Add(Me.rbImported)
         Me.gbElementsToAdd.Controls.Add(Me.rbJetEngine)
         Me.gbElementsToAdd.Controls.Add(Me.rbFuselage)
         Me.gbElementsToAdd.Controls.Add(Me.rbLiftingSurface)
         Me.gbElementsToAdd.Location = New System.Drawing.Point(7, 7)
         Me.gbElementsToAdd.Name = "gbElementsToAdd"
-        Me.gbElementsToAdd.Size = New System.Drawing.Size(270, 81)
+        Me.gbElementsToAdd.Size = New System.Drawing.Size(270, 107)
         Me.gbElementsToAdd.TabIndex = 64
         Me.gbElementsToAdd.TabStop = False
         Me.gbElementsToAdd.Text = "Which type of object do you wish to add?"
+        '
+        'rbImported
+        '
+        Me.rbImported.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.rbImported.ImeMode = System.Windows.Forms.ImeMode.NoControl
+        Me.rbImported.Location = New System.Drawing.Point(145, 23)
+        Me.rbImported.Name = "rbImported"
+        Me.rbImported.Size = New System.Drawing.Size(104, 20)
+        Me.rbImported.TabIndex = 6
+        Me.rbImported.Text = "Imported mesh"
+        Me.rbImported.UseVisualStyleBackColor = True
         '
         'rbJetEngine
         '
         Me.rbJetEngine.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.rbJetEngine.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.rbJetEngine.Location = New System.Drawing.Point(144, 25)
+        Me.rbJetEngine.Location = New System.Drawing.Point(14, 75)
         Me.rbJetEngine.Name = "rbJetEngine"
         Me.rbJetEngine.Size = New System.Drawing.Size(104, 20)
         Me.rbJetEngine.TabIndex = 5
@@ -98,7 +111,7 @@ Partial Class FormSelectObject
         Me.rbFuselage.ImeMode = System.Windows.Forms.ImeMode.NoControl
         Me.rbFuselage.Location = New System.Drawing.Point(14, 49)
         Me.rbFuselage.Name = "rbFuselage"
-        Me.rbFuselage.Size = New System.Drawing.Size(242, 20)
+        Me.rbFuselage.Size = New System.Drawing.Size(113, 20)
         Me.rbFuselage.TabIndex = 4
         Me.rbFuselage.Text = "Fuselage"
         Me.rbFuselage.UseVisualStyleBackColor = True
@@ -110,28 +123,28 @@ Partial Class FormSelectObject
         Me.rbLiftingSurface.ImeMode = System.Windows.Forms.ImeMode.NoControl
         Me.rbLiftingSurface.Location = New System.Drawing.Point(14, 21)
         Me.rbLiftingSurface.Name = "rbLiftingSurface"
-        Me.rbLiftingSurface.Size = New System.Drawing.Size(170, 24)
+        Me.rbLiftingSurface.Size = New System.Drawing.Size(113, 24)
         Me.rbLiftingSurface.TabIndex = 3
         Me.rbLiftingSurface.TabStop = True
         Me.rbLiftingSurface.Text = "Lifting surface"
         Me.rbLiftingSurface.UseVisualStyleBackColor = True
         '
-        'rbImported
+        'rbPropeller
         '
-        Me.rbImported.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.rbImported.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.rbImported.Location = New System.Drawing.Point(144, 51)
-        Me.rbImported.Name = "rbImported"
-        Me.rbImported.Size = New System.Drawing.Size(104, 20)
-        Me.rbImported.TabIndex = 6
-        Me.rbImported.Text = "Imported mesh"
-        Me.rbImported.UseVisualStyleBackColor = True
+        Me.rbPropeller.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.rbPropeller.ImeMode = System.Windows.Forms.ImeMode.NoControl
+        Me.rbPropeller.Location = New System.Drawing.Point(145, 49)
+        Me.rbPropeller.Name = "rbPropeller"
+        Me.rbPropeller.Size = New System.Drawing.Size(113, 20)
+        Me.rbPropeller.TabIndex = 7
+        Me.rbPropeller.Text = "Propeller"
+        Me.rbPropeller.UseVisualStyleBackColor = True
         '
         'FormSelectObject
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(284, 123)
+        Me.ClientSize = New System.Drawing.Size(284, 149)
         Me.Controls.Add(Me.btnCancel)
         Me.Controls.Add(Me.btnAddObject)
         Me.Controls.Add(Me.gbElementsToAdd)
@@ -153,4 +166,5 @@ Partial Class FormSelectObject
     Friend WithEvents rbFuselage As System.Windows.Forms.RadioButton
     Friend WithEvents rbLiftingSurface As System.Windows.Forms.RadioButton
     Friend WithEvents rbImported As Windows.Forms.RadioButton
+    Friend WithEvents rbPropeller As RadioButton
 End Class

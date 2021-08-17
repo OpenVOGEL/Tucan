@@ -55,6 +55,10 @@ Namespace Tucan.Utility
                 Dim Surface As JetEngine = This
                 Refresh3DModel(Surface, gl, ForSelection, ElementIndex)
 
+            ElseIf TypeOf This Is Propeller Then
+                Dim Surface As Propeller = This
+                Refresh3DModel(Surface, gl, ForSelection, ElementIndex)
+
             ElseIf TypeOf This Is ImportedSurface Then
                 Dim Surface As ImportedSurface = This
                 Refresh3DModel(Surface, gl, ForSelection, ElementIndex)
@@ -417,15 +421,15 @@ Namespace Tucan.Utility
 
                     gl.Color(0.0, 1.0, 0.0)
                     gl.Vertex(.LocalOrigin.X, .LocalOrigin.Y, .LocalOrigin.Z)
-                    gl.Vertex(.DirectionPoints.U.X, .DirectionPoints.U.Y, .DirectionPoints.U.Z)
+                    gl.Vertex(.MainDirections.U.X, .MainDirections.U.Y, .MainDirections.U.Z)
 
                     gl.Color(1.0, 0.0, 0.0)
                     gl.Vertex(.LocalOrigin.X, .LocalOrigin.Y, .LocalOrigin.Z)
-                    gl.Vertex(.DirectionPoints.V.X, .DirectionPoints.V.Y, .DirectionPoints.V.Z)
+                    gl.Vertex(.MainDirections.V.X, .MainDirections.V.Y, .MainDirections.V.Z)
 
                     gl.Color(0.0, 0.0, 1.0)
                     gl.Vertex(.LocalOrigin.X, .LocalOrigin.Y, .LocalOrigin.Z)
-                    gl.Vertex(.DirectionPoints.W.X, .DirectionPoints.W.Y, .DirectionPoints.W.Z)
+                    gl.Vertex(.MainDirections.W.X, .MainDirections.W.Y, .MainDirections.W.Z)
 
                     gl.End()
 
@@ -622,6 +626,153 @@ Namespace Tucan.Utility
         ''' </summary>
         <Extension()>
         Public Sub Refresh3DModel(This As JetEngine,
+                                  ByRef gl As OpenGL,
+                                  Optional ByVal ForSelection As Boolean = False,
+                                  Optional ByVal ElementIndex As Integer = 0)
+            With This
+
+                Dim Code As Integer = 0
+
+                Dim Nodo As NodalPoint
+
+                If .VisualProperties.ShowSurface Then
+
+                    Dim SurfaceColor As New Vector3
+
+                    If Not .Active Then
+                        SurfaceColor.X = .VisualProperties.ColorSurface.R / 255
+                        SurfaceColor.Y = .VisualProperties.ColorSurface.G / 255
+                        SurfaceColor.Z = .VisualProperties.ColorSurface.B / 255
+                    Else
+                        SurfaceColor.X = 1.0
+                        SurfaceColor.Y = 0.8
+                        SurfaceColor.Z = 0.0
+                    End If
+
+                    gl.Color(SurfaceColor.X, SurfaceColor.Y, SurfaceColor.Z, .VisualProperties.Transparency)
+
+                    gl.InitNames()
+                    Code = Selection.GetSelectionCode(ComponentTypes.etJetEngine, ElementIndex, EntityTypes.etPanel, 0)
+
+                    For i = 0 To .NumberOfPanels - 1
+
+                        gl.PushName(Code)
+                        Code += 1
+                        gl.Begin(OpenGL.GL_TRIANGLES)
+
+                        Dim Panel As Panel = .Mesh.Panels(i)
+
+                        Nodo = .Mesh.Nodes((Panel.N1))
+                        gl.Vertex(Nodo.Position.X, Nodo.Position.Y, Nodo.Position.Z)
+
+                        Nodo = .Mesh.Nodes((Panel.N2))
+                        gl.Vertex(Nodo.Position.X, Nodo.Position.Y, Nodo.Position.Z)
+
+                        Nodo = .Mesh.Nodes((Panel.N3))
+                        gl.Vertex(Nodo.Position.X, Nodo.Position.Y, Nodo.Position.Z)
+
+                        Nodo = .Mesh.Nodes((Panel.N3))
+                        gl.Vertex(Nodo.Position.X, Nodo.Position.Y, Nodo.Position.Z)
+
+                        Nodo = .Mesh.Nodes((Panel.N4))
+                        gl.Vertex(Nodo.Position.X, Nodo.Position.Y, Nodo.Position.Z)
+
+                        Nodo = .Mesh.Nodes((Panel.N1))
+                        gl.Vertex(Nodo.Position.X, Nodo.Position.Y, Nodo.Position.Z)
+
+                        gl.End()
+                        gl.PopName()
+
+                    Next
+
+                End If
+
+                ' Nodes:
+
+                gl.InitNames()
+                Code = Selection.GetSelectionCode(ComponentTypes.etJetEngine, ElementIndex, EntityTypes.etNode, 0)
+
+                gl.PointSize(.VisualProperties.SizeNodes)
+                gl.Color(.VisualProperties.ColorNodes.R / 255,
+                         .VisualProperties.ColorNodes.G / 255,
+                         .VisualProperties.ColorNodes.B / 255)
+
+                For Each Node In .Mesh.Nodes
+
+                    If ForSelection Or Node.Active Then
+
+                        gl.PushName(Code)
+                        Code += 1
+                        gl.Begin(OpenGL.GL_POINTS)
+                        gl.Vertex(Node.Position.X, Node.Position.Y, Node.Position.Z)
+                        gl.End()
+                        gl.PopName()
+
+                    End If
+
+                Next
+
+                ' Segments:
+
+                gl.InitNames()
+                Code = Selection.GetSelectionCode(ComponentTypes.etJetEngine, ElementIndex, EntityTypes.etSegment, 0)
+
+                If ForSelection Or .VisualProperties.ShowMesh Then
+
+                    gl.LineWidth(.VisualProperties.ThicknessMesh)
+
+                    Dim Node1 As Vector3
+                    Dim Node2 As Vector3
+
+                    gl.Color(.VisualProperties.ColorMesh.R / 255,
+                             .VisualProperties.ColorMesh.G / 255,
+                             .VisualProperties.ColorMesh.B / 255)
+
+                    For Each Segment In .Mesh.Lattice
+
+                        Node1 = .Mesh.Nodes(Segment.N1).Position
+                        Node2 = .Mesh.Nodes(Segment.N2).Position
+
+                        gl.Begin(OpenGL.GL_LINES)
+                        gl.Vertex(Node1.X, Node1.Y, Node1.Z)
+                        gl.Vertex(Node2.X, Node2.Y, Node2.Z)
+                        gl.End()
+
+                    Next
+
+                End If
+
+                ' Normals:
+
+                If .VisualProperties.ShowNormalVectors Then
+
+                    gl.Begin(OpenGL.GL_LINES)
+
+                    gl.Color(.VisualProperties.ColorPositiveLoad.R / 255,
+                             .VisualProperties.ColorPositiveLoad.G / 255,
+                             .VisualProperties.ColorPositiveLoad.B / 255)
+
+                    For Each Panel In .Mesh.Panels
+                        gl.Vertex(Panel.ControlPoint.X, Panel.ControlPoint.Y, Panel.ControlPoint.Z)
+                        gl.Vertex(Panel.ControlPoint.X + Panel.NormalVector.X,
+                                  Panel.ControlPoint.Y + Panel.NormalVector.Y,
+                                  Panel.ControlPoint.Z + Panel.NormalVector.Z)
+
+                    Next
+
+                    gl.End()
+
+                End If
+
+            End With
+
+        End Sub
+
+        ''' <summary>
+        ''' Renders a propeller using SharpGL
+        ''' </summary>
+        <Extension()>
+        Public Sub Refresh3DModel(This As Propeller,
                                   ByRef gl As OpenGL,
                                   Optional ByVal ForSelection As Boolean = False,
                                   Optional ByVal ElementIndex As Integer = 0)

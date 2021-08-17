@@ -100,6 +100,10 @@ Public Class MainRibbon
                 ProjectRoot.Model.AddJetEngine()
             End If
 
+            If Dialog.rbPropeller.Checked Then
+                ProjectRoot.Model.AddPropeller()
+            End If
+
             If Dialog.rbImported.Checked Then
                 ProjectRoot.Model.AddImportedSurface()
             End If
