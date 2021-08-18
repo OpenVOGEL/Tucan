@@ -365,7 +365,7 @@ Public Class WingControl
             lblCamberLineName.Text = camber.Name
         End If
 
-        Dim polar As PolarFamily = ProjectRoot.Model.PolarDataBase.GetFamilyFromID(Wing.CurrentRegion.PolarID)
+        Dim polar As PolarFamily = ProjectRoot.Model.PolarDataBase.GetFamilyFromID(Wing.CurrentRegion.PolarId)
 
         If polar IsNot Nothing Then
             lblPolarName.Text = polar.Name
@@ -952,7 +952,7 @@ Public Class WingControl
             If form.ShowDialog() = vbOK Then
                 If Not form.SelectedFamilyId.Equals(Guid.Empty) Then
                     Wing.CurrentRegion.PolarFamiliy = DataStore.Model.PolarDataBase.GetFamilyFromID(form.SelectedFamilyId)
-                    Wing.CurrentRegion.PolarID = form.SelectedFamilyId
+                    Wing.CurrentRegion.PolarId = form.SelectedFamilyId
                 End If
             End If
             LoadRegionToForm()

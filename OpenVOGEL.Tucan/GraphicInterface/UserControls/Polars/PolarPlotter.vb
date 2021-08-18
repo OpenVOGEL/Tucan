@@ -125,10 +125,10 @@ Public Class PolarPlotter
     ''' <summary>
     ''' Drwas the grid and the axis labels
     ''' </summary>
-    ''' <param name="g"></param>
-    Private Sub DrawGrid(g As Graphics)
+    ''' <param name="G"></param>
+    Private Sub DrawGrid(G As Graphics)
 
-        g.FillRectangle(Background, 0, 0, Width, Height)
+        G.FillRectangle(Background, 0, 0, Width, Height)
 
         Dim nx As Integer = 10
         Dim x As Single
@@ -145,33 +145,33 @@ Public Class PolarPlotter
         For i = 1 To ny - 1
 
             Dim y As Single = MarginY + i * GraphH / ny
-            g.DrawLine(GridPen, LimitXmin, y, LimitXmax, y)
+            G.DrawLine(GridPen, LimitXmin, y, LimitXmax, y)
 
         Next
 
-        g.DrawLine(AxisPen, LimitXmin, LimitYmin, LimitXmin, LimitYmax)
-        g.DrawLine(AxisPen, LimitXmin, LimitYmin, LimitXmax, LimitYmin)
-        g.DrawLine(AxisPen, LimitXmax, LimitYmin, LimitXmax, LimitYmax)
-        g.DrawLine(AxisPen, LimitXmax, LimitYmax, LimitXmin, LimitYmax)
+        G.DrawLine(AxisPen, LimitXmin, LimitYmin, LimitXmin, LimitYmax)
+        G.DrawLine(AxisPen, LimitXmin, LimitYmin, LimitXmax, LimitYmin)
+        G.DrawLine(AxisPen, LimitXmax, LimitYmin, LimitXmax, LimitYmax)
+        G.DrawLine(AxisPen, LimitXmax, LimitYmax, LimitXmin, LimitYmax)
 
         For i = 0 To nx
 
             x = MarginX + ((i + Math.Round(Xmin / dx * nx)) / nx - Xmin / dx) * GraphW
 
             If x > LimitXmin And x < LimitXmax Then
-                g.DrawLine(GridPen, x, LimitYmin, x, LimitYmax)
+                G.DrawLine(GridPen, x, LimitYmin, x, LimitYmax)
             End If
 
         Next
 
         If Xmax > 0 And Xmin < 0 Then
             x = CSng(MarginX - GraphW * Xmin / dx)
-            g.DrawLine(AxisPen, x, MarginY, x, MarginY + GraphH)
+            G.DrawLine(AxisPen, x, MarginY, x, MarginY + GraphH)
         End If
 
-        g.DrawString("CD", FontAxis, FontAxisColor, LimitXmin + 2, LimitYmin + 2)
-        Dim Size As SizeF = g.MeasureString("CL", FontAxis)
-        g.DrawString("CL", FontAxis, FontAxisColor, LimitXmax - Size.Width - 2, LimitYmax - Size.Height - 2)
+        G.DrawString("CD", FontAxis, FontAxisColor, LimitXmin + 2, LimitYmin + 2)
+        Dim Size As SizeF = G.MeasureString("CL", FontAxis)
+        G.DrawString("CL", FontAxis, FontAxisColor, LimitXmax - Size.Width - 2, LimitYmax - Size.Height - 2)
 
     End Sub
 

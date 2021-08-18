@@ -209,6 +209,15 @@ Public Class MainForm
 
     End Sub
 
+    Public Sub ShowPropellerEditor(Propeller As Propeller)
+
+        Dim PropellerForm As New FormPropeller(Propeller)
+        AddHandler PropellerForm.UpdateModel, AddressOf RefreshOnGL
+        PropellerForm.ShowDialog()
+        Propeller.GenerateMesh()
+
+    End Sub
+
     Public Sub ShowSurfaceLoader(Surface As ImportedSurface)
 
         Dim Dialog As New OpenFileDialog()
@@ -240,6 +249,10 @@ Public Class MainForm
             ElseIf TypeOf Surface Is JetEngine
 
                 ShowJetEngineEditor(Surface)
+
+            ElseIf TypeOf Surface Is Propeller
+
+                ShowPropellerEditor(Surface)
 
             ElseIf TypeOf Surface Is ImportedSurface
 

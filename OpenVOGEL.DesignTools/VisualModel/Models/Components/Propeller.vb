@@ -27,15 +27,26 @@ Imports OpenVOGEL.AeroTools.CalculationModel.Models.Aero.Components
 Imports OpenVOGEL.MathTools.Algebra.EuclideanSpace
 Imports OpenVOGEL.MathTools.Algebra.CustomMatrices
 Imports OpenVOGEL.DesignTools.VisualModel.Models.Components.Basics
-Imports OpenVOGEL.AeroTools.CalculationModel.Models.Structural.Library.Elements
 Imports OpenVOGEL.DesignTools.DataStore
 Imports OpenVOGEL.AeroTools.IoHelper
 Imports OpenVOGEL.AeroTools.CalculationModel.Settings
+Imports System.IO
 
 '#############################################################################
 ' Unit: Propeller
 '
-' This unit provides a propeller model
+' This unit provides a propeller model for any number of blades. The geometry  
+' of the blades is generated using the functions that describe the distribution
+' of twist and chord along the span (the usual geometry representation available
+' on databases). The position coordinate given to the functions is considered 
+' as normalized with respect to the radius of the propeller.
+' The shape functions are a linear interpolation of provided nodes.
+' Take into acconunt that the range of the functions must be from 0 to 1 or 
+' there will be troubles while meshing. This range is not checked by the
+' mesher.
+' The shape of the camber line of the airfoil is constant along the span and
+' there is only one polar family (a set of Reynolds dependent polars).
+' The collective pitch can be adjusted as independent variable.
 '#############################################################################
 Namespace VisualModel.Models.Components
 
@@ -48,21 +59,23 @@ Namespace VisualModel.Models.Components
         ''' </summary>
         Public Sub New()
 
-            VisualProperties = New VisualProperties(ComponentTypes.etJetEngine)
+            VisualProperties = New VisualProperties(ComponentTypes.etPropeller)
             VisualProperties.ShowSurface = True
             VisualProperties.ShowMesh = True
             IncludeInCalculation = True
 
             Mesh = New Mesh
-            ExternalDiameter = 2.0
-            CentralDiameter = 0.1
-            TwistNodes.Add(New Vector2(0.0, 45.0))
-            TwistNodes.Add(New Vector2(1.0, 15.0))
-            ChordNodes.Add(New Vector2(0.0, 0.25))
-            ChordNodes.Add(New Vector2(1.0, 0.1))
             NumberOfBlades = 2
             NumberOfChordPanels = 5
             NumberOfSpanPanels = 20
+            Diameter = 2.0#
+            CentralRing = 10.0#
+            CollectivePitch = 0.0#
+            TwistFunction.Add(New Vector2(0.0, 45.0))
+            TwistFunction.Add(New Vector2(1.0, 15.0))
+            ChordFunction.Add(New Vector2(0.0, 0.25))
+            ChordFunction.Add(New Vector2(1.0, 0.1))
+
             GenerateMesh()
 
         End Sub
@@ -96,12 +109,17 @@ Namespace VisualModel.Models.Components
         ''' <summary>
         ''' The diameter of the propeller
         ''' </summary>
-        Public Property ExternalDiameter As Double
+        Public Property Diameter As Double
 
         ''' <summary>
-        ''' The diameter of the inner part (not covered by the blades)
+        ''' The diameter of the inner part relative to the outer diameter (%)
         ''' </summary>
-        Public Property CentralDiameter As Double
+        Public Property CentralRing As Double
+
+        ''' <summary>
+        ''' The collective pitch angle
+        ''' </summary>
+        Public Property CollectivePitch As Double
 
         ''' <summary>
         ''' Index of polar curve to be loaded.
@@ -126,18 +144,18 @@ Namespace VisualModel.Models.Components
         ''' <summary>
         ''' The nodes describing the twist of the blade along the normalized coordinate
         ''' </summary>
-        Public Property TwistNodes As New List(Of Vector2)
+        Public Property TwistFunction As New List(Of Vector2)
 
         ''' <summary>
         ''' Returns the twist at an specific normalized coordinate (rande from 0 to 1)
         ''' </summary>
         Function Twist(X As Double) As Double
 
-            For i = 0 To TwistNodes.Count - 2
+            For i = 0 To TwistFunction.Count - 2
 
-                If X > TwistNodes(i).X And X <= TwistNodes(i + 1).X Then
+                If X >= TwistFunction(i).X And X <= TwistFunction(i + 1).X Then
 
-                    Return TwistNodes(i).Y + (TwistNodes(i + 1).Y - TwistNodes(i).Y) * (X - TwistNodes(i).X) / (TwistNodes(i + 1).X - TwistNodes(i).X)
+                    Return TwistFunction(i).Y + (TwistFunction(i + 1).Y - TwistFunction(i).Y) * (X - TwistFunction(i).X) / (TwistFunction(i + 1).X - TwistFunction(i).X)
 
                 End If
 
@@ -150,18 +168,18 @@ Namespace VisualModel.Models.Components
         ''' <summary>
         ''' The nodes describing the chord of the blade along the normalized coordinate
         ''' </summary>
-        Public Property ChordNodes As New List(Of Vector2)
+        Public Property ChordFunction As New List(Of Vector2)
 
         ''' <summary>
         ''' Returns the twist at an specific normalized coordinate (rande from 0 to 1)
         ''' </summary>
         Function Chord(X As Double) As Double
 
-            For i = 0 To ChordNodes.Count - 2
+            For i = 0 To ChordFunction.Count - 2
 
-                If X > ChordNodes(i).X And X <= ChordNodes(i + 1).X Then
+                If X >= ChordFunction(i).X And X <= ChordFunction(i + 1).X Then
 
-                    Return ChordNodes(i).Y + (ChordNodes(i + 1).Y - ChordNodes(i).Y) * (X - ChordNodes(i).X) / (ChordNodes(i + 1).X - ChordNodes(i).X)
+                    Return ChordFunction(i).Y + (ChordFunction(i + 1).Y - ChordFunction(i).Y) * (X - ChordFunction(i).X) / (ChordFunction(i + 1).X - ChordFunction(i).X)
 
                 End If
 
@@ -188,19 +206,32 @@ Namespace VisualModel.Models.Components
             '---------------------------------------------------------------------
 
             Dim NumberOfChordNodes As Integer = NumberOfChordPanels + 1
+            Dim NumberOfSpanNodes As Integer = NumberOfSpanPanels + 1
+            Dim NumberOfPanels As Integer = NumberOfChordPanels * NumberOfSpanPanels
+            Dim NumberOfNodes As Integer = NumberOfChordNodes * NumberOfSpanNodes
 
-            For p = 1 To NumberOfSpanPanels
+            For K = 1 To NumberOfBlades
 
-                For q = 0 To NumberOfChordPanels - 1
+                Dim LastCount As Integer = (K - 1) * NumberOfNodes
 
-                    Dim Panel As New Panel
+                For I = 1 To NumberOfSpanPanels
 
-                    Panel.N1 = (p - 1) * NumberOfChordNodes + q
-                    Panel.N2 = (p - 1) * NumberOfChordNodes + q + 1
-                    Panel.N3 = p * NumberOfChordNodes + q + 1
-                    Panel.N4 = p * NumberOfChordNodes + q
+                    For J = 0 To NumberOfChordPanels - 1
 
-                    Mesh.Panels.Add(Panel)
+                        Dim Panel As New Panel
+
+                        Panel.N1 = (I - 1) * NumberOfChordNodes + J + LastCount
+                        Panel.N2 = (I - 1) * NumberOfChordNodes + J + 1 + LastCount
+                        Panel.N3 = I * NumberOfChordNodes + J + 1 + LastCount
+                        Panel.N4 = I * NumberOfChordNodes + J + LastCount
+
+                        Panel.IsSlender = True
+                        Panel.IsReversed = False
+                        Panel.IsPrimitive = (J = NumberOfChordPanels - 1)
+
+                        Mesh.Panels.Add(Panel)
+
+                    Next
 
                 Next
 
@@ -210,47 +241,64 @@ Namespace VisualModel.Models.Components
             '---------------------------------------------------------------------
 
             Dim Camber As CamberLine = GetCamberLineFromId(CamberLineId)
+            Dim CentralDiameter As Double = CentralRing * Diameter / 100.0#
 
-            For I = 0 To NumberOfSpanPanels
+            For K = 1 To NumberOfBlades
 
-                Dim K As Double = CDbl(I) / CDbl(NumberOfSpanPanels)
-                Dim R As Double = 0.5 * (CentralDiameter + K * (ExternalDiameter - CentralDiameter))
-                Dim C As Double = Chord(R)
-                Dim T As Double = Twist(R) * Math.PI / 180.0#
+                Dim F As Double = (K - 1) / NumberOfBlades * 2.0# * Math.PI
 
-                For J = 0 To NumberOfChordPanels
+                For I = 0 To NumberOfSpanPanels
 
-                    Dim Q As Double = 1.0 - CDbl(J) / CDbl(NumberOfChordPanels)
-                    Dim B As Double = 0.0#
-                    If Camber IsNot Nothing Then
-                        B = Camber.Y(Q)
-                    End If
-                    Dim Node As New NodalPoint
-                    Mesh.Nodes.Add(Node)
+                    Dim S As Double = CDbl(I) / CDbl(NumberOfSpanPanels)
+                    Dim R As Double = 0.5# * (CentralDiameter + S * (Diameter - CentralDiameter))
+                    Dim C As Double = 0.5# * Diameter * Chord(S)
+                    Dim T As Double = (CollectivePitch + Twist(S)) * Math.PI / 180.0#
 
-                    ' Apply profile
+                    For J = 0 To NumberOfChordPanels
 
-                    Node.Position.X = -C * B
-                    Node.Position.Y = 0
-                    Node.Position.Z = C * Q
+                        Dim Q As Double = 1.0# - J / NumberOfChordPanels
+                        Dim B As Double = 0.0#
+                        If Camber IsNot Nothing Then
+                            B = Camber.Y(Q)
+                        End If
+                        Dim Node As New NodalPoint
+                        Mesh.Nodes.Add(Node)
 
-                    ' Apply twist (for now only around C/2)
+                        ' Apply profile
 
-                    Node.Position.Z -= C * 0.5
+                        Node.Position.X = -C * B
+                        Node.Position.Y = 0.0#
+                        Node.Position.Z = C * Q
 
-                    Dim M As New RotationMatrix()
-                    Dim A As New OrientationAngles
-                    A.R1 = 0
-                    A.R2 = T
-                    A.R3 = 0
-                    A.Sequence = RotationSequence.XYZ
-                    M.Generate(A)
+                        ' Apply twist (for now only around C/2)
 
-                    Node.Position.Rotate(M)
+                        Node.Position.Z -= C * 0.5#
 
-                    ' Apply local position
+                        Dim M As New RotationMatrix()
+                        Dim A As New OrientationAngles
+                        A.R1 = 0.0#
+                        A.R2 = T
+                        A.R3 = 0.0#
+                        A.Sequence = RotationSequence.XYZ
+                        M.Generate(A)
 
-                    Node.Position.Y += R
+                        Node.Position.Rotate(M)
+
+                        ' Apply local position
+
+                        Node.Position.Y += R
+
+                        ' Apply blade rotation around proppeller axis (X)
+
+                        A.R1 = F
+                        A.R2 = 0.0#
+                        A.R3 = 0.0#
+                        A.Sequence = RotationSequence.XYZ
+                        M.Generate(A)
+
+                        Node.Position.Rotate(M)
+
+                    Next
 
                 Next
 
@@ -261,6 +309,51 @@ Namespace VisualModel.Models.Components
         End Sub
 
 #End Region
+
+        ''' <summary>
+        ''' Loads the geometry of the propeller from a text file
+        ''' The format of each line must be: r/R c/R beta
+        ''' </summary>
+        Public Sub LoadFromFile(FilePath As String)
+
+            If File.Exists(FilePath) Then
+
+                Dim FileId = FreeFile()
+
+                FileOpen(FileId, FilePath, OpenMode.Input)
+
+                TwistFunction.Clear()
+                ChordFunction.Clear()
+
+                While Not EOF(FileId)
+
+                    Dim Line As String = LineInput(FileId)
+
+                    If Line.Length > 0 AndAlso Line(0) <> "#" Then
+
+                        Dim Values As String() = Line.Split({" "c}, StringSplitOptions.RemoveEmptyEntries)
+
+                        If Values.Length = 3 Then
+
+                            Dim R As Double = CDbl(Values(0))
+
+                            ChordFunction.Add(New Vector2(R, CDbl(Values(1))))
+
+                            TwistFunction.Add(New Vector2(R, CDbl(Values(2))))
+
+                        End If
+
+                    End If
+
+                End While
+
+                FileClose(FileId)
+
+                GenerateMesh()
+
+            End If
+
+        End Sub
 
         ''' <summary>
         ''' Generates an identical propeller

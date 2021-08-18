@@ -312,6 +312,21 @@ Namespace VisualModel.Interface
                     ShowSurface = True
                     ShowNodes = False
 
+                Case ComponentTypes.etPropeller
+
+                    ColorSurface = Color.LightGray
+                    ColorMesh = Color.Black
+                    ColorNodes = Color.Black
+                    ColorVelocity = Color.BlueViolet
+                    Transparency = 1.0#
+                    ThicknessMesh = 1.0#
+                    SizeNodes = 8.0#
+                    ScaleVelocityVectors = 0.0#
+                    ScaleLoadVectors = 0.0#
+                    ShowMesh = True
+                    ShowSurface = True
+                    ShowNodes = False
+
                 Case ComponentTypes.etResultContainer
 
                     ColorSurface = Color.LightGray

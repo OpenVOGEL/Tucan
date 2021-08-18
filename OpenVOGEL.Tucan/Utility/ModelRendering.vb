@@ -799,7 +799,7 @@ Namespace Tucan.Utility
                     gl.Color(SurfaceColor.X, SurfaceColor.Y, SurfaceColor.Z, .VisualProperties.Transparency)
 
                     gl.InitNames()
-                    Code = Selection.GetSelectionCode(ComponentTypes.etJetEngine, ElementIndex, EntityTypes.etPanel, 0)
+                    Code = Selection.GetSelectionCode(ComponentTypes.etPropeller, ElementIndex, EntityTypes.etPanel, 0)
 
                     For i = 0 To .NumberOfPanels - 1
 

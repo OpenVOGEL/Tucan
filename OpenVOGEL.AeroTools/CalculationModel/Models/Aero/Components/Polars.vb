@@ -47,7 +47,7 @@ Namespace CalculationModel.Models.Aero.Components
         Function SkinDrag(ByRef Cl) As Double
         Property Reynolds As Double
         ReadOnly Property Type As PolarType
-        Property ID As Guid
+        Property Id As Guid
         Property Name As String
 
         Sub ReadBinary(ByRef r As BinaryReader)
@@ -92,7 +92,7 @@ Namespace CalculationModel.Models.Aero.Components
             End Get
         End Property
 
-        Public Property ID As Guid Implements IPolarCurve.ID
+        Public Property Id As Guid Implements IPolarCurve.Id
             Get
                 Return _ID
             End Get
@@ -162,7 +162,7 @@ Namespace CalculationModel.Models.Aero.Components
             writer.WriteAttributeString("CD1", String.Format("{0}", Cd1))
             writer.WriteAttributeString("CD2", String.Format("{0}", Cd2))
             writer.WriteAttributeString("Re", String.Format("{0}", Reynolds))
-            writer.WriteAttributeString("ID", String.Format("{0}", ID.ToString))
+            writer.WriteAttributeString("ID", String.Format("{0}", Id.ToString))
             writer.WriteAttributeString("Name", String.Format("{0}", Name))
 
         End Sub
@@ -173,7 +173,7 @@ Namespace CalculationModel.Models.Aero.Components
             Cd1 = IOXML.ReadDouble(reader, "CD1", 0.1)
             Cd2 = IOXML.ReadDouble(reader, "CD2", 1.0)
             Reynolds = IOXML.ReadDouble(reader, "Re", 1.0)
-            ID = New Guid(IOXML.ReadString(reader, "ID", Guid.NewGuid.ToString))
+            Id = New Guid(IOXML.ReadString(reader, "ID", Guid.NewGuid.ToString))
             Name = IOXML.ReadString(reader, "Name", 0.0)
 
         End Sub
@@ -188,7 +188,7 @@ Namespace CalculationModel.Models.Aero.Components
 
         Private _ID As Guid = Guid.NewGuid
 
-        Public Property ID As Guid Implements IPolarCurve.ID
+        Public Property Id As Guid Implements IPolarCurve.Id
             Get
                 Return _ID
             End Get
@@ -273,7 +273,7 @@ Namespace CalculationModel.Models.Aero.Components
             Next
             Polar._Reynolds = _Reynolds
             Polar.Name = _Name
-            Polar.ID = _ID
+            Polar.Id = _ID
             Return Polar
 
         End Function
@@ -290,7 +290,7 @@ Namespace CalculationModel.Models.Aero.Components
             Next
 
             writer.WriteAttributeString("Re", String.Format("{0}", Reynolds))
-            writer.WriteAttributeString("ID", String.Format("{0}", ID.ToString))
+            writer.WriteAttributeString("ID", String.Format("{0}", Id.ToString))
             writer.WriteAttributeString("Name", String.Format("{0}", Name))
 
         End Sub
@@ -306,7 +306,7 @@ Namespace CalculationModel.Models.Aero.Components
             Next
 
             Reynolds = IOXML.ReadDouble(reader, "Re", 1.0)
-            ID = New Guid(IOXML.ReadString(reader, "ID", Guid.NewGuid.ToString))
+            Id = New Guid(IOXML.ReadString(reader, "ID", Guid.NewGuid.ToString))
             Name = IOXML.ReadString(reader, "Name", 0.0)
 
         End Sub

@@ -28,6 +28,7 @@ Namespace VisualModel.Interface
         etResultContainer = 3
         etWake = 4
         etJetEngine = 5
+        etPropeller = 6
 
     End Enum
 

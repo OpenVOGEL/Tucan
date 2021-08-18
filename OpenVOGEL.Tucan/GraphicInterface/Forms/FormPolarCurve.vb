@@ -84,7 +84,7 @@ Public Class FormPolarCurve
             If IsNothing(CurrentPolar) Then
                 Return Guid.Empty
             Else
-                Return CurrentPolar.ID
+                Return CurrentPolar.Id
             End If
         End Get
     End Property

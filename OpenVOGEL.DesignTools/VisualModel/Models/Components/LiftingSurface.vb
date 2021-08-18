@@ -74,7 +74,7 @@ Namespace VisualModel.Models.Components
         Public Sub New()
 
             FlapChord = 0.3
-            PolarID = Guid.Empty
+            PolarId = Guid.Empty
             SpacementType = Spacements.Constant
 
         End Sub
@@ -216,7 +216,7 @@ Namespace VisualModel.Models.Components
         ''' <value></value>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Property PolarID As Guid
+        Public Property PolarId As Guid
 
 #End Region
 
@@ -301,7 +301,7 @@ Namespace VisualModel.Models.Components
             writer.WriteAttributeString("m", String.Format("{0}", TipSection.M))
 
             writer.WriteAttributeString("CenterOfShear", String.Format("{0}", CenterOfShear))
-            writer.WriteAttributeString("PolarID", String.Format("{0}", PolarID))
+            writer.WriteAttributeString("PolarID", String.Format("{0}", PolarId))
             writer.WriteAttributeString("CamberLineID", String.Format("{0}", CamberLineId))
 
         End Sub
@@ -336,7 +336,7 @@ Namespace VisualModel.Models.Components
             TipSection.M = IOXML.ReadDouble(reader, "m", 10)
 
             CenterOfShear = IOXML.ReadDouble(reader, "CenterOfShear", 0.0)
-            PolarID = New Guid(IOXML.ReadString(reader, "PolarID", Guid.Empty.ToString))
+            PolarId = New Guid(IOXML.ReadString(reader, "PolarID", Guid.Empty.ToString))
             CamberLineId = New Guid(IOXML.ReadString(reader, "CamberLineID", Guid.Empty.ToString))
 
         End Sub
@@ -367,7 +367,7 @@ Namespace VisualModel.Models.Components
         ''' <summary>
         ''' Cached points used to represent the directions of the local axes.
         ''' </summary>
-        Public Property DirectionPoints As New Base3
+        Public Property MainDirections As New Base3
 
         ''' <summary>
         ''' Indicates if the mesh has to be symmetric about the plane y = 0.
@@ -1115,7 +1115,7 @@ Namespace VisualModel.Models.Components
 
             Dim FlapChord As Double = RootFlap
 
-            Dim RootChamber As CamberLine = GetCamberLineFromId(WingRegions(0).CamberLineId)
+            Dim RootCamber As CamberLine = GetCamberLineFromId(WingRegions(0).CamberLineId)
 
             For i = 1 To _ChordNodesCount
 
@@ -1143,7 +1143,7 @@ Namespace VisualModel.Models.Components
 
                 WingRegions(0).FlapDeflection = 0
 
-                RootChamber.EvaluatePoint(Point, X)
+                RootCamber.EvaluatePoint(Point, X)
 
                 Point.X *= _RootChord
 
@@ -1439,29 +1439,29 @@ Namespace VisualModel.Models.Components
             ' Direction points:
             '------------------------
 
-            DirectionPoints.U.X = 0.5
-            DirectionPoints.U.Y = 0.0
-            DirectionPoints.U.Z = 0.0
-            DirectionPoints.U.Substract(CenterOfRotation)
-            DirectionPoints.U.Rotate(LocalRotationMatrix)
-            DirectionPoints.U.Add(CenterOfRotation)
-            DirectionPoints.U.Add(Position)
+            MainDirections.U.X = 0.5
+            MainDirections.U.Y = 0.0
+            MainDirections.U.Z = 0.0
+            MainDirections.U.Substract(CenterOfRotation)
+            MainDirections.U.Rotate(LocalRotationMatrix)
+            MainDirections.U.Add(CenterOfRotation)
+            MainDirections.U.Add(Position)
 
-            DirectionPoints.V.X = 0.0
-            DirectionPoints.V.Y = 0.5
-            DirectionPoints.V.Z = 0.0
-            DirectionPoints.V.Substract(CenterOfRotation)
-            DirectionPoints.V.Rotate(LocalRotationMatrix)
-            DirectionPoints.V.Add(CenterOfRotation)
-            DirectionPoints.V.Add(Position)
+            MainDirections.V.X = 0.0
+            MainDirections.V.Y = 0.5
+            MainDirections.V.Z = 0.0
+            MainDirections.V.Substract(CenterOfRotation)
+            MainDirections.V.Rotate(LocalRotationMatrix)
+            MainDirections.V.Add(CenterOfRotation)
+            MainDirections.V.Add(Position)
 
-            DirectionPoints.W.X = 0.0
-            DirectionPoints.W.Y = 0.0
-            DirectionPoints.W.Z = 0.5
-            DirectionPoints.W.Substract(CenterOfRotation)
-            DirectionPoints.W.Rotate(LocalRotationMatrix)
-            DirectionPoints.W.Add(CenterOfRotation)
-            DirectionPoints.W.Add(Position)
+            MainDirections.W.X = 0.0
+            MainDirections.W.Y = 0.0
+            MainDirections.W.Z = 0.5
+            MainDirections.W.Substract(CenterOfRotation)
+            MainDirections.W.Rotate(LocalRotationMatrix)
+            MainDirections.W.Add(CenterOfRotation)
+            MainDirections.W.Add(Position)
 
             ' Local origin
             '------------------------
