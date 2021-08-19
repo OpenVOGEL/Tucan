@@ -365,7 +365,7 @@ Public Class WingControl
             lblCamberLineName.Text = camber.Name
         End If
 
-        Dim polar As PolarFamily = ProjectRoot.Model.PolarDataBase.GetFamilyFromID(Wing.CurrentRegion.PolarId)
+        Dim polar As PolarFamily = ProjectRoot.Model.PolarDataBase.GetFamilyFromId(Wing.CurrentRegion.PolarId)
 
         If polar IsNot Nothing Then
             lblPolarName.Text = polar.Name
@@ -946,12 +946,12 @@ Public Class WingControl
         If Not IsNothing(DataStore.Model.PolarDataBase) Then
             Dim ID As Guid = Guid.Empty
             If Not IsNothing(Wing.CurrentRegion.PolarFamiliy) Then
-                ID = Wing.CurrentRegion.PolarFamiliy.ID
+                ID = Wing.CurrentRegion.PolarFamiliy.Id
             End If
             Dim form As New FormPolarCurve(DataStore.Model.PolarDataBase, ID)
             If form.ShowDialog() = vbOK Then
                 If Not form.SelectedFamilyId.Equals(Guid.Empty) Then
-                    Wing.CurrentRegion.PolarFamiliy = DataStore.Model.PolarDataBase.GetFamilyFromID(form.SelectedFamilyId)
+                    Wing.CurrentRegion.PolarFamiliy = DataStore.Model.PolarDataBase.GetFamilyFromId(form.SelectedFamilyId)
                     Wing.CurrentRegion.PolarId = form.SelectedFamilyId
                 End If
             End If
@@ -1004,11 +1004,11 @@ Public Class WingControl
 
         If (Wing.CurrentRegion IsNot Nothing) Then
 
-            Dim form As New FormCamberLine(Wing.CurrentRegion.CamberLineId)
+            Dim Form As New FormCamberLine(Wing.CurrentRegion.CamberLineId)
 
-            Select Case form.ShowDialog()
+            Select Case Form.ShowDialog()
                 Case DialogResult.OK
-                    Wing.CurrentRegion.CamberLineId = form.SelectedCamberID
+                    Wing.CurrentRegion.CamberLineId = Form.SelectedCamberID
                     Wing.GenerateMesh()
                     RaiseEvent RefreshModelView()
             End Select

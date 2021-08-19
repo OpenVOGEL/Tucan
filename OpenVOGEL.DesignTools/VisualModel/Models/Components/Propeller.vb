@@ -69,11 +69,10 @@ Namespace VisualModel.Models.Components
             NumberOfChordPanels = 5
             NumberOfSpanPanels = 20
             Diameter = 2.0#
-            CentralRing = 10.0#
             CollectivePitch = 0.0#
             TwistFunction.Add(New Vector2(0.0, 45.0))
             TwistFunction.Add(New Vector2(1.0, 15.0))
-            ChordFunction.Add(New Vector2(0.0, 0.25))
+            ChordFunction.Add(New Vector2(0.1, 0.25))
             ChordFunction.Add(New Vector2(1.0, 0.1))
 
             GenerateMesh()
@@ -110,11 +109,6 @@ Namespace VisualModel.Models.Components
         ''' The diameter of the propeller
         ''' </summary>
         Public Property Diameter As Double
-
-        ''' <summary>
-        ''' The diameter of the inner part relative to the outer diameter (%)
-        ''' </summary>
-        Public Property CentralRing As Double
 
         ''' <summary>
         ''' The collective pitch angle
@@ -241,7 +235,8 @@ Namespace VisualModel.Models.Components
             '---------------------------------------------------------------------
 
             Dim Camber As CamberLine = GetCamberLineFromId(CamberLineId)
-            Dim CentralDiameter As Double = CentralRing * Diameter / 100.0#
+
+            Dim Xmin As Double = ChordFunction(0).X
 
             For K = 1 To NumberOfBlades
 
@@ -249,8 +244,8 @@ Namespace VisualModel.Models.Components
 
                 For I = 0 To NumberOfSpanPanels
 
-                    Dim S As Double = CDbl(I) / CDbl(NumberOfSpanPanels)
-                    Dim R As Double = 0.5# * (CentralDiameter + S * (Diameter - CentralDiameter))
+                    Dim S As Double = Xmin + (1.0# - Xmin) * CDbl(I) / CDbl(NumberOfSpanPanels)
+                    Dim R As Double = 0.5# * S * Diameter
                     Dim C As Double = 0.5# * Diameter * Chord(S)
                     Dim T As Double = (CollectivePitch + Twist(S)) * Math.PI / 180.0#
 

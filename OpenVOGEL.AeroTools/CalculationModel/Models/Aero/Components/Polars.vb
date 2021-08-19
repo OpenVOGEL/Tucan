@@ -341,7 +341,7 @@ Namespace CalculationModel.Models.Aero.Components
 
         Public Property Name As String = "Polar family"
 
-        Public Property ID As Guid = Guid.NewGuid
+        Public Property Id As Guid = Guid.NewGuid
 
         Public Sub SortPolars()
 
@@ -368,7 +368,7 @@ Namespace CalculationModel.Models.Aero.Components
             writer.WriteStartElement("Info")
             writer.WriteAttributeString("NumberOfPolars", String.Format("{0}", Polars.Count))
             writer.WriteAttributeString("Name", Name)
-            writer.WriteAttributeString("ID", ID.ToString)
+            writer.WriteAttributeString("ID", Id.ToString)
             writer.WriteEndElement()
 
             Dim i As Integer = 0
@@ -407,7 +407,7 @@ Namespace CalculationModel.Models.Aero.Components
                 Select Case reader.Name
                     Case "Info"
                         Name = IOXML.ReadString(reader, "Name", "Polar family")
-                        ID = New Guid(IOXML.ReadString(reader, "ID", Guid.NewGuid.ToString))
+                        Id = New Guid(IOXML.ReadString(reader, "ID", Guid.NewGuid.ToString))
                     Case "QuadraticPolar"
                         Dim polar As New QuadraticPolar
                         polar.ReadFromXML(reader)
@@ -425,7 +425,7 @@ Namespace CalculationModel.Models.Aero.Components
 
         Public Overloads Sub ReadBinary(ByRef r As BinaryReader)
             Try
-                ID = New Guid(r.ReadString)
+                Id = New Guid(r.ReadString)
                 Name = r.ReadString
                 For i = 1 To r.ReadInt32
                     Dim type As Short = r.ReadInt16
@@ -447,7 +447,7 @@ Namespace CalculationModel.Models.Aero.Components
 
         Public Overloads Sub WriteBinary(ByRef w As BinaryWriter)
 
-            w.Write(ID.ToString)
+            w.Write(Id.ToString)
             w.Write(Name)
             w.Write(Polars.Count)
 
@@ -558,7 +558,7 @@ Namespace CalculationModel.Models.Aero.Components
 
                 Dim newFamily As New PolarFamily
                 newFamily.Name = Family.Name
-                newFamily.ID = Family.ID
+                newFamily.Id = Family.Id
                 db.Families.Add(newFamily)
 
                 For Each Polar In Family.Polars
@@ -604,9 +604,9 @@ Namespace CalculationModel.Models.Aero.Components
 
         End Sub
 
-        Function GetFamilyFromID(FamilyID As Guid) As PolarFamily
+        Function GetFamilyFromId(FamilyID As Guid) As PolarFamily
             For Each Family In Families
-                If Family.ID.Equals(FamilyID) Then
+                If Family.Id.Equals(FamilyID) Then
                     Return Family
                 End If
             Next

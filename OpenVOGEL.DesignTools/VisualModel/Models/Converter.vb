@@ -50,6 +50,9 @@ Imports OpenVOGEL.DesignTools.VisualModel.Models.Components
 '     by the introduction of a single vortex
 ' For engine nacelles:
 '   > the wake is loaded at the shedding edge (trailing edge)
+' Propellers:
+'   > the chorwise strips are generated using the polars
+'   > the wakes are loaded at the shedding edge (trailing edge) of each blade
 '#############################################################################
 Namespace VisualModel.Models
 
@@ -88,15 +91,11 @@ Namespace VisualModel.Models
 
             If GenerateStructure Then This.StructuralLinks = New List(Of StructuralLink)
 
-            Dim count As Integer = 0
-
             For ObjectIndex = 0 To Model.Objects.Count - 1
 
                 If TypeOf Model.Objects(ObjectIndex) Is LiftingSurface AndAlso Model.Objects(ObjectIndex).IncludeInCalculation Then
 
                     Dim Wing As LiftingSurface = Model.Objects(ObjectIndex)
-
-                    count += 1
 
                     This.AddLiftingSurface(Wing, False, GenerateStructure, Wing.Symmetric)
 
@@ -176,6 +175,21 @@ Namespace VisualModel.Models
                     Dim Nacelle As JetEngine = Model.Objects(ObjectIndex)
 
                     This.AddJetEngine(Nacelle)
+
+                End If
+
+            Next
+
+            ' Add propeller blades
+            '---------------------------------------------------
+
+            For ObjectIndex = 0 To Model.Objects.Count - 1
+
+                If TypeOf Model.Objects(ObjectIndex) Is Propeller AndAlso Model.Objects(ObjectIndex).IncludeInCalculation Then
+
+                    Dim Prop As Propeller = Model.Objects(ObjectIndex)
+
+                    This.AddPropeller(Prop)
 
                 End If
 
@@ -326,7 +340,7 @@ Namespace VisualModel.Models
 
             If Surface.ConvectWake Then
 
-                Dim Wake As New AeroTools.CalculationModel.Models.Aero.Wake
+                Dim Wake As New Wake
 
                 For PrimitiveIndex = Surface.FirstPrimitiveNode To Surface.LastPrimitiveNode
                     Wake.Primitive.Nodes.Add(Surface.GetPrimitiveNodeIndex(PrimitiveIndex) - 1)
@@ -491,6 +505,95 @@ Namespace VisualModel.Models
                 Next
 
                 'End If
+
+            Next
+
+        End Sub
+
+        ''' <summary>
+        ''' Adds a bounded lattice with wakes from a propeller.
+        ''' </summary>
+        <Extension()>
+        Private Sub AddPropeller(This As Solver,
+                                 ByRef Surface As Propeller)
+
+            Dim NumberOfChordNodes As Integer = Surface.NumberOfChordPanels + 1
+            Dim NumberOfSpanNodes As Integer = Surface.NumberOfSpanPanels + 1
+            Dim NumberOfBladeNodes As Integer = NumberOfChordNodes * NumberOfSpanNodes
+            Dim NumberOfBladePanels As Integer = Surface.NumberOfChordPanels * Surface.NumberOfSpanPanels
+
+            Dim NodeIndex As Integer = 0
+            Dim PanelIndex As Integer = 0
+            Dim NodeOffset As Integer = 0
+
+            For K = 1 To Surface.NumberOfBlades
+
+                Dim Lattice As New BoundedLattice
+
+                This.Lattices.Add(Lattice)
+
+                Dim Wake As New Wake
+
+                Lattice.Wakes.Add(Wake)
+
+                Wake.CuttingStep = 50 'Surface.CuttingStep
+
+                Wake.SupressInnerCircuation = True
+
+                ' Add nodal points
+                '-----------------------------------------
+
+                Dim N As Integer = 0
+
+                For I = 1 To NumberOfSpanNodes
+
+                    For J = 1 To NumberOfChordNodes
+
+                        Lattice.AddNode(Surface.Mesh.Nodes(NodeIndex).Position)
+
+                        If J = NumberOfChordNodes Then
+
+                            Wake.Primitive.Nodes.Add(N)
+
+                        End If
+
+                        N += 1
+                        NodeIndex += 1
+
+                    Next
+
+                Next
+
+                ' Add rings
+                '-----------------------------------------
+
+                Dim P As Integer = 0
+
+                For I = 1 To Surface.NumberOfSpanPanels
+
+                    For J = 1 To Surface.NumberOfChordPanels
+
+                        Dim Node1 As Integer = Surface.Mesh.Panels(PanelIndex).N1 - NodeOffset
+                        Dim Node2 As Integer = Surface.Mesh.Panels(PanelIndex).N2 - NodeOffset
+                        Dim Node3 As Integer = Surface.Mesh.Panels(PanelIndex).N3 - NodeOffset
+                        Dim Node4 As Integer = Surface.Mesh.Panels(PanelIndex).N4 - NodeOffset
+
+                        Lattice.AddVortexRing4(Node1, Node2, Node3, Node4, False, True)
+
+                        If J = Surface.NumberOfChordPanels Then
+
+                            Wake.Primitive.Rings.Add(P)
+
+                        End If
+
+                        P += 1
+                        PanelIndex += 1
+
+                    Next
+
+                Next
+
+                NodeOffset += NumberOfBladeNodes
 
             Next
 

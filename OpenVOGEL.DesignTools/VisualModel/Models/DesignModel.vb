@@ -203,7 +203,7 @@ Namespace VisualModel.Models
 
                                         If Not Region.PolarId.Equals(Guid.Empty) Then
 
-                                            Region.PolarFamiliy = PolarDataBase.GetFamilyFromID(Region.PolarId)
+                                            Region.PolarFamiliy = PolarDataBase.GetFamilyFromId(Region.PolarId)
 
                                         End If
 

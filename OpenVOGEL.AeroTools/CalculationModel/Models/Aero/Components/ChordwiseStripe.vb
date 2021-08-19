@@ -273,7 +273,7 @@ Namespace CalculationModel.Models.Aero.Components
                 ' Polar id
                 '-----------------------------------
                 Dim PolarId = New Guid(Reader.ReadString())
-                Polars = PolarData.GetFamilyFromID(PolarId)
+                Polars = PolarData.GetFamilyFromId(PolarId)
 
                 ' Geometric properties
                 '-----------------------------------
@@ -344,7 +344,7 @@ Namespace CalculationModel.Models.Aero.Components
             If IsNothing(Polars) Then
                 Writer.Write(Guid.Empty.ToString)
             Else
-                Writer.Write(Polars.ID.ToString)
+                Writer.Write(Polars.Id.ToString)
             End If
 
             ' Geometric properties

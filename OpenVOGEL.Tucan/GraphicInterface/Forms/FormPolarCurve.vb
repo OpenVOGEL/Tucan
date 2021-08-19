@@ -50,7 +50,7 @@ Public Class FormPolarCurve
 
         If lbFamilies.Items.Count > 0 Then
             For i = 0 To PolarDatabase.Families.Count - 1
-                If PolarDatabase.Families(i).ID.Equals(SelectedFamiyID) Then
+                If PolarDatabase.Families(i).Id.Equals(SelectedFamiyID) Then
                     lbFamilies.SelectedIndex = i
                     Exit For
                 End If
@@ -74,7 +74,7 @@ Public Class FormPolarCurve
             If IsNothing(CurrentFamily) Then
                 Return Guid.Empty
             Else
-                Return CurrentFamily.ID
+                Return CurrentFamily.Id
             End If
         End Get
     End Property

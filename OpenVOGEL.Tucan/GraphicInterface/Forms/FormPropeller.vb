@@ -1,4 +1,28 @@
-﻿
+﻿'#############################################################################
+'OpenVOGEL (openvogel.org)
+'Open source software for aerodynamics
+'Copyright (C) 2021 Guillermo Hazebrouck (guillermo.hazebrouck@openvogel.org)
+
+'This program Is free software: you can redistribute it And/Or modify
+'it under the terms Of the GNU General Public License As published by
+'the Free Software Foundation, either version 3 Of the License, Or
+'(at your option) any later version.
+
+'This program Is distributed In the hope that it will be useful,
+'but WITHOUT ANY WARRANTY; without even the implied warranty Of
+'MERCHANTABILITY Or FITNESS FOR A PARTICULAR PURPOSE.  See the
+'GNU General Public License For more details.
+
+'You should have received a copy Of the GNU General Public License
+'along with this program.  If Not, see < http:  //www.gnu.org/licenses/>.
+
+'' Standard .NET frameworks dependencies
+'-----------------------------------------------------------------------------
+
+
+'' OpenVOGEL dependencies
+'-----------------------------------------------------------------------------
+Imports OpenVOGEL.DesignTools.DataStore
 Imports OpenVOGEL.DesignTools.VisualModel.Models.Components
 
 Public Class FormPropeller
@@ -16,7 +40,6 @@ Public Class FormPropeller
         SetUpControls()
 
         AddHandler nudDiameter.ValueChanged, AddressOf RequestUpdate
-        AddHandler nudCentral.ValueChanged, AddressOf RequestUpdate
         AddHandler nudPitch.ValueChanged, AddressOf RequestUpdate
         AddHandler nudChordPanels.ValueChanged, AddressOf RequestUpdate
         AddHandler nudWakeLength.ValueChanged, AddressOf RequestUpdate
@@ -32,12 +55,6 @@ Public Class FormPropeller
         nudDiameter.DecimalPlaces = 3
         nudDiameter.Minimum = 0.0
         nudDiameter.Value = _Propeller.Diameter
-
-        nudCentral.DecimalPlaces = 1
-        nudCentral.Minimum = 0.0
-        nudCentral.Maximum = 100.0
-        nudCentral.Increment = 1.0
-        nudCentral.Value = _Propeller.CentralRing
 
         nudPitch.DecimalPlaces = 1
         nudPitch.Minimum = -180.0
@@ -64,7 +81,6 @@ Public Class FormPropeller
         If _Propeller IsNot Nothing Then
 
             _Propeller.Diameter = nudDiameter.Value
-            _Propeller.CentralRing = nudCentral.Value
             _Propeller.CollectivePitch = nudPitch.Value
             _Propeller.Name = tbxName.Text
             _Propeller.NumberOfBlades = nudBlades.Value
@@ -88,6 +104,7 @@ Public Class FormPropeller
     Private Sub pbxPlot_Paint(sender As Object, e As PaintEventArgs) Handles pbxPlot.Paint
 
         Dim G As Graphics = e.Graphics
+        G.FillRectangle(Background, pbxPlot.DisplayRectangle)
         G.TranslateTransform(0.0, pbxPlot.Height)
         G.ScaleTransform(1.0, -1.0)
 
@@ -134,6 +151,65 @@ Public Class FormPropeller
                 pbxPlot.Refresh()
 
                 RaiseEvent UpdateModel()
+
+            End If
+
+        End If
+
+    End Sub
+
+    Private Sub btnAirfoil_Click(sender As Object, e As EventArgs) Handles btnAirfoil.Click
+
+        If _Propeller IsNot Nothing Then
+
+            Dim Form As New FormCamberLine(_Propeller.CamberLineId)
+
+            Select Case Form.ShowDialog()
+
+                Case DialogResult.OK
+
+                    _Propeller.CamberLineId = Form.SelectedCamberID
+                    _Propeller.GenerateMesh()
+
+                    RaiseEvent UpdateModel()
+
+            End Select
+
+        End If
+
+    End Sub
+
+    Private Sub btnInertia_Click(sender As Object, e As EventArgs) Handles btnInertia.Click
+
+        If _Propeller IsNot Nothing Then
+
+            FormInertia.SetInertia(_Propeller.Inertia)
+
+            If FormInertia.ShowDialog() = DialogResult.OK Then
+                _Propeller.Inertia = FormInertia.GetInertia
+            End If
+
+        End If
+
+    End Sub
+
+    Private Sub btnPolar_Click(sender As Object, e As EventArgs) Handles btnPolar.Click
+
+        If Model.PolarDataBase IsNot Nothing And _Propeller IsNot _Propeller Then
+
+            Dim Id As Guid = Guid.Empty
+            If _Propeller.PolarFamiliy IsNot Nothing Then
+                Id = _Propeller.PolarFamiliy.Id
+            End If
+
+            Dim Form As New FormPolarCurve(Model.PolarDataBase, Id)
+
+            If Form.ShowDialog() = vbOK Then
+
+                If Not Form.SelectedFamilyId.Equals(Guid.Empty) Then
+                    _Propeller.PolarFamiliy = Model.PolarDataBase.GetFamilyFromId(Form.SelectedFamilyId)
+                    _Propeller.PolarId = Form.SelectedFamilyId
+                End If
 
             End If
 
