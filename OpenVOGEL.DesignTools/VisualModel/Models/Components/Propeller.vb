@@ -251,7 +251,7 @@ Namespace VisualModel.Models.Components
 
                     For J = 0 To NumberOfChordPanels
 
-                        Dim Q As Double = 1.0# - J / NumberOfChordPanels
+                        Dim Q As Double = J / NumberOfChordPanels
                         Dim B As Double = 0.0#
                         If Camber IsNot Nothing Then
                             B = Camber.Y(Q)
