@@ -45,7 +45,7 @@ Namespace CalculationModel.Solver
         ''' The first number is increased when functionality changes are introduced.
         ''' The second number is increased when there are fixes without touching the basic features.
         ''' </summary>
-        Public Shared ReadOnly Property Version As String = "4.3-2021.05"
+        Public Shared ReadOnly Property Version As String = "5.0-2021.08"
 
         ''' <summary>
         ''' Read a written snapshot
@@ -463,7 +463,7 @@ Namespace CalculationModel.Solver
             RaiseEvent PushResultLine("")
 
             RaiseEvent PushResultLine("# Reference velocity [m/s]")
-            RaiseEvent PushResultLine(String.Format("V  = {0,14:E6}", StreamVelocity.EuclideanNorm))
+            RaiseEvent PushResultLine(String.Format("V  = {0,14:E6}", StreamVelocity.Norm2))
             RaiseEvent PushResultLine(String.Format("Vx = {0,14:E6}", StreamVelocity.X))
             RaiseEvent PushResultLine(String.Format("Vy = {0,14:E6}", StreamVelocity.Y))
             RaiseEvent PushResultLine(String.Format("Vz = {0,14:E6}", StreamVelocity.Z))

@@ -9,10 +9,10 @@ Imports System.Runtime.InteropServices
 ' Review the values of the assembly attributes
 
 <Assembly: AssemblyTitle("Tucan")>
-<Assembly: AssemblyDescription("Software for aerodynamic analysis and aircraft design")>
+<Assembly: AssemblyDescription("Aeromechanics in .NET")>
 <Assembly: AssemblyCompany("OpenVOGEL")>
 <Assembly: AssemblyProduct("Tucan")>
-<Assembly: AssemblyCopyright("Copyright ©  2020 - Guillermo A. Hazebrouck")>
+<Assembly: AssemblyCopyright("Copyright ©  2021 - Guillermo A. Hazebrouck")>
 <Assembly: AssemblyTrademark("OpenVOGEL Tucan")>
 
 <Assembly: ComVisible(False)>
@@ -31,5 +31,5 @@ Imports System.Runtime.InteropServices
 ' by using the '*' as shown below:
 ' <Assembly: AssemblyVersion("1.0.*")> 
 
-<Assembly: AssemblyVersion("3.3.2021.05")>
+<Assembly: AssemblyVersion("4.0.2021.01")>
 <Assembly: AssemblyFileVersion("0.0.0.0")>

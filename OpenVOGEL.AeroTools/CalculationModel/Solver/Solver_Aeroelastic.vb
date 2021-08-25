@@ -83,7 +83,7 @@ Namespace CalculationModel.Solver
 
             ' Build starting matrix and RHS:
 
-            Dim WithStreamOmega As Boolean = Stream.Rotation.EuclideanNorm > 0.00001
+            Dim WithStreamOmega As Boolean = Stream.Rotation.Norm2 > 0.00001
 
             BuildMatrixForDoublets(True)
             BuildRightHandSide1()

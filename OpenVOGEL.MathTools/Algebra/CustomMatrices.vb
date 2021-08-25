@@ -167,7 +167,7 @@ Namespace Algebra.CustomMatrices
 
     Public Class Matrix3x3
 
-        Private RM(2, 2) As Double
+        Private Elements(2, 2) As Double
 
         ''' <summary>
         ''' Sets and gets the value of an item. Indices are 1-based (from 1 to 3)
@@ -178,29 +178,29 @@ Namespace Algebra.CustomMatrices
         Public Property Item(ByVal i As Integer, ByVal j As Integer) As Double
             Get
                 If 1 < i < 3 And 1 < i < 3 Then
-                    Return RM(i - 1, j - 1)
+                    Return Elements(i - 1, j - 1)
                 Else
                     Return 0
                 End If
             End Get
             Set(ByVal value As Double)
                 If 1 < i < 3 And 1 < i < 3 Then
-                    RM(i - 1, j - 1) = value
+                    Elements(i - 1, j - 1) = value
                 End If
             End Set
         End Property
 
-        Public ReadOnly Property Determinante As Double
+        Public ReadOnly Property Determinant As Double
             Get
-                Return Item(1, 1) * (Item(2, 2) * Item(3, 3) - Item(3, 2) * Item(2, 3)) - _
-                Item(1, 2) * (Item(2, 1) * Item(3, 3) - Item(3, 1) * Item(3, 2)) + _
+                Return Item(1, 1) * (Item(2, 2) * Item(3, 3) - Item(3, 2) * Item(2, 3)) -
+                Item(1, 2) * (Item(2, 1) * Item(3, 3) - Item(3, 1) * Item(3, 2)) +
                 Item(1, 3) * (Item(2, 1) * Item(3, 2) - Item(3, 1) * Item(2, 2))
             End Get
         End Property
 
-        Public Sub Transponer()
+        Public Sub Transpose()
             Dim Matriz As New Matrix3x3
-            Matriz.RM = Me.RM
+            Matriz.Elements = Me.Elements
             For i = 1 To 3
                 For j = 1 To 3
                     Me.Item(i, j) = Matriz.Item(j, i)
@@ -208,7 +208,7 @@ Namespace Algebra.CustomMatrices
             Next
         End Sub
 
-        Public Sub Invertir()
+        Public Sub Invert()
 
             Dim m As New DotNumerics.LinearAlgebra.Matrix(3)
 
@@ -246,30 +246,38 @@ Namespace Algebra.CustomMatrices
 
         Inherits Matrix3x3
 
-        Public Sub Generate(ByVal t1 As Double, ByVal t2 As Double, ByVal t3 As Double)
+        ''' <summary>
+        ''' Generates the rotation matrix from a sequence of rotations
+        ''' </summary>
+        ''' <param name="Orientation"></param>
+        Public Sub Generate(ByVal Angle1 As Double, ByVal Angle2 As Double, ByVal Angle3 As Double)
 
-            Item(1, 1) = Math.Cos(t1) * Math.Cos(t2)
-            Item(1, 2) = Math.Cos(t1) * Math.Sin(t2) * Math.Sin(t3) - Math.Sin(t1) * Math.Cos(t3)
-            Item(1, 3) = Math.Sin(t1) * Math.Sin(t3) + Math.Cos(t1) * Math.Sin(t2) * Math.Cos(t3)
-            Item(2, 1) = Math.Sin(t1) * Math.Cos(t2)
-            Item(2, 2) = Math.Sin(t1) * Math.Sin(t2) * Math.Sin(t3) + Math.Cos(t1) * Math.Cos(t3)
-            Item(2, 3) = Math.Sin(t1) * Math.Sin(t2) * Math.Cos(t3) - Math.Cos(t1) * Math.Sin(t3)
-            Item(3, 1) = -Math.Sin(t2)
-            Item(3, 2) = Math.Cos(t2) * Math.Sin(t3)
-            Item(3, 3) = Math.Cos(t2) * Math.Cos(t3)
+            Item(1, 1) = Math.Cos(Angle1) * Math.Cos(Angle2)
+            Item(1, 2) = Math.Cos(Angle1) * Math.Sin(Angle2) * Math.Sin(Angle3) - Math.Sin(Angle1) * Math.Cos(Angle3)
+            Item(1, 3) = Math.Sin(Angle1) * Math.Sin(Angle3) + Math.Cos(Angle1) * Math.Sin(Angle2) * Math.Cos(Angle3)
+            Item(2, 1) = Math.Sin(Angle1) * Math.Cos(Angle2)
+            Item(2, 2) = Math.Sin(Angle1) * Math.Sin(Angle2) * Math.Sin(Angle3) + Math.Cos(Angle1) * Math.Cos(Angle3)
+            Item(2, 3) = Math.Sin(Angle1) * Math.Sin(Angle2) * Math.Cos(Angle3) - Math.Cos(Angle1) * Math.Sin(Angle3)
+            Item(3, 1) = -Math.Sin(Angle2)
+            Item(3, 2) = Math.Cos(Angle2) * Math.Sin(Angle3)
+            Item(3, 3) = Math.Cos(Angle2) * Math.Cos(Angle3)
 
         End Sub
 
+        ''' <summary>
+        ''' Generates the rotation matrix from a sequence of rotations
+        ''' </summary>
+        ''' <param name="Orientation"></param>
         Public Sub Generate(ByVal Orientation As OrientationAngles)
 
-            Dim c1 As Double = Math.Cos(Orientation.R1)
-            Dim s1 As Double = Math.Sin(Orientation.R1)
+            Dim c1 As Double = Math.Cos(Orientation.Angle1)
+            Dim s1 As Double = Math.Sin(Orientation.Angle1)
 
-            Dim c2 As Double = Math.Cos(Orientation.R2)
-            Dim s2 As Double = Math.Sin(Orientation.R2)
+            Dim c2 As Double = Math.Cos(Orientation.Angle2)
+            Dim s2 As Double = Math.Sin(Orientation.Angle2)
 
-            Dim c3 As Double = Math.Cos(Orientation.R3)
-            Dim s3 As Double = Math.Sin(Orientation.R3)
+            Dim c3 As Double = Math.Cos(Orientation.Angle3)
+            Dim s3 As Double = Math.Sin(Orientation.Angle3)
 
             Select Case Orientation.Sequence
 
@@ -298,6 +306,26 @@ Namespace Algebra.CustomMatrices
                     Item(3, 3) = c1 * c2
 
             End Select
+
+        End Sub
+
+        ''' <summary>
+        ''' Generates the rotation matrix from a quaternion
+        ''' </summary>
+        ''' <param name="Orientation"></param>
+        Public Sub Generate(ByVal Qr As Double, ByVal Qi As Double, ByVal Qj As Double, ByVal Qk As Double)
+
+            Dim S As Double = 1 / (Qr * Qr + Qi * Qi + Qj * Qj + Qk * Qk)
+
+            Item(1, 1) = 1.0# - 2.0# * S * (Qj * Qj + Qk * Qk)
+            Item(1, 2) = 2.0# * S * (Qi * Qj - Qk * Qr)
+            Item(1, 3) = 2.0# * S * (Qi * Qk + Qj * Qr)
+            Item(2, 1) = 2.0# * S * (Qi * Qj + Qk * Qr)
+            Item(2, 2) = 1.0# - 2.0# * S * (Qi * Qi + Qk * Qk)
+            Item(2, 3) = 2.0# * S * (Qj * Qk - Qi * Qr)
+            Item(3, 1) = 2.0# * S * (Qi * Qk - Qj * Qr)
+            Item(3, 2) = 2.0# * S * (Qj * Qk + Qi * Qr)
+            Item(3, 3) = 1.0# - 2.0# * S * (Qi * Qi + Qj * Qj)
 
         End Sub
 

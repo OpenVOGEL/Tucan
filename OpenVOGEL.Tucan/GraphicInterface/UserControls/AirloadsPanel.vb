@@ -290,7 +290,7 @@ Public Class AirloadsPanel
 
             Dim Frame As ResultFrame = ProjectRoot.Results.ActiveFrame
 
-            rbVelocity.Value = Frame.StreamVelocity.EuclideanNorm
+            rbVelocity.Value = Frame.StreamVelocity.Norm2
             rbDensity.Value = ProjectRoot.Results.Settings.Density
             rbAlpha.Value = Frame.TotalAirLoads.Alfa
             rbBeta.Value = Frame.TotalAirLoads.Beta
@@ -458,7 +458,7 @@ Public Class AirloadsPanel
 
                     For I = 0 To Vectors.Count - 1
 
-                        Data(I).Y = Vectors(I).Vector.EuclideanNorm
+                        Data(I).Y = Vectors(I).Vector.Norm2
 
                         If I = 0 Then
                             ymax = Data(I).Y

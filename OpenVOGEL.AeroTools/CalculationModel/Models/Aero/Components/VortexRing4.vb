@@ -399,7 +399,7 @@ Namespace CalculationModel.Models.Aero.Components
             _Basis.W.Y = _Basis.U.Z * V2X - _Basis.U.X * V2Z
             _Basis.W.Z = _Basis.U.X * V2Y - _Basis.U.Y * V2X
 
-            _Area = 0.5 * _Basis.W.EuclideanNorm
+            _Area = 0.5 * _Basis.W.Norm2
 
             _Basis.U.Normalize()
             _Basis.W.Normalize()

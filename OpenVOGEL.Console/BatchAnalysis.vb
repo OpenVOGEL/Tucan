@@ -43,7 +43,7 @@ Module BatchAnalysis
         Dim N As Integer = (Alfa2 - Alfa1) / AlfaS
         Dim Loads As New List(Of AirLoads)
 
-        Dim V As Double = ProjectRoot.SimulationSettings.StreamVelocity.EuclideanNorm
+        Dim V As Double = ProjectRoot.SimulationSettings.StreamVelocity.Norm2
 
         For I = 0 To N
 
@@ -131,7 +131,7 @@ Module BatchAnalysis
         Dim N As Integer = (Beta2 - Beta1) / BetaS
         Dim Loads As New List(Of AirLoads)
 
-        Dim V As Double = ProjectRoot.SimulationSettings.StreamVelocity.EuclideanNorm
+        Dim V As Double = ProjectRoot.SimulationSettings.StreamVelocity.Norm2
 
         For I = 0 To N
 
@@ -275,7 +275,7 @@ Module BatchAnalysis
         Dim N As Integer = (Delta2 - Delta1) / DeltaS
         Dim Loads As New List(Of AirLoads)
 
-        Dim V As Double = ProjectRoot.SimulationSettings.StreamVelocity.EuclideanNorm
+        Dim V As Double = ProjectRoot.SimulationSettings.StreamVelocity.Norm2
 
         ' Set the incidence angle
         '-----------------------------------------------------------------
@@ -449,7 +449,7 @@ Module BatchAnalysis
         Dim Nd As Integer = (Delta2 - Delta1) / DeltaS
         Dim Loads As New List(Of AirLoads)
 
-        Dim V As Double = ProjectRoot.SimulationSettings.StreamVelocity.EuclideanNorm
+        Dim V As Double = ProjectRoot.SimulationSettings.StreamVelocity.Norm2
 
         For I = 0 To Na
 
@@ -830,7 +830,7 @@ Module BatchAnalysis
         PrintLine(FileId, "// Original model: " & ProjectRoot.FilePath)
         PrintLine(FileId, "")
 
-        Dim Velocity As Double = ProjectRoot.SimulationSettings.StreamVelocity.EuclideanNorm
+        Dim Velocity As Double = ProjectRoot.SimulationSettings.StreamVelocity.Norm2
         Dim Density As Double = ProjectRoot.SimulationSettings.Density
         Dim Area As Double = Loads(0).Area
 
@@ -938,6 +938,88 @@ Module BatchAnalysis
         PrintLine(FileId, "Stl_V = 5 * ones(1, 10)")
         PrintLine(FileId, "contour2d(M, X, n, 10, Stl_n)")
         PrintLine(FileId, "contour2d(M, X, V, 10, Stl_V)")
+
+        FileClose(FileId)
+
+    End Sub
+
+    ''' <summary>
+    ''' Performs a series of steady analysis between Omega1 and Omega2 using the OmegaS in between.
+    ''' </summary>
+    ''' <param name="Alfa1">The initial angular velocity.</param>
+    ''' <param name="Alfa2">The final angular velocity.</param>
+    ''' <param name="AlfaS">The step.</param>
+    Public Sub PropellerScan(JMin As Double, JMax As Double, Steps As Integer, Rpm As Double)
+
+        Dim D As Double = 0.0#
+        Dim E As Double = 0.0#
+
+        If Model.Objects.Count = 1 AndAlso TypeOf (Model.Objects(0)) Is Propeller Then
+
+            Dim Prop As Propeller = Model.Objects(0)
+
+            E = 1.5 * Prop.Diameter / Prop.NumberOfSpanPanels
+
+            D = Prop.Diameter
+
+        Else
+
+            System.Console.WriteLine("Error: incorrect input data for propeller scan, make sure there is only one propeller")
+
+            Exit Sub
+
+        End If
+
+        Dim FileId As Integer = FreeFile()
+
+        FileOpen(FileId, Path.Combine(Path.GetDirectoryName(FilePath), Path.GetFileNameWithoutExtension(FilePath)) & "_batch.dat", OpenMode.Output)
+
+        PrintLine(FileId, "OpenVOGEL propeller performance scan")
+        PrintLine(FileId, "Kernel version: " & Solver.Solver.Version)
+        PrintLine(FileId, "Original model: " & ProjectRoot.FilePath)
+        PrintLine(FileId, "")
+        PrintLine(FileId, String.Format("{0} RPM", Rpm))
+        PrintLine(FileId, "")
+
+        ProjectRoot.SimulationSettings.ExtendWakes = False
+
+        For I = 0 To Steps
+
+            Dim J As Double = JMin + I / Steps * (JMax - JMin)
+
+            System.Console.WriteLine(String.Format("STEP {0} of {1} (J={2})", I, Steps, J))
+
+            Dim N As Double = Rpm / 60.0
+
+            Dim W As Double = Rpm * Math.PI / 30.0#
+
+            Dim V As Double = J * N * D
+
+            Dim Rho As Double = ProjectRoot.SimulationSettings.Density
+
+            ProjectRoot.SimulationSettings.StreamRotation.X = W
+
+            ProjectRoot.SimulationSettings.StreamVelocity.X = V
+
+            ProjectRoot.SimulationSettings.Interval = E / (V ^ 2 + (0.5 * D * W) ^ 2) ^ 0.5
+
+            ProjectRoot.SimulationSettings.SimulationSteps = 150
+
+            Dim Kernel As New Solver.Solver
+
+            ProjectRoot.StartCalculation(CalculationType.SteadyState, Kernel)
+
+            Dim Load As AirLoads = Kernel.GlobalAirloads
+
+            Dim Ct As Double = -Load.Force.X / (Rho * N ^ 2 * D ^ 4)
+
+            Dim Cp As Double = W * Load.Moment.X / (Rho * N ^ 3 * D ^ 5)
+
+            Dim Eta As Double = J * Ct / Cp
+
+            PrintLine(FileId, String.Format("{0,14:E6} {1,14:E6} {2,6:F3} {3,14:E6} {4,14:E6} {5,8:F5} {6,8:F5} {7,8:F5}", V, W, J, Load.Force.X, Load.Moment.X, Ct, Cp, Eta))
+
+        Next
 
         FileClose(FileId)
 

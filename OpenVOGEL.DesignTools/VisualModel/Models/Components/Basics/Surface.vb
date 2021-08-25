@@ -167,9 +167,9 @@ Namespace VisualModel.Models.Components.Basics
         ''' <param name="Ori"></param>
         Public Overridable Sub Orientate(ByVal Point As Vector3, ByVal Ori As OrientationAngles) Implements IOperational.Orientate
 
-            Orientation.R1 = Ori.R1
-            Orientation.R2 = Ori.R2
-            Orientation.R3 = Ori.R3
+            Orientation.Angle1 = Ori.Angle1
+            Orientation.Angle2 = Ori.Angle2
+            Orientation.Angle3 = Ori.Angle3
 
             CenterOfRotation.X = Point.X
             CenterOfRotation.Y = Point.Y

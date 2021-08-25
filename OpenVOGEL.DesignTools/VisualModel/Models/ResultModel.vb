@@ -381,9 +381,9 @@ Namespace VisualModel.Models
                             J.AntiTransform(Settings.InertialBasis)
 
                             Frame.Orientation.Sequence = RotationSequence.XYZ
-                            Frame.Orientation.R1 = Math.Asin(I.Y / Math.Sqrt(1 - I.Z ^ 2))
-                            Frame.Orientation.R2 = Math.Asin(-I.Z)
-                            Frame.Orientation.R3 = Math.Asin(J.Z / Math.Sqrt(1 - I.Z ^ 2))
+                            Frame.Orientation.Angle1 = Math.Asin(I.Y / Math.Sqrt(1 - I.Z ^ 2))
+                            Frame.Orientation.Angle2 = Math.Asin(-I.Z)
+                            Frame.Orientation.Angle3 = Math.Asin(J.Z / Math.Sqrt(1 - I.Z ^ 2))
                             Frame.Orientation.ToDegrees()
 
                             ' Load position
@@ -659,7 +659,7 @@ Namespace VisualModel.Models
 
                     ' Lift vectors
                     '-----------------------------------
-                    If Stripe.Lift.EuclideanNorm > 0.0 Then
+                    If Stripe.Lift.Norm2 > 0.0 Then
                         Dim LiftVector As New FixedVector
                         LiftVector.Vector.Assign(Stripe.Lift)
                         LiftVector.Vector.Normalize()
@@ -671,7 +671,7 @@ Namespace VisualModel.Models
 
                     ' Induced drag vectors
                     '-----------------------------------
-                    If Stripe.InducedDrag.EuclideanNorm > 0.0 Then
+                    If Stripe.InducedDrag.Norm2 > 0.0 Then
                         Dim DragVector As New FixedVector
                         DragVector.Vector.Assign(Stripe.InducedDrag)
                         DragVector.Vector.Normalize()
@@ -683,7 +683,7 @@ Namespace VisualModel.Models
 
                     ' Skin drag  vectors
                     '-----------------------------------
-                    If Stripe.SkinDrag.EuclideanNorm > 0.0 Then
+                    If Stripe.SkinDrag.Norm2 > 0.0 Then
                         Dim DragVector As New FixedVector
                         DragVector.Vector.Assign(Stripe.SkinDrag)
                         DragVector.Vector.Normalize()

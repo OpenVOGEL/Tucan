@@ -34,9 +34,11 @@ Imports OpenVOGEL.MathTools.Algebra.EuclideanSpace
 Namespace CalculationModel.Models.Aero.Components
 
     ''' <summary>
-    ''' Represents a vortex ring stripe where lift and drag can be locally computed.
+    ''' Represents a collection of adjacent vortex rings (typically along the chord of a wing) 
+    ''' where lift and drag can be locally computed.
+    ''' Note: the stripe force coefficients are referred to the local velocity, not to the 
+    ''' reference stream velocity (with the idea of quantifying the situation on the airfoil).
     ''' </summary>
-    ''' <remarks></remarks>
     Public Class ChorwiseStripe
 
         ''' <summary>
@@ -51,96 +53,85 @@ Namespace CalculationModel.Models.Aero.Components
         ''' <remarks></remarks>
         Public Polars As PolarFamily
 
+        ''' <summary>
+        ''' Initializes the object.
+        ''' </summary>
         Public Sub New()
+
             Rings = New List(Of VortexRing)
+
         End Sub
 
         ''' <summary>
         ''' Returns the area of this portion of wing in m².
         ''' </summary>
-        ''' <returns></returns>
         Public ReadOnly Property Area As Double
 
         ''' <summary>
         ''' Local lift coefficient in this portion of wing.
+        ''' Note: the reference velocity is the local velocity.
         ''' </summary>
-        ''' <remarks></remarks>
         Public ReadOnly Property LiftCoefficient As Double
 
         ''' <summary>
         ''' Local induced drag coefficient in this portion of wing.
+        ''' Note: the reference velocity is the local velocity.
         ''' </summary>
-        ''' <remarks></remarks>
         Public ReadOnly Property InducedDragCoefficient As Double
 
         ''' <summary>
         ''' Skin drag coefficient in this portion of wing.
+        ''' Note: the reference velocity is the local velocity.
         ''' </summary>
-        ''' <remarks></remarks>
         Public ReadOnly Property SkinDragCoefficient As Double
 
         ''' <summary>
         ''' Total stripe lift in N.
         ''' </summary>
-        ''' <remarks></remarks>
         Public ReadOnly Property Lift As New Vector3
 
         ''' <summary>
         ''' Total stripe induced drag in N.
         ''' </summary>
-        ''' <remarks></remarks>
         Public ReadOnly Property InducedDrag As New Vector3
 
         ''' <summary>
         ''' Total stripe induced drag in N.
         ''' </summary>
-        ''' <remarks></remarks>
         Public ReadOnly Property SkinDrag As New Vector3
 
         ''' <summary>
         ''' Total stripe moment (with respect to the origin) in N.m.
         ''' </summary>
-        ''' <remarks></remarks>
         Public ReadOnly Property LiftMoment As New Vector3
 
         ''' <summary>
         ''' Total stripe moment (with respect to the origin) in N.m.
         ''' </summary>
-        ''' <remarks></remarks>
         Public ReadOnly Property InducedDragMoment As New Vector3
 
         ''' <summary>
         ''' Total stripe moment (with respect to the origin) in N.m.
         ''' </summary>
-        ''' <remarks></remarks>
         Public ReadOnly Property SkinDragMoment As New Vector3
 
         ''' <summary>
         ''' Stripe chord in meters.
         ''' </summary>
-        ''' <value></value>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
         Public ReadOnly Property Chord As Double
 
         ''' <summary>
         ''' Vector having the direction of the chord.
         ''' </summary>
-        ''' <value></value>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
         Public ReadOnly Property ChordWiseVector As New Vector3
 
         ''' <summary>
         ''' Point located at the geometric center of the chordwise stripe.
         ''' </summary>
-        ''' <value></value>
-        ''' <returns></returns>
-        ''' <remarks>Coordinates are always in meters.</remarks>
         Public ReadOnly Property CenterPoint As New Vector3
 
         ''' <summary>
-        ''' Calculates the stripe lift, drag and area. 
+        ''' Calculates the stripe lift, drag and area, along with the correspondig moment and reference coefficients. 
         ''' The Cp (pressure coefficient) and the Cdi (local induced component) of each panel should be calculated before calling this sub.
         ''' NOTE:
         ''' This method corrects the missing leading edge pressure decay by substracting the projection of the total force in 
@@ -149,10 +140,10 @@ Namespace CalculationModel.Models.Aero.Components
         ''' does provide more consistent results, specially in the case of rotating wings where the incidence varies considerably.
         ''' </summary>
         ''' <remarks></remarks>
-        Public Sub Compute(StreamVelocity As Vector3,
-                           StreamRotation As Vector3,
-                           Density As Double,
-                           Viscosity As Double)
+        Public Sub ComputeLoads(StreamVelocity As Vector3,
+                                StreamRotation As Vector3,
+                                Density As Double,
+                                Viscosity As Double)
 
             ' Calculate local chordwise direction and chord:
 
@@ -166,12 +157,13 @@ Namespace CalculationModel.Models.Aero.Components
             _CenterPoint.Y = 0.5 * (Rings(0).Node(1).Position.Y + Rings(0).Node(4).Position.Y + _ChordWiseVector.Y)
             _CenterPoint.Z = 0.5 * (Rings(0).Node(1).Position.Z + Rings(0).Node(4).Position.Z + _ChordWiseVector.Z)
 
-            _Chord = _ChordWiseVector.EuclideanNorm
+            _Chord = _ChordWiseVector.Norm2
             _ChordWiseVector.Normalize()
 
             Dim DynamicPressure As Double = 0.5 * StreamVelocity.SquareEuclideanNorm * Density
-            Dim StreamDirection As New Vector3(StreamVelocity)
-            StreamDirection.AddCrossProduct(StreamRotation, _CenterPoint)
+            Dim LocalVelocity As New Vector3(StreamVelocity)
+            LocalVelocity.AddCrossProduct(StreamRotation, _CenterPoint)
+            Dim StreamDirection As New Vector3(LocalVelocity)
             StreamDirection.Normalize()
 
             _Area = 0.0#
@@ -193,7 +185,8 @@ Namespace CalculationModel.Models.Aero.Components
             _InducedDragMoment.SetToCero()
             _SkinDragMoment.SetToCero()
 
-            ' Sum contributions to lift and induced drag:
+            ' Sum the lift and induced drag contributions from each panel
+            '------------------------------------------------------------
 
             For Each VortexRing In Rings
 
@@ -233,19 +226,26 @@ Namespace CalculationModel.Models.Aero.Components
 
             Next
 
-            qS = _Area * DynamicPressure
-
-            _LiftCoefficient = _Lift.EuclideanNorm / qS
-            _InducedDragCoefficient = InducedDrag.EuclideanNorm / qS
-
-            ' Skin drag from polar curve using lift coefficient and the Reynolds number 
-            ' If there is no polar curve it stays zero.
+            ' Calculate the force coefficients
+            ' Note: all coefficients are based on the local dynamic pressure
             '--------------------------------------------------------------------------
 
-            Dim Reynolds As Double = StreamVelocity.EuclideanNorm * Density * Chord / Viscosity
+            qS = _Area * 0.5 * LocalVelocity.SquareEuclideanNorm * Density
 
-            If Not IsNothing(Polars) Then
+            _LiftCoefficient = _Lift.Norm2 / qS
+
+            _InducedDragCoefficient = InducedDrag.Norm2 / qS
+
+            ' Skin drag from polar curve using the local lift coefficient and Reynolds. 
+            ' Note: if there is no polar curve its value stays zero.
+            '--------------------------------------------------------------------------
+
+            If Polars IsNot Nothing Then
+
+                Dim Reynolds As Double = LocalVelocity.Norm2 * Density * Chord / Viscosity
+
                 _SkinDragCoefficient = Polars.SkinDrag(LiftCoefficient, Reynolds)
+
             End If
 
             _SkinDrag.X = _SkinDragCoefficient * ChordWiseVector.X * qS
@@ -259,15 +259,12 @@ Namespace CalculationModel.Models.Aero.Components
         ''' <summary>
         ''' Reads the chordwise link data from a binary stream.
         ''' </summary>
-        ''' <param name="Reader"></param>
-        ''' <param name="Rings"></param>
-        ''' <param name="PolarData"></param>
-        Sub ReadBinary(ByRef Reader As BinaryReader, ByRef Rings As List(Of VortexRing), ByRef PolarData As PolarDatabase)
+        Sub ReadBinary(ByRef Reader As BinaryReader, ByRef InRings As List(Of VortexRing), ByRef PolarData As PolarDatabase)
             Try
                 ' Rings
                 '-----------------------------------
-                For i = 1 To Reader.ReadInt32
-                    Me.Rings.Add(Rings(Reader.ReadInt32))
+                For I = 1 To Reader.ReadInt32
+                    Rings.Add(InRings(Reader.ReadInt32))
                 Next
 
                 ' Polar id
@@ -320,7 +317,7 @@ Namespace CalculationModel.Models.Aero.Components
                 _SkinDragMoment.Z = Reader.ReadDouble
 
             Catch ex As Exception
-                Me.Rings.Clear()
+                Rings.Clear()
             End Try
 
         End Sub
@@ -328,7 +325,6 @@ Namespace CalculationModel.Models.Aero.Components
         ''' <summary>
         ''' Writes the chordwise link data to a binary stream.
         ''' </summary>
-        ''' <param name="Writer"></param>
         Sub WriteBinary(ByRef Writer As BinaryWriter)
 
             ' Rings
@@ -341,7 +337,7 @@ Namespace CalculationModel.Models.Aero.Components
 
             ' Polar id
             '-----------------------------------
-            If IsNothing(Polars) Then
+            If Polars Is Nothing Then
                 Writer.Write(Guid.Empty.ToString)
             Else
                 Writer.Write(Polars.Id.ToString)

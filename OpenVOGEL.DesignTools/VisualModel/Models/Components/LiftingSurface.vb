@@ -1708,7 +1708,7 @@ Namespace VisualModel.Models.Components
                     Diagonal2.Z = Nodo3.Z - Nodo1.Z
 
                     Mesh.Panels(i).NormalVector = Algebra.VectorProduct(Diagonal1, Diagonal2).NormalizedDirection
-                    Mesh.Panels(i).Area = 0.5 * Algebra.VectorProduct(Vector1, Vector2).EuclideanNorm + 0.5 * Algebra.VectorProduct(Vector3, Vector4).EuclideanNorm
+                    Mesh.Panels(i).Area = 0.5 * Algebra.VectorProduct(Vector1, Vector2).Norm2 + 0.5 * Algebra.VectorProduct(Vector3, Vector4).Norm2
 
                 Next
 
@@ -1805,7 +1805,7 @@ Namespace VisualModel.Models.Components
 
             Dim Sign As Integer = Math.Sign(V2ho.X * V1ho.X + V2ho.Y * V1ho.Y)
 
-            Orientation.R1 += Sign * Math.Acos(V1h.X * V2h.X + V1h.Y * V2h.Y) * 180 / Math.PI
+            Orientation.Angle1 += Sign * Math.Acos(V1h.X * V2h.X + V1h.Y * V2h.Y) * 180 / Math.PI
 
             'Dim Vertical As New EVector3
             'Vertical.Z = V1.Z - V2.Z
@@ -1856,9 +1856,9 @@ Namespace VisualModel.Models.Components
                         Position.Y = IOXML.ReadDouble(reader, "Y", 0.0)
                         Position.Z = IOXML.ReadDouble(reader, "Z", 0.0)
 
-                        Orientation.R1 = IOXML.ReadDouble(reader, "Psi", 0.0)
-                        Orientation.R2 = IOXML.ReadDouble(reader, "Tita", 0.0)
-                        Orientation.R3 = IOXML.ReadDouble(reader, "Fi", 0.0)
+                        Orientation.Angle1 = IOXML.ReadDouble(reader, "Psi", 0.0)
+                        Orientation.Angle2 = IOXML.ReadDouble(reader, "Tita", 0.0)
+                        Orientation.Angle3 = IOXML.ReadDouble(reader, "Fi", 0.0)
                         Orientation.Sequence = IOXML.ReadInteger(reader, "Sequence", CInt(RotationSequence.ZYX))
 
                         CenterOfRotation.X = IOXML.ReadDouble(reader, "Xcr", 0.0)
@@ -1956,9 +1956,9 @@ Namespace VisualModel.Models.Components
             writer.WriteAttributeString("Y", String.Format("{0}", Position.Y))
             writer.WriteAttributeString("Z", String.Format("{0}", Position.Z))
 
-            writer.WriteAttributeString("Psi", String.Format("{0}", Orientation.R1))
-            writer.WriteAttributeString("Tita", String.Format("{0}", Orientation.R2))
-            writer.WriteAttributeString("Fi", String.Format("{0}", Orientation.R3))
+            writer.WriteAttributeString("Psi", String.Format("{0}", Orientation.Angle1))
+            writer.WriteAttributeString("Tita", String.Format("{0}", Orientation.Angle2))
+            writer.WriteAttributeString("Fi", String.Format("{0}", Orientation.Angle3))
             writer.WriteAttributeString("Sequence", String.Format("{0}", CInt(Orientation.Sequence)))
 
             writer.WriteAttributeString("Xcr", String.Format("{0}", CenterOfRotation.X))

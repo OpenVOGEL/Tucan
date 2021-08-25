@@ -216,7 +216,7 @@ Namespace Tucan.Utility
             ControlGL.Ortho(-0.5 * ControlGLWidth, 0.5 * ControlGLWidth, -0.5 * ControlGLHeight, 0.5 * ControlGLHeight, -100000, 100000)
 
             ControlGL.Translate(Visualization.CameraPosition.X, Visualization.CameraPosition.Y, 0)
-            ControlGL.Rotate(Orientacion.R3, Orientacion.R2, Orientacion.R1)
+            ControlGL.Rotate(Orientacion.Angle3, Orientacion.Angle2, Orientacion.Angle1)
             ControlGL.Scale(Visualization.Proximity, Visualization.Proximity, Visualization.Proximity)
 
             For Each List In ListOfSurfacesToDraw
@@ -277,7 +277,7 @@ Namespace Tucan.Utility
             ControlGL.Ortho(-0.5 * Width, 0.5 * Width, -0.5 * Height, 0.5 * Height, -100000, 100000)
 
             ControlGL.Translate(Visualization.CameraPosition.X, Visualization.CameraPosition.Y, 0)
-            ControlGL.Rotate(Orientacion.R3, Orientacion.R2, Orientacion.R1)
+            ControlGL.Rotate(Orientacion.Angle3, Orientacion.Angle2, Orientacion.Angle1)
             ControlGL.Scale(Visualization.Proximity, Visualization.Proximity, Visualization.Proximity)
 
             Visualization.Axes.Extension = 1.0
@@ -463,7 +463,7 @@ Namespace Tucan.Utility
             ControlGL.Ortho(-0.5 * ControlGLWidth, 0.5 * ControlGLWidth, -0.5 * ControlGLHeight, 0.5 * ControlGLHeight, -100000, 100000)
 
             ControlGL.Translate(Visualization.CameraPosition.X, Visualization.CameraPosition.Y, 0)
-            ControlGL.Rotate(Orientacion.R3, Orientacion.R2, Orientacion.R1)
+            ControlGL.Rotate(Orientacion.Angle3, Orientacion.Angle2, Orientacion.Angle1)
             ControlGL.Scale(Visualization.Proximity, Visualization.Proximity, Visualization.Proximity)
 
             Visualization.Axes.Extension = 1.0
@@ -508,7 +508,7 @@ Namespace Tucan.Utility
             Dim Orientation As OrientationAngles = Visualization.CameraOrientation
 
             ControlGL.Translate(Visualization.CameraPosition.X, Visualization.CameraPosition.Y, 0)
-            ControlGL.Rotate(Orientation.R3, Orientation.R2, Orientation.R1)
+            ControlGL.Rotate(Orientation.Angle3, Orientation.Angle2, Orientation.Angle1)
             ControlGL.Scale(Visualization.Proximity, Visualization.Proximity, Visualization.Proximity)
 
             Select Case InterfaceMode
@@ -576,7 +576,7 @@ Namespace Tucan.Utility
                 Dim EyeVector As New Vector3
 
                 EyeVector.Z = 1.0
-                EyeVector.Rotate(-Orientation.R1, -Orientation.R2, -Orientation.R3)
+                EyeVector.Rotate(-Orientation.Angle1, -Orientation.Angle2, -Orientation.Angle3)
 
                 For i = 1 To Hits
 

@@ -33,9 +33,9 @@ Public Class FormAttitude
             ' J points to the right wingtip
             '--------------------------------------------------------------------
 
-            _AttitudeIndicator.Pitch = -Frame.Orientation.R2
-            _AttitudeIndicator.Roll = -Frame.Orientation.R3
-            _AttitudeIndicator.AirSpeed = Frame.StreamVelocity.EuclideanNorm
+            _AttitudeIndicator.Pitch = -Frame.Orientation.Angle2
+            _AttitudeIndicator.Roll = -Frame.Orientation.Angle3
+            _AttitudeIndicator.AirSpeed = Frame.StreamVelocity.Norm2
             _AttitudeIndicator.Slide = Frame.StreamVelocity.Y
             _AttitudeIndicator.Altitude = Frame.Position.Z
 

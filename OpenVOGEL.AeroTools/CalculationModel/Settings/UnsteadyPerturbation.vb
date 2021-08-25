@@ -253,7 +253,7 @@ Namespace CalculationModel.Settings
                 Dim Tita As Double
                 Dim Parametro As Double
                 Dim LIntensity As Double
-                Dim LVelocity As Double = BaseVelocity.EuclideanNorm
+                Dim LVelocity As Double = BaseVelocity.Norm2
 
                 For i = 0 To NumberOfSteps - 1
 

@@ -461,12 +461,6 @@ Namespace CalculationModel.Models.Aero
         ''' <param name="SquareVelocity">Square of reference velocity used to adimensionalize pressure</param>
         Public Sub CalculatePressure(ByVal SquareVelocity As Double)
 
-            'Parallel.ForEach(VortexRings, Sub(Ring As VortexRing)
-
-            '                                  Ring.CalculateCP(SquareVelocity)
-
-            '                              End Sub)
-
             For Each Ring In VortexRings
 
                 Ring.CalculateCp(SquareVelocity)

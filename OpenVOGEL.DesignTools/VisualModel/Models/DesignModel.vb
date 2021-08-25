@@ -197,9 +197,9 @@ Namespace VisualModel.Models
 
                                     LiftingSurface.ReadFromXML(SubReader.ReadSubtree)
 
-                                    For i = 0 To LiftingSurface.WingRegions.Count - 1
+                                    For I = 0 To LiftingSurface.WingRegions.Count - 1
 
-                                        Dim Region As WingRegion = LiftingSurface.WingRegions(i)
+                                        Dim Region As WingRegion = LiftingSurface.WingRegions(I)
 
                                         If Not Region.PolarId.Equals(Guid.Empty) Then
 
@@ -226,6 +226,20 @@ Namespace VisualModel.Models
                                     JetEngine.ReadFromXML(Reader.ReadSubtree)
 
                                     Objects.Add(JetEngine)
+
+                                ElseIf SubReader.Name = "Propeller" Then
+
+                                    Dim Propeller As New Propeller()
+
+                                    Propeller.ReadFromXML(SubReader.ReadSubtree)
+
+                                    If Not Propeller.PolarId.Equals(Guid.Empty) Then
+
+                                        Propeller.PolarFamiliy = PolarDataBase.GetFamilyFromId(Propeller.PolarId)
+
+                                    End If
+
+                                    Objects.Add(Propeller)
 
                                 ElseIf SubReader.Name = "ImportedSurface" Then
 
@@ -291,6 +305,16 @@ Namespace VisualModel.Models
                 If TypeOf Objects(i) Is JetEngine Then
 
                     Writer.WriteStartElement("JetEngine")
+
+                    Objects(i).WriteToXML(Writer)
+
+                    Writer.WriteEndElement()
+
+                End If
+
+                If TypeOf Objects(i) Is Propeller Then
+
+                    Writer.WriteStartElement("Propeller")
 
                     Objects(i).WriteToXML(Writer)
 

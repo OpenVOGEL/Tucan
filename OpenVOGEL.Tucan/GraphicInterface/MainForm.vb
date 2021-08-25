@@ -292,8 +292,8 @@ Public Class MainForm
         End If
 
         If ModelInterface.Visualization.Rotating Then
-            ModelInterface.Visualization.CameraOrientation.R1 = CameraOrientation.R1 + 0.25 * (e.Location.X - MouseDownPosition.X)
-            ModelInterface.Visualization.CameraOrientation.R3 = CameraOrientation.R3 + 0.25 * (e.Location.Y - MouseDownPosition.Y)
+            ModelInterface.Visualization.CameraOrientation.Angle1 = CameraOrientation.Angle1 + 0.25 * (e.Location.X - MouseDownPosition.X)
+            ModelInterface.Visualization.CameraOrientation.Angle3 = CameraOrientation.Angle3 + 0.25 * (e.Location.Y - MouseDownPosition.Y)
         End If
 
     End Sub
@@ -309,8 +309,8 @@ Public Class MainForm
         If e.Button = MouseButtons.Right Then
             ModelInterface.Visualization.Rotating = True
             MouseDownPosition = e.Location
-            CameraOrientation.R1 = ModelInterface.Visualization.CameraOrientation.R1
-            CameraOrientation.R3 = ModelInterface.Visualization.CameraOrientation.R3
+            CameraOrientation.Angle1 = ModelInterface.Visualization.CameraOrientation.Angle1
+            CameraOrientation.Angle3 = ModelInterface.Visualization.CameraOrientation.Angle3
         End If
 
         If e.Button = MouseButtons.Left Then
@@ -468,7 +468,7 @@ Public Class MainForm
                                         lblStatus.Text = String.Format("Panel {0}: ΔCp={1:F5}; V={2:F5}m/s; G={3:F5}; A={4:F5}m²",
                                                                        SelectedItem.EntityIndex,
                                                                        Panel.Cp,
-                                                                       Panel.LocalVelocity.EuclideanNorm,
+                                                                       Panel.LocalVelocity.Norm2,
                                                                        Panel.Circulation,
                                                                        Panel.Area)
 
@@ -477,7 +477,7 @@ Public Class MainForm
                                         lblStatus.Text = String.Format("Panel {0}: Cp={1:F5}; V={2:F5}m/s; G={3:F5}; S={4:F5}; A={5:F5}m²",
                                                                        SelectedItem.EntityIndex,
                                                                        Panel.Cp,
-                                                                       Panel.LocalVelocity.EuclideanNorm,
+                                                                       Panel.LocalVelocity.Norm2,
                                                                        Panel.Circulation,
                                                                        Panel.SourceStrength,
                                                                        Panel.Area)
@@ -541,23 +541,23 @@ Public Class MainForm
         Select Case Vista
 
             Case "XY"
-                ModelInterface.Visualization.CameraOrientation.R1 = 0
-                ModelInterface.Visualization.CameraOrientation.R3 = 0
+                ModelInterface.Visualization.CameraOrientation.Angle1 = 0
+                ModelInterface.Visualization.CameraOrientation.Angle3 = 0
                 lblStatus.Text = "XY view"
 
             Case "ZY"
-                ModelInterface.Visualization.CameraOrientation.R1 = 90
-                ModelInterface.Visualization.CameraOrientation.R3 = -90
+                ModelInterface.Visualization.CameraOrientation.Angle1 = 90
+                ModelInterface.Visualization.CameraOrientation.Angle3 = -90
                 lblStatus.Text = "ZY view"
 
             Case "ZX"
-                ModelInterface.Visualization.CameraOrientation.R1 = 0
-                ModelInterface.Visualization.CameraOrientation.R3 = -90
+                ModelInterface.Visualization.CameraOrientation.Angle1 = 0
+                ModelInterface.Visualization.CameraOrientation.Angle3 = -90
                 lblStatus.Text = "ZX view"
 
             Case "Isometrica"
-                ModelInterface.Visualization.CameraOrientation.R1 = 30
-                ModelInterface.Visualization.CameraOrientation.R3 = -60
+                ModelInterface.Visualization.CameraOrientation.Angle1 = 30
+                ModelInterface.Visualization.CameraOrientation.Angle3 = -60
                 lblStatus.Text = "Free view"
 
             Case "Center"
@@ -576,12 +576,12 @@ Public Class MainForm
 #Region " Other event handlers "
 
     Private Sub sbHorizontal_Scroll(ByVal sender As System.Object, ByVal e As System.Windows.Forms.ScrollEventArgs) Handles sbHorizontal.Scroll
-        ModelInterface.Visualization.CameraOrientation.R1 = Me.sbHorizontal.Value
+        ModelInterface.Visualization.CameraOrientation.Angle1 = Me.sbHorizontal.Value
         ModelInterface.RepresentOnGL()
     End Sub
 
     Private Sub sbVertical_Scroll(ByVal sender As System.Object, ByVal e As System.Windows.Forms.ScrollEventArgs) Handles sbVertical.Scroll
-        ModelInterface.Visualization.CameraOrientation.R3 = Me.sbVertical.Value
+        ModelInterface.Visualization.CameraOrientation.Angle3 = Me.sbVertical.Value
         ModelInterface.RepresentOnGL()
     End Sub
 

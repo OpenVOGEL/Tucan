@@ -760,9 +760,9 @@ ErrSub:
             nudCRy.Value = _SelectedSurface.CenterOfRotation.Y
             nudCRz.Value = _SelectedSurface.CenterOfRotation.Z
 
-            nudPsi.Value = _SelectedSurface.Orientation.R1
-            nudTita.Value = _SelectedSurface.Orientation.R2
-            nudFi.Value = _SelectedSurface.Orientation.R3
+            nudPsi.Value = _SelectedSurface.Orientation.Angle1
+            nudTita.Value = _SelectedSurface.Orientation.Angle2
+            nudFi.Value = _SelectedSurface.Orientation.Angle3
 
             cbSecuence.SelectedIndex = _SelectedSurface.Orientation.Sequence
 
@@ -993,7 +993,7 @@ ErrSub:
 
         If _SelectedSurface IsNot Nothing AndAlso Not _LockPropsEvents Then
 
-            _SelectedSurface.Orientation.R1 = nudPsi.Value
+            _SelectedSurface.Orientation.Angle1 = nudPsi.Value
 
             _SelectedSurface.Orientate(_SelectedSurface.CenterOfRotation, _SelectedSurface.Orientation)
 
@@ -1007,7 +1007,7 @@ ErrSub:
 
         If _SelectedSurface IsNot Nothing AndAlso Not _LockPropsEvents Then
 
-            _SelectedSurface.Orientation.R2 = nudTita.Value
+            _SelectedSurface.Orientation.Angle2 = nudTita.Value
 
             _SelectedSurface.Orientate(_SelectedSurface.CenterOfRotation, _SelectedSurface.Orientation)
 
@@ -1021,7 +1021,7 @@ ErrSub:
 
         If _SelectedSurface IsNot Nothing AndAlso Not _LockPropsEvents Then
 
-            _SelectedSurface.Orientation.R3 = nudFi.Value
+            _SelectedSurface.Orientation.Angle3 = nudFi.Value
 
             _SelectedSurface.Orientate(_SelectedSurface.CenterOfRotation, _SelectedSurface.Orientation)
 
@@ -1694,23 +1694,23 @@ ErrSub:
             Select Case Vista
 
                 Case "XY"
-                    ModelInterface.Visualization.CameraOrientation.R1 = 0
-                    ModelInterface.Visualization.CameraOrientation.R3 = 0
+                    ModelInterface.Visualization.CameraOrientation.Angle1 = 0
+                    ModelInterface.Visualization.CameraOrientation.Angle3 = 0
                     RaiseEvent PushMessage("XY view")
 
                 Case "ZY"
-                    ModelInterface.Visualization.CameraOrientation.R1 = 90
-                    ModelInterface.Visualization.CameraOrientation.R3 = -90
+                    ModelInterface.Visualization.CameraOrientation.Angle1 = 90
+                    ModelInterface.Visualization.CameraOrientation.Angle3 = -90
                     RaiseEvent PushMessage("ZY view")
 
                 Case "ZX"
-                    ModelInterface.Visualization.CameraOrientation.R1 = 0
-                    ModelInterface.Visualization.CameraOrientation.R3 = -90
+                    ModelInterface.Visualization.CameraOrientation.Angle1 = 0
+                    ModelInterface.Visualization.CameraOrientation.Angle3 = -90
                     RaiseEvent PushMessage("ZX view")
 
                 Case "Isometrica"
-                    ModelInterface.Visualization.CameraOrientation.R1 = 30
-                    ModelInterface.Visualization.CameraOrientation.R3 = -60
+                    ModelInterface.Visualization.CameraOrientation.Angle1 = 30
+                    ModelInterface.Visualization.CameraOrientation.Angle3 = -60
                     RaiseEvent PushMessage("Free view")
 
                 Case "Center"

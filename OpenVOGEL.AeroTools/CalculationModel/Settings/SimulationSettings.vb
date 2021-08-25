@@ -332,7 +332,7 @@ Namespace CalculationModel.Settings
         ''' <returns></returns>
         Public ReadOnly Property UnitReynoldsNumber
             Get
-                Return StreamVelocity.EuclideanNorm * Density / Viscocity
+                Return StreamVelocity.Norm2 * Density / Viscocity
             End Get
         End Property
 

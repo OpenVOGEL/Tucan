@@ -68,7 +68,7 @@ Namespace CalculationModel.Solver
             StreamDirection.Assign(Stream.Velocity)
             StreamDirection.Normalize()
             Dim Projection As New Vector3
-            Dim V As Double = Stream.Velocity.EuclideanNorm
+            Dim V As Double = Stream.Velocity.Norm2
             Dim CutOff As Double = Settings.Cutoff
 
             For Each Lattice In Lattices
@@ -193,7 +193,7 @@ Namespace CalculationModel.Solver
                             '> It approaches the reynolds number using a diagonal (which only works for low incidence angle)
                             Dim Direction As New Vector3(Ring.VelocityT)
                             Direction.ProjectOnPlane(Ring.Normal)
-                            Dim SurfaceVelocity As Double = Direction.EuclideanNorm
+                            Dim SurfaceVelocity As Double = Direction.Norm2
                             Direction.Normalize()
                             Dim Distance As Double = Ring.ControlPoint.DistanceTo(FirstNode.Position)
                             Dim LocalReynolds As Double = SurfaceVelocity * Distance * Settings.Density / Settings.Viscocity
@@ -215,7 +215,7 @@ Namespace CalculationModel.Solver
 
                 For Each Stripe In Lattice.ChordWiseStripes
 
-                    Stripe.Compute(Stream.Velocity, Stream.Rotation, Settings.Density, Settings.Viscocity)
+                    Stripe.ComputeLoads(Stream.Velocity, Stream.Rotation, Settings.Density, Settings.Viscocity)
 
                     Lattice.AirLoads.LiftForce.Add(Stripe.Lift)
                     Lattice.AirLoads.InducedDragForce.Add(Stripe.InducedDrag)
@@ -229,9 +229,9 @@ Namespace CalculationModel.Solver
                 ' Traditional coefficients:
 
                 qS = StreamDynamicPressure * Lattice.AirLoads.Area
-                Lattice.AirLoads.LiftCoefficient = Lattice.AirLoads.LiftForce.EuclideanNorm / qS
-                Lattice.AirLoads.InducedDragCoefficient = Lattice.AirLoads.InducedDragForce.EuclideanNorm / qS
-                Lattice.AirLoads.SkinDragCoefficient = Lattice.AirLoads.SkinDragForce.EuclideanNorm / qS
+                Lattice.AirLoads.LiftCoefficient = Lattice.AirLoads.LiftForce.Norm2 / qS
+                Lattice.AirLoads.InducedDragCoefficient = Lattice.AirLoads.InducedDragForce.Norm2 / qS
+                Lattice.AirLoads.SkinDragCoefficient = Lattice.AirLoads.SkinDragForce.Norm2 / qS
 
                 ' Total force
                 '-------------------------------------------------------------
@@ -265,11 +265,11 @@ Namespace CalculationModel.Solver
             '-----------------------------------------------------------------
 
             qS = StreamDynamicPressure * GlobalAirloads.Area
-            GlobalAirloads.LiftCoefficient = GlobalAirloads.LiftForce.EuclideanNorm / qS
-            GlobalAirloads.InducedDragCoefficient = GlobalAirloads.InducedDragForce.EuclideanNorm / qS
-            GlobalAirloads.SkinDragCoefficient = GlobalAirloads.SkinDragForce.EuclideanNorm / qS
-            GlobalAirloads.Alfa = Math.Asin(StreamVelocity.Z / StreamVelocity.EuclideanNorm)
-            GlobalAirloads.Beta = Math.Asin(StreamVelocity.Y / StreamVelocity.EuclideanNorm)
+            GlobalAirloads.LiftCoefficient = GlobalAirloads.LiftForce.Norm2 / qS
+            GlobalAirloads.InducedDragCoefficient = GlobalAirloads.InducedDragForce.Norm2 / qS
+            GlobalAirloads.SkinDragCoefficient = GlobalAirloads.SkinDragForce.Norm2 / qS
+            GlobalAirloads.Alfa = Math.Asin(StreamVelocity.Z / StreamVelocity.Norm2)
+            GlobalAirloads.Beta = Math.Asin(StreamVelocity.Y / StreamVelocity.Norm2)
 
         End Sub
 

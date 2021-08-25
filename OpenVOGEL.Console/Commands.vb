@@ -226,6 +226,17 @@ Module Commands
 
                         End If
 
+                    Case "propeller_scan"
+
+                        If Commands.Length > 4 Then
+
+                            BatchAnalysis.PropellerScan(CDbl(Commands(1)),
+                                                        CDbl(Commands(2)),
+                                                        CInt(Commands(3)),
+                                                        CDbl(Commands(4)))
+
+                        End If
+
                     Case "set_velocity"
 
                         If Commands.Length > 1 Then
@@ -276,7 +287,7 @@ Module Commands
 
                         If Commands.Length > 1 Then
                             Dim Alfa As Double = CDbl(Commands(1)) / 180 * Math.PI
-                            Dim V As Double = DataStore.ProjectRoot.SimulationSettings.StreamVelocity.EuclideanNorm
+                            Dim V As Double = DataStore.ProjectRoot.SimulationSettings.StreamVelocity.Norm2
                             DataStore.ProjectRoot.SimulationSettings.StreamVelocity.X = V * Math.Cos(Alfa)
                             DataStore.ProjectRoot.SimulationSettings.StreamVelocity.Y = 0
                             DataStore.ProjectRoot.SimulationSettings.StreamVelocity.Z = V * Math.Sin(Alfa)

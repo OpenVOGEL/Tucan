@@ -536,7 +536,7 @@ Namespace VisualModel.Models
 
                 Lattice.Wakes.Add(Wake)
 
-                Wake.CuttingStep = 50 'Surface.CuttingStep
+                Wake.CuttingStep = Surface.CuttingStep
 
                 Wake.SupressInnerCircuation = True
 
@@ -578,7 +578,7 @@ Namespace VisualModel.Models
                         Dim Node3 As Integer = Surface.Mesh.Panels(PanelIndex).N3 - NodeOffset
                         Dim Node4 As Integer = Surface.Mesh.Panels(PanelIndex).N4 - NodeOffset
 
-                        Lattice.AddVortexRing4(Node1, Node2, Node3, Node4, False, True)
+                        Lattice.AddVortexRing4(Node1, Node2, Node3, Node4, Surface.Mesh.Panels(PanelIndex).IsReversed, True)
 
                         If J = Surface.NumberOfChordPanels Then
 
@@ -590,6 +590,28 @@ Namespace VisualModel.Models
                         PanelIndex += 1
 
                     Next
+
+                Next
+
+                ' Load chordwise stripes (for skin drag computation)
+                '-----------------------------------------
+
+                Dim VortexRingIndex As Integer = 0
+
+                For I = 1 To Surface.NumberOfSpanPanels
+
+                    Dim Stripe As New ChorwiseStripe()
+
+                    Stripe.Polars = Surface.PolarFamiliy
+
+                    For J = 1 To Surface.NumberOfChordPanels
+
+                        Stripe.Rings.Add(Lattice.VortexRings(VortexRingIndex))
+                        VortexRingIndex += 1
+
+                    Next
+
+                    Lattice.ChordWiseStripes.Add(Stripe)
 
                 Next
 

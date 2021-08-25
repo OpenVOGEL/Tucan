@@ -375,7 +375,7 @@ Namespace CalculationModel.Models.Structural.Library.Elements
                 Basis.V.X = -Basis.U.Y
                 Basis.V.Y = Basis.U.X
 
-                If Basis.V.EuclideanNorm < 0.001 Then
+                If Basis.V.Norm2 < 0.001 Then
                     Basis.V.X = 1.0
                     Basis.V.Y = 0.0
                 End If

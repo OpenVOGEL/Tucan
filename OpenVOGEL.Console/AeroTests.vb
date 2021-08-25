@@ -69,7 +69,7 @@ Public Module AeroTests
         P.Y = 0.5
         P.Z = 1.0
 
-        A.R1 = Math.PI / 5
+        A.Angle1 = Math.PI / 5
         M.Generate(A)
         N1.Position.Rotate(M)
         N2.Position.Rotate(M)
@@ -333,15 +333,15 @@ Public Module AeroTests
         Dim VS4 As New Vector3
         Panel4.AddSourceVelocityInfluence(VS4, P, False)
 
-        System.Console.WriteLine("4-nodes = {0:F14}", (VS4.EuclideanNorm))
+        System.Console.WriteLine("4-nodes = {0:F14}", (VS4.Norm2))
 
         Dim VS3 As New Vector3
         Panel3a.AddSourceVelocityInfluence(VS3, P, False)
         Panel3b.AddSourceVelocityInfluence(VS3, P, False)
 
-        System.Console.WriteLine("3-nodes = {0:F14}", (VS3.EuclideanNorm))
+        System.Console.WriteLine("3-nodes = {0:F14}", (VS3.Norm2))
 
-        If (VS4.EuclideanNorm - VS3.EuclideanNorm) / VS4.EuclideanNorm < Epsilon Then
+        If (VS4.Norm2 - VS3.Norm2) / VS4.Norm2 < Epsilon Then
             System.Console.WriteLine("Source velocity OK")
         Else
             System.Console.WriteLine("Source velocity NOT OK!")
@@ -374,15 +374,15 @@ Public Module AeroTests
         Dim VD4 As New Vector3
         Panel4.AddDoubletVelocityInfluence(VD4, P, 0.0001, False)
 
-        System.Console.WriteLine("4-nodes = {0:F14}", (VD4.EuclideanNorm))
+        System.Console.WriteLine("4-nodes = {0:F14}", (VD4.Norm2))
 
         Dim VD3 As New Vector3
         Panel3a.AddDoubletVelocityInfluence(VD3, P, 0.0001, False)
         Panel3b.AddDoubletVelocityInfluence(VD3, P, 0.0001, False)
 
-        System.Console.WriteLine("3-nodes = {0:F14}", (VD3.EuclideanNorm))
+        System.Console.WriteLine("3-nodes = {0:F14}", (VD3.Norm2))
 
-        If (VD4.EuclideanNorm - VD3.EuclideanNorm) / VD4.EuclideanNorm < Epsilon Then
+        If (VD4.Norm2 - VD3.Norm2) / VD4.Norm2 < Epsilon Then
             System.Console.WriteLine("Doublet velocity OK")
         Else
             System.Console.WriteLine("Doublet velocity NOT OK!")

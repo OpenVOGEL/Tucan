@@ -39,9 +39,9 @@ Namespace Tucan.Utility
         Public Sub Initialize()
 
             CameraOrientation = New OrientationAngles
-            CameraOrientation.R1 = 0.0
-            CameraOrientation.R2 = 0.0
-            CameraOrientation.R3 = 0.0
+            CameraOrientation.Angle1 = 0.0
+            CameraOrientation.Angle2 = 0.0
+            CameraOrientation.Angle3 = 0.0
 
             CameraPosition = New Vector3
             CameraPosition.X = 0
@@ -63,9 +63,9 @@ Namespace Tucan.Utility
         Public Sub SaveToXML(ByRef writer As XmlWriter)
 
             writer.WriteStartElement("Camera")
-            writer.WriteAttributeString("Psi", String.Format("{0}", CameraOrientation.R1))
-            writer.WriteAttributeString("Tita", String.Format("{0}", CameraOrientation.R2))
-            writer.WriteAttributeString("Fi", String.Format("{0}", CameraOrientation.R3))
+            writer.WriteAttributeString("Psi", String.Format("{0}", CameraOrientation.Angle1))
+            writer.WriteAttributeString("Tita", String.Format("{0}", CameraOrientation.Angle2))
+            writer.WriteAttributeString("Fi", String.Format("{0}", CameraOrientation.Angle3))
             writer.WriteAttributeString("X", String.Format("{0}", CameraPosition.X))
             writer.WriteAttributeString("Y", String.Format("{0}", CameraPosition.Y))
             writer.WriteAttributeString("Z", String.Format("{0}", CameraPosition.Z))
@@ -96,9 +96,9 @@ Namespace Tucan.Utility
 
                         Case "Camera"
 
-                            CameraOrientation.R1 = IOXML.ReadDouble(reader, "Psi", 0)
-                            CameraOrientation.R2 = IOXML.ReadDouble(reader, "Tita", 0)
-                            CameraOrientation.R3 = IOXML.ReadDouble(reader, "Fi", 0)
+                            CameraOrientation.Angle1 = IOXML.ReadDouble(reader, "Psi", 0)
+                            CameraOrientation.Angle2 = IOXML.ReadDouble(reader, "Tita", 0)
+                            CameraOrientation.Angle3 = IOXML.ReadDouble(reader, "Fi", 0)
                             CameraPosition.X = IOXML.ReadDouble(reader, "X", 0)
                             CameraPosition.Y = IOXML.ReadDouble(reader, "Y", 0)
                             CameraPosition.Z = IOXML.ReadDouble(reader, "Z", 0)

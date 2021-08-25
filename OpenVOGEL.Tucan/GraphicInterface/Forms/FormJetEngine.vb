@@ -68,17 +68,17 @@ Public Class FormJetEngine
         nudPsi.DecimalPlaces = 3
         nudPsi.Minimum = -180
         nudPsi.Maximum = 180
-        nudPsi.Value = _JetEngine.Orientation.R1
+        nudPsi.Value = _JetEngine.Orientation.Angle1
 
         nudTita.DecimalPlaces = 3
         nudTita.Minimum = -180
         nudTita.Maximum = 180
-        nudTita.Value = _JetEngine.Orientation.R2
+        nudTita.Value = _JetEngine.Orientation.Angle2
 
         nudPhi.DecimalPlaces = 3
         nudPhi.Minimum = -180
         nudPhi.Maximum = 180
-        nudPhi.Value = _JetEngine.Orientation.R3
+        nudPhi.Value = _JetEngine.Orientation.Angle3
 
         nudFrontD.DecimalPlaces = 3
         nudFrontD.Value = _JetEngine.FrontDiameter
@@ -115,9 +115,9 @@ Public Class FormJetEngine
             _JetEngine.FrontLength = nudFrontL.Value
             _JetEngine.BackLength = nudRearL.Value
             _JetEngine.Length = nudTotalL.Value
-            _JetEngine.Orientation.R1 = nudPsi.Value ' * Math.PI / 180
-            _JetEngine.Orientation.R2 = nudTita.Value ' * Math.PI / 180
-            _JetEngine.Orientation.R3 = nudPhi.Value ' * Math.PI / 180
+            _JetEngine.Orientation.Angle1 = nudPsi.Value ' * Math.PI / 180
+            _JetEngine.Orientation.Angle2 = nudTita.Value ' * Math.PI / 180
+            _JetEngine.Orientation.Angle3 = nudPhi.Value ' * Math.PI / 180
             _JetEngine.Name = tbxName.Text
             _JetEngine.Resolution = nudResolution.Value
             _JetEngine.CuttingStep = nudCuttingStep.Value

@@ -294,7 +294,7 @@ Namespace VisualModel.Models.Components
                     Diagonal2.Z = Nodo3.Z - Nodo1.Z
 
                     Mesh.Panels(i).NormalVector = Algebra.VectorProduct(Diagonal1, Diagonal2).NormalizedDirection
-                    Mesh.Panels(i).Area = 0.5 * Algebra.VectorProduct(Vector1, Vector2).EuclideanNorm
+                    Mesh.Panels(i).Area = 0.5 * Algebra.VectorProduct(Vector1, Vector2).Norm2
 
                 Else
 
@@ -321,7 +321,7 @@ Namespace VisualModel.Models.Components
                     Diagonal2.Z = Nodo3.Z - Nodo1.Z
 
                     Mesh.Panels(i).NormalVector = Algebra.VectorProduct(Diagonal1, Diagonal2).NormalizedDirection
-                    Mesh.Panels(i).Area = 0.5 * Algebra.VectorProduct(Vector1, Vector2).EuclideanNorm + 0.5 * Algebra.VectorProduct(Vector3, Vector4).EuclideanNorm
+                    Mesh.Panels(i).Area = 0.5 * Algebra.VectorProduct(Vector1, Vector2).Norm2 + 0.5 * Algebra.VectorProduct(Vector3, Vector4).Norm2
 
                 End If
 
@@ -412,14 +412,14 @@ Namespace VisualModel.Models.Components
 
             If NumberOfNodes >= 1 Then
 
-                DisplacementRange.Maximum = Mesh.Nodes(0).Displacement.EuclideanNorm
+                DisplacementRange.Maximum = Mesh.Nodes(0).Displacement.Norm2
                 DisplacementRange.Minimum = DisplacementRange.Maximum
 
                 Dim d As Double
 
                 For i = 0 To NumberOfNodes - 1
 
-                    d = Mesh.Nodes(i).Displacement.EuclideanNorm
+                    d = Mesh.Nodes(i).Displacement.Norm2
                     If d > DisplacementRange.Maximum Then DisplacementRange.Maximum = d
                     If d < DisplacementRange.Minimum Then DisplacementRange.Minimum = d
 
@@ -433,7 +433,7 @@ Namespace VisualModel.Models.Components
 
             For Each Node In Mesh.Nodes
 
-                Node.DisplacementColor = Colormap.ScalarToColor(Node.Displacement.EuclideanNorm, DisplacementRange.Maximum, DisplacementRange.Minimum)
+                Node.DisplacementColor = Colormap.ScalarToColor(Node.Displacement.Norm2, DisplacementRange.Maximum, DisplacementRange.Minimum)
 
             Next
 
@@ -449,7 +449,7 @@ Namespace VisualModel.Models.Components
 
                 Dim Diagonal = Mesh.Nodes(Panel.N1).Position.DistanceTo(Mesh.Nodes(Panel.N3).Position)
                 Diagonal = Math.Min(Diagonal, Mesh.Nodes(Panel.N2).Position.DistanceTo(Mesh.Nodes(Panel.N4).Position))
-                Dim Velocity As Double = Panel.LocalVelocity.EuclideanNorm
+                Dim Velocity As Double = Panel.LocalVelocity.Norm2
                 If Velocity > 0.0# Then
                     VisualProperties.ScaleVelocityVectors = Math.Max(VisualProperties.ScaleVelocityVectors, 0.2 * Diagonal / Velocity)
                 End If

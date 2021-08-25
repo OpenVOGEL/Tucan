@@ -45,17 +45,17 @@ Namespace Algebra.EuclideanSpace
         ''' <summary>
         ''' Yaw angle
         ''' </summary>
-        Public Property R1 As Double
+        Public Property Angle1 As Double
 
         ''' <summary>
         ''' Pitch angle
         ''' </summary>
-        Public Property R2 As Double
+        Public Property Angle2 As Double
 
         ''' <summary>
         ''' Roll angle
         ''' </summary>
-        Public Property R3 As Double
+        Public Property Angle3 As Double
 
         ''' <summary>
         ''' The rotation sequence
@@ -67,9 +67,9 @@ Namespace Algebra.EuclideanSpace
         ''' Resets the orientation to zero.
         ''' </summary>
         Public Sub SetToZero()
-            R1 = 0
-            R2 = 0
-            R3 = 0
+            Angle1 = 0
+            Angle2 = 0
+            Angle3 = 0
         End Sub
 
         ''' <summary>
@@ -78,9 +78,9 @@ Namespace Algebra.EuclideanSpace
         ''' <returns></returns>
         Public Sub ToRadians()
 
-            R1 *= PiDiv180
-            R2 *= PiDiv180
-            R3 *= PiDiv180
+            Angle1 *= PiDiv180
+            Angle2 *= PiDiv180
+            Angle3 *= PiDiv180
 
         End Sub
 
@@ -103,9 +103,9 @@ Namespace Algebra.EuclideanSpace
         ''' <returns></returns>
         Public Sub ToDegrees()
 
-            R1 /= PiDiv180
-            R2 /= PiDiv180
-            R3 /= PiDiv180
+            Angle1 /= PiDiv180
+            Angle2 /= PiDiv180
+            Angle3 /= PiDiv180
 
         End Sub
 
@@ -115,9 +115,10 @@ Namespace Algebra.EuclideanSpace
         ''' <param name="Orientation"></param>
         Public Sub Assign(ByVal Orientation As OrientationAngles)
 
-            R3 = Orientation.R3
-            R1 = Orientation.R1
-            R2 = Orientation.R2
+            Angle1 = Orientation.Angle1
+            Angle2 = Orientation.Angle2
+            Angle3 = Orientation.Angle3
+
             Sequence = Orientation.Sequence
 
         End Sub

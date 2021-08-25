@@ -70,6 +70,9 @@ Namespace VisualModel.Models.Components
             NumberOfSpanPanels = 20
             Diameter = 2.0#
             CollectivePitch = 0.0#
+            AxisDeflection = 0.2#
+            AxisPosition = 0.25#
+            CuttingStep = 50
             TwistFunction.Add(New Vector2(0.0, 45.0))
             TwistFunction.Add(New Vector2(1.0, 15.0))
             ChordFunction.Add(New Vector2(0.1, 0.25))
@@ -116,6 +119,16 @@ Namespace VisualModel.Models.Components
         Public Property CollectivePitch As Double
 
         ''' <summary>
+        ''' The bending along the blade axis
+        ''' </summary>
+        Public Property AxisDeflection As Double
+
+        ''' <summary>
+        ''' The position of the axis relative to the leading edge
+        ''' </summary>
+        Public Property AxisPosition As Double
+
+        ''' <summary>
         ''' Index of polar curve to be loaded.
         ''' </summary>
         Public Property CamberLineId As Guid
@@ -134,6 +147,11 @@ Namespace VisualModel.Models.Components
         ''' The number of panels along the chord
         ''' </summary>
         Public Property NumberOfChordPanels As Integer
+
+        ''' <summary>
+        ''' The wake cutting step
+        ''' </summary>
+        Public Property CuttingStep As Integer
 
         ''' <summary>
         ''' The nodes describing the twist of the blade along the normalized coordinate
@@ -248,6 +266,7 @@ Namespace VisualModel.Models.Components
                     Dim R As Double = 0.5# * S * Diameter
                     Dim C As Double = 0.5# * Diameter * Chord(S)
                     Dim T As Double = (CollectivePitch + Twist(S)) * Math.PI / 180.0#
+                    Dim E As Double = 0.5# * AxisDeflection * Diameter * Math.Sin(Math.PI * S)
 
                     For J = 0 To NumberOfChordPanels
 
@@ -267,27 +286,31 @@ Namespace VisualModel.Models.Components
 
                         ' Apply twist (for now only around C/2)
 
-                        Node.Position.Z -= C * 0.5#
+                        Node.Position.Z -= C * (1.0 - AxisPosition)
 
                         Dim M As New RotationMatrix()
                         Dim A As New OrientationAngles
-                        A.R1 = 0.0#
-                        A.R2 = T
-                        A.R3 = 0.0#
+                        A.Angle1 = 0.0#
+                        A.Angle2 = T
+                        A.Angle3 = 0.0#
                         A.Sequence = RotationSequence.XYZ
                         M.Generate(A)
 
                         Node.Position.Rotate(M)
 
-                        ' Apply local position
+                        ' Apply local span position
 
                         Node.Position.Y += R
 
+                        ' Apply sinusolidal bending
+
+                        Node.Position.Z += E
+
                         ' Apply blade rotation around proppeller axis (X)
 
-                        A.R1 = F
-                        A.R2 = 0.0#
-                        A.R3 = 0.0#
+                        A.Angle1 = F
+                        A.Angle2 = 0.0#
+                        A.Angle3 = 0.0#
                         A.Sequence = RotationSequence.XYZ
                         M.Generate(A)
 
@@ -360,22 +383,194 @@ Namespace VisualModel.Models.Components
         End Function
 
         ''' <summary>
+        ''' Encodes the function as a string
+        ''' </summary>
+        Function EncodePoints(Points As List(Of Vector2)) As String
+
+            Dim Result As String = ""
+
+            For Each Point In Points
+
+                Result += String.Format("{0:F4};{1:F4}/", Point.X, Point.Y)
+
+            Next
+
+            Return Result
+
+        End Function
+
+        ''' <summary>
+        ''' Encodes the function as a string
+        ''' </summary>
+        Sub DecodePoints(Data As String, ByRef Points As List(Of Vector2))
+
+            Points.Clear()
+
+            Dim Coords As String() = Data.Split({"/"c}, StringSplitOptions.RemoveEmptyEntries)
+
+            For Each Coord In Coords
+
+                Dim XY As String() = Coord.Split({";"c}, StringSplitOptions.RemoveEmptyEntries)
+
+                If XY.Length = 2 Then
+
+                    Dim Point As New Vector2
+
+                    Point.X = CDbl(XY(0))
+                    Point.Y = CDbl(XY(1))
+
+                    Points.Add(Point)
+
+                End If
+
+            Next
+
+        End Sub
+
+        ''' <summary>
         ''' Writes the data to an XML node
         ''' </summary>
-        Public Overrides Sub WriteToXML(ByRef writes As XmlWriter)
+        Public Overrides Sub WriteToXML(ByRef Writer As XmlWriter)
 
-            Throw New NotImplementedException()
+            ' Identity
+            '-----------------------------------------------------
+
+            Writer.WriteStartElement("Identity")
+            Writer.WriteAttributeString("Name", Name)
+            Writer.WriteAttributeString("ID", Id.ToString)
+            Writer.WriteAttributeString("Include", String.Format("{0}", IncludeInCalculation))
+
+            Writer.WriteAttributeString("DI", CDbl(Diameter))
+            Writer.WriteAttributeString("CP", CDbl(CollectivePitch))
+            Writer.WriteAttributeString("DF", CDbl(AxisDeflection))
+            Writer.WriteAttributeString("PS", CDbl(AxisPosition))
+            Writer.WriteAttributeString("NB", CInt(NumberOfBlades))
+            Writer.WriteAttributeString("CI", CamberLineId.ToString)
+            Writer.WriteAttributeString("PI", PolarId.ToString)
+            Writer.WriteAttributeString("NC", CInt(NumberOfChordPanels))
+            Writer.WriteAttributeString("NS", CInt(NumberOfSpanPanels))
+            Writer.WriteAttributeString("CS", CInt(CuttingStep))
+            Writer.WriteAttributeString("TF", EncodePoints(TwistFunction))
+            Writer.WriteAttributeString("CF", EncodePoints(ChordFunction))
+
+            Writer.WriteAttributeString("X", CDbl(Position.X))
+            Writer.WriteAttributeString("Y", CDbl(Position.Y))
+            Writer.WriteAttributeString("Z", CDbl(Position.Z))
+
+            Writer.WriteAttributeString("Psi", CDbl(Orientation.Angle1))
+            Writer.WriteAttributeString("Theta", CDbl(Orientation.Angle2))
+            Writer.WriteAttributeString("Phi", CDbl(Orientation.Angle3))
+            Writer.WriteAttributeString("Sequence", String.Format("{0}", CInt(Orientation.Sequence)))
+
+            Writer.WriteAttributeString("Xcr", String.Format("{0}", Position.X))
+            Writer.WriteAttributeString("Ycr", String.Format("{0}", Position.Y))
+            Writer.WriteAttributeString("Zcr", String.Format("{0}", Position.Z))
+
+            Writer.WriteEndElement()
+
+            ' Visual properties
+            '-----------------------------------------------------
+
+            Writer.WriteStartElement("VisualProperties")
+            VisualProperties.WriteToXML(Writer)
+            Writer.WriteEndElement()
+
+            ' Inertia
+            '-----------------------------------------------------
+
+            Writer.WriteStartElement("Inertia")
+
+            Writer.WriteAttributeString("Mass", String.Format("{0,14:E6}", Inertia.Mass))
+
+            Writer.WriteAttributeString("Xcg", String.Format("{0,14:E6}", Inertia.Xcg))
+            Writer.WriteAttributeString("Ycg", String.Format("{0,14:E6}", Inertia.Ycg))
+            Writer.WriteAttributeString("Zcg", String.Format("{0,14:E6}", Inertia.Zcg))
+
+            Writer.WriteAttributeString("Ixx", String.Format("{0,14:E6}", Inertia.Ixx))
+            Writer.WriteAttributeString("Iyy", String.Format("{0,14:E6}", Inertia.Iyy))
+            Writer.WriteAttributeString("Izz", String.Format("{0,14:E6}", Inertia.Izz))
+
+            Writer.WriteAttributeString("Ixy", String.Format("{0,14:E6}", Inertia.Ixy))
+            Writer.WriteAttributeString("Ixz", String.Format("{0,14:E6}", Inertia.Ixz))
+            Writer.WriteAttributeString("Iyz", String.Format("{0,14:E6}", Inertia.Iyz))
+
+            Writer.WriteEndElement()
 
         End Sub
 
         ''' <summary>
         ''' Reads the data from an XML node
         ''' </summary>
-        Public Overrides Sub ReadFromXML(ByRef reader As XmlReader)
+        Public Overrides Sub ReadFromXML(ByRef Reader As XmlReader)
 
-            Throw New NotImplementedException()
+            While Reader.Read
+
+                Select Case Reader.Name
+
+                    Case "Identity"
+
+                        Name = Reader.GetAttribute("Name")
+                        Id = New Guid(IOXML.ReadString(Reader, "ID", Guid.NewGuid.ToString))
+                        IncludeInCalculation = IOXML.ReadBoolean(Reader, "Include", True)
+
+                        Diameter = IOXML.ReadDouble(Reader, "DI", 1.0)
+                        CollectivePitch = IOXML.ReadDouble(Reader, "CP", 0.0#)
+                        AxisDeflection = IOXML.ReadDouble(Reader, "DF", 0.0#)
+                        AxisPosition = IOXML.ReadDouble(Reader, "PS", 0.25#)
+                        NumberOfBlades = IOXML.ReadInteger(Reader, "NB", 0)
+                        CamberLineId = Guid.Parse(IOXML.ReadString(Reader, "CI", Guid.Empty.ToString))
+                        PolarId = Guid.Parse(IOXML.ReadString(Reader, "PI", Guid.Empty.ToString))
+                        NumberOfChordPanels = IOXML.ReadInteger(Reader, "NC", 5)
+                        NumberOfSpanPanels = IOXML.ReadInteger(Reader, "NS", 20)
+                        CuttingStep = IOXML.ReadInteger(Reader, "CS", 50)
+                        DecodePoints(IOXML.ReadString(Reader, "TF", ""), TwistFunction)
+                        DecodePoints(IOXML.ReadString(Reader, "CF", ""), ChordFunction)
+
+                        Position.X = IOXML.ReadDouble(Reader, "X", 0.0)
+                        Position.Y = IOXML.ReadDouble(Reader, "Y", 0.0)
+                        Position.Z = IOXML.ReadDouble(Reader, "Z", 0.0)
+
+                        Orientation.Angle1 = IOXML.ReadDouble(Reader, "Psi", 0)
+                        Orientation.Angle2 = IOXML.ReadDouble(Reader, "Theta", 0)
+                        Orientation.Angle3 = IOXML.ReadDouble(Reader, "Phi", 0)
+                        Orientation.Sequence = IOXML.ReadInteger(Reader, "Sequence", CInt(RotationSequence.ZYX))
+
+                        CenterOfRotation.X = IOXML.ReadDouble(Reader, "Xcr", 0.0)
+                        CenterOfRotation.Y = IOXML.ReadDouble(Reader, "Ycr", 0.0)
+                        CenterOfRotation.Z = IOXML.ReadDouble(Reader, "Zcr", 0.0)
+
+                    Case "VisualProperties"
+
+                        VisualProperties.ReadFromXML(Reader.ReadSubtree)
+
+                    Case "Inertia"
+
+                        Dim I As InertialProperties
+
+                        I.Mass = IOXML.ReadDouble(Reader, "Mass", 0.0)
+
+                        I.Xcg = IOXML.ReadDouble(Reader, "Xcg", 0.0)
+                        I.Ycg = IOXML.ReadDouble(Reader, "Ycg", 0.0)
+                        I.Zcg = IOXML.ReadDouble(Reader, "Zcg", 0.0)
+
+                        I.Ixx = IOXML.ReadDouble(Reader, "Ixx", 0.0)
+                        I.Iyy = IOXML.ReadDouble(Reader, "Iyy", 0.0)
+                        I.Izz = IOXML.ReadDouble(Reader, "Izz", 0.0)
+
+                        I.Ixy = IOXML.ReadDouble(Reader, "Ixy", 0.0)
+                        I.Ixz = IOXML.ReadDouble(Reader, "Ixz", 0.0)
+                        I.Iyz = IOXML.ReadDouble(Reader, "Iyz", 0.0)
+
+                        Inertia = I
+
+                End Select
+
+            End While
+
+            GenerateMesh()
 
         End Sub
+
     End Class
 
 End Namespace

@@ -25,11 +25,14 @@ Partial Class FormPropeller
         Me.Label3 = New System.Windows.Forms.Label()
         Me.tbxName = New System.Windows.Forms.TextBox()
         Me.gbDimensions = New System.Windows.Forms.GroupBox()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.nudDeflection = New System.Windows.Forms.NumericUpDown()
         Me.Label4 = New System.Windows.Forms.Label()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.Label5 = New System.Windows.Forms.Label()
         Me.nudDiameter = New System.Windows.Forms.NumericUpDown()
         Me.txtRearD = New System.Windows.Forms.Label()
+        Me.btnAirfoil = New System.Windows.Forms.Button()
         Me.nudPitch = New System.Windows.Forms.NumericUpDown()
         Me.Label10 = New System.Windows.Forms.Label()
         Me.nudChordPanels = New System.Windows.Forms.NumericUpDown()
@@ -40,13 +43,15 @@ Partial Class FormPropeller
         Me.nudSpanPanels = New System.Windows.Forms.NumericUpDown()
         Me.btnInertia = New System.Windows.Forms.Button()
         Me.btnPolar = New System.Windows.Forms.Button()
-        Me.btnAirfoil = New System.Windows.Forms.Button()
         Me.pbxPlot = New System.Windows.Forms.PictureBox()
         Me.btnOK = New System.Windows.Forms.Button()
         Me.btnLoad = New System.Windows.Forms.Button()
         Me.Label8 = New System.Windows.Forms.Label()
         Me.nudBlades = New System.Windows.Forms.NumericUpDown()
+        Me.Label9 = New System.Windows.Forms.Label()
+        Me.nudAxisPosition = New System.Windows.Forms.NumericUpDown()
         Me.gbDimensions.SuspendLayout()
+        CType(Me.nudDeflection, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.nudDiameter, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.nudPitch, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.nudChordPanels, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -55,6 +60,7 @@ Partial Class FormPropeller
         CType(Me.nudSpanPanels, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.pbxPlot, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.nudBlades, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.nudAxisPosition, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'Label3
@@ -76,19 +82,43 @@ Partial Class FormPropeller
         '
         'gbDimensions
         '
+        Me.gbDimensions.Controls.Add(Me.Label9)
+        Me.gbDimensions.Controls.Add(Me.nudAxisPosition)
+        Me.gbDimensions.Controls.Add(Me.Label2)
+        Me.gbDimensions.Controls.Add(Me.nudDeflection)
         Me.gbDimensions.Controls.Add(Me.Label4)
         Me.gbDimensions.Controls.Add(Me.Label1)
         Me.gbDimensions.Controls.Add(Me.Label5)
         Me.gbDimensions.Controls.Add(Me.nudDiameter)
         Me.gbDimensions.Controls.Add(Me.txtRearD)
-        Me.gbDimensions.Controls.Add(Me.btnAirfoil)
         Me.gbDimensions.Controls.Add(Me.nudPitch)
         Me.gbDimensions.Location = New System.Drawing.Point(4, 31)
         Me.gbDimensions.Name = "gbDimensions"
-        Me.gbDimensions.Size = New System.Drawing.Size(224, 94)
+        Me.gbDimensions.Size = New System.Drawing.Size(224, 118)
         Me.gbDimensions.TabIndex = 155
         Me.gbDimensions.TabStop = False
         Me.gbDimensions.Text = "Geometry"
+        '
+        'Label2
+        '
+        Me.Label2.AutoSize = True
+        Me.Label2.Location = New System.Drawing.Point(7, 62)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(85, 13)
+        Me.Label2.TabIndex = 161
+        Me.Label2.Text = "Axis deflection:"
+        Me.Label2.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'nudDeflection
+        '
+        Me.nudDeflection.DecimalPlaces = 4
+        Me.nudDeflection.Increment = New Decimal(New Integer() {5, 0, 0, 131072})
+        Me.nudDeflection.Location = New System.Drawing.Point(108, 60)
+        Me.nudDeflection.Maximum = New Decimal(New Integer() {1410065408, 2, 0, 0})
+        Me.nudDeflection.Minimum = New Decimal(New Integer() {1410065408, 2, 0, -2147483648})
+        Me.nudDeflection.Name = "nudDeflection"
+        Me.nudDeflection.Size = New System.Drawing.Size(75, 22)
+        Me.nudDeflection.TabIndex = 162
         '
         'Label4
         '
@@ -140,6 +170,22 @@ Partial Class FormPropeller
         Me.txtRearD.Text = "Collective pitch:"
         Me.txtRearD.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         '
+        'btnAirfoil
+        '
+        Me.btnAirfoil.BackColor = System.Drawing.Color.White
+        Me.btnAirfoil.FlatAppearance.BorderColor = System.Drawing.Color.Gray
+        Me.btnAirfoil.FlatAppearance.CheckedBackColor = System.Drawing.Color.White
+        Me.btnAirfoil.FlatAppearance.MouseDownBackColor = System.Drawing.Color.PaleGreen
+        Me.btnAirfoil.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DeepSkyBlue
+        Me.btnAirfoil.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnAirfoil.Font = New System.Drawing.Font("Microsoft Sans Serif", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnAirfoil.Location = New System.Drawing.Point(429, 96)
+        Me.btnAirfoil.Name = "btnAirfoil"
+        Me.btnAirfoil.Size = New System.Drawing.Size(80, 23)
+        Me.btnAirfoil.TabIndex = 160
+        Me.btnAirfoil.Text = "Airfoil..."
+        Me.btnAirfoil.UseVisualStyleBackColor = False
+        '
         'nudPitch
         '
         Me.nudPitch.DecimalPlaces = 4
@@ -180,7 +226,7 @@ Partial Class FormPropeller
         Me.GroupBox1.Controls.Add(Me.nudChordPanels)
         Me.GroupBox1.Location = New System.Drawing.Point(234, 31)
         Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Size = New System.Drawing.Size(189, 94)
+        Me.GroupBox1.Size = New System.Drawing.Size(189, 118)
         Me.GroupBox1.TabIndex = 156
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "Mesh"
@@ -255,25 +301,9 @@ Partial Class FormPropeller
         Me.btnPolar.Text = "Polars..."
         Me.btnPolar.UseVisualStyleBackColor = False
         '
-        'btnAirfoil
-        '
-        Me.btnAirfoil.BackColor = System.Drawing.Color.White
-        Me.btnAirfoil.FlatAppearance.BorderColor = System.Drawing.Color.Gray
-        Me.btnAirfoil.FlatAppearance.CheckedBackColor = System.Drawing.Color.White
-        Me.btnAirfoil.FlatAppearance.MouseDownBackColor = System.Drawing.Color.PaleGreen
-        Me.btnAirfoil.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DeepSkyBlue
-        Me.btnAirfoil.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btnAirfoil.Font = New System.Drawing.Font("Microsoft Sans Serif", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnAirfoil.Location = New System.Drawing.Point(108, 65)
-        Me.btnAirfoil.Name = "btnAirfoil"
-        Me.btnAirfoil.Size = New System.Drawing.Size(75, 23)
-        Me.btnAirfoil.TabIndex = 160
-        Me.btnAirfoil.Text = "Airfoil..."
-        Me.btnAirfoil.UseVisualStyleBackColor = False
-        '
         'pbxPlot
         '
-        Me.pbxPlot.Location = New System.Drawing.Point(11, 131)
+        Me.pbxPlot.Location = New System.Drawing.Point(11, 154)
         Me.pbxPlot.Name = "pbxPlot"
         Me.pbxPlot.Size = New System.Drawing.Size(496, 265)
         Me.pbxPlot.TabIndex = 161
@@ -289,7 +319,7 @@ Partial Class FormPropeller
         Me.btnOK.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DeepSkyBlue
         Me.btnOK.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.btnOK.Font = New System.Drawing.Font("Microsoft Sans Serif", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnOK.Location = New System.Drawing.Point(430, 402)
+        Me.btnOK.Location = New System.Drawing.Point(430, 424)
         Me.btnOK.Name = "btnOK"
         Me.btnOK.Size = New System.Drawing.Size(77, 23)
         Me.btnOK.TabIndex = 162
@@ -305,7 +335,7 @@ Partial Class FormPropeller
         Me.btnLoad.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DeepSkyBlue
         Me.btnLoad.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.btnLoad.Font = New System.Drawing.Font("Microsoft Sans Serif", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnLoad.Location = New System.Drawing.Point(10, 402)
+        Me.btnLoad.Location = New System.Drawing.Point(10, 424)
         Me.btnLoad.Name = "btnLoad"
         Me.btnLoad.Size = New System.Drawing.Size(80, 23)
         Me.btnLoad.TabIndex = 163
@@ -331,11 +361,32 @@ Partial Class FormPropeller
         Me.nudBlades.TabIndex = 164
         Me.nudBlades.Value = New Decimal(New Integer() {2, 0, 0, 0})
         '
+        'Label9
+        '
+        Me.Label9.AutoSize = True
+        Me.Label9.Location = New System.Drawing.Point(7, 83)
+        Me.Label9.Name = "Label9"
+        Me.Label9.Size = New System.Drawing.Size(76, 13)
+        Me.Label9.TabIndex = 163
+        Me.Label9.Text = "Axis position:"
+        Me.Label9.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'nudAxisPosition
+        '
+        Me.nudAxisPosition.DecimalPlaces = 4
+        Me.nudAxisPosition.Increment = New Decimal(New Integer() {5, 0, 0, 131072})
+        Me.nudAxisPosition.Location = New System.Drawing.Point(108, 81)
+        Me.nudAxisPosition.Maximum = New Decimal(New Integer() {1410065408, 2, 0, 0})
+        Me.nudAxisPosition.Minimum = New Decimal(New Integer() {1410065408, 2, 0, -2147483648})
+        Me.nudAxisPosition.Name = "nudAxisPosition"
+        Me.nudAxisPosition.Size = New System.Drawing.Size(75, 22)
+        Me.nudAxisPosition.TabIndex = 164
+        '
         'FormPropeller
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(519, 430)
+        Me.ClientSize = New System.Drawing.Size(519, 454)
         Me.Controls.Add(Me.Label8)
         Me.Controls.Add(Me.nudBlades)
         Me.Controls.Add(Me.btnLoad)
@@ -343,6 +394,7 @@ Partial Class FormPropeller
         Me.Controls.Add(Me.pbxPlot)
         Me.Controls.Add(Me.btnPolar)
         Me.Controls.Add(Me.btnInertia)
+        Me.Controls.Add(Me.btnAirfoil)
         Me.Controls.Add(Me.GroupBox1)
         Me.Controls.Add(Me.gbDimensions)
         Me.Controls.Add(Me.Label3)
@@ -354,6 +406,7 @@ Partial Class FormPropeller
         Me.Text = "Propeller editor"
         Me.gbDimensions.ResumeLayout(False)
         Me.gbDimensions.PerformLayout()
+        CType(Me.nudDeflection, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.nudDiameter, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.nudPitch, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.nudChordPanels, System.ComponentModel.ISupportInitialize).EndInit()
@@ -363,6 +416,7 @@ Partial Class FormPropeller
         CType(Me.nudSpanPanels, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.pbxPlot, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.nudBlades, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.nudAxisPosition, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -392,4 +446,8 @@ Partial Class FormPropeller
     Friend WithEvents btnLoad As Button
     Friend WithEvents Label8 As Label
     Friend WithEvents nudBlades As NumericUpDown
+    Friend WithEvents Label2 As Label
+    Friend WithEvents nudDeflection As NumericUpDown
+    Friend WithEvents Label9 As Label
+    Friend WithEvents nudAxisPosition As NumericUpDown
 End Class

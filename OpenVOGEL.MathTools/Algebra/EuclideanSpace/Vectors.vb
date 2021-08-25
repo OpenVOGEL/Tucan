@@ -437,7 +437,7 @@ Namespace Algebra.EuclideanSpace
             Return X * Punto.X + Y * Punto.Y + Z * Punto.Z
         End Function
 
-        Public ReadOnly Property EuclideanNorm As Double
+        Public ReadOnly Property Norm2 As Double
             Get
                 ' In the .NET frameworks X * X is much more effective than X ^ 2.
                 Dim Value As Double = Math.Sqrt(X * X + Y * Y + Z * Z)
@@ -461,7 +461,7 @@ Namespace Algebra.EuclideanSpace
         End Function
 
         Public Function DistanceTo(ByVal Punto As Vector3) As Double
-            Return Me.RelativePosition(Punto).EuclideanNorm
+            Return Me.RelativePosition(Punto).Norm2
         End Function
 
         Public ReadOnly Property ProjectedVector(ByVal Vector As Vector3) As Vector3
@@ -481,7 +481,7 @@ Namespace Algebra.EuclideanSpace
 
         Public ReadOnly Property NormalizedDirection As Vector3
             Get
-                Dim Norma As Double = Me.EuclideanNorm
+                Dim Norma As Double = Me.Norm2
                 Dim VectorEscalado As New Vector3(Me, 1 / Norma)
                 'VectorEscalado.Escalar(1 / Norma)
                 Return VectorEscalado

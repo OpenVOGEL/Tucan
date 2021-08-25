@@ -41,8 +41,10 @@ Public Class FormPropeller
 
         AddHandler nudDiameter.ValueChanged, AddressOf RequestUpdate
         AddHandler nudPitch.ValueChanged, AddressOf RequestUpdate
+        AddHandler nudDeflection.ValueChanged, AddressOf RequestUpdate
+        AddHandler nudAxisPosition.ValueChanged, AddressOf RequestUpdate
         AddHandler nudChordPanels.ValueChanged, AddressOf RequestUpdate
-        AddHandler nudWakeLength.ValueChanged, AddressOf RequestUpdate
+        AddHandler nudSpanPanels.ValueChanged, AddressOf RequestUpdate
         AddHandler nudBlades.ValueChanged, AddressOf RequestUpdate
         AddHandler tbxName.TextChanged, AddressOf RequestUpdate
 
@@ -74,6 +76,22 @@ Public Class FormPropeller
         nudSpanPanels.Minimum = 1
         nudSpanPanels.Value = _Propeller.NumberOfSpanPanels
 
+        nudWakeLength.DecimalPlaces = 0
+        nudWakeLength.Minimum = 1
+        nudWakeLength.Value = _Propeller.CuttingStep
+
+        nudDeflection.DecimalPlaces = 3
+        nudDeflection.Minimum = -0.5
+        nudDeflection.Maximum = 0.5
+        nudDeflection.Increment = 0.01
+        nudDeflection.Value = _Propeller.AxisDeflection
+
+        nudAxisPosition.DecimalPlaces = 3
+        nudAxisPosition.Minimum = 0.0
+        nudAxisPosition.Maximum = 1.0
+        nudAxisPosition.Increment = 0.01
+        nudAxisPosition.Value = _Propeller.AxisPosition
+
     End Sub
 
     Private Sub RequestUpdate()
@@ -82,10 +100,13 @@ Public Class FormPropeller
 
             _Propeller.Diameter = nudDiameter.Value
             _Propeller.CollectivePitch = nudPitch.Value
+            _Propeller.AxisDeflection = nudDeflection.Value
+            _Propeller.AxisPosition = nudAxisPosition.Value
             _Propeller.Name = tbxName.Text
             _Propeller.NumberOfBlades = nudBlades.Value
             _Propeller.NumberOfSpanPanels = nudSpanPanels.Value
             _Propeller.NumberOfChordPanels = nudChordPanels.Value
+            _Propeller.CuttingStep = nudWakeLength.Value
 
             _Propeller.GenerateMesh()
 
@@ -95,23 +116,46 @@ Public Class FormPropeller
 
     End Sub
 
-    Private Background As SolidBrush = Brushes.Black
+    Private Background As SolidBrush = Brushes.DarkGray
     Private AxisPen As New Pen(Color.DimGray, 2)
     Private GridPen As New Pen(Color.DimGray, 1)
     Private TwistPen As New Pen(Color.Red, 3)
     Private ChordPen As New Pen(Color.Blue, 3)
+    Private FontLabel As New Font("Segoe UI", 6.5)
+    Private FontAxis As New Font("Segoe UI", 10.0)
 
     Private Sub pbxPlot_Paint(sender As Object, e As PaintEventArgs) Handles pbxPlot.Paint
 
         Dim G As Graphics = e.Graphics
+
         G.FillRectangle(Background, pbxPlot.DisplayRectangle)
+
+        G.DrawString("β [°]", FontAxis, Brushes.Red, 30, 2)
+
+        G.DrawString("C/R [°]", FontAxis, Brushes.Blue, pbxPlot.Width - 50, 2)
+
+        For I = 1 To 9
+
+            Dim Y As Single = 1.0 - I / 10
+
+            Dim H As Single = Y * pbxPlot.Height
+
+            G.DrawLine(GridPen, 20, H, pbxPlot.Width - 20, H)
+
+            G.DrawString(String.Format("{0:F0}°", 100.0 * I / 10), FontLabel, Brushes.Red, 4, H - 6)
+
+            G.DrawString(String.Format("{0:F1}", I / 10), FontLabel, Brushes.Blue, pbxPlot.Width - 16, H - 6)
+
+        Next
+
         G.TranslateTransform(0.0, pbxPlot.Height)
+
         G.ScaleTransform(1.0, -1.0)
 
         G.SmoothingMode = Drawing2D.SmoothingMode.AntiAlias
 
         Dim X_Scale As Single = pbxPlot.Width
-        Dim Y_Scale As Single = pbxPlot.Height / 90.0#
+        Dim Y_Scale As Single = pbxPlot.Height / 100.0#
 
         For I = 1 To _Propeller.TwistFunction.Count - 1
 
@@ -195,7 +239,7 @@ Public Class FormPropeller
 
     Private Sub btnPolar_Click(sender As Object, e As EventArgs) Handles btnPolar.Click
 
-        If Model.PolarDataBase IsNot Nothing And _Propeller IsNot _Propeller Then
+        If Model.PolarDataBase IsNot Nothing And _Propeller IsNot Nothing Then
 
             Dim Id As Guid = Guid.Empty
             If _Propeller.PolarFamiliy IsNot Nothing Then

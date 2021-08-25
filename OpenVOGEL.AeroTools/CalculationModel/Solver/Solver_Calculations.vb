@@ -24,6 +24,7 @@ Imports System.Threading.Tasks
 '-----------------------------------------------------------------------------
 Imports DotNumerics.LinearAlgebra
 Imports OpenVOGEL.MathTools.Algebra.EuclideanSpace
+Imports OpenVOGEL.MathTools.Algebra.CustomMatrices
 Imports OpenVOGEL.AeroTools.CalculationModel.Models.Aero
 Imports OpenVOGEL.AeroTools.CalculationModel.Models.Aero.Components
 
@@ -289,7 +290,7 @@ Namespace CalculationModel.Solver
             If Indexate Then
 
                 Dimension = IndexateLattices()
-                MatrixDoublets = New Matrix(Dimension)
+                MatrixDoublets = New DotNumerics.LinearAlgebra.Matrix(Dimension)
                 RHS = New Vector(Dimension)
 
             End If
@@ -376,7 +377,7 @@ Namespace CalculationModel.Solver
 
             Next
 
-            MatrixSources = New Matrix(MatrixDoublets.RowCount, n)
+            MatrixSources = New DotNumerics.LinearAlgebra.Matrix(MatrixDoublets.RowCount, n)
             S = New Vector(n)
 
             For Each Lattice As Lattice In Lattices
@@ -802,6 +803,33 @@ Namespace CalculationModel.Solver
         ''' </summary>
         Private Sub CalculateVelocityOnWakes()
 
+            ' Compute stream rotation matrix if necessary
+            '--------------------------------------------
+
+            Dim Rotation As New RotationMatrix
+
+            Dim Delta As Double = 1.0# / Settings.Interval
+
+            If WithStreamRotation Then
+
+                Dim Angle As Double = 0.5# * Stream.Rotation.Norm2 * Settings.Interval
+
+                Dim Vector As New Vector3(Stream.Rotation)
+
+                Dim Cos As Double = Math.Cos(Angle)
+                Dim Sin As Double = Math.Sin(Angle)
+
+                Vector.Normalize()
+
+                Vector.Scale(Sin)
+
+                Rotation.Generate(Cos, Vector.X, Vector.Y, Vector.Z)
+
+            End If
+
+            ' Sum velocity components for each wake node
+            '--------------------------------------------
+
             Dim CutOff As Double = Settings.Cutoff
 
             For Each Lattice As BoundedLattice In Lattices
@@ -809,23 +837,33 @@ Namespace CalculationModel.Solver
                 For Each Wake As Wake In Lattice.Wakes
 
                     Parallel.ForEach(Wake.Nodes,
-                    Sub(NodalPoint As Node)
+                    Sub(Node As Node)
 
-                        NodalPoint.Velocity.Assign(Stream.Velocity)
+                        Node.Velocity.Assign(Stream.Velocity)
 
                         If WithStreamRotation Then
 
-                            NodalPoint.Velocity.AddCrossProduct(Stream.Rotation, NodalPoint.Position)
+                            Dim Vector As New Vector3
+
+                            Vector.Assign(Node.Position)
+
+                            Vector.Rotate(Rotation)
+
+                            Vector.Substract(Node.Position)
+
+                            Vector.Scale(Delta)
+
+                            Node.Velocity.Add(Vector)
 
                         End If
 
                         For Each OtherLattice As BoundedLattice In Lattices
 
-                            OtherLattice.AddInducedVelocity(NodalPoint.Velocity, NodalPoint.Position, CutOff)
+                            OtherLattice.AddInducedVelocity(Node.Velocity, Node.Position, CutOff)
 
                             For Each OtherWake As Wake In OtherLattice.Wakes
 
-                                OtherWake.AddInducedVelocity(NodalPoint.Velocity, NodalPoint.Position, CutOff)
+                                OtherWake.AddInducedVelocity(Node.Velocity, Node.Position, CutOff)
 
                             Next
 
@@ -881,21 +919,21 @@ Namespace CalculationModel.Solver
 
         Public Property CancellationPending As Boolean = False
 
-            Public Sub RequestCancellation()
+        Public Sub RequestCancellation()
 
-                CancellationPending = True
+            CancellationPending = True
 
-            End Sub
+        End Sub
 
-            Public Sub CancelProcess()
+        Public Sub CancelProcess()
 
-                RaiseEvent PushMessage("Calculation canceled")
-                RaiseEvent CalculationDone()
+            RaiseEvent PushMessage("Calculation canceled")
+            RaiseEvent CalculationDone()
 
-            End Sub
+        End Sub
 
 #End Region
 
-        End Class
+    End Class
 
 End Namespace

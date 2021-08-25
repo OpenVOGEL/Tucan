@@ -66,13 +66,11 @@ Namespace VisualModel.Models.Components
         ''' <summary>
         ''' The number of panels in radial direction
         ''' </summary>
-        ''' <returns></returns>
         Public Property Resolution As Integer
 
         ''' <summary>
-        ''' Generates a triangular or quadrilateral mesh.
+        ''' Generates a triangular or quadrilateral mesh
         ''' </summary>
-        ''' <remarks></remarks>
         Public Overrides Sub GenerateMesh()
 
             Mesh.Nodes.Clear()
@@ -186,63 +184,63 @@ Namespace VisualModel.Models.Components
         ''' <summary>
         ''' Reads the wing from an XML file.
         ''' </summary>
-        ''' <param name="reader"></param>
+        ''' <param name="Reader"></param>
         ''' <remarks></remarks>
-        Public Overrides Sub ReadFromXML(ByRef reader As XmlReader)
+        Public Overrides Sub ReadFromXML(ByRef Reader As XmlReader)
 
-            While reader.Read
+            While Reader.Read
 
-                Select Case reader.Name
+                Select Case Reader.Name
 
                     Case "Identity"
 
-                        Name = reader.GetAttribute("Name")
-                        Id = New Guid(IOXML.ReadString(reader, "ID", Guid.NewGuid.ToString))
-                        IncludeInCalculation = IOXML.ReadBoolean(reader, "Include", True)
+                        Name = Reader.GetAttribute("Name")
+                        Id = New Guid(IOXML.ReadString(Reader, "ID", Guid.NewGuid.ToString))
+                        IncludeInCalculation = IOXML.ReadBoolean(Reader, "Include", True)
 
-                        Resolution = IOXML.ReadInteger(reader, "RE", 10)
-                        FrontDiameter = IOXML.ReadDouble(reader, "FD", 1)
-                        BackDiameter = IOXML.ReadDouble(reader, "BD", 0.5)
-                        FrontLength = IOXML.ReadDouble(reader, "FL", 1)
-                        BackLength = IOXML.ReadDouble(reader, "BL", 0.5)
-                        Length = IOXML.ReadDouble(reader, "TL", 0.5)
-                        Resolution = Math.Max(11, IOXML.ReadInteger(reader, "RS", 15))
-                        CuttingStep = IOXML.ReadInteger(reader, "CS", 20)
+                        Resolution = IOXML.ReadInteger(Reader, "RE", 10)
+                        FrontDiameter = IOXML.ReadDouble(Reader, "FD", 1)
+                        BackDiameter = IOXML.ReadDouble(Reader, "BD", 0.5)
+                        FrontLength = IOXML.ReadDouble(Reader, "FL", 1)
+                        BackLength = IOXML.ReadDouble(Reader, "BL", 0.5)
+                        Length = IOXML.ReadDouble(Reader, "TL", 0.5)
+                        Resolution = Math.Max(11, IOXML.ReadInteger(Reader, "RS", 15))
+                        CuttingStep = IOXML.ReadInteger(Reader, "CS", 20)
 
-                        Position.X = IOXML.ReadDouble(reader, "X", 0.0)
-                        Position.Y = IOXML.ReadDouble(reader, "Y", 0.0)
-                        Position.Z = IOXML.ReadDouble(reader, "Z", 0.0)
+                        Position.X = IOXML.ReadDouble(Reader, "X", 0.0)
+                        Position.Y = IOXML.ReadDouble(Reader, "Y", 0.0)
+                        Position.Z = IOXML.ReadDouble(Reader, "Z", 0.0)
 
-                        Orientation.R1 = IOXML.ReadDouble(reader, "Psi", 0)
-                        Orientation.R2 = IOXML.ReadDouble(reader, "Theta", 0)
-                        Orientation.R3 = IOXML.ReadDouble(reader, "Phi", 0)
-                        Orientation.Sequence = IOXML.ReadInteger(reader, "Sequence", CInt(RotationSequence.ZYX))
+                        Orientation.Angle1 = IOXML.ReadDouble(Reader, "Psi", 0)
+                        Orientation.Angle2 = IOXML.ReadDouble(Reader, "Theta", 0)
+                        Orientation.Angle3 = IOXML.ReadDouble(Reader, "Phi", 0)
+                        Orientation.Sequence = IOXML.ReadInteger(Reader, "Sequence", CInt(RotationSequence.ZYX))
 
-                        CenterOfRotation.X = IOXML.ReadDouble(reader, "Xcr", 0.0)
-                        CenterOfRotation.Y = IOXML.ReadDouble(reader, "Ycr", 0.0)
-                        CenterOfRotation.Z = IOXML.ReadDouble(reader, "Zcr", 0.0)
+                        CenterOfRotation.X = IOXML.ReadDouble(Reader, "Xcr", 0.0)
+                        CenterOfRotation.Y = IOXML.ReadDouble(Reader, "Ycr", 0.0)
+                        CenterOfRotation.Z = IOXML.ReadDouble(Reader, "Zcr", 0.0)
 
                     Case "VisualProperties"
 
-                        VisualProperties.ReadFromXML(reader.ReadSubtree)
+                        VisualProperties.ReadFromXML(Reader.ReadSubtree)
 
                     Case "Inertia"
 
                         Dim I As InertialProperties
 
-                        I.Mass = IOXML.ReadDouble(reader, "Mass", 0.0)
+                        I.Mass = IOXML.ReadDouble(Reader, "Mass", 0.0)
 
-                        I.Xcg = IOXML.ReadDouble(reader, "Xcg", 0.0)
-                        I.Ycg = IOXML.ReadDouble(reader, "Ycg", 0.0)
-                        I.Zcg = IOXML.ReadDouble(reader, "Zcg", 0.0)
+                        I.Xcg = IOXML.ReadDouble(Reader, "Xcg", 0.0)
+                        I.Ycg = IOXML.ReadDouble(Reader, "Ycg", 0.0)
+                        I.Zcg = IOXML.ReadDouble(Reader, "Zcg", 0.0)
 
-                        I.Ixx = IOXML.ReadDouble(reader, "Ixx", 0.0)
-                        I.Iyy = IOXML.ReadDouble(reader, "Iyy", 0.0)
-                        I.Izz = IOXML.ReadDouble(reader, "Izz", 0.0)
+                        I.Ixx = IOXML.ReadDouble(Reader, "Ixx", 0.0)
+                        I.Iyy = IOXML.ReadDouble(Reader, "Iyy", 0.0)
+                        I.Izz = IOXML.ReadDouble(Reader, "Izz", 0.0)
 
-                        I.Ixy = IOXML.ReadDouble(reader, "Ixy", 0.0)
-                        I.Ixz = IOXML.ReadDouble(reader, "Ixz", 0.0)
-                        I.Iyz = IOXML.ReadDouble(reader, "Iyz", 0.0)
+                        I.Ixy = IOXML.ReadDouble(Reader, "Ixy", 0.0)
+                        I.Ixz = IOXML.ReadDouble(Reader, "Ixz", 0.0)
+                        I.Iyz = IOXML.ReadDouble(Reader, "Iyz", 0.0)
 
                         Inertia = I
 
@@ -257,69 +255,69 @@ Namespace VisualModel.Models.Components
         ''' <summary>
         ''' Writes the wing to an XML file.
         ''' </summary>
-        ''' <param name="writer"></param>
+        ''' <param name="Writer"></param>
         ''' <remarks></remarks>
-        Public Overrides Sub WriteToXML(ByRef writer As XmlWriter)
+        Public Overrides Sub WriteToXML(ByRef Writer As XmlWriter)
 
             ' Identity
             '-----------------------------------------------------
 
-            writer.WriteStartElement("Identity")
-            writer.WriteAttributeString("Name", Name)
-            writer.WriteAttributeString("ID", Id.ToString)
-            writer.WriteAttributeString("Include", String.Format("{0}", IncludeInCalculation))
+            Writer.WriteStartElement("Identity")
+            Writer.WriteAttributeString("Name", Name)
+            Writer.WriteAttributeString("ID", Id.ToString)
+            Writer.WriteAttributeString("Include", String.Format("{0}", IncludeInCalculation))
 
-            writer.WriteAttributeString("FD", CDbl(FrontDiameter))
-            writer.WriteAttributeString("BD", CDbl(BackDiameter))
-            writer.WriteAttributeString("FL", CDbl(FrontLength))
-            writer.WriteAttributeString("BL", CDbl(BackLength))
-            writer.WriteAttributeString("TL", CDbl(Length))
-            writer.WriteAttributeString("RS", CInt(Resolution))
-            writer.WriteAttributeString("CS", CInt(CuttingStep))
+            Writer.WriteAttributeString("FD", CDbl(FrontDiameter))
+            Writer.WriteAttributeString("BD", CDbl(BackDiameter))
+            Writer.WriteAttributeString("FL", CDbl(FrontLength))
+            Writer.WriteAttributeString("BL", CDbl(BackLength))
+            Writer.WriteAttributeString("TL", CDbl(Length))
+            Writer.WriteAttributeString("RS", CInt(Resolution))
+            Writer.WriteAttributeString("CS", CInt(CuttingStep))
 
-            writer.WriteAttributeString("X", CDbl(Position.X))
-            writer.WriteAttributeString("Y", CDbl(Position.Y))
-            writer.WriteAttributeString("Z", CDbl(Position.Z))
+            Writer.WriteAttributeString("X", CDbl(Position.X))
+            Writer.WriteAttributeString("Y", CDbl(Position.Y))
+            Writer.WriteAttributeString("Z", CDbl(Position.Z))
 
-            writer.WriteAttributeString("Psi", CDbl(Orientation.R1))
-            writer.WriteAttributeString("Theta", CDbl(Orientation.R2))
-            writer.WriteAttributeString("Phi", CDbl(Orientation.R3))
-            writer.WriteAttributeString("Sequence", String.Format("{0}", CInt(Orientation.Sequence)))
+            Writer.WriteAttributeString("Psi", CDbl(Orientation.Angle1))
+            Writer.WriteAttributeString("Theta", CDbl(Orientation.Angle2))
+            Writer.WriteAttributeString("Phi", CDbl(Orientation.Angle3))
+            Writer.WriteAttributeString("Sequence", String.Format("{0}", CInt(Orientation.Sequence)))
 
-            writer.WriteAttributeString("Xcr", String.Format("{0}", Position.X))
-            writer.WriteAttributeString("Ycr", String.Format("{0}", Position.Y))
-            writer.WriteAttributeString("Zcr", String.Format("{0}", Position.Z))
+            Writer.WriteAttributeString("Xcr", String.Format("{0}", Position.X))
+            Writer.WriteAttributeString("Ycr", String.Format("{0}", Position.Y))
+            Writer.WriteAttributeString("Zcr", String.Format("{0}", Position.Z))
 
-            writer.WriteAttributeString("RE", CInt(Resolution))
-            writer.WriteEndElement()
+            Writer.WriteAttributeString("RE", CInt(Resolution))
+            Writer.WriteEndElement()
 
             ' Visual properties
             '-----------------------------------------------------
 
-            writer.WriteStartElement("VisualProperties")
-            VisualProperties.WriteToXML(writer)
-            writer.WriteEndElement()
+            Writer.WriteStartElement("VisualProperties")
+            VisualProperties.WriteToXML(Writer)
+            Writer.WriteEndElement()
 
             ' Inertia
             '-----------------------------------------------------
 
-            writer.WriteStartElement("Inertia")
+            Writer.WriteStartElement("Inertia")
 
-            writer.WriteAttributeString("Mass", String.Format("{0,14:E6}", Inertia.Mass))
+            Writer.WriteAttributeString("Mass", String.Format("{0,14:E6}", Inertia.Mass))
 
-            writer.WriteAttributeString("Xcg", String.Format("{0,14:E6}", Inertia.Xcg))
-            writer.WriteAttributeString("Ycg", String.Format("{0,14:E6}", Inertia.Ycg))
-            writer.WriteAttributeString("Zcg", String.Format("{0,14:E6}", Inertia.Zcg))
+            Writer.WriteAttributeString("Xcg", String.Format("{0,14:E6}", Inertia.Xcg))
+            Writer.WriteAttributeString("Ycg", String.Format("{0,14:E6}", Inertia.Ycg))
+            Writer.WriteAttributeString("Zcg", String.Format("{0,14:E6}", Inertia.Zcg))
 
-            writer.WriteAttributeString("Ixx", String.Format("{0,14:E6}", Inertia.Ixx))
-            writer.WriteAttributeString("Iyy", String.Format("{0,14:E6}", Inertia.Iyy))
-            writer.WriteAttributeString("Izz", String.Format("{0,14:E6}", Inertia.Izz))
+            Writer.WriteAttributeString("Ixx", String.Format("{0,14:E6}", Inertia.Ixx))
+            Writer.WriteAttributeString("Iyy", String.Format("{0,14:E6}", Inertia.Iyy))
+            Writer.WriteAttributeString("Izz", String.Format("{0,14:E6}", Inertia.Izz))
 
-            writer.WriteAttributeString("Ixy", String.Format("{0,14:E6}", Inertia.Ixy))
-            writer.WriteAttributeString("Ixz", String.Format("{0,14:E6}", Inertia.Ixz))
-            writer.WriteAttributeString("Iyz", String.Format("{0,14:E6}", Inertia.Iyz))
+            Writer.WriteAttributeString("Ixy", String.Format("{0,14:E6}", Inertia.Ixy))
+            Writer.WriteAttributeString("Ixz", String.Format("{0,14:E6}", Inertia.Ixz))
+            Writer.WriteAttributeString("Iyz", String.Format("{0,14:E6}", Inertia.Iyz))
 
-            writer.WriteEndElement()
+            Writer.WriteEndElement()
 
         End Sub
 
@@ -337,9 +335,9 @@ Namespace VisualModel.Models.Components
             Position.Y = Engine.Position.Y
             Position.Z = Engine.Position.Z
 
-            Orientation.R1 = Engine.Orientation.R1
-            Orientation.R2 = Engine.Orientation.R2
-            Orientation.R3 = Engine.Orientation.R3
+            Orientation.Angle1 = Engine.Orientation.Angle1
+            Orientation.Angle2 = Engine.Orientation.Angle2
+            Orientation.Angle3 = Engine.Orientation.Angle3
 
             GenerateMesh()
 
