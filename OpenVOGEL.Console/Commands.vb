@@ -37,7 +37,7 @@ Module Commands
     Sub Main(Arguments As String())
 
         System.Console.WriteLine("** OpenVOGEL **")
-        System.Console.WriteLine("Console version: 3.3")
+        System.Console.WriteLine("Console version: 3.4")
         System.Console.WriteLine("Solver  version: " & AeroTools.CalculationModel.Solver.Solver.Version)
 
         MklSetup.Initialize()
