@@ -152,6 +152,12 @@
     <Compile Include="GraphicInterface\Forms\FormAtmosphere.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="GraphicInterface\Forms\FormPropeller.Designer.vb">
+      <DependentUpon>FormPropeller.vb</DependentUpon>
+    </Compile>
+    <Compile Include="GraphicInterface\Forms\FormPropeller.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="GraphicInterface\Forms\StartupScreen.designer.vb">
       <DependentUpon>StartupScreen.vb</DependentUpon>
     </Compile>
