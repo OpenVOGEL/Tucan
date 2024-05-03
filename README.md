@@ -1,5 +1,5 @@
 > [!IMPORTANT]
-> This repository is no longer updated. The project has been moved [to this repository](https://github.com/GuillermoHazebrouck/VGL).
+> This repository is no longer maintained. The project has been moved [to this repository](https://github.com/GuillermoHazebrouck/VGL).
 > The new project only contains the calculation units to be launched in .NET under any OS, so there is no graphical interface.
 
 ## Welcome to OpenVOGEL aeromechanics (in .NET)
