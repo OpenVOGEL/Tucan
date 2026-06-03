@@ -1,6 +1,6 @@
 > [!IMPORTANT]
 > This repository is no longer maintained. The project has been moved [to this repository](https://github.com/GuillermoHazebrouck/VGL) for further development.
-> The new project only contains the calculation units to be launched in .NET under any OS, so there is no graphical interface.
+> For the moment the new project only contains the calculation units to be launched in .NET under any OS. A graphical interface using OpenTK is on the way.
 
 ## Welcome to OpenVOGEL aeromechanics (in .NET)
 OpenVOGEL is a project providing .NET computer programs useful to study some characteristics of mechanical systems subjected to aerodynamic loads. OpenVOGEL programs can be used, for instance, to compute approximated airloads over complex configurations of slender and thick surfaces (wings and fuselages), to compute some important aeroelastic characteristics of wings and to analyze the dynamic response of an airplane to a gust.
